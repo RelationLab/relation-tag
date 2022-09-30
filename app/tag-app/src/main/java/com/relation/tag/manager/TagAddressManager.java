@@ -6,4 +6,6 @@ public interface TagAddressManager {
     void refreshTagByTable(List<String> tables) throws Exception;
 
     void refreshAllLabel() throws Exception;
+
+    void tagMerge();
 }

@@ -68,7 +68,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            summaryData();
+            tagMerge();
         });
     }
 
@@ -96,10 +96,26 @@ public class TagAddressManagerImpl implements TagAddressManager {
         tagByRuleSqlList(ruleSqlList, false);
     }
 
-    public void summaryData() {
+
+    @Override
+    public void tagMerge() {
         log.info("summaryData start....");
         forkJoinPool.execute(() -> {
-            String createTable = "create table address_label_gp_temp as select * from address_label_gp limit 1;";
+            String createTable = "-- auto-generated definition\n" +
+                    "create table address_label_gp_temp\n" +
+                    "(\n" +
+                    "    owner      varchar(256),\n" +
+                    "    address    varchar(512),\n" +
+                    "    label_type varchar(512),\n" +
+                    "    label_name varchar(1024),\n" +
+                    "    source     varchar(100),\n" +
+                    "    updated_at timestamp(6)\n" +
+                    ")\n" +
+                    "    distributed by (address);\n" +
+                    "\n" +
+                    "alter table address_label_gp_temp\n" +
+                    "    owner to gpadmin;\n" +
+                    "\n";
             iAddressLabelService.exceSql(createTable);
             List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
             ruleSqlList = ruleSqlList.stream().filter(item -> {

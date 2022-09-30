@@ -61,4 +61,20 @@ public class PublicTagController {
         return ResponseWrapper.success();
     }
 
+    @PostMapping("tag/merge")
+    @ApiOperation("按标签类型打标签")
+    @MethodDesc("按标签类型打标签")
+    public ResponseWrapper tagMerge() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    tagAddressManager.tagMerge();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+        return ResponseWrapper.success();
+    }
 }
