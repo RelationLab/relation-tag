@@ -1,0 +1,66 @@
+server:
+  port: ${PORT:10008}
+  base-url: /api
+
+spring:
+  application:
+    name: relation-ugc-scheduler
+  swagger:
+    enabled: true
+  datasource:
+    primary:
+      url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}?currentSchema=public&characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&stringtype=unspecified
+      username: ${DB_USERNAME:postgres}
+      password: ${DB_PASSWORD:hojil@123!}
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: org.postgresql.Driver
+      #      druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 50
+      query-timeout: 6000
+      transaction-query-timeout: 6000
+      remove-abandoned-timeout: 1800
+      filters: stat,config
+
+    read-only:
+      url: jdbc:postgresql://${READ_ONLY_DB_HOST:localhost}:${READ_ONLY_DB_PORT:5432}/${READ_ONLY_DB_NAME:postgres}?currentSchema=public
+      username: ${READ_ONLY_DB_USERNAME:readpostgres}
+      password: ${READ_ONLY_DB_PASSWORD:hojil@123!}
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: org.postgresql.Driver
+      #      druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 10
+      query-timeout: 6000
+      transaction-query-timeout: 6000
+      remove-abandoned-timeout: 1800
+      max-wait: 5000000
+      filters: stat,config
+    greenplum:
+      url: jdbc:postgresql://${GREENPLUM_DB_HOST:localhost}:${GREENPLUM_DB_PORT:5432}/${GREENPLUM_DB_NAME:postgres}
+      username: ${GREENPLUM_DB_USERNAME:readpostgres}
+      password: ${GREENPLUM_DB_PASSWORD:hojil@123!}
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: org.postgresql.Driver
+      #      druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 10
+      query-timeout: 6000
+      transaction-query-timeout: 6000
+      remove-abandoned-timeout: 6000
+      max-wait: 5000000
+      filters: stat,config
+
+  redis:
+    is-aws: ${IS_AWS:true}
+    host: ${RDS_HOST:localhost}
+    port: ${RDS_PORT:6379}
+    password: ${RDS_PASSWORD:}
+    database: ${RDS_DATABASE:1}
+
+# 日志配置
+logging:
+  config: classpath:logback-spring-yun.xml

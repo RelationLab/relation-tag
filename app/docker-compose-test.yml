@@ -1,0 +1,32 @@
+networks:
+  relation-network:
+    driver: bridge
+
+services:
+  relation-redis:
+    container_name: relation-redis
+    image: redis:latest
+    networks:
+      relation-network: {}
+    hostname: relation-redis
+    ports:
+      - 127.0.0.1:6379:6379/tcp
+
+  relation-tag:
+    container_name: relation-tag
+    environment:
+      DB_HOST: db.data-engine-eth-dev.relation-lab.com
+      DB_NAME: eth
+      DB_USERNAME: relationLab
+      DB_PASSWORD: 123456789
+      RDS_HOST: relation-redis
+      HOSTNAME: relation-tag
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    networks:
+      relation-network: {}
+    depends_on:
+      - relation-redis
+
+

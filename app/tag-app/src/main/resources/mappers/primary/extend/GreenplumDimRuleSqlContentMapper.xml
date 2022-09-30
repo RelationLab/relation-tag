@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relation.tag.mapper.greenplum.GreenplumDimRuleSqlContentMapper">
+    <sql id="TableName">dim_rule_sql_content</sql>
+
+
+    <select id="listByTables" resultType="com.relation.tag.entity.DimRuleSqlContent">
+        select *
+        from
+        <include refid="TableName"/>
+        where rule_name  in
+        (<foreach collection="list" item="item" separator=",">
+        #{item}
+    </foreach>)
+    </select>
+</mapper>

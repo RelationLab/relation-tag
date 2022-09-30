@@ -1,0 +1,75 @@
+{{ $count := (.Values.jobsCount | int) }}
+{{- range $index := until $count }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "data-tag.fullname" $ }}-{{ $index }}
+  labels:
+    {{- include "data-tag.labels" $ | nindent 4 }}
+spec:
+  replicas: {{ $.Values.replicaCount }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "data-tag.selectorLabels" $ | nindent 6 }}
+  template:
+    metadata:
+      {{- with $.Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "data-tag.selectorLabels" $ | nindent 8 }}
+    spec:
+      terminationGracePeriodSeconds: 10
+      {{- with $.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "data-tag.serviceAccountName" $ }}
+      securityContext:
+        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ $.Chart.Name }}-{{ $index }}
+          securityContext:
+            {{- toYaml $.Values.securityContext | nindent 12 }}
+          image: {{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          env:
+            - name: JOB_IDENTIFIER
+              value: "{{ $.Chart.Name }}-{{ $index }}"
+            - name: RDS_HOST
+              value: {{ $.Values.redis.host | quote }}
+            - name: DB_HOST
+              value: {{ $.Values.database.host | quote }}
+            - name: DB_NAME
+              value: {{ $.Values.database.name | quote }}
+            - name: DB_USERNAME
+              value: {{ $.Values.database.username | quote }}
+            - name: DB_PASSWORD
+              value: {{ $.Values.database.password | quote }}
+          ports:
+            - name: http
+              containerPort: 10008
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          resources:
+            {{- toYaml $.Values.resources | nindent 12 }}
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

@@ -1,0 +1,47 @@
+networks:
+  relation-network:
+    driver: bridge
+
+services:
+  relation-redis:
+    container_name: relation-redis
+    image: redis:latest
+    networks:
+      relation-network: {}
+    hostname: relation-redis
+    ports:
+      - 127.0.0.1:6379:6379/tcp
+
+  relation-postgres:
+    container_name: relation-postgres
+    environment:
+      POSTGRES_PASSWORD: hojil@123!
+    image: postgres:14
+    networks:
+      relation-network: {}
+    hostname: relation-postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - /opt/data/postgres/data:/var/lib/postgresql/data
+
+  # once
+  relation-tag:
+    container_name:   relation-tag
+    environment:
+      DB_HOST: relation-postgres
+      DB_NAME: postgres
+      DB_USERNAME: postgres
+      DB_PASSWORD: hojil@123!
+      RDS_HOST: relation-redis
+      JOB_IDENTIFIER: relation-tag
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    networks:
+      relation-network: {}
+    ports:
+      - 10001:10001
+    depends_on:
+      - relation-postgres
+      - relation-redis

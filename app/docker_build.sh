@@ -1,0 +1,1 @@
+docker build . -t relation/tag-app:1.0.0

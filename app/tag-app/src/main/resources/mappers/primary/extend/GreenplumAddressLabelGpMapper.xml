@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relation.tag.mapper.greenplum.GreenplumAddressLabelGpMapper">
+    <sql id="TableName">address_label_gp</sql>
+
+    <select id="findLabelsAddress" resultType="com.relation.tag.vo.AddressLabelVO">
+        select  distinct address as address
+        from
+        <include refid="TableName"/>
+        <where>
+        <foreach collection="list" item="item" separator=" or ">
+            label_name=#{item.name}
+        </foreach>
+        </where>
+        order by address
+        limit #{limit} offset #{offSet};
+    </select>
+
+    <select id="findLabelsAddressCount" resultType="java.lang.Long">
+        select count(distinct address)
+        from
+        <include refid="TableName"/>
+        <where>
+        <foreach collection="list" item="item" separator=" or ">
+            label_name=#{item.name}
+        </foreach>
+        </where>
+    </select>
+    <select id="findLabelsByAddress" resultType="com.relation.tag.vo.AddressLabelVO">
+        select  address,ARRAY_AGG (label_name
+        ORDER BY
+        label_name
+        ) as labels
+        from
+        <include refid="TableName"/>
+        <where>
+            address in
+            (<foreach collection="list" item="item" separator=",">
+                #{item}
+            </foreach>)
+        </where>
+        group by address
+        order by address
+    </select>
+
+    <update id="exceSql" timeout="864000">
+        ${exceSqlStr}
+    </update>
+</mapper>
