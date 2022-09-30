@@ -20,7 +20,7 @@ MAINTAINER qingyun.yu
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN echo 'Asia/Shanghai' > /etc/timezone
 
-COPY --from=relation-data-sync /build/tag-app/target/tag-app.jar /tag-app.jar
+COPY --from=relation-tag /build/tag-app/target/tag-app.jar /tag-app.jar
 
 EXPOSE 10008 10008
 
