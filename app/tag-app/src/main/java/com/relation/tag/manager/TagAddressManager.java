@@ -8,4 +8,6 @@ public interface TagAddressManager {
     void refreshAllLabel() throws Exception;
 
     void tagMerge();
+
+    void refreshTag2pgByTable(List<String> tables);
 }
