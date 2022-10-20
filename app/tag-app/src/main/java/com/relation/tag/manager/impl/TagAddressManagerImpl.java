@@ -23,7 +23,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Autowired
     @Qualifier("greenplumDimRuleSqlContentServiceImpl")
     private IDimRuleSqlContentService dimRuleSqlContentService;
-
     @Autowired
     @Qualifier("greenPlumAddressLabelGpServiceImpl")
     protected IAddressLabelGpService iAddressLabelService;
