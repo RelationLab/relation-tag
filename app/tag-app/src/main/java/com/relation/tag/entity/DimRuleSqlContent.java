@@ -15,5 +15,4 @@ public class DimRuleSqlContent {
     private String ruleName;
     private String ruleSql;
     private Integer ruleOrder;
-    private Integer id;
 }

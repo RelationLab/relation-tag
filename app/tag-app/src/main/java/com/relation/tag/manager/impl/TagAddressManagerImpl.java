@@ -60,9 +60,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     value.parallelStream().forEach(ruleSql -> {
                         String sql = ruleSql.getRuleSql();
                         long startTime = System.currentTimeMillis();
-                        log.info("sqlid={} sqlTable={} start......", ruleSql.getId(), ruleSql.getRuleName());
+                        log.info("sqlid={} sqlTable={} start......", ruleSql.getRuleName(), ruleSql.getRuleName());
                         iAddressLabelService.exceSql(sql);
-                        log.info("sqlid={} sqlTable={}  end..... time====={}", ruleSql.getId(), ruleSql.getRuleName(), System.currentTimeMillis() - startTime);
+                        log.info("sqlid={} sqlTable={}  end..... time====={}", ruleSql.getRuleName(), ruleSql.getRuleName(), System.currentTimeMillis() - startTime);
                     });
                 });
             } catch (Exception e) {
@@ -95,9 +95,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     value.parallelStream().forEach(ruleSql -> {
                         String sql = ruleSql.getRuleSql();
                         long startTime = System.currentTimeMillis();
-                        log.info("sqlid={} sqlTable={} start......", ruleSql.getId(), ruleSql.getRuleName());
+                        log.info("sqlid={} sqlTable={} start......", ruleSql.getRuleName(), ruleSql.getRuleName());
                         iAddressLabelService.exceSql(sql);
-                        log.info("sqlid={} sqlTable={}  end..... time====={}", ruleSql.getId(), ruleSql.getRuleName(), System.currentTimeMillis() - startTime);
+                        log.info("sqlid={} sqlTable={}  end..... time====={}", ruleSql.getRuleName(), ruleSql.getRuleName(), System.currentTimeMillis() - startTime);
                     });
                 });
             } catch (Exception e) {
