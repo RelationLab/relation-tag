@@ -97,4 +97,21 @@ public class PublicTagController {
         }).start();
         return ResponseWrapper.success();
     }
+
+    @PostMapping("tag/merge2Gin")
+    @ApiOperation("按标签类型打标签")
+    @MethodDesc("按标签类型打标签")
+    public ResponseWrapper merge2Gin() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    tagAddressManager.merge2Gin();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+        return ResponseWrapper.success();
+    }
 }

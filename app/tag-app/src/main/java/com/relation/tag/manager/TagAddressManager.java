@@ -10,4 +10,6 @@ public interface TagAddressManager {
     void tagMerge();
 
     void refreshTag2pgByTable(List<String> tables);
+
+    void merge2Gin();
 }

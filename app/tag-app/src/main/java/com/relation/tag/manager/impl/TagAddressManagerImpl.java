@@ -195,4 +195,22 @@ public class TagAddressManagerImpl implements TagAddressManager {
         log.info("rename table end....time===={}", System.currentTimeMillis() - summaryDataTime);
 
     }
+
+    @Override
+    public void merge2Gin() {
+        String exceSql = "insert\n" +
+                "\tinto\n" +
+                "\taddress_labels_json_gin(address,\n" +
+                "\tlabels,\n" +
+                "\tupdated_at)\n" +
+                "   select\n" +
+                "\taddress,\n" +
+                "\tjson_object_agg(label_type, label_name order by label_type desc) as labels,\n" +
+                "\tCURRENT_TIMESTAMP as updated_at\n" +
+                "from\n" +
+                "\taddress_label_gp\n" +
+                "group by\n" +
+                "\taddress";
+        iAddressLabelService.exceSql(exceSql);
+    }
 }
