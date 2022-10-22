@@ -41,6 +41,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.listByTables(tables);
         tag2pgByRuleSqlList(ruleSqlList, true);
         tag2pgMerge(tables);
+
     }
 
     private void tagByRuleSqlList(List<DimRuleSqlContent> ruleSqlList, boolean partTag) {
