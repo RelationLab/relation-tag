@@ -53,7 +53,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 Collectors.groupingBy(
                         ruleSql -> ruleSql.getRuleOrder()
                 ));
-
         sortMapByKey(ruleSqlMap).forEach((key, value) -> {
             log.info("runOrder==={}  start..... ", key);
             try {
