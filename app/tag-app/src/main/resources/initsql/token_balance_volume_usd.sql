@@ -1,5 +1,5 @@
 drop table if exists token_balance_volume_usd;
-create table if not exists public.token_balance_volume_usd
+create table public.token_balance_volume_usd
 (
     address varchar(512) not null,
     token varchar(512) not null,
@@ -16,4 +16,5 @@ insert into token_balance_volume_usd(address, token, balance_usd, volume_usd)
 
 insert into token_balance_volume_usd(address, token, balance_usd, volume_usd)
     (select th.address, token, th.balance * price, total_transfer_all_volume* price from token_holding th
-inner join white_list_erc20 wle on th.token = wle.address and ignored = false where  (th.balance > 0 or th.total_transfer_all_volume>0));
+inner join white_list_erc20 wle on th.token = wle.address and ignored = false where
+(th.balance > 0 or th.total_transfer_all_volume>0));

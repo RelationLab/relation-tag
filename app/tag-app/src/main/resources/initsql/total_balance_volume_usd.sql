@@ -6,8 +6,7 @@ CREATE TABLE public.total_balance_volume_usd (
                              volume_usd numeric(250, 20) NULL,
                              created_at timestamp(6) NULL,
                              updated_at timestamp(6) NULL,
-                             removed bool NULL,
-                             CONSTRAINT total_balance_volume_usd_pkey PRIMARY KEY (id)
+                             removed bool NULL
 )
     DISTRIBUTED BY (address);
 
