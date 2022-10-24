@@ -1,4 +1,4 @@
-drop table if exists dim_rule_sql_content;
+drop table if exists address_labels_json_gin;
 create table address_labels_json_gin
 (
     address    varchar(512),
