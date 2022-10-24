@@ -31,18 +31,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
     protected static ForkJoinPool forkJoinPool = new ForkJoinPool(10);
 
     static String FILEPATH = "initsql";
+
     @Override
     public void refreshTagByTable(List<String> tables) {
         List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.listByTables(tables);
         tagByRuleSqlList(ruleSqlList, true);
-    }
-
-    @Override
-    public void refreshTag2pgByTable(List<String> tables) {
-        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.listByTables(tables);
-        tag2pgByRuleSqlList(ruleSqlList, true);
-        tag2pgMerge(tables);
-
     }
 
     private void tagByRuleSqlList(List<DimRuleSqlContent> ruleSqlList, boolean partTag) {
@@ -80,58 +73,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         });
     }
 
-    private void tag2pgByRuleSqlList(List<DimRuleSqlContent> ruleSqlList, boolean partTag) {
-        ruleSqlList = ruleSqlList.stream().filter(item -> {
-            return !StringUtils.equals(item.getRuleName(), "summary");
-        }).collect(Collectors.toList());
-        //根据ruleOrder字段进行分组
-        Map<Integer, List<DimRuleSqlContent>> ruleSqlMap = ruleSqlList.stream().collect(
-                Collectors.groupingBy(
-                        ruleSql -> ruleSql.getRuleOrder()
-                ));
-        sortMapByKey(ruleSqlMap).forEach((key, value) -> {
-            log.info("runOrder==={}  start..... ", key);
-            try {
-                forkJoinPool.execute(() -> {
-                    value.parallelStream().forEach(ruleSql -> {
-                        String sql = ruleSql.getRuleSql();
-                        long startTime = System.currentTimeMillis();
-                        log.info("sqlid={} sqlTable={} start......", ruleSql.getRuleName(), ruleSql.getRuleName());
-                        iAddressLabelService.exceSql(sql);
-                        log.info("sqlid={} sqlTable={}  end..... time====={}", ruleSql.getRuleName(), ruleSql.getRuleName(), System.currentTimeMillis() - startTime);
-                    });
-                });
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            log.info("runOrder==={}   end..... ", key);
-            long timeSleep = partTag ? 120000 : 1200000;
-            try {
-                Thread.sleep(timeSleep);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-
-    private void tag2pgMerge(List<String> tabelNames) {
-        log.info("summaryData start....");
-        long summaryDataTime = System.currentTimeMillis();
-        try {
-            forkJoinPool.submit(() -> {
-                tabelNames.parallelStream().forEach(item -> {
-                    String insertOrUpdateSql = "insert into public.address_label_gp (address,label_type,label_name,updated_at) " +
-                            "select address,label_type,label_name,updated_at from " + item;
-                    iAddressLabelService.exceSql(insertOrUpdateSql);
-                });
-            }).get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        log.info("rename table end....time===={}", System.currentTimeMillis() - summaryDataTime);
-
-    }
-
     class MapKeyComparator implements Comparator<Integer> {
         @Override
         public int compare(Integer o1, Integer o2) {
@@ -156,6 +97,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void innit() throws Exception {
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_token_type.sql")));
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_type.sql")));
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_content.sql")));
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("nft_volume_count.sql")));
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("platform_nft_type_volume_count.sql")));
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")));
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")));
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("address_labels_json_gin.sql")));
@@ -198,11 +144,14 @@ public class TagAddressManagerImpl implements TagAddressManager {
             throw new RuntimeException(e);
         }
         long summaryDataTime = System.currentTimeMillis();
-        log.info("rename table start....");
-        String renameSql = "drop table if exists address_label_old;" +
-                "alter table address_label_gp rename to address_label_old;" +
-                "alter table address_label_gp_temp rename to address_label_gp;";
-        iAddressLabelService.exceSql(renameSql);
+        forkJoinPool.execute(() -> {
+                    log.info("rename table start....");
+                    String renameSql = "drop table if exists address_label_old;" +
+                            "alter table address_label_gp rename to address_label_old;" +
+                            "alter table address_label_gp_temp rename to address_label_gp;";
+                    iAddressLabelService.exceSql(renameSql);
+                }
+        );
         try {
             Thread.sleep(60000);
         } catch (InterruptedException e) {
