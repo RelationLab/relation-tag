@@ -17,6 +17,11 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
             this.baseMapper.exceSql(sqlStr);
         }catch (Exception ex){
             log.error("exceSql try.........{}",sqlStr);
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             this.exceSql(sqlStr);
         }
         return true;
