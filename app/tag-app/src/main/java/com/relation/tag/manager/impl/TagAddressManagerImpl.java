@@ -36,6 +36,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     public void refreshTagByTable(List<String> tables) {
         List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.listByTables(tables);
         tagByRuleSqlList(ruleSqlList, true);
+
     }
 
     private void tagByRuleSqlList(List<DimRuleSqlContent> ruleSqlList, boolean partTag) {
