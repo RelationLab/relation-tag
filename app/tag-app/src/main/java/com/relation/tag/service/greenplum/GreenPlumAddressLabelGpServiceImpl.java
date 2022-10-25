@@ -13,7 +13,7 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
 
     @Override
     public boolean exceSql(String sqlStr) {
-        log.info("GreenPlumAddressLabelGpServiceImpl sqlStr====={}",sqlStr);
+//        log.info("GreenPlumAddressLabelGpServiceImpl sqlStr====={}",sqlStr);
         this.baseMapper.exceSql(sqlStr);
         return true;
     }
