@@ -44,26 +44,6 @@ public class PublicTagController {
         return ResponseWrapper.success();
     }
 
-    @PostMapping("tag-to-pg/lable-type")
-    @ApiOperation("按标签类型打标签")
-    @MethodDesc("按标签类型打标签")
-    public ResponseWrapper tag2pgByLabeltype(@RequestBody List<String> tables) {
-        if (CollectionUtils.isEmpty(tables)) {
-            return ResponseWrapper.error(1, "请检查参数");
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    tagAddressManager.refreshTag2pgByTable(tables);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }).start();
-        return ResponseWrapper.success();
-    }
-
     @PostMapping("tag/refresh-all-label")
     @ApiOperation("初始化打标签")
     @MethodDesc("初始化打标签")
