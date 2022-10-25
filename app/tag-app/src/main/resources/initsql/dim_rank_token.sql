@@ -114,3 +114,6 @@ INSERT INTO public.dim_rank_token (token_id) VALUES
                                                  ('0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec'),
                                                  ('0x761d38e5ddf6ccf6cf7c55759d5210750b5d60f3'),
                                                  ('0x5f98805a4e8be255a32880fdec7f6728c6568ba0');
+
+INSERT INTO public.dim_rank_token (token_id) VALUES
+                                                 ('0x7ff4169a6b5122b664c51c95727d87750ec07c84');
