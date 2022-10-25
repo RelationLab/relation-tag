@@ -1,9 +1,4 @@
--- public.dim_rule_sql_content definition
-
--- Drop table
-
 drop table if exists dim_rule_sql_content;
-
 CREATE TABLE dim_rule_sql_content (
                                              rule_name varchar(100) NULL,
                                              rule_sql text NULL,
