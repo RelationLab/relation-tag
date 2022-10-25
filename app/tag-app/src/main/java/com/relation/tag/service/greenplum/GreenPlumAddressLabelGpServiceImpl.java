@@ -13,12 +13,12 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
 
     @Override
     public boolean exceSql(String sqlStr, String name) {
-        try{
+        try {
             long startTime = System.currentTimeMillis();
             this.baseMapper.exceSql(sqlStr);
             log.info(" sqlTable={}  end..... time====={}", name, System.currentTimeMillis() - startTime);
-        }catch (Exception ex){
-          log.info("err......name={}",name);
+        } catch (Exception ex) {
+            log.info("err......name={}", name);
         }
         return true;
     }
