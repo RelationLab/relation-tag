@@ -53,8 +53,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             try {
                 forkJoinPool.execute(() -> {
                     value.parallelStream().forEach(ruleSql -> {
-                        String sql = ruleSql.getRuleSql();
-                        iAddressLabelService.exceSql(sql, ruleSql.getRuleName());
+                        iAddressLabelService.exceSql(ruleSql.getRuleSql(), ruleSql.getRuleName());
                     });
                 });
             } catch (Exception e) {
