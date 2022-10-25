@@ -1,4 +1,5 @@
 drop table if exists dim_rule_sql_content;
+
 CREATE TABLE dim_rule_sql_content (
                                              rule_name varchar(100) NULL,
                                              rule_sql text NULL,
@@ -7,7 +8,7 @@ CREATE TABLE dim_rule_sql_content (
     DISTRIBUTED RANDOMLY;
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_eth_count_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_eth_count_grade','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_eth_count_grade;
 
 insert
@@ -65,7 +66,7 @@ where
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_grade','-- 第一类标签
 -- 第一类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
 	table public.address_label_token_balance_grade;
 
 insert
@@ -127,7 +128,7 @@ where
 ',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_count_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_token_count_grade','set gp_segment_connect_timeout to ''100min'';truncate    
 	table public.address_label_token_count_grade;
 
 insert
@@ -197,7 +198,7 @@ where
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_time_grade','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_token_time_grade;
 
 insert
@@ -236,7 +237,7 @@ where  a2.data_subject = ''time_grade'' and counter >= 1 and counter<=365
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_volume_grade','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
 	table public.address_label_token_volume_grade;
 
 insert
@@ -300,7 +301,7 @@ where
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_eth_balance_rank','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_eth_balance_rank;
 
 insert
@@ -368,7 +369,7 @@ where tb1.balance_usd >= 100
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_eth_volume_rank','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_eth_volume_rank;
 
 insert
@@ -437,7 +438,7 @@ where tb1.volume_usd >= 100
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_time_special','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_time_special','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_time_special;
 insert
 into public.address_label_time_special (distributed_key,address,
@@ -468,7 +469,7 @@ where a2.data_subject = ''time_special'' and counter >= 1 and a2.token_type=''to
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_rank','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_token_balance_rank;
 
 insert
@@ -573,7 +574,7 @@ where tb1.balance_usd >= 100
 ;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_balance_top','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate   table address_label_token_balance_top;
+values ('address_label_token_balance_top','set gp_segment_connect_timeout to ''100min'';truncate     table address_label_token_balance_top;
 insert into public.address_label_token_balance_top (distributed_key,address,
                                          label_type,
                                          label_name,
@@ -620,7 +621,7 @@ where
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_volume_rank','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_token_volume_rank;
 
 insert
@@ -728,7 +729,7 @@ where tb1.volume_usd >= 100
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_usdt_balance_rank','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_usdt_balance_rank;
 
 insert
@@ -796,7 +797,7 @@ where tb1.balance_usd >= 100
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_usdt_volume_rank','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_usdt_volume_rank;
 
 insert
@@ -865,7 +866,7 @@ where tb1.volume_usd >= 100
 ;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_web3_type_balance_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_web3_type_balance_grade','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_web3_type_balance_grade;
 
 insert
@@ -951,7 +952,7 @@ from
     ) t where balance>=1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_web3_type_count_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_web3_type_count_grade','set gp_segment_connect_timeout to ''100min'';truncate    
 	table public.address_label_web3_type_count_grade;
 
 insert
@@ -1048,7 +1049,7 @@ from
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_web3_type_balance_rank','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_web3_type_balance_rank;
 
 insert
@@ -1166,7 +1167,7 @@ where tb1.balance >= 100
   and tb2.data_subject = ''balance_rank'' and  zb_rate <= 0.1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_web3_type_balance_top','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate   table address_label_web3_type_balance_top;
+values ('address_label_web3_type_balance_top','set gp_segment_connect_timeout to ''100min'';truncate     table address_label_web3_type_balance_top;
 insert into public.address_label_web3_type_balance_top (distributed_key,address,
                                          label_type,
                                          label_name,
@@ -1222,7 +1223,7 @@ where
         s1.rn <= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_project_type_balance_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_token_project_type_balance_grade','set gp_segment_connect_timeout to ''100min'';truncate    
 	table public.address_label_token_project_type_balance_grade;
 
 insert
@@ -1274,7 +1275,7 @@ from
     ) t where balance_usd >= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_project_type_count_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_token_project_type_count_grade','set gp_segment_connect_timeout to ''100min'';truncate    
 	table public.address_label_token_project_type_count_grade;
 
 insert
@@ -1427,7 +1428,7 @@ from
     ) t where total_transfer_count >= 1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_project_type_volume_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_token_project_type_volume_grade','set gp_segment_connect_timeout to ''100min'';truncate    
 	table public.address_label_token_project_type_volume_grade;
 
 insert
@@ -1578,7 +1579,7 @@ from
     ) t where total_transfer_volume_usd >= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_project_time_top','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_token_project_time_top','set gp_segment_connect_timeout to ''100min'';truncate    
 	table public.address_label_token_project_time_top;
 
 insert
@@ -1609,7 +1610,7 @@ from
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_project_type_volume_rank','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_token_project_type_volume_rank;
 
 insert
@@ -1800,7 +1801,7 @@ where tb1.total_transfer_volume_usd >= 100
   and tb2.data_subject = ''volume_rank''  and  zb_rate <= 0.1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_project_type_count_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_nft_project_type_count_grade','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_project_type_count_grade;
 
 insert
@@ -1900,7 +1901,7 @@ from
 ',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_project_type_volume_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_nft_project_type_volume_grade','set gp_segment_connect_timeout to ''100min'';truncate    
 	table public.address_label_nft_project_type_volume_grade;
 
 insert
@@ -1993,7 +1994,7 @@ from
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_count_rank','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_project_type_volume_count_rank;
 
 insert
@@ -2122,7 +2123,7 @@ where tb1.volume_usd >= 100   and zb_rate <= 0.001 and zb_rate_transfer_count<=0
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_rank','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_project_type_volume_rank;
 
 insert
@@ -2253,7 +2254,7 @@ where tb1.volume_usd >= 100
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_top','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_project_type_volume_top;
 
 insert
@@ -2334,7 +2335,7 @@ where
         s1.rn <= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_balance_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_nft_balance_grade','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_balance_grade;
 
 insert
@@ -2389,7 +2390,7 @@ from (
      ) t where balance>=1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_count_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_nft_count_grade','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_count_grade;
 
 insert
@@ -2452,7 +2453,7 @@ from (
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_time_grade','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_time_grade;
 
 insert
@@ -2496,7 +2497,7 @@ where a2.data_subject = ''time_grade''   and counter > 0
 ;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_volume_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_nft_volume_grade','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_volume_grade;
 
 insert
@@ -2553,7 +2554,7 @@ from (
              a2.label_type) t where volume_usd >= 1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_balance_rank','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_nft_balance_rank','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_balance_rank;
 
 insert
@@ -2666,7 +2667,7 @@ where tb1.balance >= 100  AND   (tb2.project ='''' or tb2.project =''ALL'')
   and tb2.data_subject = ''balance_rank'' and  zb_rate <= 0.1 ;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_balance_top','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate   table address_label_nft_balance_top;
+values ('address_label_nft_balance_top','set gp_segment_connect_timeout to ''100min'';truncate     table address_label_nft_balance_top;
 insert into public.address_label_nft_balance_top (distributed_key,address,
                                          label_type,
                                          label_name,
@@ -2711,7 +2712,7 @@ where
         s1.rn <= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_time_rank','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_nft_time_rank','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_time_rank;
 insert
 into public.address_label_nft_time_rank (distributed_key,address,
@@ -2745,7 +2746,7 @@ where a2.data_subject = ''time_special'' and counter >=1
 ;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_time_top','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_nft_time_top','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_time_top;
 insert
 into public.address_label_nft_time_top (distributed_key,address,
@@ -2787,7 +2788,7 @@ where
         s1.rn <= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_volume_count_rank','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_nft_volume_count_rank','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_volume_count_rank;
 insert
 into
@@ -2909,7 +2910,7 @@ where
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_volume_rank','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_nft_volume_rank','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_volume_rank;
 
 insert
@@ -3011,7 +3012,7 @@ where tb1.transfer_volume >= 100  and tb2.data_subject = ''volume_rank''  and  z
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_volume_top','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_volume_top;
 
 insert
@@ -3099,7 +3100,7 @@ where
         s1.rn <= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_transfer_count_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_nft_transfer_count_grade','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_transfer_count_grade;
 
 insert
@@ -3165,7 +3166,7 @@ from (
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_transfer_volume_grade','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+values ('address_label_nft_transfer_volume_grade','set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_transfer_volume_grade;
 
 insert
@@ -3224,7 +3225,7 @@ from (
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_transfer_volume_count_rank','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_transfer_volume_count_rank;
 
 insert
@@ -3318,7 +3319,7 @@ where tb1.total_transfer_volume >= 100
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_transfer_volume_rank','-- -- 第二类标签
-set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate  
+set gp_segment_connect_timeout to ''100min'';truncate    
     table public.address_label_nft_transfer_volume_rank;
 
 insert
@@ -3409,7 +3410,7 @@ where tb1.total_transfer_volume >= 100
   and tb2.data_subject = ''volume_rank'' and  zb_rate <= 0.1 ;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_transfer_volume_top','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate   table address_label_nft_transfer_volume_top;
+values ('address_label_nft_transfer_volume_top','set gp_segment_connect_timeout to ''100min'';truncate     table address_label_nft_transfer_volume_top;
 insert into public.address_label_nft_transfer_volume_top (distributed_key,address,
                                                 label_type,
                                                 label_name,
@@ -3452,7 +3453,7 @@ where
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_balance_provider','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate   table address_label_token_balance_provider;
+values ('address_label_token_balance_provider','set gp_segment_connect_timeout to ''100min'';truncate     table address_label_token_balance_provider;
 insert into public.address_label_token_balance_provider (distributed_key,address,
                                                     label_type,
                                                     label_name,
@@ -3482,7 +3483,7 @@ where
         s1.rn <= 200;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_balance_staked','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate   table address_label_token_balance_staked;
+values ('address_label_token_balance_staked','set gp_segment_connect_timeout to ''100min'';truncate     table address_label_token_balance_staked;
 insert into public.address_label_token_balance_staked (distributed_key,address,
                                                     label_type,
                                                     label_name,
@@ -3513,7 +3514,7 @@ where
         s1.rn <= 200;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_time_first_lp','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate   table address_label_token_time_first_lp;
+values ('address_label_token_time_first_lp','set gp_segment_connect_timeout to ''100min'';truncate     table address_label_token_time_first_lp;
 insert into public.address_label_token_time_first_lp (distributed_key,address,
                                                     label_type,
                                                     label_name,
@@ -3544,7 +3545,7 @@ where
         s1.rn <= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_time_first_stake','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate   table address_label_token_time_first_stake;
+values ('address_label_token_time_first_stake','set gp_segment_connect_timeout to ''100min'';truncate     table address_label_token_time_first_stake;
 insert into public.address_label_token_time_first_stake (distributed_key,address,
                                                        label_type,
                                                        label_name,
@@ -3575,7 +3576,7 @@ where
         s1.rn <= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('summary','set gp_segment_connect_timeout to ''100min'';set gp_segment_connect_timeout to ''100min'';truncate   table address_label_gp_temp;
+values ('summary','set gp_segment_connect_timeout to ''100min'';truncate     table address_label_gp_temp;
 insert into public.address_label_gp_temp(address,label_type,label_name,updated_at,owner,source)
 select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source from address_label_eth_count_grade  union all
 select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source from address_label_token_project_type_balance_grade  union all

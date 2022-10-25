@@ -28,7 +28,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Autowired
     @Qualifier("greenPlumAddressLabelGpServiceImpl")
     protected IAddressLabelGpService iAddressLabelService;
-    protected static ForkJoinPool forkJoinPool = new ForkJoinPool(5);
+    protected static ForkJoinPool forkJoinPool = new ForkJoinPool(20);
 
     static String FILEPATH = "initsql";
 
