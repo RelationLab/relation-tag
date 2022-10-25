@@ -24,7 +24,7 @@ public class FileUtils {
      * @param filePath
      */
     public static String readFile(String filePath) throws Exception {
-        log.info(String.format("readFile %s start.........",filePath));
+//        log.info(String.format("readFile %s start.........",filePath));
         StringBuffer stringBuffer = new StringBuffer();
         InputStreamReader read = null;
         try {
@@ -42,7 +42,7 @@ public class FileUtils {
                 read.close();
             }
         }
-        log.info(String.format("readFile %s end.........",filePath));
+//        log.info(String.format("readFile %s end.........",filePath));
         return stringBuffer.toString();
     }
 

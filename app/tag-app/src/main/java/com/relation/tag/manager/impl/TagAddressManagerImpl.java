@@ -54,10 +54,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 forkJoinPool.execute(() -> {
                     value.parallelStream().forEach(ruleSql -> {
                         String sql = ruleSql.getRuleSql();
-                        long startTime = System.currentTimeMillis();
-                        log.info("sqlid={} sqlTable={} start......", ruleSql.getRuleName(), ruleSql.getRuleName());
-                        iAddressLabelService.exceSql(sql);
-                        log.info("sqlid={} sqlTable={}  end..... time====={}", ruleSql.getRuleName(), ruleSql.getRuleName(), System.currentTimeMillis() - startTime);
+                        iAddressLabelService.exceSql(sql, ruleSql.getRuleName());
                     });
                 });
             } catch (Exception e) {
@@ -103,12 +100,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
 //        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_content.sql")));
 //        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("nft_volume_count.sql")));
 //        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("platform_nft_type_volume_count.sql")));
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")));
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")));
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("address_labels_json_gin.sql")));
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("create_address_label_table.sql")));
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("token_balance_volume_usd.sql")));
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("total_balance_volume_usd.sql")));
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")), "dim_rank_token.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")), "dim_rule_sql_content.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("address_labels_json_gin.sql")), "address_labels_json_gin.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("create_address_label_table.sql")),"create_address_label_table.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("token_balance_volume_usd.sql")), "token_balance_volume_usd.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("total_balance_volume_usd.sql")), "total_balance_volume_usd.sql");
     }
 
 
@@ -131,13 +128,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     "alter table address_label_gp_temp\n" +
                     "    owner to gpadmin;\n" +
                     "\n";
-            iAddressLabelService.exceSql(createTable);
+            iAddressLabelService.exceSql(createTable, "createTable");
             List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
             ruleSqlList = ruleSqlList.stream().filter(item -> {
                 return StringUtils.equals(item.getRuleName(), "summary");
             }).collect(Collectors.toList());
             String sql = ruleSqlList.get(0).getRuleSql();
-            iAddressLabelService.exceSql(sql);
+            iAddressLabelService.exceSql(sql, "summary");
         });
         try {
             Thread.sleep(60000);
@@ -150,7 +147,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     String renameSql = "drop table if exists address_label_old;" +
                             "alter table address_label_gp rename to address_label_old;" +
                             "alter table address_label_gp_temp rename to address_label_gp;";
-                    iAddressLabelService.exceSql(renameSql);
+                    iAddressLabelService.exceSql(renameSql, "renameSql");
                 }
         );
         try {
@@ -179,6 +176,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 "\taddress_label_gp\n" +
                 "group by\n" +
                 "\taddress";
-        iAddressLabelService.exceSql(exceSql);
+        iAddressLabelService.exceSql(exceSql,"merge2Gin" );
     }
 }

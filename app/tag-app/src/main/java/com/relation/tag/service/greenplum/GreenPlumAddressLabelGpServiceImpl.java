@@ -12,17 +12,18 @@ import org.springframework.stereotype.Service;
 public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAddressLabelGpMapper, AddressLabelGp> implements IAddressLabelGpService {
 
     @Override
-    public boolean exceSql(String sqlStr) {
+    public boolean exceSql(String sqlStr, String name) {
         try{
+            long startTime = System.currentTimeMillis();
             this.baseMapper.exceSql(sqlStr);
+            log.info(" sqlTable={}  end..... time====={}", name, System.currentTimeMillis() - startTime);
         }catch (Exception ex){
-            log.error("exceSql try.........{}",sqlStr);
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            this.exceSql(sqlStr);
+            this.exceSql(sqlStr, name);
         }
         return true;
     }
