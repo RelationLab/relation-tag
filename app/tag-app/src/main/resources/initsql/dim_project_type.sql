@@ -8,7 +8,7 @@
     ,label_name  varchar(100)  
     ,content   varchar(100) 
     ,operate_type   varchar(100) 
-    ,seq_flag varchar(100)
+    ,seq_flag varchar(100) 
     ,data_subject varchar(100) 
     ,etl_update_time timestamp 
     );    

@@ -1,4 +1,5 @@
-drop table if exists platform_nft_type_volume_count;
+DROP TABLE if exists public.platform_nft_type_volume_count;
+
 CREATE TABLE public.platform_nft_type_volume_count (
 	address varchar(512) NOT NULL,
 	platform_group varchar(256) NULL,
@@ -27,6 +28,3 @@ platform_nft_volume_usd pnvu inner join platform_nft_holding pnh on pnvu .addres
 insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
 select pnvu.address, pnvu.platform_group, pnvu.platform, pnvu.quote_token, pnvu.token, 'All', pnvu.volume_usd, pnh.total_transfer_all_count from  
 platform_nft_volume_usd pnvu inner join platform_nft_holding pnh on pnvu .address = pnh.address and pnvu."token" = pnh."token" and pnvu.quote_token = pnh.quote_token and pnvu.platform_group = pnh.platform_group and pnvu.platform = pnh.platform;
-
-
-select * from platform_nft_type_volume_count
