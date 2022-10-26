@@ -3,7 +3,7 @@ DROP TABLE if EXISTS public.nft_volume_count;
 CREATE TABLE public.nft_volume_count (
 	address varchar(512) NOT NULL,
 	"token" varchar(512) NOT NULL,
-	type varchar(20) NOT NULL, -- mint, burn, buy, sale, all
+	type varchar(20) NOT NULL,
 	transfer_volume int8 NOT NULL,
 	transfer_count int8 NULL,
 	created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
