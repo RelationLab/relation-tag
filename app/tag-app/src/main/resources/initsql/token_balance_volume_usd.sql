@@ -10,9 +10,6 @@ create table public.token_balance_volume_usd
     removed boolean default false
 );
 
-create index token_balance_volume_usd_address_index
-    on token_balance_volume_usd (address);
-
 insert into token_balance_volume_usd(address, token, balance_usd, volume_usd)
     select eh.address as address, 'eth' as token, eh.balance * price asbalance_usd , eh.total_transfer_all_volume* price as volume_usd from eth_holding eh
      inner join white_list_erc20 wle on symbol='WETH' where eh.balance > 0.04 or eh.total_transfer_all_volume>0;
