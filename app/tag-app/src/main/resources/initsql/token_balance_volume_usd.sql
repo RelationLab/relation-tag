@@ -12,7 +12,7 @@ create table public.token_balance_volume_usd
 
 insert into token_balance_volume_usd(address, token, balance_usd, volume_usd)
     (select eh.address, 'eth', eh.balance * price, eh.total_transfer_all_volume* price from eth_holding eh
-     left join white_list_erc20 wle on symbol='WETH' where (eh.balance > 0.04 or eh.total_transfer_all_volume>0));
+     inner join white_list_erc20 wle on symbol='WETH' where (eh.balance > 0.04 or eh.total_transfer_all_volume>0));
 
 insert into token_balance_volume_usd(address, token, balance_usd, volume_usd)
     (select th.address, token, th.balance * price, total_transfer_all_volume* price from token_holding th
