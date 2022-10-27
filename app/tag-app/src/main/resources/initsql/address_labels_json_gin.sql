@@ -7,7 +7,7 @@ CREATE TABLE public.address_label_gp
     label_name varchar(1024) NULL,
     "source"   varchar(100) NULL,
     updated_at timestamp(6) NULL
-) DISTRIBUTED BY (address);
+);
 
 drop table if exists address_labels_json_gin;
 create table address_labels_json_gin

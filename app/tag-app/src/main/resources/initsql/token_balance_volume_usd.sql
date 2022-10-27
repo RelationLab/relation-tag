@@ -8,7 +8,7 @@ create table public.token_balance_volume_usd
     created_at timestamp default CURRENT_TIMESTAMP,
     updated_at timestamp default now(),
     removed boolean default false
-)    DISTRIBUTED BY (address);
+);
 
 insert into token_balance_volume_usd(address, token, balance_usd, volume_usd)
     (select eh.address, 'eth', eh.balance * price, eh.total_transfer_all_volume* price from eth_holding eh

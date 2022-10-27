@@ -7,8 +7,7 @@ CREATE TABLE public.total_balance_volume_usd (
                              created_at timestamp(6) NULL,
                              updated_at timestamp(6) NULL,
                              removed bool NULL
-)
-    DISTRIBUTED BY (address);
+);
 
 insert into total_balance_volume_usd(address, balance_usd, volume_usd)
      (select address, sum(balance_usd), sum(volume_usd) from token_balance_volume_usd group by address);

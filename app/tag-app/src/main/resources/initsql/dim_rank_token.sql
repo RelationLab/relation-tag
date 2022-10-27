@@ -1,8 +1,7 @@
 drop table if exists dim_rank_token;
 CREATE TABLE public.dim_rank_token (
     token_id varchar(512) NULL
-)
-    DISTRIBUTED BY (token_id);
+);
 
 INSERT INTO public.dim_rank_token (token_id) VALUES
                                                  ('0xbb0e17ef65f82ab018d8edd776e8dd940327b28b'),
