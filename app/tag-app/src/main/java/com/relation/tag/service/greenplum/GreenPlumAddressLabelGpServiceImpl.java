@@ -20,6 +20,7 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
 
         } catch (Exception ex) {
             log.info("err......name={}", name);
+            log.error(ex.getMessage(),ex);
         }
         return true;
     }

@@ -424,9 +424,9 @@ values ('address_label_eth_volume_rank','truncate
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_time_special','truncate
-		table public.address_label_time_special;
-	insert into public.address_label_time_special (distributed_key,address,
+values ('address_label_token_time_special','truncate
+		table public.address_label_token_time_special;
+	insert into public.address_label_token_time_special (distributed_key,address,
 										label_type,
 										label_name,
 										updated_at)
@@ -3464,7 +3464,7 @@ values ('summary','truncate table address_label_gp_temp;
 	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_volume_grade  union all
 	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_eth_balance_rank  union all
 	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_eth_volume_rank  union all
-	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_time_special  union all
+	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_time_special  union all
 	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_balance_rank  union all
 	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_balance_top  union all
 	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_volume_rank  union all
@@ -3478,5 +3478,7 @@ values ('summary','truncate table address_label_gp_temp;
 	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_balance_staked union all
 	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_time_first_lp union all
 	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_time_first_stake union all
+    select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_eth_time_grade union all
+	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_eth_time_special union all
 	select address,label_type,label_name,updated_at, owner, source  from address_label_third_party union all
 	select address,label_type,label_name,updated_at,owner, source  from address_label_ugc;',999999);
