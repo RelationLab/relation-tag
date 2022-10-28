@@ -112,7 +112,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     public void tagMerge() {
         log.info("summaryData start....");
         forkJoinPool.execute(() -> {
-            String createTable = "create table address_label_gp_temp\n" +
+            String createTable = "DROP TABLE if EXISTS  address_label_gp_temp;create table address_label_gp_temp\n" +
                     "(\n" +
                     "    owner      varchar(256),\n" +
                     "    address    varchar(512),\n" +
