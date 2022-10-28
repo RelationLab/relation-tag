@@ -17,7 +17,6 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
             long startTime = System.currentTimeMillis();
             this.baseMapper.exceSql(sqlStr);
             log.info(" sqlTable={}  end..... time====={}", name, System.currentTimeMillis() - startTime);
-
         } catch (Exception ex) {
             log.info("err......name={}", name);
             log.error(ex.getMessage(),ex);
