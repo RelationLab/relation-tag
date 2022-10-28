@@ -143,6 +143,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     iAddressLabelService.exceSql(renameSql, "renameSql");
                 }
         );
+
         try {
             Thread.sleep(60000);
         } catch (InterruptedException e) {
