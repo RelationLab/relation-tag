@@ -3429,6 +3429,73 @@ values ('address_label_token_time_first_stake','truncate table address_label_tok
 			s1.rn <= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_eth_time_grade','truncate
+    table public.address_label_eth_time_grade;
+
+insert
+into public.address_label_eth_time_grade (distributed_key,address,
+                                            label_type,
+                                            label_name,
+                                            updated_at)
+select md5(cast(random() as varchar)) as distributed_key,
+       a1.address,
+       a2.label_type,
+       a2.label_type||''_''||case
+                               when counter = 1 then ''L1''
+                               when counter > 1
+                                   and counter <= 7 then ''L2''
+                               when counter > 7
+                                   and counter <= 30 then ''L3''
+                               when counter > 30
+                                   and counter <= 90 then ''L4''
+                               when counter > 90
+                                   and counter <= 180 then ''L5''
+                               when counter > 180
+                                   and counter <= 365 then ''L6''
+           end as label_name
+        ,
+       now()   as updated_at
+from (select address,
+             ''eth'' as token,
+             floor((floor(extract(epoch from now())) - latest_tx_time) / (24 * 3600)) as counter
+      from eth_holding_time tbvutk) a1
+         inner join
+     dim_rule_content a2
+     on
+             a1.token = a2.token
+where  a2.data_subject = ''time_grade'' and counter >= 1 and counter<=365;',1);
+
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_eth_time_special','truncate
+    table public.address_label_eth_time_special;
+insert
+into public.address_label_eth_time_special (distributed_key,address,
+                                        label_type,
+                                        label_name,
+                                        updated_at)
+select md5(cast(random() as varchar)) as distributed_key,a1.address
+        ,
+       a2.label_type
+        ,
+       a2.label_type||''_''||case
+           when counter >= 155 then ''LONG_TERM_HOLDER''
+           when counter >= 1
+               and counter < 155 then ''SHORT_TERM_HOLDER''
+           end as label_name
+        ,
+        now()   as updated_at
+from (select address,
+             ''eth'' as  token,
+             floor((floor(extract(epoch from now())) - latest_tx_time) / (24 * 3600)) as  counter
+      from eth_holding_time tbvutk) a1
+         inner join
+     dim_rule_content a2
+     on
+             a1.token = a2.token
+where a2.data_subject = ''time_special'' and counter >= 1 and a2.token_type=''token'';',1);
+
+
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('summary','truncate table address_label_gp_temp;
 	insert into public.address_label_gp_temp(address,label_type,label_name,updated_at,owner,source)
 	select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source from address_label_eth_count_grade  union all
