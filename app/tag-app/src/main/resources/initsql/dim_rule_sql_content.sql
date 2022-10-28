@@ -3432,12 +3432,11 @@ insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_eth_time_grade','truncate
     table public.address_label_eth_time_grade;
 
-insert
-into public.address_label_eth_time_grade (distributed_key,address,
+    insert into public.address_label_eth_time_grade (distributed_key,address,
                                             label_type,
                                             label_name,
                                             updated_at)
-select md5(cast(random() as varchar)) as distributed_key,
+    select md5(cast(random() as varchar)) as distributed_key,
        a1.address,
        a2.label_type,
        a2.label_type||''_''||case
@@ -3455,7 +3454,7 @@ select md5(cast(random() as varchar)) as distributed_key,
            end as label_name
         ,
        now()   as updated_at
-from (select address,
+    from (select address,
              ''eth'' as token,
              floor((floor(extract(epoch from now())) - latest_tx_time) / (24 * 3600)) as counter
       from eth_holding_time tbvutk) a1
@@ -3463,17 +3462,16 @@ from (select address,
      dim_rule_content a2
      on
              a1.token = a2.token
-where  a2.data_subject = ''time_grade'' and counter >= 1 and counter<=365;',1);
+    where  a2.data_subject = ''time_grade'' and counter >= 1 and counter<=365;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_eth_time_special','truncate
     table public.address_label_eth_time_special;
-insert
-into public.address_label_eth_time_special (distributed_key,address,
+    insert into public.address_label_eth_time_special (distributed_key,address,
                                         label_type,
                                         label_name,
                                         updated_at)
-select md5(cast(random() as varchar)) as distributed_key,a1.address
+    select md5(cast(random() as varchar)) as distributed_key,a1.address
         ,
        a2.label_type
         ,
@@ -3484,7 +3482,7 @@ select md5(cast(random() as varchar)) as distributed_key,a1.address
            end as label_name
         ,
         now()   as updated_at
-from (select address,
+    from (select address,
              ''eth'' as  token,
              floor((floor(extract(epoch from now())) - latest_tx_time) / (24 * 3600)) as  counter
       from eth_holding_time tbvutk) a1
@@ -3492,7 +3490,7 @@ from (select address,
      dim_rule_content a2
      on
              a1.token = a2.token
-where a2.data_subject = ''time_special'' and counter >= 1 and a2.token_type=''token'';',1);
+    where a2.data_subject = ''time_special'' and counter >= 1 and a2.token_type=''token'';',1);
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
