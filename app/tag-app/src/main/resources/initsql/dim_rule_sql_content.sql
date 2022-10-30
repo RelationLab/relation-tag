@@ -57,7 +57,7 @@ values ('address_label_eth_count_grade','truncate
 				a1.token = a2.token
 		where
 			a1.total_transfer_all_count >= 1
-	and a2.data_subject = ''count'' and a2.token_type=''token''
+	and a2.data_subject = ''count''
 	;',1);
 
 
@@ -117,7 +117,7 @@ values ('address_label_token_balance_grade','truncate
 		a1.token = a2.token
 		where
 		a1.balance_usd >= 100
-		and a2.data_subject = ''balance_grade'' and a2.token_type=''token''
+		and a2.data_subject = ''balance_grade''
 	;
 
 	',1);
@@ -186,7 +186,7 @@ values ('address_label_token_count_grade','truncate
 				a1.token = a2.token
 		where
 			a1.total_transfer_all_count >= 1
-	and a2.data_subject = ''count'' and a2.token_type=''token''
+	and a2.data_subject = ''count''
 	;
 	',1);
 
@@ -286,7 +286,7 @@ values ('address_label_token_volume_grade','truncate
 		a1.token = a2.token
 		where
 		a1.volume_usd >= 100
-		and a2.data_subject = ''volume_grade'' and a2.token_type=''token''
+		and a2.data_subject = ''volume_grade''
 	;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
@@ -352,7 +352,7 @@ values ('address_label_eth_balance_rank','truncate
 			tb1.token = tb2.token
 		where tb1.balance_usd >= 100
 	and tb1.zb_rate <= 0.1
-	and tb2.data_subject = ''balance_rank'' and tb2.token_type=''token''
+	and tb2.data_subject = ''balance_rank''
 	;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
@@ -419,7 +419,7 @@ values ('address_label_eth_volume_rank','truncate
 		on
 				tb1.token = tb2.token
 		where tb1.volume_usd >= 100
-	and tb2.data_subject = ''volume_rank'' and tb2.token_type=''token''   and  zb_rate <= 0.1
+	and tb2.data_subject = ''volume_rank''   and  zb_rate <= 0.1
 	;',1);
 
 
@@ -449,7 +449,7 @@ values ('address_label_token_time_special','truncate
 		dim_rule_content a2
 		on
 				a1.token = a2.token
-		where a2.data_subject = ''time_special'' and counter >= 1 and a2.token_type=''token''
+		where a2.data_subject = ''time_special'' and counter >= 1
 	;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
@@ -552,7 +552,7 @@ values ('address_label_token_balance_rank','truncate
 			tb1.token = tb2.token
 		where tb1.balance_usd >= 100
 	and tb1.zb_rate <= 0.1
-	and tb2.data_subject = ''balance_rank'' and tb2.token_type=''token''
+	and tb2.data_subject = ''balance_rank''
 	;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
@@ -595,7 +595,7 @@ values ('address_label_token_balance_top','truncate table address_label_token_ba
 					inner join dim_rule_content a2
 							on
 										a1.token = a2.token
-									and a2.data_subject = ''balance_top'' and a2.token_type=''token''
+									and a2.data_subject = ''balance_top''
 		) s1
 		where
 			s1.rn <= 100;',1);
@@ -702,7 +702,7 @@ values ('address_label_token_volume_rank','truncate
 		on
 				tb1.token = tb2.token
 		where tb1.volume_usd >= 100
-	and tb2.data_subject = ''volume_rank'' and tb2.token_type=''token''   and  zb_rate <= 0.1
+	and tb2.data_subject = ''volume_rank''   and  zb_rate <= 0.1
 	;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
@@ -768,7 +768,7 @@ values ('address_label_usdt_balance_rank','truncate
 			tb1.token = tb2.token
 		where tb1.balance_usd >= 100
 	and tb1.zb_rate <= 0.1
-	and tb2.data_subject = ''balance_rank'' and tb2.token_type=''token''
+	and tb2.data_subject = ''balance_rank''
 	;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
@@ -836,7 +836,7 @@ values ('address_label_usdt_volume_rank','truncate
 		on
 				tb1.token = tb2.token
 		where tb1.volume_usd >= 100
-	and tb2.data_subject = ''volume_rank'' and tb2.token_type=''token'' and  zb_rate <= 0.1
+	and tb2.data_subject = ''volume_rank'' and  zb_rate <= 0.1
 	;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
@@ -3490,7 +3490,7 @@ values ('address_label_eth_time_special','truncate
      dim_rule_content a2
      on
              a1.token = a2.token
-    where a2.data_subject = ''time_special'' and counter >= 1 and a2.token_type=''token'';',1);
+    where a2.data_subject = ''time_special'' and counter >= 1;',1);
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
