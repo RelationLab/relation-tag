@@ -120,7 +120,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     "    label_name varchar(1024),\n" +
                     "    source     varchar(100),\n" +
                     "    updated_at timestamp(6)\n" +
-                    ");";
+                    ") distributed by (address);";
             iAddressLabelService.exceSql(createTable, "createTable");
             List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
             ruleSqlList = ruleSqlList.stream().filter(item -> {

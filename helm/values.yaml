@@ -17,9 +17,10 @@ fullnameOverride: ""
 greenplum:
   host: ""
   port: "5432"
-  #name: "eth"
-  name: "postgres"
-  username: "postgres"
+  name: "eth"
+  #name: "postgres"
+  username: "gpadmin"
+  #username: "postgres"
   password: ""
 
 serviceAccount:
