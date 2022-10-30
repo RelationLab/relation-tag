@@ -165,7 +165,7 @@ values ('address_label_token_count_grade','truncate
 				token,
 				total_transfer_all_count
 			from
-				token_holding_tst th1
+				token_holding th1
 			union all
 			select
 				address,
@@ -175,7 +175,7 @@ values ('address_label_token_count_grade','truncate
 			(
 				select address,total_transfer_all_count from  eth_holding th
 				union all
-				select address,total_transfer_all_count from  token_holding_tst th
+				select address,total_transfer_all_count from  token_holding th
 			) th2
 			group by
 				address
