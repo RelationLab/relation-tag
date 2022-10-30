@@ -60,7 +60,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 throw new RuntimeException(e);
             }
             log.info("runOrder==={}   end..... ", key);
-            long timeSleep = partTag ? 120000 : 1200000;
+            long timeSleep = partTag ? 120000 : 2400000;
             try {
                 Thread.sleep(timeSleep);
             } catch (InterruptedException e) {
