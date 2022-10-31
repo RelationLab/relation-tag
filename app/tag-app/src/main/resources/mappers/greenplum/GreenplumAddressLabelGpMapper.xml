@@ -6,4 +6,12 @@
     <update id="exceSql" timeout="864000">
         ${exceSqlStr}
     </update>
+
+    <select id="exceSelectSql" resultType="java.lang.Long" timeout="864000">
+        ${exceSelectSql}
+    </select>
+
+    <select id="selectQueryStr" resultType="java.lang.String" timeout="864000">
+        select query from pg_stat_activity
+    </select>
 </mapper>

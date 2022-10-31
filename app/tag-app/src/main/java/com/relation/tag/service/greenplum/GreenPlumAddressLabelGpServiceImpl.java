@@ -7,6 +7,8 @@ import com.relation.tag.service.IAddressLabelGpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("greenPlumAddressLabelGpServiceImpl")
 @Slf4j
 public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAddressLabelGpMapper, AddressLabelGp> implements IAddressLabelGpService {
@@ -22,5 +24,15 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
             log.error(ex.getMessage(),ex);
         }
         return true;
+    }
+
+    @Override
+    public Long exceSelectSql(String exceSelectSql) {
+        return baseMapper.exceSelectSql(exceSelectSql);
+    }
+
+    @Override
+    public List<String> selectQueryStr() {
+        return baseMapper.selectQueryStr();
     }
 }

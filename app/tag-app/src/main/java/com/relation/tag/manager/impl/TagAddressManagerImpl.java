@@ -29,6 +29,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Qualifier("greenPlumAddressLabelGpServiceImpl")
     protected IAddressLabelGpService iAddressLabelService;
     protected static ForkJoinPool forkJoinPool = new ForkJoinPool(20);
+    protected static ForkJoinPool forkJoinCheckPool = new ForkJoinPool(20);
+
+    public static final int RETRYTIMES = 3;
 
     static String FILEPATH = "initsql";
 
@@ -48,7 +51,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 Collectors.groupingBy(
                         ruleSql -> ruleSql.getRuleOrder()
                 ));
-        sortMapByKey(ruleSqlMap).forEach((key, value) -> {
+
+        Map<Integer, List<DimRuleSqlContent>> sortMap = sortMapByKey(ruleSqlMap);
+        sortMap.forEach((key, value) -> {
             log.info("runOrder==={}  start..... ", key);
             try {
                 forkJoinPool.execute(() -> {
@@ -60,14 +65,62 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 throw new RuntimeException(e);
             }
             log.info("runOrder==={}   end..... ", key);
-            long timeSleep = partTag ? 120000 : 2400000;
+            checkAndRepair(sortMap);
+//            long timeSleep = partTag ? 120000 : 1800000;
+//            try {
+//                Thread.sleep(timeSleep);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//            tagMerge();
+        });
+    }
+
+    private void checkAndRepair(Map<Integer, List<DimRuleSqlContent>> sortMap) {
+        checkTableTagFinish(sortMap);
+        sortMap.forEach((key, value) -> {
             try {
-                Thread.sleep(timeSleep);
-            } catch (InterruptedException e) {
+                forkJoinCheckPool.submit(() -> {
+                    value.parallelStream().forEach(ruleSql -> {
+                        checkAndRepair(ruleSql.getRuleSql(), ruleSql.getRuleName());
+                    });
+                }).get();
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            tagMerge();
         });
+    }
+
+    private void checkTableTagFinish(Map<Integer, List<DimRuleSqlContent>> sortMap) {
+        List<String> listTabelQuery = iAddressLabelService.selectQueryStr();
+        boolean tagFinishFlag = true;
+        for (List<DimRuleSqlContent> itemList : sortMap.values()) {
+            for (DimRuleSqlContent item : itemList) {
+                if (listTabelQuery.contains(item.getRuleName())) {
+                    tagFinishFlag = false;
+                }
+            }
+        }
+        if (tagFinishFlag) {
+            return;
+        }
+        try {
+            Thread.sleep(5 * 60 * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        checkTableTagFinish(sortMap);
+    }
+
+    private void checkAndRepair(String ruleSql, String ruleName) {
+        String[] checkSqlArr = ruleSql.split(";");
+        String checkSql = checkSqlArr[checkSqlArr.length - 1];
+        String checkSqlSbstr = "select count(1)  ".concat(checkSql.substring(checkSql.indexOf("from")));
+        Long shouldTagCount = iAddressLabelService.exceSelectSql(checkSqlSbstr);
+        Long tagCount = iAddressLabelService.exceSelectSql("select count(1)  from ".concat(ruleName));
+        if (!shouldTagCount.equals(tagCount)) {
+            log.info("{}  exec failed......", ruleName);
+        }
     }
 
     class MapKeyComparator implements Comparator<Integer> {

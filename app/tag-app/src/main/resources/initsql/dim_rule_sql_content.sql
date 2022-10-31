@@ -1216,10 +1216,10 @@ values ('address_label_token_project_type_balance_grade','truncate
 				a2.label_type,
 				sum(balance_usd) as balance_usd
 			from
-				dex_tx_volume_count_summary  a1 inner join dim_rule_content a2
-														on a1.token=a2.token
+				dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+                                                       on a1.token=a2.token
+                                                            and a1.project = a2.project
 															and a2.data_subject = ''balance_grade''
-															and a2.token_type=''lp''
 			group by
 				a1.address,
 				a2.label_type
