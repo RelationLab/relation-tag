@@ -28,10 +28,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Autowired
     @Qualifier("greenPlumAddressLabelGpServiceImpl")
     protected IAddressLabelGpService iAddressLabelService;
-    protected static ForkJoinPool forkJoinPool = new ForkJoinPool(20);
+    protected static ForkJoinPool forkJoinPool = new ForkJoinPool(10);
     protected static ForkJoinPool forkJoinCheckPool = new ForkJoinPool(20);
-
-    public static final int RETRYTIMES = 3;
 
     static String FILEPATH = "initsql";
 
@@ -42,17 +40,15 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     }
 
-    private void tagByRuleSqlList(List<DimRuleSqlContent> ruleSqlList, boolean partTag) {
-        ruleSqlList = ruleSqlList.stream().filter(item -> {
-            return !StringUtils.equals(item.getRuleName(), "summary");
-        }).collect(Collectors.toList());
-        //根据ruleOrder字段进行分组
-        Map<Integer, List<DimRuleSqlContent>> ruleSqlMap = ruleSqlList.stream().collect(
-                Collectors.groupingBy(
-                        ruleSql -> ruleSql.getRuleOrder()
-                ));
+    @Override
+    public void checkAndRepair() {
+        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
+        Map<Integer, List<DimRuleSqlContent>> sortMap = buildSortMap(ruleSqlList);
+        checkAndRepair(sortMap);
+    }
 
-        Map<Integer, List<DimRuleSqlContent>> sortMap = sortMapByKey(ruleSqlMap);
+    private void tagByRuleSqlList(List<DimRuleSqlContent> ruleSqlList, boolean partTag) {
+        Map<Integer, List<DimRuleSqlContent>> sortMap = buildSortMap(ruleSqlList);
         sortMap.forEach((key, value) -> {
             log.info("runOrder==={}  start..... ", key);
             try {
@@ -74,6 +70,18 @@ public class TagAddressManagerImpl implements TagAddressManager {
 //            }
 //            tagMerge();
         });
+    }
+
+    private Map<Integer, List<DimRuleSqlContent>> buildSortMap(List<DimRuleSqlContent> ruleSqlList) {
+        ruleSqlList = ruleSqlList.stream().filter(item -> {
+            return !StringUtils.equals(item.getRuleName(), "summary");
+        }).collect(Collectors.toList());
+        //根据ruleOrder字段进行分组
+        Map<Integer, List<DimRuleSqlContent>> ruleSqlMap = ruleSqlList.stream().collect(
+                Collectors.groupingBy(
+                        ruleSql -> ruleSql.getRuleOrder()
+                ));
+        return sortMapByKey(ruleSqlMap);
     }
 
     private void checkAndRepair(Map<Integer, List<DimRuleSqlContent>> sortMap) {
