@@ -61,6 +61,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 throw new RuntimeException(e);
             }
             log.info("runOrder==={}   end..... ", key);
+            try {
+                Thread.sleep(1*70*60*1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             checkAndRepair(sortMap);
 //            long timeSleep = partTag ? 120000 : 1800000;
 //            try {
@@ -85,7 +90,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void checkAndRepair(Map<Integer, List<DimRuleSqlContent>> sortMap) {
-        checkTableTagFinish(sortMap);
         sortMap.forEach((key, value) -> {
             try {
                 forkJoinCheckPool.submit(() -> {
@@ -97,27 +101,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    private void checkTableTagFinish(Map<Integer, List<DimRuleSqlContent>> sortMap) {
-        List<String> listTabelQuery = iAddressLabelService.selectQueryStr();
-        boolean tagFinishFlag = true;
-        for (List<DimRuleSqlContent> itemList : sortMap.values()) {
-            for (DimRuleSqlContent item : itemList) {
-                if (listTabelQuery.contains(item.getRuleName())) {
-                    tagFinishFlag = false;
-                }
-            }
-        }
-        if (tagFinishFlag) {
-            return;
-        }
-        try {
-            Thread.sleep(5 * 60 * 1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        checkTableTagFinish(sortMap);
     }
 
     private void checkAndRepair(String ruleSql, String ruleName) {
@@ -165,7 +148,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("address_labels_json_gin.sql")), "address_labels_json_gin.sql");
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("create_address_label_table.sql")), "create_address_label_table.sql");
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("token_balance_volume_usd.sql")), "token_balance_volume_usd.sql");
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("total_balance_volume_usd.sql")), "total_balance_volume_usd.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("web3_transaction_record_summary.sql")), "web3_transaction_record_summary.sql");
     }
 
 
