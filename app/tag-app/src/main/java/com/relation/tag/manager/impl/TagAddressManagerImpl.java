@@ -208,7 +208,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 "\tupdated_at)\n" +
                 "   select\n" +
                 "\taddress,\n" +
-                "\tjson_object_agg(label_type, label_name order by label_type desc) as labels,\n" +
+                "\tjson_object_agg(label_type, label_name order by label_type desc)::jsonb as labels,\n" +
                 "\tCURRENT_TIMESTAMP as updated_at\n" +
                 "from\n" +
                 "\taddress_label_gp\n" +
