@@ -10,4 +10,5 @@ public interface TagAddressManager {
     void tagMerge();
 
     void merge2Gin();
+    void checkAndRepair();
 }

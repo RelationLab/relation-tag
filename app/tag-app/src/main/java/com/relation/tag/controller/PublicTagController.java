@@ -24,6 +24,24 @@ public class PublicTagController {
     @Autowired
     private TagAddressManager tagAddressManager;
 
+
+    @PostMapping("tag/check-and-repair")
+    @ApiOperation("按标签类型打标签")
+    @MethodDesc("按标签类型打标签")
+    public ResponseWrapper checkAndRepair() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    tagAddressManager.checkAndRepair();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+        return ResponseWrapper.success();
+    }
+
     @PostMapping("tag/lable-type")
     @ApiOperation("按标签类型打标签")
     @MethodDesc("按标签类型打标签")
