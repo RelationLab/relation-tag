@@ -31,8 +31,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
     protected static ForkJoinPool forkJoinPool = new ForkJoinPool(10);
     protected static ForkJoinPool forkJoinCheckPool = new ForkJoinPool(20);
 
-    public static final int RETRYTIMES = 3;
-
     static String FILEPATH = "initsql";
 
     @Override
