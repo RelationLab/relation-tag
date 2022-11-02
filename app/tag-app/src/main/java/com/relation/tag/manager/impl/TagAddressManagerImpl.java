@@ -148,7 +148,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("address_labels_json_gin.sql")), "address_labels_json_gin.sql");
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("create_address_label_table.sql")), "create_address_label_table.sql");
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("token_balance_volume_usd.sql")), "token_balance_volume_usd.sql");
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("web3_transaction_record_summary.sql")), "web3_transaction_record_summary.sql");
+//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("web3_transaction_record_summary.sql")), "web3_transaction_record_summary.sql");
     }
 
 
