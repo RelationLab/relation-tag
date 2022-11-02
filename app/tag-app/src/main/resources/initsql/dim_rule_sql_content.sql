@@ -724,7 +724,7 @@ values ('address_label_token_volume_rank','
 	and tb2.data_subject = ''volume_rank'' and tb2.token_type=''token''   and  zb_rate <= 0.1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_usdt_balance_rank','t
+values ('address_label_usdt_balance_rank','
 	truncate
 		table public.address_label_usdt_balance_rank;
 
