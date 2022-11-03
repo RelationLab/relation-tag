@@ -2566,7 +2566,7 @@ values ('address_label_nft_balance_rank','truncate
 											updated_at)
 	select md5(cast(random() as varchar)) as distributed_key,tb1.address ,
 		tb2.label_type,
-		tb2.label_type||''_''||label_type||''_''||case
+		tb2.label_type||''_''||case
 			when zb_rate > 0.01 and zb_rate <= 0.025 then ''RARE_NFT_COLLECTOR''
 			when zb_rate > 0.001 and zb_rate <= 0.01 then ''EPIC_NFT_COLLECTOR''
 			when zb_rate > 0.025 and zb_rate <= 0.1 then ''UNCOMMON_NFT_COLLECTOR''
