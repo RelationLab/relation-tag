@@ -2784,7 +2784,7 @@ values ('address_label_nft_time_top','truncate
 						inner join dim_project_token_type a2
 								on
 											a1.token = a2.token
-										and a2.data_subject = ''time_special''   AND (a2.type='''' or a2.type=''ALL'') and (a2.project ='''' or a2.project =''ALL'')
+										and a2.data_subject = ''time_rank''   AND (a2.type='''' or a2.type=''ALL'') and (a2.project ='''' or a2.project =''ALL'')
 			) s1
 		where
 				s1.rn <= 100;',1);
@@ -3040,7 +3040,7 @@ values ('address_label_nft_volume_top','truncate
 		select
 			md5(cast(random() as varchar)) as distributed_key,s1.address,
 			s1.label_type,
-			s1.label_type||''_''||''WHALE'' as label_name,
+			s1.label_type||''_''||''TOP'' as label_name,
 			now() as updated_at
 		from
 			(
