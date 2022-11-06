@@ -1980,7 +1980,6 @@ values ('address_label_nft_project_type_volume_grade','truncate
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_count_rank','
-		-- -- 第二类标签
 	truncate
 		table public.address_label_nft_project_type_volume_count_rank;
 
@@ -2043,7 +2042,6 @@ values ('address_label_nft_project_type_volume_count_rank','
 										sum(volume_usd) AS volume_usd,
 										sum(transfer_count) AS transfer_count
 									FROM (
-											-- project-token-type
 											select  address
 												,platform_group
 												,platform
@@ -2052,7 +2050,6 @@ values ('address_label_nft_project_type_volume_count_rank','
 												,type
 												,volume_usd,transfer_count from platform_nft_type_volume_count
 											union all
-											-- project-token(ALL)-type
 											select  address
 												,platform_group
 												,platform
@@ -2061,7 +2058,6 @@ values ('address_label_nft_project_type_volume_count_rank','
 												,type
 												,volume_usd,transfer_count from platform_nft_type_volume_count
 											union all
-											-- project-token(ALL)-type(ALL)
 											select  address
 													,platform_group
 													,platform
@@ -2070,7 +2066,6 @@ values ('address_label_nft_project_type_volume_count_rank','
 													,''ALL'' AS type
 													,volume_usd,transfer_count from platform_nft_type_volume_count
 											union all
-											-- project-token-type(ALL)
 											select  address
 													,platform_group
 													,platform
@@ -2096,25 +2091,22 @@ values ('address_label_nft_project_type_volume_count_rank','
 										s2.seq_flag) AS a1) as a1
 							inner join
 						(select count(distinct address) as count_sum_total,platform_group,token,type
-							from ( -- project-token-type
+							from (
 									select  address
 										,platform_group
 										,token
 										,type  from platform_nft_type_volume_count
 									union all
-									-- project-token(ALL)-type
 									select  address
 										,platform_group
 										,''ALL'' AS token
 										,type  from platform_nft_type_volume_count
 									union all
-									-- project-token(ALL)-type(ALL)
 									select  address
 										,platform_group
 										,''ALL'' AS token
 										,''ALL'' AS type from platform_nft_type_volume_count
 									union all
-									-- project-token-type(ALL)
 									select  address
 										,platform_group
 										, token
