@@ -197,7 +197,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
         merge2Gin();
         log.info("rename table end....time===={}", System.currentTimeMillis() - summaryDataTime);
-
     }
 
     @Override
