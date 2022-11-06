@@ -12,7 +12,6 @@ CREATE TABLE  public.web3_transaction_record_summary
     project character varying(100) COLLATE pg_catalog."default",
     balance numeric(125,30) NOT NULL DEFAULT 0
     );
-
     insert
     into
         web3_transaction_record_summary(address,
