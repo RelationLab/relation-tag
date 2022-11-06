@@ -1039,12 +1039,12 @@ values ('address_label_web3_type_balance_rank','
 	select md5(cast(random() as varchar)) as distributed_key,tb1.address ,
 		tb2.label_type,
 		tb2.label_type||''_''||case
-			when zb_rate > 0.01 and zb_rate <= 0.025 then ''RARE''
-			when zb_rate > 0.001 and zb_rate <= 0.01 then ''ELITE''
-			when zb_rate > 0.025 and zb_rate <= 0.1 then ''EPIC''
-			when zb_rate <= 0.001 then ''LEGENDARY''
+									when zb_rate > 0.01 and zb_rate <= 0.025 then ''RARE''
+									when zb_rate > 0.001 and zb_rate <= 0.01 then ''EPIC''
+									when zb_rate > 0.025 and zb_rate <= 0.1 then ''UNCOMMON''
+									when zb_rate <= 0.001 then ''LEGENDARY''
 			end as label_name,
-			now()   as updated_at
+		now()   as updated_at
 	from (select t1.id,
 				t1.address,
 				t1.project,
@@ -1101,18 +1101,18 @@ values ('address_label_web3_type_balance_rank','
 												,balance from web3_transaction_record_summary
 											union all
 											select  address
-													,total_transfer_volume
-													,total_transfer_count
-													,''ALL'' as type
-													,''ALL'' as project
-													,balance from web3_transaction_record_summary
+												,total_transfer_volume
+												,total_transfer_count
+												,''ALL'' as type
+												,''ALL'' as project
+												,balance from web3_transaction_record_summary
 											union all
 											select  address
-													,total_transfer_volume
-													,total_transfer_count
-													,''ALL'' as type
-													,project
-													,balance from web3_transaction_record_summary
+												,total_transfer_volume
+												,total_transfer_count
+												,''ALL'' as type
+												,project
+												,balance from web3_transaction_record_summary
 										)
 											s1
 											INNER JOIN dim_project_type s2
@@ -1121,7 +1121,7 @@ values ('address_label_web3_type_balance_rank','
 																AND s1.type = s2.type
 																AND s2.data_subject = ''balance_rank''
 									WHERE
-										balance >= 100
+											balance >= 1
 									GROUP BY
 										s1.address,
 										s1.project,
@@ -1152,7 +1152,7 @@ values ('address_label_web3_type_balance_rank','
 		on
 					tb1.project = tb2.project
 				and tb1.type = tb2.type
-	where tb1.balance >= 100
+	where tb1.balance >= 1
 	and tb2.data_subject = ''balance_rank'' and  zb_rate <= 0.1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
@@ -2080,7 +2080,7 @@ values ('address_label_nft_project_type_volume_count_rank','
 																	s1.token = s2.token
 																AND s1.platform_group = s2.project
 																AND s1.type=s2.type
-																AND s2.data_subject = ''volume_rank''
+																AND  s2.data_subject = ''volume_elite''
 									WHERE
 										volume_usd >= 100
 									GROUP BY
@@ -2121,7 +2121,7 @@ values ('address_label_nft_project_type_volume_count_rank','
 				and tb1.project = tb2.project
 				AND tb1.type=tb2.type
 	where tb1.volume_usd >= 100   and zb_rate <= 0.001 and zb_rate_transfer_count<=0.001
-  and tb2.data_subject = ''volume_rank'';',1);
+	and  tb2.data_subject = ''volume_elite'';',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_rank','
@@ -2555,7 +2555,7 @@ values ('address_label_nft_volume_grade','truncate
 					a2.label_type) t where volume_usd >= 1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_balance_rank','truncate
+values ('address_label_nft_balance_rank','	truncate
 		table public.address_label_nft_balance_rank;
 
 	insert
@@ -2647,7 +2647,7 @@ values ('address_label_nft_balance_rank','truncate
 																AND (s2.type='''' or s2.type=''ALL'')
 																AND s2.data_subject = ''balance_rank''
 									WHERE
-										balance >= 100
+										balance >= 1
 									GROUP BY
 										s1.address,
 										s1.token,
@@ -2667,7 +2667,7 @@ values ('address_label_nft_balance_rank','truncate
 		dim_project_token_type tb2
 		on
 				tb1.token = tb2.token
-	where tb1.balance >= 100  AND   (tb2.project ='''' or tb2.project =''ALL'')
+	where tb1.balance >= 1  AND   (tb2.project ='''' or tb2.project =''ALL'')
 	AND (tb2.type='''' OR tb2.type=''ALL'')
 	and tb2.data_subject = ''balance_rank''and  zb_rate <= 0.1;',1);
 
@@ -2790,7 +2790,7 @@ values ('address_label_nft_time_top','truncate
 				s1.rn <= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_volume_count_rank','truncate
+values ('address_label_nft_volume_count_rank','	truncate
 		table public.address_label_nft_volume_count_rank;
 	insert
 	into
@@ -2799,11 +2799,12 @@ values ('address_label_nft_volume_count_rank','truncate
 												label_name,
 
 												updated_at)
+
 	select
 		md5(cast(random() as varchar)) as distributed_key,tb1.address ,
 		tb2.label_type,
-		tb2.label_type as label_name,
-			now() as updated_at
+		tb2.label_type||''_ELITE_NFT_TRADER'' as label_name,
+		now() as updated_at
 	from
 		(
 			select
@@ -2885,9 +2886,9 @@ values ('address_label_nft_volume_count_rank','truncate
 													inner join dim_project_token_type s2 on
 															s1.token = s2.token
 														and s2.type = s2.type
-														and s2.data_subject = ''volume_rank''
+														and  s2.data_subject = ''volume_elite''
 											where
-												transfer_volume >= 100
+													transfer_volume >= 1
 											group by
 												s1.address,
 												s1.token,
@@ -2911,19 +2912,19 @@ values ('address_label_nft_volume_count_rank','truncate
 												type
 											from
 												nft_volume_count ) nvc group by token ,type) as a10 on
-									a10.token=  a1.token and a10.type=  a1.type) as a2) as t1 ) tb1
+											a10.token=  a1.token and a10.type=  a1.type) as a2) as t1 ) tb1
 			inner join dim_project_token_type tb2 on
 					tb1.token = tb2.token
 				and tb2.type = tb2.type  and (tb2.project ='''' or tb2.project =''ALL'')
 	where
-			tb1.transfer_volume >= 100
+			tb1.transfer_volume >= 1
 	and zb_rate <= 0.001
 	and zb_rate_transfer_count <= 0.001
-	and tb2.data_subject = ''volume_rank'';',1);
+	and tb2.data_subject = ''volume_elite'';',1);
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_volume_rank','truncate
+values ('address_label_nft_volume_rank','	truncate
 		table public.address_label_nft_volume_rank;
 
 	insert
@@ -3003,7 +3004,7 @@ values ('address_label_nft_volume_rank','truncate
 																AND s2.type = s2.type
 																AND s2.data_subject = ''volume_rank''
 									WHERE
-										transfer_volume >= 100
+										transfer_volume >= 1
 									GROUP BY
 										s1.address,
 										s1.token,
@@ -3026,7 +3027,7 @@ values ('address_label_nft_volume_rank','truncate
 		on
 					tb1.token = tb2.token
 				AND tb2.type = tb2.type and (tb2.project ='''' or tb2.project =''ALL'')
-	where tb1.transfer_volume >= 100 and tb2.data_subject = ''volume_rank'' and  zb_rate <= 0.1;',1);
+	where tb1.transfer_volume >= 1 and tb2.data_subject = ''volume_rank'' and  zb_rate <= 0.1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_volume_top','truncate
@@ -3298,9 +3299,9 @@ values ('address_label_nft_transfer_volume_count_rank','
 											INNER JOIN dim_project_token_type s2
 														ON
 																	s1.token = s2.token
-																AND s2.data_subject = ''volume_rank'' and (s2.project ='''' or s2.project =''ALL'')
+																AND s2.data_subject = ''volume_elite'' and (s2.project ='''' or s2.project =''ALL'')
 									WHERE
-										total_transfer_volume >= 100
+										total_transfer_volume >= 1
 									GROUP BY
 										s1.address,
 										s1.token,
@@ -3321,10 +3322,10 @@ values ('address_label_nft_transfer_volume_count_rank','
 		dim_project_token_type tb2
 		on
 				tb1.token = tb2.token
-	where tb1.total_transfer_volume >= 100
+	where tb1.total_transfer_volume >= 1
 	and tb2.type = ''Transfer''  and (tb2.project ='''' or tb2.project =''ALL'')
 	and zb_rate <= 0.001 and zb_rate_transfer_count<=0.001
-	and tb2.data_subject = ''volume_rank'';',1);
+	and tb2.data_subject = ''volume_elite'';',1);
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
@@ -3399,7 +3400,7 @@ values ('address_label_nft_transfer_volume_rank','
 																	s1.token = s2.token
 																AND s2.data_subject = ''volume_rank''
 									WHERE
-										total_transfer_volume >= 100
+										total_transfer_volume >= 1
 									GROUP BY
 										s1.address,
 										s1.token,
@@ -3420,7 +3421,7 @@ values ('address_label_nft_transfer_volume_rank','
 		dim_project_token_type tb2
 		on
 				tb1.token = tb2.token
-	where tb1.total_transfer_volume >= 100
+	where tb1.total_transfer_volume >= 1
 	and tb2.type = ''Transfer''  and (tb2.project ='''' or tb2.project =''ALL'')
 	and tb2.data_subject = ''volume_rank''   and  zb_rate <= 0.1;',1);
 
