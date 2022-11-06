@@ -1,3 +1,18 @@
+DROP TABLE IF EXISTS public.web3_transaction_record_summary;
+
+CREATE TABLE  public.web3_transaction_record_summary
+(
+    address character varying(256) COLLATE pg_catalog."default" NOT NULL,
+    total_transfer_volume numeric(125,30) NOT NULL DEFAULT 0,
+    total_transfer_count bigint NOT NULL DEFAULT 0,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    removed boolean DEFAULT false,
+    type character varying(50) COLLATE pg_catalog."default",
+    project character varying(100) COLLATE pg_catalog."default",
+    balance numeric(125,30) NOT NULL DEFAULT 0
+    )
+
     insert
     into
         web3_transaction_record_summary(address,
