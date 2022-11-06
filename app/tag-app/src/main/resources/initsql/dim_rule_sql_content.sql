@@ -1980,6 +1980,7 @@ values ('address_label_nft_project_type_volume_grade','truncate
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_count_rank','
+		-- -- 第二类标签
 	truncate
 		table public.address_label_nft_project_type_volume_count_rank;
 
@@ -1991,7 +1992,7 @@ values ('address_label_nft_project_type_volume_count_rank','
 																updated_at)
 	select md5(cast(random() as varchar)) as distributed_key,tb1.address ,
 		tb2.label_type,
-		tb2.label_type as label_name,
+		tb2.label_type||''_ELITE_NFT_TRADER'' as label_name,
 			now()   as updated_at
 	from (select t1.id,
 				t1.address,
@@ -2042,6 +2043,7 @@ values ('address_label_nft_project_type_volume_count_rank','
 										sum(volume_usd) AS volume_usd,
 										sum(transfer_count) AS transfer_count
 									FROM (
+											-- project-token-type
 											select  address
 												,platform_group
 												,platform
@@ -2050,6 +2052,7 @@ values ('address_label_nft_project_type_volume_count_rank','
 												,type
 												,volume_usd,transfer_count from platform_nft_type_volume_count
 											union all
+											-- project-token(ALL)-type
 											select  address
 												,platform_group
 												,platform
@@ -2058,6 +2061,7 @@ values ('address_label_nft_project_type_volume_count_rank','
 												,type
 												,volume_usd,transfer_count from platform_nft_type_volume_count
 											union all
+											-- project-token(ALL)-type(ALL)
 											select  address
 													,platform_group
 													,platform
@@ -2066,6 +2070,7 @@ values ('address_label_nft_project_type_volume_count_rank','
 													,''ALL'' AS type
 													,volume_usd,transfer_count from platform_nft_type_volume_count
 											union all
+											-- project-token-type(ALL)
 											select  address
 													,platform_group
 													,platform
@@ -2091,22 +2096,25 @@ values ('address_label_nft_project_type_volume_count_rank','
 										s2.seq_flag) AS a1) as a1
 							inner join
 						(select count(distinct address) as count_sum_total,platform_group,token,type
-							from (
+							from ( -- project-token-type
 									select  address
 										,platform_group
 										,token
 										,type  from platform_nft_type_volume_count
 									union all
+									-- project-token(ALL)-type
 									select  address
 										,platform_group
 										,''ALL'' AS token
 										,type  from platform_nft_type_volume_count
 									union all
+									-- project-token(ALL)-type(ALL)
 									select  address
 										,platform_group
 										,''ALL'' AS token
 										,''ALL'' AS type from platform_nft_type_volume_count
 									union all
+									-- project-token-type(ALL)
 									select  address
 										,platform_group
 										, token
@@ -2121,7 +2129,7 @@ values ('address_label_nft_project_type_volume_count_rank','
 				and tb1.project = tb2.project
 				AND tb1.type=tb2.type
 	where tb1.volume_usd >= 100   and zb_rate <= 0.001 and zb_rate_transfer_count<=0.001
-	and tb2.data_subject = ''volume_rank'';',1);
+  and tb2.data_subject = ''volume_rank'';',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_rank','
@@ -2282,7 +2290,7 @@ values ('address_label_nft_project_type_volume_top','truncate
 		select
 			md5(cast(random() as varchar)) as distributed_key,s1.address,
 			s1.label_type,
-			s1.label_type||''_''||''WHALE'' as label_name,
+			s1.label_type||''_''||''TOP'' as label_name,
 			now() as updated_at
 		from
 			(
@@ -3434,7 +3442,7 @@ values ('address_label_nft_transfer_volume_top','truncate table address_label_nf
 		select
 			md5(cast(random() as varchar)) as distributed_key,s1.address,
 			s1.label_type,
-			label_type||''_''||''WHALE'' as label_name,
+			label_type||''_''||''TOP'' as label_name,
 			now() as updated_at
 		from
 			(
