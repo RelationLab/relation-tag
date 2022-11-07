@@ -62,65 +62,55 @@ values ('address_label_eth_count_grade','truncate
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_balance_grade','truncate
-			table public.address_label_token_balance_grade;
+values ('address_label_token_balance_grade','
+	truncate
+		table public.address_label_token_balance_grade;
 
-			insert into
-			public.address_label_token_balance_grade (distributed_key,address,
-			label_type,
-			label_name,
-			updated_at)
-			select
-			md5(cast(random() as varchar)) as distributed_key,
-			address,
-			a2.label_type,
-			a2.label_type||''_''||case
-				when balance_usd >= 100
-				and balance_usd < 1000 then ''L1''
-				when balance_usd >= 1000
-				and balance_usd < 10000 then ''L2''
-				when balance_usd >= 10000
-				and balance_usd < 50000 then ''L3''
-				when balance_usd >= 50000
-				and balance_usd < 100000 then ''L4''
-				when balance_usd >= 100000
-				and balance_usd < 500000 then ''L5''
-				when balance_usd >= 500000
-				and balance_usd < 1000000 then ''L6''
-				when balance_usd >= 1000000
-				and balance_usd < 1000000000 then ''Millionaire''
-				when balance_usd >= 1000000000 then ''Billionaire''
-			end as label_name
-			,
+	insert
+	into
+		public.address_label_token_balance_grade (distributed_key,address,
+												label_type,
+												label_name,
+												updated_at)
+	select
+		md5(cast(random() as varchar)) as distributed_key,
+		address,
+		a2.label_type,
+		a2.label_type||''_''||case
+			when balance_usd >= 100
+			and balance_usd < 1000 then ''L1''
+			when balance_usd >= 1000
+			and balance_usd < 10000 then ''L2''
+			when balance_usd >= 10000
+			and balance_usd < 50000 then ''L3''
+			when balance_usd >= 50000
+			and balance_usd < 100000 then ''L4''
+			when balance_usd >= 100000
+			and balance_usd < 500000 then ''L5''
+			when balance_usd >= 500000
+			and balance_usd < 1000000 then ''L6''
+			when balance_usd >= 1000000
+			and balance_usd < 1000000000 then ''Millionaire''
+			when balance_usd >= 1000000000 then ''Billionaire''
+		end as label_name
+		,
 			now() as updated_at
-			from
-			(
+	from
+		(
 			select
 				address,
 				token,
 				balance_usd
 			from
 				token_balance_volume_usd tbvutk
-			union all
-			select
-				address,
-				''ALL'' as token ,
-				sum(balance_usd) as balance_usd
-			from
-				token_balance_volume_usd tbvu
-			group by
-				address
-			) a1
+		) a1
 			inner join
 		dim_rule_content a2
-			on
-			a1.token = a2.token
-			where
+		on
+				a1.token = a2.token
+	where
 			a1.balance_usd >= 100
-			and a2.data_subject = ''balance_grade''
-		;
-
-		',1);
+	and a2.data_subject = ''balance_grade'' and a2.token_type=''token'';',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_count_grade','truncate
@@ -228,66 +218,58 @@ values ('address_label_token_time_grade','truncate
 		;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_volume_grade','truncate
-			table public.address_label_token_volume_grade;
+values ('address_label_token_volume_grade','	
+	truncate
+		table public.address_label_token_volume_grade;
 
-		insert into
-			public.address_label_token_volume_grade (distributed_key,address,
-			label_type,
-			label_name,
+	insert
+	into
+		public.address_label_token_volume_grade (distributed_key,address,
+												label_type,
+												label_name,
 
-			updated_at)
-				select md5(cast(random() as varchar)) as distributed_key,
-			a1.address
+												updated_at)
+	select md5(cast(random() as varchar)) as distributed_key,
+		a1.address
 			,
-			a2.label_type
+		a2.label_type
 			,
-			a2.label_type||''_''||case
-				when volume_usd >= 100
-				and volume_usd < 1000 then ''L1''
-				when volume_usd >= 1000
-				and volume_usd < 10000 then ''L2''
-				when volume_usd >= 10000
-				and volume_usd < 50000 then ''L3''
-				when volume_usd >= 50000
-				and volume_usd < 100000 then ''L4''
-				when volume_usd >= 100000
-				and volume_usd < 500000 then ''L5''
-				when volume_usd >= 500000
-				and volume_usd < 1000000 then ''L6''
-				when volume_usd >= 1000000
-				and volume_usd < 1000000000 then ''Million''
-				when volume_usd >= 1000000000 then ''Billion''
-			end as label_name
-			,
+		a2.label_type||''_''||case
+			when volume_usd >= 100
+			and volume_usd < 1000 then ''L1''
+			when volume_usd >= 1000
+			and volume_usd < 10000 then ''L2''
+			when volume_usd >= 10000
+			and volume_usd < 50000 then ''L3''
+			when volume_usd >= 50000
+			and volume_usd < 100000 then ''L4''
+			when volume_usd >= 100000
+			and volume_usd < 500000 then ''L5''
+			when volume_usd >= 500000
+			and volume_usd < 1000000 then ''L6''
+			when volume_usd >= 1000000
+			and volume_usd < 1000000000 then ''Million''
+			when volume_usd >= 1000000000 then ''Billion''
+		end as label_name
+		,
 			now() as updated_at
-			from
-			(
+	from
+		(
 			select
 				address,
 				token,
 				volume_usd
 			from
 				token_balance_volume_usd tbvutk
-			union all
-			select
-				address,
-				''ALL'' as token ,
-				sum(volume_usd) as volume_usd
-			from
-				token_balance_volume_usd tbvu
-			group by
-				address
-			)
+		)
 			a1
 			inner join
 		dim_rule_content a2
-			on
-			a1.token = a2.token
-			where
+		on
+				a1.token = a2.token
+	where
 			a1.volume_usd >= 100
-			and a2.data_subject = ''volume_grade''
-		;',1);
+	and a2.data_subject = ''volume_grade'' and a2.token_type=''token'';',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_eth_balance_rank','
@@ -455,267 +437,188 @@ values ('address_label_token_time_special','truncate
 		;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_balance_rank','			truncate
-			table public.address_label_token_balance_rank;
+values ('address_label_token_balance_rank','	
+	truncate
+		table public.address_label_token_balance_rank;
 
-		insert
-		into public.address_label_token_balance_rank (distributed_key,address,
-													label_type,
-													label_name,
-
-													updated_at)
-		select md5(cast(random() as varchar)) as distributed_key,tb1.address
-				,
-			tb2.label_type
-				,
-			tb2.label_type||''_''||''HIGH_BALANCE'' as label_name
-				,
-				now()       as updated_at
-		from (select t1.id,
-					t1.address,
-					t1.token,
-					t1.balance_usd,
-					t1.count_sum,
-					t1.count_sum_total,
-					t1.zb_rate
-			from (select a2.id,
-						a2.address,
-						a2.token,
-						a2.balance_usd,
-						a2.count_sum,
-						a2.count_sum_total,
-						cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
-					from (select a1.id
-							, a1.address
-							, a1.token
-							, a1.balance_usd
-							, a1.count_sum
-							, a10.count_sum_total
-						from (select md5(cast(random() as varchar)) as id
-									, a1.address
-									, a1.token
-									, a1.balance_usd
-									, row_number()                      over(partition by  token order by balance_usd desc) as count_sum
-								from (select s1.token,
-											s1.address,
-											sum(s1.balance_usd) as balance_usd
-									from (select token, address, balance_usd
-											from token_balance_volume_usd
-											where token <> ''eth''
-											and token <> ''0xdac17f958d2ee523a2206206994597c13d831ec7'') s1
-											inner join dim_rank_token s2
-														on s1.token = s2.token_id
-									where balance_usd >= 100
-									group by s1.token, s1.address) as a1) as a1
-								inner join
-							(select count(distinct address) as count_sum_total,token
-								from (select token, address
-									from token_balance_volume_usd
-									where token <> ''eth''
-										and token <> ''0xdac17f958d2ee523a2206206994597c13d831ec7'' ) tbvu2 group by token) as a10
-							on a10.token = a1.token) as a2) as t1
-			union  all
-			select t1.id,
-					t1.address,
-					t1.token,
-					t1.balance_usd,
-					t1.count_sum,
-					t1.count_sum_total,
-					t1.zb_rate
-			from (select a2.id,
-						a2.address,
-						a2.token,
-						a2.balance_usd,
-						a2.count_sum,
-						a2.count_sum_total,
-						cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
-					from (select a1.id
-							, a1.address
-							, a1.token
-							, a1.balance_usd
-							, a1.count_sum
-							, a10.count_sum_total
-						from (select md5(cast(random() as varchar)) as id
-									, a1.address
-									, a1.token
-									, a1.balance_usd
-									, row_number()                      over(partition by  token order by balance_usd desc) as count_sum
-								from (select ''ALL'' token,
-											s1.address,
-											sum(s1.balance_usd) as balance_usd
-									from token_balance_volume_usd s1
-									where balance_usd >= 100
-									group by  s1.address) as a1) as a1
-								inner join
-							(select count(distinct address) as count_sum_total,token
-								from (
-									select ''ALL'' token, address
-									from token_balance_volume_usd ) tbvu group by token) as a10
-							on a10.token = a1.token) as a2) as t1
-
-			) tb1
-				inner join
-			dim_rule_content tb2
-			on
-					tb1.token = tb2.token
-		where tb1.balance_usd >= 100
-		and tb1.zb_rate <= 0.1
-		and tb2.data_subject = ''balance_rank'' and tb2.token_type=''token'';',1);
-
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_balance_top','truncate table address_label_token_balance_top;
-		insert into public.address_label_token_balance_top (distributed_key,address,
+	insert
+	into public.address_label_token_balance_rank (distributed_key,address,
 												label_type,
 												label_name,
 
 												updated_at)
-			select
-			md5(cast(random() as varchar)) as distributed_key,s1.address,
-			s1.label_type,
-			s1.label_type||''_''||''WHALE'' as label_name,
+	select md5(cast(random() as varchar)) as distributed_key,tb1.address
+			,
+		tb2.label_type
+			,
+		tb2.label_type||''_''||''HIGH_BALANCE'' as label_name
+			,
+			now()       as updated_at
+	from (select t1.id,
+				t1.address,
+				t1.token,
+				t1.balance_usd,
+				t1.count_sum,
+				t1.count_sum_total,
+				t1.zb_rate
+		from (select a2.id,
+					a2.address,
+					a2.token,
+					a2.balance_usd,
+					a2.count_sum,
+					a2.count_sum_total,
+					cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
+				from (select a1.id
+						, a1.address
+						, a1.token
+						, a1.balance_usd
+						, a1.count_sum
+						, a10.count_sum_total
+					from (select md5(cast(random() as varchar)) as id
+								, a1.address
+								, a1.token
+								, a1.balance_usd
+								, row_number()                      over(partition by  token order by balance_usd desc) as count_sum
+							from (select s1.token,
+										s1.address,
+										sum(s1.balance_usd) as balance_usd
+								from (select token, address, balance_usd
+										from token_balance_volume_usd
+										where token <> ''eth''
+										and token <> ''0xdac17f958d2ee523a2206206994597c13d831ec7'') s1
+										inner join dim_rank_token s2
+													on s1.token = s2.token_id
+								where balance_usd >= 100
+								group by s1.token, s1.address) as a1) as a1
+							inner join
+						(select count(distinct address) as count_sum_total,token
+							from (select token, address
+								from token_balance_volume_usd
+								where token <> ''eth''
+									and token <> ''0xdac17f958d2ee523a2206206994597c13d831ec7'' ) tbvu2 group by token) as a10
+						on a10.token = a1.token) as a2) as t1
+		) tb1
+			inner join
+		dim_rule_content tb2
+		on
+				tb1.token = tb2.token
+	where tb1.balance_usd >= 100
+	and tb1.zb_rate <= 0.1
+	and tb2.data_subject = ''balance_rank'' and tb2.token_type=''token'';',1);
+
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_token_balance_top','	truncate table address_label_token_balance_top;
+	insert into public.address_label_token_balance_top (distributed_key,address,
+														label_type,
+														label_name,
+
+														updated_at)
+	select
+		md5(cast(random() as varchar)) as distributed_key,s1.address,
+		s1.label_type,
+		s1.label_type||''_''||''WHALE'' as label_name,
 			now() as updated_at
+	from
+		(
+			select
+				a1.address,
+				a2.label_type,
+				
+				row_number() over( partition by a2.token
+		order by
+			balance_usd desc) as rn
 			from
-			(
-				select
-					a1.address,
-					a2.label_type,
-					row_number() over( partition by a2.token
-			order by
-				balance_usd desc) as rn
-				from
-					(
-						select
-							address,
-							token,
-							balance_usd,
-							volume_usd
-						from
-							token_balance_volume_usd
-						union all
-						select
-							address,
-							''ALL'' as token,
-							balance_usd,
-							volume_usd
-						from
-							token_balance_volume_usd ) a1
-						inner join dim_rule_content a2
-								on
-											a1.token = a2.token
-										and a2.data_subject = ''balance_top''
-			) s1
-			where
-				s1.rn <= 100;',1);
+				(
+					select
+						address,
+						token,
+						balance_usd,
+						volume_usd
+					from
+						token_balance_volume_usd
+				) a1
+					inner join dim_rule_content a2
+							on
+										a1.token = a2.token
+									and a2.data_subject = ''balance_top'' and a2.token_type=''token''
+		) s1
+	where
+			s1.rn <= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_volume_rank','
-		truncate
-			table public.address_label_token_volume_rank;
+			
+	truncate
+		table public.address_label_token_volume_rank;
 
-		insert
-		into public.address_label_token_volume_rank (distributed_key,address,
-													label_type,
-													label_name,
+	insert
+	into public.address_label_token_volume_rank (distributed_key,address,
+												label_type,
+												label_name,
 
-													updated_at)
-		select md5(cast(random() as varchar)) as distributed_key,tb1.address
-				,
-			tb2.label_type
-				,
-			tb2.label_type||''_''||case
-				when zb_rate > 0.025 and zb_rate <= 0.1 then ''MEDIUM''
-				when zb_rate > 0.01 and zb_rate <= 0.025 then ''HEAVY''
-				when zb_rate > 0.001 and zb_rate <= 0.01 then ''ELITE''
-				when zb_rate <= 0.001 then ''LEGENDARY''
-				end as label_name
-				,
-				now()   as updated_at
-		from (select t1.id,
-					t1.address,
-					t1.token,
-					t1.volume_usd,
-					t1.count_sum,
-					t1.count_sum_total,
-					t1.zb_rate
-			from (select a2.id,
-						a2.address,
-						a2.token,
-						a2.volume_usd,
-						a2.count_sum,
-						a2.count_sum_total,
-						cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
-					from (select a1.id
-							, a1.address
-							, a1.token
-							, a1.volume_usd
-							, a1.count_sum
-							, a10.count_sum_total
-						from (select md5(cast(random() as varchar)) as id
-									, a1.address
-									, a1.token
-									, a1.volume_usd
-									, row_number()                      over(partition by  token order by volume_usd desc) as count_sum
-								from (select s1.token,
-											s1.address,
-											sum(s1.volume_usd) as volume_usd
-									from (select token, address, volume_usd
-											from token_balance_volume_usd
-											where token <> ''eth''
-											and token <> ''0xdac17f958d2ee523a2206206994597c13d831ec7'') s1
-											inner join dim_rank_token s2
-														on s1.token = s2.token_id
-									where volume_usd >= 100
-									group by s1.token, s1.address) as a1) as a1
-								inner join
-							(select count(distinct address) as count_sum_total,token
-								from (select token, address
-									from token_balance_volume_usd
-									where token <> ''eth''
-										and token <> ''0xdac17f958d2ee523a2206206994597c13d831ec7'') tbvu2 group by token ) as a10
-							on a10.token = a1.token) as a2) as t1
-			union all
-			select t1.id,
-					t1.address,
-					t1.token,
-					t1.volume_usd,
-					t1.count_sum,
-					t1.count_sum_total,
-					t1.zb_rate
-			from (select a2.id,
-						a2.address,
-						a2.token,
-						a2.volume_usd,
-						a2.count_sum,
-						a2.count_sum_total,
-						cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
-					from (select a1.id
-							, a1.address
-							, a1.token
-							, a1.volume_usd
-							, a1.count_sum
-							, a10.count_sum_total
-						from (select md5(cast(random() as varchar)) as id
-									, a1.address
-									, a1.token
-									, a1.volume_usd
-									, row_number()                      over(partition by  token order by volume_usd desc) as count_sum
-								from (select ''ALL''                 token,
-											s1.address,
-											sum(s1.volume_usd) as volume_usd
-									from token_balance_volume_usd s1
-									where volume_usd >= 100
-									group by s1.address) as a1) as a1
-								inner join
-							(select count(distinct address) as count_sum_total,token
-								from (select ''ALL'' token, address
-									from token_balance_volume_usd ) tbvu group by token) as a10
-							on a10.token = a1.token) as a2) as t1) tb1
-				inner join
-			dim_rule_content tb2
-			on
-					tb1.token = tb2.token
-		where tb1.volume_usd >= 100
-		and tb2.data_subject = ''volume_rank'' and tb2.token_type=''token''   and  zb_rate <= 0.1;',1);
+												updated_at)
+	select md5(cast(random() as varchar)) as distributed_key,tb1.address
+			,
+		tb2.label_type
+			,
+		tb2.label_type||''_''||case
+			when zb_rate > 0.025 and zb_rate <= 0.1 then ''MEDIUM''
+			when zb_rate > 0.01 and zb_rate <= 0.025 then ''HEAVY''
+			when zb_rate > 0.001 and zb_rate <= 0.01 then ''ELITE''
+			when zb_rate <= 0.001 then ''LEGENDARY''
+			end as label_name
+			,
+			now()   as updated_at
+	from (select t1.id,
+				t1.address,
+				t1.token,
+				t1.volume_usd,
+				t1.count_sum,
+				t1.count_sum_total,
+				t1.zb_rate
+		from (select a2.id,
+					a2.address,
+					a2.token,
+					a2.volume_usd,
+					a2.count_sum,
+					a2.count_sum_total,
+					cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
+				from (select a1.id
+						, a1.address
+						, a1.token
+						, a1.volume_usd
+						, a1.count_sum
+						, a10.count_sum_total
+					from (select md5(cast(random() as varchar)) as id
+								, a1.address
+								, a1.token
+								, a1.volume_usd
+								, row_number()                      over(partition by  token order by volume_usd desc) as count_sum
+							from (select s1.token,
+										s1.address,
+										sum(s1.volume_usd) as volume_usd
+								from (select token, address, volume_usd
+										from token_balance_volume_usd
+										where token <> ''eth''
+										and token <> ''0xdac17f958d2ee523a2206206994597c13d831ec7'') s1
+										inner join dim_rank_token s2
+													on s1.token = s2.token_id
+								where volume_usd >= 100
+								group by s1.token, s1.address) as a1) as a1
+							inner join
+						(select count(distinct address) as count_sum_total,token
+							from (select token, address
+								from token_balance_volume_usd
+								where token <> ''eth''
+									and token <> ''0xdac17f958d2ee523a2206206994597c13d831ec7'') tbvu2 group by token ) as a10
+						on a10.token = a1.token) as a2) as t1
+		) tb1
+			inner join
+		dim_rule_content tb2
+		on
+				tb1.token = tb2.token
+	where tb1.volume_usd >= 100
+	and tb2.data_subject = ''volume_rank'' and tb2.token_type=''token''   and  zb_rate <= 0.1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_usdt_balance_rank','
@@ -3654,6 +3557,290 @@ values ('address_label_eth_time_special','truncate
 				a1.token = a2.token
 		where a2.data_subject = ''time_special'' and counter >= 1;',1);
 
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_token_balance_grade_all','
+	
+	truncate
+		table public.address_label_token_balance_grade_all;
+
+	insert
+	into
+		public.address_label_token_balance_grade_all (distributed_key,address,
+												label_type,
+												label_name,
+												updated_at)
+	select
+		md5(cast(random() as varchar)) as distributed_key,
+		address,
+		a2.label_type,
+		a2.label_type||''_''||case
+			when balance_usd >= 100
+			and balance_usd < 1000 then ''L1''
+			when balance_usd >= 1000
+			and balance_usd < 10000 then ''L2''
+			when balance_usd >= 10000
+			and balance_usd < 50000 then ''L3''
+			when balance_usd >= 50000
+			and balance_usd < 100000 then ''L4''
+			when balance_usd >= 100000
+			and balance_usd < 500000 then ''L5''
+			when balance_usd >= 500000
+			and balance_usd < 1000000 then ''L6''
+			when balance_usd >= 1000000
+			and balance_usd < 1000000000 then ''Millionaire''
+			when balance_usd >= 1000000000 then ''Billionaire''
+		end as label_name
+		,
+			now() as updated_at
+	from
+		(
+			select
+				address,
+				''ALL'' as token ,
+			sum(balance_usd) as balance_usd
+			from
+				total_balance_volume_usd tbvu
+			group by
+				address
+		) a1
+			inner join
+		dim_rule_content a2
+		on
+				a1.token = a2.token
+	where
+			a1.balance_usd >= 100
+	and a2.data_subject = ''balance_grade'' and a2.token_type=''token''
+	;',1);
+
+
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_token_volume_grade_all','	
+	truncate
+		table public.address_label_token_volume_grade_all;
+
+	insert
+	into
+		public.address_label_token_volume_grade_all (distributed_key,address,
+												label_type,
+												label_name,
+
+												updated_at)
+	select md5(cast(random() as varchar)) as distributed_key,
+		a1.address
+			,
+		a2.label_type
+			,
+		a2.label_type||''_''||case
+								when volume_usd >= 100
+									and volume_usd < 1000 then ''L1''
+								when volume_usd >= 1000
+									and volume_usd < 10000 then ''L2''
+								when volume_usd >= 10000
+									and volume_usd < 50000 then ''L3''
+								when volume_usd >= 50000
+									and volume_usd < 100000 then ''L4''
+								when volume_usd >= 100000
+									and volume_usd < 500000 then ''L5''
+								when volume_usd >= 500000
+									and volume_usd < 1000000 then ''L6''
+								when volume_usd >= 1000000
+									and volume_usd < 1000000000 then ''Million''
+								when volume_usd >= 1000000000 then ''Billion''
+			end as label_name
+			,
+		now() as updated_at
+	from
+		(
+			select
+				address,
+				''ALL'' as token ,
+				volume_usd as volume_usd
+			from
+				total_balance_volume_usd tbvu
+		)
+			a1
+			inner join
+		dim_rule_content a2
+		on
+				a1.token = a2.token
+	where
+			a1.volume_usd >= 100
+	and a2.data_subject = ''volume_grade'' and a2.token_type=''token''
+	;',1);
+
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_token_balance_rank_all','	
+	truncate
+		table public.address_label_token_balance_rank_all;
+
+	insert
+	into public.address_label_token_balance_rank_all (distributed_key,address,
+												label_type,
+												label_name,
+
+												updated_at)
+	select md5(cast(random() as varchar)) as distributed_key,tb1.address
+			,
+		tb2.label_type
+			,
+		tb2.label_type||''_''||''HIGH_BALANCE'' as label_name
+			,
+		now()       as updated_at
+	from (
+		select t1.id,
+				t1.address,
+				t1.token,
+				t1.balance_usd,
+				t1.count_sum,
+				t1.count_sum_total,
+				t1.zb_rate
+		from (select a2.id,
+					a2.address,
+					a2.token,
+					a2.balance_usd,
+					a2.count_sum,
+					a2.count_sum_total,
+					cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
+				from (select a1.id
+						, a1.address
+						, a1.token
+						, a1.balance_usd
+						, a1.count_sum
+						, a10.count_sum_total
+					from (select md5(cast(random() as varchar)) as id
+								, a1.address
+								, a1.token
+								, a1.balance_usd
+								, row_number()                      over(partition by  token order by balance_usd desc) as count_sum
+							from (select ''ALL'' token,
+										s1.address,
+										sum(s1.balance_usd) as balance_usd
+								from total_balance_volume_usd s1
+								where balance_usd >= 100
+								group by  s1.address) as a1) as a1
+							inner join
+						(select count(distinct address) as count_sum_total,token
+							from (
+									select ''ALL'' token, address
+									from total_balance_volume_usd ) tbvu group by token) as a10
+						on a10.token = a1.token) as a2) as t1
+
+		) tb1
+			inner join
+		dim_rule_content tb2
+		on
+				tb1.token = tb2.token
+	where tb1.balance_usd >= 100
+	and tb1.zb_rate <= 0.1
+	and tb2.data_subject = ''balance_rank'' and tb2.token_type=''token''
+	;',1);
+
+
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_token_balance_top_all','truncate table address_label_token_balance_top_all;
+	insert into public.address_label_token_balance_top_all (distributed_key,address,
+														label_type,
+														label_name,
+
+														updated_at)
+	select
+		md5(cast(random() as varchar)) as distributed_key,s1.address,
+		s1.label_type,
+		s1.label_type||''_''||''WHALE'' as label_name,
+		now() as updated_at
+	from
+		(
+			select
+				a1.address,
+				a2.label_type,
+				
+				row_number() over( partition by a2.token
+		order by
+			balance_usd desc) as rn
+			from
+				(
+					select
+						address,
+						''ALL'' as token,
+						balance_usd,
+						volume_usd
+					from
+						total_balance_volume_usd ) a1
+					inner join dim_rule_content a2
+							on
+										a1.token = a2.token
+									and a2.data_subject = ''balance_top'' and a2.token_type=''token''
+		) s1
+	where
+        s1.rn <= 100;',1);
+
+
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_token_volume_rank_all','	
+	truncate
+		table public.address_label_token_volume_rank_all;
+
+	insert
+	into public.address_label_token_volume_rank_all (distributed_key,address,
+												label_type,
+												label_name,
+
+												updated_at)
+	select md5(cast(random() as varchar)) as distributed_key,tb1.address
+			,
+		tb2.label_type
+			,
+		tb2.label_type||''_''||case
+									when zb_rate > 0.025 and zb_rate <= 0.1 then ''MEDIUM''
+									when zb_rate > 0.01 and zb_rate <= 0.025 then ''HEAVY''
+									when zb_rate > 0.001 and zb_rate <= 0.01 then ''ELITE''
+									when zb_rate <= 0.001 then ''LEGENDARY''
+			end as label_name
+			,
+		now()   as updated_at
+	from (
+		select t1.id,
+				t1.address,
+				t1.token,
+				t1.volume_usd,
+				t1.count_sum,
+				t1.count_sum_total,
+				t1.zb_rate
+		from (select a2.id,
+					a2.address,
+					a2.token,
+					a2.volume_usd,
+					a2.count_sum,
+					a2.count_sum_total,
+					cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
+				from (select a1.id
+						, a1.address
+						, a1.token
+						, a1.volume_usd
+						, a1.count_sum
+						, a10.count_sum_total
+					from (select md5(cast(random() as varchar)) as id
+								, a1.address
+								, a1.token
+								, a1.volume_usd
+								, row_number()                      over(partition by  token order by volume_usd desc) as count_sum
+							from (select ''ALL''                 token,
+										s1.address,
+										s1.volume_usd
+								from total_balance_volume_usd s1
+								where volume_usd >= 100) as a1) as a1
+							inner join
+						(select count(distinct address) as count_sum_total,token
+							from (select ''ALL'' token, address
+								from total_balance_volume_usd ) tbvu group by token) as a10
+						on a10.token = a1.token) as a2) as t1) tb1
+			inner join
+		dim_rule_content tb2
+		on
+				tb1.token = tb2.token
+	where tb1.volume_usd >= 100
+	and tb2.data_subject = ''volume_rank'' and tb2.token_type=''token''   and  zb_rate <= 0.1
+	;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('summary','truncate table address_label_gp_temp;
@@ -3707,5 +3894,10 @@ values ('summary','truncate table address_label_gp_temp;
 		select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_time_first_stake union all
 		select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_eth_time_grade union all
 		select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_eth_time_special union all
-		select address,label_type,label_name,updated_at, owner, source  from address_label_third_party union all
+        select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_balance_grade_all union all
+        select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_volume_grade_all union all
+         select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_balance_rank_all union all
+        select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_balance_top_all union all
+         select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_volume_rank_all union all
+        select address,label_type,label_name,updated_at, owner, source  from address_label_third_party union all
 		select address,label_type,label_name,updated_at,owner, source  from address_label_ugc;',999999);
