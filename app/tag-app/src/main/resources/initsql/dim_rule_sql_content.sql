@@ -3011,7 +3011,7 @@ values ('address_label_nft_volume_top','
 					from
 						nft_volume_count
 					union all
-					(ALL)
+					
 					select
 						address
 						,token
