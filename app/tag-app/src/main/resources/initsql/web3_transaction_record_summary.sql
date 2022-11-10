@@ -33,3 +33,6 @@ CREATE TABLE  public.web3_transaction_record_summary
         address,
         type ,
         project;
+
+update web3_transaction_record_summary set type ='mint' where type='Mint';
+update web3_transaction_record_summary set type ='write' where type='Write';
