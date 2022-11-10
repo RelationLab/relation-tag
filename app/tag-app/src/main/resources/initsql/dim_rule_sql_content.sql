@@ -2518,7 +2518,7 @@ values ('address_label_nft_balance_rank','	truncate
 										s1.token,
 										sum(s1.balance) AS balance
 									FROM (
-											(null)
+
 											select  address
 												,token
 												,balance
@@ -2980,7 +2980,7 @@ values ('address_label_nft_volume_top','
 			transfer_volume desc) as rn
 			from
 				(
-					(null)
+
 					select
 						address
 						,token
