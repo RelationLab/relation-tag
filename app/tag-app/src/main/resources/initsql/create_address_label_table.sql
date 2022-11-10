@@ -47,6 +47,12 @@ drop table if exists address_label_web3_type_balance_rank;
 drop table if exists address_label_web3_type_balance_top;
 drop table if exists address_label_eth_time_grade;
 drop table if exists address_label_eth_time_special;
+drop table if exists address_label_token_balance_grade_all;
+drop table if exists address_label_token_volume_grade_all;
+drop table if exists address_label_token_balance_rank_all;
+drop table if exists address_label_token_balance_top_all;
+drop table if exists address_label_token_volume_rank_all;
+
 
 CREATE TABLE public.address_label_token_project_type_balance_grade (
                                                                        distributed_key varchar(256) NULL,

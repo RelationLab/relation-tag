@@ -66,7 +66,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            checkAndRepair(sortMap);
+//            checkAndRepair(sortMap);
 //            long timeSleep = partTag ? 120000 : 1800000;
 //            try {
 //                Thread.sleep(timeSleep);
