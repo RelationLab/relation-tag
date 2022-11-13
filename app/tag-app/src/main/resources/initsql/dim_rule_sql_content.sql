@@ -11,12 +11,12 @@ values ('address_label_eth_count_grade','truncate
 			table public.address_label_eth_count_grade;
 
 		insert into
-			public.address_label_eth_count_grade (distributed_key,address,
+			public.address_label_eth_count_grade (address,
 													label_type,
 													label_name,
 													updated_at)
 			select
-			md5(cast(random() as varchar)) as distributed_key,
+			
 			a1.address
 				,
 			a2.label_type
@@ -62,19 +62,18 @@ values ('address_label_eth_count_grade','truncate
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_balance_grade','	-- 第一类标签
-	-- 第一类标签
+values ('address_label_token_balance_grade','
 	truncate
 		table public.address_label_token_balance_grade;
 
 	insert
 	into
-		public.address_label_token_balance_grade (distributed_key,address,
+		public.address_label_token_balance_grade (address,
 												label_type,
 												label_name,
 												updated_at)
 	select
-		md5(cast(random() as varchar)) as distributed_key,
+		
 		address,
 		a2.label_type,
 		a2.label_type||''_''||case
@@ -119,12 +118,12 @@ values ('address_label_token_count_grade','	truncate
 
 	insert
 	into
-		public.address_label_token_count_grade (distributed_key,address,
+		public.address_label_token_count_grade (address,
 												label_type,
 												label_name,
 												updated_at)
 	select
-		md5(cast(random() as varchar)) as distributed_key,
+		
 		a1.address
 			,
 		a2.label_type
@@ -184,11 +183,11 @@ insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_time_grade','truncate
 			table public.address_label_token_time_grade;
 
-		insert into public.address_label_token_time_grade (distributed_key,address,
+		insert into public.address_label_token_time_grade (address,
 											label_type,
 											label_name,
 											updated_at)
-				select md5(cast(random() as varchar)) as distributed_key,
+				select 
 				a1.address,
 				a2.label_type,
 				a2.label_type||''_''||case
@@ -218,18 +217,18 @@ values ('address_label_token_time_grade','truncate
 		;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_volume_grade','	-- -- 第二类标签
+values ('address_label_token_volume_grade','
 	truncate
 		table public.address_label_token_volume_grade;
 
 	insert
 	into
-		public.address_label_token_volume_grade (distributed_key,address,
+		public.address_label_token_volume_grade (address,
 												label_type,
 												label_name,
 
 												updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,
+	select 
 		a1.address
 			,
 		a2.label_type
@@ -272,17 +271,17 @@ values ('address_label_token_volume_grade','	-- -- 第二类标签
   and a2.data_subject = ''volume_grade'';',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_eth_balance_rank','	-- -- 第二类标签
+values ('address_label_eth_balance_rank','
 	truncate
 		table public.address_label_eth_balance_rank;
 
 	insert
-	into public.address_label_eth_balance_rank (distributed_key,address,
+	into public.address_label_eth_balance_rank (address,
 												label_type,
 												label_name,
 
 												updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address
+	select tb1.address
 			,
 		tb2.label_type
 			,
@@ -339,16 +338,16 @@ values ('address_label_eth_balance_rank','	-- -- 第二类标签
   and tb2.data_subject = ''balance_rank'' and tb2.token_type=''token'';',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_eth_volume_rank','	-- -- 第二类标签
+values ('address_label_eth_volume_rank','
 	truncate
 		table public.address_label_eth_volume_rank;
 
 	insert
-	into public.address_label_eth_volume_rank (distributed_key,address,
+	into public.address_label_eth_volume_rank (address,
 											label_type,
 											label_name,
 											updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address
+	select tb1.address
 			,
 		tb2.label_type
 			,
@@ -410,11 +409,11 @@ values ('address_label_eth_volume_rank','	-- -- 第二类标签
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_time_special','truncate
 			table public.address_label_token_time_special;
-		insert into public.address_label_token_time_special (distributed_key,address,
+		insert into public.address_label_token_time_special (address,
 											label_type,
 											label_name,
 											updated_at)
-				select md5(cast(random() as varchar)) as distributed_key,a1.address
+				select a1.address
 				,
 			a2.label_type
 				,
@@ -437,17 +436,17 @@ values ('address_label_token_time_special','truncate
 		;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_balance_rank','	-- -- 第二类标签
+values ('address_label_token_balance_rank','
 	truncate
 		table public.address_label_token_balance_rank;
 
 	insert
-	into public.address_label_token_balance_rank (distributed_key,address,
+	into public.address_label_token_balance_rank (address,
 												label_type,
 												label_name,
 
 												updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address
+	select tb1.address
 			,
 		tb2.label_type
 			,
@@ -508,13 +507,13 @@ values ('address_label_token_balance_rank','	-- -- 第二类标签
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_top','	truncate table address_label_token_balance_top;
-	insert into public.address_label_token_balance_top (distributed_key,address,
+	insert into public.address_label_token_balance_top (address,
 														label_type,
 														label_name,
 
 														updated_at)
 	select
-		md5(cast(random() as varchar)) as distributed_key,s1.address,
+		s1.address,
 		s1.label_type,
 		s1.label_type||''_''||''WHALE'' as label_name,
 			now() as updated_at
@@ -523,7 +522,7 @@ values ('address_label_token_balance_top','	truncate table address_label_token_b
 			select
 				a1.address,
 				a2.label_type,
-				-- 分组字段很关键
+
 				row_number() over( partition by a2.token
 		order by
 			balance_usd desc,address asc) as rn
@@ -546,17 +545,17 @@ values ('address_label_token_balance_top','	truncate table address_label_token_b
         s1.rn <= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_volume_rank','	-- -- 第二类标签
+values ('address_label_token_volume_rank','
 	truncate
 		table public.address_label_token_volume_rank;
 
 	insert
-	into public.address_label_token_volume_rank (distributed_key,address,
+	into public.address_label_token_volume_rank (address,
 												label_type,
 												label_name,
 
 												updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address
+	select tb1.address
 			,
 		tb2.label_type
 			,
@@ -620,17 +619,17 @@ values ('address_label_token_volume_rank','	-- -- 第二类标签
 	and tb2.data_subject = ''volume_rank''  and  zb_rate <= 0.1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_usdt_balance_rank','	-- -- 第二类标签
+values ('address_label_usdt_balance_rank','
 	truncate
 		table public.address_label_usdt_balance_rank;
 
 	insert
-	into public.address_label_usdt_balance_rank (distributed_key,address,
+	into public.address_label_usdt_balance_rank (address,
 												label_type,
 												label_name,
 
 												updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address
+	select tb1.address
 			,
 		tb2.label_type
 			,
@@ -687,17 +686,17 @@ values ('address_label_usdt_balance_rank','	-- -- 第二类标签
   and tb2.data_subject = ''balance_rank'' and tb2.token_type=''token'';',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_usdt_volume_rank','	-- -- 第二类标签
+values ('address_label_usdt_volume_rank','
 	truncate
 		table public.address_label_usdt_volume_rank;
 
 	insert
-	into public.address_label_usdt_volume_rank (distributed_key,address,
+	into public.address_label_usdt_volume_rank (address,
 												label_type,
 												label_name,
 
 												updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address
+	select tb1.address
 			,
 		tb2.label_type
 			,
@@ -760,13 +759,13 @@ values ('address_label_web3_type_balance_grade','truncate
 			table public.address_label_web3_type_balance_grade;
 
 		insert into
-			public.address_label_web3_type_balance_grade (distributed_key,address,
+			public.address_label_web3_type_balance_grade (address,
 													label_type,
 													label_name,
 
 													updated_at)
 			select
-			md5(cast(random() as varchar)) as distributed_key,address,
+			address,
 			label_type,
 			label_type||''_''||case
 				when balance = 1 then ''L1''
@@ -841,13 +840,13 @@ values ('address_label_web3_type_count_grade','truncate
 			table public.address_label_web3_type_count_grade;
 
 		insert into
-			public.address_label_web3_type_count_grade (distributed_key,address,
+			public.address_label_web3_type_count_grade (address,
 			label_type,
 			label_name,
 
 			updated_at)
 			select
-			md5(cast(random() as varchar)) as distributed_key,address
+			address
 			,
 			label_type
 			,
@@ -928,17 +927,17 @@ values ('address_label_web3_type_count_grade','truncate
 			) t where total_transfer_count>=1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_web3_type_balance_rank','	-- -- 第二类标签
+values ('address_label_web3_type_balance_rank','
 	truncate
 		table public.address_label_web3_type_balance_rank;
 
 	insert
-	into public.address_label_web3_type_balance_rank (distributed_key,address,
+	into public.address_label_web3_type_balance_rank (address,
 													label_type,
 													label_name,
 
 													updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address ,
+	select tb1.address ,
 		tb2.label_type,
 		tb2.label_type||''_''||case
 									when zb_rate > 0.01 and zb_rate <= 0.025 then ''RARE''
@@ -988,7 +987,6 @@ values ('address_label_web3_type_balance_rank','	-- -- 第二类标签
 										s1.type,
 										sum(s1.balance) AS balance
 									FROM (
-											-- project-type
 											select  address
 												,total_transfer_volume
 												,total_transfer_count
@@ -996,7 +994,6 @@ values ('address_label_web3_type_balance_rank','	-- -- 第二类标签
 												,project
 												,balance from web3_transaction_record_summary
 											union all
-											-- project(ALL)-type
 											select  address
 												,total_transfer_volume
 												,total_transfer_count
@@ -1004,7 +1001,6 @@ values ('address_label_web3_type_balance_rank','	-- -- 第二类标签
 												,''ALL'' as project
 												,balance from web3_transaction_record_summary
 											union all
-											-- project(ALL)-type(ALL)
 											select  address
 												,total_transfer_volume
 												,total_transfer_count
@@ -1012,7 +1008,6 @@ values ('address_label_web3_type_balance_rank','	-- -- 第二类标签
 												,''ALL'' as project
 												,balance from web3_transaction_record_summary
 											union all
-											-- project-type(ALL)
 											select  address
 												,total_transfer_volume
 												,total_transfer_count
@@ -1035,22 +1030,19 @@ values ('address_label_web3_type_balance_rank','	-- -- 第二类标签
 										s2.seq_flag) AS a1) as a1
 							inner join
 						(select count(distinct address) as count_sum_total, type,project
-							from ( -- project-type
+							from (
 									select  address
 										,type
 										,project from web3_transaction_record_summary
 									union all
-									-- project(ALL)-type
 									select  address
 										,type
 										,''ALL'' as project from web3_transaction_record_summary
 									union all
-									-- project(ALL)-type(ALL)
 									select  address
 										,''ALL'' as type
 										,''ALL'' as project from web3_transaction_record_summary
 									union all
-									-- project-type(ALL)
 									select  address
 										,''ALL'' as type
 										,project from web3_transaction_record_summary) w3trs group by type,project) as a10
@@ -1066,13 +1058,13 @@ values ('address_label_web3_type_balance_rank','	-- -- 第二类标签
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_web3_type_balance_top','	truncate table address_label_web3_type_balance_top;
-	insert into public.address_label_web3_type_balance_top (distributed_key,address,
+	insert into public.address_label_web3_type_balance_top (address,
 															label_type,
 															label_name,
 
 															updated_at)
 	select
-		md5(cast(random() as varchar)) as distributed_key,s1.address,
+		s1.address,
 		s1.label_type,
 		s1.label_type||''_''||''WHALE'' as label_name,
 			now() as updated_at
@@ -1081,31 +1073,27 @@ values ('address_label_web3_type_balance_top','	truncate table address_label_web
 			select
 				a1.address,
 				a2.label_type,
-				-- 分组字段很关键
+
 				row_number() over( partition by a2.seq_flag
 		order by
 			balance desc,address asc) as rn
 			from
 				(
-					-- project-type
 					select  address
 						,type
 						,project
 						,balance from web3_transaction_record_summary
 					union all
-					-- project(ALL)-type
 					select  address
 						,type
 						,''ALL'' AS project
 						,balance from web3_transaction_record_summary
 					union all
-					-- project(ALL)-type(ALL)
 					select  address
 							,''ALL'' AS type
 							,''ALL'' AS project
 							,balance from web3_transaction_record_summary
 					union all
-					-- project-type(ALL)
 					select  address
 							,''ALL'' AS type
 							,project
@@ -1126,13 +1114,13 @@ values ('address_label_token_project_type_count_grade','truncate
 
 		insert
 			into
-			public.address_label_token_project_type_count_grade (distributed_key,address,
+			public.address_label_token_project_type_count_grade (address,
 			label_type,
 			label_name,
 
 			updated_at)
 			select
-			md5(cast(random() as varchar)) as distributed_key,address
+			address
 				,
 			label_type
 				,
@@ -1271,13 +1259,13 @@ values ('address_label_token_project_type_volume_grade','truncate
 
 	insert
 	into
-		public.address_label_token_project_type_volume_grade(distributed_key,address,
+		public.address_label_token_project_type_volume_grade(address,
 															label_type,
 															label_name,
 
 															updated_at)
 	select
-		md5(cast(random() as varchar)) as distributed_key,address
+		address
 			,
 		label_type
 			,
@@ -1414,13 +1402,13 @@ values ('address_label_token_project_time_top','truncate
 
 		insert
 			into
-			public.address_label_token_project_time_top(distributed_key,address,
+			public.address_label_token_project_time_top(address,
 			label_type,
 			label_name,
 
 			updated_at)
 			select
-			md5(cast(random() as varchar)) as distributed_key,s1.address,
+			s1.address,
 			s1.label_type,
 			s1.label_type as label_name,
 			now() as updated_at
@@ -1443,13 +1431,13 @@ values ('address_label_token_project_type_volume_rank','	truncate
 
 	insert
 	into
-		public.address_label_token_project_type_volume_rank(distributed_key,address,
+		public.address_label_token_project_type_volume_rank(address,
 													label_type,
 													label_name,
 
-													updated_at);
+													updated_at)
 
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address ,
+	select tb1.address ,
 		tb2.label_type,
 		tb2.label_type||''_''||case
 									when zb_rate > 0.01 and zb_rate <= 0.025 then ''HEAVY''
@@ -1505,7 +1493,6 @@ values ('address_label_token_project_type_volume_rank','	truncate
 										min(s1.first_updated_block_height) as first_updated_block_height,
 										sum(s1.total_transfer_volume_usd) AS total_transfer_volume_usd
 									FROM (
-											-- project-token-type
 											select  address
 												,token
 												,total_transfer_volume_usd
@@ -1519,7 +1506,6 @@ values ('address_label_token_project_type_volume_rank','	truncate
 												,out_transfer_count
 												,balance_usd from dex_tx_volume_count_summary
 											union all
-											-- project(ALL)-token(ALL)-type
 											select address
 												,''ALL'' AS token
 												,total_transfer_volume_usd
@@ -1533,7 +1519,6 @@ values ('address_label_token_project_type_volume_rank','	truncate
 												,out_transfer_count
 												,balance_usd from dex_tx_volume_count_summary
 											union all
-											-- project-token(ALL)-type(ALL)
 											select address
 												,''ALL'' AS  token
 												,total_transfer_volume_usd
@@ -1547,7 +1532,6 @@ values ('address_label_token_project_type_volume_rank','	truncate
 												,out_transfer_count
 												,balance_usd from dex_tx_volume_count_summary
 											union all
-											-- project(ALL)-token-type(ALL)
 											select address
 												,token
 												,total_transfer_volume_usd
@@ -1561,7 +1545,6 @@ values ('address_label_token_project_type_volume_rank','	truncate
 												,out_transfer_count
 												,balance_usd from dex_tx_volume_count_summary
 											union all
-											-- project-token(ALL)-type
 											select address
 												,''ALL'' AS token
 												,total_transfer_volume_usd
@@ -1575,7 +1558,6 @@ values ('address_label_token_project_type_volume_rank','	truncate
 												,out_transfer_count
 												,balance_usd from dex_tx_volume_count_summary
 											union all
-											-- project(ALL)-token-type
 											select address
 												,token
 												,total_transfer_volume_usd
@@ -1589,7 +1571,6 @@ values ('address_label_token_project_type_volume_rank','	truncate
 												,out_transfer_count
 												,balance_usd from dex_tx_volume_count_summary
 											union all
-											-- project-token-type(ALL)
 											select address
 												,token
 												,total_transfer_volume_usd
@@ -1625,40 +1606,34 @@ values ('address_label_token_project_type_volume_rank','	truncate
 									,project
 								from dex_tx_volume_count_summary
 								union all
-								-- project(ALL)-token(ALL)-type
 								select address
 									,''ALL'' AS token
 									,type
 									,''ALL'' AS project from dex_tx_volume_count_summary
 								union all
-								-- project-token(ALL)-type(ALL)
 								select address
 									,''ALL'' AS  token
 									,''ALL'' AS  type
 									,project from dex_tx_volume_count_summary
 								union all
-								-- project(ALL)-token-type(ALL)
 								select address
 									,token
 									,''ALL'' AS type
 									,''ALL'' AS project
 								from dex_tx_volume_count_summary
 								union all
-								-- project-token(ALL)-type
 								select address
 									,''ALL'' AS token
 									,type
 									, project
 								from dex_tx_volume_count_summary
 								union all
-								-- project(ALL)-token-type
 								select address
 									,token
 									,type
 									,''ALL'' AS  project
 								from dex_tx_volume_count_summary
 								union all
-								-- project-token-type(ALL)
 								select address
 									,token
 									,''ALL'' AS type
@@ -1679,13 +1654,13 @@ values ('address_label_nft_project_type_count_grade','truncate
 			table public.address_label_nft_project_type_count_grade;
 
 		insert into
-			public.address_label_nft_project_type_count_grade(distributed_key,address,
+			public.address_label_nft_project_type_count_grade(address,
 													label_type,
 													label_name,
 
 													updated_at)
 		select
-			md5(cast(random() as varchar)) as distributed_key,address
+			address
 				,
 			label_type
 				,
@@ -1775,13 +1750,13 @@ values ('address_label_nft_project_type_volume_grade','truncate
 
 		insert
 			into
-			public.address_label_nft_project_type_volume_grade(distributed_key,address,
+			public.address_label_nft_project_type_volume_grade(address,
 			label_type,
 			label_name,
 
 			updated_at)
 		select
-			md5(cast(random() as varchar)) as distributed_key,address
+			address
 				,
 			label_type
 				,
@@ -1863,12 +1838,12 @@ values ('address_label_nft_project_type_volume_count_rank','
 		table public.address_label_nft_project_type_volume_count_rank;
 
 	insert
-	into public.address_label_nft_project_type_volume_count_rank (distributed_key,address,
+	into public.address_label_nft_project_type_volume_count_rank (address,
 																label_type,
 																label_name,
 
 																updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address ,
+	select tb1.address ,
 		tb2.label_type,
 		tb2.label_type||''_ELITE_NFT_TRADER'' as label_name,
 			now()   as updated_at
@@ -2008,12 +1983,12 @@ values ('address_label_nft_project_type_volume_rank','
 		table public.address_label_nft_project_type_volume_rank;
 
 	insert
-	into public.address_label_nft_project_type_volume_rank (distributed_key,address,
+	into public.address_label_nft_project_type_volume_rank (address,
 															label_type,
 															label_name,
 
 															updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address ,
+	select tb1.address ,
 		tb2.label_type,
 		tb2.label_type||''_''||case
 			when zb_rate > 0.01 and zb_rate <= 0.025 then ''RARE_NFT_TRADER''
@@ -2153,13 +2128,13 @@ insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_top','truncate
 			table public.address_label_nft_project_type_volume_top;
 
-		insert into public.address_label_nft_project_type_volume_top (distributed_key,address,
+		insert into public.address_label_nft_project_type_volume_top (address,
 												label_type,
 												label_name,
 
 												updated_at)
 		select
-			md5(cast(random() as varchar)) as distributed_key,s1.address,
+			s1.address,
 			s1.label_type,
 			s1.label_type||''_''||''TOP'' as label_name,
 			now() as updated_at
@@ -2230,12 +2205,12 @@ values ('address_label_nft_balance_grade','	truncate
 		table public.address_label_nft_balance_grade;
 
 	insert
-	into public.address_label_nft_balance_grade(distributed_key,address,
+	into public.address_label_nft_balance_grade(address,
 												label_type,
 												label_name,
 
 												updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,address
+	select address
 			,
 		label_type
 			,
@@ -2283,12 +2258,12 @@ values ('address_label_nft_count_grade','	truncate
 		table public.address_label_nft_count_grade;
 
 	insert
-	into public.address_label_nft_count_grade(distributed_key,address,
+	into public.address_label_nft_count_grade(address,
 											label_type,
 											label_name,
 
 											updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,address
+	select address
 			,
 		label_type
 			,
@@ -2344,12 +2319,12 @@ values ('address_label_nft_time_grade','
 		table public.address_label_nft_time_grade;
 
 	insert
-	into public.address_label_nft_time_grade (distributed_key,address,
+	into public.address_label_nft_time_grade (address,
 											label_type,
 											label_name,
 
 											updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,a1.address
+	select a1.address
 			,
 		a2.label_type
 			,
@@ -2387,12 +2362,12 @@ values ('address_label_nft_volume_grade','	truncate
 		table public.address_label_nft_volume_grade;
 
 	insert
-	into public.address_label_nft_volume_grade(distributed_key,address,
+	into public.address_label_nft_volume_grade(address,
 											label_type,
 											label_name,
 
 											updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,address
+	select address
 			,
 		label_type
 			,
@@ -2444,13 +2419,13 @@ values ('address_label_nft_balance_rank','	truncate
 		table public.address_label_nft_balance_rank;
 
 	insert
-	into public.address_label_nft_balance_rank(distributed_key,address,
+	into public.address_label_nft_balance_rank(address,
 											label_type,
 											label_name,
 
 											updated_at)
 
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address ,
+	select tb1.address ,
 		tb2.label_type,
 		tb2.label_type||''_''||case
 									when zb_rate > 0.01 and zb_rate <= 0.025 then ''RARE_NFT_COLLECTOR''
@@ -2486,21 +2461,18 @@ values ('address_label_nft_balance_rank','	truncate
 								a1.balance,
 								ROW_NUMBER() OVER(PARTITION BY seq_flag
 	ORDER BY
-		balance DESC,id asc) AS count_sum
+		balance DESC,address asc) AS count_sum
 							FROM
 								(
 									SELECT
 										s1.address,
 										s2.seq_flag,
 										s1.token,
-										min(s1.id) id,
 										sum(s1.balance) AS balance
 									FROM (
-											-- project(null)+nft+type(null)
 											select  address
 												,token
 												,balance
-												,id
 												,total_transfer_volume
 												,total_transfer_count
 												,total_transfer_to_volume
@@ -2513,11 +2485,9 @@ values ('address_label_nft_balance_rank','	truncate
 												,total_transfer_all_count
 												,updated_block_height from nft_holding
 											union all
-											-- project(null)-token(ALL)-type(null)
 											select address
 												,''ALL'' as token
 												,balance
-												,id
 												,total_transfer_volume
 												,total_transfer_count
 												,total_transfer_to_volume
@@ -2549,7 +2519,6 @@ values ('address_label_nft_balance_rank','	truncate
 									,token
 								from nft_holding
 								union all
-								-- project(null)-token(ALL)-type(null)
 								select address
 									,''ALL'' as token
 								from nft_holding) nh group by token) as a10
@@ -2565,14 +2534,14 @@ values ('address_label_nft_balance_rank','	truncate
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_balance_top','	truncate table address_label_nft_balance_top;
-	insert into public.address_label_nft_balance_top (distributed_key,address,
+	insert into public.address_label_nft_balance_top (address,
 													label_type,
 													label_name,
 
 													updated_at)
 
 	select
-		md5(cast(random() as varchar)) as distributed_key,s1.address,
+		s1.address,
 		s1.label_type,
 		s1.label_type||''_''||''WHALE'' as label_name,
 		now() as updated_at
@@ -2581,16 +2550,15 @@ values ('address_label_nft_balance_top','	truncate table address_label_nft_balan
 			select
 				a1.address,
 				a2.label_type,
-				-- 分组字段很关键
+
 				row_number() over( partition by a2.token
 		order by
-			balance desc,id asc) as rn
+			balance desc,address asc) as rn
 			from
 				(
 					select
 						address,
 						token,
-						id,
 						balance
 					from
 						nft_holding
@@ -2598,7 +2566,6 @@ values ('address_label_nft_balance_top','	truncate table address_label_nft_balan
 					select
 						address,
 						''ALL'' as token,
-						id,
 						balance
 					from
 						nft_holding ) a1
@@ -2615,12 +2582,12 @@ insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_time_rank','	truncate
 		table public.address_label_nft_time_rank;
 	insert
-	into public.address_label_nft_time_rank (distributed_key,address,
+	into public.address_label_nft_time_rank (address,
 											label_type,
 											label_name,
 
 											updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,a1.address
+	select a1.address
 			,
 		a2.label_type
 			,
@@ -2648,13 +2615,13 @@ insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_time_top','	truncate
 		table public.address_label_nft_time_top;
 	insert
-	into public.address_label_nft_time_top (distributed_key,address,
+	into public.address_label_nft_time_top (address,
 											label_type,
 											label_name,
 
 											updated_at)
 	select
-		md5(cast(random() as varchar)) as distributed_key,s1.address,
+		s1.address,
 		s1.label_type,
 		s1.label_type as label_name,
 			now() as updated_at
@@ -2692,7 +2659,7 @@ values ('address_label_nft_volume_count_rank','	truncate
 		table public.address_label_nft_volume_count_rank;
 	insert
 	into
-		public.address_label_nft_volume_count_rank(distributed_key,address,
+		public.address_label_nft_volume_count_rank(address,
 												label_type,
 												label_name,
 
@@ -2703,7 +2670,7 @@ values ('address_label_nft_volume_count_rank','	truncate
 
 
 	select
-		md5(cast(random() as varchar)) as distributed_key,tb1.address ,
+		tb1.address ,
 		tb2.label_type,
 		tb2.label_type||''_ELITE_NFT_TRADER'' as label_name,
 		now() as updated_at
@@ -2768,7 +2735,6 @@ values ('address_label_nft_volume_count_rank','	truncate
 												sum(transfer_count) as transfer_count
 											from
 												(
-													-- project(null)+nft+type
 													select
 														address ,
 														token ,
@@ -2778,7 +2744,6 @@ values ('address_label_nft_volume_count_rank','	truncate
 													from
 														nft_volume_count
 													union all
-													-- project(null)+nft（ALL）+type
 													select
 														address ,
 														''ALL'' as token ,
@@ -2804,7 +2769,6 @@ values ('address_label_nft_volume_count_rank','	truncate
 										count(distinct address) as count_sum_total,token ,type
 									from
 										(
-											-- project(null)+nft+type
 											select
 												address ,
 												token ,
@@ -2812,7 +2776,6 @@ values ('address_label_nft_volume_count_rank','	truncate
 											from
 												nft_volume_count
 											union all
-											-- project(null)+nft（ALL）+type
 											select
 												address ,
 												''ALL'' as token ,
@@ -2835,12 +2798,12 @@ values ('address_label_nft_volume_rank','	truncate
 		table public.address_label_nft_volume_rank;
 
 	insert
-	into public.address_label_nft_volume_rank(distributed_key,address,
+	into public.address_label_nft_volume_rank(address,
 											label_type,
 											label_name,
 
 											updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address ,
+	select tb1.address ,
 		tb2.label_type,
 		tb2.label_type||''_''||case
 			when zb_rate > 0.01 and zb_rate <= 0.025 then ''RARE_NFT_TRADER''
@@ -2891,14 +2854,12 @@ values ('address_label_nft_volume_rank','	truncate
 										sum(transfer_volume) AS transfer_volume
 									FROM (
 
-											-- project(null)+nft+type
 											select  address
 												,token
 												,type
 												,transfer_volume
 												,transfer_count from nft_volume_count
 											union all
-											-- project(null)+nft（ALL）+type
 											select  address
 												,''ALL'' AS token
 												,type
@@ -2922,12 +2883,11 @@ values ('address_label_nft_volume_rank','	truncate
 										s2.seq_flag) AS a1) as a1
 							inner join
 						(select count(distinct address) as count_sum_total,token,type
-							from ( -- project(null)+nft+type
+							from (
 									select  address
 										,token
 										,type from nft_volume_count
 									union all
-									-- project(null)+nft（ALL）+type
 									select  address
 										,''ALL'' AS token
 										,type from nft_volume_count) nvc group by token,type  ) as a10
@@ -2941,18 +2901,18 @@ values ('address_label_nft_volume_rank','	truncate
 	where tb1.transfer_volume >= 1 and tb2.data_subject = ''volume_rank'' and tb2.label_type like ''%NFT%'' AND  tb2.label_type NOT  LIKE ''%WEB3%'' and  zb_rate <= 0.1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_volume_top','	-- -- 第二类标签
+values ('address_label_nft_volume_top','
 	truncate
 		table public.address_label_nft_volume_top;
 
 	insert
-	into public.address_label_nft_volume_top (distributed_key,address,
+	into public.address_label_nft_volume_top (address,
 											label_type,
 											label_name,
 
 											updated_at)
 	select
-		md5(cast(random() as varchar)) as distributed_key,s1.address,
+		s1.address,
 		s1.label_type,
 		s1.label_type||''_''||''TOP'' as label_name,
 		now() as updated_at
@@ -2961,13 +2921,12 @@ values ('address_label_nft_volume_top','	-- -- 第二类标签
 			select
 				a1.address,
 				a2.label_type,
-				-- 分组字段很关键
+
 				row_number() over( partition by seq_flag
 		order by
 			transfer_volume desc,address asc) as rn
 			from
 				(
-					-- project(null)+nft+type(null)
 					select
 						address
 						,token
@@ -2977,7 +2936,6 @@ values ('address_label_nft_volume_top','	-- -- 第二类标签
 					from
 						nft_volume_count
 					union all
-					-- project(null)+nft(ALL)+type(null)
 					select
 						address
 						,''ALL'' AS token
@@ -2988,7 +2946,6 @@ values ('address_label_nft_volume_top','	-- -- 第二类标签
 					from
 						nft_volume_count
 					union all
-					-- project(null)+nft+type
 					select
 						address
 						,token
@@ -2999,7 +2956,6 @@ values ('address_label_nft_volume_top','	-- -- 第二类标签
 					from
 						nft_volume_count
 					union all
-					-- project(null)+nft+type(ALL)
 					select
 						address
 						,token
@@ -3010,7 +2966,6 @@ values ('address_label_nft_volume_top','	-- -- 第二类标签
 					from
 						nft_volume_count
 					union all
-					-- project(null)+nft（ALL）+type
 					select
 						address
 						,''ALL'' AS token
@@ -3034,12 +2989,12 @@ values ('address_label_nft_transfer_count_grade','	truncate
 		table public.address_label_nft_transfer_count_grade;
 
 	insert
-	into public.address_label_nft_transfer_count_grade(distributed_key,address,
+	into public.address_label_nft_transfer_count_grade(address,
 													label_type,
 													label_name,
 
 													updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,address
+	select address
 			,
 		label_type
 			,
@@ -3100,12 +3055,12 @@ values ('address_label_nft_transfer_volume_grade','	truncate
 		table public.address_label_nft_transfer_volume_grade;
 
 	insert
-	into public.address_label_nft_transfer_volume_grade(distributed_key,address,
+	into public.address_label_nft_transfer_volume_grade(address,
 														label_type,
 														label_name,
 
 														updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,address
+	select address
 			,
 		label_type
 			,
@@ -3154,17 +3109,17 @@ values ('address_label_nft_transfer_volume_grade','	truncate
              a2.label_type) t where volume_usd >= 1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_transfer_volume_count_rank','	-- -- 第二类标签
+values ('address_label_nft_transfer_volume_count_rank','
 	truncate
 		table public.address_label_nft_transfer_volume_count_rank;
 
 	insert
-	into public.address_label_nft_transfer_volume_count_rank (distributed_key,address,
+	into public.address_label_nft_transfer_volume_count_rank (address,
 															label_type,
 															label_name,
 
 															updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address ,
+	select tb1.address ,
 		tb2.label_type,
 		tb2.label_type||''_ELITE_NFT_TRADER'' as label_name,
 			now()   as updated_at
@@ -3207,14 +3162,12 @@ values ('address_label_nft_transfer_volume_count_rank','	-- -- 第二类标签
 										sum(s1.total_transfer_volume) AS total_transfer_volume,
 										sum(s1.total_transfer_count) AS total_transfer_count
 									FROM (
-											-- project-token-type
 											select  address
 												,token
 												,total_transfer_volume
 												,total_transfer_count
 											from nft_transfer_holding
 											union all
-											-- project(null)+nft（ALL）+type
 											select  address
 												,''ALL'' as token
 												,total_transfer_volume
@@ -3235,12 +3188,11 @@ values ('address_label_nft_transfer_volume_count_rank','	-- -- 第二类标签
 										s2.seq_flag) AS a1) as a1
 							inner join
 						(select count(distinct address) as count_sum_total ,token
-							from ( -- project-token-type
+							from (
 									select  address
 										,token
 									from nft_transfer_holding
 									union all
-									-- project(null)+nft（ALL）+type
 									select  address
 										,''ALL'' as token
 									from nft_transfer_holding) nth group by  token) as a10
@@ -3257,17 +3209,17 @@ values ('address_label_nft_transfer_volume_count_rank','	-- -- 第二类标签
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_transfer_volume_rank','	-- -- 第二类标签
+values ('address_label_nft_transfer_volume_rank','
 	truncate
 		table public.address_label_nft_transfer_volume_rank;
 
 	insert
-	into public.address_label_nft_transfer_volume_rank (distributed_key,address,
+	into public.address_label_nft_transfer_volume_rank (address,
 														label_type,
 														label_name,
 
 														updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address ,
+	select tb1.address ,
 		tb2.label_type,
 		tb2.label_type||''_''||case
 				when zb_rate > 0.01 and zb_rate <= 0.025 then ''RARE_NFT_TRADER''
@@ -3312,13 +3264,11 @@ values ('address_label_nft_transfer_volume_rank','	-- -- 第二类标签
 										s1.token,
 										sum(s1.total_transfer_volume) AS total_transfer_volume
 									FROM (
-											-- project-token-type
 											select  address
 												,token
 												,total_transfer_volume
 											from nft_transfer_holding
 											union all
-											-- project(null)+nft（ALL）+type
 											select  address
 												,''ALL'' as token
 												,total_transfer_volume
@@ -3337,12 +3287,11 @@ values ('address_label_nft_transfer_volume_rank','	-- -- 第二类标签
 										s2.seq_flag) AS a1) as a1
 							inner join
 						(select count(distinct address) as count_sum_total ,token
-							from ( -- project-token-type
+							from (
 									select  address
 										,token
 									from nft_transfer_holding
 									union all
-									-- project(null)+nft（ALL）+type
 									select  address
 										,''ALL'' as token
 									from nft_transfer_holding) nth group by  token) as a10
@@ -3358,13 +3307,13 @@ values ('address_label_nft_transfer_volume_rank','	-- -- 第二类标签
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_transfer_volume_top','	truncate table address_label_nft_transfer_volume_top;
-	insert into public.address_label_nft_transfer_volume_top (distributed_key,address,
+	insert into public.address_label_nft_transfer_volume_top (address,
 															label_type,
 															label_name,
 
 															updated_at)
 	select
-		md5(cast(random() as varchar)) as distributed_key,s1.address,
+		s1.address,
 		s1.label_type,
 		label_type||''_''||''TOP'' as label_name,
 			now() as updated_at
@@ -3373,7 +3322,7 @@ values ('address_label_nft_transfer_volume_top','	truncate table address_label_n
 			select
 				a1.address,
 				a2.label_type,
-				-- 分组字段很关键
+
 				row_number() over( partition by a2.token
 		order by
 			total_transfer_volume desc,address asc) as rn
@@ -3384,7 +3333,6 @@ values ('address_label_nft_transfer_volume_top','	truncate table address_label_n
 						,total_transfer_volume
 					from nft_transfer_holding
 					union all
-					-- project(null)+nft（ALL）+type
 					select  address
 						,''ALL'' as token
 						,total_transfer_volume
@@ -3401,12 +3349,12 @@ values ('address_label_nft_transfer_volume_top','	truncate table address_label_n
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_provider','	truncate table address_label_token_balance_provider;
-	insert into public.address_label_token_balance_provider (distributed_key,address,
+	insert into public.address_label_token_balance_provider (address,
 														label_type,
 														label_name,
 														updated_at)
 	select
-		md5(cast(random() as varchar)) as distributed_key,s1.address,
+		s1.address,
 		s1.label_type,
 		s1.label_type as label_name,
 		now() as updated_at
@@ -3415,7 +3363,7 @@ values ('address_label_token_balance_provider','	truncate table address_label_to
 			select
 				a1.address,
 				a2.label_type,
-				-- 分组字段很关键
+
 				row_number() over( partition by a2.seq_flag
 		order by
 			balance_usd desc,address asc) as rn
@@ -3431,12 +3379,12 @@ values ('address_label_token_balance_provider','	truncate table address_label_to
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_staked','	truncate table address_label_token_balance_staked;
-	insert into public.address_label_token_balance_staked (distributed_key,address,
+	insert into public.address_label_token_balance_staked (address,
 														label_type,
 														label_name,
 														updated_at)
 	select
-		md5(cast(random() as varchar)) as distributed_key,s1.address,
+		s1.address,
 		s1.label_type,
 		s1.label_type as label_name,
 		now() as updated_at
@@ -3445,7 +3393,7 @@ values ('address_label_token_balance_staked','	truncate table address_label_toke
 			select
 				a1.address,
 				a2.label_type,
-				-- 分组字段很关键
+
 				row_number() over( partition by a2.seq_flag
 		order by
 			balance_usd desc,address asc) as rn
@@ -3462,12 +3410,12 @@ values ('address_label_token_balance_staked','	truncate table address_label_toke
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_time_first_lp','truncate table address_label_token_time_first_lp;
-		insert into public.address_label_token_time_first_lp (distributed_key,address,
+		insert into public.address_label_token_time_first_lp (address,
 															label_type,
 															label_name,
 															updated_at)
 		select
-			md5(cast(random() as varchar)) as distributed_key,s1.address,
+			s1.address,
 			s1.label_type,
 			s1.label_type as label_name,
 			now() as updated_at
@@ -3493,12 +3441,12 @@ values ('address_label_token_time_first_lp','truncate table address_label_token_
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_time_first_stake','truncate table address_label_token_time_first_stake;
-		insert into public.address_label_token_time_first_stake (distributed_key,address,
+		insert into public.address_label_token_time_first_stake (address,
 															label_type,
 															label_name,
 															updated_at)
 		select
-			md5(cast(random() as varchar)) as distributed_key,s1.address,
+			s1.address,
 			s1.label_type,
 			s1.label_type as label_name,
 			now() as updated_at
@@ -3526,11 +3474,11 @@ insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_eth_time_grade','truncate
 		table public.address_label_eth_time_grade;
 
-		insert into public.address_label_eth_time_grade (distributed_key,address,
+		insert into public.address_label_eth_time_grade (address,
 												label_type,
 												label_name,
 												updated_at)
-		select md5(cast(random() as varchar)) as distributed_key,
+		select 
 		a1.address,
 		a2.label_type,
 		a2.label_type||''_''||case
@@ -3561,11 +3509,11 @@ values ('address_label_eth_time_grade','truncate
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_eth_time_special','truncate
 		table public.address_label_eth_time_special;
-		insert into public.address_label_eth_time_special (distributed_key,address,
+		insert into public.address_label_eth_time_special (address,
 											label_type,
 											label_name,
 											updated_at)
-		select md5(cast(random() as varchar)) as distributed_key,a1.address
+		select a1.address
 			,
 		a2.label_type
 			,
@@ -3594,12 +3542,12 @@ values ('address_label_token_balance_grade_all','
 
 	insert
 	into
-		public.address_label_token_balance_grade_all (distributed_key,address,
+		public.address_label_token_balance_grade_all (address,
 												label_type,
 												label_name,
 												updated_at)
 	select
-		md5(cast(random() as varchar)) as distributed_key,
+		
 		address,
 		a2.label_type,
 		a2.label_type||''_''||case
@@ -3649,12 +3597,12 @@ values ('address_label_token_volume_grade_all','
 
 	insert
 	into
-		public.address_label_token_volume_grade_all (distributed_key,address,
+		public.address_label_token_volume_grade_all (address,
 												label_type,
 												label_name,
 
 												updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,
+	select 
 		a1.address
 			,
 		a2.label_type
@@ -3698,17 +3646,17 @@ values ('address_label_token_volume_grade_all','
 	;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_balance_rank_all','	-- -- 第二类标签
+values ('address_label_token_balance_rank_all','
 	truncate
 		table public.address_label_token_balance_rank_all;
 
 	insert
-	into public.address_label_token_balance_rank_all (distributed_key,address,
+	into public.address_label_token_balance_rank_all (address,
 												label_type,
 												label_name,
 
 												updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address
+	select tb1.address
 			,
 		tb2.label_type
 			,
@@ -3766,13 +3714,13 @@ values ('address_label_token_balance_rank_all','	-- -- 第二类标签
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_top_all','	truncate table address_label_token_balance_top_all;
-	insert into public.address_label_token_balance_top_all (distributed_key,address,
+	insert into public.address_label_token_balance_top_all (address,
 														label_type,
 														label_name,
 
 														updated_at)
 	select
-		md5(cast(random() as varchar)) as distributed_key,s1.address,
+		s1.address,
 		s1.label_type,
 		s1.label_type||''_''||''WHALE'' as label_name,
 		now() as updated_at
@@ -3781,7 +3729,7 @@ values ('address_label_token_balance_top_all','	truncate table address_label_tok
 			select
 				a1.address,
 				a2.label_type,
-				-- 分组字段很关键
+
 				row_number() over( partition by a2.token
 		order by
 			balance_usd desc,address asc) as rn
@@ -3804,17 +3752,17 @@ values ('address_label_token_balance_top_all','	truncate table address_label_tok
 
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_volume_rank_all','	-- -- 第二类标签
+values ('address_label_token_volume_rank_all','
 	truncate
 		table public.address_label_token_volume_rank_all;
 
 	insert
-	into public.address_label_token_volume_rank_all (distributed_key,address,
+	into public.address_label_token_volume_rank_all (address,
 												label_type,
 												label_name,
 
 												updated_at)
-	select md5(cast(random() as varchar)) as distributed_key,tb1.address
+	select tb1.address
 			,
 		tb2.label_type
 			,
