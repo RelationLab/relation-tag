@@ -1397,35 +1397,6 @@ values ('address_label_token_project_type_volume_grade','truncate
 		) t where total_transfer_volume_usd >= 100;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_token_project_time_top','truncate
-			table public.address_label_token_project_time_top;
-
-		insert
-			into
-			public.address_label_token_project_time_top(address,
-			label_type,
-			label_name,
-
-			updated_at)
-			select
-			s1.address,
-			s1.label_type,
-			s1.label_type as label_name,
-			now() as updated_at
-			from
-			(
-				select
-					a1.address,
-					a2.label_type,
-					row_number() over(partition by   a2.seq_flag  order by first_updated_block_height desc) as rn
-				from dex_tx_volume_count_summary a1 inner join dim_project_token_type a2
-															on a1.token=a2.token
-																and a1.project=a2.project
-																and a1.type=a2.type and a2.data_subject=''time''
-			) s1 where s1.rn<=100;
-		',1);
-
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_project_type_volume_rank','	truncate
 		table public.address_label_token_project_type_volume_rank;
 
@@ -3821,10 +3792,8 @@ insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('summary','truncate table address_label_gp_temp;
 		insert into public.address_label_gp_temp(address,label_type,label_name,updated_at,owner,source)
 		select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source from address_label_eth_count_grade  union all
-		select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source from address_label_token_project_type_balance_grade  union all
 		select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_project_type_count_grade  union all
 		select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_project_type_volume_grade  union all
-		select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_project_time_top  union all
 		select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_token_project_type_volume_rank  union all
 		select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_nft_project_type_count_grade  union all
 		select address,label_type,label_name,updated_at,''-1'' as owner,''SYSTEM'' as source  from address_label_nft_project_type_volume_grade  union all
