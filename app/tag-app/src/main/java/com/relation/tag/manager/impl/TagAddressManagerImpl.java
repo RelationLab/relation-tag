@@ -62,18 +62,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
             }
             log.info("runOrder==={}   end..... ", key);
             try {
-                Thread.sleep(1*70*60*1000);
+                Thread.sleep(1*60*60*1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-//            checkAndRepair(sortMap);
-//            long timeSleep = partTag ? 120000 : 1800000;
-//            try {
-//                Thread.sleep(timeSleep);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//            tagMerge();
+            checkAndRepair(sortMap);
+            tagMerge();
         });
     }
 
@@ -104,12 +98,14 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void checkAndRepair(String ruleSql, String ruleName) {
-        String[] checkSqlArr = ruleSql.split(";");
-        String checkSql = checkSqlArr[checkSqlArr.length - 1];
-        String checkSqlSbstr = "select count(1)  ".concat(checkSql.substring(checkSql.indexOf("from")));
-        Long shouldTagCount = iAddressLabelService.exceSelectSql(checkSqlSbstr);
-        Long tagCount = iAddressLabelService.exceSelectSql("select count(1)  from ".concat(ruleName));
-        if (!shouldTagCount.equals(tagCount)) {
+        Long tagCount = iAddressLabelService.exceSelectSql("select count(1)  from (select * from ".concat(ruleName).concat("limit 1)  t"));
+        if (tagCount.intValue()!=1) {
+            try {
+                Thread.sleep(1*60*1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            checkAndRepair( ruleSql,  ruleName);
             log.info("{}  exec failed......", ruleName);
         }
     }
