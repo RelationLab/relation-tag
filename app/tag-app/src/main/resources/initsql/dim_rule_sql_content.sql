@@ -1745,92 +1745,92 @@ values ('address_label_nft_project_type_count_grade','truncate
 		',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_project_type_volume_grade','truncate
-			table public.address_label_nft_project_type_volume_grade;
+values ('address_label_nft_project_type_volume_grade','	truncate
+		table public.address_label_nft_project_type_volume_grade;
 
-		insert
-			into
-			public.address_label_nft_project_type_volume_grade(address,
-			label_type,
-			label_name,
+	insert
+	into
+		public.address_label_nft_project_type_volume_grade(address,
+														label_type,
+														label_name,
 
-			updated_at)
-		select
-			address
-				,
-			label_type
-				,
-			label_type||''_''||case
-				when volume_usd >= 1
-					and volume_usd < 3 then ''L1''
-				when volume_usd >= 3
-					and volume_usd < 7 then ''L2''
-				when volume_usd >= 7
-					and volume_usd < 21 then ''L3''
-				when volume_usd >= 21
-					and volume_usd < 101 then ''L4''
-				when volume_usd >= 101
-					and volume_usd < 201 then ''L5''
-				when volume_usd >= 201 then ''L6''
-				end as label_name,
+														updated_at)
+	select
+		address
+			,
+		label_type
+			,
+		label_type||''_''||case
+							when volume_usd >= 100
+								and volume_usd < 1000 then ''L1''
+							when volume_usd >= 1000
+								and volume_usd < 10000 then ''L2''
+							when volume_usd >= 10000
+								and volume_usd < 50000 then ''L3''
+							when volume_usd >= 50000
+								and volume_usd < 100000 then ''L4''
+							when volume_usd >= 100000
+								and volume_usd < 500000 then ''L5''
+							when volume_usd >= 500000 then ''L6''
+			end as label_name,
 			now() as updated_at
-		from
-			(
-				select
-					a1.address,
-					a2.seq_flag,
-					a2.label_type,
-					sum(
-							volume_usd) as volume_usd
-				from
-					platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-																on a1.token=a2.token and a1.platform_group=a2.project and a2.data_subject = ''volume_grade''
-				group by
-					a1.address,
-					a2.seq_flag,
-					a2.label_type
-				union all
-				select
-					a1.address,
-					a2.seq_flag,
-					a2.label_type,
-					sum(
-							volume_usd) as volume_usd
-				from
-					platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-																on a2.token=''ALL'' and a1.platform_group=a2.project and a2.data_subject = ''volume_grade''
-				group by
-					a1.address,
-					a2.seq_flag,
-					a2.label_type
-				union all
-				select
-					a1.address,
-					a2.seq_flag,
-					a2.label_type,
-					sum(volume_usd) as volume_usd
-				from
-					platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-																on a2.token=''ALL'' and a1.platform_group=a2.project and a2.type=''ALL'' and a2.data_subject = ''volume_grade''
-				group by
-					a1.address,
-					a2.seq_flag,
-					a2.label_type
-				union all
-				select
-					a1.address,
-					a2.seq_flag,
-					a2.label_type,
-					sum(
-							volume_usd) as volume_usd
-				from
-					platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-																on a1.token=a2.token and a1.platform_group=a2.project and a2.type=''ALL'' and a2.data_subject = ''volume_grade''
-				group by
-					a1.address,
-					a2.seq_flag,
-					a2.label_type
-			) t where volume_usd >= 1;',1);
+	from
+		(
+			select
+				a1.address,
+				a2.seq_flag,
+				a2.label_type,
+				sum(
+						volume_usd) as volume_usd
+			from
+				platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+															on a1.token=a2.token and a1.platform_group=a2.project and a2.data_subject = ''volume_grade''
+			group by
+				a1.address,
+				a2.seq_flag,
+				a2.label_type
+			union all
+			select
+				a1.address,
+				a2.seq_flag,
+				a2.label_type,
+				sum(
+				volume_usd) as volume_usd
+			from
+				platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+			on a2.token=''ALL'' and a1.platform_group=a2.project and a2.data_subject = ''volume_grade''
+			group by
+				a1.address,
+				a2.seq_flag,
+				a2.label_type
+			union all
+			select
+				a1.address,
+				a2.seq_flag,
+				a2.label_type,
+				sum(volume_usd) as volume_usd
+			from
+				platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+			on a2.token=''ALL'' and a1.platform_group=a2.project and a2.type=''ALL'' and a2.data_subject = ''volume_grade''
+			group by
+				a1.address,
+				a2.seq_flag,
+				a2.label_type
+			union all
+			select
+				a1.address,
+				a2.seq_flag,
+				a2.label_type,
+				sum(
+				volume_usd) as volume_usd
+			from
+				platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+			on a1.token=a2.token and a1.platform_group=a2.project and a2.type=''ALL'' and a2.data_subject = ''volume_grade''
+			group by
+				a1.address,
+				a2.seq_flag,
+				a2.label_type
+		) t where volume_usd >= 1;',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_count_rank','
