@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.util.Arrays;
@@ -18,32 +19,31 @@ public class FileUtils {
     public final static String SEMICOLON = ";";
 
     public static void readFileTree(String rootPath, List<FileEntity> fileList) throws IOException {
-        ClassPathResource resource = new ClassPathResource(rootPath);
-        FileUtils.readFileTree(resource.getPath(), fileList, resource.getFile());
+        readFileRecursion(ResourceUtils.CLASSPATH_URL_PREFIX +rootPath,  fileList);
     }
 
-    public static void readFileTree(String rootPath, List<FileEntity> fileList, File resourceFile) throws IOException {
-        File rootFile = new File(rootPath);
-        System.out.println(rootPath);
+    public static void readFileRecursion(String rootPath, List<FileEntity> fileList) throws IOException {
+        File file = ResourceUtils.getFile( rootPath);
         FileInputStream is = null;
         BufferedReader reader = null;
         StringBuilder sb = new StringBuilder();
-        if (rootFile.isFile()) {
+        if (!file.isDirectory()) {
             //如果当前路径是文件，读取内容
-            is = new FileInputStream(rootFile);
+            is = new FileInputStream(file);
             reader = new BufferedReader(new InputStreamReader(is, "GBK"));
             String content = null;
             while ((content = reader.readLine()) != null) {
                 sb.append(content);
             }
-            fileList.add(FileEntity.builder().fileName(rootFile.getName()).fileContent(sb.toString()).build());
+            fileList.add(FileEntity.builder().fileName(file.getName()).fileContent(sb.toString()).build());
             System.out.println("文件内容 : " + sb.toString());
         } else {
             //如果当前路径是文件夹，则列出文件夹下的所有文件和目录
-            File[] files = resourceFile != null ? resourceFile.listFiles() : rootFile.listFiles();
-            for (File file : files) {
+            File[] files = file.listFiles();
+            for (File fileItem : files) {
+               String path =  fileItem.getPath();
                 //递归调用
-                readFileTree(file.getAbsolutePath(), fileList, null);
+                readFileRecursion(fileItem.getAbsolutePath(), fileList);
             }
         }
 

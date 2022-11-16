@@ -83,10 +83,10 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void refreshAllLabel() throws Exception {
-        innit();
+//        innit();
         List<FileEntity> fileList = Lists.newArrayList();
         FileUtils.readFileTree(SCRIPTSPATH, fileList);
-        tagByRuleSqlList(fileList, false);
+//        tagByRuleSqlList(fileList, false);
     }
 
     private void innit() throws Exception {
