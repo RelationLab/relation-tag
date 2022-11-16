@@ -25,42 +25,42 @@ public class PublicTagController {
     private TagAddressManager tagAddressManager;
 
 
-    @PostMapping("tag/check-and-repair")
-    @ApiOperation("按标签类型打标签")
-    @MethodDesc("按标签类型打标签")
-    public ResponseWrapper checkAndRepair() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    tagAddressManager.checkAndRepair();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }).start();
-        return ResponseWrapper.success();
-    }
+//    @PostMapping("tag/check-and-repair")
+//    @ApiOperation("按标签类型打标签")
+//    @MethodDesc("按标签类型打标签")
+//    public ResponseWrapper checkAndRepair() {
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    tagAddressManager.checkAndRepair();
+//                } catch (Exception e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        }).start();
+//        return ResponseWrapper.success();
+//    }
 
-    @PostMapping("tag/lable-type")
-    @ApiOperation("按标签类型打标签")
-    @MethodDesc("按标签类型打标签")
-    public ResponseWrapper tagByLabeltype(@RequestBody List<String> tables) {
-        if (CollectionUtils.isEmpty(tables)) {
-            return ResponseWrapper.error(1, "请检查参数");
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    tagAddressManager.refreshTagByTable(tables);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }).start();
-        return ResponseWrapper.success();
-    }
+//    @PostMapping("tag/lable-type")
+//    @ApiOperation("按标签类型打标签")
+//    @MethodDesc("按标签类型打标签")
+//    public ResponseWrapper tagByLabeltype(@RequestBody List<String> tables) {
+//        if (CollectionUtils.isEmpty(tables)) {
+//            return ResponseWrapper.error(1, "请检查参数");
+//        }
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    tagAddressManager.refreshTagByTable(tables);
+//                } catch (Exception e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        }).start();
+//        return ResponseWrapper.success();
+//    }
 
     @PostMapping("tag/refresh-all-label")
     @ApiOperation("初始化打标签")
