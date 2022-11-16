@@ -32,7 +32,7 @@ public class FileUtils {
             BufferedReader bufferedReader = new BufferedReader(read);
             String lineTxt = null;
             while ((lineTxt = bufferedReader.readLine()) != null) {
-                stringBuffer.append(lineTxt);
+                stringBuffer.append(lineTxt).append("\n");
             }
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
