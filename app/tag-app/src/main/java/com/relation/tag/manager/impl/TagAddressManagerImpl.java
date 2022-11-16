@@ -39,8 +39,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
         try {
             forkJoinPool.execute(() -> {
                 ruleSqlList.parallelStream().forEach(ruleSql -> {
-                    log.info("sqlname={},sql===={}",ruleSql.getFileName(),ruleSql.getFileContent());
-//                    iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
+                    log.info("sqlname={},sql===={}", ruleSql.getFileName(), ruleSql.getFileContent());
+                    iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
                 });
             });
         } catch (Exception e) {
@@ -51,8 +51,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-//        checkAndRepair(ruleSqlList);
-//        tagMerge();
+        checkAndRepair(ruleSqlList);
+        tagMerge();
     }
 
     private void checkAndRepair(List<FileEntity> fileList) {
@@ -68,6 +68,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void checkAndRepair(String ruleSql, String ruleName) {
+        ruleName = ruleName.substring(0,ruleName.indexOf("."));
         Long tagCount = iAddressLabelService.exceSelectSql("select count(1)  from (select * from ".concat(ruleName).concat(" limit 1)  t"));
         if (tagCount.intValue() != 1) {
             try {
@@ -80,25 +81,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
     }
 
-    class MapKeyComparator implements Comparator<Integer> {
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            return o1 - o2;
-        }
-    }
-
-    public Map<Integer, List<DimRuleSqlContent>> sortMapByKey(Map<Integer, List<DimRuleSqlContent>> map) {
-        if (map == null || map.isEmpty()) {
-            return null;
-        }
-        Map<Integer, List<DimRuleSqlContent>> sortMap = new TreeMap<>(new MapKeyComparator());
-        sortMap.putAll(map);
-        return sortMap;
-    }
-
     @Override
     public void refreshAllLabel() throws Exception {
-//        innit();
+        innit();
         List<FileEntity> fileList = Lists.newArrayList();
         FileUtils.readFileTree(SCRIPTSPATH, fileList);
         tagByRuleSqlList(fileList, false);

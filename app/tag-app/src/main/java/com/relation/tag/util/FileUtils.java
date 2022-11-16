@@ -17,13 +17,14 @@ import java.util.stream.Collectors;
 public class FileUtils {
     public final static String SEMICOLON = ";";
 
-    public static  void readFileTree(String rootPath, List<FileEntity> fileList) throws IOException {
+    public static void readFileTree(String rootPath, List<FileEntity> fileList) throws IOException {
         ClassPathResource resource = new ClassPathResource(rootPath);
-        File rootFile = new File(resource.getPath());
-        if (!rootFile.exists()) {
-            System.out.println("路径错误");
-            return;
-        }
+        FileUtils.readFileTree(resource.getPath(), fileList, resource.getFile());
+    }
+
+    public static void readFileTree(String rootPath, List<FileEntity> fileList, File resourceFile) throws IOException {
+        File rootFile = new File(rootPath);
+        System.out.println(rootPath);
         FileInputStream is = null;
         BufferedReader reader = null;
         StringBuilder sb = new StringBuilder();
@@ -36,12 +37,13 @@ public class FileUtils {
                 sb.append(content);
             }
             fileList.add(FileEntity.builder().fileName(rootFile.getName()).fileContent(sb.toString()).build());
+            System.out.println("文件内容 : " + sb.toString());
         } else {
             //如果当前路径是文件夹，则列出文件夹下的所有文件和目录
-            File[] files = rootFile.listFiles();
+            File[] files = resourceFile != null ? resourceFile.listFiles() : rootFile.listFiles();
             for (File file : files) {
                 //递归调用
-                readFileTree(file.getAbsolutePath(),fileList);
+                readFileTree(file.getAbsolutePath(), fileList, null);
             }
         }
 
@@ -66,7 +68,7 @@ public class FileUtils {
         try {
             Resource resource = new ClassPathResource(filePath);
             read = new InputStreamReader(resource.getInputStream(), "UTF-8");
-            BufferedReader bufferedReader  = new BufferedReader(read);
+            BufferedReader bufferedReader = new BufferedReader(read);
             String lineTxt = null;
             while ((lineTxt = bufferedReader.readLine()) != null) {
                 stringBuffer.append(lineTxt);
@@ -93,7 +95,7 @@ public class FileUtils {
      * @param fileNames
      * @return
      */
-    public static List<String> resolveSqlFile(String fileDir, String[] fileNames) throws Exception{
+    public static List<String> resolveSqlFile(String fileDir, String[] fileNames) throws Exception {
         log.info("resolveSqlFile start......");
         String filePathConcat = concatDir(fileDir);
         List<String> sqlList = Lists.newArrayList();
