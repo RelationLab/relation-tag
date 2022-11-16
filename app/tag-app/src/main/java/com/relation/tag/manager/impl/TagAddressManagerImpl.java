@@ -140,7 +140,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         });
         forkJoinPool.execute(() -> {
             try {
-                iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("summary.sql")), "summary.sql");
+                iAddressLabelService.exceSql(FileUtils.readFile(SCRIPTSPATH.concat(File.separator).concat("summary.sql")), "summary.sql");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
