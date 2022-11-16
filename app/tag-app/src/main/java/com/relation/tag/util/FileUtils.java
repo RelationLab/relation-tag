@@ -17,45 +17,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FileUtils {
     public final static String SEMICOLON = ";";
-
-    public static void readFileTree(String rootPath, List<FileEntity> fileList) throws IOException {
-        readFileRecursion(ResourceUtils.CLASSPATH_URL_PREFIX +rootPath,  fileList);
-    }
-
-    public static void readFileRecursion(String rootPath, List<FileEntity> fileList) throws IOException {
-        File file = ResourceUtils.getFile( rootPath);
-        FileInputStream is = null;
-        BufferedReader reader = null;
-        StringBuilder sb = new StringBuilder();
-        if (!file.isDirectory()) {
-            //如果当前路径是文件，读取内容
-            is = new FileInputStream(file);
-            reader = new BufferedReader(new InputStreamReader(is, "GBK"));
-            String content = null;
-            while ((content = reader.readLine()) != null) {
-                sb.append(content);
-            }
-            fileList.add(FileEntity.builder().fileName(file.getName()).fileContent(sb.toString()).build());
-            System.out.println("文件内容 : " + sb.toString());
-        } else {
-            //如果当前路径是文件夹，则列出文件夹下的所有文件和目录
-            File[] files = file.listFiles();
-            for (File fileItem : files) {
-               String path =  fileItem.getPath();
-                //递归调用
-                readFileRecursion(fileItem.getAbsolutePath(), fileList);
-            }
-        }
-
-        if (reader != null) {
-            reader.close();
-        }
-
-        if (is != null) {
-            is.close();
-        }
-    }
-
     /**
      * read TXT file
      *

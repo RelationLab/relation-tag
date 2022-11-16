@@ -83,10 +83,16 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void refreshAllLabel() throws Exception {
-//        innit();
+        innit();
+        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
         List<FileEntity> fileList = Lists.newArrayList();
-        FileUtils.readFileTree(SCRIPTSPATH, fileList);
-//        tagByRuleSqlList(fileList, false);
+        for (DimRuleSqlContent item:ruleSqlList) {
+            String fileName = item.getRuleName().concat(".sql");
+            fileList.add(FileEntity.builder().fileName(fileName)
+                    .fileContent(FileUtils.readFile(SCRIPTSPATH.concat(File.separator)
+                            .concat(fileName))).build());
+        }
+        tagByRuleSqlList(fileList, false);
     }
 
     private void innit() throws Exception {
