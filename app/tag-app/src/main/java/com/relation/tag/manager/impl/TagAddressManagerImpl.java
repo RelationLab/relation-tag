@@ -35,25 +35,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     static String SCRIPTSPATH = "tagscripts";
 
-//    @Override
-//    public void refreshTagByTable(List<String> tables) {
-//        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.listByTables(tables);
-//        tagByRuleSqlList(ruleSqlList, true);
-//
-//    }
-
-//    @Override
-//    public void checkAndRepair() {
-//        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
-//        Map<Integer, List<DimRuleSqlContent>> sortMap = buildSortMap(ruleSqlList);
-//        checkAndRepair(sortMap);
-//    }
-
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList, boolean partTag) {
         try {
             forkJoinPool.execute(() -> {
                 ruleSqlList.parallelStream().forEach(ruleSql -> {
-                    iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
+                    log.info("sqlname={},sql===={}",ruleSql.getFileName(),ruleSql.getFileContent());
+//                    iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
                 });
             });
         } catch (Exception e) {
@@ -64,21 +51,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        checkAndRepair(ruleSqlList);
-        tagMerge();
+//        checkAndRepair(ruleSqlList);
+//        tagMerge();
     }
-
-//    private Map<Integer, List<DimRuleSqlContent>> buildSortMap(List<DimRuleSqlContent> ruleSqlList) {
-//        ruleSqlList = ruleSqlList.stream().filter(item -> {
-//            return !StringUtils.equals(item.getRuleName(), "summary");
-//        }).collect(Collectors.toList());
-//        //根据ruleOrder字段进行分组
-//        Map<Integer, List<DimRuleSqlContent>> ruleSqlMap = ruleSqlList.stream().collect(
-//                Collectors.groupingBy(
-//                        ruleSql -> ruleSql.getRuleOrder()
-//                ));
-//        return sortMapByKey(ruleSqlMap);
-//    }
 
     private void checkAndRepair(List<FileEntity> fileList) {
         try {
@@ -123,8 +98,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void refreshAllLabel() throws Exception {
-        innit();
-//        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
+//        innit();
         List<FileEntity> fileList = Lists.newArrayList();
         FileUtils.readFileTree(SCRIPTSPATH, fileList);
         tagByRuleSqlList(fileList, false);
