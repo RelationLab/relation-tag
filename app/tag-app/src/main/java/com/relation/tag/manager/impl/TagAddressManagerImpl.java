@@ -1,12 +1,13 @@
 package com.relation.tag.manager.impl;
 
 import com.relation.tag.entity.DimRuleSqlContent;
+import com.relation.tag.entity.FileEntity;
 import com.relation.tag.manager.TagAddressManager;
 import com.relation.tag.service.IAddressLabelGpService;
 import com.relation.tag.service.IDimRuleSqlContentService;
 import com.relation.tag.util.FileUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ForkJoinPool;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -33,79 +33,74 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     static String FILEPATH = "initsql";
 
-    @Override
-    public void refreshTagByTable(List<String> tables) {
-        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.listByTables(tables);
-        tagByRuleSqlList(ruleSqlList, true);
+    static String SCRIPTSPATH = "tagscripts";
 
-    }
+//    @Override
+//    public void refreshTagByTable(List<String> tables) {
+//        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.listByTables(tables);
+//        tagByRuleSqlList(ruleSqlList, true);
+//
+//    }
 
-    @Override
-    public void checkAndRepair() {
-        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
-        Map<Integer, List<DimRuleSqlContent>> sortMap = buildSortMap(ruleSqlList);
-        checkAndRepair(sortMap);
-    }
+//    @Override
+//    public void checkAndRepair() {
+//        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
+//        Map<Integer, List<DimRuleSqlContent>> sortMap = buildSortMap(ruleSqlList);
+//        checkAndRepair(sortMap);
+//    }
 
-    private void tagByRuleSqlList(List<DimRuleSqlContent> ruleSqlList, boolean partTag) {
-        Map<Integer, List<DimRuleSqlContent>> sortMap = buildSortMap(ruleSqlList);
-        sortMap.forEach((key, value) -> {
-            log.info("runOrder==={}  start..... ", key);
-            try {
-                forkJoinPool.execute(() -> {
-                    value.parallelStream().forEach(ruleSql -> {
-                        iAddressLabelService.exceSql(ruleSql.getRuleSql(), ruleSql.getRuleName());
-                    });
+    private void tagByRuleSqlList(List<FileEntity> ruleSqlList, boolean partTag) {
+        try {
+            forkJoinPool.execute(() -> {
+                ruleSqlList.parallelStream().forEach(ruleSql -> {
+                    iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
                 });
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            log.info("runOrder==={}   end..... ", key);
-            try {
-                Thread.sleep(1*60*60*1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            checkAndRepair(sortMap);
-            tagMerge();
-        });
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Thread.sleep(1 * 60 * 60 * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        checkAndRepair(ruleSqlList);
+        tagMerge();
     }
 
-    private Map<Integer, List<DimRuleSqlContent>> buildSortMap(List<DimRuleSqlContent> ruleSqlList) {
-        ruleSqlList = ruleSqlList.stream().filter(item -> {
-            return !StringUtils.equals(item.getRuleName(), "summary");
-        }).collect(Collectors.toList());
-        //根据ruleOrder字段进行分组
-        Map<Integer, List<DimRuleSqlContent>> ruleSqlMap = ruleSqlList.stream().collect(
-                Collectors.groupingBy(
-                        ruleSql -> ruleSql.getRuleOrder()
-                ));
-        return sortMapByKey(ruleSqlMap);
-    }
+//    private Map<Integer, List<DimRuleSqlContent>> buildSortMap(List<DimRuleSqlContent> ruleSqlList) {
+//        ruleSqlList = ruleSqlList.stream().filter(item -> {
+//            return !StringUtils.equals(item.getRuleName(), "summary");
+//        }).collect(Collectors.toList());
+//        //根据ruleOrder字段进行分组
+//        Map<Integer, List<DimRuleSqlContent>> ruleSqlMap = ruleSqlList.stream().collect(
+//                Collectors.groupingBy(
+//                        ruleSql -> ruleSql.getRuleOrder()
+//                ));
+//        return sortMapByKey(ruleSqlMap);
+//    }
 
-    private void checkAndRepair(Map<Integer, List<DimRuleSqlContent>> sortMap) {
-        sortMap.forEach((key, value) -> {
-            try {
-                forkJoinCheckPool.submit(() -> {
-                    value.parallelStream().forEach(ruleSql -> {
-                        checkAndRepair(ruleSql.getRuleSql(), ruleSql.getRuleName());
-                    });
-                }).get();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+    private void checkAndRepair(List<FileEntity> fileList) {
+        try {
+            forkJoinCheckPool.submit(() -> {
+                fileList.parallelStream().forEach(ruleSql -> {
+                    checkAndRepair(ruleSql.getFileContent(), ruleSql.getFileName());
+                });
+            }).get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void checkAndRepair(String ruleSql, String ruleName) {
-        Long tagCount = iAddressLabelService.exceSelectSql("select count(1)  from (select * from ".concat(ruleName).concat("limit 1)  t"));
-        if (tagCount.intValue()!=1) {
+        Long tagCount = iAddressLabelService.exceSelectSql("select count(1)  from (select * from ".concat(ruleName).concat(" limit 1)  t"));
+        if (tagCount.intValue() != 1) {
             try {
-                Thread.sleep(1*60*1000);
+                Thread.sleep(1 * 60 * 1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            checkAndRepair( ruleSql,  ruleName);
+            checkAndRepair(ruleSql, ruleName);
             log.info("{}  exec failed......", ruleName);
         }
     }
@@ -129,8 +124,10 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Override
     public void refreshAllLabel() throws Exception {
         innit();
-        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
-        tagByRuleSqlList(ruleSqlList, false);
+//        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
+        List<FileEntity> fileList = Lists.newArrayList();
+        FileUtils.readFileTree(SCRIPTSPATH, fileList);
+        tagByRuleSqlList(fileList, false);
     }
 
     private void innit() throws Exception {
@@ -166,12 +163,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     "    updated_at timestamp(6)\n" +
                     ") distributed by (address);";
             iAddressLabelService.exceSql(createTable, "createTable");
-            List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
-            ruleSqlList = ruleSqlList.stream().filter(item -> {
-                return StringUtils.equals(item.getRuleName(), "summary");
-            }).collect(Collectors.toList());
-            String sql = ruleSqlList.get(0).getRuleSql();
-            iAddressLabelService.exceSql(sql, "summary");
+        });
+        forkJoinPool.execute(() -> {
+            try {
+                iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("summary.sql")), "summary.sql");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
         try {
             Thread.sleep(60000);
