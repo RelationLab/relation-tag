@@ -18,36 +18,35 @@ public class FileUtils {
     public final static String SEMICOLON = ";";
 
     public static  void readFileTree(String rootPath, List<FileEntity> fileList) throws IOException {
-        Resource resource = new ClassPathResource(rootPath);
-        if (!resource.exists()) {
+        ClassPathResource resource = new ClassPathResource(rootPath);
+        File rootFile = new File(resource.getPath());
+        if (!rootFile.exists()) {
             System.out.println("路径错误");
             return;
         }
-        System.out.println(rootPath);
         FileInputStream is = null;
-        InputStreamReader read = null;
+        BufferedReader reader = null;
         StringBuilder sb = new StringBuilder();
-        StringBuffer stringBuffer = new StringBuffer();
-        if (resource.isFile()) {
-            read = new InputStreamReader(resource.getInputStream(), "UTF-8");
-            BufferedReader bufferedReader  = new BufferedReader(read);
-            String lineTxt = null;
-            while ((lineTxt = bufferedReader.readLine()) != null) {
-                stringBuffer.append(lineTxt);
+        if (rootFile.isFile()) {
+            //如果当前路径是文件，读取内容
+            is = new FileInputStream(rootFile);
+            reader = new BufferedReader(new InputStreamReader(is, "GBK"));
+            String content = null;
+            while ((content = reader.readLine()) != null) {
+                sb.append(content);
             }
-            System.out.println("文件内容 : " + sb.toString());
-            fileList.add(FileEntity.builder().fileName(resource.getFilename()).fileContent(stringBuffer.toString()).build());
+            fileList.add(FileEntity.builder().fileName(rootFile.getName()).fileContent(sb.toString()).build());
         } else {
             //如果当前路径是文件夹，则列出文件夹下的所有文件和目录
-            File[] files = resource.getFile().listFiles();
+            File[] files = rootFile.listFiles();
             for (File file : files) {
                 //递归调用
-                readFileTree(file.getAbsolutePath(),fileList );
+                readFileTree(file.getAbsolutePath(),fileList);
             }
         }
 
-        if (read != null) {
-            read.close();
+        if (reader != null) {
+            reader.close();
         }
 
         if (is != null) {
