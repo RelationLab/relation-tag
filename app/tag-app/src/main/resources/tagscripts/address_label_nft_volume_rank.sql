@@ -1,14 +1,14 @@
 truncate  table public.address_label_nft_volume_rank;
 insert into public.address_label_nft_volume_rank(address,label_type,label_name,updated_at)
-    select tb1.address ,
+select tb1.address ,
        tb2.label_type,
        tb2.label_type||'_'||case
-           when zb_rate > 0.01 and zb_rate <= 0.025 then 'RARE_NFT_TRADER'
-           when zb_rate > 0.001 and zb_rate <= 0.01 then 'EPIC_NFT_TRADER'
-           when zb_rate > 0.025 and zb_rate <= 0.1 then 'UNCOMMON_NFT_TRADER'
-           when zb_rate <= 0.001 then 'LEGENDARY_NFT_TRADER'
+                                when zb_rate > 0.01 and zb_rate <= 0.025 then 'RARE_NFT_TRADER'
+                                when zb_rate > 0.001 and zb_rate <= 0.01 then 'EPIC_NFT_TRADER'
+                                when zb_rate > 0.025 and zb_rate <= 0.1 then 'UNCOMMON_NFT_TRADER'
+                                when zb_rate <= 0.001 then 'LEGENDARY_NFT_TRADER'
            end as label_name,
-        now()   as updated_at
+       now()   as updated_at
     from (select t1.id,
              t1.address,
              t1.token,
@@ -70,11 +70,11 @@ insert into public.address_label_nft_volume_rank(address,label_type,label_name,u
                                          INNER JOIN dim_project_token_type s2
                                                     ON
                                                                 s1.token = s2.token
-                                                            AND s2.type = s2.type
+                                                            AND s1.type = s2.type
                                                             AND s2.data_subject = 'volume_rank'
                                                             and s2.label_type like '%NFT%' AND  s2.label_type NOT  LIKE '%WEB3%'
                                 WHERE
-                                    transfer_volume >= 1
+                                        transfer_volume >= 1
                                 GROUP BY
                                     s1.address,
                                     s1.token,

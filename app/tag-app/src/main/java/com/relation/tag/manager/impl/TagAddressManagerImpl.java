@@ -115,18 +115,16 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Override
     public void tagMerge() {
         log.info("summaryData start....");
-        forkJoinPool.execute(() -> {
-            String createTable = "DROP TABLE if EXISTS  address_label_gp_temp;create table address_label_gp_temp\n" +
-                    "(\n" +
-                    "    owner      varchar(256),\n" +
-                    "    address    varchar(512),\n" +
-                    "    label_type varchar(512),\n" +
-                    "    label_name varchar(1024),\n" +
-                    "    source     varchar(100),\n" +
-                    "    updated_at timestamp(6)\n" +
-                    ") distributed by (address);";
-            iAddressLabelService.exceSql(createTable, "createTable");
-        });
+        String createTable = "DROP TABLE if EXISTS  address_label_gp_temp;create table address_label_gp_temp\n" +
+                "(\n" +
+                "    owner      varchar(256),\n" +
+                "    address    varchar(512),\n" +
+                "    label_type varchar(512),\n" +
+                "    label_name varchar(1024),\n" +
+                "    source     varchar(100),\n" +
+                "    updated_at timestamp(6)\n" +
+                ") distributed by (address);";
+        iAddressLabelService.exceSql(createTable, "createTable");
         forkJoinPool.execute(() -> {
             try {
                 iAddressLabelService.exceSql(FileUtils.readFile(SCRIPTSPATH.concat(File.separator).concat("summary.sql")), "summary.sql");
