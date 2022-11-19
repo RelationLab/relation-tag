@@ -11,7 +11,7 @@ insert into public.address_label_token_project_time_top(address,label_type,label
             a1.address,
             a2.label_type,
             -- 分组字段很关键
-            row_number() over(partition by   a2.seq_flag  order by first_updated_block_height desc) as rn
+            row_number() over(partition by   a2.token,a2.seq_flag,a2.type  order by first_updated_block_height desc) as rn
         from dex_tx_volume_count_summary a1 inner join dim_project_token_type a2
                                                        on a1.token=a2.token
                                                            and a1.project=a2.project

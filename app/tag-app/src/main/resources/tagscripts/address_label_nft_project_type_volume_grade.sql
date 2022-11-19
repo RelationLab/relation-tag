@@ -22,7 +22,6 @@ insert into public.address_label_nft_project_type_volume_grade(address,label_typ
         -- project-token-type
         select
             a1.address,
-            a2.seq_flag,
             a2.label_type,
             sum(
                     volume_usd) as volume_usd
@@ -31,13 +30,11 @@ insert into public.address_label_nft_project_type_volume_grade(address,label_typ
                                                           on a1.token=a2.token and a1.platform_group=a2.project and a2.data_subject = 'volume_grade'
         group by
             a1.address,
-            a2.seq_flag,
             a2.label_type
     -- project-token(ALL)-type
         union all
         select
             a1.address,
-            a2.seq_flag,
             a2.label_type,
             sum(
             volume_usd) as volume_usd
@@ -46,13 +43,11 @@ insert into public.address_label_nft_project_type_volume_grade(address,label_typ
         on a2.token='ALL' and a1.platform_group=a2.project and a2.data_subject = 'volume_grade'
         group by
             a1.address,
-            a2.seq_flag,
             a2.label_type
             -- project-token(ALL)-type(ALL)
         union all
         select
             a1.address,
-            a2.seq_flag,
             a2.label_type,
             sum(volume_usd) as volume_usd
         from
@@ -60,13 +55,11 @@ insert into public.address_label_nft_project_type_volume_grade(address,label_typ
         on a2.token='ALL' and a1.platform_group=a2.project and a2.type='ALL' and a2.data_subject = 'volume_grade'
         group by
             a1.address,
-            a2.seq_flag,
             a2.label_type
             -- project-token-type(ALL)
         union all
         select
             a1.address,
-            a2.seq_flag,
             a2.label_type,
             sum(
             volume_usd) as volume_usd
@@ -75,6 +68,5 @@ insert into public.address_label_nft_project_type_volume_grade(address,label_typ
         on a1.token=a2.token and a1.platform_group=a2.project and a2.type='ALL' and a2.data_subject = 'volume_grade'
         group by
             a1.address,
-            a2.seq_flag,
             a2.label_type
     ) t where volume_usd >= 1;

@@ -20,7 +20,6 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
     from (
          -- project(null)+nft+type(null)
          select a1.address,
-                a2.seq_flag,
                 a2.label_type,
                 sum(balance) as balance
          from nft_holding a1
@@ -28,12 +27,10 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
                              on a1.token = a2.token and (a2.project ='' or a2.project ='ALL') and (a2.type ='' OR a2.type ='ALL') and
                                 a2.data_subject = 'balance_grade' and a2.label_type like '%NFT%' AND  a2.label_type NOT  LIKE '%WEB3%'
          group by a1.address,
-             a2.seq_flag,
              a2.label_type
          union all
          -- project(null)+nft(ALL)+type(null)
          select a1.address,
-             a2.seq_flag,
              a2.label_type,
              sum(balance) as balance
          from nft_holding a1
@@ -41,6 +38,5 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
          on a2.token = 'ALL' and (a2.project ='' or a2.project ='ALL') and (a2.type ='' OR a2.type ='ALL') and
              a2.data_subject = 'balance_grade' and a2.label_type like '%NFT%' AND  a2.label_type NOT  LIKE '%WEB3%'
          group by a1.address,
-             a2.seq_flag,
              a2.label_type
      ) t where balance>=1;

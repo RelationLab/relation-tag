@@ -11,15 +11,24 @@ insert into public.address_label_token_time_first_stake (address,label_type,labe
             a1.address,
             a2.label_type,
             -- 分组字段很关键
-            row_number() over( partition by a2.seq_flag
+            row_number() over( partition by a2.token,
+		seq_flag
 	order by
-		first_updated_block_height asc) as rn
+		first_updated_block_height asc,
+		address asc) as rn
         from
-            (select * from
-                dex_tx_volume_count_summary where type='stake' and balance_usd>0)  a1
+            (
+                select
+                    *
+                from
+                    dex_tx_volume_count_summary
+                where
+                        type = 'stake'
+                  and balance_usd>0) a1
                 inner join dim_project_token_type a2
                            on
-                                       a1.token = a2.token and a1.project=a2.project
+                                       a1.token = a2.token
+                                   and a1.project = a2.project
                                    and a2.data_subject = 'FIRST_MOVER_STAKING'
     ) s1
     where

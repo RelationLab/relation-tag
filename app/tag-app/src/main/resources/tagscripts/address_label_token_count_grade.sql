@@ -3,27 +3,26 @@ insert into public.address_label_token_count_grade (address,label_type,label_nam
     select
     a1.address ,
     a2.label_type,
-    a2.label_type||'_'||case
-        when total_transfer_all_count >= 1
-            and total_transfer_all_count < 10 then 'L1'
-        when total_transfer_all_count >= 10
-            and total_transfer_all_count < 40 then 'L2'
-        when total_transfer_all_count >= 40
-            and total_transfer_all_count < 80 then 'L3'
-        when total_transfer_all_count >= 80
-            and total_transfer_all_count < 120 then 'L4'
-        when total_transfer_all_count >= 120
-            and total_transfer_all_count < 160 then 'L5'
-        when total_transfer_all_count >= 160
-            and total_transfer_all_count < 200 then 'L6'
-        when total_transfer_all_count >= 200
-            and total_transfer_all_count < 400 then 'Low'
-        when total_transfer_all_count >= 400
-            and total_transfer_all_count < 619 then 'Medium'
-        when total_transfer_all_count >= 619 then 'High'
-        end as label_name
-        ,
-        now() as updated_at
+    a2.label_type || '_' || case
+                                when total_transfer_all_count >= 1
+                                    and total_transfer_all_count < 10 then 'L1'
+                                when total_transfer_all_count >= 10
+                                    and total_transfer_all_count < 40 then 'L2'
+                                when total_transfer_all_count >= 40
+                                    and total_transfer_all_count < 80 then 'L3'
+                                when total_transfer_all_count >= 80
+                                    and total_transfer_all_count < 120 then 'L4'
+                                when total_transfer_all_count >= 120
+                                    and total_transfer_all_count < 160 then 'L5'
+                                when total_transfer_all_count >= 160
+                                    and total_transfer_all_count < 200 then 'L6'
+                                when total_transfer_all_count >= 200
+                                    and total_transfer_all_count < 400 then 'Low'
+                                when total_transfer_all_count >= 400
+                                    and total_transfer_all_count < 619 then 'Medium'
+                                when total_transfer_all_count >= 619 then 'High'
+        end as label_name,
+    now() as updated_at
     from
     (
         select
@@ -39,9 +38,17 @@ insert into public.address_label_token_count_grade (address,label_type,label_nam
             sum(total_transfer_all_count) as total_transfer_all_count
         from
             (
-            select address,total_transfer_all_count from  eth_holding th
-            union all
-            select address,total_transfer_all_count from  token_holding th
+                select
+                    address,
+                    total_transfer_all_count
+                from
+                    eth_holding th
+                union all
+                select
+                    address,
+                    total_transfer_all_count
+                from
+                    token_holding th
             ) th2
         group by
             address

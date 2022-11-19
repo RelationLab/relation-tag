@@ -28,22 +28,19 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
         -- project-token-type
         select
             a1.address,
-            a2.seq_flag,
             a2.label_type,
             sum(
                     transfer_count) as sum_count
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-                                                          on a1.token=a2.token and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = 'count'
+            on a1.token=a2.token and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = 'count'
         group by
             a1.address,
-            a2.seq_flag,
             a2.label_type
             -- project-token(ALL)-type(ALL)
         union all
         select
             a1.address,
-            a2.seq_flag,
             a2.label_type,
             sum(
             transfer_count) as sum_count
@@ -52,13 +49,11 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
         on a2.token='ALL' and a1.platform_group=a2.project and a2.type='ALL' and a2.data_subject = 'count'
         group by
             a1.address,
-            a2.seq_flag,
             a2.label_type
             -- project-token(ALL)-type
         union all
         select
             a1.address,
-            a2.seq_flag,
             a2.label_type,
             sum(
             transfer_count) as sum_count
@@ -67,13 +62,11 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
         on a2.token='ALL' and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = 'count'
         group by
             a1.address,
-            a2.seq_flag,
             a2.label_type
             -- project-token-type(ALL)
         union all
         select
             a1.address,
-            a2.seq_flag,
             a2.label_type,
             sum(
             transfer_count) as sum_count
@@ -82,6 +75,5 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
         on a1.token=a2.token and a1.platform_group=a2.project and a2.type='ALL' and a2.data_subject = 'count'
         group by
             a1.address,
-            a2.seq_flag,
             a2.label_type
     ) t where sum_count >= 1;
