@@ -37,7 +37,7 @@ insert into public.address_label_nft_balance_rank(address,label_type,label_name,
 		select
 			t1.address,
 			t1.balance,
-			t1.seq_flag
+			t1.seq_flag,
 			t1.count_sum,
 			t1.count_sum_total,
 			t1.zb_rate
