@@ -46,7 +46,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             throw new RuntimeException(e);
         }
         try {
-            Thread.sleep(1 * 60 * 60 * 1000);
+            Thread.sleep(1 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
