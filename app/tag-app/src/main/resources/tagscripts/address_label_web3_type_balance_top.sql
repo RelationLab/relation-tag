@@ -25,7 +25,7 @@ insert into public.address_label_web3_type_balance_top (address,label_type,label
 			a1.address,
 			a2.label_type,
 			a2.type,
-			a2.project
+			a2.project,
 			-- 分组字段很关键
             row_number() over( partition by a2.type,a2.project
 		order by

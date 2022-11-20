@@ -16,7 +16,6 @@ insert into public.address_label_token_volume_rank_all (address,label_type,label
     from
     (
         select
-            t1.id,
             t1.address,
             t1.token,
             t1.volume_usd,
@@ -26,7 +25,6 @@ insert into public.address_label_token_volume_rank_all (address,label_type,label
         from
             (
                 select
-                    a2.id,
                     a2.address,
                     a2.token,
                     a2.volume_usd,
