@@ -1,7 +1,5 @@
-drop table if exists address_label_token_project_type_balance_grade;
 drop table if exists address_label_token_project_type_count_grade;
 drop table if exists address_label_token_project_type_volume_grade;
-drop table if exists address_label_token_project_time_top;
 drop table if exists address_label_token_project_type_volume_rank;
 drop table if exists address_label_nft_project_type_count_grade;
 drop table if exists address_label_nft_project_type_volume_grade;
@@ -53,14 +51,6 @@ drop table if exists address_label_token_balance_rank_all;
 drop table if exists address_label_token_balance_top_all;
 drop table if exists address_label_token_volume_rank_all;
 
-CREATE TABLE public.address_label_token_project_type_balance_grade (
-                                                                       
-                                                                       address varchar(512) NULL,
-                                                                       label_type varchar(512) NULL,
-                                                                       label_name varchar(1024) NULL,
-                                                                       updated_at timestamp(6) NULL
-);
-
 CREATE TABLE public.address_label_token_project_type_count_grade (
                                                                          
                                                                          address varchar(512) NULL,
@@ -75,14 +65,6 @@ CREATE TABLE public.address_label_token_project_type_volume_grade (
                                                                           label_type varchar(512) NULL,
                                                                           label_name varchar(1024) NULL,
                                                                           updated_at timestamp(6) NULL
-);
-
-CREATE TABLE public.address_label_token_project_time_top (
-                                                                 
-                                                                 address varchar(512) NULL,
-                                                                 label_type varchar(512) NULL,
-                                                                 label_name varchar(1024) NULL,
-                                                                 updated_at timestamp(6) NULL
 );
 
 CREATE TABLE public.address_label_token_project_type_volume_rank (
