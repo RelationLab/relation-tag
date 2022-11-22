@@ -52,5 +52,11 @@ select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source
 select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_token_balance_rank_all union all
 select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_token_balance_top_all union all
 select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_token_volume_rank_all union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_univ3_balance_grade union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_univ3_count_grade union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_univ3_volume_grade union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_univ3_balance_rank union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_univ3_balance_top union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_univ3_volume_rank union all
 select address,label_type,label_name,updated_at, owner, source  from address_label_third_party union all
 select address,label_type,label_name,updated_at,owner, source  from address_label_ugc;

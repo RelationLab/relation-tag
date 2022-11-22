@@ -50,6 +50,12 @@ drop table if exists address_label_token_volume_grade_all;
 drop table if exists address_label_token_balance_rank_all;
 drop table if exists address_label_token_balance_top_all;
 drop table if exists address_label_token_volume_rank_all;
+drop table if exists address_label_univ3_balance_grade;
+drop table if exists address_label_univ3_count_grade;
+drop table if exists address_label_univ3_volume_grade;
+drop table if exists address_label_univ3_balance_rank;
+drop table if exists address_label_univ3_balance_top;
+drop table if exists address_label_univ3_volume_rank;
 
 CREATE TABLE public.address_label_token_project_type_count_grade (
                                                                          
@@ -462,6 +468,54 @@ CREATE TABLE public.address_label_token_balance_top_all (
 
 CREATE TABLE public.address_label_token_volume_rank_all (
                                                             
+                                                            address varchar(512) NULL,
+                                                            label_type varchar(512) NULL,
+                                                            label_name varchar(1024) NULL,
+                                                            updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_univ3_balance_grade (
+
+                                                            address varchar(512) NULL,
+                                                            label_type varchar(512) NULL,
+                                                            label_name varchar(1024) NULL,
+                                                            updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_univ3_count_grade (
+
+                                                            address varchar(512) NULL,
+                                                            label_type varchar(512) NULL,
+                                                            label_name varchar(1024) NULL,
+                                                            updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_univ3_volume_grade (
+
+                                                            address varchar(512) NULL,
+                                                            label_type varchar(512) NULL,
+                                                            label_name varchar(1024) NULL,
+                                                            updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_univ3_balance_rank (
+
+                                                            address varchar(512) NULL,
+                                                            label_type varchar(512) NULL,
+                                                            label_name varchar(1024) NULL,
+                                                            updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_univ3_balance_top (
+
+                                                            address varchar(512) NULL,
+                                                            label_type varchar(512) NULL,
+                                                            label_name varchar(1024) NULL,
+                                                            updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_univ3_volume_rank (
+
                                                             address varchar(512) NULL,
                                                             label_type varchar(512) NULL,
                                                             label_name varchar(1024) NULL,

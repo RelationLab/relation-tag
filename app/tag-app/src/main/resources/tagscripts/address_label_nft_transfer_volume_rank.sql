@@ -30,7 +30,7 @@ insert into public.address_label_nft_transfer_volume_rank (address,label_type,la
                   and dptt.type = 'Transfer'
                   and (dptt.project = ''
                     or dptt.project = 'ALL')
-                  and dptt.data_subject = 'volume_elite'
+                  and dptt.data_subject = 'volume_rank'
                   and dptt.label_type like '%NFT%'
                   and dptt.label_type not like '%WEB3%') as label_type,
     zb_rate
