@@ -144,15 +144,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
                             "alter table address_label_gp rename to address_label_old;" +
                             "alter table address_label_gp_temp rename to address_label_gp;";
                     iAddressLabelService.exceSql(renameSql, "renameSql");
+                    merge2Gin();
                 }
         );
-
-        try {
-            Thread.sleep(60000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        merge2Gin();
         log.info("rename table end....time===={}", System.currentTimeMillis() - summaryDataTime);
     }
 
