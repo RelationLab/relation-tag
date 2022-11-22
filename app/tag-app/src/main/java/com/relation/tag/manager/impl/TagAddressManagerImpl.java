@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.concurrent.ForkJoinPool;
 
 @Service
@@ -67,7 +64,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void checkAndRepair(String ruleSql, String ruleName) {
-        ruleName = ruleName.substring(0,ruleName.indexOf("."));
+        ruleName = ruleName.substring(0, ruleName.indexOf("."));
         Long tagCount = iAddressLabelService.exceSelectSql("select count(1)  from (select * from ".concat(ruleName).concat(" limit 1)  t"));
         if (tagCount.intValue() != 1) {
             try {
@@ -85,7 +82,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         innit();
         List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
         List<FileEntity> fileList = Lists.newArrayList();
-        for (DimRuleSqlContent item:ruleSqlList) {
+        for (DimRuleSqlContent item : ruleSqlList) {
             String fileName = item.getRuleName().concat(".sql");
             fileList.add(FileEntity.builder().fileName(fileName)
                     .fileContent(FileUtils.readFile(SCRIPTSPATH.concat(File.separator)
@@ -137,7 +134,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        long summaryDataTime = System.currentTimeMillis();
         forkJoinPool.execute(() -> {
                     log.info("rename table start....");
                     String renameSql = "drop table if exists address_label_old;" +
@@ -147,7 +143,15 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     merge2Gin();
                 }
         );
-        log.info("rename table end....time===={}", System.currentTimeMillis() - summaryDataTime);
+        try {
+            Thread.sleep(60000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        forkJoinPool.execute(() -> {
+                    merge2Gin();
+                }
+        );
     }
 
     @Override

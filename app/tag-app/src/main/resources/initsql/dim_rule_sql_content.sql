@@ -3787,3 +3787,17 @@ values ('address_label_token_volume_rank_all','
 				tb1.token = tb2.token
 	where tb1.volume_usd >= 100
   and tb2.data_subject = ''volume_rank'' and tb2.token_type=''token''   and  zb_rate <= 0.1;',1);
+
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_univ3_balance_grade','address_label_univ3_balance_grade',1);
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_univ3_count_grade','address_label_univ3_count_grade',1);
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_univ3_volume_grade','address_label_univ3_volume_grade',1);
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_univ3_balance_rank','address_label_univ3_balance_rank',1);
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_univ3_balance_top','address_label_univ3_balance_top',1);
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_univ3_volume_rank','address_label_univ3_volume_rank',1);
+
