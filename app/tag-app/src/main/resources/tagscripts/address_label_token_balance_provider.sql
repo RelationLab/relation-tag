@@ -20,14 +20,12 @@ insert into public.address_label_token_balance_provider (address,label_type,labe
                 select
                     *
                 from
-                    dex_tx_volume_count_summary
+                    token_balance_volume_usd tbvu
                 where
-                        type = 'lp'
-                  and balance_usd>0) a1
+                        balance_usd>0) a1
                 inner join dim_project_token_type a2
                            on
                                        a1.token = a2.token
-                                   and a1.project = a2.project
                                    and a2.data_subject = 'HEAVY_LP'
     ) s1
     where
