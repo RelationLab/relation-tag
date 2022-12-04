@@ -111,7 +111,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void tagMerge() {
-        log.info("summaryData start....");
+        log.info("createTable start....");
         String createTable = "DROP TABLE if EXISTS  address_label_gp_temp;create table address_label_gp_temp\n" +
                 "(\n" +
                 "    owner      varchar(256),\n" +
@@ -124,6 +124,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         iAddressLabelService.exceSql(createTable, "createTable");
         forkJoinPool.execute(() -> {
             try {
+                log.info("summary start....");
                 iAddressLabelService.exceSql(FileUtils.readFile(SCRIPTSPATH.concat(File.separator).concat("summary.sql")), "summary.sql");
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -140,7 +141,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
                             "alter table address_label_gp rename to address_label_old;" +
                             "alter table address_label_gp_temp rename to address_label_gp;";
                     iAddressLabelService.exceSql(renameSql, "renameSql");
-                    merge2Gin();
                 }
         );
         try {
@@ -149,6 +149,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             throw new RuntimeException(e);
         }
         forkJoinPool.execute(() -> {
+                    log.info("merge2Gin  start....");
                     merge2Gin();
                 }
         );
