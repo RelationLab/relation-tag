@@ -67,6 +67,7 @@ insert into public.address_label_nft_transfer_count_grade(address,label_type,lab
                                    and a2.label_type not like '%WEB3%'
                                    and (a2.project = ''
                                    or a2.project = 'ALL')
+        and a1.type=a2.type
         where
                 total_transfer_count >= 1
         group by

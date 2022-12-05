@@ -62,7 +62,7 @@ insert into public.address_label_univ3_volume_rank (address,label_type,label_nam
                                                     address,
                                                     total_transfer_volume_usd as volume_usd
                                                 from
-                                                    dex_tx_volume_count_summary dtvcs
+                                                    dex_tx_volume_count_summary_univ3 dtvcs
                                                 where
                                                         dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                                   and dtvcs.total_transfer_volume_usd >= 100) s1
@@ -85,7 +85,7 @@ insert into public.address_label_univ3_volume_rank (address,label_type,label_nam
                                             token,
                                             address
                                         from
-                                            dex_tx_volume_count_summary dtvcs
+                                            dex_tx_volume_count_summary_univ3 dtvcs
                                         where
                                                 dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                           and dtvcs.total_transfer_volume_usd >= 100 ) tbvu2
