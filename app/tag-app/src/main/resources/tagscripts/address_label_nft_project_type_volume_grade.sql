@@ -16,7 +16,7 @@ insert into public.address_label_nft_project_type_volume_grade(address,label_typ
                              and volume_usd < 500000 then 'L5'
                          when volume_usd >= 500000 then 'L6'
         end as label_name,
-        now() as updated_at
+    now() as updated_at
     from
     (
         -- project-token-type
@@ -27,20 +27,20 @@ insert into public.address_label_nft_project_type_volume_grade(address,label_typ
                     volume_usd) as volume_usd
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-                                                          on a1.token=a2.token and a1.platform_group=a2.project and a2.data_subject = 'volume_grade'
+                                                          on a1.token=a2.token and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = 'volume_grade'
         group by
             a1.address,
             a2.label_type
-    -- project-token(ALL)-type
+            -- project-token(ALL)-type
         union all
         select
             a1.address,
             a2.label_type,
             sum(
-            volume_usd) as volume_usd
+                    volume_usd) as volume_usd
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-        on a2.token='ALL' and a1.platform_group=a2.project and a2.data_subject = 'volume_grade'
+                                                          on a2.token='ALL' and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = 'volume_grade'
         group by
             a1.address,
             a2.label_type
@@ -52,7 +52,7 @@ insert into public.address_label_nft_project_type_volume_grade(address,label_typ
             sum(volume_usd) as volume_usd
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-        on a2.token='ALL' and a1.platform_group=a2.project and a2.type='ALL' and a2.data_subject = 'volume_grade'
+                                                          on a2.token='ALL' and a1.platform_group=a2.project and a1.type=a2.type and a2.type='ALL' and a2.data_subject = 'volume_grade'
         group by
             a1.address,
             a2.label_type
@@ -62,10 +62,10 @@ insert into public.address_label_nft_project_type_volume_grade(address,label_typ
             a1.address,
             a2.label_type,
             sum(
-            volume_usd) as volume_usd
+                    volume_usd) as volume_usd
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-        on a1.token=a2.token and a1.platform_group=a2.project and a2.type='ALL' and a2.data_subject = 'volume_grade'
+                                                          on a1.token=a2.token and a1.platform_group=a2.project and a1.type=a2.type and a2.type='ALL' and a2.data_subject = 'volume_grade'
         group by
             a1.address,
             a2.label_type
