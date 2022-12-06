@@ -28,7 +28,7 @@ insert into public.address_label_univ3_volume_grade (address,label_type,label_na
             token,
             total_transfer_volume_usd as volume_usd
         from
-            dex_tx_volume_count_summary_univ3 dtvcs
+            dex_tx_volume_count_summary dtvcs
         where
                 dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
           and dtvcs.total_transfer_volume_usd >= 100

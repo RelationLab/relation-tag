@@ -30,7 +30,7 @@ insert into public.address_label_univ3_balance_grade (address,label_type,label_n
             project,
             type
         from
-            dex_tx_volume_count_summary_univ3 tbvutk
+            dex_tx_volume_count_summary tbvutk
         where
                 project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
           and balance_usd >= 100

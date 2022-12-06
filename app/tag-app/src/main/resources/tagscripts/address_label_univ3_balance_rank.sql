@@ -54,7 +54,7 @@ insert into public.address_label_univ3_balance_rank (address,label_type,label_na
                                                     address,
                                                     balance_usd
                                                 from
-                                                    dex_tx_volume_count_summary_univ3
+                                                    dex_tx_volume_count_summary
                                                 where
                                                         project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                                   and balance_usd >= 100
@@ -78,7 +78,7 @@ insert into public.address_label_univ3_balance_rank (address,label_type,label_na
                                             token,
                                             address
                                         from
-                                            dex_tx_volume_count_summary_univ3
+                                            dex_tx_volume_count_summary
                                         where
                                                 project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                           and balance_usd >= 100
