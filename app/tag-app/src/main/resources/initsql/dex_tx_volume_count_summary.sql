@@ -26,7 +26,6 @@ CREATE INDEX dex_tx_volume_count_summary_balance_usd_idx ON public.dex_tx_volume
 CREATE INDEX dex_tx_volume_count_summary_project_idx ON public.dex_tx_volume_count_summary USING btree (project);
 CREATE INDEX dex_tx_volume_count_summary_token_idx ON public.dex_tx_volume_count_summary USING btree (token);
 CREATE INDEX dex_tx_volume_count_summary_total_transfer_volume_usd_idx ON public.dex_tx_volume_count_summary USING btree (total_transfer_volume_usd);
-
 insert
     into
     dex_tx_volume_count_summary(address,
