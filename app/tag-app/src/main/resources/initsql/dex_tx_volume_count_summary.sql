@@ -3,8 +3,8 @@ CREATE TABLE public.dex_tx_volume_count_summary (
                                                     address varchar(256) NOT NULL,
                                                     "token" varchar(256) NOT NULL,
                                                     block_height int8 NOT NULL,
-                                                    total_transfer_volume_usd numeric(125, 30) NOT NULL DEFAULT 0,
-                                                    total_transfer_count int8 NOT NULL DEFAULT 0,
+                                                    total_transfer_volume_usd numeric(125, 30) DEFAULT 0,
+                                                    total_transfer_count int8 DEFAULT 0,
                                                     created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                                     updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                                     removed bool NULL DEFAULT false,
@@ -17,7 +17,7 @@ CREATE TABLE public.dex_tx_volume_count_summary (
                                                     out_transfer_volume numeric(125, 30) NULL,
                                                     in_transfer_count int8 NULL,
                                                     out_transfer_count int8 NULL,
-                                                    balance_usd numeric(125, 30) NOT NULL DEFAULT 0,
+                                                    balance_usd numeric(125, 30) DEFAULT 0,
                                                     CONSTRAINT dex_tx_volume_count_summary_un UNIQUE (address, token, type, project)
 );
 
