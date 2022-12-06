@@ -244,5 +244,5 @@ insert into public.address_label_nft_project_type_volume_count_rank (address,lab
          ) tb1
     where
     tb1.volume_usd >= 100
-  and zb_rate <= 0.001
-  and zb_rate_transfer_count <= 0.001) t;
+  and zb_rate <= 0.01
+  and zb_rate_transfer_count <= 0.01) t;

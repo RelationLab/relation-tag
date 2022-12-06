@@ -91,6 +91,7 @@ insert into public.address_label_token_balance_rank (address,label_type,label_na
     dim_rule_content tb2
     on
             tb1.token = tb2.token
+            and tb2.label_type not like 'Uniswap_v3%'
     where
         tb1.balance_usd >= 100
   and tb1.zb_rate <= 0.1

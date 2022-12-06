@@ -57,6 +57,7 @@ insert into public.address_label_token_count_grade (address,label_type,label_nam
     dim_rule_content a2
     on
             a1.token = a2.token
+         and a2.label_type not like 'Uniswap_v3%'
     where
         a1.total_transfer_all_count >= 1
   and a2.data_subject = 'count';

@@ -40,6 +40,7 @@ insert into public.address_label_token_balance_top (address,label_type,label_nam
                            on
                                        a1.token = a2.token
                                    and a2.data_subject = 'balance_top'
+                                   and a2.label_type not like 'Uniswap_v3%'
     ) s1
     where
         s1.rn <= 100;

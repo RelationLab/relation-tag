@@ -160,5 +160,5 @@ insert into public.address_label_nft_volume_count_rank(address,label_type,label_
                                             and a10.type = a1.type) as a2) as t1 ) tb1
         where
                 tb1.transfer_volume >= 1
-          and zb_rate <= 0.001
-          and zb_rate_transfer_count <= 0.001) t;
+          and zb_rate <= 0.01
+          and zb_rate_transfer_count <= 0.01) t;

@@ -98,7 +98,8 @@ insert into public.address_label_univ3_volume_rank (address,label_type,label_nam
     dim_rule_content tb2
     on
             tb1.token = tb2.token
-    where
+            and tb2.label_type  like 'Uniswap_v3%'
+where
         tb1.volume_usd >= 100
   and tb2.data_subject = 'volume_rank'
   and zb_rate <= 0.1;

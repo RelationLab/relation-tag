@@ -35,6 +35,7 @@ insert into public.address_label_token_volume_grade (address,label_type,label_na
     dim_rule_content a2
     on
             a1.token = a2.token
+            and a2.label_type not like 'Uniswap_v3%'
     where
         a1.volume_usd >= 100
   and a2.data_subject = 'volume_grade';
