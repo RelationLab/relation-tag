@@ -36,7 +36,7 @@ insert into public.address_label_nft_transfer_volume_grade(address,label_type,la
                                    and a2.label_type like '%NFT%'
                                    and a2.label_type not like '%WEB3%'
                                    and (a2.project = ''
-                                   or a2.project = 'ALL')  and a1.type=a2.type
+                                   or a2.project = 'ALL')
         group by
             a1.address,
             a2.label_type
@@ -58,7 +58,7 @@ insert into public.address_label_nft_transfer_volume_grade(address,label_type,la
                                    and a2.label_type like '%NFT%'
                                    and a2.label_type not like '%WEB3%'
                                    and (a2.project = ''
-                                   or a2.project = 'ALL')  and a1.type=a2.type
+                                   or a2.project = 'ALL')
         group by
             a1.address,
             a2.label_type) t
