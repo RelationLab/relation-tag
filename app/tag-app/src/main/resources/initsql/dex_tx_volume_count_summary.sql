@@ -1,6 +1,5 @@
 drop table if exists dex_tx_volume_count_summary;
 CREATE TABLE public.dex_tx_volume_count_summary (
-                                                    id bigserial NOT NULL,
                                                     address varchar(256) NOT NULL,
                                                     "token" varchar(256) NOT NULL,
                                                     block_height int8 NOT NULL,
@@ -19,7 +18,6 @@ CREATE TABLE public.dex_tx_volume_count_summary (
                                                     in_transfer_count int8 NULL,
                                                     out_transfer_count int8 NULL,
                                                     balance_usd numeric(125, 30) NOT NULL DEFAULT 0,
-                                                    CONSTRAINT dex_tx_volume_count_summary_pkey PRIMARY KEY (id),
                                                     CONSTRAINT dex_tx_volume_count_summary_un UNIQUE (address, token, type, project)
 );
 
