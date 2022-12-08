@@ -48,7 +48,7 @@ insert into public.address_label_token_count_grade (address,label_type,label_nam
                     address,
                     total_transfer_count
                 from
-                    token_holding th
+                    token_holding th where th.token in (select token_id from dim_rank_token)
             ) th2
         group by
             address
