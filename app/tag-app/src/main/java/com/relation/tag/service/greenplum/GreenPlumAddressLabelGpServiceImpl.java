@@ -16,17 +16,12 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
     @Override
     public boolean exceSql(String sqlStr, String name) {
         try {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    long startTime = System.currentTimeMillis();
-                    baseMapper.exceSql(sqlStr);
-                    log.info(" sqlTable={}  end..... time====={}", name, System.currentTimeMillis() - startTime);
-                }
-            }).start();
+            long startTime = System.currentTimeMillis();
+            baseMapper.exceSql(sqlStr);
+            log.info(" sqlTable={}  end..... time====={}", name, System.currentTimeMillis() - startTime);
         } catch (Exception ex) {
             log.info("err......name={}", name);
-            log.error(ex.getMessage(),ex);
+            log.error(ex.getMessage(), ex);
         }
         return true;
     }
