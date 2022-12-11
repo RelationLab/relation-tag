@@ -17,7 +17,7 @@ spring:
       #      druid:
       initial-size: 5
       min-idle: 5
-      max-active: 10
+      max-active: 100
       query-timeout: 6000
       transaction-query-timeout: 6000
       remove-abandoned-timeout: 6000
