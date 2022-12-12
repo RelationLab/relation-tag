@@ -29,7 +29,8 @@ public class GreenplumMybatisPlusConfig {
 //    @ConfigurationProperties(prefix = "spring.datasource.greenplum")
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
+//        return DataSourceBuilder.create().build();
+        return new DruidDataSource();
     }
 
     @Bean("greenplumSqlSessionFactory")
