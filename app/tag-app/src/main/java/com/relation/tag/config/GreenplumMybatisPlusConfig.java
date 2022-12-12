@@ -26,10 +26,10 @@ public class GreenplumMybatisPlusConfig {
     private String mappers = "classpath*:mappers/greenplum/**/*Mapper.xml";
 
     @Bean(name = "greenplumDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.greenplum")
+//    @ConfigurationProperties(prefix = "spring.datasource.greenplum")
+    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
-//        return new DruidDataSource();
     }
 
     @Bean("greenplumSqlSessionFactory")
@@ -41,7 +41,6 @@ public class GreenplumMybatisPlusConfig {
         configuration.setJdbcTypeForNull(JdbcType.NULL);
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setCacheEnabled(false);
-        //configuration.addMapper(SysMenuMapper.class);
         configuration.setDefaultStatementTimeout(6000000);
 
         sqlSessionFactory.setConfiguration(configuration);
