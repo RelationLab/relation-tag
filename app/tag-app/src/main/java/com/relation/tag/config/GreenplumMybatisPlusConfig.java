@@ -11,6 +11,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -27,8 +28,9 @@ public class GreenplumMybatisPlusConfig {
     @Bean(name = "greenplumDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.greenplum")
     public DataSource dataSource() {
-        DruidDataSource druidDataSource = new DruidDataSource();
-        return druidDataSource;
+        return DataSourceBuilder.create().build();
+//        DruidDataSource druidDataSource = new DruidDataSource();
+//        return druidDataSource;
     }
 
     @Bean("greenplumSqlSessionFactory")
