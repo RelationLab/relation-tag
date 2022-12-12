@@ -18,9 +18,14 @@ spring:
       initial-size: 5
       min-idle: 5
       max-active: 100
-      query-timeout: 6000
-      transaction-query-timeout: 6000
-      remove-abandoned-timeout: 6000
+      query-timeout: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select version()
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
       max-wait: 5000000
       filters: stat,config
 

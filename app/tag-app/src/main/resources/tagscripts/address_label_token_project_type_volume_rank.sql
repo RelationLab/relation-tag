@@ -1,6 +1,6 @@
 truncate table public.address_label_token_project_type_volume_rank;
 insert into public.address_label_token_project_type_volume_rank(address,label_type,label_name,updated_at)
-    select
+select
     address ,
     label_type,
     label_type || '_' || case
@@ -13,7 +13,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                              when zb_rate <= 0.001 then 'LEGENDARY'
         end as label_name,
     now() as updated_at
-    from
+from
     (
         select
             address,
@@ -26,7 +26,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                         dptt.token = tb1.token
                   and dptt."type" = tb1.type
                   and dptt.seq_flag = tb1.seq_flag
-                  and dptt.data_subject = 'volume_rank') as label_type,
+                  and dptt.data_subject = 'volume_rank'
+                  and label_type not like '%NFT%') as label_type,
             zb_rate
         from
             (
@@ -172,7 +173,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             dex_tx_volume_count_summary
                                                         where
                                                                 total_transfer_volume_usd  > 0
-                                                        -- project(ALL)-token(ALL)-type(ALL)
+                                                                -- project(ALL)-token(ALL)-type(ALL)
                                                         union all
                                                         select
                                                             address,
@@ -183,7 +184,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         from
                                                             dex_tx_volume_count_summary where
                                                                 total_transfer_volume_usd  > 0
-                                                              and token in (select distinct(token) from dim_project_token_type)) s1
+                                                                                          and token in (select distinct(token) from dim_project_token_type)) s1
                                                         inner join dim_project_token_type s2
                                                                    on
                                                                                s1.token = s2.token
@@ -309,8 +310,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         from
                                                             dex_tx_volume_count_summary where
                                                                 total_transfer_volume_usd  > 0
-                                                          and token in (select distinct(token) from dim_project_token_type)
-                                                        ) ta
+                                                                                          and token in (select distinct(token) from dim_project_token_type)
+                                                    ) ta
                                                 group by
                                                     address,
                                                     token,
