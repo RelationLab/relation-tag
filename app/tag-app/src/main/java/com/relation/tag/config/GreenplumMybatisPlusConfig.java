@@ -28,7 +28,8 @@ public class GreenplumMybatisPlusConfig {
     @Bean(name = "greenplumDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.greenplum")
     public DataSource dataSource() {
-        return new DruidDataSource();
+        return DataSourceBuilder.create().build();
+//        return new DruidDataSource();
     }
 
     @Bean("greenplumSqlSessionFactory")
@@ -42,6 +43,7 @@ public class GreenplumMybatisPlusConfig {
         configuration.setCacheEnabled(false);
         //configuration.addMapper(SysMenuMapper.class);
         configuration.setDefaultStatementTimeout(6000000);
+
         sqlSessionFactory.setConfiguration(configuration);
         GlobalConfig.DbConfig dbConfig = new GlobalConfig.DbConfig();
         dbConfig.setIdType(IdType.AUTO);
