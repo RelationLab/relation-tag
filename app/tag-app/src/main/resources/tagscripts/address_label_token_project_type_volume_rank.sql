@@ -1,6 +1,6 @@
 truncate table public.address_label_token_project_type_volume_rank;
 insert into public.address_label_token_project_type_volume_rank(address,label_type,label_name,updated_at)
-select
+    select
     address ,
     label_type,
     label_type || '_' || case
@@ -13,7 +13,7 @@ select
                              when zb_rate <= 0.001 then 'LEGENDARY'
         end as label_name,
     now() as updated_at
-from
+    from
     (
         select
             address,
