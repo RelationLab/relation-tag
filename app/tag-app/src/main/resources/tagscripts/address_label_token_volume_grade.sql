@@ -38,4 +38,4 @@ insert into public.address_label_token_volume_grade (address,label_type,label_na
             and a2.label_type not like 'Uniswap_v3%'
     where
         a1.volume_usd >= 100
-  and a2.data_subject = 'volume_grade';
+  and a2.data_subject = 'volume_grade' and address <>'0x000000000000000000000000000000000000dead';

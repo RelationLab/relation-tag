@@ -52,7 +52,7 @@ insert into public.address_label_nft_volume_top (address,label_type,label_name,u
 				from
 					nft_volume_count
 				where
-					transfer_volume >= 1
+					transfer_volume >= 1 and address <>'0x000000000000000000000000000000000000dead'
 			union all
 				-- project(null)+nft(ALL)+type(null)
 				select
@@ -63,7 +63,7 @@ insert into public.address_label_nft_volume_top (address,label_type,label_name,u
 				from
 					nft_volume_count
 				where
-					transfer_volume >= 1
+					transfer_volume >= 1 and address <>'0x000000000000000000000000000000000000dead'
 			union all
 				-- project(null)+nft+type
 				select
@@ -74,7 +74,7 @@ insert into public.address_label_nft_volume_top (address,label_type,label_name,u
 				from
 					nft_volume_count
 				where
-					transfer_volume >= 1
+					transfer_volume >= 1 and address <>'0x000000000000000000000000000000000000dead'
 			union all
 				-- project(null)+nft+type(ALL)
 				select
@@ -85,7 +85,7 @@ insert into public.address_label_nft_volume_top (address,label_type,label_name,u
 				from
 					nft_volume_count
 				where
-					transfer_volume >= 1
+					transfer_volume >= 1 and address <>'0x000000000000000000000000000000000000dead'
 			union all
 				-- project(null)+nft（ALL）+type
 				select
@@ -96,7 +96,7 @@ insert into public.address_label_nft_volume_top (address,label_type,label_name,u
 				from
 					nft_volume_count
 				where
-					transfer_volume >= 1
+					transfer_volume >= 1 and address <>'0x000000000000000000000000000000000000dead'
           ) tatola
 			inner join dim_project_token_type a2
                            on

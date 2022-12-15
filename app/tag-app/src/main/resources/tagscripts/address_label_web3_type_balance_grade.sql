@@ -83,4 +83,4 @@ insert into public.address_label_web3_type_balance_grade (address,label_type,lab
             a2.label_type
     ) t
     where
-        balance >= 1;
+        balance >= 1 and address <>'0x000000000000000000000000000000000000dead';

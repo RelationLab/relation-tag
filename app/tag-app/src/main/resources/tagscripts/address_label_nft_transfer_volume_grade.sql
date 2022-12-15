@@ -63,4 +63,4 @@ insert into public.address_label_nft_transfer_volume_grade(address,label_type,la
             a1.address,
             a2.label_type) t
     where
-        volume_usd >= 100;
+        volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead';

@@ -18,7 +18,7 @@ insert into public.address_label_token_time_special (address,label_type,label_na
         from
             token_holding_time tbvutk
         where
-                balance>0) a1
+                balance>0 and address <>'0x000000000000000000000000000000000000dead') a1
         inner join
     dim_rule_content a2
     on

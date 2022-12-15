@@ -40,4 +40,4 @@ insert into public.address_label_univ3_volume_grade (address,label_type,label_na
             a1.token = a2.token
             and a2.label_type  like 'Uniswap_v3%'
     where
-        a2.data_subject = 'volume_grade';
+        a2.data_subject = 'volume_grade' and address <>'0x000000000000000000000000000000000000dead';

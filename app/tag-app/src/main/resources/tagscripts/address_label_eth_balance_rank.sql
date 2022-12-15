@@ -56,7 +56,7 @@ insert into public.address_label_eth_balance_rank (address,label_type,label_name
                                                 from
                                                     token_balance_volume_usd
                                                 where
-                                                        token = 'eth') s1
+                                                        token = 'eth' and address <>'0x000000000000000000000000000000000000dead') s1
                                                 inner join dim_rank_token s2
                                                            on
                                                                    s1.token = s2.token_id
@@ -72,7 +72,7 @@ insert into public.address_label_eth_balance_rank (address,label_type,label_name
                                 from
                                     token_balance_volume_usd
                                 where
-                                        token = 'eth'
+                                        token = 'eth' and address <>'0x000000000000000000000000000000000000dead'
                                   and balance_usd >= 100) as a10
                             on
                                     1 = 1) as a2) as t1

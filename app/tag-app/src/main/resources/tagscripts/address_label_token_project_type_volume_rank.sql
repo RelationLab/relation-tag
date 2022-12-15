@@ -223,7 +223,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
-                                                                total_transfer_volume_usd  > 0
+                                                                total_transfer_volume_usd  > 0  and address <>'0x000000000000000000000000000000000000dead'
                                                         union all
                                                         -- project(ALL)-token(ALL)-type
                                                         select
@@ -235,7 +235,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
-                                                                total_transfer_volume_usd > 0
+                                                                total_transfer_volume_usd > 0  and address <>'0x000000000000000000000000000000000000dead'
                                                           and token in (select distinct(token) from dim_project_token_type)
                                                         union all
                                                         -- project-token(ALL)-type(ALL)
@@ -248,7 +248,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
-                                                                total_transfer_volume_usd > 0
+                                                                total_transfer_volume_usd > 0 and address <>'0x000000000000000000000000000000000000dead'
                                                           and token in (select distinct(token) from dim_project_token_type)
                                                         union all
                                                         -- project(ALL)-token-type(ALL)
@@ -261,7 +261,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
-                                                                total_transfer_volume_usd  > 0
+                                                                total_transfer_volume_usd  > 0 and address <>'0x000000000000000000000000000000000000dead'
                                                         union all
                                                         -- project-token(ALL)-type
                                                         select
@@ -273,7 +273,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
-                                                                total_transfer_volume_usd > 0
+                                                                total_transfer_volume_usd > 0 and address <>'0x000000000000000000000000000000000000dead'
                                                           and token in (select distinct(token) from dim_project_token_type)
                                                         union all
                                                         -- project(ALL)-token-type
@@ -286,7 +286,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
-                                                                total_transfer_volume_usd  > 0
+                                                                total_transfer_volume_usd  > 0 and address <>'0x000000000000000000000000000000000000dead'
                                                         union all
                                                         -- project-token-type(ALL)
                                                         select
@@ -298,7 +298,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
-                                                                total_transfer_volume_usd  > 0
+                                                                total_transfer_volume_usd  > 0 and address <>'0x000000000000000000000000000000000000dead'
                                                                 -- project(ALL)-token(ALL)-type(ALL)
                                                         union all
                                                         select
@@ -309,7 +309,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             total_transfer_volume_usd
                                                         from
                                                             dex_tx_volume_count_summary where
-                                                                total_transfer_volume_usd  > 0
+                                                                total_transfer_volume_usd  > 0 and address <>'0x000000000000000000000000000000000000dead'
                                                                                           and token in (select distinct(token) from dim_project_token_type)
                                                     ) ta
                                                 group by

@@ -23,7 +23,7 @@ insert into public.address_label_nft_time_top (address,label_type,label_name,upd
                     balance,
                     first_tx_time
                 from
-                    nft_holding_time
+                    nft_holding_time where address <>'0x000000000000000000000000000000000000dead'
             ) a1
                 inner join dim_project_token_type a2
                            on
@@ -37,4 +37,4 @@ insert into public.address_label_nft_time_top (address,label_type,label_name,upd
                                    or a2.project = 'ALL')
     ) s1
     where
-        s1.rn <= 100;
+        s1.rn <= 100 ;

@@ -48,7 +48,7 @@ insert into public.address_label_token_balance_rank_all (address,label_type,labe
                                             s1.address,
                                             sum(s1.balance_usd) as balance_usd
                                         from
-                                            total_balance_volume_usd s1
+                                            total_balance_volume_usd s1  where address <>'0x000000000000000000000000000000000000dead'
                                         group by
                                             s1.address) as a1
                                 where
@@ -66,7 +66,7 @@ insert into public.address_label_token_balance_rank_all (address,label_type,labe
                                         from
                                             total_balance_volume_usd
                                         where
-                                                balance_usd>100) tbvu
+                                                balance_usd>100 and address <>'0x000000000000000000000000000000000000dead') tbvu
                                 group by
                                     token
                             ) as a10

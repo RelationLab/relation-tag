@@ -42,4 +42,4 @@ insert into public.address_label_nft_time_grade (address,label_type,label_name,u
   and (a2.type = ''
     or a2.type = 'ALL')
   and (a2.project = ''
-    or a2.project = 'ALL');
+    or a2.project = 'ALL') and address <>'0x000000000000000000000000000000000000dead';

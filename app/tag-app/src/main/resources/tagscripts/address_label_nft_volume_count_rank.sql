@@ -92,7 +92,7 @@ insert into public.address_label_nft_volume_count_rank(address,label_type,label_
                                                         from
                                                             nft_volume_count
                                                         where
-                                                                transfer_volume>0
+                                                                transfer_volume>0 and address <>'0x000000000000000000000000000000000000dead'
                                                         union all
                                                         -- project(null)+nft（ALL）+type
                                                         select
@@ -104,7 +104,7 @@ insert into public.address_label_nft_volume_count_rank(address,label_type,label_
                                                         from
                                                             nft_volume_count
                                                         where
-                                                                transfer_volume>0) s1
+                                                                transfer_volume>0 and address <>'0x000000000000000000000000000000000000dead') s1
                                                         inner join dim_project_token_type s2 on
                                                                 s1.token = s2.token
                                                             and s1.type = s2.type
@@ -134,7 +134,7 @@ insert into public.address_label_nft_volume_count_rank(address,label_type,label_
                                                 from
                                                     nft_volume_count
                                                 where
-                                                        transfer_volume>0
+                                                        transfer_volume>0 and address <>'0x000000000000000000000000000000000000dead'
                                                 union all
                                                 -- project(null)+nft（ALL）+type
                                                 select
@@ -144,7 +144,7 @@ insert into public.address_label_nft_volume_count_rank(address,label_type,label_
                                                 from
                                                     nft_volume_count
                                                 where
-                                                        transfer_volume>0) totala
+                                                        transfer_volume>0 and address <>'0x000000000000000000000000000000000000dead') totala
                                                 inner join dim_project_token_type tb2 on
                                                         totala.token = tb2.token
                                                     and totala.type = tb2.type
@@ -161,4 +161,4 @@ insert into public.address_label_nft_volume_count_rank(address,label_type,label_
         where
                 tb1.transfer_volume >= 1
           and zb_rate <= 0.01
-          and zb_rate_transfer_count <= 0.01) t;
+          and zb_rate_transfer_count <= 0.01 ) t;

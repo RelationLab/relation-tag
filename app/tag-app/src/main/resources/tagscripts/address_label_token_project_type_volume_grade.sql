@@ -180,4 +180,4 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
             a2.label_type
     ) t
     where
-        total_transfer_volume_usd >= 100;
+        total_transfer_volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead';

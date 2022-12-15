@@ -90,4 +90,4 @@ insert into public.address_label_web3_type_count_grade (address,label_type,label
             a2.label_type
     ) t
     where
-        total_transfer_count >= 1;
+        total_transfer_count >= 1 and address <>'0x000000000000000000000000000000000000dead';

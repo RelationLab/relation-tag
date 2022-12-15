@@ -100,7 +100,7 @@ insert into public.address_label_nft_project_type_volume_count_rank (address,lab
 							from
 								platform_nft_type_volume_count
 							where
-								volume_usd >= 100
+								volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead'
 						union all
 							-- project-token(ALL)-type
 							select
@@ -114,7 +114,7 @@ insert into public.address_label_nft_project_type_volume_count_rank (address,lab
 							from
 								platform_nft_type_volume_count
 							where
-								volume_usd > 0
+								volume_usd > 0 and address <>'0x000000000000000000000000000000000000dead'
 						union all
 							-- project-token(ALL)-type(ALL)
 							select
@@ -128,7 +128,7 @@ insert into public.address_label_nft_project_type_volume_count_rank (address,lab
 							from
 								platform_nft_type_volume_count
 							where
-								volume_usd > 0
+								volume_usd > 0 and address <>'0x000000000000000000000000000000000000dead'
 						union all
 							-- project-token-type(ALL)
 							select
@@ -142,7 +142,7 @@ insert into public.address_label_nft_project_type_volume_count_rank (address,lab
 							from
 								platform_nft_type_volume_count
 							where
-								volume_usd >= 100) s1
+								volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead') s1
 						inner join dim_project_token_type s2
                         on
 							s1.token = s2.token
@@ -183,7 +183,7 @@ insert into public.address_label_nft_project_type_volume_count_rank (address,lab
 							from
 								platform_nft_type_volume_count
 							where
-								volume_usd >= 100
+								volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead'
 						union all
 							-- project-token(ALL)-type
 							select
@@ -195,7 +195,7 @@ insert into public.address_label_nft_project_type_volume_count_rank (address,lab
 							from
 								platform_nft_type_volume_count
 							where
-								volume_usd >0
+								volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
 						union all
 							-- project-token(ALL)-type(ALL)
 							select
@@ -207,7 +207,7 @@ insert into public.address_label_nft_project_type_volume_count_rank (address,lab
 							from
 								platform_nft_type_volume_count
 							where
-								volume_usd >0
+								volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
 						union all
 							-- project-token-type(ALL)
 							select
@@ -219,7 +219,7 @@ insert into public.address_label_nft_project_type_volume_count_rank (address,lab
 							from
 								platform_nft_type_volume_count
 							where
-								volume_usd >= 100) totala
+								volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead') totala
 						inner join
 						     dim_project_token_type tb2
 						     on

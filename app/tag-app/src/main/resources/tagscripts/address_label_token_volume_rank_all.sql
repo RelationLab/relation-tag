@@ -58,7 +58,7 @@ insert into public.address_label_token_volume_rank_all (address,label_type,label
                                         from
                                             total_balance_volume_usd s1
                                         where
-                                                volume_usd >0) as a1) as a1
+                                                volume_usd >0 and address <>'0x000000000000000000000000000000000000dead') as a1) as a1
                                 inner join
                             (
                                 select
@@ -79,7 +79,7 @@ insert into public.address_label_token_volume_rank_all (address,label_type,label
                                                 from
                                                     total_balance_volume_usd
                                                 where
-                                                        volume_usd >= 100) totala
+                                                        volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead') totala
                                         group by
                                             token,
                                             address) tbvu

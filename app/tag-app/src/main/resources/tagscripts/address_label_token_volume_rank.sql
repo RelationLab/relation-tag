@@ -64,7 +64,7 @@ insert into public.address_label_token_volume_rank (address,label_type,label_nam
                                                 from
                                                     token_balance_volume_usd
                                                 where
-                                                        token <> 'eth'
+                                                        token <> 'eth' and address <>'0x000000000000000000000000000000000000dead'
                                                   and token <> '0xdac17f958d2ee523a2206206994597c13d831ec7') s1
                                                 inner join dim_rank_token s2
                                                            on
@@ -87,7 +87,7 @@ insert into public.address_label_token_volume_rank (address,label_type,label_nam
                                         from
                                             token_balance_volume_usd
                                         where
-                                                token <> 'eth'
+                                                token <> 'eth' and address <>'0x000000000000000000000000000000000000dead'
                                           and token <> '0xdac17f958d2ee523a2206206994597c13d831ec7'
                                           and volume_usd >= 100 ) tbvu2
                                 group by

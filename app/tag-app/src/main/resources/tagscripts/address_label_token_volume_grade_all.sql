@@ -38,4 +38,4 @@ insert into public.address_label_token_volume_grade_all (address,label_type,labe
     where
         a1.volume_usd >= 100
   and a2.data_subject = 'volume_grade'
-  and a2.token_type = 'token';
+  and a2.token_type = 'token' and address <>'0x000000000000000000000000000000000000dead';

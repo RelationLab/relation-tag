@@ -48,7 +48,7 @@ insert into public.address_label_nft_project_type_volume_top (address,label_type
                                     type,
                                     volume_usd
                                 from
-                                    platform_nft_type_volume_count
+                                    platform_nft_type_volume_count where   address <>'0x000000000000000000000000000000000000dead'
                                 union all
                                 -- project-token(ALL)-type
                                 select
@@ -58,7 +58,7 @@ insert into public.address_label_nft_project_type_volume_top (address,label_type
                                     type,
                                     volume_usd
                                 from
-                                    platform_nft_type_volume_count
+                                    platform_nft_type_volume_count where   address <>'0x000000000000000000000000000000000000dead'
                                 union all
                                 -- project-token(ALL)-type(ALL)
                                 select
@@ -68,7 +68,7 @@ insert into public.address_label_nft_project_type_volume_top (address,label_type
                                     'ALL' as type,
                                     volume_usd
                                 from
-                                    platform_nft_type_volume_count
+                                    platform_nft_type_volume_count where   address <>'0x000000000000000000000000000000000000dead'
                                 union all
                                 -- project-token-type(ALL)
                                 select
@@ -78,7 +78,7 @@ insert into public.address_label_nft_project_type_volume_top (address,label_type
                                     'ALL' as type,
                                     volume_usd
                                 from
-                                    platform_nft_type_volume_count )
+                                    platform_nft_type_volume_count  where address <>'0x000000000000000000000000000000000000dead')
                                 tatola
                                 inner join dim_project_token_type a2
                                            on
@@ -95,4 +95,4 @@ insert into public.address_label_nft_project_type_volume_top (address,label_type
                             tatola.type) a1
             ) s1
         where
-                s1.rn <= 100) t;
+                s1.rn <= 100 ) t;

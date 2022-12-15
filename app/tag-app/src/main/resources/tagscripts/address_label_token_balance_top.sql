@@ -31,7 +31,7 @@ insert into public.address_label_token_balance_top (address,label_type,label_nam
                         from
                             token_balance_volume_usd
                         where
-                                balance_usd>100
+                                balance_usd>100 and address <>'0x000000000000000000000000000000000000dead'
                     ) totala
                 group by
                     address,

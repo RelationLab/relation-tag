@@ -61,4 +61,4 @@ insert into public.address_label_nft_volume_grade(address,label_type,label_name,
             a1.address,
             a2.label_type) t
     where
-        volume_usd >= 1;
+        volume_usd >= 1 and address <>'0x000000000000000000000000000000000000dead';

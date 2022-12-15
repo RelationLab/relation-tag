@@ -60,4 +60,4 @@ insert into public.address_label_token_count_grade (address,label_type,label_nam
          and a2.label_type not like 'Uniswap_v3%'
     where
         a1.total_transfer_count >= 1
-  and a2.data_subject = 'count';
+  and a2.data_subject = 'count' and address <>'0x000000000000000000000000000000000000dead';

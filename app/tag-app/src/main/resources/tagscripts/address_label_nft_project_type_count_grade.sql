@@ -76,4 +76,4 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
         group by
             a1.address,
             a2.label_type
-    ) t where sum_count >= 1;
+    ) t where sum_count >= 1 and address <>'0x000000000000000000000000000000000000dead';

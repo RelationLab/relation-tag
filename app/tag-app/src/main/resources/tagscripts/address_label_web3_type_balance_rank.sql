@@ -86,7 +86,7 @@ insert into public.address_label_web3_type_balance_rank (address,label_type,labe
 								project,
 								balance
 							from
-								web3_transaction_record_summary
+								web3_transaction_record_summary where balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
 						union all
 							-- project(ALL)-type
 							select
@@ -97,7 +97,7 @@ insert into public.address_label_web3_type_balance_rank (address,label_type,labe
 								'ALL' as project,
 								balance
 							from
-								web3_transaction_record_summary
+								web3_transaction_record_summary where  balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
 						union all
 							-- project(ALL)-type(ALL)
 							select
@@ -108,7 +108,7 @@ insert into public.address_label_web3_type_balance_rank (address,label_type,labe
 								'ALL' as project,
 								balance
 							from
-								web3_transaction_record_summary
+								web3_transaction_record_summary where  balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
 						union all
 							-- project-type(ALL)
 							select
@@ -119,7 +119,7 @@ insert into public.address_label_web3_type_balance_rank (address,label_type,labe
 								project,
 								balance
 							from
-								web3_transaction_record_summary
+								web3_transaction_record_summary where  balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
                                      )
                                          s1
 						inner join dim_project_type s2
@@ -149,7 +149,7 @@ insert into public.address_label_web3_type_balance_rank (address,label_type,labe
 						from
 							web3_transaction_record_summary
 						where
-							balance >= 1
+							balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
 					union all
 						-- project(ALL)-type
 						select
@@ -159,7 +159,7 @@ insert into public.address_label_web3_type_balance_rank (address,label_type,labe
 						from
 							web3_transaction_record_summary
 						where
-							balance >= 1
+							balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
 					union all
 						-- project(ALL)-type(ALL)
 						select
@@ -169,7 +169,7 @@ insert into public.address_label_web3_type_balance_rank (address,label_type,labe
 						from
 							web3_transaction_record_summary
 						where
-							balance >= 1
+							balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
 					union all
 						-- project-type(ALL)
 						select
@@ -179,7 +179,7 @@ insert into public.address_label_web3_type_balance_rank (address,label_type,labe
 						from
 							web3_transaction_record_summary
 						where
-							balance >= 1) w3trs
+							balance >= 1 and address <>'0x000000000000000000000000000000000000dead') w3trs
 					group by
 						type,
 						project) as a10

@@ -46,14 +46,14 @@ insert into public.address_label_nft_balance_top (address,label_type,label_name,
 					token,
 					balance
 				from
-					nft_holding
+					nft_holding where address <>'0x000000000000000000000000000000000000dead'
 			union all
 				select
 					address,
 					'ALL' as token,
 					balance
 				from
-					nft_holding ) totala
+					nft_holding where address <>'0x000000000000000000000000000000000000dead') totala
 			inner join dim_project_token_type a2
     on
 				totala.token = a2.token
@@ -72,4 +72,4 @@ insert into public.address_label_nft_balance_top (address,label_type,label_name,
 
     ) s1
     where
-    s1.rn <= 100) t;
+    s1.rn <= 100 ) t;

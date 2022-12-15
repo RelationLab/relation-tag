@@ -24,7 +24,7 @@ insert into public.address_label_token_time_first_lp (address,label_type,label_n
                     dex_tx_volume_count_summary
                 where
                         type = 'lp'
-                  and balance_usd>0) a1
+                  and balance_usd>0 and address <>'0x000000000000000000000000000000000000dead') a1
                 inner join dim_project_token_type a2
                            on
                                        a1.token = a2.token

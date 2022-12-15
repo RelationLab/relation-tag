@@ -39,5 +39,5 @@ insert into public.address_label_token_balance_grade_all (address,label_type,lab
     where
         a1.balance_usd >= 100
   and a2.data_subject = 'balance_grade'
-  and a2.token_type = 'token';
+  and a2.token_type = 'token' and address <>'0x000000000000000000000000000000000000dead';
 

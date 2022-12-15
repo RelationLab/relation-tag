@@ -64,7 +64,7 @@ insert into public.address_label_eth_volume_rank (address,label_type,label_name,
                                                 from
                                                     token_balance_volume_usd
                                                 where
-                                                        token = 'eth'
+                                                        token = 'eth'and address <>'0x000000000000000000000000000000000000dead'
                                                   and volume_usd >= 100) s1
                                                 inner join dim_rank_token s2
                                                            on
@@ -81,7 +81,7 @@ insert into public.address_label_eth_volume_rank (address,label_type,label_name,
                                 from
                                     token_balance_volume_usd
                                 where
-                                        token = 'eth'
+                                        token = 'eth'and address <>'0x000000000000000000000000000000000000dead'
                                   and volume_usd >= 100) as a10
                             on
                                     1 = 1) as a2) as t1) tb1
@@ -93,4 +93,4 @@ insert into public.address_label_eth_volume_rank (address,label_type,label_name,
         tb1.volume_usd >= 100
   and tb2.data_subject = 'volume_rank'
   and tb2.token_type = 'token'
-  and zb_rate <= 0.1;
+  and zb_rate <= 0.1 ;

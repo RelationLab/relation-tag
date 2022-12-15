@@ -24,4 +24,4 @@ insert into public.address_label_eth_time_special (address,label_type,label_name
     where
         a2.data_subject = 'time_special'
   and counter >= 1
-  and a2.token_type = 'token';
+  and a2.token_type = 'token' and address <>'0x000000000000000000000000000000000000dead';

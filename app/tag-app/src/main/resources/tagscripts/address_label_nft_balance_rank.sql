@@ -87,7 +87,7 @@ insert into public.address_label_nft_balance_rank(address,label_type,label_name,
 							from
 								nft_holding
 							where
-								balance >= 1
+								balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
 						union all
 							-- project(null)-token(ALL)-type(null)
 							select
@@ -97,7 +97,7 @@ insert into public.address_label_nft_balance_rank(address,label_type,label_name,
 							from
 								nft_holding
 							where
-								balance >= 1
+								balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
     )
     s1
 						inner join dim_project_token_type s2
@@ -129,7 +129,7 @@ insert into public.address_label_nft_balance_rank(address,label_type,label_name,
 						from
 							nft_holding
 						where
-							balance >= 1
+							balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
 					union all
 						-- project(null)-token(ALL)-type(null)
 						select
@@ -139,7 +139,7 @@ insert into public.address_label_nft_balance_rank(address,label_type,label_name,
 						from
 							nft_holding
 						where
-							balance >= 1) totala
+							balance >= 1 and address <>'0x000000000000000000000000000000000000dead') totala
 					inner join dim_project_token_type tb2
     on
 						totala.token = tb2.token

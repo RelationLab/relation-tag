@@ -32,7 +32,7 @@ insert into public.address_label_univ3_balance_top (address,label_type,label_nam
                         where
                                 project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                           and balance_usd >= 100
-                          and type = 'lp'
+                          and type = 'lp' and address <>'0x000000000000000000000000000000000000dead'
                     ) totala
                 group by
                     address,

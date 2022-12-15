@@ -39,4 +39,4 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
              a2.data_subject = 'balance_grade' and a2.label_type like '%NFT%' AND  a2.label_type NOT  LIKE '%WEB3%'
          group by a1.address,
              a2.label_type
-     ) t where balance>=1;
+     ) t where balance>=1 and address <>'0x000000000000000000000000000000000000dead';

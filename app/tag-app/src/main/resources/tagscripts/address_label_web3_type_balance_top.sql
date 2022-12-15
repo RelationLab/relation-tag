@@ -49,7 +49,7 @@ insert into public.address_label_web3_type_balance_top (address,label_type,label
 				from
 					web3_transaction_record_summary
 				where
-					balance >= 1
+					balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
 			union all
 				-- project(ALL)-type
 				select
@@ -60,7 +60,7 @@ insert into public.address_label_web3_type_balance_top (address,label_type,label
 				from
 					web3_transaction_record_summary
 				where
-					balance >= 1
+					balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
 			union all
 				-- project(ALL)-type(ALL)
 				select
@@ -71,7 +71,7 @@ insert into public.address_label_web3_type_balance_top (address,label_type,label
 				from
 					web3_transaction_record_summary
 				where
-					balance >= 1
+					balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
 			union all
 				-- project-type(ALL)
 				select
@@ -82,7 +82,7 @@ insert into public.address_label_web3_type_balance_top (address,label_type,label
 				from
 					web3_transaction_record_summary
 				where
-					balance >= 1
+					balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
                ) totala
 			group by
 				address,

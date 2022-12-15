@@ -65,7 +65,7 @@ insert into public.address_label_univ3_volume_rank (address,label_type,label_nam
                                                     dex_tx_volume_count_summary dtvcs
                                                 where
                                                         dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
-                                                  and dtvcs.total_transfer_volume_usd >= 100) s1
+                                                  and dtvcs.total_transfer_volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead') s1
                                                 inner join dim_rank_token s2
                                                            on
                                                                    s1.token = s2.token_id
@@ -88,7 +88,7 @@ insert into public.address_label_univ3_volume_rank (address,label_type,label_nam
                                             dex_tx_volume_count_summary dtvcs
                                         where
                                                 dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
-                                          and dtvcs.total_transfer_volume_usd >= 100 ) tbvu2
+                                          and dtvcs.total_transfer_volume_usd >= 100  and address <>'0x000000000000000000000000000000000000dead') tbvu2
                                 group by
                                     token ) as a10
                             on

@@ -22,7 +22,7 @@ insert into public.address_label_token_balance_provider (address,label_type,labe
                 from
                     token_balance_volume_usd tbvu
                 where
-                        balance_usd>0) a1
+                        balance_usd>0 and address <>'0x000000000000000000000000000000000000dead') a1
                 inner join dim_project_token_type a2
                            on
                                        a1.token = a2.token

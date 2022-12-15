@@ -37,6 +37,6 @@ insert into public.address_label_token_balance_grade (address,label_type,label_n
     and a2.label_type not like 'Uniswap_v3%'
     where
         a1.balance_usd >= 100
-  and a2.data_subject = 'balance_grade';
+  and a2.data_subject = 'balance_grade' and address <>'0x000000000000000000000000000000000000dead';
 
 
