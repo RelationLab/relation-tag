@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -22,6 +23,7 @@ import javax.sql.DataSource;
 @Configuration
 @MapperScan(basePackages = "com.relation.tag.mapper.greenplum",
         sqlSessionTemplateRef = "greenplumSqlSessionTemplate")
+@Slf4j
 public class GreenplumMybatisPlusConfig {
     private String mappers = "classpath*:mappers/greenplum/**/*Mapper.xml";
 
@@ -51,6 +53,7 @@ public class GreenplumMybatisPlusConfig {
         GlobalConfig conf = new GlobalConfig();
         conf.setDbConfig(dbConfig);
         sqlSessionFactory.setGlobalConfig(conf);
+        log.info("sqlSessionFactory init end......");
         return sqlSessionFactory.getObject();
     }
 
