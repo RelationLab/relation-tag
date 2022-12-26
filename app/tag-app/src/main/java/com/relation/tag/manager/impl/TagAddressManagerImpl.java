@@ -76,9 +76,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 return;
             }
         } catch (Exception ex) {
-            tryAgain(tableName,sleepTime);
+            tryAgain(tableName, sleepTime);
         }
-        tryAgain(tableName,sleepTime);
+        tryAgain(tableName, sleepTime);
     }
 
     private void tryAgain(String tableName, long sleepTime) {
@@ -145,7 +145,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         forkJoinPool.execute(new Runnable() {
             @Override
             public void run() {
-                check(lastTableName, 10 * 1000);
+                check(lastTableName, 20 * 1000);
                 try {
                     iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
                 } catch (Exception e) {
@@ -192,7 +192,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 }
         );
         try {
-            Thread.sleep(5 * 1000);
+            Thread.sleep(60 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
