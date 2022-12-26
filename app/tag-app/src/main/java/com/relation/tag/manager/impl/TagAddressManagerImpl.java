@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -33,10 +34,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     static String SCRIPTSPATH = "tagscripts";
 
+    @Value("${spring.datasource.greenplum.jdbc-url}")
+    private String greenplum_jdbc_url;
     @PostConstruct
     private void initConstruct() throws Exception {
         log.info("initConstruct start.......");
-        refreshAllLabel();
+        log.info("spring.datasource.greenplum===={}",greenplum_jdbc_url);
+//        refreshAllLabel();
         log.info("initConstruct end.......");
     }
 
