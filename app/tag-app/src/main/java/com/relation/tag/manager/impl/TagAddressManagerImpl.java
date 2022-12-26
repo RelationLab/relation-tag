@@ -65,7 +65,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void check(String tableName, long sleepTime) {
-        tableName = tableName.substring(0, tableName.indexOf("."));
+        if (StringUtils.isEmpty(tableName)) {
+            return;
+        }
         Long tagCount = iAddressLabelService.exceSelectSql("select count(1)  from (select * from ".concat(tableName).concat(" limit 1)  t"));
         if (tagCount.intValue() != 1) {
             try {
@@ -132,9 +134,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         forkJoinPool.execute(new Runnable() {
             @Override
             public void run() {
-                if (!StringUtils.isEmpty(lastTableName)) {
-                    check(lastTableName, 10 * 1000);
-                }
+                check(lastTableName, 10 * 1000);
                 try {
                     iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
                 } catch (Exception e) {
