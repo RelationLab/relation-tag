@@ -1,5 +1,6 @@
 package com.relation.tag.manager.impl;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.relation.tag.entity.DimRuleSqlContent;
 import com.relation.tag.entity.FileEntity;
 import com.relation.tag.manager.TagAddressManager;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
@@ -34,12 +36,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     static String SCRIPTSPATH = "tagscripts";
 
-    @Value("${spring.datasource.greenplum.jdbc-url}")
-    private String greenplum_jdbc_url;
+    @Autowired
+    @Qualifier("greenplumDataSource")
+    DataSource dataSource;
     @PostConstruct
     private void initConstruct() throws Exception {
         log.info("initConstruct start.......");
-        log.info("spring.datasource.greenplum===={}",greenplum_jdbc_url);
+        log.info("dataSource====={}",((DruidDataSource)dataSource).getProperties());
 //        refreshAllLabel();
         log.info("initConstruct end.......");
     }
