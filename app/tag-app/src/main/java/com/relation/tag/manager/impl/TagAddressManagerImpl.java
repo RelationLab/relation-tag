@@ -42,7 +42,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @PostConstruct
     private void initConstruct() throws Exception {
         log.info("initConstruct start.......");
-        log.info("dataSource====={}",((DruidDataSource)dataSource).getConnection());
 //        refreshAllLabel();
         log.info("initConstruct end.......");
     }
