@@ -96,6 +96,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void innit() throws Exception {
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("create_tabel.sql")), "create_tabel.sql");
         execSql(null, "dim_project_token_type.sql");
         execSql("dim_project_token_type", "dim_project_type.sql");
         execSql("dim_project_type", "dim_rule_content.sql");
@@ -105,8 +106,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("nft_volume_count", "platform_nft_type_volume_count.sql");
         execSql("platform_nft_type_volume_count", "dim_rank_token.sql");
         execSql("dim_rank_token", "dim_rule_sql_content.sql");
-        execSql("dim_rule_sql_content", "address_labels_json_gin.sql");
-        execSql(null, "create_address_label_table.sql");
         execSql("dim_rule_sql_content", "dex_tx_volume_count_summary.sql");
         execSql("dex_tx_volume_count_summary", "dex_tx_volume_count_summary_univ3.sql");
         execSql("dex_tx_volume_count_summary", "token_balance_volume_usd.sql");

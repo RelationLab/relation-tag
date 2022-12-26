@@ -1,16 +1,4 @@
-DROP TABLE if EXISTS public.nft_volume_count;
 
-CREATE TABLE public.nft_volume_count (
-	address varchar(512) NOT NULL,
-	"token" varchar(512) NOT NULL,
-	type varchar(20) NOT NULL,
-	transfer_volume int8 NOT NULL,
-	transfer_count int8 NULL,
-	created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-	updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-	removed bool NULL DEFAULT false,
-	CONSTRAINT uk_nvc_address_token UNIQUE (address, token, type)
-);
 CREATE INDEX nft_activity_volume_address_gin_trgm ON public.nft_volume_count USING btree (address);
 CREATE INDEX nft_activity_volume_token_gin_trgm ON public.nft_volume_count USING btree (token);
 

@@ -1,17 +1,3 @@
-
-    drop table if exists dim_rule_content;
-    create table dim_rule_content
-    (
-        rule_code    varchar(50),
-        token        varchar(300),
-        label_type   varchar(300),
-        operate_type varchar(300),
-        data_subject varchar(20),
-        create_time  timestamp,
-        token_name   varchar(20),
-        token_type   varchar(20)
-    );
-  
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_1', '0x9c4fe5ffd9a9fc5678cfbd93aa2d4fd684b67c4c', 'Uniswap_v2_WETH/PAXG_BALANCE_GRADE', 'T', 'balance_grade', now(), 'WETH/PAXG', 'lp');
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_2', '0x63b61e73d3fa1fb96d51ce457cabe89fffa7a1f1', 'Uniswap_v2_WETH/SHINJA_BALANCE_GRADE', 'T', 'balance_grade', now(), 'WETH/SHINJA', 'lp');
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_3', '0x1d42064fc4beb5f8aaf85f4617ae8b3b5b8bd801', 'Uniswap_v3_UNI/WETH_BALANCE_GRADE', 'T', 'balance_grade', now(), 'UNI/WETH', 'lp');

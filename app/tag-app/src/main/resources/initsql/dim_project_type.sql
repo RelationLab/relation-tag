@@ -1,18 +1,3 @@
-
-    drop table if exists dim_project_type;
-    create table dim_project_type 
-    (
-    project  varchar(100) 
-    ,type   varchar(100) 
-    ,label_type   varchar(100) 
-    ,label_name  varchar(100)  
-    ,content   varchar(100) 
-    ,operate_type   varchar(100) 
-    ,seq_flag varchar(100) 
-    ,data_subject varchar(100) 
-    ,etl_update_time timestamp 
-    );
-
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'NFT Recipient', 'WEB3_ALL_NFTRecipient_BALANCE_GRADE', '', '', 'T', 'ALL_NFTRecipient', 'balance_grade', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'NFT Recipient', 'WEB3_ALL_NFTRecipient_BALANCE_TOP', '', '', 'T', 'ALL_NFTRecipient', 'balance_top', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'NFT Recipient', 'WEB3_ALL_NFTRecipient_BALANCE_RANK', '', '', 'T', 'ALL_NFTRecipient', 'balance_rank', now());

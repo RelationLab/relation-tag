@@ -1,10 +1,4 @@
-drop table if exists dim_rule_sql_content;
 
-CREATE TABLE public.dim_rule_sql_content (
-                                             rule_name varchar(100) NULL,
-                                             rule_sql text NULL,
-                                             rule_order int8 NULL
-);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_eth_count_grade','truncate
