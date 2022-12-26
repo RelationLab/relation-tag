@@ -7,7 +7,7 @@
         ${exceSqlStr}
     </update>
 
-    <select id="exceSelectSql" resultType="java.lang.Long" timeout="864000">
+    <select id="exceSelectSql" resultType="java.lang.Integer" timeout="864000">
         ${exceSelectSql}
     </select>
 
