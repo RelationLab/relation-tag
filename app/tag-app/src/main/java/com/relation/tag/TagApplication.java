@@ -21,7 +21,8 @@ public class TagApplication {
     }
     @PostConstruct
     public void postConstruct() throws Exception {
-        tagAddressManager.refreshAllLabel();
-        System.out.println("执行Springboot正式启动前的代码");
+        System.out.println("执行Springboot正式启动前的代码 start.........");
+//        tagAddressManager.refreshAllLabel();
+        System.out.println("执行Springboot正式启动前的代码 end.........");
     }
 }
