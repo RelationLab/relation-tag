@@ -29,8 +29,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Qualifier("greenPlumAddressLabelGpServiceImpl")
     protected IAddressLabelGpService iAddressLabelService;
     protected static ForkJoinPool forkJoinPool = new ForkJoinPool(100);
-    protected static ForkJoinPool forkJoinCheckPool = new ForkJoinPool(100);
-
     static String FILEPATH = "initsql";
 
     static String SCRIPTSPATH = "tagscripts";
