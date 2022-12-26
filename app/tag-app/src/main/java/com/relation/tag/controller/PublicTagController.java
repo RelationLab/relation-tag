@@ -31,7 +31,17 @@ public class PublicTagController {
     @PostConstruct
     private void initConstruct() throws Exception {
         log.info("PublicTagController start.......");
-        tagAddressManager.refreshAllLabel();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                } catch (Exception e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        }).start();
+//        Thread.sleep(1* 60 * 1000);
+
         log.info("PublicTagController end.......");
     }
 

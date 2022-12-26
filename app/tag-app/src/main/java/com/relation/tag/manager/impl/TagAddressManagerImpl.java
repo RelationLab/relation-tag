@@ -42,6 +42,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @PostConstruct
     private void initConstruct() throws Exception {
         log.info("initConstruct start.......");
+        forkJoinPool.submit(()->{
+            try {
+                refreshAllLabel();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }).get();
         log.info("initConstruct end.......");
     }
 
