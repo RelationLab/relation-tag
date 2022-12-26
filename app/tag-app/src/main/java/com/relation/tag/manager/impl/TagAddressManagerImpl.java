@@ -69,14 +69,24 @@ public class TagAddressManagerImpl implements TagAddressManager {
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
-        List<Integer> tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
-        if (CollectionUtils.isEmpty(tagList)) {
-            try {
-                Thread.sleep(sleepTime);
-                check(tableName, sleepTime);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+        List<Integer> tagList = null;
+        try {
+            tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
+            if (!CollectionUtils.isEmpty(tagList)) {
+                return;
             }
+        } catch (Exception ex) {
+            tryAgain(tableName,sleepTime);
+        }
+        tryAgain(tableName,sleepTime);
+    }
+
+    private void tryAgain(String tableName, long sleepTime) {
+        try {
+            Thread.sleep(sleepTime);
+            check(tableName, sleepTime);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -102,7 +112,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_content.sql")), "dim_rule_content.sql");
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")), "dim_rule_sql_content.sql");
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")), "dim_rule_sql_content.sql");
-
 
 
         execSql("dim_rank_token", "platform_nft_volume_usd.sql");
