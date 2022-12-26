@@ -42,7 +42,16 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @PostConstruct
     private void initConstruct() throws Exception {
         log.info("initConstruct start.......");
-//        refreshAllLabel();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    refreshAllLabel();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
         log.info("initConstruct end.......");
     }
 
