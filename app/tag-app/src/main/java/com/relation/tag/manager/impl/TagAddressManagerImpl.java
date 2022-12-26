@@ -76,7 +76,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            log.info("{}  check data..... not data......", tableName);
         }
     }
 
