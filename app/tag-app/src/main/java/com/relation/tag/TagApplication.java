@@ -1,7 +1,6 @@
 package com.relation.tag;
 
 import com.relation.tag.manager.TagAddressManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -14,14 +13,10 @@ import javax.annotation.PostConstruct;
         "org.springframework.boot.extension"})
 @EnableScheduling
 public class TagApplication {
-    @Autowired
-    private TagAddressManager tagAddressManager;
-    public static void main(String[] args)  {
+
+    public static void main(String[] args) throws Exception {
         ConfigurableApplicationContext ctx =  SpringApplication.run(TagApplication.class, args);
-    }
-    @PostConstruct
-    public void postConstruct() throws Exception {
-        System.out.println("执行Springboot正式启动前的代码 start.........");
-        System.out.println("执行Springboot正式启动前的代码 end.........");
+        TagAddressManager tagAddressManager = ctx.getBean(TagAddressManager.class);
+        tagAddressManager.refreshAllLabel();
     }
 }

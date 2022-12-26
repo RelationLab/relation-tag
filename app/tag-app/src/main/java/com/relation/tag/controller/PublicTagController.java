@@ -31,17 +31,18 @@ public class PublicTagController {
     @PostConstruct
     private void initConstruct() throws Exception {
         log.info("PublicTagController start.......");
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                } catch (Exception e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        }).start();
-//        Thread.sleep(1* 60 * 1000);
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    tagAddressManager.refreshAllLabel();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+        Thread.sleep(1* 60 * 1000);
+        tagAddressManager.check("white_list_erc20",10*1000);
         log.info("PublicTagController end.......");
     }
 

@@ -36,22 +36,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     static String SCRIPTSPATH = "tagscripts";
 
-    @Autowired
-    @Qualifier("greenplumDataSource")
-    DataSource dataSource;
-    @PostConstruct
-    private void initConstruct() throws Exception {
-        log.info("initConstruct start.......");
-        forkJoinPool.submit(()->{
-            try {
-                refreshAllLabel();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }).get();
-        log.info("initConstruct end.......");
-    }
-
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList, boolean partTag) {
         try {
             forkJoinPool.execute(() -> {
@@ -70,7 +54,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         tagMerge();
     }
 
-    private void check(String tableName, long sleepTime) {
+    public void check(String tableName, long sleepTime) {
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
