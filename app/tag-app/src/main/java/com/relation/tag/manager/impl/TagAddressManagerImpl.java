@@ -96,16 +96,20 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private void innit() throws Exception {
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("create_tabel.sql")), "create_tabel.sql");
-        execSql(null, "dim_project_token_type.sql");
-        execSql("dim_project_token_type", "dim_project_type.sql");
-        execSql("dim_project_type", "dim_rule_content.sql");
-        execSql("dim_rule_content", "platform_nft_volume_usd.sql");
+
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_token_type.sql")), "dim_project_token_type.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_type.sql")), "dim_project_type.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_content.sql")), "dim_rule_content.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")), "dim_rule_sql_content.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")), "dim_rule_sql_content.sql");
+
+
+
+        execSql("dim_rank_token", "platform_nft_volume_usd.sql");
         execSql("platform_nft_volume_usd", "nft_transfer_holding.sql");
         execSql("nft_transfer_holding", "nft_volume_count.sql");
         execSql("nft_volume_count", "platform_nft_type_volume_count.sql");
-        execSql("platform_nft_type_volume_count", "dim_rank_token.sql");
-        execSql("dim_rank_token", "dim_rule_sql_content.sql");
-        execSql("dim_rule_sql_content", "dex_tx_volume_count_summary.sql");
+        execSql("platform_nft_type_volume_count", "dex_tx_volume_count_summary.sql");
         execSql("dex_tx_volume_count_summary", "dex_tx_volume_count_summary_univ3.sql");
         execSql("dex_tx_volume_count_summary", "token_balance_volume_usd.sql");
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql");
