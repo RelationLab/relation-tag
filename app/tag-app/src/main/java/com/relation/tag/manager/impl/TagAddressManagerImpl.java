@@ -32,7 +32,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
     static String FILEPATH = "initsql";
 
     static String SCRIPTSPATH = "tagscripts";
-
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList, boolean partTag) {
         try {
             forkJoinPool.execute(() -> {
