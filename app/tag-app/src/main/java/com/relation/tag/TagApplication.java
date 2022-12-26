@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication(scanBasePackages = {"com.relation.tag",
-        "org.springframework.boot.extension"},exclude = DataSourceAutoConfiguration.class)
+        "org.springframework.boot.extension"})
 @EnableScheduling
 public class TagApplication {
 
