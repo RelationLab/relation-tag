@@ -21,6 +21,7 @@ public class InitSpringBoot implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         try {
+            Thread.sleep(10*1000);
             tagAddressManager.refreshAllLabel();
             log.info("springboot初始化完成");
         } catch (Exception e) {
