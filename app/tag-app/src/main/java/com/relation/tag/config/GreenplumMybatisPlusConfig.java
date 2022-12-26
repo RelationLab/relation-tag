@@ -37,6 +37,7 @@ public class GreenplumMybatisPlusConfig {
 
     @Bean("greenplumSqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory(@Qualifier("greenplumDataSource") DataSource dataSource) throws Exception {
+        log.info("sqlSessionFactory init start......");
         MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
         sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mappers));
@@ -65,6 +66,9 @@ public class GreenplumMybatisPlusConfig {
 
     @Bean(name = "greenplumSqlSessionTemplate")
     public SqlSessionTemplate sqlSessionTemplate(@Qualifier("greenplumSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
-        return new SqlSessionTemplate(sqlSessionFactory);
+        log.info("sqlSessionTemplate init start......");
+        SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
+        log.info("sqlSessionTemplate init end......");
+        return sqlSessionTemplate;
     }
 }
