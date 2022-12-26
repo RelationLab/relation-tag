@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
@@ -34,6 +35,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     static String SCRIPTSPATH = "tagscripts";
 
+    @PostConstruct
+    private void initConstruct() throws Exception {
+        log.info("initConstruct start.......");
+        refreshAllLabel();
+        log.info("initConstruct end.......");
+    }
+
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList, boolean partTag) {
         try {
             forkJoinPool.execute(() -> {
@@ -49,20 +57,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-//        checkAndRepair(ruleSqlList);
         tagMerge();
-    }
-
-    private void checkAndRepair(List<FileEntity> fileList) {
-        try {
-            forkJoinCheckPool.submit(() -> {
-                fileList.parallelStream().forEach(ruleSql -> {
-                    check(ruleSql.getFileName(), 1 * 60 * 1000);
-                });
-            }).get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void check(String tableName, long sleepTime) {
@@ -111,7 +106,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_type.sql")), "dim_project_type.sql");
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_content.sql")), "dim_rule_content.sql");
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")), "dim_rule_sql_content.sql");
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")), "dim_rule_sql_content.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")), "dim_rank_token.sql");
 
 
         execSql("dim_rank_token", "platform_nft_volume_usd.sql");
@@ -123,22 +118,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("dex_tx_volume_count_summary", "token_balance_volume_usd.sql");
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql");
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_token_type.sql")), "dim_project_token_type.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_type.sql")), "dim_project_type.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_content.sql")), "dim_rule_content.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("platform_nft_volume_usd.sql")), "platform_nft_volume_usd.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("nft_transfer_holding.sql")), "nft_transfer_holding.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("nft_volume_count.sql")), "nft_volume_count.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("platform_nft_type_volume_count.sql")), "platform_nft_type_volume_count.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")), "dim_rank_token.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")), "dim_rule_sql_content.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("address_labels_json_gin.sql")), "address_labels_json_gin.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("create_address_label_table.sql")), "create_address_label_table.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dex_tx_volume_count_summary.sql")), "dex_tx_volume_count_summary.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dex_tx_volume_count_summary_univ3.sql")), "dex_tx_volume_count_summary_univ3.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("token_balance_volume_usd.sql")), "token_balance_volume_usd.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("total_balance_volume_usd.sql")), "total_balance_volume_usd.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("web3_transaction_record_summary.sql")), "web3_transaction_record_summary.sql");
     }
 
     private void execSql(String lastTableName, String sqlName) {
@@ -192,16 +171,23 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 }
         );
         try {
-            Thread.sleep(60 * 60 * 1000);
+            Thread.sleep(50 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         forkJoinPool.execute(() -> {
                     log.info("merge2Gin  start....");
-                    check("address_labels_json_gin", 1 * 60 * 1000);
+                    check("address_label_gp", 1 * 60 * 1000);
                     merge2Gin();
                 }
         );
+        try {
+            Thread.sleep(10 * 60 * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        check("address_labels_json_gin", 1 * 60 * 1000);
+        log.info("tag end...........");
     }
 
     @Override
