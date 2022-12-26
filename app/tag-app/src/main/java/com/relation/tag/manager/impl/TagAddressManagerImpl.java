@@ -104,7 +104,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("platform_nft_type_volume_count", "dim_rank_token.sql");
         execSql("dim_rank_token", "dim_rule_sql_content.sql");
         execSql("dim_rule_sql_content", "address_labels_json_gin.sql");
-        execSql("", "create_address_label_table.sql");
+        execSql(null, "create_address_label_table.sql");
         execSql("dim_rule_sql_content", "dex_tx_volume_count_summary.sql");
         execSql("dex_tx_volume_count_summary", "dex_tx_volume_count_summary_univ3.sql");
         execSql("dex_tx_volume_count_summary", "token_balance_volume_usd.sql");
