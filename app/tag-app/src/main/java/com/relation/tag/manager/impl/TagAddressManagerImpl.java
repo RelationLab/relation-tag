@@ -12,6 +12,7 @@ import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.io.File;
 import java.util.List;
@@ -68,8 +69,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
-        Long tagCount = iAddressLabelService.exceSelectSql("select count(1)  from (select * from ".concat(tableName).concat(" limit 1)  t"));
-        if (tagCount.intValue() != 1) {
+        List<Integer> tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
+        if (CollectionUtils.isEmpty(tagList)) {
             try {
                 Thread.sleep(sleepTime);
                 check(tableName, sleepTime);

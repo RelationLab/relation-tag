@@ -9,7 +9,7 @@ import java.util.List;
 public interface GreenplumAddressLabelGpMapper extends BaseMapper<AddressLabelGp>, PostgresPageMapper<AddressLabelGp> {
     void exceSql(String sqlStr);
 
-    Long exceSelectSql(String exceSelectSql);
+    List<Integer> exceSelectSql(String exceSelectSql);
 
     List<String> selectQueryStr();
 }

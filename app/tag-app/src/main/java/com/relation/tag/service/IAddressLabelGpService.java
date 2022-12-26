@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IAddressLabelGpService extends IService<AddressLabelGp> {
     boolean exceSql(String sqlStr, String name);
-    Long exceSelectSql(String exceSelectSql);
+    List<Integer> exceSelectSql(String exceSelectSql);
 
     List<String> selectQueryStr();
 }
