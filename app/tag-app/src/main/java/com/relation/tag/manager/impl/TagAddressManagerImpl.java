@@ -55,7 +55,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         try {
             forkJoinCheckPool.submit(() -> {
                 fileList.parallelStream().forEach(ruleSql -> {
-                    checkAndRepair(ruleSql.getFileContent(), ruleSql.getFileName());
+                    check(ruleSql.getFileName());
                 });
             }).get();
         } catch (Exception e) {
@@ -63,17 +63,16 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
     }
 
-    private void checkAndRepair(String ruleSql, String ruleName) {
-        ruleName = ruleName.substring(0, ruleName.indexOf("."));
-        Long tagCount = iAddressLabelService.exceSelectSql("select count(1)  from (select * from ".concat(ruleName).concat(" limit 1)  t"));
+    private void check(String tableName) {
+        tableName = tableName.substring(0, tableName.indexOf("."));
+        Long tagCount = iAddressLabelService.exceSelectSql("select count(1)  from (select * from ".concat(tableName).concat(" limit 1)  t"));
         if (tagCount.intValue() != 1) {
             try {
                 Thread.sleep(1 * 60 * 1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            checkAndRepair(ruleSql, ruleName);
-            log.info("{}  exec failed......", ruleName);
+            log.info("{}  check data..... not data......", tableName);
         }
     }
 
@@ -133,7 +132,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             }
         });
         try {
-            Thread.sleep(60000);
+            Thread.sleep(5*1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -146,12 +145,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 }
         );
         try {
-            Thread.sleep(60000);
+            Thread.sleep(5*1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         forkJoinPool.execute(() -> {
                     log.info("merge2Gin  start....");
+                    check("address_labels_json_gin");
                     merge2Gin();
                 }
         );
