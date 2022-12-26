@@ -32,6 +32,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     static String FILEPATH = "initsql";
 
     static String SCRIPTSPATH = "tagscripts";
+
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList, boolean partTag) {
         try {
             forkJoinPool.execute(() -> {
@@ -69,6 +70,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         if (tagCount.intValue() != 1) {
             try {
                 Thread.sleep(sleepTime);
+                check(tableName, sleepTime);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -87,26 +89,27 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     .fileContent(FileUtils.readFile(SCRIPTSPATH.concat(File.separator)
                             .concat(fileName))).build());
         }
+        check("web3_transaction_record_summary", 60 * 1000);
         tagByRuleSqlList(fileList, false);
     }
 
     private void innit() throws Exception {
-        execSql(null,"dim_project_token_type.sql");
-        execSql("dim_project_token_type","dim_project_type.sql");
-        execSql("dim_project_type","dim_rule_content.sql");
-        execSql("dim_rule_content","platform_nft_volume_usd.sql");
-        execSql("platform_nft_volume_usd","nft_transfer_holding.sql");
-        execSql("nft_transfer_holding","nft_volume_count.sql");
-        execSql("nft_volume_count","platform_nft_type_volume_count.sql");
-        execSql("platform_nft_type_volume_count","dim_rank_token.sql");
-        execSql("dim_rank_token","dim_rule_sql_content.sql");
-        execSql("dim_rule_sql_content","address_labels_json_gin.sql");
-        execSql("","create_address_label_table.sql");
-        execSql("dim_rule_sql_content","dex_tx_volume_count_summary.sql");
-        execSql("dex_tx_volume_count_summary","dex_tx_volume_count_summary_univ3.sql");
-        execSql("dex_tx_volume_count_summary","token_balance_volume_usd.sql");
-        execSql("token_balance_volume_usd","total_balance_volume_usd.sql");
-        execSql("total_balance_volume_usd","web3_transaction_record_summary.sql");
+        execSql(null, "dim_project_token_type.sql");
+        execSql("dim_project_token_type", "dim_project_type.sql");
+        execSql("dim_project_type", "dim_rule_content.sql");
+        execSql("dim_rule_content", "platform_nft_volume_usd.sql");
+        execSql("platform_nft_volume_usd", "nft_transfer_holding.sql");
+        execSql("nft_transfer_holding", "nft_volume_count.sql");
+        execSql("nft_volume_count", "platform_nft_type_volume_count.sql");
+        execSql("platform_nft_type_volume_count", "dim_rank_token.sql");
+        execSql("dim_rank_token", "dim_rule_sql_content.sql");
+        execSql("dim_rule_sql_content", "address_labels_json_gin.sql");
+        execSql("", "create_address_label_table.sql");
+        execSql("dim_rule_sql_content", "dex_tx_volume_count_summary.sql");
+        execSql("dex_tx_volume_count_summary", "dex_tx_volume_count_summary_univ3.sql");
+        execSql("dex_tx_volume_count_summary", "token_balance_volume_usd.sql");
+        execSql("token_balance_volume_usd", "total_balance_volume_usd.sql");
+        execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
 //        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_token_type.sql")), "dim_project_token_type.sql");
 //        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_type.sql")), "dim_project_type.sql");
 //        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_content.sql")), "dim_rule_content.sql");
@@ -125,11 +128,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
 //        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("web3_transaction_record_summary.sql")), "web3_transaction_record_summary.sql");
     }
 
-    private void execSql(String lastTableName,String sqlName) {
+    private void execSql(String lastTableName, String sqlName) {
         forkJoinPool.execute(new Runnable() {
             @Override
             public void run() {
-                if (!StringUtils.isBlank(lastTableName)){
+                if (!StringUtils.isEmpty(lastTableName)) {
                     check(lastTableName, 10 * 1000);
                 }
                 try {
@@ -165,7 +168,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             }
         });
         try {
-            Thread.sleep(5*1000);
+            Thread.sleep(5 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -178,7 +181,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 }
         );
         try {
-            Thread.sleep(5*1000);
+            Thread.sleep(5 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
