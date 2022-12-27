@@ -159,7 +159,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 }
         );
         try {
-            Thread.sleep(50 * 60 * 1000);
+            Thread.sleep(40 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
