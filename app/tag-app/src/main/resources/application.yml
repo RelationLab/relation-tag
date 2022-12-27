@@ -29,8 +29,7 @@ spring:
       max-open-prepared-statements: 20
       max-pool-prepared-statement-per-connection-size: 20
       filters: stat,config
-  main:
-    web-application-type: none
+
 # 日志配置
 logging:
   config: classpath:logback-spring-yun.xml
