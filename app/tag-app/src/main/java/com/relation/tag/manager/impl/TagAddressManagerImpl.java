@@ -1,6 +1,5 @@
 package com.relation.tag.manager.impl;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.relation.tag.entity.DimRuleSqlContent;
 import com.relation.tag.entity.FileEntity;
 import com.relation.tag.manager.TagAddressManager;
@@ -12,12 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;

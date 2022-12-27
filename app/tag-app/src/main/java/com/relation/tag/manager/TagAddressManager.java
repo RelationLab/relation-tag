@@ -1,7 +1,5 @@
 package com.relation.tag.manager;
 
-import java.util.List;
-
 public interface TagAddressManager {
     void refreshAllLabel() throws Exception;
 
@@ -9,5 +7,5 @@ public interface TagAddressManager {
 
     void merge2Gin();
 
-   void check(String tableName, long sleepTime);
+    void check(String tableName, long sleepTime);
 }
