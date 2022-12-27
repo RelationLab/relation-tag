@@ -32,7 +32,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     static String SCRIPTSPATH = "tagscripts";
 
-    private void tagByRuleSqlList(List<FileEntity> ruleSqlList, boolean partTag) {
+    private void tagByRuleSqlList(List<FileEntity> ruleSqlList) {
         try {
             forkJoinPool.execute(() -> {
                 ruleSqlList.parallelStream().forEach(ruleSql -> {
@@ -87,7 +87,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                             .concat(fileName))).build());
         }
         check("web3_transaction_record_summary", 60 * 1000);
-        tagByRuleSqlList(fileList, false);
+        tagByRuleSqlList(fileList);
     }
 
     private void innit() throws Exception {
