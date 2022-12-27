@@ -28,16 +28,13 @@ public class GreenplumMybatisPlusConfig {
     private String mappers = "classpath*:mappers/greenplum/**/*Mapper.xml";
 
     @Bean(name = "greenplumDataSource")
-//    @ConfigurationProperties(prefix = "spring.datasource.greenplum")
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
-//        return DataSourceBuilder.create().build();
         return new DruidDataSource();
     }
 
     @Bean("greenplumSqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory(@Qualifier("greenplumDataSource") DataSource dataSource) throws Exception {
-        log.info("sqlSessionFactory init start......");
         MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
         sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mappers));
@@ -54,7 +51,6 @@ public class GreenplumMybatisPlusConfig {
         GlobalConfig conf = new GlobalConfig();
         conf.setDbConfig(dbConfig);
         sqlSessionFactory.setGlobalConfig(conf);
-        log.info("sqlSessionFactory init end......");
         return sqlSessionFactory.getObject();
     }
 
@@ -66,9 +62,7 @@ public class GreenplumMybatisPlusConfig {
 
     @Bean(name = "greenplumSqlSessionTemplate")
     public SqlSessionTemplate sqlSessionTemplate(@Qualifier("greenplumSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
-        log.info("sqlSessionTemplate init start......");
         SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
-        log.info("sqlSessionTemplate init end......");
         return sqlSessionTemplate;
     }
 }
