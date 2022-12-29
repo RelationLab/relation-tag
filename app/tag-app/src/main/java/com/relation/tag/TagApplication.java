@@ -11,8 +11,8 @@ public class TagApplication {
 
     public static void main(String[] args) throws Exception {
         ConfigurableApplicationContext ctx = SpringApplication.run(TagApplication.class, args);
-//        TagAddressManager tagAddressManager = ctx.getBean(TagAddressManager.class);
-//        tagAddressManager.refreshAllLabel();
-//        System.exit(0);
+        TagAddressManager tagAddressManager = ctx.getBean(TagAddressManager.class);
+        tagAddressManager.refreshAllLabel();
+        System.exit(0);
     }
 }
