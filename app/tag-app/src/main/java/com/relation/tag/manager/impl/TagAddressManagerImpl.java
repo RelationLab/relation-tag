@@ -51,6 +51,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     public void check(String tableName, long sleepTime) {
+        if (StringUtils.equals("address_labels_json_gin",tableName)){
+            log.info("address_labels_json_gin check.........");
+        }
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
@@ -64,6 +67,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
             tryAgain(tableName, sleepTime);
         }
         tryAgain(tableName, sleepTime);
+        if (StringUtils.equals("address_labels_json_gin",tableName)){
+            log.info("address_labels_json_gin check end end end end.........");
+        }
     }
 
     private void tryAgain(String tableName, long sleepTime) {
@@ -174,6 +180,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        log.info("check address_labels_json_gin start...........");
         check("address_labels_json_gin", 1 * 60 * 1000);
         log.info("tag end...........");
     }
