@@ -722,3 +722,56 @@ CREATE TABLE  public.web3_transaction_record_summary
     project character varying(100) COLLATE pg_catalog."default",
     balance numeric(125,30) NOT NULL DEFAULT 0
 );
+
+-- public.token_holding_vol_count definition
+
+-- Drop table
+
+-- DROP TABLE public.token_holding_vol_count;
+
+CREATE TABLE public.token_holding_vol_count (
+                                                address varchar(256) NULL,
+                                                "token" varchar(256) NULL,
+                                                balance numeric(125, 30) NULL,
+                                                block_height int8 NULL,
+                                                total_transfer_volume numeric(125, 30) NULL,
+                                                total_transfer_count int8 NULL,
+                                                status varchar(128) NULL,
+                                                created_at timestamp NULL,
+                                                updated_at timestamp NULL,
+                                                removed bool NULL,
+                                                fail_count int4 NULL,
+                                                error_code int4 NULL,
+                                                error_message text NULL,
+                                                node_name varchar(512) NULL,
+                                                total_transfer_to_count int8 NULL,
+                                                total_transfer_all_count int8 NULL,
+                                                total_transfer_to_volume numeric(120, 30) NULL,
+                                                total_transfer_all_volume numeric(120, 30) NULL
+);
+
+-- public.eth_holding_vol_count.sql definition
+
+-- Drop table
+
+-- DROP TABLE public.eth_holding_vol_count.sql;
+
+CREATE TABLE public.eth_holding_vol_count (
+                                              address varchar(256) NULL,
+                                              balance numeric(125, 30) NULL,
+                                              total_transfer_count int8 NULL,
+                                              block_height int8 NULL,
+                                              total_transfer_volume numeric(120, 30) NULL,
+                                              status varchar(128) NULL,
+                                              created_at timestamp NULL,
+                                              updated_at timestamp NULL,
+                                              removed bool NULL,
+                                              fail_count int4 NULL,
+                                              error_code int4 NULL,
+                                              error_message text NULL,
+                                              node_name varchar(512) NULL,
+                                              total_transfer_to_count int8 NULL,
+                                              total_transfer_all_count int8 NULL,
+                                              total_transfer_to_volume numeric(120, 30) NULL,
+                                              total_transfer_all_volume numeric(120, 30) NULL
+);
