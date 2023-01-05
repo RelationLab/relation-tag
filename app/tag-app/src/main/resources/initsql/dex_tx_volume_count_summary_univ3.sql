@@ -20,7 +20,7 @@
     min(first_updated_block_height) as first_updated_block_height,
     sum(th.balance * w.price) as balance_usd
     from
-    token_holding_uni th
+        token_holding_uni_cal th
         inner join white_list_erc20 w on
             w.address = th.price_token
     where

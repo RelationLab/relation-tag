@@ -733,9 +733,9 @@ CREATE TABLE public.token_holding_vol_count (
                                                 address varchar(256) NULL,
                                                 "token" varchar(256) NULL,
                                                 balance numeric(125, 30) NULL,
-                                                block_height int8 NULL,
+                                                block_height bigint NULL,
                                                 total_transfer_volume numeric(125, 30) NULL,
-                                                total_transfer_count int8 NULL,
+                                                total_transfer_count bigint NULL,
                                                 status varchar(128) NULL,
                                                 created_at timestamp NULL,
                                                 updated_at timestamp NULL,
@@ -744,8 +744,8 @@ CREATE TABLE public.token_holding_vol_count (
                                                 error_code int4 NULL,
                                                 error_message text NULL,
                                                 node_name varchar(512) NULL,
-                                                total_transfer_to_count int8 NULL,
-                                                total_transfer_all_count int8 NULL,
+                                                total_transfer_to_count bigint NULL,
+                                                total_transfer_all_count bigint NULL,
                                                 total_transfer_to_volume numeric(120, 30) NULL,
                                                 total_transfer_all_volume numeric(120, 30) NULL
 );
@@ -774,4 +774,41 @@ CREATE TABLE public.eth_holding_vol_count (
                                               total_transfer_all_count int8 NULL,
                                               total_transfer_to_volume numeric(120, 30) NULL,
                                               total_transfer_all_volume numeric(120, 30) NULL
+);
+
+-- public.token_holding_uni_cal definition
+
+-- Drop table
+
+-- DROP TABLE public.token_holding_uni_cal;
+
+CREATE TABLE public.token_holding_uni_cal (
+                                              address varchar(256) NULL,
+                                              "token" varchar(256) NULL,
+                                              balance numeric(125, 30) NULL,
+                                              block_height int8 NULL,
+                                              total_transfer_volume numeric(125, 30) NULL,
+                                              total_transfer_count int8 NULL,
+                                              status varchar(128) NULL,
+                                              created_at timestamp NULL,
+                                              updated_at timestamp NULL,
+                                              removed bool NULL,
+                                              fail_count int4 NULL,
+                                              error_code int4 NULL,
+                                              error_message text NULL,
+                                              node_name varchar(512) NULL,
+                                              nft_token_id varchar(150) NULL,
+                                              in_transfer_volume numeric(125, 30) NULL,
+                                              out_transfer_volume numeric(125, 30) NULL,
+                                              in_transfer_count int8 NULL,
+                                              out_transfer_count int8 NULL,
+                                              "event" varchar(10) NULL,
+                                              first_updated_block_height int8 NULL,
+                                              transaction_hash varchar(100) NULL,
+                                              price_token varchar(150) NULL,
+                                              liquidity numeric(125, 30) NULL,
+                                              token0 varchar(150) NULL,
+                                              token1 varchar(150) NULL,
+                                              handle bool NULL,
+                                              "type" varchar(30) NULL
 );
