@@ -180,7 +180,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 }
         );
         try {
-            Thread.sleep(10 * 60 * 1000);
+            Thread.sleep(25 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
