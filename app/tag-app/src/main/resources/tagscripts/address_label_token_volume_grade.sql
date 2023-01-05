@@ -28,7 +28,7 @@ insert into public.address_label_token_volume_grade (address,label_type,label_na
             token,
             volume_usd
         from
-            token_balance_volume_usd tbvutk
+            token_volume_usd tbvutk
     )
         a1
         inner join

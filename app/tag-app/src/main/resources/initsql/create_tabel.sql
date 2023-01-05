@@ -812,3 +812,34 @@ CREATE TABLE public.token_holding_uni_cal (
                                               handle bool NULL,
                                               "type" varchar(30) NULL
 );
+
+-- public.token_volume_usd definition
+
+-- Drop table
+
+-- DROP TABLE public.token_volume_usd;
+
+CREATE TABLE public.token_volume_usd (
+                                         address varchar(512) NULL,
+                                         "token" varchar(512) NULL,
+                                         volume_usd numeric NULL,
+                                         created_at timestamp NULL,
+                                         updated_at timestamp NULL,
+                                         removed bool NULL
+)
+    DISTRIBUTED RANDOMLY;
+
+-- public.total_volume_usd definition
+
+-- Drop table
+
+-- DROP TABLE public.total_volume_usd;
+
+CREATE TABLE public.total_volume_usd (
+                                         address varchar(512) NULL,
+                                         volume_usd numeric(250, 20) NULL,
+                                         created_at timestamp(6) NULL,
+                                         updated_at timestamp(6) NULL,
+                                         removed bool NULL
+)
+    DISTRIBUTED RANDOMLY;

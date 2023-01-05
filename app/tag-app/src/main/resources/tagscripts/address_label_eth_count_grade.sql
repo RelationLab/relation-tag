@@ -30,7 +30,7 @@ insert into public.address_label_eth_count_grade (address,label_type,label_name,
             'eth' as token,
             total_transfer_count
         from
-            eth_holding th1
+            eth_holding_vol_count th1
     ) a1
         inner join
     dim_rule_content a2

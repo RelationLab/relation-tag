@@ -62,7 +62,7 @@ insert into public.address_label_usdt_volume_rank (address,label_type,label_name
                                                     address,
                                                     volume_usd
                                                 from
-                                                    token_balance_volume_usd
+                                                    token_volume_usd
                                                 where
                                                         token = '0xdac17f958d2ee523a2206206994597c13d831ec7' and address <>'0x000000000000000000000000000000000000dead') s1
                                                 inner join dim_rank_token s2
@@ -78,7 +78,7 @@ insert into public.address_label_usdt_volume_rank (address,label_type,label_name
                                 select
                                     count(distinct address) as count_sum_total
                                 from
-                                    token_balance_volume_usd
+                                    token_volume_usd
                                 where
                                         token = '0xdac17f958d2ee523a2206206994597c13d831ec7' and address <>'0x000000000000000000000000000000000000dead'
                                   and volume_usd >= 100) as a10
