@@ -832,7 +832,6 @@ CREATE TABLE public.token_volume_usd (
 -- public.total_volume_usd definition
 
 -- Drop table
-
 -- DROP TABLE public.total_volume_usd;
 
 CREATE TABLE public.total_volume_usd (
