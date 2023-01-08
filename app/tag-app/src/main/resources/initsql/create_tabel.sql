@@ -830,7 +830,6 @@ CREATE TABLE public.token_volume_usd (
     DISTRIBUTED RANDOMLY;
 
 -- public.total_volume_usd definition
-
 -- Drop table
 -- DROP TABLE public.total_volume_usd;
 
