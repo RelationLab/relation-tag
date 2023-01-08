@@ -728,7 +728,7 @@ CREATE TABLE  public.web3_transaction_record_summary
 -- Drop table
 
 -- DROP TABLE public.token_holding_vol_count;
-
+DROP TABLE IF EXISTS public.token_holding_vol_count;
 CREATE TABLE public.token_holding_vol_count (
                                                 address varchar(256) NULL,
                                                 "token" varchar(256) NULL,
@@ -755,7 +755,7 @@ CREATE TABLE public.token_holding_vol_count (
 -- Drop table
 
 -- DROP TABLE public.eth_holding_vol_count.sql;
-
+DROP TABLE IF EXISTS public.eth_holding_vol_count;
 CREATE TABLE public.eth_holding_vol_count (
                                               address varchar(256) NULL,
                                               balance numeric(125, 30) NULL,
@@ -781,7 +781,7 @@ CREATE TABLE public.eth_holding_vol_count (
 -- Drop table
 
 -- DROP TABLE public.token_holding_uni_cal;
-
+DROP TABLE IF EXISTS public.token_holding_uni_cal;
 CREATE TABLE public.token_holding_uni_cal (
                                               address varchar(256) NULL,
                                               "token" varchar(256) NULL,
@@ -818,7 +818,7 @@ CREATE TABLE public.token_holding_uni_cal (
 -- Drop table
 
 -- DROP TABLE public.token_volume_usd;
-
+DROP TABLE IF EXISTS public.token_volume_usd;
 CREATE TABLE public.token_volume_usd (
                                          address varchar(512) NULL,
                                          "token" varchar(512) NULL,
@@ -832,7 +832,7 @@ CREATE TABLE public.token_volume_usd (
 -- public.total_volume_usd definition
 -- Drop table
 -- DROP TABLE public.total_volume_usd;
-
+DROP TABLE IF EXISTS public.total_volume_usd;
 CREATE TABLE public.total_volume_usd (
                                          address varchar(512) NULL,
                                          volume_usd numeric(250, 20) NULL,
