@@ -77,7 +77,7 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
                                    and a2.data_subject = 'volume_grade'
                                    and a2.label_type not like '%NFT%'
                                    and a2.label_type not like '%WEB3%'
-        where  a1.token in (select distinct(token) from dim_project_token_type)
+        where  (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
         group by
             a1.address,
             a2.label_type
@@ -117,6 +117,7 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
                                    and a2.data_subject = 'volume_grade'
                                    and a2.label_type not like '%NFT%'
                                    and a2.label_type not like '%WEB3%'
+        where (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
         group by
             a1.address,
             a2.label_type
@@ -156,6 +157,7 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
                                    and a2.data_subject = 'volume_grade'
                                    and a2.label_type not like '%NFT%'
                                    and a2.label_type not like '%WEB3%'
+        where (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
         group by
             a1.address,
             a2.label_type
