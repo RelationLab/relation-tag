@@ -104,6 +104,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")), "dim_rule_sql_content.sql");
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")), "dim_rank_token.sql");
 
+
         execSql("dim_rank_token", "platform_nft_volume_usd.sql");
         execSql("platform_nft_volume_usd", "eth_holding_vol_count.sql");
         execSql("platform_nft_volume_usd", "token_holding_vol_count.sql");
