@@ -50,8 +50,30 @@ public class TagAddressManagerImpl implements TagAddressManager {
         tagMerge();
     }
 
+    public boolean checkResult(String tableName) {
+        try {
+            if (StringUtils.equals("address_labels_json_gin", tableName)) {
+                log.info("address_labels_json_gin check.........");
+            }
+            if (StringUtils.isEmpty(tableName)) {
+                return false;
+            }
+            List<Integer> tagList = null;
+            tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
+            if (!CollectionUtils.isEmpty(tagList)) {
+                return true;
+            }
+            if (StringUtils.equals("address_labels_json_gin", tableName)) {
+                log.info("address_labels_json_gin check end end end end.........");
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
     public void check(String tableName, long sleepTime) {
-        if (StringUtils.equals("address_labels_json_gin",tableName)){
+        if (StringUtils.equals("address_labels_json_gin", tableName)) {
             log.info("address_labels_json_gin check.........");
         }
         if (StringUtils.isEmpty(tableName)) {
@@ -67,7 +89,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             tryAgain(tableName, sleepTime);
         }
         tryAgain(tableName, sleepTime);
-        if (StringUtils.equals("address_labels_json_gin",tableName)){
+        if (StringUtils.equals("address_labels_json_gin", tableName)) {
             log.info("address_labels_json_gin check end end end end.........");
         }
     }
@@ -83,6 +105,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void refreshAllLabel() throws Exception {
+        if (!checkResult("address_labels_json_gin")) {
+            tag();
+        }
+    }
+
+    private void tag() throws Exception {
         innit();
         List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
         List<FileEntity> fileList = Lists.newArrayList();
@@ -98,28 +126,26 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private void innit() throws Exception {
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("create_tabel.sql")), "create_tabel.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_token_type.sql")), "dim_project_token_type.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_type.sql")), "dim_project_type.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_content.sql")), "dim_rule_content.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")), "dim_rule_sql_content.sql");
-//        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")), "dim_rank_token.sql");
-//
-//
-//        execSql("dim_rank_token", "platform_nft_volume_usd.sql");
-//        execSql("platform_nft_volume_usd", "nft_transfer_holding.sql");
-//        execSql("nft_transfer_holding", "nft_volume_count.sql");
-//        execSql("nft_volume_count", "platform_nft_type_volume_count.sql");
-//        execSql("platform_nft_type_volume_count", "token_holding_uni_cal.sql");
-//        execSql("token_holding_uni_cal", "token_balance_volume_usd.sql");
-//        execSql("token_balance_volume_usd", "total_balance_volume_usd.sql");
-//        execSql("total_balance_volume_usd", "dex_tx_volume_count_summary.sql");
-//        execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql");
-//        execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
-//        execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_token_type.sql")), "dim_project_token_type.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_type.sql")), "dim_project_type.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_content.sql")), "dim_rule_content.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")), "dim_rule_sql_content.sql");
+        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")), "dim_rank_token.sql");
 
-//        execSql("eth_holding_vol_count", "token_holding_vol_count.sql");
-//        execSql("token_holding_vol_count", "token_volume_usd.sql");
-//        execSql("token_volume_usd", "total_volume_usd.sql");
+        execSql("dim_rank_token", "platform_nft_volume_usd.sql");
+        execSql("platform_nft_volume_usd", "nft_transfer_holding.sql");
+        execSql("nft_transfer_holding", "nft_volume_count.sql");
+        execSql("nft_volume_count", "platform_nft_type_volume_count.sql");
+        execSql("platform_nft_type_volume_count", "token_holding_uni_cal.sql");
+        execSql("token_holding_uni_cal", "token_balance_volume_usd.sql");
+        execSql("token_balance_volume_usd", "total_balance_volume_usd.sql");
+        execSql("total_balance_volume_usd", "dex_tx_volume_count_summary.sql");
+        execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql");
+        execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
+        execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
+        execSql("eth_holding_vol_count", "token_holding_vol_count.sql");
+        execSql("token_holding_vol_count", "token_volume_usd.sql");
+        execSql("token_volume_usd", "total_volume_usd.sql");
     }
 
     private void execSql(String lastTableName, String sqlName) {
