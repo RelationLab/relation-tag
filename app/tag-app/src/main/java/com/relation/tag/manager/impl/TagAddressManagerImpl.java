@@ -27,7 +27,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Autowired
     @Qualifier("greenPlumAddressLabelGpServiceImpl")
     protected IAddressLabelGpService iAddressLabelService;
-    protected static ForkJoinPool forkJoinPool = new ForkJoinPool(2000);
+    protected static ForkJoinPool forkJoinPool = new ForkJoinPool(1000);
     static String FILEPATH = "initsql";
 
     static String SCRIPTSPATH = "tagscripts";
@@ -72,8 +72,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
     }
 
-    public void
-    check(String tableName, long sleepTime) throws Exception {
+    public void check(String tableName, long sleepTime) {
         if (StringUtils.equals("address_labels_json_gin", tableName)) {
             log.info("address_labels_json_gin check.........");
         }
@@ -95,9 +94,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
     }
 
-    private void tryAgain(String tableName, long sleepTime) throws Exception {
-        Thread.sleep(sleepTime);
-        check(tableName, sleepTime);
+    private void tryAgain(String tableName, long sleepTime) {
+        try {
+            Thread.sleep(sleepTime);
+            check(tableName, sleepTime);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -147,16 +150,18 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void execSql(String lastTableName, String sqlName) {
-        try {
-            check(lastTableName, 20 * 1000);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        forkJoinPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                check(lastTableName, 20 * 1000);
+                try {
+                    iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
     }
 
 
@@ -201,12 +206,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
         forkJoinPool.execute(() -> {
                     log.info("merge2Gin  start....");
-            try {
-                check("address_label_gp", 1 * 60 * 1000);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            merge2Gin();
+                    check("address_label_gp", 1 * 60 * 1000);
+                    merge2Gin();
                 }
         );
         try {
@@ -215,11 +216,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             throw new RuntimeException(e);
         }
         log.info("check address_labels_json_gin start...........");
-        try {
-            check("address_labels_json_gin", 1 * 60 * 1000);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        check("address_labels_json_gin", 1 * 60 * 1000);
         log.info("tag end...........");
     }
 
