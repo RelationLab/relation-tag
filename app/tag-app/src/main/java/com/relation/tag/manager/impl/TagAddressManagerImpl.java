@@ -72,7 +72,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
     }
 
-    public void check(String tableName, long sleepTime) {
+    public void check(String tableName, long sleepTime) throws Exception {
         if (StringUtils.equals("address_labels_json_gin", tableName)) {
             log.info("address_labels_json_gin check.........");
         }
@@ -94,18 +94,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
     }
 
-    private void tryAgain(String tableName, long sleepTime) {
-        try {
-            Thread.sleep(sleepTime);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    check(tableName, sleepTime);
-                }
-            }).start();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    private void tryAgain(String tableName, long sleepTime) throws Exception {
+        Thread.sleep(sleepTime);
+        check(tableName, sleepTime);
     }
 
     @Override
@@ -154,17 +145,16 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void execSql(String lastTableName, String sqlName) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                check(lastTableName, 20 * 1000);
-                try {
-                    iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }).start();;
+        try {
+            check(lastTableName, 20 * 1000);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -209,8 +199,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
         forkJoinPool.execute(() -> {
                     log.info("merge2Gin  start....");
-                    check("address_label_gp", 1 * 60 * 1000);
-                    merge2Gin();
+            try {
+                check("address_label_gp", 1 * 60 * 1000);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            merge2Gin();
                 }
         );
         try {
@@ -219,7 +213,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
             throw new RuntimeException(e);
         }
         log.info("check address_labels_json_gin start...........");
-        check("address_labels_json_gin", 1 * 60 * 1000);
+        try {
+            check("address_labels_json_gin", 1 * 60 * 1000);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         log.info("tag end...........");
     }
 

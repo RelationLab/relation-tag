@@ -7,5 +7,5 @@ public interface TagAddressManager {
 
     void merge2Gin();
 
-    void check(String tableName, long sleepTime);
+    void check(String tableName, long sleepTime) throws Exception;
 }
