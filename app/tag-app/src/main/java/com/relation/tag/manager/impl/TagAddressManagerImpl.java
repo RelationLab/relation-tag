@@ -97,7 +97,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
     private void tryAgain(String tableName, long sleepTime) {
         try {
             Thread.sleep(sleepTime);
-            check(tableName, sleepTime);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    check(tableName, sleepTime);
+                }
+            }).start();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -144,13 +149,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
         execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
         execSql("eth_holding_vol_count", "token_holding_vol_count.sql");
-        Thread.sleep(40*60*1000);
         execSql("token_holding_vol_count", "token_volume_usd.sql");
         execSql("token_volume_usd", "total_volume_usd.sql");
     }
 
     private void execSql(String lastTableName, String sqlName) {
-        forkJoinPool.execute(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 check(lastTableName, 20 * 1000);
@@ -160,8 +164,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     throw new RuntimeException(e);
                 }
             }
-        });
-
+        }).start();;
     }
 
 
