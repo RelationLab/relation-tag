@@ -27,7 +27,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Autowired
     @Qualifier("greenPlumAddressLabelGpServiceImpl")
     protected IAddressLabelGpService iAddressLabelService;
-    protected static ForkJoinPool forkJoinPool = new ForkJoinPool(1000);
+    protected static ForkJoinPool forkJoinPool = new ForkJoinPool(2000);
     static String FILEPATH = "initsql";
 
     static String SCRIPTSPATH = "tagscripts";
@@ -72,7 +72,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
     }
 
-    public void check(String tableName, long sleepTime) throws Exception {
+    public void
+    check(String tableName, long sleepTime) throws Exception {
         if (StringUtils.equals("address_labels_json_gin", tableName)) {
             log.info("address_labels_json_gin check.........");
         }
