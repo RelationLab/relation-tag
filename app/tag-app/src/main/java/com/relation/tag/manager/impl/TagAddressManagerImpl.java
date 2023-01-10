@@ -27,7 +27,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Autowired
     @Qualifier("greenPlumAddressLabelGpServiceImpl")
     protected IAddressLabelGpService iAddressLabelService;
-    protected static ForkJoinPool forkJoinPool = new ForkJoinPool(100);
+    protected static ForkJoinPool forkJoinPool = new ForkJoinPool(1000);
     static String FILEPATH = "initsql";
 
     static String SCRIPTSPATH = "tagscripts";
@@ -144,6 +144,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
         execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
         execSql("eth_holding_vol_count", "token_holding_vol_count.sql");
+        Thread.sleep(40*60*1000);
         execSql("token_holding_vol_count", "token_volume_usd.sql");
         execSql("token_volume_usd", "total_volume_usd.sql");
     }
