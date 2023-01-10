@@ -53,10 +53,11 @@ insert into token_holding_uni_cal(address
                                  ,price_token
                                  ,liquidity
                                  ,type)
+
 select
     address
      ,token
-     ,case liquidity when 0 THEN 0 ELSE balance end balance
+     ,case  when liquidity<=0 THEN 0 ELSE balance end balance
      ,block_height
      ,total_transfer_volume
      ,total_transfer_count
