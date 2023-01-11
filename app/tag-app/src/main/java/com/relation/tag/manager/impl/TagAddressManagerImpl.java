@@ -173,7 +173,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             throw new RuntimeException(e);
         }
         log.info("createTable start....");
-        String createTable = "DROP TABLE if EXISTS  address_label_gp_temp;create table address_label_gp_temp\n" +
+        String createTable = "DROP TABLE if EXISTS  address_label_gp;create table address_label_gp_temp\n" +
                 "(\n" +
                 "    owner      varchar(256),\n" +
                 "    address    varchar(512),\n" +
@@ -191,21 +191,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 throw new RuntimeException(e);
             }
         });
+
         try {
-            Thread.sleep(15*60 * 1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        forkJoinPool.execute(() -> {
-                    log.info("rename table start....");
-                    String renameSql = "drop table if exists address_label_old;" +
-                            "alter table address_label_gp rename to address_label_old;" +
-                            "alter table address_label_gp_temp rename to address_label_gp;";
-                    iAddressLabelService.exceSql(renameSql, "renameSql");
-                }
-        );
-        try {
-            Thread.sleep(40 * 60 * 1000);
+            Thread.sleep(20 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

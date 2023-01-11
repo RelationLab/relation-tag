@@ -1,5 +1,5 @@
-truncate table address_label_gp_temp;
-insert into public.address_label_gp_temp(address,label_type,label_name,updated_at,owner,source)
+truncate table address_label_gp;
+insert into public.address_label_gp(address,label_type,label_name,updated_at,owner,source)
 select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source from address_label_eth_count_grade  union all
 select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_token_project_type_count_grade  union all
 select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_token_project_type_volume_grade  union all
