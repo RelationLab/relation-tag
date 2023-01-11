@@ -173,7 +173,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             throw new RuntimeException(e);
         }
         log.info("createTable start....");
-        String createTable = "DROP TABLE if EXISTS  address_label_gp;create table address_label_gp_temp\n" +
+        String createTable = "DROP TABLE if EXISTS  address_label_gp;create table address_label_gp\n" +
                 "(\n" +
                 "    owner      varchar(256),\n" +
                 "    address    varchar(512),\n" +
