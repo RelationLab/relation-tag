@@ -167,6 +167,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void tagMerge() {
+        try {
+            Thread.sleep(20*60 * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         log.info("createTable start....");
         String createTable = "DROP TABLE if EXISTS  address_label_gp_temp;create table address_label_gp_temp\n" +
                 "(\n" +
@@ -187,7 +192,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             }
         });
         try {
-            Thread.sleep(5 * 1000);
+            Thread.sleep(15*60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
