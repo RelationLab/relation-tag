@@ -43,7 +43,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             throw new RuntimeException(e);
         }
         try {
-            Thread.sleep(90 * 60 * 1000);
+            Thread.sleep(70 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
