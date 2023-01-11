@@ -79,10 +79,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
-        List<Integer> tagList = null;
         try {
-            tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
-            if (!CollectionUtils.isEmpty(tagList)) {
+            List<Integer> tagList  = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
+            if (tagList!=null&&!CollectionUtils.isEmpty(tagList)) {
                 return;
             }
         } catch (Exception ex) {
@@ -193,13 +192,14 @@ public class TagAddressManagerImpl implements TagAddressManager {
         });
 
         try {
-            Thread.sleep(40 * 60 * 1000);
+            Thread.sleep(15 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         forkJoinPool.execute(() -> {
                     log.info("merge2Gin  start....");
                     check("address_label_gp", 1 * 60 * 1000);
+                    log.info("check address_label_gp  end....");
                     merge2Gin();
                 }
         );
