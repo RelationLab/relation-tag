@@ -1,3 +1,4 @@
+
 truncate table address_label_gp;
 insert into public.address_label_gp(address,label_type,label_name,updated_at,owner,source)
 select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source from address_label_eth_count_grade  union all
@@ -60,3 +61,18 @@ select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source
 select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_univ3_volume_rank union all
 select address,label_type,label_name,updated_at, owner, source  from address_label_third_party union all
 select address,label_type,label_name,updated_at,owner, source  from address_label_ugc;
+
+truncate
+    table public.address_labels_json_gin;
+insert into
+    address_labels_json_gin(address,
+                            labels,
+                            updated_at)
+    select
+    address,
+    json_object_agg(label_type, label_name order by label_type desc)::jsonb as labels,
+                CURRENT_TIMESTAMP as updated_at
+    from
+    address_label_gp
+    group by
+    address;

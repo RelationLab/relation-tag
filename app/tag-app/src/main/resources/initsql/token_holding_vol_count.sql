@@ -46,4 +46,7 @@ from
             erc20_tx_record
         group by
             to_address,
-            token ) atb group by  address,token
+            token ) atb group by  address,token;
+
+
+

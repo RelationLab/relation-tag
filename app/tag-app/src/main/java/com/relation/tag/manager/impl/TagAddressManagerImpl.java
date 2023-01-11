@@ -166,17 +166,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        log.info("createTable start....");
-        String createTable = "DROP TABLE if EXISTS  address_label_gp;create table address_label_gp\n" +
-                "(\n" +
-                "    owner      varchar(256),\n" +
-                "    address    varchar(512),\n" +
-                "    label_type varchar(512),\n" +
-                "    label_name varchar(1024),\n" +
-                "    source     varchar(100),\n" +
-                "    updated_at timestamp(6)\n" +
-                ") distributed by (address);";
-        iAddressLabelService.exceSql(createTable, "createTable");
         forkJoinPool.execute(() -> {
             try {
                 log.info("summary start....");
@@ -185,19 +174,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 throw new RuntimeException(e);
             }
         });
-
         try {
-            Thread.sleep(12 * 60 * 1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        forkJoinPool.execute(() -> {
-                    log.info("merge2Gin  start....");
-                    merge2Gin();
-                }
-        );
-        try {
-            Thread.sleep(20 * 60 * 1000);
+            Thread.sleep(25 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
