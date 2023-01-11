@@ -53,7 +53,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     public boolean checkResult(String tableName) {
         try {
             if (StringUtils.equals("address_labels_json_gin", tableName)) {
-                log.info("address_labels_json_gin check.........");
+                log.info("checkResult address_labels_json_gin check.........");
             }
             if (StringUtils.isEmpty(tableName)) {
                 return false;
@@ -64,7 +64,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 return true;
             }
             if (StringUtils.equals("address_labels_json_gin", tableName)) {
-                log.info("address_labels_json_gin check end end end end.........");
+                log.info("checkResult address_labels_json_gin check end end end end.........");
             }
             return false;
         } catch (Exception ex) {
