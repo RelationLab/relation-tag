@@ -42,11 +42,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        try {
-            Thread.sleep(70 * 60 * 1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         tagMerge();
     }
 
@@ -167,7 +162,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Override
     public void tagMerge() {
         try {
-            Thread.sleep(20*60 * 1000);
+            Thread.sleep(50*60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -192,14 +187,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
         });
 
         try {
-            Thread.sleep(15 * 60 * 1000);
+            Thread.sleep(12 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         forkJoinPool.execute(() -> {
                     log.info("merge2Gin  start....");
-                    check("address_label_gp", 1 * 60 * 1000);
-                    log.info("check address_label_gp  end....");
                     merge2Gin();
                 }
         );
