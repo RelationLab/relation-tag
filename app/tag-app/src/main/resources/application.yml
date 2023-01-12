@@ -9,7 +9,7 @@ spring:
     enabled: true
   datasource:
 #    greenplum:
-    url: jdbc:postgresql://${GREENPLUM_DB_HOST:localhost}:${GREENPLUM_DB_PORT:5432}/${GREENPLUM_DB_NAME:eth}?prepareThreshold=0
+    url: jdbc:postgresql://${GREENPLUM_DB_HOST:localhost}:${GREENPLUM_DB_PORT:5432}/${GREENPLUM_DB_NAME:eth}
     username: ${GREENPLUM_DB_USERNAME:gpadmin}
     password: ${GREENPLUM_DB_PASSWORD:hojil@123!}
     type: com.alibaba.druid.pool.DruidDataSource
