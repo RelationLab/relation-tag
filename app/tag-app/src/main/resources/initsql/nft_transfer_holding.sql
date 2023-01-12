@@ -7,4 +7,4 @@ insert into nft_transfer_holding (address, token, total_transfer_volume, total_t
      from nft_holding nh
               left join nft_buy_sell_holding nbsh
                         on nh.address = nbsh.address
-                            and nh.token = nbsh.token)
+                            and nh.token = nbsh.token);
