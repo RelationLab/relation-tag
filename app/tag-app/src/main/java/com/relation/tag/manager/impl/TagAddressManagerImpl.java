@@ -80,6 +80,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 return;
             }
         } catch (Exception ex) {
+            log.error(ex.getMessage(),ex);
             tryAgain(tableName, sleepTime);
         }
         tryAgain(tableName, sleepTime);
@@ -162,7 +163,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Override
     public void tagMerge() {
         try {
-            Thread.sleep(50*60 * 1000);
+            Thread.sleep(10*60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
