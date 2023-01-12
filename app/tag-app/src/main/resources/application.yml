@@ -18,9 +18,9 @@ spring:
       initial-size: 5
       min-idle: 5
       max-active: 200
-      max-wait: 30000
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
+      max-wait: 3000000
+      time-between-eviction-runs-millis: 6000000
+      min-evictable-idle-time-millis: 30000000
       validation-query: select version()
       test-while-idle: true
       test-on-borrow: false

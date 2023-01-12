@@ -138,7 +138,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
         execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
         execSql("eth_holding_vol_count", "token_holding_vol_count.sql");
-        Thread.sleep(60*60*1000);
+        Thread.sleep(40*60*1000);
         execSql("token_holding_vol_count", "token_volume_usd.sql");
         execSql("token_volume_usd", "total_volume_usd.sql");
     }
@@ -174,11 +174,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 throw new RuntimeException(e);
             }
         });
-        try {
-            Thread.sleep(25 * 60 * 1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         log.info("check address_labels_json_gin start...........");
         check("address_labels_json_gin", 1 * 60 * 1000);
         log.info("tag end...........");
