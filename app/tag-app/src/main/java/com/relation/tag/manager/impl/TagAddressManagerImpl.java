@@ -68,7 +68,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     public void check(String tableName, long sleepTime) {
-        log.info("check table ===={} start.......",tableName);
+//        log.info("check table ===={} start.......",tableName);
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
@@ -83,11 +83,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
             tryAgain(tableName, sleepTime);
         }
         tryAgain(tableName, sleepTime);
-        log.info("check table ===={} end.......",tableName);
+//        log.info("check table ===={} end.......",tableName);
     }
 
     private void tryAgain(String tableName, long sleepTime) {
-        log.info("tryAgain table ===={} .......",tableName);
+//        log.info("tryAgain table ===={} .......",tableName);
         try {
             Thread.sleep(sleepTime);
             check(tableName, sleepTime);
