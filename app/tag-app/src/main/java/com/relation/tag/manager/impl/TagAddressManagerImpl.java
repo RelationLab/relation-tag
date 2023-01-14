@@ -77,6 +77,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         try {
             List<Integer> tagList  = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
             if (tagList!=null&&!CollectionUtils.isEmpty(tagList)) {
+                log.info("check table ===={} end.......",tableName);
                 return;
             }
         } catch (Exception ex) {
@@ -126,8 +127,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_content.sql")), "dim_rule_content.sql");
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")), "dim_rule_sql_content.sql");
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")), "dim_rank_token.sql");
-//        execSql("dim_rank_token", "init.sql");
-//        Thread.sleep(50*60*1000);
+
         execSql("dim_rank_token", "platform_nft_volume_usd.sql");
         execSql("platform_nft_volume_usd", "nft_transfer_holding.sql");
         execSql("nft_transfer_holding", "nft_volume_count.sql");
@@ -140,7 +140,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
         execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
         execSql("eth_holding_vol_count", "token_holding_vol_count.sql");
-        Thread.sleep(40*60*1000);
         execSql("token_holding_vol_count", "token_volume_usd.sql");
         execSql("token_volume_usd", "total_volume_usd.sql");
     }
