@@ -68,16 +68,14 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     public void check(String tableName, long sleepTime) {
-        if (StringUtils.equals("address_labels_json_gin", tableName)) {
-            log.info("address_labels_json_gin check.........");
-        }
+        log.info("check table ===={} start.......",tableName);
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
         try {
             List<Integer> tagList  = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
             if (tagList!=null&&!CollectionUtils.isEmpty(tagList)) {
-                log.info("check table ===={} end.......",tableName);
+                log.info("check table ===={} end.......tagList.size===={}",tableName,tagList.size());
                 return;
             }
         } catch (Exception ex) {
@@ -85,12 +83,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
             tryAgain(tableName, sleepTime);
         }
         tryAgain(tableName, sleepTime);
-        if (StringUtils.equals("address_labels_json_gin", tableName)) {
-            log.info("address_labels_json_gin check end end end end.........");
-        }
+        log.info("check table ===={} end.......",tableName);
     }
 
     private void tryAgain(String tableName, long sleepTime) {
+        log.info("tryAgain table ===={} .......",tableName);
         try {
             Thread.sleep(sleepTime);
             check(tableName, sleepTime);
