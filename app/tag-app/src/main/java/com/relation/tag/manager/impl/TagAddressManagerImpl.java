@@ -72,18 +72,18 @@ public class TagAddressManagerImpl implements TagAddressManager {
             return;
         }
         boolean runCheckFlag = true;
-        while (true){
+        while (true) {
             try {
-                List<Integer> tagList  = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
-                if (tagList!=null&&!CollectionUtils.isEmpty(tagList)) {
-                    log.info("check table ===={} end.......tagList.size===={}",tableName,tagList.size());
+                List<Integer> tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
+                if (tagList != null && !CollectionUtils.isEmpty(tagList)) {
+                    log.info("check table ===={} end.......tagList.size===={}", tableName, tagList.size());
                     runCheckFlag = false;
                 }
-                if (!runCheckFlag){
+                if (!runCheckFlag) {
                     break;
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage(),ex);
+
             }
             try {
                 Thread.sleep(sleepTime);
@@ -111,32 +111,52 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     .fileContent(FileUtils.readFile(SCRIPTSPATH.concat(File.separator)
                             .concat(fileName))).build());
         }
-        check("total_volume_usd", 1*60 * 1000);
+        check("total_volume_usd", 1 * 60 * 1000);
         tagByRuleSqlList(fileList);
     }
 
     private void innit() throws Exception {
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("create_tabel.sql")), "create_tabel.sql");
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_token_type.sql")), "dim_project_token_type.sql");
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_project_type.sql")), "dim_project_type.sql");
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_content.sql")), "dim_rule_content.sql");
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")), "dim_rule_sql_content.sql");
-        iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")), "dim_rank_token.sql");
+        execSynSql("dim_project_token_type.sql");
+        execSynSql("dim_project_type.sql");
+        execSynSql("dim_rule_sql_content.sql");
+        execSynSql("dim_rule_content.sql");
+        execSynSql("platform_nft_volume_usd.sql");
+        execSynSql("nft_transfer_holding.sql");
+        execSynSql("token_holding_uni_cal.sql");
+        execSynSql("dex_tx_volume_count_summary.sql");
+        execSynSql("web3_transaction_record_summary.sql");
+        execSynSql("eth_holding_vol_count.sql");
+        execSynSql("token_holding_vol_count.sql");
 
-        execSql("dim_rank_token", "platform_nft_volume_usd.sql");
-        execSql("platform_nft_volume_usd", "nft_transfer_holding.sql");
+
+//        execSql("dim_rank_token", "platform_nft_volume_usd.sql");
+//        execSql("platform_nft_volume_usd", "nft_transfer_holding.sql");
         execSql("nft_transfer_holding", "nft_volume_count.sql");
-        execSql("nft_volume_count", "platform_nft_type_volume_count.sql");
-        execSql("platform_nft_type_volume_count", "token_holding_uni_cal.sql");
-        execSql("token_holding_uni_cal", "token_balance_volume_usd.sql");
+        execSql("platform_nft_volume_usd", "platform_nft_type_volume_count.sql");
+//        execSql("platform_nft_type_volume_count", "token_holding_uni_cal.sql");
+        execSql("dim_rank_token", "token_balance_volume_usd.sql");
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql");
-        execSql("total_balance_volume_usd", "dex_tx_volume_count_summary.sql");
-        execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql");
-        execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
-        execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
-        execSql("eth_holding_vol_count", "token_holding_vol_count.sql");
+//        execSql("total_balance_volume_usd", "dex_tx_volume_count_summary.sql");
+        execSql("token_holding_uni_cal", "dex_tx_volume_count_summary_univ3.sql");
+//        execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
+//        execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
+//        execSql("eth_holding_vol_count", "token_holding_vol_count.sql");
         execSql("token_holding_vol_count", "token_volume_usd.sql");
         execSql("token_volume_usd", "total_volume_usd.sql");
+    }
+
+    private void execSynSql(String sqlName) {
+        forkJoinPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     private void execSql(String lastTableName, String sqlName) {
@@ -158,7 +178,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Override
     public void tagMerge() {
         try {
-            Thread.sleep(10*60 * 1000);
+            Thread.sleep(10 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
