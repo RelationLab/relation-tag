@@ -68,32 +68,30 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     public void check(String tableName, long sleepTime) {
-//        log.info("check table ===={} start.......",tableName);
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
-        try {
-            List<Integer> tagList  = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
-            if (tagList!=null&&!CollectionUtils.isEmpty(tagList)) {
-                log.info("check table ===={} end.......tagList.size===={}",tableName,tagList.size());
-                return;
+        boolean runCheckFlag = true;
+        while (true){
+            try {
+                List<Integer> tagList  = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
+                if (tagList!=null&&!CollectionUtils.isEmpty(tagList)) {
+                    log.info("check table ===={} end.......tagList.size===={}",tableName,tagList.size());
+                    runCheckFlag = false;
+                }
+                if (!runCheckFlag){
+                    break;
+                }
+            } catch (Exception ex) {
+                log.error(ex.getMessage(),ex);
             }
-        } catch (Exception ex) {
-            log.error(ex.getMessage(),ex);
-            tryAgain(tableName, sleepTime);
+            try {
+                Thread.sleep(sleepTime);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
-        tryAgain(tableName, sleepTime);
-//        log.info("check table ===={} end.......",tableName);
-    }
 
-    private void tryAgain(String tableName, long sleepTime) {
-//        log.info("tryAgain table ===={} .......",tableName);
-        try {
-            Thread.sleep(sleepTime);
-            check(tableName, sleepTime);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
