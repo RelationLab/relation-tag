@@ -111,17 +111,23 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
         execSql("dim_rank_token", "platform_nft_volume_usd.sql");
         execSql("platform_nft_volume_usd", "nft_transfer_holding.sql");
+
         execSql("nft_transfer_holding", "nft_volume_count.sql");
         execSql("nft_volume_count", "platform_nft_type_volume_count.sql");
+
         execSql("platform_nft_type_volume_count", "token_holding_uni_cal.sql");
+
         execSql("token_holding_uni_cal", "token_balance_volume_usd.sql");
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql");
+
         execSql("total_balance_volume_usd", "dex_tx_volume_count_summary.sql");
         execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql");
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
         execSql("web3_transaction_record_summary", "token_holding_vol_count.sql");
-        execSql("token_holding_vol_count", "eth_holding_vol_count.sql");
+        execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
+        Thread.sleep(30*60*1000);
         execSql("eth_holding_vol_count", "token_volume_usd.sql");
+        Thread.sleep(2*60*1000);
         execSql("token_volume_usd", "total_volume_usd.sql");
     }
 
