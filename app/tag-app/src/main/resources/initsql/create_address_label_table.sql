@@ -522,4 +522,5 @@ CREATE TABLE public.address_label_univ3_volume_rank (
                                                             updated_at timestamp(6) NULL
 );
 
+truncate table dex_tx_volume_count_summary;
 ----ALTER TABLE public.erc20_tx_record DROP COLUMN id;
