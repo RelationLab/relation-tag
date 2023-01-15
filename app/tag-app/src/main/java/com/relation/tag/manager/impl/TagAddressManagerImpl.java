@@ -111,25 +111,30 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
         execSql("dim_rank_token", "platform_nft_volume_usd.sql");
         execSql("platform_nft_volume_usd", "nft_transfer_holding.sql");
-
         execSql("nft_transfer_holding", "nft_volume_count.sql");
         execSql("nft_volume_count", "platform_nft_type_volume_count.sql");
-
         execSql("platform_nft_type_volume_count", "token_holding_uni_cal.sql");
-
         execSql("token_holding_uni_cal", "token_balance_volume_usd.sql");
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql");
-
-        execSql("total_balance_volume_usd", "dex_tx_volume_count_summary.sql");
-        execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql");
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
+        execSql("token_holding_uni_cal", "dex_tx_volume_count_summary_univ3.sql");
+        execSql("dex_tx_volume_count_summary", "dex_tx_volume_count_summary.sql");
+        log.info("dex_tx_volume_count_summary Thread end.....");
+        Thread.sleep(20*60*1000);
+        log.info("token_holding_vol_count Thread start .....");
         execSql("web3_transaction_record_summary", "token_holding_vol_count.sql");
-        Thread.sleep(1*60*1000);
+        log.info("token_holding_vol_count Thread end .....");
+        Thread.sleep(3*60*1000);
         execSql("token_holding_vol_count", "eth_holding_vol_count.sql");
-        Thread.sleep(1*60*1000);
+        log.info("eth_holding_vol_count Thread end .....");
+        Thread.sleep(13*60*1000);
+        log.info("token_volume_usd Thread start .....");
         execSql("eth_holding_vol_count", "token_volume_usd.sql");
-        Thread.sleep(1*60*1000);
+        log.info("token_volume_usd Thread end .....");
+        Thread.sleep(3*60*1000);
+        log.info("total_volume_usd Thread start .....");
         execSql("token_volume_usd", "total_volume_usd.sql");
+        log.info("total_volume_usd Thread end .....");
     }
 
     private void execSql(String lastTableName, String sqlName) {
