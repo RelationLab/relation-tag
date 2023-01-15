@@ -71,19 +71,15 @@ public class TagAddressManagerImpl implements TagAddressManager {
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
-        boolean runCheckFlag = true;
         while (true){
             try {
                 List<Integer> tagList  = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
                 if (tagList!=null&&!CollectionUtils.isEmpty(tagList)) {
                     log.info("check table ===={} end.......tagList.size===={}",tableName,tagList.size());
-                    runCheckFlag = false;
-                }
-                if (!runCheckFlag){
                     break;
                 }
             } catch (Exception ex) {
-                log.error(ex.getMessage(),ex);
+//                log.error(ex.getMessage(),ex);
             }
             try {
                 Thread.sleep(sleepTime);
