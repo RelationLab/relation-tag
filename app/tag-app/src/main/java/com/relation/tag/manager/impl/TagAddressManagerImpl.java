@@ -27,7 +27,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Autowired
     @Qualifier("greenPlumAddressLabelGpServiceImpl")
     protected IAddressLabelGpService iAddressLabelService;
-    protected static ForkJoinPool forkJoinPool = new ForkJoinPool(1500);
+    protected static ForkJoinPool forkJoinPool = new ForkJoinPool(500);
     static String FILEPATH = "initsql";
 
     static String SCRIPTSPATH = "tagscripts";
@@ -46,22 +46,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     public boolean checkResult(String tableName) {
-        try {
-            if (StringUtils.equals("address_labels_json_gin", tableName)) {
-                log.info("checkResult address_labels_json_gin check.........");
-            }
-            if (StringUtils.isEmpty(tableName)) {
-                return false;
-            }
-            List<Integer> tagList = null;
-            tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
-            if (!CollectionUtils.isEmpty(tagList)) {
-                return true;
-            }
-            if (StringUtils.equals("address_labels_json_gin", tableName)) {
-                log.info("checkResult address_labels_json_gin check end end end end.........");
-            }
+        if (StringUtils.isEmpty(tableName)) {
             return false;
+        }
+        try {
+            List<Integer> tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
+            return !CollectionUtils.isEmpty(tagList);
         } catch (Exception ex) {
             return false;
         }
@@ -71,11 +61,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
-        while (true){
+        while (true) {
             try {
-                List<Integer> tagList  = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
-                if (tagList!=null&&!CollectionUtils.isEmpty(tagList)) {
-                    log.info("check table ===={} end.......tagList.size===={}",tableName,tagList.size());
+                List<Integer> tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
+                if (tagList != null && !CollectionUtils.isEmpty(tagList)) {
+                    log.info("check table ===={} end.......tagList.size===={}", tableName, tagList.size());
                     break;
                 }
             } catch (Exception ex) {
@@ -107,7 +97,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     .fileContent(FileUtils.readFile(SCRIPTSPATH.concat(File.separator)
                             .concat(fileName))).build());
         }
-        check("total_volume_usd", 1*60 * 1000);
+        check("total_volume_usd", 1 * 60 * 1000);
         tagByRuleSqlList(fileList);
     }
 
@@ -154,7 +144,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Override
     public void tagMerge() {
         try {
-            Thread.sleep(10*60 * 1000);
+            Thread.sleep(10 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
