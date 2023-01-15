@@ -97,6 +97,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     .fileContent(FileUtils.readFile(SCRIPTSPATH.concat(File.separator)
                             .concat(fileName))).build());
         }
+        Thread.sleep(2*60*1000);
         check("total_volume_usd", 1 * 60 * 1000);
         tagByRuleSqlList(fileList);
     }
@@ -121,17 +122,18 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("dex_tx_volume_count_summary", "dex_tx_volume_count_summary.sql");
         log.info("dex_tx_volume_count_summary Thread end.....");
         Thread.sleep(15*60*1000);
-        log.info("token_holding_vol_count Thread start .....");
-        execSql("web3_transaction_record_summary", "token_holding_vol_count.sql");
-        log.info("token_holding_vol_count Thread end .....");
-        Thread.sleep(10*60*1000);
-        execSql("token_holding_vol_count", "eth_holding_vol_count.sql");
+        log.info("eth_holding_vol_count Thread start.....");
+        execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
         log.info("eth_holding_vol_count Thread end .....");
-        Thread.sleep(13*60*1000);
+        Thread.sleep(15*60*1000);
+        log.info("token_holding_vol_count Thread start .....");
+        execSql("eth_holding_vol_count", "token_holding_vol_count.sql");
+        log.info("token_holding_vol_count Thread end .....");
+        Thread.sleep(60*60*1000);
         log.info("token_volume_usd Thread start .....");
-        execSql("eth_holding_vol_count", "token_volume_usd.sql");
+        execSql("token_holding_vol_count", "token_volume_usd.sql");
         log.info("token_volume_usd Thread end .....");
-        Thread.sleep(3*60*1000);
+        Thread.sleep(5*60*1000);
         log.info("total_volume_usd Thread start .....");
         execSql("token_volume_usd", "total_volume_usd.sql");
         log.info("total_volume_usd Thread end .....");

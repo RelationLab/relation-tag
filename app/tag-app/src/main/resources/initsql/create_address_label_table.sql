@@ -521,3 +521,5 @@ CREATE TABLE public.address_label_univ3_volume_rank (
                                                             label_name varchar(1024) NULL,
                                                             updated_at timestamp(6) NULL
 );
+
+----ALTER TABLE public.erc20_tx_record DROP COLUMN id;
