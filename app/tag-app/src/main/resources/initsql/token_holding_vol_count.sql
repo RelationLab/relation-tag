@@ -1,3 +1,4 @@
+truncate table token_holding_vol_count;
 insert into
     token_holding_vol_count(address,
                             token,
