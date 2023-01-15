@@ -170,9 +170,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 throw new RuntimeException(e);
             }
         });
-        log.info("check address_labels_json_gin start...........");
-        check("address_labels_json_gin", 1 * 60 * 1000);
-        log.info("tag end...........");
     }
 
     @Override
