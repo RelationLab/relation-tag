@@ -119,9 +119,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("total_balance_volume_usd", "dex_tx_volume_count_summary.sql");
         execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql");
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
-        execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
-        execSql("eth_holding_vol_count", "token_holding_vol_count.sql");
-        execSql("token_holding_vol_count", "token_volume_usd.sql");
+        execSql("web3_transaction_record_summary", "token_holding_vol_count.sql");
+        execSql("token_holding_vol_count", "eth_holding_vol_count.sql");
+        execSql("eth_holding_vol_count", "token_volume_usd.sql");
         execSql("token_volume_usd", "total_volume_usd.sql");
     }
 
