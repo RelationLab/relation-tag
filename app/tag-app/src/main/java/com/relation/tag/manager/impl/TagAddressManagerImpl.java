@@ -120,11 +120,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("token_holding_uni_cal", "dex_tx_volume_count_summary_univ3.sql");
         execSql("dex_tx_volume_count_summary", "dex_tx_volume_count_summary.sql");
         log.info("dex_tx_volume_count_summary Thread end.....");
-        Thread.sleep(20*60*1000);
+        Thread.sleep(15*60*1000);
         log.info("token_holding_vol_count Thread start .....");
         execSql("web3_transaction_record_summary", "token_holding_vol_count.sql");
         log.info("token_holding_vol_count Thread end .....");
-        Thread.sleep(3*60*1000);
+        Thread.sleep(10*60*1000);
         execSql("token_holding_vol_count", "eth_holding_vol_count.sql");
         log.info("eth_holding_vol_count Thread end .....");
         Thread.sleep(13*60*1000);

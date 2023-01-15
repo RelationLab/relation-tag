@@ -1,3 +1,4 @@
+truncate table eth_holding_vol_count;
 insert into
     eth_holding_vol_count(address,
                           total_transfer_volume,
