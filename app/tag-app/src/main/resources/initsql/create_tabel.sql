@@ -560,15 +560,8 @@ CREATE TABLE public.dex_tx_volume_count_summary (
                                                     out_transfer_volume numeric(125, 30) NULL,
                                                     in_transfer_count int8 NULL,
                                                     out_transfer_count int8 NULL,
-                                                    balance_usd numeric(125, 30) DEFAULT 0,
-                                                    CONSTRAINT dex_tx_volume_count_summary_un UNIQUE (address, token, type, project)
+                                                    balance_usd numeric(125, 30) DEFAULT 0
 );
-
-CREATE INDEX dex_tx_volume_count_summary_address_idx ON public.dex_tx_volume_count_summary USING btree (address);
-CREATE INDEX dex_tx_volume_count_summary_balance_usd_idx ON public.dex_tx_volume_count_summary USING btree (balance_usd);
-CREATE INDEX dex_tx_volume_count_summary_project_idx ON public.dex_tx_volume_count_summary USING btree (project);
-CREATE INDEX dex_tx_volume_count_summary_token_idx ON public.dex_tx_volume_count_summary USING btree (token);
-CREATE INDEX dex_tx_volume_count_summary_total_transfer_volume_usd_idx ON public.dex_tx_volume_count_summary USING btree (total_transfer_volume_usd);
 
 drop table if exists dim_project_token_type;
 create table dim_project_token_type
