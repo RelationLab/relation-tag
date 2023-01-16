@@ -24,6 +24,10 @@ public class TagApplication {
                 }
             }
         }).start();
+        if (tagAddressManager.checkResult("address_labels_json_gin")){
+            log.info("checkResult tag end...........");
+            System.exit(0);
+        }
         Thread.sleep(180*60*1000);
         log.info("check address_labels_json_gin start...........");
         tagAddressManager.check("address_labels_json_gin", 1 * 60 * 1000);
