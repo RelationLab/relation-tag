@@ -61,4 +61,4 @@ insert
     dtvcr.address,
     token,
     type,
-    project
+    project;

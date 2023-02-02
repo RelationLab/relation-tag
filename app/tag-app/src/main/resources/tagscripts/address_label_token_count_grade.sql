@@ -30,7 +30,7 @@ insert into public.address_label_token_count_grade (address,label_type,label_nam
             token,
             total_transfer_count
         from
-            token_holding th1
+            token_holding_vol_count th1
         union all
         select
             address,
