@@ -25,7 +25,7 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
     now() as updated_at
     from
     (
-        -- project-token-type
+        -- project-token-type(含ALL)
         select
             a1.address,
             a2.label_type,
@@ -41,25 +41,7 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
         group by
             a1.address,
             a2.label_type
-            -- project(ALL)-token(ALL)-type(ALL)
-        union all
-        select
-            a1.address,
-            a2.label_type,
-            sum(total_transfer_count) as total_transfer_count
-        from
-            dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a2.token = 'ALL'
-                                   and a2.project = 'ALL'
-                                   and a2.type = 'ALL'
-                                   and a2.data_subject = 'count'
-        where   (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
-        group by
-            a1.address,
-            a2.label_type
-            -- project(ALL)-token(ALL)-type
+            -- project(ALL)-token(ALL)-type(含ALL)
         union all
         select
             a1.address,
@@ -77,42 +59,7 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
         group by
             a1.address,
             a2.label_type
-            -- project-token(ALL)-type(ALL)
-        union all
-        select
-            a1.address,
-            a2.label_type,
-            sum(total_transfer_count) as total_transfer_count
-        from
-            dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a2.token = 'ALL'
-                                   and a1.project = a2.project
-                                   and a2.type = 'ALL'
-                                   and a2.data_subject = 'count'
-        where  a1.token in (select distinct(token) from dim_project_token_type)
-        group by
-            a1.address,
-            a2.label_type
-            -- project(ALL)-token-type(ALL)
-        union all
-        select
-            a1.address,
-            a2.label_type,
-            sum(total_transfer_count) as total_transfer_count
-        from
-            dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a1.token = a2.token
-                                   and a2.project = 'ALL'
-                                   and a2.type = 'ALL'
-                                   and a2.data_subject = 'count'
-        group by
-            a1.address,
-            a2.label_type
-            -- project-token(ALL)-type
+            -- project-token(ALL)-type(含ALL)
         union all
         select
             a1.address,
@@ -130,7 +77,7 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
         group by
             a1.address,
             a2.label_type
-            -- project(ALL)-token-type
+            -- project(ALL)-token-type(含ALL)
         union all
         select
             a1.address,
@@ -145,23 +92,6 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
                                    and a1.type = a2.type
                                    and a2.data_subject = 'count'
         where (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
-        group by
-            a1.address,
-            a2.label_type
-            -- project-token-type(ALL)
-        union all
-        select
-            a1.address,
-            a2.label_type,
-            sum(total_transfer_count) as total_transfer_count
-        from
-            dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a1.token = a2.token
-                                   and a1.project = a2.project
-                                   and a2.type = 'ALL'
-                                   and a2.data_subject = 'count'
         group by
             a1.address,
             a2.label_type

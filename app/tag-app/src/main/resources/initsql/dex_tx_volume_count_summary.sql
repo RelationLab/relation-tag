@@ -1,15 +1,15 @@
-
+---汇总UNIv3的LP数据
 insert
 into
-    dex_tx_volume_count_summary (address,
-                                 token,
-                                 type,
-                                 project,
-                                 block_height,
-                                 total_transfer_volume_usd,
-                                 total_transfer_count,
-                                 first_updated_block_height,
-                                 balance_usd)
+    dex_tx_volume_count_summary(address,
+                                token,
+                                type,
+                                project,
+                                block_height,
+                                total_transfer_volume_usd,
+                                total_transfer_count,
+                                first_updated_block_height,
+                                balance_usd)
 select
     th.address,
     th.token,
@@ -23,15 +23,16 @@ select
 from
     token_holding_uni_cal th
         inner join white_list_erc20 w on
-            w.address = th.price_token
+    w.address = th.price_token
 where
     (th.balance >= 0
-        and th.total_transfer_volume >= 0)
+  and th.total_transfer_volume >= 0)
 group by
     th.address,
     th.token,
-    th.type
+    th.type;
 
+---先把dex_tx_volume_count_record的USD计算出来
 insert
     into
     dex_tx_volume_count_summary(address,
@@ -43,7 +44,7 @@ insert
                                 total_transfer_count,
                                 first_updated_block_height,
                                 balance_usd)
-    select
+select
     dtvcr.address,
     token,
     type,
@@ -53,12 +54,45 @@ insert
     sum(total_transfer_count) total_transfer_count,
     min(first_updated_block_height) first_updated_block_height,
     sum(balance * w.price) balance_usd
-    from
-    dex_tx_volume_count_record dtvcr
+from
+    dex_tx_volume_count_summary dtvcr
         inner join white_list_erc20 w on
             w.address = dtvcr."token"
-    group by
+group by
     dtvcr.address,
     token,
     type,
     project;
+
+---再计算dex_tx_volume_count_summary的ALL(有些同一笔交易txHash同时LP和SWAP)
+insert
+    into
+    dex_tx_volume_count_summary (address,
+                                 token,
+                                 transaction_hash,
+                                 type,
+                                 project,
+                                 block_height,
+                                 total_transfer_volume_usd,
+                                 total_transfer_count,
+                                 first_updated_block_height,
+                                 balance_usd)
+
+select dtvcr.address as address
+     ,dtvcr.token as token
+     ,dtvcr.transaction_hash as transaction_hash
+     ,'ALL' as type
+     ,dtvcr.project as project
+     ,min(dtvcr.block_height) as block_height
+     ,dtvcr.total_transfer_volume_usd as total_transfer_volume_usd
+     ,min(dtvcr.total_transfer_count) as total_transfer_count
+     ,min(dtvcr.first_updated_block_height) as first_updated_block_height
+     ,max(dtvcr.balance_usd)  as balance_usd from
+    dex_tx_volume_count_summary  dtvcr
+group by
+    dtvcr.address,
+    dtvcr."token",
+    dtvcr.transaction_hash,
+    dtvcr.project,
+    dtvcr.total_transfer_volume_usd;
+

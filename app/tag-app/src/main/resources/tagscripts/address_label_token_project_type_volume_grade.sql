@@ -41,26 +41,6 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
         group by
             a1.address,
             a2.label_type
-            -- project(ALL)-token(ALL)-type(ALL)
-        union all
-        select
-            a1.address,
-            a2.label_type,
-            sum(total_transfer_volume_usd) as total_transfer_volume_usd
-        from
-            dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a2.token = 'ALL'
-                                   and a2.project = 'ALL'
-                                   and a2.type = 'ALL'
-                                   and a2.data_subject = 'volume_grade'
-                                   and a2.label_type not like '%NFT%'
-                                   and a2.label_type not like '%WEB3%'
-        where  a1.token in (select distinct(token) from dim_project_token_type)
-        group by
-            a1.address,
-            a2.label_type
             -- project(ALL)-token(ALL)-type
         union all
         select
@@ -78,46 +58,6 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
                                    and a2.label_type not like '%NFT%'
                                    and a2.label_type not like '%WEB3%'
         where  (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
-        group by
-            a1.address,
-            a2.label_type
-            -- project-token(ALL)-type(ALL)
-        union all
-        select
-            a1.address,
-            a2.label_type,
-            sum(total_transfer_volume_usd) as total_transfer_volume_usd
-        from
-            dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a2.token = 'ALL'
-                                   and a1.project = a2.project
-                                   and a2.type = 'ALL'
-                                   and a2.data_subject = 'volume_grade'
-                                   and a2.label_type not like '%NFT%'
-                                   and a2.label_type not like '%WEB3%'
-        where  a1.token in (select distinct(token) from dim_project_token_type)
-        group by
-            a1.address,
-            a2.label_type
-            -- project(ALL)-token-type(ALL)
-        union all
-        select
-            a1.address,
-            a2.label_type,
-            sum(total_transfer_volume_usd) as total_transfer_volume_usd
-        from
-            dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a1.token = a2.token
-                                   and a2.project = 'ALL'
-                                   and a2.type = 'ALL'
-                                   and a2.data_subject = 'volume_grade'
-                                   and a2.label_type not like '%NFT%'
-                                   and a2.label_type not like '%WEB3%'
-        where (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
         group by
             a1.address,
             a2.label_type
@@ -161,25 +101,5 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
         group by
             a1.address,
             a2.label_type
-            -- project-token-type(ALL)
-        union all
-        select
-            a1.address,
-            a2.label_type,
-            sum(total_transfer_volume_usd) as total_transfer_volume_usd
-        from
-            dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a1.token = a2.token
-                                   and a1.project = a2.project
-                                   and a2.type = 'ALL'
-                                   and a2.data_subject = 'volume_grade'
-                                   and a2.label_type not like '%NFT%'
-                                   and a2.label_type not like '%WEB3%'
-        group by
-            a1.address,
-            a2.label_type
-    ) t
-    where
+    ) t where
         total_transfer_volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead';
