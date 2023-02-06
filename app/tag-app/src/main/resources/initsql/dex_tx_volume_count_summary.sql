@@ -33,8 +33,9 @@ group by
     th.type;
 
 ---先把dex_tx_volume_count_record的USD计算出来
+---先把dex_tx_volume_count_record的USD计算出来
 insert
-    into
+into
     dex_tx_volume_count_summary(address,
                                 token,
                                 type,
@@ -55,7 +56,7 @@ select
     min(first_updated_block_height) first_updated_block_height,
     sum(balance * w.price) balance_usd
 from
-    dex_tx_volume_count_summary dtvcr
+    dex_tx_volume_count_record  dtvcr
         inner join white_list_erc20 w on
             w.address = dtvcr."token"
 group by
