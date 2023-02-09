@@ -685,7 +685,6 @@ create table public.token_balance_volume_usd
     token varchar(512) not null,
     balance_usd numeric,
     volume_usd numeric,
-    balance_level varchar(30) NULL,
     created_at timestamp default CURRENT_TIMESTAMP,
     updated_at timestamp default now(),
     removed boolean default false
@@ -697,7 +696,6 @@ CREATE TABLE public.total_balance_volume_usd (
                                                  address varchar(512) NOT NULL,
                                                  balance_usd numeric(250, 20) NULL,
                                                  volume_usd numeric(250, 20) NULL,
-                                                 balance_level varchar(30) NULL,
                                                  created_at timestamp(6) NULL,
                                                  updated_at timestamp(6) NULL,
                                                  removed bool NULL
@@ -819,7 +817,6 @@ CREATE TABLE public.token_volume_usd (
                                          address varchar(512) NULL,
                                          "token" varchar(512) NULL,
                                          volume_usd numeric NULL,
-                                         volume_level varchar(30) NULL,
                                          created_at timestamp NULL,
                                          updated_at timestamp NULL,
                                          removed bool NULL
@@ -833,7 +830,6 @@ DROP TABLE IF EXISTS public.total_volume_usd;
 CREATE TABLE public.total_volume_usd (
                                          address varchar(512) NULL,
                                          volume_usd numeric(250, 20) NULL,
-                                         volume_level varchar(30) NULL,
                                          created_at timestamp(6) NULL,
                                          updated_at timestamp(6) NULL,
                                          removed bool NULL
