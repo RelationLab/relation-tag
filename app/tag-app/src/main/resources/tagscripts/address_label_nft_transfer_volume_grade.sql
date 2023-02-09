@@ -1,5 +1,5 @@
 truncate table public.address_label_nft_transfer_volume_grade;
-insert into public.address_label_nft_transfer_volume_grade(address,label_type,label_name,updated_at)
+insert into public.address_label_nft_transfer_volume_grade(address,label_type,label_name,data,updated_at)
     select
     address,
     label_type,
@@ -16,6 +16,7 @@ insert into public.address_label_nft_transfer_volume_grade(address,label_type,la
                                  and volume_usd < 500000 then 'L5'
                              when volume_usd >= 500000 then 'L6'
         end as label_name,
+    volume_usd,
     now() as updated_at
     from
     (

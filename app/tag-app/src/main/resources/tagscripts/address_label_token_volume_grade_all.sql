@@ -1,5 +1,5 @@
 truncate table public.address_label_token_volume_grade_all;
-insert into public.address_label_token_volume_grade_all (address,label_type,label_name,updated_at)
+insert into public.address_label_token_volume_grade_all (address,label_type,label_name,data,updated_at)
     select
     a1.address,
     a2.label_type,
@@ -20,6 +20,7 @@ insert into public.address_label_token_volume_grade_all (address,label_type,labe
                                     and volume_usd < 1000000000 then 'Million'
                                 when volume_usd >= 1000000000 then 'Billion'
         end as label_name,
+    volume_usd,
     now() as updated_at
     from
     (

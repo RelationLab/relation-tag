@@ -1,5 +1,5 @@
 truncate table public.address_label_nft_time_rank;
-insert into public.address_label_nft_time_rank (address,label_type,label_name,updated_at)
+insert into public.address_label_nft_time_rank (address,label_type,label_name,data,updated_at)
     select
     a1.address,
     a2.label_type,
@@ -8,6 +8,7 @@ insert into public.address_label_nft_time_rank (address,label_type,label_name,up
                                 when counter >= 1
                                     and counter < 155 then 'SHORT_TERM_HOLDER'
         end as label_name,
+    counter,
     now() as updated_at
     from
     (

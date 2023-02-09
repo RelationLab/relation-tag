@@ -1,5 +1,5 @@
 truncate table public.address_label_nft_project_type_volume_rank;
-insert into public.address_label_nft_project_type_volume_rank (address,label_type,label_name,updated_at)
+insert into public.address_label_nft_project_type_volume_rank (address,label_type,label_name,data,updated_at)
     select
     address ,
     label_type,
@@ -12,6 +12,7 @@ insert into public.address_label_nft_project_type_volume_rank (address,label_typ
                                  and zb_rate <= 0.1 then 'UNCOMMON_NFT_TRADER'
                              when zb_rate <= 0.001 then 'LEGENDARY_NFT_TRADER'
         end as label_name,
+    zb_rate,
     now() as updated_at
     from
     (

@@ -1,5 +1,5 @@
 truncate table public.address_label_nft_count_grade;
-insert into public.address_label_nft_count_grade(address,label_type,label_name,updated_at)
+insert into public.address_label_nft_count_grade(address,label_type,label_name,data,updated_at)
     select
     address,
     label_type,
@@ -22,6 +22,7 @@ insert into public.address_label_nft_count_grade(address,label_type,label_name,u
                                  and sum_count < 619 then 'Medium'
                              when sum_count >= 619 then 'High'
         end as label_name,
+    sum_count,
     now() as updated_at
     from
     (

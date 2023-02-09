@@ -1,5 +1,5 @@
 truncate table public.address_label_univ3_balance_grade;
-insert into public.address_label_univ3_balance_grade (address,label_type,label_name,updated_at)
+insert into public.address_label_univ3_balance_grade (address,label_type,label_name,data,updated_at)
     select
     address,
     a2.label_type,
@@ -20,6 +20,7 @@ insert into public.address_label_univ3_balance_grade (address,label_type,label_n
                                     and balance_usd < 1000000000 then 'Millionaire'
                                 when balance_usd >= 1000000000 then 'Billionaire'
         end as label_name,
+    balance_usd,
     now() as updated_at
     from
     (
