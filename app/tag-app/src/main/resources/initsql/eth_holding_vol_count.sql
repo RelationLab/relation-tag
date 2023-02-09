@@ -1,6 +1,7 @@
 truncate table eth_holding_vol_count;
 insert into
-    eth_holding_vol_count(address,
+    token_holding_vol_count(address,
+                          token,
                           total_transfer_volume,
                           total_transfer_count,
                           total_transfer_to_count,
@@ -9,6 +10,7 @@ insert into
                           total_transfer_all_volume)
 select
     address,
+    'eth' as token,
     sum(total_transfer_volume) total_transfer_volume,
     sum(total_transfer_count) total_transfer_count,
     sum(total_transfer_to_count) as total_transfer_to_count,
