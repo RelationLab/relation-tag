@@ -731,6 +731,7 @@ CREATE TABLE public.token_holding_vol_count (
                                                 block_height bigint NULL,
                                                 total_transfer_volume numeric(125, 30) NULL,
                                                 total_transfer_count bigint NULL,
+                                                count_level varchar(30) NULL,
                                                 status varchar(128) NULL,
                                                 created_at timestamp NULL,
                                                 updated_at timestamp NULL,
