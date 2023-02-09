@@ -1,4 +1,6 @@
-
+insert into user_profile_summary(
+    address, analysis_json
+)
 SELECT thvc.address, json_build_object(
     'assetAnalysis', json_build_object(
         'totalBalance', min(tbvu1.balance_usd),
