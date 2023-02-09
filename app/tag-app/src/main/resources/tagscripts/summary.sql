@@ -59,6 +59,16 @@ select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source
 select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_univ3_balance_rank union all
 select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_univ3_balance_top union all
 select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from address_label_univ3_volume_rank union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_active_users union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_defi_active_users union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_defi_high_demander union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_elite union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_long_term_holder union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_nft_active_users union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_nft_high_demander union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_nft_whale union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_token_whale union all
+select address,label_type,label_name,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_web3_active_users union all
 select address,label_type,label_name,updated_at, owner, source  from address_label_third_party union all
 select address,label_type,label_name,updated_at,owner, source  from address_label_ugc;
 
