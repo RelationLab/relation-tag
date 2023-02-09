@@ -57,6 +57,17 @@ drop table if exists address_label_univ3_balance_rank;
 drop table if exists address_label_univ3_balance_top;
 drop table if exists address_label_univ3_volume_rank;
 
+drop table if exists address_label_crowd_active_users;
+drop table if exists address_label_crowd_defi_active_users;
+drop table if exists address_label_crowd_defi_high_demander;
+drop table if exists address_label_crowd_elite;
+drop table if exists address_label_crowd_long_term_holder;
+drop table if exists address_label_crowd_nft_active_users;
+drop table if exists address_label_crowd_nft_high_demander;
+drop table if exists address_label_crowd_nft_whale;
+drop table if exists address_label_crowd_token_whale;
+drop table if exists address_label_crowd_web3_active_users;
+
 CREATE TABLE public.address_label_token_project_type_count_grade (
 
                                                                      address varchar(512) NULL,
