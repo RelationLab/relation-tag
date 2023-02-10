@@ -603,6 +603,22 @@ create table address_label_gp
     updated_at timestamp(6)
 ) distributed by (address);
 
+DROP TABLE if EXISTS address_label_gp_profile;
+create table address_label_gp_profile
+(
+    owner      varchar(256),
+    address    varchar(512),
+    data numeric(250, 20) NULL,
+    asset varchar(100),
+    asset_type varchar(100),
+    label_type varchar(512),
+    label_name varchar(1024),
+    label_level varchar(50),
+    label_group varchar(100),
+    source     varchar(100),
+    updated_at timestamp(6)
+) distributed by (address);
+
 drop table if exists address_labels_json_gin;
 create table address_labels_json_gin
 (

@@ -62,6 +62,30 @@ select address,label_type,label_name,data,updated_at,'-1' as owner,'SYSTEM' as s
 select address,label_type,label_name,data,updated_at, owner, source  from address_label_third_party union all
 select address,label_type,label_name,data,updated_at,owner, source  from address_label_ugc;
 
+
+insert into address_label_gp_profile(
+	owner,address,data,asset,asset_type,label_type,label_name,label_level,label_group,source,updated_at
+)
+SELECT
+	alg.owner, alg.address, alg.data, comb.asset, comb.asset_type, alg.label_type, alg.label_name,
+	case when comb.balance <> '' then comb.balance
+			 WHEN comb.volume <> '' then comb.volume
+			 when comb.activity <> '' then comb.activity
+	END as label_level,
+	case when position('BALANCE' in alg.label_name) > 0 then 'Balance'
+			 WHEN position('VOLUME' in alg.label_name) > 0 then 'Volume'
+			 when position('ACTIVITY' in alg.label_name) > 0 then 'Activity'
+	END as label_group,
+	alg."source", alg.updated_at
+
+FROM address_label_gp alg
+inner join combination comb on comb.label_name = alg.label_name
+	and (comb.balance in ('L1','L2','L3','L4','L5','L6','Millionaire','Billionaire')
+		or comb.volume in ('L1','L2','L3','L4','L5','L6','Million','Billion')
+		or comb.activity in ('L1','L2','L3','L4','L5','L6','Low','Medium','High')
+	);
+
+
 truncate
     table public.address_labels_json_gin;
 insert into
