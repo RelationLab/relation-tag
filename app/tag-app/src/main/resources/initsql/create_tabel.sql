@@ -596,6 +596,7 @@ create table address_label_gp
 (
     owner      varchar(256),
     address    varchar(512),
+    data numeric(250, 20) NULL,
     label_type varchar(512),
     label_name varchar(1024),
     source     varchar(100),
