@@ -77,7 +77,6 @@ SELECT
 			 when position('ACTIVITY' in alg.label_name) > 0 then 'Activity'
 	END as label_group,
 	alg."source", alg.updated_at
-
 FROM address_label_gp alg
 inner join combination comb on comb.label_name = alg.label_name
 	and (comb.balance in ('L1','L2','L3','L4','L5','L6','Millionaire','Billionaire')
