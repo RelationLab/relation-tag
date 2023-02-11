@@ -1,9 +1,10 @@
 truncate table public.address_label_token_balance_rank;
-insert into public.address_label_token_balance_rank (address,label_type,label_name,updated_at)
+insert into public.address_label_token_balance_rank (address,label_type,label_name,data,updated_at)
     select
     tb1.address ,
     tb2.label_type,
     tb2.label_type || '_' || 'HIGH_BALANCE' as label_name,
+    tb1.zb_rate,
     now() as updated_at
     from
     (

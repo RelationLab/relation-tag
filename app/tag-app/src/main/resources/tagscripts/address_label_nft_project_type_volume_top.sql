@@ -1,9 +1,10 @@
 truncate table public.address_label_nft_project_type_volume_top;
-insert into public.address_label_nft_project_type_volume_top (address,label_type,label_name,updated_at)
+insert into public.address_label_nft_project_type_volume_top (address,label_type,label_name,data,updated_at)
     select
     address,
     label_type,
     label_type || '_' || 'TOP' as label_name,
+    rn,
     now() as updated_at
     from
     (
@@ -18,7 +19,8 @@ insert into public.address_label_nft_project_type_volume_top (address,label_type
                         dptt.seq_flag = s1.seq_flag
                   and dptt.project = s1.platform_group
                   and dptt.type = s1.type
-                  and dptt.data_subject = 'volume_top') as label_type
+                  and dptt.data_subject = 'volume_top') as label_type,
+                  s1.rn
         from
             (
                 select

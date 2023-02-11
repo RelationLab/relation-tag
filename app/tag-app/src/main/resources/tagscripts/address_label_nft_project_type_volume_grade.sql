@@ -1,5 +1,5 @@
 truncate table public.address_label_nft_project_type_volume_grade;
-insert into public.address_label_nft_project_type_volume_grade(address,label_type,label_name,updated_at)
+insert into public.address_label_nft_project_type_volume_grade(address,label_type,label_name,data,updated_at)
     select
     address,
     label_type,
@@ -16,7 +16,8 @@ insert into public.address_label_nft_project_type_volume_grade(address,label_typ
                              and volume_usd < 500000 then 'L5'
                          when volume_usd >= 500000 then 'L6'
         end as label_name,
-        now() as updated_at
+    volume_usd,
+    now() as updated_at
     from
     (
         -- project-token-type

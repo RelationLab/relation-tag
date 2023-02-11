@@ -1,9 +1,10 @@
 truncate table public.address_label_nft_volume_top;
-insert into public.address_label_nft_volume_top (address,label_type,label_name,updated_at)
+insert into public.address_label_nft_volume_top (address,label_type,label_name,data,updated_at)
     select
     address,
     label_type,
     label_type || '_' || 'TOP' as label_name,
+    rn,
     now() as updated_at
     from
     (
@@ -21,7 +22,8 @@ insert into public.address_label_nft_volume_top (address,label_type,label_name,u
                   and dptt.label_type like '%NFT%'
                   and dptt.label_type not like '%WEB3%'
                   and (dptt.project = ''
-                    or dptt.project = 'ALL')) as label_type
+                    or dptt.project = 'ALL')) as label_type,
+            rn
     from
 		(
 		select

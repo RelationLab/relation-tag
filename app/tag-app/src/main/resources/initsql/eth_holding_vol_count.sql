@@ -1,38 +1,16 @@
 truncate table eth_holding_vol_count;
 insert into
-    token_holding_vol_count(address,
-                          token,
+    eth_holding_vol_count(address,
                           total_transfer_volume,
                           total_transfer_count,
-                          count_level,
                           total_transfer_to_count,
                           total_transfer_all_count,
                           total_transfer_to_volume,
                           total_transfer_all_volume)
 select
     address,
-    'eth' as token,
     sum(total_transfer_volume) total_transfer_volume,
     sum(total_transfer_count) total_transfer_count,
-    case
-        when sum(total_transfer_count) >= 1
-            and sum(total_transfer_count) < 10 then 'L1'
-        when sum(total_transfer_count) >= 10
-            and sum(total_transfer_count) < 40 then 'L2'
-        when sum(total_transfer_count) >= 40
-            and sum(total_transfer_count) < 80 then 'L3'
-        when sum(total_transfer_count) >= 80
-            and sum(total_transfer_count) < 120 then 'L4'
-        when sum(total_transfer_count) >= 120
-            and sum(total_transfer_count) < 160 then 'L5'
-        when sum(total_transfer_count) >= 160
-            and sum(total_transfer_count) < 200 then 'L6'
-        when sum(total_transfer_count) >= 200
-            and sum(total_transfer_count) < 400 then 'Low'
-        when sum(total_transfer_count) >= 400
-            and sum(total_transfer_count) < 619 then 'Medium'
-        when sum(total_transfer_count) >= 619 then 'High'
-    end as "count_level",
     sum(total_transfer_to_count) as total_transfer_to_count,
     sum(total_transfer_all_count) as total_transfer_all_count,
     sum(total_transfer_to_volume) as total_transfer_to_volume,

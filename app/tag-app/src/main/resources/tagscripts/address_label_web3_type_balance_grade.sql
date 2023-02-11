@@ -1,5 +1,5 @@
 truncate table public.address_label_web3_type_balance_grade;
-insert into public.address_label_web3_type_balance_grade (address,label_type,label_name,updated_at)
+insert into public.address_label_web3_type_balance_grade (address,label_type,label_name,data,updated_at)
     select
     address,
     label_type,
@@ -15,6 +15,7 @@ insert into public.address_label_web3_type_balance_grade (address,label_type,lab
                                  and balance < 101 then 'L5'
                              when balance >= 101 then 'L6'
         end as label_name,
+    balance,
     now() as updated_at
     from
     (

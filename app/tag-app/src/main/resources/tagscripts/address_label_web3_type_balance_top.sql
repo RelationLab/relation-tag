@@ -1,9 +1,10 @@
 truncate table address_label_web3_type_balance_top;
-insert into public.address_label_web3_type_balance_top (address,label_type,label_name,updated_at)
+insert into public.address_label_web3_type_balance_top (address,label_type,label_name,data,updated_at)
     select
     address,
     label_type,
     label_type || '_' || 'WHALE' as label_name,
+    rn,
     now() as updated_at
     from
     (
@@ -18,7 +19,8 @@ insert into public.address_label_web3_type_balance_top (address,label_type,label
                         dptt.project = s1.project
                   and dptt.type = s1.type
                   and dptt.data_subject = 'balance_top'
-                limit 1) as label_type
+                limit 1) as label_type,
+            rn
     from
 		(
 		select

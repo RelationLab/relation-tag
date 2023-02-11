@@ -1,9 +1,10 @@
 truncate table public.address_label_nft_transfer_volume_count_rank;
-insert into public.address_label_nft_transfer_volume_count_rank (address,label_type,label_name,updated_at)
+insert into public.address_label_nft_transfer_volume_count_rank (address,label_type,label_name,data,updated_at)
     select
     address ,
     label_type,
     label_type || '_ELITE_NFT_TRADER' as label_name,
+    zb_rate,
     now() as updated_at
     from
     (
@@ -24,7 +25,8 @@ insert into public.address_label_nft_transfer_volume_count_rank (address,label_t
                     or dptt.project = 'ALL')
                   and dptt.data_subject = 'volume_elite'
                   and dptt.label_type like '%NFT%'
-                  and dptt.label_type not like '%WEB3%') as label_type
+                  and dptt.label_type not like '%WEB3%') as label_type,
+                  zb_rate
     from
 		(
 		select

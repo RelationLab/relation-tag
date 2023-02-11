@@ -1,9 +1,10 @@
 truncate table address_label_nft_balance_top;
-insert into public.address_label_nft_balance_top (address,label_type,label_name,updated_at)
+insert into public.address_label_nft_balance_top (address,label_type,label_name,data,updated_at)
     select
     address,
     label_type,
     label_type || '_' || 'WHALE' as label_name,
+    rn,
     now() as updated_at
     from
     (
@@ -22,7 +23,8 @@ insert into public.address_label_nft_balance_top (address,label_type,label_name,
                   and (dptt.project = ''
                     or dptt.project = 'ALL')
                   and (dptt.type = ''
-                    or dptt.type = 'ALL')) as label_type
+                    or dptt.type = 'ALL')) as label_type,
+            s1.rn
     from
 		(
 		select
