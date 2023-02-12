@@ -1,3 +1,4 @@
+create table eth_holding_vol_count_tmp as select * from eth_holding_vol_count;
 truncate table eth_holding_vol_count;
 insert into
     eth_holding_vol_count(address,
@@ -17,6 +18,18 @@ select
     sum(total_transfer_all_volume) total_transfer_all_volume
 from
     (
+        select
+             address,
+            sum(total_transfer_volume) total_transfer_volume,
+            sum(total_transfer_count) total_transfer_count,
+             sum(total_transfer_to_count) as total_transfer_to_count,
+            sum(total_transfer_all_count) total_transfer_all_count,
+             sum(total_transfer_to_volume) as total_transfer_to_volume,
+            sum(total_transfer_all_volume) total_transfer_all_volume
+        from
+            eth_holding_vol_count_tmp
+        group by
+            address
         select
             from_address address,
             sum(amount) total_transfer_volume,

@@ -1,3 +1,4 @@
+create table token_holding_vol_count_tmp as select * from token_holding_vol_count;
 truncate table token_holding_vol_count;
 insert into
     token_holding_vol_count(address,
@@ -39,6 +40,21 @@ select
     sum(total_transfer_all_volume) total_transfer_all_volume
 from
     (
+        select
+            address,
+            token,
+            sum(total_transfer_volume) total_transfer_volume,
+            sum(total_transfer_count) total_transfer_count,
+            sum(total_transfer_to_count) as total_transfer_to_count,
+            sum(total_transfer_all_count) total_transfer_all_count,
+            sum(total_transfer_to_volume) as total_transfer_to_volume,
+            sum(total_transfer_all_volume) total_transfer_all_volume
+        from
+            token_holding_vol_count_tmp thvc
+        group by
+            address,
+            token
+            union all
         select
             from_address address,
             token,
