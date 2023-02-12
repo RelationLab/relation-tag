@@ -101,31 +101,31 @@ insert into
     address;
 
 -- user profile
-insert into user_profile_summary(
-    address, analysis_json
-)
-SELECT
-    algp.address,
-    algp.balance,
-    json_build_object(
-        'assets', json_agg(
-                      json_build_object(
-                          'name', drt.token_name,
-                          'type', drt.asset_type,
-                          'balance', json_build_object(
-                                        'data', drt.token_name,
-                                        'level', drt.asset_type,
-                                      ),
-                          'volume', json_build_object(
-                                        'data', drt.token_name,
-                                        'level', drt.asset_type,
-                                      ),
-                          'activity', json_build_object(
-                                        'data', drt.token_name,
-                                        'level', drt.asset_type,
-                                      )
-                      )
-                  )
-    )
-from address_label_gp_profile algp
-group by algp.address, algp.balance
+--insert into user_profile_summary(
+--    address, analysis_json
+--)
+--SELECT
+--    algp.address,
+--    algp.balance,
+--    json_build_object(
+--        'assets', json_agg(
+--                      json_build_object(
+--                          'name', drt.token_name,
+--                          'type', drt.asset_type,
+--                          'balance', json_build_object(
+--                                        'data', drt.token_name,
+--                                        'level', drt.asset_type,
+--                                      ),
+--                          'volume', json_build_object(
+--                                        'data', drt.token_name,
+--                                        'level', drt.asset_type,
+--                                      ),
+--                          'activity', json_build_object(
+--                                        'data', drt.token_name,
+--                                        'level', drt.asset_type,
+--                                      )
+--                      )
+--                  )
+--    )
+--from address_label_gp_profile algp
+--group by algp.address, algp.balance
