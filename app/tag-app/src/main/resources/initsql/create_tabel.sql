@@ -591,6 +591,76 @@ CREATE TABLE public.address_label_univ3_volume_rank (
                                                         updated_at timestamp(6) NULL
 );
 
+CREATE TABLE public.address_label_crowd_active_users (
+                                                         address varchar(512) NULL,
+                                                         label_type varchar(512) NULL,
+                                                         label_name varchar(1024) NULL,
+                                                         updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_crowd_defi_active_users (
+                                                              address varchar(512) NULL,
+                                                              label_type varchar(512) NULL,
+                                                              label_name varchar(1024) NULL,
+                                                              updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_crowd_defi_high_demander (
+                                                               address varchar(512) NULL,
+                                                               label_type varchar(512) NULL,
+                                                               label_name varchar(1024) NULL,
+                                                               updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_crowd_elite (
+                                                  address varchar(512) NULL,
+                                                  label_type varchar(512) NULL,
+                                                  label_name varchar(1024) NULL,
+                                                  updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_crowd_long_term_holder (
+                                                             address varchar(512) NULL,
+                                                             label_type varchar(512) NULL,
+                                                             label_name varchar(1024) NULL,
+                                                             updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_crowd_nft_active_users (
+                                                             address varchar(512) NULL,
+                                                             label_type varchar(512) NULL,
+                                                             label_name varchar(1024) NULL,
+                                                             updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_crowd_nft_high_demander (
+                                                              address varchar(512) NULL,
+                                                              label_type varchar(512) NULL,
+                                                              label_name varchar(1024) NULL,
+                                                              updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_crowd_nft_whale (
+                                                      address varchar(512) NULL,
+                                                      label_type varchar(512) NULL,
+                                                      label_name varchar(1024) NULL,
+                                                      updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_crowd_token_whale (
+                                                        address varchar(512) NULL,
+                                                        label_type varchar(512) NULL,
+                                                        label_name varchar(1024) NULL,
+                                                        updated_at timestamp(6) NULL
+);
+
+CREATE TABLE public.address_label_crowd_web3_active_users (
+                                                              address varchar(512) NULL,
+                                                              label_type varchar(512) NULL,
+                                                              label_name varchar(1024) NULL,
+                                                              updated_at timestamp(6) NULL
+);
+
 DROP TABLE if EXISTS  address_label_gp;
 create table address_label_gp
 (
