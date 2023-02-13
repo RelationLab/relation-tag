@@ -184,9 +184,9 @@ SELECT
                       json_build_object(
                           'name', algp.asset,
                           'type', algp.asset_type,
-             'data', algp.data,
+                          'data', algp.data,
                           'level', algp.label_level,
-             'group', algp.label_group
+                          'group', algp.label_group
                       )
                   )
     ) as data_object
@@ -201,9 +201,9 @@ SELECT
                       json_build_object(
                           'name', algp.platform,
                           'type', algp.asset_type,
-             'data', algp."data",
+                          'data', algp."data",
                           'level', algp."label_level",
-             'group', algp.label_group
+                          'group', algp.label_group
                       )
                   )
     ) as data_object
@@ -220,9 +220,9 @@ SELECT
                       json_build_object(
                           'name', algp.action,
                           'type', algp.asset_type,
-             'data', algp."data",
+                          'data', algp."data",
                           'level', algp."label_level",
-             'group', algp.label_group
+                          'group', algp.label_group
                       )
                   )
     ) as data_object
