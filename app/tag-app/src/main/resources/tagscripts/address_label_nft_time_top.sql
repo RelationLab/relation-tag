@@ -1,17 +1,17 @@
 truncate table public.address_label_nft_time_top;
-insert into public.address_label_nft_time_top(address,label_type,label_name,`data`,wired_type,updated_at)
+insert into public.address_label_nft_time_top(address,label_type,label_name,data,wired_type,updated_at)
 select
     address ,
     label_type,
     label_name,
-    `data`,
+    data,
     (select wired_type from label l where l.name=label_name) as wired_type,
     updated_at
 from ( select
     s1.address,
     s1.label_type,
     s1.label_type as label_name,
-    s1.rn  as `data`,
+    s1.rn  as data,
     now() as updated_at
     from
     (

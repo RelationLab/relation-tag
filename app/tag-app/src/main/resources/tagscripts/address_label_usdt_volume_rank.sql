@@ -1,10 +1,10 @@
 truncate table public.address_label_usdt_volume_rank;
-insert into public.address_label_usdt_volume_rank(address,label_type,label_name,`data`,wired_type,updated_at)
+insert into public.address_label_usdt_volume_rank(address,label_type,label_name,data,wired_type,updated_at)
 select
     address ,
     label_type,
     label_name,
-    `data`,
+    data,
     (select wired_type from label l where l.name=label_name) as wired_type,
     updated_at
 from (
@@ -20,7 +20,7 @@ from (
                                      and zb_rate <= 0.1 then 'MEDIUM'
                                  when zb_rate <= 0.001 then 'LEGENDARY'
         end as label_name,
-    zb_rate  as `data`,
+    zb_rate  as data,
     now() as updated_at
     from
     (

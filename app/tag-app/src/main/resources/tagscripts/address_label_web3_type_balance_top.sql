@@ -1,10 +1,10 @@
 truncate table address_label_web3_type_balance_top;
-insert into public.address_label_web3_type_balance_top(address,label_type,label_name,`data`,wired_type,updated_at)
+insert into public.address_label_web3_type_balance_top(address,label_type,label_name,data,wired_type,updated_at)
 select
     address ,
     label_type,
     label_name,
-    `data`,
+    data,
     (select wired_type from label l where l.name=label_name) as wired_type,
     updated_at
 from (
@@ -12,7 +12,7 @@ from (
     address,
     label_type,
     label_type || '_' || 'WHALE' as label_name,
-    rn  as `data`,
+    rn  as data,
     now() as updated_at
     from
     (
