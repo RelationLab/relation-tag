@@ -133,20 +133,20 @@ select address,label_type,label_name,data,updated_at,'-1' as owner,'SYSTEM' as s
 select address,label_type,label_name,data,updated_at, owner, source  from address_label_third_party union all
 select address,label_type,label_name,data,updated_at,owner, source  from address_label_ugc;
 
-
-insert into address_label_gp_profile(
+-- 统计user profile 数据
+INSERT INTO address_label_gp_profile(
 	owner,address,data,asset,asset_type,label_type,label_name,label_level,label_group,source,updated_at
 )
-SELECT
+select
 	alg.owner, alg.address, alg.data, comb.asset, comb.asset_type, alg.label_type, alg.label_name,
 	case when comb.balance <> '' then comb.balance
-			 WHEN comb.volume <> '' then comb.volume
-			 when comb.activity <> '' then comb.activity
-	END as label_level,
+	     when comb.volume <> '' then comb.volume
+		 when comb.activity <> '' then comb.activity
+	end as label_level,
 	case when position('BALANCE' in alg.label_name) > 0 then 'Balance'
-			 WHEN position('VOLUME' in alg.label_name) > 0 then 'Volume'
-			 when position('ACTIVITY' in alg.label_name) > 0 then 'Activity'
-	END as label_group,
+	     when position('VOLUME' in alg.label_name) > 0 then 'Volume'
+		 when position('ACTIVITY' in alg.label_name) > 0 then 'Activity'
+	end as label_group,
 	alg."source", alg.updated_at
 FROM address_label_gp alg
 inner join combination comb on comb.label_name = alg.label_name
@@ -155,7 +155,7 @@ inner join combination comb on comb.label_name = alg.label_name
 		or comb.activity in ('L1','L2','L3','L4','L5','L6','Low','Medium','High')
 	);
 
-
+-- 用户标签
 truncate
     table public.address_labels_json_gin;
 insert into
@@ -170,3 +170,33 @@ insert into
     address_label_gp
     group by
     address;
+
+-- user profile
+--insert into user_profile_summary(
+--    address, analysis_json
+--)
+--SELECT
+--    algp.address,
+--    algp.balance,
+--    json_build_object(
+--        'assets', json_agg(
+--                      json_build_object(
+--                          'name', drt.token_name,
+--                          'type', drt.asset_type,
+--                          'balance', json_build_object(
+--                                        'data', drt.token_name,
+--                                        'level', drt.asset_type,
+--                                      ),
+--                          'volume', json_build_object(
+--                                        'data', drt.token_name,
+--                                        'level', drt.asset_type,
+--                                      ),
+--                          'activity', json_build_object(
+--                                        'data', drt.token_name,
+--                                        'level', drt.asset_type,
+--                                      )
+--                      )
+--                  )
+--    )
+--from address_label_gp_profile algp
+--group by algp.address, algp.balance

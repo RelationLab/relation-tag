@@ -681,6 +681,8 @@ create table address_label_gp_profile
     data numeric(250, 20) NULL,
     asset varchar(100),
     asset_type varchar(100),
+    platform varchar(100),
+    action varchar(100),
     label_type varchar(512),
     label_name varchar(1024),
     label_level varchar(50),
@@ -695,6 +697,16 @@ create table address_labels_json_gin
     address    varchar(512),
     labels     jsonb,
     updated_at timestamp
+) distributed by (address);
+
+DROP TABLE IF EXISTS public.user_profile_summary;
+CREATE TABLE public.user_profile_summary (
+     address varchar(512) NULL,
+     assets jsonb NULL,
+     assets jsonb NULL,
+     created_at timestamp(6) NULL,
+     updated_at timestamp(6) NULL,
+     removed bool NULL
 ) distributed by (address);
 
 drop table if exists dex_tx_volume_count_summary;
@@ -877,54 +889,54 @@ CREATE TABLE  public.web3_transaction_record_summary
 -- Drop table
 
 -- DROP TABLE public.token_holding_vol_count;
--- DROP TABLE IF EXISTS public.token_holding_vol_count;
--- CREATE TABLE public.token_holding_vol_count (
---                                                 address varchar(256) NULL,
---                                                 "token" varchar(256) NULL,
---                                                 balance numeric(125, 30) NULL,
---                                                 block_height bigint NULL,
---                                                 total_transfer_volume numeric(125, 30) NULL,
---                                                 total_transfer_count bigint NULL,
---                                                 count_level varchar(30) NULL,
---                                                 status varchar(128) NULL,
---                                                 created_at timestamp NULL,
---                                                 updated_at timestamp NULL,
---                                                 removed bool NULL,
---                                                 fail_count int4 NULL,
---                                                 error_code int4 NULL,
---                                                 error_message text NULL,
---                                                 node_name varchar(512) NULL,
---                                                 total_transfer_to_count bigint NULL,
---                                                 total_transfer_all_count bigint NULL,
---                                                 total_transfer_to_volume numeric(120, 30) NULL,
---                                                 total_transfer_all_volume numeric(120, 30) NULL
--- );
+DROP TABLE IF EXISTS public.token_holding_vol_count;
+CREATE TABLE public.token_holding_vol_count (
+                                                address varchar(256) NULL,
+                                                "token" varchar(256) NULL,
+                                                balance numeric(125, 30) NULL,
+                                                block_height bigint NULL,
+                                                total_transfer_volume numeric(125, 30) NULL,
+                                                total_transfer_count bigint NULL,
+                                                count_level varchar(30) NULL,
+                                                status varchar(128) NULL,
+                                                created_at timestamp NULL,
+                                                updated_at timestamp NULL,
+                                                removed bool NULL,
+                                                fail_count int4 NULL,
+                                                error_code int4 NULL,
+                                                error_message text NULL,
+                                                node_name varchar(512) NULL,
+                                                total_transfer_to_count bigint NULL,
+                                                total_transfer_all_count bigint NULL,
+                                                total_transfer_to_volume numeric(120, 30) NULL,
+                                                total_transfer_all_volume numeric(120, 30) NULL
+);
 
 -- public.eth_holding_vol_count.sql definition
 
 -- Drop table
 
 -- DROP TABLE public.eth_holding_vol_count.sql;
--- DROP TABLE IF EXISTS public.eth_holding_vol_count;
--- CREATE TABLE public.eth_holding_vol_count (
---                                               address varchar(256) NULL,
---                                               balance numeric(125, 30) NULL,
---                                               total_transfer_count int8 NULL,
---                                               block_height int8 NULL,
---                                               total_transfer_volume numeric(120, 30) NULL,
---                                               status varchar(128) NULL,
---                                               created_at timestamp NULL,
---                                               updated_at timestamp NULL,
---                                               removed bool NULL,
---                                               fail_count int4 NULL,
---                                               error_code int4 NULL,
---                                               error_message text NULL,
---                                               node_name varchar(512) NULL,
---                                               total_transfer_to_count int8 NULL,
---                                               total_transfer_all_count int8 NULL,
---                                               total_transfer_to_volume numeric(120, 30) NULL,
---                                               total_transfer_all_volume numeric(120, 30) NULL
--- );
+DROP TABLE IF EXISTS public.eth_holding_vol_count;
+CREATE TABLE public.eth_holding_vol_count (
+                                              address varchar(256) NULL,
+                                              balance numeric(125, 30) NULL,
+                                              total_transfer_count int8 NULL,
+                                              block_height int8 NULL,
+                                              total_transfer_volume numeric(120, 30) NULL,
+                                              status varchar(128) NULL,
+                                              created_at timestamp NULL,
+                                              updated_at timestamp NULL,
+                                              removed bool NULL,
+                                              fail_count int4 NULL,
+                                              error_code int4 NULL,
+                                              error_message text NULL,
+                                              node_name varchar(512) NULL,
+                                              total_transfer_to_count int8 NULL,
+                                              total_transfer_all_count int8 NULL,
+                                              total_transfer_to_volume numeric(120, 30) NULL,
+                                              total_transfer_all_volume numeric(120, 30) NULL
+);
 
 -- public.token_holding_uni_cal definition
 
@@ -1003,18 +1015,3 @@ CREATE TABLE public.total_transfer_count (
 )
     DISTRIBUTED RANDOMLY;
 
-DROP TABLE IF EXISTS public.user_profile_summary;
-CREATE TABLE public.user_profile_summary (
-                                         address varchar(512) NULL,
-                                         analysis_json jsonb NULL,
-                                         created_at timestamp(6) NULL,
-                                         updated_at timestamp(6) NULL,
-                                         removed bool NULL
-)
-    DISTRIBUTED RANDOMLY;
-
-DROP TABLE IF EXISTS public.dms_syn_block;
-CREATE TABLE public.dms_syn_block (
-                                      syn_type varchar(20) NOT NULL,
-                                      block_height int8 NULL
-);
