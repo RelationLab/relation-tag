@@ -54,5 +54,7 @@ from
         from
             eth_tx_record where amount>0
         group by
-            to_address) atb group by  address
+            to_address) atb group by  address;
+insert into dms_syn_block(syn_type,block_height)
+    select 'eth_holding_type' as syn_type,max(block_number) from eth_tx_record;
 
