@@ -103,7 +103,12 @@ insert into
                             updated_at)
     select
     address,
-    json_object_agg(label_type, label_name order by label_type desc)::jsonb as labels,
+    json_agg(
+            json_build_object(
+                    label_type, label_name,
+                    'wired_type', wired_type
+                )
+                order by label_type desc)::jsonb as labels,
                 CURRENT_TIMESTAMP as updated_at
     from
     address_label_gp
