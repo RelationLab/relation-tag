@@ -88,7 +88,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void tag() throws Exception {
-        innit();
+//        innit();
+//        Thread.sleep(2*60*1000);
+        check("total_volume_usd", 1 * 60 * 1000);
         List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
         List<FileEntity> fileList = Lists.newArrayList();
         for (DimRuleSqlContent item : ruleSqlList) {
@@ -97,8 +99,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     .fileContent(FileUtils.readFile(SCRIPTSPATH.concat(File.separator)
                             .concat(fileName))).build());
         }
-        Thread.sleep(2*60*1000);
-        check("total_volume_usd", 1 * 60 * 1000);
         tagByRuleSqlList(fileList);
     }
 

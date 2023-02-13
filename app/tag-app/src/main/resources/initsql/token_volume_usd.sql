@@ -1,3 +1,4 @@
+
 insert
     into
     token_volume_usd(address,

@@ -98,63 +98,63 @@ inner join combination comb on comb.label_name = alg.label_name
 insert into user_profile_summary(
     address, profile_object
 )
-SELECT address, jsonb_object_agg(t.k, t.v) as profile_object
+SELECT address, json_object_agg(t.k, t.v)::jsonb as profile_object
 from (
-SELECT
-    algp.address,
-    json_build_object(
-        'assets', json_agg(
-                      json_build_object(
-                          'name', algp.asset,
-                          'type', algp.asset_type,
-                          'data', algp.data,
-                          'level', algp.label_level,
-                          'group', algp.label_group
-                      )
-                  )
-    ) as data_object
-from address_label_gp_profile algp
-group by algp.address
+         SELECT
+             algp.address,
+             json_build_object(
+                     'assets', json_agg(
+                     json_build_object(
+                             'name', algp.asset,
+                             'type', algp.asset_type,
+                             'data', algp.data,
+                             'level', algp.label_level,
+                             'group', algp.label_group
+                         )
+                 )
+                 )::jsonb as data_object
+         from address_label_gp_profile algp
+         group by algp.address
 
-union all
-SELECT
-    algp.address,
-  json_build_object(
-        'platforms', json_agg(
-                      json_build_object(
-                          'name', algp.platform,
-                          'type', algp.asset_type,
-                          'data', algp."data",
-                          'level', algp."label_level",
-                          'group', algp.label_group
-                      )
-                  )
-    ) as data_object
-from address_label_gp_profile algp
-WHERE algp.platform <> ''
-and action = 'ALL' and asset in ('ALL_NFT', 'ALL_TOKEN', 'ALL_WEB3')
-group by algp.address
+         union all
+         SELECT
+             algp.address,
+             json_build_object(
+                     'platforms', json_agg(
+                     json_build_object(
+                             'name', algp.platform,
+                             'type', algp.asset_type,
+                             'data', algp."data",
+                             'level', algp."label_level",
+                             'group', algp.label_group
+                         )
+                 )
+                 )::jsonb as data_object
+         from address_label_gp_profile algp
+         WHERE algp.platform <> ''
+           and action = 'ALL' and asset in ('ALL_NFT', 'ALL_TOKEN', 'ALL_WEB3')
+         group by algp.address
 
-union all
-SELECT
-    algp.address,
-  json_build_object(
-        'actions', json_agg(
-                      json_build_object(
-                          'name', algp.action,
-                          'type', algp.asset_type,
-                          'data', algp."data",
-                          'level', algp."label_level",
-                          'group', algp.label_group
-                      )
-                  )
-    ) as data_object
-from address_label_gp_profile algp
-WHERE algp.action <> ''
-and asset in ('ALL_NFT', 'ALL_TOKEN', 'ALL_WEB3')
-and algp.platform = 'ALL' and  algp.platform = ''
-group by algp.address
-) a, jsonb_each(data_object::jsonb) as t(k,v)
+         union all
+         SELECT
+             algp.address,
+             json_build_object(
+             'actions', json_agg(
+             json_build_object(
+             'name', algp.action,
+             'type', algp.asset_type,
+             'data', algp."data",
+             'level', algp."label_level",
+             'group', algp.label_group
+             )
+             )
+             )::jsonb as data_object
+         from address_label_gp_profile algp
+         WHERE algp.action <> ''
+           and asset in ('ALL_NFT', 'ALL_TOKEN', 'ALL_WEB3')
+           and algp.platform = 'ALL' and  algp.platform = ''
+         group by algp.address
+     ) a, jsonb_each(data_object) as t(k,v)
 GROUP BY address;
 
 -- 用户标签
