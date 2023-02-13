@@ -775,6 +775,7 @@ create table address_labels_json_gin
 (
     address    varchar(512),
     labels     jsonb,
+    profile_object jsonb NULL,
     updated_at timestamp
 ) distributed by (address);
 
