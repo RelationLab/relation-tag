@@ -83,8 +83,8 @@ SELECT
 			 when comb.activity <> '' then comb.activity
 	END as label_level,
 	case when position('BALANCE' in alg.label_name) > 0 then 'Balance'
-			 WHEN position('VOLUME' in alg.label_name) > 0 then 'Volume'
-			 when position('ACTIVITY' in alg.label_name) > 0 then 'Activity'
+		 WHEN position('VOLUME' in alg.label_name) > 0 then 'Volume'
+		 when position('ACTIVITY' in alg.label_name) > 0 then 'Activity'
 	END as label_group,
 	alg."source", alg.updated_at
 FROM address_label_gp alg
@@ -93,27 +93,6 @@ inner join combination comb on comb.label_name = alg.label_name
 		or comb.volume in ('L1','L2','L3','L4','L5','L6','Million','Billion')
 		or comb.activity in ('L1','L2','L3','L4','L5','L6','Low','Medium','High')
 	);
-
--- 用户标签
-truncate
-    table public.address_labels_json_gin;
-insert into
-    address_labels_json_gin(address,
-                            labels,
-                            updated_at)
-    select
-    address,
-    json_agg(
-            json_build_object(
-                    label_type, label_name,
-                    'wired_type', wired_type
-                )
-                order by label_type desc)::jsonb as labels,
-                CURRENT_TIMESTAMP as updated_at
-    from
-    address_label_gp
-    group by
-    address;
 
 -- user profile
 insert into user_profile_summary(
@@ -177,3 +156,28 @@ and algp.platform = 'ALL' and  algp.platform = ''
 group by algp.address
 ) a, jsonb_each(data_object::jsonb) as t(k,v)
 GROUP BY address;
+
+-- 用户标签
+truncate
+    table public.address_labels_json_gin;
+insert into
+    address_labels_json_gin(address,
+                            labels,
+                            profile_object,
+                            updated_at)
+select
+    alg.address,
+    json_agg(
+                json_build_object(
+                        label_type, label_name,
+                        'wired_type', wired_type
+                    )
+                    order by label_type desc)::jsonb as labels,
+    min(ups.profile_object),
+    CURRENT_TIMESTAMP as updated_at
+    from
+    address_label_gp alg
+    inner join user_profile_summary ups on ups.address = alg.address
+    group by alg.address
+
+
