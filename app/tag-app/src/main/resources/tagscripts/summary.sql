@@ -73,19 +73,19 @@ select address,label_type,label_name,wired_type,data,updated_at, owner, source  
 select address,label_type,label_name,wired_type,data,updated_at,owner, source  from address_label_ugc;
 
 -- 统计user profile 数据
-INSERT INTO address_label_gp_profile(
-	owner,address,data,asset,asset_type,label_type,label_name,label_level,label_group,source,updated_at
+insert into address_label_gp_profile(
+	owner,address,data,asset,asset_type,platform,action,label_type,label_name,label_level,label_group,source,updated_at
 )
-select
-	alg.owner, alg.address, alg.data, comb.asset, comb.asset_type, alg.label_type, alg.label_name,
+SELECT
+	alg.owner, alg.address, alg.data, comb.asset, comb.asset_type, comb.project, comb.trade_type, alg.label_type, alg.label_name,
 	case when comb.balance <> '' then comb.balance
-	     when comb.volume <> '' then comb.volume
-		 when comb.activity <> '' then comb.activity
-	end as label_level,
+			 WHEN comb.volume <> '' then comb.volume
+			 when comb.activity <> '' then comb.activity
+	END as label_level,
 	case when position('BALANCE' in alg.label_name) > 0 then 'Balance'
-	     when position('VOLUME' in alg.label_name) > 0 then 'Volume'
-		 when position('ACTIVITY' in alg.label_name) > 0 then 'Activity'
-	end as label_group,
+			 WHEN position('VOLUME' in alg.label_name) > 0 then 'Volume'
+			 when position('ACTIVITY' in alg.label_name) > 0 then 'Activity'
+	END as label_group,
 	alg."source", alg.updated_at
 FROM address_label_gp alg
 inner join combination comb on comb.label_name = alg.label_name
@@ -116,31 +116,64 @@ insert into
     address;
 
 -- user profile
---insert into user_profile_summary(
---    address, analysis_json
---)
---SELECT
---    algp.address,
---    algp.balance,
---    json_build_object(
---        'assets', json_agg(
---                      json_build_object(
---                          'name', drt.token_name,
---                          'type', drt.asset_type,
---                          'balance', json_build_object(
---                                        'data', drt.token_name,
---                                        'level', drt.asset_type,
---                                      ),
---                          'volume', json_build_object(
---                                        'data', drt.token_name,
---                                        'level', drt.asset_type,
---                                      ),
---                          'activity', json_build_object(
---                                        'data', drt.token_name,
---                                        'level', drt.asset_type,
---                                      )
---                      )
---                  )
---    )
---from address_label_gp_profile algp
---group by algp.address, algp.balance
+insert into user_profile_summary(
+    address, profile_object
+)
+SELECT address, jsonb_object_agg(t.k, t.v) as profile_object
+from (
+SELECT
+    algp.address,
+    json_build_object(
+        'assets', json_agg(
+                      json_build_object(
+                          'name', algp.asset,
+                          'type', algp.asset_type,
+                          'data', algp.data,
+                          'level', algp.label_level,
+                          'group', algp.label_group
+                      )
+                  )
+    ) as data_object
+from address_label_gp_profile algp
+group by algp.address
+
+union all
+SELECT
+    algp.address,
+  json_build_object(
+        'platforms', json_agg(
+                      json_build_object(
+                          'name', algp.platform,
+                          'type', algp.asset_type,
+                          'data', algp."data",
+                          'level', algp."label_level",
+                          'group', algp.label_group
+                      )
+                  )
+    ) as data_object
+from address_label_gp_profile algp
+WHERE algp.platform <> ''
+and action = 'ALL' and asset in ('ALL_NFT', 'ALL_TOKEN', 'ALL_WEB3')
+group by algp.address
+
+union all
+SELECT
+    algp.address,
+  json_build_object(
+        'actions', json_agg(
+                      json_build_object(
+                          'name', algp.action,
+                          'type', algp.asset_type,
+                          'data', algp."data",
+                          'level', algp."label_level",
+                          'group', algp.label_group
+                      )
+                  )
+    ) as data_object
+from address_label_gp_profile algp
+WHERE algp.action <> ''
+and asset in ('ALL_NFT', 'ALL_TOKEN', 'ALL_WEB3')
+and algp.platform = 'ALL' and  algp.platform = ''
+group by algp.address
+) a, jsonb_each(data_object::jsonb) as t(k,v)
+GROUP BY address;
