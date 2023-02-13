@@ -85,5 +85,5 @@ from (
               ,max(first_updated_block_height) first_updated_block_height
               ,price_token
               ,sum(liquidity) liquidity
-              ,max(type) as type from token_holding_uni where type='lp'
+              ,max(type) as type from token_holding_uni where type='lp' and nft_token_id<>'-1'
          group by address,token,nft_token_id,price_token ) tb1 ;

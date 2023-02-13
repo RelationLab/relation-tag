@@ -1,5 +1,13 @@
 truncate table public.address_label_univ3_volume_grade;
-insert into public.address_label_univ3_volume_grade (address,label_type,label_name,data,updated_at)
+insert into public.address_label_univ3_volume_grade(address,label_type,label_name,`data`,wired_type,updated_at)
+select
+    address ,
+    label_type,
+    label_name,
+    `data`,
+    (select wired_type from label l where l.name=label_name) as wired_type,
+    updated_at
+from (
     select
     a1.address,
     a2.label_type,
@@ -20,7 +28,7 @@ insert into public.address_label_univ3_volume_grade (address,label_type,label_na
                                     and volume_usd < 1000000000 then 'Million'
                                 when volume_usd >= 1000000000 then 'Billion'
         end as label_name,
-    volume_usd,
+    volume_usd  as `data`,
     now() as updated_at
     from
     (
@@ -41,4 +49,4 @@ insert into public.address_label_univ3_volume_grade (address,label_type,label_na
             a1.token = a2.token
             and a2.label_type  like 'Uniswap_v3%'
     where
-        a2.data_subject = 'volume_grade' and address <>'0x000000000000000000000000000000000000dead';
+        a2.data_subject = 'volume_grade' and address <>'0x000000000000000000000000000000000000dead') atb;

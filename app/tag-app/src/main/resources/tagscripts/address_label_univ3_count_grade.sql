@@ -1,5 +1,13 @@
 truncate table public.address_label_univ3_count_grade;
-insert into public.address_label_univ3_count_grade (address,label_type,label_name,data,updated_at)
+insert into public.address_label_univ3_count_grade(address,label_type,label_name,`data`,wired_type,updated_at)
+select
+    address ,
+    label_type,
+    label_name,
+    `data`,
+    (select wired_type from label l where l.name=label_name) as wired_type,
+    updated_at
+from (
     select
     a1.address ,
     a2.label_type,
@@ -22,7 +30,7 @@ insert into public.address_label_univ3_count_grade (address,label_type,label_nam
                                     and total_transfer_count < 619 then 'Medium'
                                 when total_transfer_count >= 619 then 'High'
         end as label_name,
-    total_transfer_count,
+    total_transfer_count  as `data`,
     now() as updated_at
     from
     (
@@ -43,4 +51,4 @@ insert into public.address_label_univ3_count_grade (address,label_type,label_nam
             and a2.label_type  like 'Uniswap_v3%'
     where
         a1.total_transfer_count >= 1
-  and a2.data_subject = 'count' and address <>'0x000000000000000000000000000000000000dead';
+  and a2.data_subject = 'count' and address <>'0x000000000000000000000000000000000000dead') atb;

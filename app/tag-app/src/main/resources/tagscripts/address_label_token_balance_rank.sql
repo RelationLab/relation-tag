@@ -1,10 +1,18 @@
 truncate table public.address_label_token_balance_rank;
-insert into public.address_label_token_balance_rank (address,label_type,label_name,data,updated_at)
+insert into public.address_label_token_balance_rank(address,label_type,label_name,`data`,wired_type,updated_at)
+select
+    address ,
+    label_type,
+    label_name,
+    `data`,
+    (select wired_type from label l where l.name=label_name) as wired_type,
+    updated_at
+from (
     select
     tb1.address ,
     tb2.label_type,
     tb2.label_type || '_' || 'HIGH_BALANCE' as label_name,
-    tb1.zb_rate,
+    tb1.zb_rate  as `data`,
     now() as updated_at
     from
     (
@@ -96,4 +104,4 @@ insert into public.address_label_token_balance_rank (address,label_type,label_na
     where
         tb1.balance_usd >= 100
   and tb1.zb_rate <= 0.1
-  and tb2.data_subject = 'balance_rank';
+  and tb2.data_subject = 'balance_rank') atb;

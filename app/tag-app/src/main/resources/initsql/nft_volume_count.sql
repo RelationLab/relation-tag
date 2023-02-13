@@ -1,7 +1,3 @@
-
-CREATE INDEX nft_activity_volume_address_gin_trgm ON public.nft_volume_count USING btree (address);
-CREATE INDEX nft_activity_volume_token_gin_trgm ON public.nft_volume_count USING btree (token);
-
 insert into nft_volume_count(address, token, type, transfer_volume, transfer_count)
     select address, token , 'Mint', total_transfer_mint_volume, total_transfer_mint_count from nft_holding;
 

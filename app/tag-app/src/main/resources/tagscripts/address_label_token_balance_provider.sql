@@ -1,10 +1,18 @@
 truncate table address_label_token_balance_provider;
-insert into public.address_label_token_balance_provider (address,label_type,label_name,data,updated_at)
+insert into public.address_label_token_balance_provider(address,label_type,label_name,`data`,wired_type,updated_at)
+select
+    address ,
+    label_type,
+    label_name,
+    `data`,
+    (select wired_type from label l where l.name=label_name) as wired_type,
+    updated_at
+from (
     select
     s1.address,
     s1.label_type,
     s1.label_type as label_name,
-    rn,
+    rn  as `data`,
     now() as updated_at
     from
     (
@@ -30,4 +38,4 @@ insert into public.address_label_token_balance_provider (address,label_type,labe
                                    and a2.data_subject = 'HEAVY_LP'
     ) s1
     where
-        s1.rn <= 200;
+        s1.rn <= 200) atb;

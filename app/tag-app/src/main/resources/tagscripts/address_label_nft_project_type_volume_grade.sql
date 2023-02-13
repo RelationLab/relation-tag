@@ -1,6 +1,13 @@
 truncate table public.address_label_nft_project_type_volume_grade;
-insert into public.address_label_nft_project_type_volume_grade(address,label_type,label_name,data,updated_at)
-    select
+insert into public.address_label_nft_project_type_volume_grade(address,label_type,label_name,`data`,wired_type,updated_at)
+select
+    address ,
+    label_type,
+    label_name,
+    `data`,
+    (select wired_type from label l where l.name=label_name) as wired_type,
+    updated_at
+from (  select
     address,
     label_type,
     label_type||'_'||case
@@ -16,7 +23,7 @@ insert into public.address_label_nft_project_type_volume_grade(address,label_typ
                              and volume_usd < 500000 then 'L5'
                          when volume_usd >= 500000 then 'L6'
         end as label_name,
-    volume_usd,
+    volume_usd  as `data`,
     now() as updated_at
     from
     (
@@ -70,4 +77,4 @@ insert into public.address_label_nft_project_type_volume_grade(address,label_typ
         group by
             a1.address,
             a2.label_type
-    ) t where volume_usd >= 1 and address <>'0x000000000000000000000000000000000000dead';
+    ) t where volume_usd >= 1 and address <>'0x000000000000000000000000000000000000dead') atb;
