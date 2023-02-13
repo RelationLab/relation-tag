@@ -66,7 +66,7 @@ from
             token ) atb group by  address,token;
 
 insert into dms_syn_block(syn_type,block_height)
-select 'token_holding_type' as syn_type,max(block_number) from erc20_tx_record;
+select 'erc20_tx_record' as syn_type,max(block_number) from erc20_tx_record;
 
 
 

@@ -1099,7 +1099,7 @@ CREATE TABLE public.total_transfer_count (
 -- Drop table
 
 -- DROP TABLE public.dms_syn_block;
-
+DROP TABLE IF EXISTS public.dms_syn_block;
 CREATE TABLE public.dms_syn_block (
                                       syn_type varchar(20) NOT NULL,
                                       block_height int8 NULL
