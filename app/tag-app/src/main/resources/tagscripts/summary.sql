@@ -167,7 +167,12 @@ insert into
                             updated_at)
 select
     alg.address,
-    json_object_agg(alg.label_type, alg.label_name order by alg.label_type desc)::jsonb as labels,
+    json_agg(
+                json_build_object(
+                        label_type, label_name,
+                        'wired_type', wired_type
+                    )
+                    order by label_type desc)::jsonb as labels,
     min(ups.profile_object),
     CURRENT_TIMESTAMP as updated_at
     from
