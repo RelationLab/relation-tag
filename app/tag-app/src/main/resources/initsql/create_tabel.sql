@@ -702,8 +702,7 @@ create table address_labels_json_gin
 DROP TABLE IF EXISTS public.user_profile_summary;
 CREATE TABLE public.user_profile_summary (
      address varchar(512) NULL,
-     assets jsonb NULL,
-     assets jsonb NULL,
+     profile_object jsonb NULL,
      created_at timestamp(6) NULL,
      updated_at timestamp(6) NULL,
      removed bool NULL
