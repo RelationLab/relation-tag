@@ -1,6 +1,13 @@
 truncate table public.address_label_nft_balance_grade;
-insert into public.address_label_nft_balance_grade(address,label_type,label_name,data,updated_at)
-    select address
+insert into public.address_label_nft_balance_grade(address,label_type,label_name,`data`,wired_type,updated_at)
+select
+    address ,
+    label_type,
+    label_name,
+    `data`,
+    (select wired_type from label l where l.name=label_name) as wired_type,
+    updated_at
+from (  select address
         ,
        label_type
         ,
@@ -16,7 +23,7 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
                and balance < 101 then 'L5'
            when balance >= 101 then 'L6'
            end  as label_name,
-           balance,
+           balance  as `data`,
         now()   as updated_at
     from (
          -- project(null)+nft+type(null)
@@ -40,4 +47,4 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
              a2.data_subject = 'balance_grade' and a2.label_type like '%NFT%' AND  a2.label_type NOT  LIKE '%WEB3%'
          group by a1.address,
              a2.label_type
-     ) t where balance>=1 and address <>'0x000000000000000000000000000000000000dead';
+     ) t where balance>=1 and address <>'0x000000000000000000000000000000000000dead') atb;

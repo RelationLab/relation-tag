@@ -1,6 +1,13 @@
 truncate table public.address_label_nft_count_grade;
-insert into public.address_label_nft_count_grade(address,label_type,label_name,data,updated_at)
-    select
+insert into public.address_label_nft_count_grade(address,label_type,label_name,`data`,wired_type,updated_at)
+select
+    address ,
+    label_type,
+    label_name,
+    `data`,
+    (select wired_type from label l where l.name=label_name) as wired_type,
+    updated_at
+from ( select
     address,
     label_type,
     label_type || '_' || case
@@ -22,7 +29,7 @@ insert into public.address_label_nft_count_grade(address,label_type,label_name,d
                                  and sum_count < 619 then 'Medium'
                              when sum_count >= 619 then 'High'
         end as label_name,
-    sum_count,
+    sum_count  as `data`,
     now() as updated_at
     from
     (
@@ -69,4 +76,4 @@ insert into public.address_label_nft_count_grade(address,label_type,label_name,d
             a1.address,
             a2.label_type) t
     where
-        sum_count >= 1 and address <>'0x000000000000000000000000000000000000dead';
+        sum_count >= 1 and address <>'0x000000000000000000000000000000000000dead') atb;

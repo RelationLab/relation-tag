@@ -1,5 +1,13 @@
 truncate table public.address_label_web3_type_balance_grade;
-insert into public.address_label_web3_type_balance_grade (address,label_type,label_name,data,updated_at)
+insert into public.address_label_web3_type_balance_grade(address,label_type,label_name,`data`,wired_type,updated_at)
+select
+    address ,
+    label_type,
+    label_name,
+    `data`,
+    (select wired_type from label l where l.name=label_name) as wired_type,
+    updated_at
+from (
     select
     address,
     label_type,
@@ -15,7 +23,7 @@ insert into public.address_label_web3_type_balance_grade (address,label_type,lab
                                  and balance < 101 then 'L5'
                              when balance >= 101 then 'L6'
         end as label_name,
-    balance,
+    balance  as `data`,
     now() as updated_at
     from
     (
@@ -84,4 +92,4 @@ insert into public.address_label_web3_type_balance_grade (address,label_type,lab
             a2.label_type
     ) t
     where
-        balance >= 1 and address <>'0x000000000000000000000000000000000000dead';
+        balance >= 1 and address <>'0x000000000000000000000000000000000000dead') atb;

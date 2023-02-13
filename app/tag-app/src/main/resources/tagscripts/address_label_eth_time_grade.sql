@@ -1,6 +1,13 @@
 truncate table public.address_label_eth_time_grade;
-insert into public.address_label_eth_time_grade(address,label_type,label_name,data,updated_at)
-    select
+insert into public.address_label_eth_time_grade(address,label_type,label_name,`data`,wired_type,updated_at)
+select
+    address ,
+    label_type,
+    label_name,
+    `data`,
+    (select wired_type from label l where l.name=label_name) as wired_type,
+    updated_at
+from ( select
     a1.address,
     a2.label_type,
     a2.label_type || '_' || case
@@ -16,7 +23,7 @@ insert into public.address_label_eth_time_grade(address,label_type,label_name,da
                                 when counter > 180
                                     and counter <= 365 then 'L6'
         end as label_name,
-    a1.counter,
+    a1.counter  as `data`,
     now() as updated_at
     from
     (
@@ -33,4 +40,4 @@ insert into public.address_label_eth_time_grade(address,label_type,label_name,da
     where
         a2.data_subject = 'time_grade'
   and counter >= 1
-  and counter <= 365 and address <>'0x000000000000000000000000000000000000dead';
+  and counter <= 365 and address <>'0x000000000000000000000000000000000000dead') atb;
