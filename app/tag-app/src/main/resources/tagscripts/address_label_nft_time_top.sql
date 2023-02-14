@@ -1,17 +1,11 @@
 truncate table public.address_label_nft_time_top;
 insert into public.address_label_nft_time_top(address,label_type,label_name,data,wired_type,updated_at)
-select
-    address ,
-    label_type,
-    label_name,
-    data,
-    (select wired_type from label l where l.name=label_name) as wired_type,
-    updated_at
-from ( select
+ select
     s1.address,
     s1.label_type,
     s1.label_type as label_name,
     s1.rn  as data,
+    'NFT'  as wired_type,
     now() as updated_at
     from
     (
@@ -45,4 +39,4 @@ from ( select
                                    or a2.project = 'ALL')
     ) s1
     where
-        s1.rn <= 100 ) atb;
+        s1.rn <= 100 ;

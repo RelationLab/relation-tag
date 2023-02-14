@@ -3,15 +3,9 @@ insert into public.address_label_nft_volume_count_rank(address,label_type,label_
 select
     address ,
     label_type,
-    label_name,
-    data,
-    (select wired_type from label l where l.name=label_name) as wired_type,
-    updated_at
-from ( select
-    address ,
-    label_type,
     label_type || '_ELITE_NFT_TRADER' as label_name,
     zb_rate  as data,
+    'NFT'  as wired_type,
     now() as updated_at
     from
     (
@@ -170,4 +164,4 @@ from ( select
         where
                 tb1.transfer_volume >= 1
           and zb_rate <= 0.01
-          and zb_rate_transfer_count <= 0.01 ) t) atb;
+          and zb_rate_transfer_count <= 0.01 ) t;

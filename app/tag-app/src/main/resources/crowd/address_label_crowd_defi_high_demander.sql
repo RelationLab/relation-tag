@@ -16,4 +16,4 @@ from ( select
          where (label_name = 'ALL_ALL_ALL_VOLUME_RANK_MEDIUM' or label_name = 'ALL_ALL_ALL_VOLUME_RANK_HEAVY'
             or label_name = 'ALL_ALL_ALL_VOLUME_RANK_ELITE'  or label_name = 'ALL_ALL_ALL_VOLUME_RANK_LEGENDARY')
 and
-         address <>'0x000000000000000000000000000000000000dead') atb;
+         address <>'0x000000000000000000000000000000000000dead';

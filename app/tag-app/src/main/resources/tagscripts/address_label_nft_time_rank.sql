@@ -1,13 +1,6 @@
 truncate table public.address_label_nft_time_rank;
 insert into public.address_label_nft_time_rank(address,label_type,label_name,data,wired_type,updated_at)
 select
-    address ,
-    label_type,
-    label_name,
-    data,
-    (select wired_type from label l where l.name=label_name) as wired_type,
-    updated_at
-from (  select
     a1.address,
     a2.label_type,
     a2.label_type || '_' || case
@@ -16,6 +9,7 @@ from (  select
                                     and counter < 155 then 'SHORT_TERM_HOLDER'
         end as label_name,
     counter  as data,
+    'NFT'  as wired_type,
     now() as updated_at
     from
     (
@@ -41,4 +35,4 @@ from (  select
   and (a2.type = ''
     or a2.type = 'ALL')
   and (a2.project = ''
-    or a2.project = 'ALL') and address <>'0x000000000000000000000000000000000000dead') atb;
+    or a2.project = 'ALL') and address <>'0x000000000000000000000000000000000000dead';

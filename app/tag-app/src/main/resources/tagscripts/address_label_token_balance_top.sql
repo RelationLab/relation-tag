@@ -1,18 +1,11 @@
 truncate table address_label_token_balance_top;
 insert into public.address_label_token_balance_top(address,label_type,label_name,data,wired_type,updated_at)
-select
-    address ,
-    label_type,
-    label_name,
-    data,
-    (select wired_type from label l where l.name=label_name) as wired_type,
-    updated_at
-from (
     select
     s1.address,
     s1.label_type,
     s1.label_type || '_' || 'WHALE' as label_name,
     rn  as data,
+    'DEFI'  as wired_type,
     now() as updated_at
     from
     (
@@ -52,4 +45,4 @@ from (
                                    and a2.label_type not like 'Uniswap_v3%'
     ) s1
     where
-        s1.rn <= 100) atb;
+        s1.rn <= 100;

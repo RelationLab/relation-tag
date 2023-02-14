@@ -1,13 +1,5 @@
 truncate table public.address_label_token_balance_grade;
 insert into public.address_label_token_balance_grade(address,label_type,label_name,data,wired_type,updated_at)
-select
-    address ,
-    label_type,
-    label_name,
-    data,
-    (select wired_type from label l where l.name=label_name) as wired_type,
-    updated_at
-from (
     select
     address,
     a2.label_type,
@@ -29,6 +21,7 @@ from (
                                 when balance_usd >= 1000000000 then 'Billionaire'
         end as label_name,
     balance_usd  as data,
+    'DEFI'  as wired_type,
     now() as updated_at
     from
     (
@@ -46,6 +39,6 @@ from (
     and a2.label_type not like 'Uniswap_v3%'
     where
         a1.balance_usd >= 100
-  and a2.data_subject = 'balance_grade' and address <>'0x000000000000000000000000000000000000dead') atb;
+  and a2.data_subject = 'balance_grade' and address <>'0x000000000000000000000000000000000000dead';
 
 

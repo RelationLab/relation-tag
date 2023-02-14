@@ -3,13 +3,6 @@ insert into public.address_label_nft_project_type_volume_rank(address,label_type
 select
     address ,
     label_type,
-    label_name,
-    data,
-    (select wired_type from label l where l.name=label_name) as wired_type,
-    updated_at
-from ( select
-    address ,
-    label_type,
     label_type || '_' || case
                              when zb_rate > 0.01
                                  and zb_rate <= 0.025 then 'RARE_NFT_TRADER'
@@ -20,6 +13,7 @@ from ( select
                              when zb_rate <= 0.001 then 'LEGENDARY_NFT_TRADER'
         end as label_name,
     zb_rate  as data,
+    'NFT'  as wired_type,
     now() as updated_at
     from
     (
@@ -246,4 +240,4 @@ from ( select
      ) tb1
     where
     tb1.volume_usd >= 100
-  and zb_rate <= 0.1 ) t) atb;
+  and zb_rate <= 0.1 ) t;

@@ -24,4 +24,4 @@ from (
          select address from address_label_token_count_grade
          where label_name = 'ALL_ALL_ALL_ACTIVITY_High') a1
 where
-        address <>'0x000000000000000000000000000000000000dead' ) atb;
+        address <>'0x000000000000000000000000000000000000dead' ;

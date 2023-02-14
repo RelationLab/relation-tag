@@ -3,13 +3,6 @@ insert into public.address_label_nft_volume_rank(address,label_type,label_name,d
 select
     address ,
     label_type,
-    label_name,
-    data,
-    (select wired_type from label l where l.name=label_name) as wired_type,
-    updated_at
-from ( select
-    address ,
-    label_type,
     label_type || '_' || case
                              when zb_rate > 0.01
                                  and zb_rate <= 0.025 then 'RARE_NFT_TRADER'
@@ -20,6 +13,7 @@ from ( select
                              when zb_rate <= 0.001 then 'LEGENDARY_NFT_TRADER'
         end as label_name,
     zb_rate  as data,
+    'NFT'  as wired_type,
     now() as updated_at
     from
     (
@@ -170,7 +164,7 @@ from ( select
             ) tb1
         where
                 tb1.transfer_volume >= 1
-          and zb_rate <= 0.1) t ) atb;
+          and zb_rate <= 0.1) t ;
 
 truncate table public.address_label_crowd_nft_high_demander;
 insert into public.address_label_crowd_nft_high_demander(address,label_type,label_name,data,wired_type,updated_at)
@@ -193,4 +187,4 @@ from ( select
            or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_UNCOMMON_NFT_TRADER'
            or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_LEGENDARY_NFT_TRADER')
          and
-               address <>'0x000000000000000000000000000000000000dead') atb;
+               address <>'0x000000000000000000000000000000000000dead';

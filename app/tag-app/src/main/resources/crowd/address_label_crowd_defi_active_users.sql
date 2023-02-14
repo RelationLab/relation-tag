@@ -17,4 +17,4 @@ from address_label_token_count_grade a1
 where (label_name = 'ALL_ALL_ALL_ACTIVITY_High'
     or label_name = 'ALL_ALL_ALL_ACTIVITY_Medium'
     or label_name = 'ALL_ALL_ALL_ACTIVITY_Low')
-  and  address <>'0x000000000000000000000000000000000000dead') atb;
+  and  address <>'0x000000000000000000000000000000000000dead';

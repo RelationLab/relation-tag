@@ -1,13 +1,5 @@
 truncate table public.address_label_web3_type_balance_rank;
 insert into public.address_label_web3_type_balance_rank(address,label_type,label_name,data,wired_type,updated_at)
-select
-    address ,
-    label_type,
-    label_name,
-    data,
-    (select wired_type from label l where l.name=label_name) as wired_type,
-    updated_at
-from (
     select
     address ,
     label_type,
@@ -21,6 +13,7 @@ from (
                              when zb_rate <= 0.001 then 'LEGENDARY'
         end as label_name,
     zb_rate  as data,
+    'WEB3'  as wired_type,
     now() as updated_at
     from
     (
@@ -203,4 +196,4 @@ from (
     and tb1.type = tb2.type
     where
     tb2.data_subject = 'balance_rank'
-  and zb_rate <= 0.1) t ) atb;
+  and zb_rate <= 0.1) t ;

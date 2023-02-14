@@ -1,13 +1,6 @@
 truncate  table public.address_label_nft_balance_rank;
 insert into public.address_label_nft_balance_rank(address,label_type,label_name,data,wired_type,updated_at)
 select
-    address ,
-    label_type,
-    label_name,
-    data,
-    (select wired_type from label l where l.name=label_name) as wired_type,
-    updated_at
-from ( select
     address,
     label_type,
     label_type || '_' || case
@@ -20,6 +13,7 @@ from ( select
                              when zb_rate <= 0.001 then 'LEGENDARY_NFT_COLLECTOR'
         end as label_name,
     zb_rate  as data,
+    'NFT'  as wired_type,
     now() as updated_at
     from
     (
@@ -165,7 +159,7 @@ from ( select
     ) tb1
     where
     tb1.balance >= 1
-  and zb_rate <= 0.1) t) atb;
+  and zb_rate <= 0.1) t;
 
 truncate table public.address_label_crowd_nft_whale;
 insert into public.address_label_crowd_nft_whale(address,label_type,label_name,data,wired_type,updated_at)
@@ -192,4 +186,4 @@ from ( select
                 select address from
                     address_label_nft_balance_top  ) a1
        where
-               address <>'0x000000000000000000000000000000000000dead') atb;
+               address <>'0x000000000000000000000000000000000000dead';

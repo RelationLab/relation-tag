@@ -1,13 +1,5 @@
 truncate table public.address_label_token_balance_grade_all;
 insert into public.address_label_token_balance_grade_all(address,label_type,label_name,data,wired_type,updated_at)
-select
-    address ,
-    label_type,
-    label_name,
-    data,
-    (select wired_type from label l where l.name=label_name) as wired_type,
-    updated_at
-from (
     select
     address,
     a2.label_type,
@@ -29,6 +21,7 @@ from (
                                 when balance_usd >= 1000000000 then 'Billionaire'
         end as label_name,
     balance_usd  as data,
+    'DEFI'  as wired_type,
     now() as updated_at
     from
     (
@@ -48,7 +41,7 @@ from (
     where
         a1.balance_usd >= 100
   and a2.data_subject = 'balance_grade'
-  and a2.token_type = 'token' and address <>'0x000000000000000000000000000000000000dead') atb;
+  and a2.token_type = 'token' and address <>'0x000000000000000000000000000000000000dead';
 
 truncate table public.address_label_crowd_token_whale;
 insert into public.address_label_crowd_token_whale(address,label_type,label_name,data,wired_type,updated_at)
@@ -73,5 +66,5 @@ from ( select
                    or label_name = 'ALL_ALL_ALL_BALANCE_TOP_WHALE'
                 union all
                 select address from address_label_token_balance_rank_all  ) a1
-       where address <>'0x000000000000000000000000000000000000dead') atb;
+       where address <>'0x000000000000000000000000000000000000dead';
 

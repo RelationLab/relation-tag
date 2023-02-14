@@ -1,17 +1,11 @@
 truncate table address_label_nft_transfer_volume_top;
 insert into public.address_label_nft_transfer_volume_top(address,label_type,label_name,data,wired_type,updated_at)
-select
-    address ,
-    label_type,
-    label_name,
-    data,
-    (select wired_type from label l where l.name=label_name) as wired_type,
-    updated_at
-from ( select
+ select
     address,
     label_type,
     label_type || '_' || 'TOP' as label_name,
     rn  as data,
+    'NFT'  as wired_type,
     now() as updated_at
     from
     (
@@ -80,4 +74,4 @@ from ( select
 				address,
 				seq_flag) a1) s1
     where
-    s1.rn <= 100) t ) atb;
+    s1.rn <= 100) t ;

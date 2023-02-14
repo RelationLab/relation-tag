@@ -1,13 +1,5 @@
 truncate table public.address_label_token_volume_rank_all;
 insert into public.address_label_token_volume_rank_all(address,label_type,label_name,data,wired_type,updated_at)
-select
-    address ,
-    label_type,
-    label_name,
-    data,
-    (select wired_type from label l where l.name=label_name) as wired_type,
-    updated_at
-from (
     select
     tb1.address,
     tb2.label_type,
@@ -21,6 +13,7 @@ from (
                                  when zb_rate <= 0.001 then 'LEGENDARY'
         end as label_name,
     zb_rate  as data,
+    'DEFI'  as wired_type,
     now() as updated_at
     from
     (
@@ -106,7 +99,7 @@ from (
         tb1.volume_usd >= 100
   and tb2.data_subject = 'volume_rank'
   and tb2.token_type = 'token'
-  and zb_rate <= 0.1) atb;
+  and zb_rate <= 0.1;
 
 
 truncate table public.address_label_crowd_defi_high_demander;
@@ -127,7 +120,7 @@ from ( select
        where (label_name = 'ALL_ALL_ALL_VOLUME_RANK_MEDIUM' or label_name = 'ALL_ALL_ALL_VOLUME_RANK_HEAVY'
            or label_name = 'ALL_ALL_ALL_VOLUME_RANK_ELITE'  or label_name = 'ALL_ALL_ALL_VOLUME_RANK_LEGENDARY')
          and
-               address <>'0x000000000000000000000000000000000000dead') atb;
+               address <>'0x000000000000000000000000000000000000dead';
 
 truncate table public.address_label_crowd_elite;
 insert into public.address_label_crowd_elite(address,label_type,label_name,data,wired_type,updated_at)
@@ -152,4 +145,4 @@ from ( select
                 where label_name = 'ALL_ALL_ALL_VOLUME_RANK_ELITE'
             ) a1
        where
-               address <>'0x000000000000000000000000000000000000dead') atb;
+               address <>'0x000000000000000000000000000000000000dead';
