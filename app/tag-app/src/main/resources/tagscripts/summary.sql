@@ -83,8 +83,9 @@ select
     address,
     json_agg(
             json_build_object(
-                    label_type, label_name,
-                    'wired_type', wired_type
+                    'type', label_type,
+                    'name', label_name,
+                    'wired_type', wired_type,
                     'data', data
                 )
                 order by label_type desc)::jsonb as labels,
