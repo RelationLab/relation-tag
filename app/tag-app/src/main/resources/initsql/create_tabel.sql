@@ -1056,17 +1056,6 @@ CREATE TABLE public.total_volume_usd (
 )
     DISTRIBUTED RANDOMLY;
 
-DROP TABLE IF EXISTS public.total_transfer_count;
-CREATE TABLE public.total_transfer_count (
-                                         address varchar(512) NULL,
-                                         transfer_count int8 NULL,
-                                         count_level varchar(30) NULL,
-                                         created_at timestamp(6) NULL,
-                                         updated_at timestamp(6) NULL,
-                                         removed bool NULL
-)
-    DISTRIBUTED RANDOMLY;
-
 -- public.dms_syn_block definition
 
 -- Drop table
