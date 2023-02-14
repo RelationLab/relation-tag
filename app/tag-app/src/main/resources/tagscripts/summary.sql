@@ -72,117 +72,10 @@ select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'S
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at, owner, source  from address_label_third_party union all
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at,owner, source  from address_label_ugc;
 
--- 统计user profile 数据
-insert into address_label_gp_profile(
-    owner,address,data,asset,asset_type,platform,action,label_type,label_name,label_level,label_group,source,updated_at
-)
-SELECT
-    alg.owner, alg.address, alg.data, comb.asset, comb.asset_type, comb.project, comb.trade_type, alg.label_type, alg.label_name,
-    case when comb.balance <> '' then comb.balance
-         WHEN comb.volume <> '' then comb.volume
-         when comb.activity <> '' then comb.activity
-        END as label_level,
-    case when position('BALANCE' in alg.label_name) > 0 then 'Balance'
-         WHEN position('VOLUME' in alg.label_name) > 0 then 'Volume'
-         when position('ACTIVITY' in alg.label_name) > 0 then 'Activity'
-        END as label_group,
-    alg."source", alg.updated_at
-FROM address_label_gp alg
-         inner join combination comb on comb.label_name = alg.label_name
-    and (comb.balance in ('L1','L2','L3','L4','L5','L6','Millionaire','Billionaire')
-        or comb.volume in ('L1','L2','L3','L4','L5','L6','Million','Billion')
-        or comb.activity in ('L1','L2','L3','L4','L5','L6','Low','Medium','High')
-                                            );
-
--- user profile
-insert into user_profile_summary(
-    address, profile_object
-)
-SELECT address, json_object_agg(t.k, t.v)::jsonb as profile_object
-from (
-         SELECT
-             algp.address,
-             json_build_object(
-                     'assets', json_agg(
-                     json_build_object(
-                             'name', algp.asset,
-                             'type', algp.asset_type,
-                             'data', algp.data,
-                             'level', algp.label_level,
-                             'group', algp.label_group
-                         )
-                 )
-                 )::jsonb as data_object
-         from address_label_gp_profile algp
-         group by algp.address
-
-         union all
-         SELECT
-             algp.address,
-             json_build_object(
-                     'platforms', json_agg(
-                     json_build_object(
-                             'name', algp.platform,
-                             'type', algp.asset_type,
-                             'data', algp."data",
-                             'level', algp."label_level",
-                             'group', algp.label_group
-                         )
-                 )
-                 )::jsonb as data_object
-         from address_label_gp_profile algp
-         WHERE algp.platform <> ''
-           and action = 'ALL' and asset in ('ALL_NFT', 'ALL_TOKEN', 'ALL_WEB3')
-         group by algp.address
-
-         union all
-         SELECT
-             algp.address,
-             json_build_object(
-             'actions', json_agg(
-             json_build_object(
-             'name', algp.action,
-             'type', algp.asset_type,
-             'data', algp."data",
-             'level', algp."label_level",
-             'group', algp.label_group
-             )
-             )
-             )::jsonb as data_object
-         from address_label_gp_profile algp
-         WHERE algp.action <> ''
-           and asset in ('ALL_NFT', 'ALL_TOKEN', 'ALL_WEB3')
-           and algp.platform = 'ALL' and  algp.platform = ''
-         group by algp.address
-     ) a, jsonb_each(data_object) as t(k,v)
-GROUP BY address;
-
 -- 用户标签
 truncate
     table public.address_labels_json_gin;
 insert into
-    address_labels_json_gin(address,
-                            labels,
-                            profile_object,
-                            updated_at)
-select
-    alg.address,
-    json_agg(
-            json_build_object(
-                    label_type, label_name,
-                    'wired_type', wired_type
-                )
-                order by label_type desc)::jsonb as labels,
-        min(ups.profile_object),
-    CURRENT_TIMESTAMP as updated_at
-from
-    address_label_gp alg
-        inner join user_profile_summary ups on ups.address = alg.address
-group by alg.address;
-
-
-
-    insert into
     address_labels_json_gin(address,
                             labels,
                             updated_at)
@@ -194,10 +87,9 @@ select
                     'wired_type', wired_type
                 )
                 order by label_type desc)::jsonb as labels,
-                CURRENT_TIMESTAMP as updated_at
+    CURRENT_TIMESTAMP as updated_at
 from
     address_label_gp
-group by
-    address;
+group by address;
 
 

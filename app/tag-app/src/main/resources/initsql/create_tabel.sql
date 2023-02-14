@@ -744,28 +744,10 @@ create table address_label_gp
 (
     owner      varchar(256),
     address    varchar(512),
-    data numeric(250, 20) NULL,
+    data varchar(256) NULL,
     wired_type varchar(20),
     label_type varchar(512),
     label_name varchar(1024),
-    source     varchar(100),
-    updated_at timestamp(6)
-) distributed by (address);
-
-DROP TABLE if EXISTS address_label_gp_profile;
-create table address_label_gp_profile
-(
-    owner      varchar(256),
-    address    varchar(512),
-    data numeric(250, 20) NULL,
-    asset varchar(100),
-    asset_type varchar(100),
-    platform varchar(100),
-    action varchar(100),
-    label_type varchar(512),
-    label_name varchar(1024),
-    label_level varchar(50),
-    label_group varchar(100),
     source     varchar(100),
     updated_at timestamp(6)
 ) distributed by (address);
@@ -775,18 +757,9 @@ create table address_labels_json_gin
 (
     address    varchar(512),
     labels     jsonb,
-    profile_object jsonb NULL,
     updated_at timestamp
 ) distributed by (address);
 
-DROP TABLE IF EXISTS public.user_profile_summary;
-CREATE TABLE public.user_profile_summary (
-     address varchar(512) NULL,
-     profile_object jsonb NULL,
-     created_at timestamp(6) NULL,
-     updated_at timestamp(6) NULL,
-     removed bool NULL
-) distributed by (address);
 
 drop table if exists dex_tx_volume_count_summary;
 CREATE TABLE public.dex_tx_volume_count_summary (
