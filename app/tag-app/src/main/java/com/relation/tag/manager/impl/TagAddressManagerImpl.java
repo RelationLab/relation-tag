@@ -120,19 +120,19 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
         execSql("token_holding_uni_cal", "dex_tx_volume_count_summary.sql");
         log.info("dex_tx_volume_count_summary Thread end.....");
-        Thread.sleep(1*60*1000);
+        Thread.sleep(1 * 60 * 1000);
         log.info("eth_holding_vol_count Thread start.....");
         execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
         log.info("eth_holding_vol_count Thread end .....");
-        Thread.sleep(1*60*1000);
+        Thread.sleep(1 * 60 * 1000);
         log.info("token_holding_vol_count Thread start .....");
         execSql("web3_transaction_record_summary", "token_holding_vol_count.sql");
         log.info("token_holding_vol_count Thread end .....");
-        Thread.sleep(60*60*1000);
+        Thread.sleep(60 * 60 * 1000);
         log.info("token_volume_usd Thread start .....");
         execSql("token_holding_vol_count", "token_volume_usd.sql");
         log.info("token_volume_usd Thread end .....");
-        Thread.sleep(5*60*1000);
+        Thread.sleep(5 * 60 * 1000);
         log.info("total_volume_usd Thread start .....");
         execSql("token_volume_usd", "total_volume_usd.sql");
         log.info("total_volume_usd Thread end .....");
@@ -173,20 +173,23 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void merge2Gin() {
-        String exceSql = "truncate\n" +
-                "    table public.address_labels_json_gin;insert\n" +
-                "\tinto\n" +
-                "\taddress_labels_json_gin(address,\n" +
-                "\tlabels,\n" +
-                "\tupdated_at)\n" +
-                "   select\n" +
-                "\taddress,\n" +
-                "\tjson_object_agg(label_type, label_name order by label_type desc)::jsonb as labels,\n" +
-                "\tCURRENT_TIMESTAMP as updated_at\n" +
-                "from\n" +
-                "\taddress_label_gp\n" +
-                "group by\n" +
-                "\taddress";
+        String exceSql = """truncate table public.address_labels_json_gin;
+                            insert
+                            into address_labels_json_gin(address,
+                                                         labels,
+                                                         updated_at)
+                            select address,
+                                   json_agg(
+                                           json_build_object(
+                                                   'type', label_type,
+                                                   'name', label_name,
+                                                   'data', data,
+                                                   'wired_type', wired_type
+                                               )
+                                           order by label_type desc)::jsonb as labels,
+                                   CURRENT_TIMESTAMP                        as updated_at
+                            from address_label_gp
+                            group by address;""";
         iAddressLabelService.exceSql(exceSql, "merge2Gin");
     }
 }

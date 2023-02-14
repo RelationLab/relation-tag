@@ -1,13 +1,13 @@
 truncate table public.address_label_eth_balance_rank;
 insert into public.address_label_eth_balance_rank(address,label_type,label_name,data,wired_type,updated_at)
- select
+select
     tb1.address ,
     tb2.label_type,
-    tb2.label_type || '_' || 'HIGH_BALANCE' as label_name,
-    t1.balance_usd  as data,
+    tb2.label_type|| '_' || 'HIGH_BALANCE' as label_name,
+    balance_usd  as data,
     'DEFI'  as wired_type,
     now() as updated_at
-    from
+from
     (
         select
             t1.address,
@@ -83,7 +83,7 @@ insert into public.address_label_eth_balance_rank(address,label_type,label_name,
     dim_rule_content tb2
     on
             tb1.token = tb2.token
-    where
+where
         tb1.balance_usd >= 100
   and tb1.zb_rate <= 0.1
   and tb2.data_subject = 'balance_rank'

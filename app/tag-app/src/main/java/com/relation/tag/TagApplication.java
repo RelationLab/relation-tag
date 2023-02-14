@@ -14,6 +14,10 @@ public class TagApplication {
     public static void main(String[] args) throws Exception {
         ConfigurableApplicationContext ctx = SpringApplication.run(TagApplication.class, args);
         TagAddressManager tagAddressManager = ctx.getBean(TagAddressManager.class);
+        if (tagAddressManager.checkResult("address_labels_json_gin")){
+            log.info("checkResult tag end...........");
+            System.exit(0);
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -24,14 +28,10 @@ public class TagApplication {
                 }
             }
         }).start();
-        if (tagAddressManager.checkResult("address_labels_json_gin")){
-            log.info("checkResult tag end...........");
-            System.exit(0);
-        }
         Thread.sleep(240*60*1000);
         log.info("check address_labels_json_gin start...........");
         tagAddressManager.check("address_labels_json_gin", 1 * 60 * 1000);
         log.info("tag end...........");
-//        System.exit(0);
+        System.exit(0);
     }
 }
