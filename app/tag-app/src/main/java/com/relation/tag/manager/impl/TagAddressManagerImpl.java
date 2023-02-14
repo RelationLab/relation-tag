@@ -88,8 +88,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void tag() throws Exception {
-//        innit();
-//        Thread.sleep(2*60*1000);
+        innit();
+        Thread.sleep(2*60*1000);
         check("total_volume_usd", 1 * 60 * 1000);
         List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
         List<FileEntity> fileList = Lists.newArrayList();
@@ -169,27 +169,5 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    @Override
-    public void merge2Gin() {
-        String exceSql = """truncate table public.address_labels_json_gin;
-                            insert
-                            into address_labels_json_gin(address,
-                                                         labels,
-                                                         updated_at)
-                            select address,
-                                   json_agg(
-                                           json_build_object(
-                                                   'type', label_type,
-                                                   'name', label_name,
-                                                   'data', data::text,
-                                                   'wired_type', wired_type
-                                               )
-                                           order by label_type desc)::jsonb as labels,
-                                   CURRENT_TIMESTAMP                        as updated_at
-                            from address_label_gp
-                            group by address;""";
-        iAddressLabelService.exceSql(exceSql, "merge2Gin");
     }
 }
