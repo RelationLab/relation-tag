@@ -85,6 +85,7 @@ select
             json_build_object(
                     label_type, label_name,
                     'wired_type', wired_type
+                    'data', data
                 )
                 order by label_type desc)::jsonb as labels,
     CURRENT_TIMESTAMP as updated_at
