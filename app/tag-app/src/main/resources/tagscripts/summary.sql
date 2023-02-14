@@ -69,30 +69,30 @@ select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'S
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_nft_whale union all
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_token_whale union all
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source  from  address_label_crowd_web3_active_users union all
-select address,label_type,label_name,wired_type,data,updated_at, owner, source  from address_label_third_party union all
-select address,label_type,label_name,wired_type,data,updated_at,owner, source  from address_label_ugc;
+select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at, owner, source  from address_label_third_party union all
+select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at,owner, source  from address_label_ugc;
 
 -- 统计user profile 数据
 insert into address_label_gp_profile(
-	owner,address,data,asset,asset_type,platform,action,label_type,label_name,label_level,label_group,source,updated_at
+    owner,address,data,asset,asset_type,platform,action,label_type,label_name,label_level,label_group,source,updated_at
 )
 SELECT
-	alg.owner, alg.address, alg.data, comb.asset, comb.asset_type, comb.project, comb.trade_type, alg.label_type, alg.label_name,
-	case when comb.balance <> '' then comb.balance
-			 WHEN comb.volume <> '' then comb.volume
-			 when comb.activity <> '' then comb.activity
-	END as label_level,
-	case when position('BALANCE' in alg.label_name) > 0 then 'Balance'
-		 WHEN position('VOLUME' in alg.label_name) > 0 then 'Volume'
-		 when position('ACTIVITY' in alg.label_name) > 0 then 'Activity'
-	END as label_group,
-	alg."source", alg.updated_at
+    alg.owner, alg.address, alg.data, comb.asset, comb.asset_type, comb.project, comb.trade_type, alg.label_type, alg.label_name,
+    case when comb.balance <> '' then comb.balance
+         WHEN comb.volume <> '' then comb.volume
+         when comb.activity <> '' then comb.activity
+        END as label_level,
+    case when position('BALANCE' in alg.label_name) > 0 then 'Balance'
+         WHEN position('VOLUME' in alg.label_name) > 0 then 'Volume'
+         when position('ACTIVITY' in alg.label_name) > 0 then 'Activity'
+        END as label_group,
+    alg."source", alg.updated_at
 FROM address_label_gp alg
-inner join combination comb on comb.label_name = alg.label_name
-	and (comb.balance in ('L1','L2','L3','L4','L5','L6','Millionaire','Billionaire')
-		or comb.volume in ('L1','L2','L3','L4','L5','L6','Million','Billion')
-		or comb.activity in ('L1','L2','L3','L4','L5','L6','Low','Medium','High')
-	);
+         inner join combination comb on comb.label_name = alg.label_name
+    and (comb.balance in ('L1','L2','L3','L4','L5','L6','Millionaire','Billionaire')
+        or comb.volume in ('L1','L2','L3','L4','L5','L6','Million','Billion')
+        or comb.activity in ('L1','L2','L3','L4','L5','L6','Low','Medium','High')
+                                            );
 
 -- user profile
 insert into user_profile_summary(
@@ -168,16 +168,36 @@ insert into
 select
     alg.address,
     json_agg(
-                json_build_object(
-                        label_type, label_name,
-                        'wired_type', wired_type
-                    )
-                    order by label_type desc)::jsonb as labels,
-    min(ups.profile_object),
+            json_build_object(
+                    label_type, label_name,
+                    'wired_type', wired_type
+                )
+                order by label_type desc)::jsonb as labels,
+        min(ups.profile_object),
     CURRENT_TIMESTAMP as updated_at
-    from
+from
     address_label_gp alg
-    inner join user_profile_summary ups on ups.address = alg.address
-    group by alg.address
+        inner join user_profile_summary ups on ups.address = alg.address
+group by alg.address;
+
+
+
+    insert into
+    address_labels_json_gin(address,
+                            labels,
+                            updated_at)
+select
+    address,
+    json_agg(
+            json_build_object(
+                    label_type, label_name,
+                    'wired_type', wired_type
+                )
+                order by label_type desc)::jsonb as labels,
+                CURRENT_TIMESTAMP as updated_at
+from
+    address_label_gp
+group by
+    address;
 
 
