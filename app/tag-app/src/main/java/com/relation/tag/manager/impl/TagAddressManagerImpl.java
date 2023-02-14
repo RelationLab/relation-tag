@@ -183,7 +183,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                                            json_build_object(
                                                    'type', label_type,
                                                    'name', label_name,
-                                                   'data', data,
+                                                   'data', data::text,
                                                    'wired_type', wired_type
                                                )
                                            order by label_type desc)::jsonb as labels,
