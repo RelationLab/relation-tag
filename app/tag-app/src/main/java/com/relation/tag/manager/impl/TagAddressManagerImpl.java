@@ -150,7 +150,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             public void run() {
                 check(lastTableName, 20 * 1000);
                 try {
-                    String tableName = sqlName.split(".")[0];
+                    String tableName = sqlName.split("\\.")[0];
                     if (checkResult(tableName)){
                         return;
                     }
