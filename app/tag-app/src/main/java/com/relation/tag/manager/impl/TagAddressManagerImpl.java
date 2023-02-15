@@ -124,7 +124,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
         execSql("token_holding_uni_cal", "dex_tx_volume_count_summary.sql");
 
-        Thread.sleep(1 * 60 * 1000);
+//        Thread.sleep(1 * 60 * 1000);
         log.info("eth_holding_vol_count Thread start.....");
         boolean token_holding_vol_countcheck = execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
         log.info("eth_holding_vol_count Thread end .....");
