@@ -1,3 +1,13 @@
+drop table if exists address_label_token_volume_rank_all;
+CREATE TABLE public.address_label_token_volume_rank_all (
+
+                                                            address varchar(512) NULL,
+                                                            data numeric(250, 20) NULL,
+                                                            wired_type varchar(20) NULL,
+                                                            label_type varchar(512) NULL,
+                                                            label_name varchar(1024) NULL,
+                                                            updated_at timestamp(6) NULL
+);
 truncate table public.address_label_token_volume_rank_all;
 insert into public.address_label_token_volume_rank_all(address,label_type,label_name,data,wired_type,updated_at)
     select
@@ -101,7 +111,15 @@ insert into public.address_label_token_volume_rank_all(address,label_type,label_
   and tb2.token_type = 'token'
   and zb_rate <= 0.1;
 
-
+drop table if exists address_label_crowd_defi_high_demander;
+CREATE TABLE public.address_label_crowd_defi_high_demander (
+                                                               address varchar(512) NULL,
+                                                               data numeric(250, 20) NULL,
+                                                               wired_type varchar(20) NULL,
+                                                               label_type varchar(512) NULL,
+                                                               label_name varchar(1024) NULL,
+                                                               updated_at timestamp(6) NULL
+);
 truncate table public.address_label_crowd_defi_high_demander;
 insert into public.address_label_crowd_defi_high_demander(address,label_type,label_name,data,wired_type,updated_at)
 select
@@ -116,6 +134,15 @@ select
          and
                address <>'0x000000000000000000000000000000000000dead';
 
+drop table if exists address_label_crowd_elite;
+CREATE TABLE public.address_label_crowd_elite (
+                                                  address varchar(512) NULL,
+                                                  data numeric(250, 20) NULL,
+                                                  wired_type varchar(20) NULL,
+                                                  label_type varchar(512) NULL,
+                                                  label_name varchar(1024) NULL,
+                                                  updated_at timestamp(6) NULL
+);
 truncate table public.address_label_crowd_elite;
 insert into public.address_label_crowd_elite(address,label_type,label_name,data,wired_type,updated_at)
  select

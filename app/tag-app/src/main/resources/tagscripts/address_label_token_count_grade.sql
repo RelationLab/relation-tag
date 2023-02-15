@@ -1,3 +1,13 @@
+drop table if exists address_label_token_count_grade;
+CREATE TABLE public.address_label_token_count_grade (
+
+                                                        address varchar(512) NULL,
+                                                        data numeric(250, 20) NULL,
+                                                        wired_type varchar(20) NULL,
+                                                        label_type varchar(512) NULL,
+                                                        label_name varchar(1024) NULL,
+                                                        updated_at timestamp(6) NULL
+);
 truncate table public.address_label_token_count_grade;
 insert into public.address_label_token_count_grade(address,label_type,label_name,data,wired_type,updated_at)
     select
@@ -64,6 +74,15 @@ insert into public.address_label_token_count_grade(address,label_type,label_name
         a1.total_transfer_count >= 1
   and a2.data_subject = 'count' and address <>'0x000000000000000000000000000000000000dead';
 
+drop table if exists address_label_crowd_defi_active_users;
+CREATE TABLE public.address_label_crowd_defi_active_users (
+                                                              address varchar(512) NULL,
+                                                              data numeric(250, 20) NULL,
+                                                              wired_type varchar(20) NULL,
+                                                              label_type varchar(512) NULL,
+                                                              label_name varchar(1024) NULL,
+                                                              updated_at timestamp(6) NULL
+);
 truncate table public.address_label_crowd_defi_active_users;
 insert into public.address_label_crowd_defi_active_users(address,label_type,label_name,data,wired_type,updated_at)
 select
@@ -79,6 +98,15 @@ select
            or label_name = 'ALL_ALL_ALL_ACTIVITY_Low')
          and  address <>'0x000000000000000000000000000000000000dead';
 
+drop table if exists address_label_crowd_active_users;
+CREATE TABLE public.address_label_crowd_active_users (
+                                                         address varchar(512) NULL,
+                                                         data numeric(250, 20) NULL,
+                                                         wired_type varchar(20) NULL,
+                                                         label_type varchar(512) NULL,
+                                                         label_name varchar(1024) NULL,
+                                                         updated_at timestamp(6) NULL
+);
 truncate table public.address_label_crowd_active_users;
 insert into public.address_label_crowd_active_users(address,label_type,label_name,data,wired_type,updated_at)
          select
