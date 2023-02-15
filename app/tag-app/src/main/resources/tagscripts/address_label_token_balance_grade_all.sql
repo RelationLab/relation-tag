@@ -1,3 +1,13 @@
+drop table if exists address_label_token_balance_grade_all;
+CREATE TABLE public.address_label_token_balance_grade_all (
+
+                                                              address varchar(512) NULL,
+                                                              data numeric(250, 20) NULL,
+                                                              wired_type varchar(20) NULL,
+                                                              label_type varchar(512) NULL,
+                                                              label_name varchar(1024) NULL,
+                                                              updated_at timestamp(6) NULL
+);
 truncate table public.address_label_token_balance_grade_all;
 insert into public.address_label_token_balance_grade_all(address,label_type,label_name,data,wired_type,updated_at)
     select
@@ -43,6 +53,15 @@ insert into public.address_label_token_balance_grade_all(address,label_type,labe
   and a2.data_subject = 'balance_grade'
   and a2.token_type = 'token' and address <>'0x000000000000000000000000000000000000dead';
 
+drop table if exists address_label_crowd_token_whale;
+CREATE TABLE public.address_label_crowd_token_whale (
+                                                        address varchar(512) NULL,
+                                                        data numeric(250, 20) NULL,
+                                                        wired_type varchar(20) NULL,
+                                                        label_type varchar(512) NULL,
+                                                        label_name varchar(1024) NULL,
+                                                        updated_at timestamp(6) NULL
+);
 truncate table public.address_label_crowd_token_whale;
 insert into public.address_label_crowd_token_whale(address,label_type,label_name,data,wired_type,updated_at)
 select

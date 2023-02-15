@@ -1,3 +1,13 @@
+drop table if exists address_label_token_time_first_lp;
+CREATE TABLE public.address_label_token_time_first_lp (
+
+                                                          address varchar(512) NULL,
+                                                          data numeric(250, 20) NULL,
+                                                          wired_type varchar(20) NULL,
+                                                          label_type varchar(512) NULL,
+                                                          label_name varchar(1024) NULL,
+                                                          updated_at timestamp(6) NULL
+);
 truncate table address_label_token_time_first_lp;
 insert into public.address_label_token_time_first_lp(address,label_type,label_name,data,wired_type,updated_at)
     select

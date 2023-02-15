@@ -1,3 +1,13 @@
+drop table if exists address_label_nft_balance_rank;
+CREATE TABLE public.address_label_nft_balance_rank (
+
+                                                       address varchar(512) NULL,
+                                                       data numeric(250, 20) NULL,
+                                                       wired_type varchar(20) NULL,
+                                                       label_type varchar(512) NULL,
+                                                       label_name varchar(1024) NULL,
+                                                       updated_at timestamp(6) NULL
+);
 truncate  table public.address_label_nft_balance_rank;
 insert into public.address_label_nft_balance_rank(address,label_type,label_name,data,wired_type,updated_at)
 select
@@ -161,6 +171,15 @@ select
     tb1.balance >= 1
   and zb_rate <= 0.1) t;
 
+drop table if exists address_label_crowd_nft_whale;
+CREATE TABLE public.address_label_crowd_nft_whale (
+                                                      address varchar(512) NULL,
+                                                      data numeric(250, 20) NULL,
+                                                      wired_type varchar(20) NULL,
+                                                      label_type varchar(512) NULL,
+                                                      label_name varchar(1024) NULL,
+                                                      updated_at timestamp(6) NULL
+);
 truncate table public.address_label_crowd_nft_whale;
 insert into public.address_label_crowd_nft_whale(address,label_type,label_name,data,wired_type,updated_at)
  select
