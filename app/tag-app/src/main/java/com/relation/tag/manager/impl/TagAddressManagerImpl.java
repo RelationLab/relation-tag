@@ -124,35 +124,40 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
         execSql("token_holding_uni_cal", "dex_tx_volume_count_summary.sql");
 
-        log.info("dex_tx_volume_count_summary Thread end.....");
         Thread.sleep(1 * 60 * 1000);
         log.info("eth_holding_vol_count Thread start.....");
-        execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
+        boolean token_holding_vol_countcheck = execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
         log.info("eth_holding_vol_count Thread end .....");
-        Thread.sleep(1 * 60 * 1000);
+        if (!token_holding_vol_countcheck){
+            Thread.sleep(1 * 60 * 1000);
+        }
         log.info("token_holding_vol_count Thread start .....");
-        execSql("web3_transaction_record_summary", "token_holding_vol_count.sql");
+        boolean dms_syn_blockcheck = execSql("web3_transaction_record_summary", "token_holding_vol_count.sql");
         log.info("token_holding_vol_count Thread end .....");
-        Thread.sleep(60 * 60 * 1000);
+        if (!dms_syn_blockcheck){
+            Thread.sleep(60 * 60 * 1000);
+        }
         log.info("token_volume_usd Thread start .....");
         execSql("token_holding_vol_count", "dms_syn_block.sql");
-        execSql("token_holding_vol_count", "token_volume_usd.sql");
+       boolean total_volume_usdcheck =  execSql("token_holding_vol_count", "token_volume_usd.sql");
         log.info("token_volume_usd Thread end .....");
-        Thread.sleep(5 * 60 * 1000);
+        if (!total_volume_usdcheck){
+            Thread.sleep(5 * 60 * 1000);
+        }
         log.info("total_volume_usd Thread start .....");
         execSql("token_volume_usd", "total_volume_usd.sql");
         log.info("total_volume_usd Thread end .....");
     }
 
-    private void execSql(String lastTableName, String sqlName) {
+    private boolean execSql(String lastTableName, String sqlName) {
+        String tableName = sqlName.split("\\.")[0];
         forkJoinPool.execute(new Runnable() {
             @Override
             public void run() {
                 check(lastTableName, 20 * 1000);
                 try {
-                    String tableName = sqlName.split("\\.")[0];
                     if (checkResult(tableName)){
-                        return;
+                        return ;
                     }
                     iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
                 } catch (Exception e) {
@@ -160,7 +165,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 }
             }
         });
-
+        return checkResult(tableName);
     }
 
 
