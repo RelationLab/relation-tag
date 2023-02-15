@@ -1,3 +1,4 @@
+drop table if exists eth_holding_vol_count_tmp;
 create table eth_holding_vol_count_tmp as select * from eth_holding_vol_count;
 truncate table eth_holding_vol_count;
 insert
@@ -63,6 +64,5 @@ from
             to_address) atb
 group by
     address;
-insert into dms_syn_block(syn_type,block_height)
-select 'eth_tx_record' as syn_type,max(block_number) from eth_tx_record;
+
 

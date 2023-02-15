@@ -3,7 +3,7 @@ create table address_label_gp
 (
     owner      varchar(256),
     address    varchar(512),
-    data varchar(256) NULL,
+    data numeric(250, 20) NULL,
     wired_type varchar(20),
     label_type varchar(512),
     label_name varchar(1024),

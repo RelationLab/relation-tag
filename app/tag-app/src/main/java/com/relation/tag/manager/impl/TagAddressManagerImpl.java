@@ -123,6 +123,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql");
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
         execSql("token_holding_uni_cal", "dex_tx_volume_count_summary.sql");
+
         log.info("dex_tx_volume_count_summary Thread end.....");
         Thread.sleep(1 * 60 * 1000);
         log.info("eth_holding_vol_count Thread start.....");
@@ -134,6 +135,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         log.info("token_holding_vol_count Thread end .....");
         Thread.sleep(60 * 60 * 1000);
         log.info("token_volume_usd Thread start .....");
+        execSql("token_holding_vol_count", "dms_syn_block.sql");
         execSql("token_holding_vol_count", "token_volume_usd.sql");
         log.info("token_volume_usd Thread end .....");
         Thread.sleep(5 * 60 * 1000);
@@ -148,6 +150,10 @@ public class TagAddressManagerImpl implements TagAddressManager {
             public void run() {
                 check(lastTableName, 20 * 1000);
                 try {
+                    String tableName = sqlName.split(".")[0];
+                    if (checkResult(tableName)){
+                        return;
+                    }
                     iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
                 } catch (Exception e) {
                     throw new RuntimeException(e);

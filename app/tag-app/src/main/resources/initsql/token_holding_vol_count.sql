@@ -1,3 +1,4 @@
+drop table if exists token_holding_vol_count_tmp;
 create table token_holding_vol_count_tmp as select * from token_holding_vol_count;
 truncate table token_holding_vol_count;
 insert into
@@ -65,8 +66,6 @@ from
             to_address,
             token ) atb group by  address,token;
 
-insert into dms_syn_block(syn_type,block_height)
-select 'erc20_tx_record' as syn_type,max(block_number) from erc20_tx_record;
 
 
 

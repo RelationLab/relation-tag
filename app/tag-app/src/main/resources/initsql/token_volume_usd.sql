@@ -1,4 +1,15 @@
-
+-- DROP TABLE public.token_volume_usd;
+DROP TABLE IF EXISTS public.token_volume_usd;
+CREATE TABLE public.token_volume_usd (
+                                         address varchar(512) NULL,
+                                         "token" varchar(512) NULL,
+                                         volume_usd numeric NULL,
+                                         created_at timestamp NULL,
+                                         updated_at timestamp NULL,
+                                         removed bool NULL
+)
+    DISTRIBUTED RANDOMLY;
+truncate table token_volume_usd;
 insert
     into
     token_volume_usd(address,

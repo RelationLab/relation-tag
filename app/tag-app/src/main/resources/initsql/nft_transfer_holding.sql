@@ -1,4 +1,16 @@
-
+DROP TABLE if EXISTS public.nft_transfer_holding;
+create table nft_transfer_holding
+(
+    id                    bigserial,
+    address               varchar(512) not null,
+    token                 varchar(512) not null,
+    total_transfer_volume bigint       not null,
+    total_transfer_count  bigint,
+    created_at            timestamp default CURRENT_TIMESTAMP,
+    updated_at            timestamp default CURRENT_TIMESTAMP,
+    removed               boolean   default false
+);
+truncate table nft_transfer_holding;
 insert into nft_transfer_holding (address, token, total_transfer_volume, total_transfer_count)
     (select nh.address,
             nh.token,
