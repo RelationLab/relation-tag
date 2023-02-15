@@ -86,7 +86,7 @@ select
                     'type', label_type,
                     'name', label_name,
                     'wired_type', wired_type,
-                    'data', data
+                    'data', data::text
                 )
                 order by label_type desc)::jsonb as labels,
     CURRENT_TIMESTAMP as updated_at
