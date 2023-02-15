@@ -2,26 +2,7 @@
 
 
 
-DROP TABLE if EXISTS  address_label_gp;
-create table address_label_gp
-(
-    owner      varchar(256),
-    address    varchar(512),
-    data varchar(256) NULL,
-    wired_type varchar(20),
-    label_type varchar(512),
-    label_name varchar(1024),
-    source     varchar(100),
-    updated_at timestamp(6)
-) distributed by (address);
 
-drop table if exists address_labels_json_gin;
-create table address_labels_json_gin
-(
-    address    varchar(512),
-    labels     jsonb,
-    updated_at timestamp
-) distributed by (address);
 
 
 drop table if exists dex_tx_volume_count_summary;

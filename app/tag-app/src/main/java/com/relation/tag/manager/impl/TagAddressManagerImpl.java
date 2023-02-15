@@ -168,6 +168,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
         forkJoinPool.execute(() -> {
             try {
                 log.info("summary start....");
+                if (checkResult("address_label_gp")){
+                    return;
+                }
                 iAddressLabelService.exceSql(FileUtils.readFile(SCRIPTSPATH.concat(File.separator).concat("summary.sql")), "summary.sql");
             } catch (Exception e) {
                 throw new RuntimeException(e);

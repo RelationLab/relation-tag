@@ -1,3 +1,16 @@
+DROP TABLE if EXISTS  address_label_gp;
+create table address_label_gp
+(
+    owner      varchar(256),
+    address    varchar(512),
+    data varchar(256) NULL,
+    wired_type varchar(20),
+    label_type varchar(512),
+    label_name varchar(1024),
+    source     varchar(100),
+    updated_at timestamp(6)
+) distributed by (address);
+
 
 truncate table address_label_gp;
 insert into public.address_label_gp(address,label_type,label_name,wired_type,data,updated_at,owner,source)
@@ -72,6 +85,13 @@ select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'S
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at, owner, source  from address_label_third_party union all
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at,owner, source  from address_label_ugc;
 
+drop table if exists address_labels_json_gin;
+create table address_labels_json_gin
+(
+    address    varchar(512),
+    labels     jsonb,
+    updated_at timestamp
+) distributed by (address);
 -- 用户标签
 truncate
     table public.address_labels_json_gin;
