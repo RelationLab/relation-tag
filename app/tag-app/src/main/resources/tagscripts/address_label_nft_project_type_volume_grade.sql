@@ -56,29 +56,4 @@ select
         group by
             a1.address,
             a2.label_type
-            -- project-token(ALL)-type(ALL)
-        union all
-        select
-            a1.address,
-            a2.label_type,
-            sum(volume_usd) as volume_usd
-        from
-            platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-        on a2.token='ALL' and a1.platform_group=a2.project and a1.type=a2.type and a2.type='ALL' and a2.data_subject = 'volume_grade'
-        group by
-            a1.address,
-            a2.label_type
-            -- project-token-type(ALL)
-        union all
-        select
-            a1.address,
-            a2.label_type,
-            sum(
-            volume_usd) as volume_usd
-        from
-            platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-        on a1.token=a2.token and a1.platform_group=a2.project and a1.type=a2.type and a2.type='ALL' and a2.data_subject = 'volume_grade'
-        group by
-            a1.address,
-            a2.label_type
     ) t where volume_usd >= 1 and address <>'0x000000000000000000000000000000000000dead';

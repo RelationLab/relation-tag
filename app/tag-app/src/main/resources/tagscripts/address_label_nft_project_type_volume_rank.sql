@@ -121,33 +121,7 @@ select
 								platform_nft_type_volume_count
 							where
 								volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
-						union all
-							-- project-token(ALL)-type(ALL)
-							select
-								address,
-								platform_group,
-								platform,
-								'ALL' as token,
-								'ALL' as type,
-								volume_usd
-							from
-								platform_nft_type_volume_count
-							where
-								volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
-						union all
-							-- project-token-type(ALL)
-							select
-								address,
-								platform_group,
-								platform,
-								token,
-								'ALL' as type,
-								volume_usd
-							from
-								platform_nft_type_volume_count
-							where
-								volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead'
-                                     )
+						 )
                                          s1
 						inner join dim_project_token_type s2
                                                     on
@@ -202,31 +176,7 @@ select
 								platform_nft_type_volume_count
 							where
 								volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
-						union all
-							-- project-token(ALL)-type(ALL)
-							select
-								address,
-								platform_group,
-								'ALL' as token,
-								'ALL' as type,
-								volume_usd
-							from
-								platform_nft_type_volume_count
-							where
-								volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
-						union all
-							-- project-token-type(ALL)
-							select
-								address,
-								platform_group,
-								token,
-								'ALL' as type,
-								volume_usd
-							from
-								platform_nft_type_volume_count
-							where
-								volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead'
-                                              ) totala
+						 ) totala
 						inner join dim_project_token_type tb2
  												on
 							totala.token = tb2.token
