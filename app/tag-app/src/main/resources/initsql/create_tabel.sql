@@ -121,15 +121,51 @@ CREATE TABLE public.dim_rule_sql_content (
 --                                               total_transfer_all_volume numeric(120, 30) NULL
 -- );
 
--- public.token_holding_uni_cal definition
+-- public.white_list_erc20_tag definition
 
 -- Drop table
 
+-- DROP TABLE public.white_list_erc20_tag;
 
+CREATE TABLE public.white_list_erc20_tag (
+                                             chain_id int4 NOT NULL,
+                                             address text NOT NULL,
+                                             "decimal" int4 NOT NULL,
+                                             logo_uri text NULL,
+                                             name text NOT NULL,
+                                             symbol text NOT NULL,
+                                             price float8 NULL,
+                                             ignored bool NULL DEFAULT true,
+                                             created_at timestamptz NULL DEFAULT CURRENT_TIMESTAMP,
+                                             updated_at timestamptz NULL DEFAULT CURRENT_TIMESTAMP,
+                                             removed bool NULL DEFAULT false,
+                                             is_lp bool NULL DEFAULT false
+);
 
--- public.token_volume_usd definition
-
--- Drop table
+insert into white_list_erc20_tag(chain_id,
+                                 address,
+                                 "decimal",
+                                 logo_uri,
+                                 name,
+                                 symbol,
+                                 price,
+                                 ignored,
+                                 created_at,
+                                 updated_at,
+                                 removed,
+                                 is_lp)
+select chain_id,
+       address,
+       "decimal",
+       logo_uri,
+       name,
+       symbol,
+       price,
+       ignored,
+       created_at,
+       updated_at,
+       removed bool,
+       is_lp from white_list_erc20;
 
 
 
