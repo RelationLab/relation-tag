@@ -161,7 +161,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     }
                     iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+//                    log.error(e.getMessage(),e);
+                    try {
+                        Thread.sleep(1*60*1000);
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    execSql( lastTableName,  sqlName);
                 }
             }
         });
