@@ -61,7 +61,7 @@ from
         where
                 amount>0
         group by
-            to_address) atb
+            to_address) atb where address !=''
 group by
     address;
 
