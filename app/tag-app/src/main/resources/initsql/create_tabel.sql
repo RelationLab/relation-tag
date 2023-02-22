@@ -132,52 +132,9 @@ CREATE TABLE public.dim_rule_sql_content (
 -- Drop table
 
 -- DROP TABLE public.white_list_erc20;
-
-CREATE TABLE public.white_list_erc20 (
-                                         chain_id int4 NULL,
-                                         address text NOT NULL,
-                                         "decimal" int4 NULL,
-                                         logo_uri text NULL,
-                                         "name" text NOT NULL,
-                                         symbol text NOT NULL,
-                                         price float8 NULL,
-                                         ignored bool NULL,
-                                         created_at timestamptz(6) NULL,
-                                         updated_at timestamptz(6) NULL,
-                                         removed bool NULL,
-                                         is_lp bool NULL,
-                                         coinmarketcap_id int8 NULL,
-                                         coinmarketcap_platform_slug varchar(256) NULL
-);
-
-insert into white_list_erc20_tag(chain_id,
-                                 address,
-                                 "decimal",
-                                 logo_uri,
-                                 "name",
-                                 symbol,
-                                 price,
-                                 ignored,
-                                 created_at,
-                                 updated_at,
-                                 removed,
-                                 is_lp,
-                                 coinmarketcap_id,
-                                 coinmarketcap_platform_slug)
-select chain_id,
-       address,
-       "decimal",
-       logo_uri,
-       "name",
-       symbol,
-       price,
-       ignored,
-       created_at,
-       updated_at,
-       removed,
-       is_lp,
-       coinmarketcap_id,
-       coinmarketcap_platform_slug from white_list_erc20;
+DROP TABLE IF EXISTS public.white_list_erc20_tag;
+CREATE TABLE public.white_list_erc20_tag as
+  select * from white_list_erc20;
 
 
 
