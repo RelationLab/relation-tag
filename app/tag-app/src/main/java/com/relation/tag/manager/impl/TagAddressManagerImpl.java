@@ -135,7 +135,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         boolean dms_syn_blockcheck = execSql("web3_transaction_record_summary", "token_holding_vol_count.sql");
         log.info("token_holding_vol_count Thread end .....");
         if (!dms_syn_blockcheck){
-            Thread.sleep(60 * 60 * 1000);
+            Thread.sleep(5 * 60 * 1000);
         }
         log.info("token_volume_usd Thread start .....");
         execSql("token_holding_vol_count", "dms_syn_block.sql");
