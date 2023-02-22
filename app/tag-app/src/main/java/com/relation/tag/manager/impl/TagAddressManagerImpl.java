@@ -151,27 +151,34 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private boolean execSql(String lastTableName, String sqlName) {
         String tableName = sqlName.split("\\.")[0];
+        if (StringUtils.equalsAny(tableName,"token_holding_vol_count","eth_holding_vol_count")){
+            tableName = tableName.concat("_tmp");
+        }
+        String finalTableName = tableName;
         forkJoinPool.execute(new Runnable() {
             @Override
             public void run() {
-                check(lastTableName, 20 * 1000);
-                try {
-                    if (checkResult(tableName)&&!StringUtils.equalsAny(tableName,"token_holding_vol_count","eth_holding_vol_count")){
-                        return ;
-                    }
-                    iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
-                } catch (Exception e) {
-//                    log.error(e.getMessage(),e);
-                    try {
-                        Thread.sleep(1*60*1000);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    execSql( lastTableName,  sqlName);
-                }
+                execSynSql( lastTableName,  sqlName, finalTableName);
             }
         });
-        return checkResult(tableName);
+        return checkResult(finalTableName);
+    }
+
+    private void execSynSql(String lastTableName, String sqlName, String tableName) {
+        check(lastTableName, 20 * 1000);
+        try {
+            if (checkResult(tableName)){
+                return ;
+            }
+            iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
+        } catch (Exception e) {
+            try {
+                Thread.sleep(1*60*1000);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+            execSynSql( lastTableName,  sqlName,  tableName);
+        }
     }
 
 
@@ -183,17 +190,5 @@ public class TagAddressManagerImpl implements TagAddressManager {
             throw new RuntimeException(e);
         }
         execSql(FileUtils.readFile(SCRIPTSPATH.concat(File.separator).concat("summary.sql")),"address_label_gp.sql");
-
-        forkJoinPool.execute(() -> {
-            try {
-                log.info("summary start....");
-//                if (checkResult("address_label_gp")){
-//                    return;
-//                }
-//                iAddressLabelService.exceSql(FileUtils.readFile(SCRIPTSPATH.concat(File.separator).concat("summary.sql")), "summary.sql");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 }
