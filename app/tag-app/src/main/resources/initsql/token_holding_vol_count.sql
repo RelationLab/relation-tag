@@ -3,6 +3,7 @@ create table token_holding_vol_count_tmp as select * from token_holding_vol_coun
 truncate table token_holding_vol_count;
 insert into
     token_holding_vol_count(address,
+                            block_height,
                             token,
                             total_transfer_volume,
                             total_transfer_count,
@@ -12,6 +13,7 @@ insert into
                             total_transfer_all_volume)
 select
     address,
+    max(block_height) as block_height,
     token,
     sum(total_transfer_volume) total_transfer_volume,
     sum(total_transfer_count) total_transfer_count,
@@ -23,6 +25,7 @@ from
     (
         select
             address,
+            max(block_height) as block_height,
             token,
             sum(total_transfer_volume) total_transfer_volume,
             sum(total_transfer_count) total_transfer_count,
@@ -38,6 +41,7 @@ from
             union all
         select
             from_address address,
+            max(block_height) as block_height,
             token,
             sum(amount) total_transfer_volume,
             sum(1) total_transfer_count,
@@ -53,6 +57,7 @@ from
 
         union all select
                       to_address address,
+                      max(block_height) as block_height,
                       token,
                       0 as total_transfer_volume,
                       0 as total_transfer_count,

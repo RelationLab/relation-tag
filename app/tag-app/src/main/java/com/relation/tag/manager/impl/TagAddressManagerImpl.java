@@ -43,10 +43,10 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
                 });
             });
+            tagMerge();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        tagMerge();
     }
 
     public boolean checkResult(String tableName) {
@@ -156,7 +156,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             public void run() {
                 check(lastTableName, 20 * 1000);
                 try {
-                    if (checkResult(tableName)){
+                    if (checkResult(tableName)&&!StringUtils.equalsAny(tableName,"token_holding_vol_count","eth_holding_vol_count")){
                         return ;
                     }
                     iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
@@ -176,19 +176,21 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
 
     @Override
-    public void tagMerge() {
+    public void tagMerge() throws Exception {
         try {
             Thread.sleep(10 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        execSql(FileUtils.readFile(SCRIPTSPATH.concat(File.separator).concat("summary.sql")),"address_label_gp.sql");
+
         forkJoinPool.execute(() -> {
             try {
                 log.info("summary start....");
-                if (checkResult("address_label_gp")){
-                    return;
-                }
-                iAddressLabelService.exceSql(FileUtils.readFile(SCRIPTSPATH.concat(File.separator).concat("summary.sql")), "summary.sql");
+//                if (checkResult("address_label_gp")){
+//                    return;
+//                }
+//                iAddressLabelService.exceSql(FileUtils.readFile(SCRIPTSPATH.concat(File.separator).concat("summary.sql")), "summary.sql");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

@@ -12,6 +12,7 @@ into
                           total_transfer_all_volume)
 select
     address,
+    max(block_height) as block_height,
     sum(total_transfer_volume) total_transfer_volume,
     sum(total_transfer_count) total_transfer_count,
     sum(total_transfer_to_count) as total_transfer_to_count,
@@ -22,6 +23,7 @@ from
     (
         select
             address,
+            max(block_height) as block_height,
             sum(total_transfer_volume) total_transfer_volume,
             sum(total_transfer_count) total_transfer_count,
             sum(total_transfer_to_count)  total_transfer_to_count,
@@ -35,6 +37,7 @@ from
         union  all
         select
             from_address address,
+            max(block_height) as block_height,
             sum(amount) total_transfer_volume,
             sum(1) total_transfer_count,
             0 as total_transfer_to_count,
@@ -50,6 +53,7 @@ from
         union all
         select
             to_address address,
+            max(block_height) as block_height,
             0 as total_transfer_volume,
             0 as total_transfer_count,
             sum(1) as total_transfer_to_count,
