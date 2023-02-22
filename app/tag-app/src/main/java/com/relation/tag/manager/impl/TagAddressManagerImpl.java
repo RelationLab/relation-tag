@@ -36,12 +36,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         try {
             forkJoinPool.execute(() -> {
                 ruleSqlList.parallelStream().forEach(ruleSql -> {
-                    String tableName = ruleSql.getFileName();
-                    String table = tableName.split("\\.")[0];
-                    if (checkResult(table)){
-                        return;
-                    }
-                    iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
+                    execContentSql(ruleSql);
                 });
             });
             tagMerge();
@@ -50,13 +45,32 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
     }
 
+    private void execContentSql(FileEntity ruleSql) {
+        try{
+            String tableName = ruleSql.getFileName();
+            String table = tableName.split("\\.")[0];
+            if (checkResult(table)) {
+                return;
+            }
+            iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
+        }catch (Exception ex){
+            try {
+                Thread.sleep(1*60*1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            execContentSql( ruleSql);
+        }
+
+    }
+
     public boolean checkResult(String tableName) {
         if (StringUtils.isEmpty(tableName)) {
             return false;
         }
         try {
             List<Integer> tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
-            log.info("tableName==={},tagList.size===={}",tableName,CollectionUtils.isEmpty(tagList)?0:tagList.size());
+            log.info("tableName==={},tagList.size===={}", tableName, CollectionUtils.isEmpty(tagList) ? 0 : tagList.size());
             return !CollectionUtils.isEmpty(tagList);
         } catch (Exception ex) {
             return false;
@@ -95,7 +109,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private void tag() throws Exception {
         innit();
-        Thread.sleep(2*60*1000);
+        Thread.sleep(2 * 60 * 1000);
         check("total_volume_usd", 1 * 60 * 1000);
         List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
         List<FileEntity> fileList = Lists.newArrayList();
@@ -130,20 +144,20 @@ public class TagAddressManagerImpl implements TagAddressManager {
         log.info("eth_holding_vol_count Thread start.....");
         boolean token_holding_vol_countcheck = execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
         log.info("eth_holding_vol_count Thread end .....");
-        if (!token_holding_vol_countcheck){
+        if (!token_holding_vol_countcheck) {
             Thread.sleep(1 * 60 * 1000);
         }
         log.info("token_holding_vol_count Thread start .....");
         boolean dms_syn_blockcheck = execSql("web3_transaction_record_summary", "token_holding_vol_count.sql");
         log.info("token_holding_vol_count Thread end .....");
-        if (!dms_syn_blockcheck){
+        if (!dms_syn_blockcheck) {
             Thread.sleep(5 * 60 * 1000);
         }
         log.info("token_volume_usd Thread start .....");
         execSql("token_holding_vol_count", "dms_syn_block.sql");
-       boolean total_volume_usdcheck =  execSql("token_holding_vol_count", "token_volume_usd.sql");
+        boolean total_volume_usdcheck = execSql("token_holding_vol_count", "token_volume_usd.sql");
         log.info("token_volume_usd Thread end .....");
-        if (!total_volume_usdcheck){
+        if (!total_volume_usdcheck) {
             Thread.sleep(5 * 60 * 1000);
         }
         log.info("total_volume_usd Thread start .....");
@@ -153,14 +167,14 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private boolean execSql(String lastTableName, String sqlName) {
         String tableName = sqlName.split("\\.")[0];
-        if (StringUtils.equalsAny(tableName,"token_holding_vol_count","eth_holding_vol_count")){
+        if (StringUtils.equalsAny(tableName, "token_holding_vol_count", "eth_holding_vol_count")) {
             tableName = tableName.concat("_tmp");
         }
         String finalTableName = tableName;
         forkJoinPool.execute(new Runnable() {
             @Override
             public void run() {
-                execSynSql( lastTableName,  sqlName, finalTableName);
+                execSynSql(lastTableName, sqlName, finalTableName);
             }
         });
         return checkResult(finalTableName);
@@ -169,18 +183,18 @@ public class TagAddressManagerImpl implements TagAddressManager {
     private void execSynSql(String lastTableName, String sqlName, String tableName) {
         check(lastTableName, 20 * 1000);
         try {
-            if (checkResult(tableName)){
-                return ;
+            if (checkResult(tableName)) {
+                return;
             }
             iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
         } catch (Exception e) {
             try {
-                Thread.sleep(1*60*1000);
+                Thread.sleep(1 * 60 * 1000);
             } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
             }
-            log.info("sqlName==={} try ......",sqlName);
-            execSynSql( lastTableName,  sqlName,  tableName);
+            log.info("sqlName==={} try ......", sqlName);
+            execSynSql(lastTableName, sqlName, tableName);
         }
     }
 
@@ -192,6 +206,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        execSql(FileUtils.readFile(SCRIPTSPATH.concat(File.separator).concat("summary.sql")),"address_label_gp.sql");
+        execSql(null,"address_label_gp.sql");
     }
 }
