@@ -37,7 +37,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
             forkJoinPool.execute(() -> {
                 ruleSqlList.parallelStream().forEach(ruleSql -> {
                     String tableName = ruleSql.getFileName();
-                    if (checkResult(tableName)){
+                    String table = tableName.split("\\.")[0];
+                    if (checkResult(table)){
                         return;
                     }
                     iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
@@ -187,7 +188,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Override
     public void tagMerge() throws Exception {
         try {
-            Thread.sleep(10 * 60 * 1000);
+            Thread.sleep(2 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
