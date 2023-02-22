@@ -177,6 +177,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
             }
+            log.info("sqlName==={} try ......",sqlName);
             execSynSql( lastTableName,  sqlName,  tableName);
         }
     }
