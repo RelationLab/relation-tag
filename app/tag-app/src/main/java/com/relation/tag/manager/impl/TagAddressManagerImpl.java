@@ -55,6 +55,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
         try {
             List<Integer> tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
+            log.info("tableName==={},tagList.size===={}",tableName,CollectionUtils.isEmpty(tagList)?0:tagList.size());
             return !CollectionUtils.isEmpty(tagList);
         } catch (Exception ex) {
             return false;
