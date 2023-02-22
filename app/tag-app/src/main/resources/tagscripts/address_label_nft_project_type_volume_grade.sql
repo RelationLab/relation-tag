@@ -56,4 +56,4 @@ select
         group by
             a1.address,
             a2.label_type
-    ) t where volume_usd >= 1 and address <>'0x000000000000000000000000000000000000dead';
+    ) t where volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead';
