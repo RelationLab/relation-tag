@@ -22,12 +22,18 @@ insert into public.address_label_token_time_first_stake(address,label_type,label
     s1.label_type as label_name,
     rn  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    't'  as group,
+    s1.label_type  as level,
+    'other'  as category,
+    'all' trade_type,
+    'all' as project,
+    s1.token_name as asset
     from
     (
         select
             a1.address,
-            a2.label_type,
+            a2.label_type, a2.token_name,
             -- 分组字段很关键
             row_number() over( partition by a2.token,
 		seq_flag

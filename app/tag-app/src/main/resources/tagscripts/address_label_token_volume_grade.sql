@@ -38,7 +38,28 @@ insert into public.address_label_token_volume_grade(address,label_type,label_nam
         end as label_name,
     volume_usd  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'v'  as group,
+    case
+    when volume_usd >= 100
+    and volume_usd < 1000 then 'L1'
+    when volume_usd >= 1000
+    and volume_usd < 10000 then 'L2'
+    when volume_usd >= 10000
+    and volume_usd < 50000 then 'L3'
+    when volume_usd >= 50000
+    and volume_usd < 100000 then 'L4'
+    when volume_usd >= 100000
+    and volume_usd < 500000 then 'L5'
+    when volume_usd >= 500000
+    and volume_usd < 1000000 then 'L6'
+    when volume_usd >= 1000000
+    and volume_usd < 1000000000 then 'Million'
+    when volume_usd >= 1000000000 then 'Billion' end  as level,
+    'grade'  as category,
+    'all' trade_type,
+    'all' as project,
+    a2.token_name as asset
     from
     (
         select

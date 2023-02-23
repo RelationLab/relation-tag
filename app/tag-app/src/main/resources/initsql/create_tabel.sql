@@ -11,6 +11,8 @@ create table dim_project_token_type
     ,seq_flag varchar(100)
     ,data_subject varchar(100)
     ,etl_update_time timestamp
+    ,token_name   varchar(100)
+    ,project_name varchar(100)
 );
 
 drop table if exists dim_project_type;
@@ -25,6 +27,7 @@ create table dim_project_type
     ,seq_flag varchar(100)
     ,data_subject varchar(100)
     ,etl_update_time timestamp
+    ,token_name   varchar(100)
 );
 
 drop table if exists dim_rank_token;

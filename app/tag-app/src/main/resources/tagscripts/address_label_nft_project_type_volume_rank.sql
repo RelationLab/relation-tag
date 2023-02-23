@@ -30,21 +30,28 @@ select
         end as label_name,
     zb_rate  as data,
     'NFT'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'v'  as group,
+    case
+    when zb_rate > 0.01
+    and zb_rate <= 0.025 then 'RARE_NFT_TRADER'
+    when zb_rate > 0.001
+    and zb_rate <= 0.01 then 'EPIC_NFT_TRADER'
+    when zb_rate > 0.025
+    and zb_rate <= 0.1 then 'UNCOMMON_NFT_TRADER'
+    when zb_rate <= 0.001 then 'LEGENDARY_NFT_TRADER' end   as level,
+    'rank' as category,
+    t.type as trade_type,
+    t.project_name as project,
+    t.token_name as asset
     from
     (
         select
             address,
-            (
-                select
-                    distinct  label_type
-                from
-                    dim_project_token_type dptt
-                where
-                        dptt.project = tb1.project
-                  and dptt."type" = tb1.type
-                  and dptt.seq_flag = tb1.seq_flag
-                  and dptt.data_subject = 'volume_rank') as label_type,
+            dptt.label_type as label_type,
+            dptt.type as type,
+            dptt.project_name as project_name,
+            dptt.token_name as token_name,
     zb_rate
     from
 		(
@@ -203,7 +210,12 @@ select
 					a10.platform_group = a1.project
 					and a10.seq_flag = a1.seq_flag
 					and a10.type = a1.type) as a2) as t1
-     ) tb1
+     ) tb1 inner join dim_project_token_type dptt on(
+        dptt.project = tb1.project
+                  and dptt."type" = tb1.type
+                  and dptt.seq_flag = tb1.seq_flag
+                  and dptt.data_subject = 'volume_rank'
+     )
     where
     tb1.volume_usd >= 100
   and zb_rate <= 0.1 ) t;

@@ -30,20 +30,27 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
         end as label_name,
     zb_rate  as data,
     'WEB3'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'b'  as group,
+    case
+    when zb_rate > 0.01
+    and zb_rate <= 0.025 then 'RARE'
+    when zb_rate > 0.001
+    and zb_rate <= 0.01 then 'EPIC'
+    when zb_rate > 0.025
+    and zb_rate <= 0.1 then 'UNCOMMON'
+    when zb_rate <= 0.001 then 'LEGENDARY' end    as level,
+    'rank' as category,
+    t.type as trade_type,
+    'all' as project,
+    t.token_name as asset
     from
     (
         select
             address,
-            (
-                select
-                    distinct  label_type
-                from
-                    dim_project_type dptt
-                where
-                        dptt.project = tb1.project
-                  and dptt.type = tb1.type
-                  and dptt.data_subject = 'balance_rank') as label_type,
+        tb2.label_type as label_type,
+        tb2.type as type,
+        tb2.token_name as token_name,
     zb_rate
     from
 		(

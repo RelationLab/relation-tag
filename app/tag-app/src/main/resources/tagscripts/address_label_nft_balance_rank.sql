@@ -30,25 +30,28 @@ select
         end as label_name,
     zb_rate  as data,
     'NFT'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'b'  as group,
+    case
+    when zb_rate > 0.01
+    and zb_rate <= 0.025 then 'RARE_NFT_COLLECTOR'
+    when zb_rate > 0.001
+    and zb_rate <= 0.01 then 'EPIC_NFT_COLLECTOR'
+    when zb_rate > 0.025
+    and zb_rate <= 0.1 then 'UNCOMMON_NFT_COLLECTOR'
+    when zb_rate <= 0.001 then 'LEGENDARY_NFT_COLLECTOR' end as level,
+        'rank' as category,
+        t.type as trade_type,
+        t.project_name as project,
+        t.token_name as asset
     from
     (
         select
             address,
-            (
-                select
-                    distinct  label_type
-                from
-                    dim_project_token_type dptt
-                where
-                        dptt.seq_flag = tb1.seq_flag
-                  and (dptt.project = ''
-                    or dptt.project = 'ALL')
-                  and (dptt.type = ''
-                    or dptt.type = 'ALL')
-                  and dptt.data_subject = 'balance_rank'
-                  and dptt.label_type like '%NFT%'
-                  and dptt.label_type not like '%WEB3%') as label_type,
+            dptt.label_type as label_type,
+            dptt.type as type,
+            dptt.project_name as project_name,
+            dptt.token_name as token_name,
     zb_rate
     from
 		(
@@ -172,7 +175,14 @@ select
 						seq_flag) as a10
     on
 					a10.seq_flag = a1.seq_flag) as a2) as t1
-    ) tb1
+    ) tb1 inner join dim_project_token_type dptt on(dptt.seq_flag = tb1.seq_flag
+                  and (dptt.project = ''
+                    or dptt.project = 'ALL')
+                  and (dptt.type = ''
+                    or dptt.type = 'ALL')
+                  and dptt.data_subject = 'balance_rank'
+                  and dptt.label_type like '%NFT%'
+                  and dptt.label_type not like '%WEB3%')
     where
     tb1.balance >= 1
   and zb_rate <= 0.1) t;
@@ -200,7 +210,13 @@ insert into public.address_label_crowd_nft_whale(address,label_type,label_name,d
            'crowd_nft_whale' as label_name,
            0  as data,
            'CROWD'  as wired_type,
-           now() as updated_at
+           now() as updated_at,
+           'g'  as group,
+        'crowd_nft_whale'  as level,
+        'other' as category,
+        'all' as trade_type,
+        'all' as project,
+        'all' as asset
        from (
                 select address from address_label_nft_balance_rank
                 where label_name = 'ALL_NFT_BALANCE_RANK_RARE_NFT_COLLECTOR'

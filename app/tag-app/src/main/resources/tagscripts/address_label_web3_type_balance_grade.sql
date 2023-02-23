@@ -33,13 +33,31 @@ insert into public.address_label_web3_type_balance_grade(address,label_type,labe
         end as label_name,
     balance  as data,
     'WEB3'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'b'  as group,
+    case
+    when balance = 1 then 'L1'
+    when balance >= 2
+    and balance < 4 then 'L2'
+    when balance >= 4
+    and balance < 11 then 'L3'
+    when balance >= 11
+    and balance < 51 then 'L4'
+    when balance >= 51
+    and balance < 101 then 'L5'
+    when balance >= 101 then 'L6' end    as level,
+    'grade' as category,
+    t.type as trade_type,
+    'all' as project,
+    t.token_name as asset
     from
     (
         -- project-type
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.token_name,
             sum(balance) as balance
         from
             web3_transaction_record_summary a1
@@ -50,12 +68,16 @@ insert into public.address_label_web3_type_balance_grade(address,label_type,labe
                                    and a2.data_subject = 'balance_grade'
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.token_name
             -- project(ALL)-type
         union all
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.token_name,
             sum(balance) as balance
         from
             web3_transaction_record_summary a1
@@ -66,12 +88,16 @@ insert into public.address_label_web3_type_balance_grade(address,label_type,labe
                                    and a2.data_subject = 'balance_grade'
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.token_name
             -- project(ALL)-type(ALL)
         union all
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.token_name,
             sum(balance) as balance
         from
             web3_transaction_record_summary a1
@@ -82,12 +108,16 @@ insert into public.address_label_web3_type_balance_grade(address,label_type,labe
                                    and a2.data_subject = 'balance_grade'
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.token_name
             -- project-type(ALL)
         union all
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.token_name,
             sum(balance) as balance
         from
             web3_transaction_record_summary a1
@@ -98,7 +128,9 @@ insert into public.address_label_web3_type_balance_grade(address,label_type,labe
                                    and a2.data_subject = 'balance_grade'
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.token_name,
     ) t
     where
         balance >= 1 and address <>'0x000000000000000000000000000000000000dead';

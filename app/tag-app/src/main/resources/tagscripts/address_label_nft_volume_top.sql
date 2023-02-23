@@ -22,24 +22,21 @@ insert into public.address_label_nft_volume_top(address,label_type,label_name,da
     label_type || '_' || 'TOP' as label_name,
     rn  as data,
     'NFT'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'v'  as group,
+    'TOP'    as level,
+    'top' as category,
+    t.type as trade_type,
+    t.project_name as project,
+    t.token_name as asset
     from
     (
         select
             s1.address,
-            (
-                select
-                    distinct  label_type
-                from
-                    dim_project_token_type dptt
-                where
-                        dptt.seq_flag = s1.seq_flag
-                  and dptt.type = s1.type
-                  and dptt.data_subject = 'volume_top'
-                  and dptt.label_type like '%NFT%'
-                  and dptt.label_type not like '%WEB3%'
-                  and (dptt.project = ''
-                    or dptt.project = 'ALL')) as label_type,
+    dptt.label_type as label_type,
+    dptt.type as type,
+    dptt.project_name as project_name,
+    dptt.token_name as token_name,
             rn
     from
 		(
@@ -130,6 +127,12 @@ insert into public.address_label_nft_volume_top(address,label_type,label_name,da
 				address,
 				seq_flag,
 				a2.type) a1
-    ) s1
+    ) s1 innner join dim_project_token_type dptt on(dptt.seq_flag = s1.seq_flag
+    and dptt.type = s1.type
+    and dptt.data_subject = 'volume_top'
+    and dptt.label_type like '%NFT%'
+    and dptt.label_type not like '%WEB3%'
+    and (dptt.project = ''
+    or dptt.project = 'ALL'))
     where
     s1.rn <= 100) t;

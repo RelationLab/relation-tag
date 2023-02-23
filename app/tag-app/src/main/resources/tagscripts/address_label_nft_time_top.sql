@@ -22,12 +22,21 @@ insert into public.address_label_nft_time_top(address,label_type,label_name,data
     s1.label_type as label_name,
     s1.rn  as data,
     'NFT'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    't'  as group,
+    s1.label_type as level,
+    'top' as category,
+    s1.type as trade_type,
+    s1.project_name as project,
+    s1.token_name as asset
     from
     (
         select
             a1.address,
             a2.label_type,
+            a2.type ,
+            a2.project_name,
+            a2.token_name,
             -- 分组字段很关键
             row_number() over( partition by a2.seq_flag
 	order by

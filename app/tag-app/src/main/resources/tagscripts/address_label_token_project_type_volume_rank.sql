@@ -30,22 +30,28 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
         end as label_name,
     zb_rate  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'v'  as group,
+    case
+    when zb_rate > 0.01
+    and zb_rate <= 0.025 then 'HEAVY'
+    when zb_rate > 0.001
+    and zb_rate <= 0.01 then 'ELITE'
+    when zb_rate > 0.025
+    and zb_rate <= 0.1 then 'MEDIUM'
+    when zb_rate <= 0.001 then 'LEGENDARY' end   as level,
+    'rank' as category,
+    t.type as trade_type,
+    t.project_name as project,
+    t.token_name as asset
     from
     (
         select
             address,
-            (
-                select
-                    distinct label_type
-                from
-                    dim_project_token_type dptt
-                where
-                        dptt.token = tb1.token
-                  and dptt."type" = tb1.type
-                  and dptt.seq_flag = tb1.seq_flag
-                  and dptt.data_subject = 'volume_rank'
-                  and label_type not like '%NFT%') as label_type,
+            dptt.label_type as label_type,
+            dptt.type as type,
+            dptt.project_name as project_name,
+            dptt.token_name as token_name,
             zb_rate
         from
             (
@@ -268,7 +274,11 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                                a10.token = a1.token
                                                            and a10.seq_flag = a1.seq_flag
                                                            and a10.type = a1.type) as a2) as t1
-            ) tb1
+            ) tb1 inner join dim_project_token_type dptt on (dptt.token = tb1.token
+                  and dptt."type" = tb1.type
+                  and dptt.seq_flag = tb1.seq_flag
+                  and dptt.data_subject = 'volume_rank'
+                  and label_type not like '%NFT%')
         where
                 tb1.total_transfer_volume_usd >= 100
           and zb_rate <= 0.1) t ;

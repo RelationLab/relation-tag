@@ -22,21 +22,20 @@ insert into public.address_label_web3_type_balance_top(address,label_type,label_
     label_type || '_' || 'WHALE' as label_name,
     rn  as data,
     'WEB3'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'b'  as group,
+    'WHALE'     as level,
+    'top' as category,
+    t.type as trade_type,
+    'all' as project,
+    t.token_name as asset
     from
     (
         select
             address,
-            (
-                select
-                    distinct label_type
-                from
-                    dim_project_type dptt
-                where
-                        dptt.project = s1.project
-                  and dptt.type = s1.type
-                  and dptt.data_subject = 'balance_top'
-                limit 1) as label_type,
+    a2.label_type as label_type,
+    a2.type as type,
+    a2.token_name as token_name,
             rn
     from
 		(

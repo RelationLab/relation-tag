@@ -40,7 +40,30 @@ insert into public.address_label_token_count_grade(address,label_type,label_name
         end as label_name,
     total_transfer_count  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'c'  as group,
+    case
+    when total_transfer_count >= 1
+    and total_transfer_count < 10 then 'L1'
+    when total_transfer_count >= 10
+    and total_transfer_count < 40 then 'L2'
+    when total_transfer_count >= 40
+    and total_transfer_count < 80 then 'L3'
+    when total_transfer_count >= 80
+    and total_transfer_count < 120 then 'L4'
+    when total_transfer_count >= 120
+    and total_transfer_count < 160 then 'L5'
+    when total_transfer_count >= 160
+    and total_transfer_count < 200 then 'L6'
+    when total_transfer_count >= 200
+    and total_transfer_count < 400 then 'Low'
+    when total_transfer_count >= 400
+    and total_transfer_count < 619 then 'Medium'
+    when total_transfer_count >= 619 then 'High' end  as level,
+    'grade'  as category,
+    'all' trade_type,
+    'all' as project,
+    a2.token_name as asset
     from
     (
         select
@@ -103,7 +126,13 @@ select
            'crowd_defi_active_users' as label_name,
            0  as data,
            'CROWD'  as wired_type,
-           now() as updated_at
+           now() as updated_at,
+           'g'  as group,
+    'crowd_defi_active_users'  as level,
+    'other'  as category,
+    'all' trade_type,
+    'all' as project,
+    'all' as asset
        from address_label_token_count_grade a1
        where (label_name = 'ALL_ALL_ALL_ACTIVITY_High'
            or label_name = 'ALL_ALL_ALL_ACTIVITY_Medium'
@@ -133,7 +162,13 @@ insert into public.address_label_crowd_active_users(address,label_type,label_nam
              'crowd_active_users' as label_name,
              0  as data,
              'CROWD'  as wired_type,
-             now() as updated_at
+             now() as updated_at,
+             'g'  as group,
+    'crowd_active_users'  as level,
+    'other'  as category,
+    'all' trade_type,
+    'all' as project,
+    'all' as asset
          from (
                   select address from address_label_nft_count_grade
                   where label_name = 'ALL_ALL_ALL_NFT_ACTIVITY_High'

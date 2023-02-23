@@ -22,7 +22,13 @@ insert into public.address_label_usdt_balance_rank(address,label_type,label_name
     tb2.label_type || '_' || 'HIGH_BALANCE' as label_name,
     zb_rate  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'b'  as group,
+    'HIGH_BALANCE'    as level,
+    'rank'  as category,
+    'all' trade_type,
+    'all' as project,
+    tb2.token_nme as asset
     from
     (
         select

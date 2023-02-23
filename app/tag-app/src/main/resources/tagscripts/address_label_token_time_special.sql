@@ -26,7 +26,16 @@ insert into public.address_label_token_time_special(address,label_type,label_nam
         end as label_name,
     counter  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    't'  as group,
+    case
+    when counter >= 155 then 'LONG_TERM_HOLDER'
+    when counter >= 1
+    and counter < 155 then 'SHORT_TERM_HOLDER' end  as level,
+    'other'  as category,
+    'all' trade_type,
+    'all' as project,
+    a2.token_name as asset
     from
     (
         select

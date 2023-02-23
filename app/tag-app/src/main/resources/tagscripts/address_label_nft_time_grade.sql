@@ -34,7 +34,24 @@ select
         end as label_name,
     counter  as data,
     'NFT'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    't'  as group,
+    case
+    when counter = 1 then 'L1'
+    when counter > 1
+    and counter <= 7 then 'L2'
+    when counter > 7
+    and counter <= 30 then 'L3'
+    when counter > 30
+    and counter <= 90 then 'L4'
+    when counter > 90
+    and counter <= 180 then 'L5'
+    when counter > 180
+    and counter <= 365 then 'L6' end  as level,
+    'grade' as category,
+    a2.type as trade_type,
+    a2.project_name as project,
+    a2.token_name as asset
     from
     (
         select

@@ -38,13 +38,37 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
         end as label_name,
     total_transfer_volume_usd  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'v'  as group,
+    case
+    when total_transfer_volume_usd >= 100
+    and total_transfer_volume_usd < 1000 then 'L1'
+    when total_transfer_volume_usd >= 1000
+    and total_transfer_volume_usd < 10000 then 'L2'
+    when total_transfer_volume_usd >= 10000
+    and total_transfer_volume_usd < 50000 then 'L3'
+    when total_transfer_volume_usd >= 50000
+    and total_transfer_volume_usd < 100000 then 'L4'
+    when total_transfer_volume_usd >= 100000
+    and total_transfer_volume_usd < 500000 then 'L5'
+    when total_transfer_volume_usd >= 500000
+    and total_transfer_volume_usd < 1000000 then 'L6'
+    when total_transfer_volume_usd >= 1000000
+    and total_transfer_volume_usd < 1000000000 then 'Million'
+    when total_transfer_volume_usd >= 1000000000 then 'Billion' end   as level,
+    'grade' as category,
+    t.type as trade_type,
+    t.project_name as project,
+    t.token_name as asset
     from
     (
         -- project-token-type
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
             sum(total_transfer_volume_usd) as total_transfer_volume_usd
         from
             dex_tx_volume_count_summary a1
@@ -58,12 +82,18 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
                                    and a2.label_type not like '%WEB3%'
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
             -- project(ALL)-token(ALL)-type
         union all
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
             sum(total_transfer_volume_usd) as total_transfer_volume_usd
         from
             dex_tx_volume_count_summary a1
@@ -78,12 +108,18 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
         where  (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
             -- project-token(ALL)-type
         union all
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
             sum(total_transfer_volume_usd) as total_transfer_volume_usd
         from
             dex_tx_volume_count_summary a1
@@ -98,12 +134,18 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
         where  a1.token in (select distinct(token) from dim_project_token_type)
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
             -- project(ALL)-token-type
         union all
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
             sum(total_transfer_volume_usd) as total_transfer_volume_usd
         from
             dex_tx_volume_count_summary a1
@@ -118,6 +160,9 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
         where (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
     ) t where
         total_transfer_volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead';

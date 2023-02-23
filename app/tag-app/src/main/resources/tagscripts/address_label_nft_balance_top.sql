@@ -22,25 +22,21 @@ select
     label_type || '_' || 'WHALE' as label_name,
     rn  as data,
     'NFT'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'b'  as group,
+    'WHALE'  as level,
+        'top' as category,
+        t.type as trade_type,
+        t.project_name as project,
+        t.token_name as asset
     from
     (
         select
             address,
-            (
-                select
-                    distinct  label_type
-                from
-                    dim_project_token_type dptt
-                where
-                        dptt.seq_flag = s1.seq_flag
-                  and dptt.data_subject = 'balance_top'
-                  and dptt.label_type like '%NFT%'
-                  and dptt.label_type not like '%WEB3%'
-                  and (dptt.project = ''
-                    or dptt.project = 'ALL')
-                  and (dptt.type = ''
-                    or dptt.type = 'ALL')) as label_type,
+            dptt.label_type as label_type,
+            dptt.type as type,
+            dptt.project_name as project_name,
+            dptt.token_name as token_name,
             s1.rn
     from
 		(
@@ -89,6 +85,15 @@ select
 				address,
 				seq_flag) a1
 
-    ) s1
+    ) s1 inner join dim_project_token_type dptt on (
+        dptt.seq_flag = s1.seq_flag
+                  and dptt.data_subject = 'balance_top'
+                  and dptt.label_type like '%NFT%'
+                  and dptt.label_type not like '%WEB3%'
+                  and (dptt.project = ''
+                    or dptt.project = 'ALL')
+                  and (dptt.type = ''
+                    or dptt.type = 'ALL')
+    )
     where
     s1.rn <= 100 ) t;

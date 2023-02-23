@@ -40,13 +40,39 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
         end as label_name,
     total_transfer_count  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'c'  as group,
+    case
+        when total_transfer_count >= 1
+            and total_transfer_count < 10 then 'L1'
+        when total_transfer_count >= 10
+            and total_transfer_count < 40 then 'L2'
+        when total_transfer_count >= 40
+            and total_transfer_count < 80 then 'L3'
+        when total_transfer_count >= 80
+            and total_transfer_count < 120 then 'L4'
+        when total_transfer_count >= 120
+            and total_transfer_count < 160 then 'L5'
+        when total_transfer_count >= 160
+            and total_transfer_count < 200 then 'L6'
+        when total_transfer_count >= 200
+            and total_transfer_count < 400 then 'Low'
+        when total_transfer_count >= 400
+            and total_transfer_count < 619 then 'Medium'
+        when total_transfer_count >= 619 then 'High' end   as level,
+    'grade' as category,
+    t.type as trade_type,
+    t.project_name as project,
+    t.token_name as asset
     from
     (
         -- project-token-type(含ALL)
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
             dex_tx_volume_count_summary a1
@@ -58,12 +84,18 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
                                    and a2.data_subject = 'count'
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
             -- project(ALL)-token(ALL)-type(含ALL)
         union all
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
             dex_tx_volume_count_summary a1
@@ -76,12 +108,18 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
         where  (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
             -- project-token(ALL)-type(含ALL)
         union all
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
             dex_tx_volume_count_summary a1
@@ -94,12 +132,18 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
         where  a1.token in (select distinct(token) from dim_project_token_type)
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
             -- project(ALL)-token-type(含ALL)
         union all
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
             dex_tx_volume_count_summary a1
@@ -112,7 +156,10 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
         where (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
     ) t
     where
         total_transfer_count >= 1 and address <>'0x000000000000000000000000000000000000dead';

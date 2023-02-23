@@ -26,7 +26,17 @@ insert into public.address_label_eth_time_special(address,label_type,label_name,
         end as label_name,
     a1.counter  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    't'  as group,
+    case
+    when counter >= 155 then 'LONG_TERM_HOLDER'
+    when counter >= 1
+    and counter < 155 then 'SHORT_TERM_HOLDER'
+    end  as level,
+    'other' as category,
+    'all' trade_type,
+    'all' as project,
+    a2.token_name as asset
     from
     (
         select
@@ -67,7 +77,13 @@ insert into public.address_label_crowd_long_term_holder(address,label_type,label
            'crowd_long_term_holder' as label_name,
            0  as data,
            'CROWD'  as wired_type,
-           now() as updated_at
+           now() as updated_at,
+           'g'  as group,
+           'crowd_long_term_holder' level,
+            'other' as category,
+            'all' trade_type,
+            'all' as project,
+            'all' as asset
        from (
                 select address from address_label_eth_time_special
                 where label_name = 'ETH_HOLDING_TIME_SPECIAL_LONG_TERM_HOLDER'

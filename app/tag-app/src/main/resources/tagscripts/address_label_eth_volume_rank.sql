@@ -30,7 +30,20 @@ insert into public.address_label_eth_volume_rank(address,label_type,label_name,d
         end as label_name,
     zb_rate  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'v'  as group,
+    case
+    when zb_rate > 0.01
+    and zb_rate <= 0.025 then 'HEAVY'
+    when zb_rate > 0.001
+    and zb_rate <= 0.01 then 'ELITE'
+    when zb_rate > 0.025
+    and zb_rate <= 0.1 then 'MEDIUM'
+    when zb_rate <= 0.001 then 'LEGENDARY' end as level,
+    'rank' as category,
+    'all' trade_type,
+    'all' as project,
+    tb2.token_name as asset
     from
     (
         select

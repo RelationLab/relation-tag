@@ -40,13 +40,39 @@ select
         end as label_name,
     sum_count  as data,
     'NFT'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'c'  as group,
+    case
+    when sum_count >= 1
+    and sum_count < 10 then 'L1'
+    when sum_count >= 10
+    and sum_count < 40 then 'L2'
+    when sum_count >= 40
+    and sum_count < 80 then 'L3'
+    when sum_count >= 80
+    and sum_count < 120 then 'L4'
+    when sum_count >= 120
+    and sum_count < 160 then 'L5'
+    when sum_count >= 160
+    and sum_count < 200 then 'L6'
+    when sum_count >= 200
+    and sum_count < 400 then 'Low'
+    when sum_count >= 400
+    and sum_count < 619 then 'Medium'
+    when sum_count >= 619 then 'High'  end    as level,
+    'grade' as category,
+    t.type as trade_type,
+    t.project_name as project,
+    t.token_name as asset
     from
     (
         -- project(null)+nft+type
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
             sum(total_transfer_count) as sum_count
         from
             nft_transfer_holding a1
@@ -65,12 +91,18 @@ select
                 total_transfer_count >= 1
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
         union all
         -- project(null)+nft（ALL）+type
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
             sum(total_transfer_count) as sum_count
         from
             nft_transfer_holding a1
@@ -89,6 +121,9 @@ select
                 total_transfer_count >= 1
         group by
             a1.address,
-            a2.label_type) t
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name) t
     where
         sum_count >= 1 and address <>'0x000000000000000000000000000000000000dead';

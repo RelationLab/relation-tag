@@ -30,27 +30,32 @@ insert into public.address_label_nft_transfer_volume_rank(address,label_type,lab
         end as label_name,
     zb_rate  as data,
     'NFT'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'v'  as group,
+    case
+    when volume_usd >= 100
+    and volume_usd < 1000 then 'L1'
+    when volume_usd >= 1000
+    and volume_usd < 10000 then 'L2'
+    when volume_usd >= 10000
+    and volume_usd < 50000 then 'L3'
+    when volume_usd >= 50000
+    and volume_usd < 100000 then 'L4'
+    when volume_usd >= 100000
+    and volume_usd < 500000 then 'L5'
+    when volume_usd >= 500000 then 'L6' end      as level,
+    'rank' as category,
+    t.type as trade_type,
+    t.project_name as project,
+    t.token_name as asset
     from
     (
         select
             address,
-            (
-                select
-                    distinct  label_type
-                from
-                    dim_project_token_type dptt
-                where
-                        dptt.seq_flag = tb1.seq_flag
-                  and dptt.type = 'Transfer'
-                  and (dptt.project = ''
-                    or dptt.project = 'ALL')
-                  and dptt.type = 'Transfer'
-                  and (dptt.project = ''
-                    or dptt.project = 'ALL')
-                  and dptt.data_subject = 'volume_rank'
-                  and dptt.label_type like '%NFT%'
-                  and dptt.label_type not like '%WEB3%') as label_type,
+    dptt.label_type as label_type,
+    dptt.type as type,
+    dptt.project_name as project_name,
+    dptt.token_name as token_name,
     zb_rate
     from
 		(
@@ -168,7 +173,16 @@ insert into public.address_label_nft_transfer_volume_rank(address,label_type,lab
 						seq_flag) as a10
                        on
 					a10.seq_flag = a1.seq_flag) as a2) as t1
-     ) tb1
+     ) tb1 inner join dim_project_token_type dptt on(dptt.seq_flag = tb1.seq_flag
+                  and dptt.type = 'Transfer'
+                  and (dptt.project = ''
+                    or dptt.project = 'ALL')
+                  and dptt.type = 'Transfer'
+                  and (dptt.project = ''
+                    or dptt.project = 'ALL')
+                  and dptt.data_subject = 'volume_rank'
+                  and dptt.label_type like '%NFT%'
+                  and dptt.label_type not like '%WEB3%')
     where
     tb1.total_transfer_volume >= 1
   and zb_rate <= 0.1) t ;

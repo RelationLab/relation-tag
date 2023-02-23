@@ -34,13 +34,33 @@ select
         end as label_name,
     volume_usd  as data,
     'NFT'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'v'  as group,
+    case
+    when volume_usd >= 100
+    and volume_usd < 1000 then 'L1'
+    when volume_usd >= 1000
+    and volume_usd < 10000 then 'L2'
+    when volume_usd >= 10000
+    and volume_usd < 50000 then 'L3'
+    when volume_usd >= 50000
+    and volume_usd < 100000 then 'L4'
+    when volume_usd >= 100000
+    and volume_usd < 500000 then 'L5'
+    when volume_usd >= 500000 then 'L6' end   as level,
+    'grade' as category,
+    t.type as trade_type,
+    t.project_name as project,
+    t.token_name as asset
     from
     (
         -- project-token-type
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
             sum(
                     volume_usd) as volume_usd
         from
@@ -48,12 +68,18 @@ select
             on a1.token=a2.token and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = 'volume_grade'
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
     -- project-token(ALL)-type
         union all
         select
             a1.address,
             a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
             sum(
             volume_usd) as volume_usd
         from
@@ -61,5 +87,8 @@ select
         on a2.token='ALL' and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = 'volume_grade'
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
     ) t where volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead';

@@ -22,12 +22,19 @@ insert into public.address_label_univ3_balance_top(address,label_type,label_name
     s1.label_type || '_' || 'WHALE' as label_name,
     rn  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'b'  as group,
+    'WHALE'   as level,
+    'top'  as category,
+    'all' trade_type,
+    'all' as project,
+    s1.token_nme as asset
     from
     (
         select
             a1.address,
             a2.label_type,
+    a2.token_nme,
             -- 分组字段很关键
             row_number() over( partition by a2.token
 	order by

@@ -22,7 +22,13 @@ insert into public.address_label_token_balance_top_all(address,label_type,label_
     s1.label_type || '_' || 'WHALE' as label_name,
     rn  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'b'  as group,
+    'WHALE'  as level,
+    'top'  as category,
+    'all' trade_type,
+    'all' as project,
+    'all' as asset
     from
     (
         select

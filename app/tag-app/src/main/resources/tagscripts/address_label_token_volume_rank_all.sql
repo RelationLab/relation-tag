@@ -30,7 +30,20 @@ insert into public.address_label_token_volume_rank_all(address,label_type,label_
         end as label_name,
     zb_rate  as data,
     'DEFI'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'v'  as group,
+    case
+    when zb_rate > 0.025
+    and zb_rate <= 0.1 then 'MEDIUM'
+    when zb_rate > 0.01
+    and zb_rate <= 0.025 then 'HEAVY'
+    when zb_rate > 0.001
+    and zb_rate <= 0.01 then 'ELITE'
+    when zb_rate <= 0.001 then 'LEGENDARY' end  as level,
+    'rank'  as category,
+    'all' trade_type,
+    'all' as project,
+    'all' as asset
     from
     (
         select
@@ -140,7 +153,13 @@ select
            'crowd_defi_high_demander' as label_name,
            0  as data,
            'CROWD'  as wired_type,
-           now() as updated_at  from address_label_token_volume_rank_all a1
+           now() as updated_at,
+           'g'  as group,
+    'crowd_defi_high_demander' level,
+    'other' as category,
+    'all' trade_type,
+    'all' as project,
+    'all' as asset  from address_label_token_volume_rank_all a1
        where (label_name = 'ALL_ALL_ALL_VOLUME_RANK_MEDIUM' or label_name = 'ALL_ALL_ALL_VOLUME_RANK_HEAVY'
            or label_name = 'ALL_ALL_ALL_VOLUME_RANK_ELITE'  or label_name = 'ALL_ALL_ALL_VOLUME_RANK_LEGENDARY')
          and
@@ -169,8 +188,14 @@ insert into public.address_label_crowd_elite(address,label_type,label_name,data,
            'crowd_elite' as label_name,
            0  as data,
            'CROWD'  as wired_type,
-           now() as updated_at
-       from (
+           now() as updated_at,
+           'g'  as group,
+    'crowd_elite' level,
+    'other' as category,
+    'all' trade_type,
+    'all' as project,
+    'all' as asset
+from (
                 select address from address_label_nft_volume_count_rank
                 where label_name = 'ALL_ALL_ALL_NFT_VOLUME_ELITE_ELITE_NFT_TRADER'
                 union all

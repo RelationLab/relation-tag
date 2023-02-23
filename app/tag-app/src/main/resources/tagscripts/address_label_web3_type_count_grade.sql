@@ -40,13 +40,21 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
         end as label_name,
     total_transfer_count as data,
     'WEB3'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'b'  as group,
+    'WHALE'     as level,
+    'top' as category,
+    t.type as trade_type,
+    'all' as project,
+    t.token_name as asset
     from
     (
         -- project-type
         select
             a1.address,
             a2.label_type,
+    a2.type,
+    a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
             web3_transaction_record_summary a1
@@ -57,12 +65,16 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
                                    and a2.data_subject = 'count'
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+    a2.type,
+    a2.token_name
             -- project(ALL)-type
         union all
         select
             a1.address,
             a2.label_type,
+    a2.type,
+    a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
             web3_transaction_record_summary a1
@@ -73,12 +85,16 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
                                    and a2.data_subject = 'count'
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+    a2.type,
+    a2.token_name
             -- project(ALL)-type(ALL)
         union all
         select
             a1.address,
             a2.label_type,
+    a2.type,
+    a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
             web3_transaction_record_summary a1
@@ -89,12 +105,16 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
                                    and a2.data_subject = 'count'
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+    a2.type,
+    a2.token_name
             -- project-type(ALL)
         union all
         select
             a1.address,
             a2.label_type,
+    a2.type,
+    a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
             web3_transaction_record_summary a1
@@ -105,7 +125,9 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
                                    and a2.data_subject = 'count'
         group by
             a1.address,
-            a2.label_type
+            a2.label_type,
+    a2.type,
+    a2.token_name
     ) t
     where
         total_transfer_count >= 1 and address <>'0x000000000000000000000000000000000000dead';
@@ -133,7 +155,13 @@ insert into public.address_label_crowd_web3_active_users(address,label_type,labe
            'crowd_web3_active_users' as label_name,
            0  as data,
            'CROWD'  as wired_type,
-           now() as updated_at
+           now() as updated_at,
+           'g'  as group,
+    'crowd_web3_active_users' level,
+    'other' as category,
+    'all' trade_type,
+    'all' as project,
+    'all' as asset
        from  address_label_web3_type_count_grade a1
        where (label_name = 'WEB3_ALL_NFTRecipient_ACTIVITY_High'
            or label_name = 'WEB3_ALL_NFTRecipient_ACTIVITY_Medium'

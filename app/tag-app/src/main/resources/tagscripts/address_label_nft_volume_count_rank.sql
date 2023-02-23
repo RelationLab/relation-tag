@@ -22,24 +22,21 @@ select
     label_type || '_ELITE_NFT_TRADER' as label_name,
     zb_rate  as data,
     'NFT'  as wired_type,
-    now() as updated_at
+    now() as updated_at,
+    'e'  as group,
+    'ELITE_NFT_TRADER'       as level,
+    'top' as category,
+    t.type as trade_type,
+    t.project_name as project,
+    t.token_name as asset
     from
     (
         select
             address,
-            (
-                select
-                    distinct  label_type
-                from
-                    dim_project_token_type dptt
-                where
-                        dptt.seq_flag = tb1.seq_flag
-                  and dptt.type = tb1.type
-                  and (dptt.project = ''
-                    or dptt.project = 'ALL')
-                  and dptt.data_subject = 'volume_elite'
-                  and dptt.label_type like '%NFT%'
-                  and dptt.label_type not like '%WEB3%') as label_type,
+    dptt.label_type as label_type,
+    dptt.type as type,
+    dptt.project_name as project_name,
+    dptt.token_name as token_name,
                   zb_rate
         from
             (
@@ -176,7 +173,14 @@ select
                                             seq_flag,
                                             tb2.type) as a10 on
                                                 a10.seq_flag = a1.seq_flag
-                                            and a10.type = a1.type) as a2) as t1 ) tb1
+                                            and a10.type = a1.type) as a2) as t1 ) tb1 inner join dim_project_token_type dptt
+    on(dptt.seq_flag = tb1.seq_flag
+    and dptt.type = tb1.type
+    and (dptt.project = ''
+    or dptt.project = 'ALL')
+    and dptt.data_subject = 'volume_elite'
+    and dptt.label_type like '%NFT%'
+    and dptt.label_type not like '%WEB3%')
         where
                 tb1.transfer_volume >= 1
           and zb_rate <= 0.01
