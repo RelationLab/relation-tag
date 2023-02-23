@@ -16,7 +16,7 @@ public class TagApplication {
         TagAddressManager tagAddressManager = ctx.getBean(TagAddressManager.class);
         if (tagAddressManager.checkResult("address_labels_json_gin")){
             log.info("checkResult tag end...........");
-            System.exit(0);
+//            System.exit(0);
         }
         new Thread(new Runnable() {
             @Override
@@ -32,6 +32,6 @@ public class TagApplication {
         log.info("check address_labels_json_gin start...........");
         tagAddressManager.check("address_labels_json_gin", 1 * 60 * 1000);
         log.info("tag end...........");
-        System.exit(0);
+//        System.exit(0);
     }
 }
