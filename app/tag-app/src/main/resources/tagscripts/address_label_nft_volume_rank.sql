@@ -7,12 +7,12 @@ CREATE TABLE public.address_label_nft_volume_rank (
                                                       label_type varchar(512) NULL,
                                                       label_name varchar(1024) NULL,
                                                       updated_at timestamp(6) NULL,
-    "group" varchar(1) NULL,
-    "level" varchar(50) NULL,
-    category varchar(50) NULL,
-    trade_type varchar(50) NULL,
-    project varchar(50) NULL,
-    asset varchar(50) NULL
+                                                      "group" varchar(1) NULL,
+                                                      "level" varchar(80) NULL,
+                                                      category varchar(80) NULL,
+                                                      trade_type varchar(80) NULL,
+                                                      project varchar(80) NULL,
+                                                      asset varchar(80) NULL
 );
 truncate  table public.address_label_nft_volume_rank;
 insert into public.address_label_nft_volume_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
@@ -33,25 +33,25 @@ select
     now() as updated_at,
     'v'  as "group",
     case
-    when zb_rate > 0.01
-    and zb_rate <= 0.025 then 'RARE_NFT_TRADER'
-    when zb_rate > 0.001
-    and zb_rate <= 0.01 then 'EPIC_NFT_TRADER'
-    when zb_rate > 0.025
-    and zb_rate <= 0.1 then 'UNCOMMON_NFT_TRADER'
-    when zb_rate <= 0.001 then 'LEGENDARY_NFT_TRADER' end     as level,
+        when zb_rate > 0.01
+            and zb_rate <= 0.025 then 'RARE_NFT_TRADER'
+        when zb_rate > 0.001
+            and zb_rate <= 0.01 then 'EPIC_NFT_TRADER'
+        when zb_rate > 0.025
+            and zb_rate <= 0.1 then 'UNCOMMON_NFT_TRADER'
+        when zb_rate <= 0.001 then 'LEGENDARY_NFT_TRADER' end     as level,
     'rank' as category,
     t.type as trade_type,
     t.project_name as project,
     t.token_name as asset
-    from
+from
     (
         select
             address,
-    dptt.label_type as label_type,
-    dptt.type as type,
-    dptt.project_name as project_name,
-    dptt.token_name as token_name,
+            dptt.label_type as label_type,
+            dptt.type as type,
+            dptt.project_name as project_name,
+            dptt.token_name as token_name,
             zb_rate
         from
             (
@@ -182,12 +182,12 @@ select
                                                 a10.seq_flag = a1.seq_flag
                                             and a10.type = a1.type) as a2) as t1
             ) tb1 inner join dim_project_token_type dptt on (dptt.seq_flag = tb1.seq_flag
-                  and dptt.type = tb1.type
-                  and (dptt.project = ''
+                and dptt.type = tb1.type
+                and (dptt.project = ''
                     or dptt.project = 'ALL')
-                  and dptt.data_subject = 'volume_rank'
-                  and dptt.label_type like '%NFT%'
-                  and dptt.label_type not like '%WEB3%')
+                and dptt.data_subject = 'volume_rank'
+                and dptt.label_type like '%NFT%'
+                and dptt.label_type not like '%WEB3%')
         where
                 tb1.transfer_volume >= 1
           and zb_rate <= 0.1) t ;
@@ -201,31 +201,31 @@ CREATE TABLE public.address_label_crowd_nft_high_demander (
                                                               label_name varchar(1024) NULL,
                                                               updated_at timestamp(6) NULL,
                                                               "group" varchar(1) NULL,
-                                                              "level" varchar(20) NULL,
-                                                              category varchar(20) NULL,
-                                                              trade_type varchar(30) NULL,
-                                                              project varchar(50) NULL,
-                                                              asset varchar(50) NULL
+                                                              "level" varchar(80) NULL,
+                                                              category varchar(80) NULL,
+                                                              trade_type varchar(80) NULL,
+                                                              project varchar(80) NULL,
+                                                              asset varchar(80) NULL
 );
 truncate table public.address_label_crowd_nft_high_demander;
 insert into public.address_label_crowd_nft_high_demander(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
 select
-           a1.address ,
-           'crowd_nft_high_demander' as label_type,
-           'crowd_nft_high_demander' as label_name,
-           0  as data,
-           'CROWD'  as wired_type,
-           now() as updated_at,
-           'g'  as "group",
+    a1.address ,
+    'crowd_nft_high_demander' as label_type,
+    'crowd_nft_high_demander' as label_name,
+    0  as data,
+    'CROWD'  as wired_type,
+    now() as updated_at,
+    'g'  as "group",
     'crowd_nft_high_demander'    as level,
     'other' as category,
     'all' as trade_type,
     'all' as project,
     'all' as asset
-       from address_label_nft_volume_rank a1
-       where (label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_RARE_NFT_TRADER'
-           or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_EPIC_NFT_TRADER'
-           or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_UNCOMMON_NFT_TRADER'
-           or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_LEGENDARY_NFT_TRADER')
-         and
-               address <>'0x000000000000000000000000000000000000dead';
+from address_label_nft_volume_rank a1
+where (label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_RARE_NFT_TRADER'
+    or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_EPIC_NFT_TRADER'
+    or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_UNCOMMON_NFT_TRADER'
+    or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_LEGENDARY_NFT_TRADER')
+  and
+        address <>'0x000000000000000000000000000000000000dead';

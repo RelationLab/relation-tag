@@ -57,7 +57,7 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
                 a2.label_type,
                 a2.token_name,
                 a2.project_name,
-                a2.type
+                a2.type,
                 sum(balance) as balance
          from nft_holding a1
                   inner join dim_project_token_type a2
@@ -74,7 +74,7 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
              a2.label_type,
             a2.token_name,
             a2.project_name,
-            a2.type
+            a2.type,
              sum(balance) as balance
          from nft_holding a1
              inner join dim_project_token_type a2

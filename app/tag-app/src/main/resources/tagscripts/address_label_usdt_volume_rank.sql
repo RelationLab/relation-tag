@@ -7,16 +7,16 @@ CREATE TABLE public.address_label_usdt_volume_rank (
                                                        label_type varchar(512) NULL,
                                                        label_name varchar(1024) NULL,
                                                        updated_at timestamp(6) NULL,
-    "group" varchar(1) NULL,
-    "level" varchar(50) NULL,
-    category varchar(50) NULL,
-    trade_type varchar(50) NULL,
-    project varchar(50) NULL,
-    asset varchar(50) NULL
+                                                       "group" varchar(1) NULL,
+                                                       "level" varchar(50) NULL,
+                                                       category varchar(50) NULL,
+                                                       trade_type varchar(50) NULL,
+                                                       project varchar(50) NULL,
+                                                       asset varchar(50) NULL
 );
 truncate table public.address_label_usdt_volume_rank;
 insert into public.address_label_usdt_volume_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
-    select
+select
     tb1.address,
     tb2.label_type,
     tb2.label_type || '_' || case
@@ -33,18 +33,18 @@ insert into public.address_label_usdt_volume_rank(address,label_type,label_name,
     now() as updated_at,
     'v'  as "group",
     case
-    when zb_rate > 0.01
-    and zb_rate <= 0.025 then 'HEAVY'
-    when zb_rate > 0.001
-    and zb_rate <= 0.01 then 'ELITE'
-    when zb_rate > 0.025
-    and zb_rate <= 0.1 then 'MEDIUM'
-    when zb_rate <= 0.001 then 'LEGENDARY' end    as level,
+        when zb_rate > 0.01
+            and zb_rate <= 0.025 then 'HEAVY'
+        when zb_rate > 0.001
+            and zb_rate <= 0.01 then 'ELITE'
+        when zb_rate > 0.025
+            and zb_rate <= 0.1 then 'MEDIUM'
+        when zb_rate <= 0.001 then 'LEGENDARY' end    as level,
     'rank'  as category,
     'all' trade_type,
     'all' as project,
-    tb2.token_nme as asset
-    from
+    tb2.token_name as asset
+from
     (
         select
             t1.address,
@@ -119,7 +119,7 @@ insert into public.address_label_usdt_volume_rank(address,label_type,label_name,
     dim_rule_content tb2
     on
             tb1.token = tb2.token
-    where
+where
         tb2.data_subject = 'volume_rank'
   and tb2.token_type = 'token'
   and zb_rate <= 0.1;

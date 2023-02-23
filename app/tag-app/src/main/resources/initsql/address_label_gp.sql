@@ -10,11 +10,11 @@ create table address_label_gp
     "source" varchar(100) NULL,
     updated_at timestamp(6) NULL,
     "group" varchar(1) NULL,
-    "level" varchar(50) NULL,
-    category varchar(50) NULL,
-    trade_type varchar(50) NULL,
-    project varchar(50) NULL,
-    asset varchar(50) NULL
+    "level" varchar(80) NULL,
+    category varchar(80) NULL,
+    trade_type varchar(80) NULL,
+    project varchar(80) NULL,
+    asset varchar(80) NULL
 ) distributed by (address);
 
 

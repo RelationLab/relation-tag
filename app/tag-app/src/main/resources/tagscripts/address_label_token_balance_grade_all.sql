@@ -6,7 +6,13 @@ CREATE TABLE public.address_label_token_balance_grade_all (
                                                               wired_type varchar(20) NULL,
                                                               label_type varchar(512) NULL,
                                                               label_name varchar(1024) NULL,
-                                                              updated_at timestamp(6) NULL
+                                                              updated_at timestamp(6) NULL,
+                                                              "group" varchar(1) NULL,
+                                                              "level" varchar(80) NULL,
+                                                              category varchar(80) NULL,
+                                                              trade_type varchar(80) NULL,
+                                                              project varchar(80) NULL,
+                                                              asset varchar(80) NULL
 );
 truncate table public.address_label_token_balance_grade_all;
 insert into public.address_label_token_balance_grade_all(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
@@ -90,7 +96,7 @@ CREATE TABLE public.address_label_crowd_token_whale (
     asset varchar(50) NULL
 );
 truncate table public.address_label_crowd_token_whale;
-insert into public.address_label_crowd_token_whale(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_crowd_token_whale(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
 select
            a1.address ,
            'crowd_token_whale' as label_type,

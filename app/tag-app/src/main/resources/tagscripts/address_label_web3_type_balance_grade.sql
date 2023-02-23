@@ -16,7 +16,7 @@ CREATE TABLE public.address_label_web3_type_balance_grade (
 );
 truncate table public.address_label_web3_type_balance_grade;
 insert into public.address_label_web3_type_balance_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
-    select
+select
     address,
     label_type,
     label_type || '_' || case
@@ -36,21 +36,21 @@ insert into public.address_label_web3_type_balance_grade(address,label_type,labe
     now() as updated_at,
     'b'  as "group",
     case
-    when balance = 1 then 'L1'
-    when balance >= 2
-    and balance < 4 then 'L2'
-    when balance >= 4
-    and balance < 11 then 'L3'
-    when balance >= 11
-    and balance < 51 then 'L4'
-    when balance >= 51
-    and balance < 101 then 'L5'
-    when balance >= 101 then 'L6' end    as level,
+        when balance = 1 then 'L1'
+        when balance >= 2
+            and balance < 4 then 'L2'
+        when balance >= 4
+            and balance < 11 then 'L3'
+        when balance >= 11
+            and balance < 51 then 'L4'
+        when balance >= 51
+            and balance < 101 then 'L5'
+        when balance >= 101 then 'L6' end    as level,
     'grade' as category,
     t.type as trade_type,
     'all' as project,
     t.token_name as asset
-    from
+from
     (
         -- project-type
         select
@@ -130,7 +130,7 @@ insert into public.address_label_web3_type_balance_grade(address,label_type,labe
             a1.address,
             a2.label_type,
             a2.type,
-            a2.token_name,
+            a2.token_name
     ) t
-    where
+where
         balance >= 1 and address <>'0x000000000000000000000000000000000000dead';

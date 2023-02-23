@@ -16,7 +16,7 @@ CREATE TABLE public.address_label_univ3_balance_rank (
 );
 truncate table public.address_label_univ3_balance_rank;
 insert into public.address_label_univ3_balance_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
-    select
+select
     tb1.address ,
     tb2.label_type,
     tb2.label_type || '_' || 'HIGH_BALANCE' as label_name,
@@ -28,8 +28,8 @@ insert into public.address_label_univ3_balance_rank(address,label_type,label_nam
     'rank'  as category,
     'all' trade_type,
     'all' as project,
-    a2.token_nme as asset
-    from
+    tb2.token_name as asset
+from
     (
         select
             t1.address,
@@ -115,9 +115,9 @@ insert into public.address_label_univ3_balance_rank(address,label_type,label_nam
         inner join
     dim_rule_content tb2
     on
-            tb1.token = tb2.token
+                tb1.token = tb2.token
             and tb2.label_type  like 'Uniswap_v3%'
-    where
+where
         tb1.balance_usd >= 100
   and tb1.zb_rate <= 0.1
   and tb2.data_subject = 'balance_rank';

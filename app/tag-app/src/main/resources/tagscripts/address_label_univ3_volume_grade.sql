@@ -16,7 +16,7 @@ CREATE TABLE public.address_label_univ3_volume_grade (
 );
 truncate table public.address_label_univ3_volume_grade;
 insert into public.address_label_univ3_volume_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
-    select
+select
     a1.address,
     a2.label_type,
     a2.label_type || '_' || case
@@ -41,26 +41,26 @@ insert into public.address_label_univ3_volume_grade(address,label_type,label_nam
     now() as updated_at,
     'v'  as "group",
     case
-    when volume_usd >= 100
-    and volume_usd < 1000 then 'L1'
-    when volume_usd >= 1000
-    and volume_usd < 10000 then 'L2'
-    when volume_usd >= 10000
-    and volume_usd < 50000 then 'L3'
-    when volume_usd >= 50000
-    and volume_usd < 100000 then 'L4'
-    when volume_usd >= 100000
-    and volume_usd < 500000 then 'L5'
-    when volume_usd >= 500000
-    and volume_usd < 1000000 then 'L6'
-    when volume_usd >= 1000000
-    and volume_usd < 1000000000 then 'Million'
-    when volume_usd >= 1000000000 then 'Billion' end   as level,
+        when volume_usd >= 100
+            and volume_usd < 1000 then 'L1'
+        when volume_usd >= 1000
+            and volume_usd < 10000 then 'L2'
+        when volume_usd >= 10000
+            and volume_usd < 50000 then 'L3'
+        when volume_usd >= 50000
+            and volume_usd < 100000 then 'L4'
+        when volume_usd >= 100000
+            and volume_usd < 500000 then 'L5'
+        when volume_usd >= 500000
+            and volume_usd < 1000000 then 'L6'
+        when volume_usd >= 1000000
+            and volume_usd < 1000000000 then 'Million'
+        when volume_usd >= 1000000000 then 'Billion' end   as level,
     'grade'  as category,
     'all' trade_type,
     'all' as project,
-    a2.token_nme as asset
-    from
+    a2.token_name as asset
+from
     (
         select
             address,
@@ -76,7 +76,7 @@ insert into public.address_label_univ3_volume_grade(address,label_type,label_nam
         inner join
     dim_rule_content a2
     on
-            a1.token = a2.token
+                a1.token = a2.token
             and a2.label_type  like 'Uniswap_v3%'
-    where
+where
         a2.data_subject = 'volume_grade' and address <>'0x000000000000000000000000000000000000dead';

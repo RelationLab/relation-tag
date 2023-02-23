@@ -16,7 +16,7 @@ CREATE TABLE public.address_label_web3_type_balance_top (
 );
 truncate table address_label_web3_type_balance_top;
 insert into public.address_label_web3_type_balance_top(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
-    select
+select
     address,
     label_type,
     label_type || '_' || 'WHALE' as label_name,
@@ -29,89 +29,90 @@ insert into public.address_label_web3_type_balance_top(address,label_type,label_
     t.type as trade_type,
     'all' as project,
     t.token_name as asset
-    from
+from
     (
         select
             address,
-    a2.label_type as label_type,
-    a2.type as type,
-    a2.token_name as token_name,
+            s1.label_type as label_type,
+            s1.type as type,
+            s1.token_name as token_name,
             rn
-    from
-		(
-		select
-			a1.address,
-			a2.label_type,
-			a2.type,
-			a2.project,
-			-- 分组字段很关键
-            row_number() over( partition by a2.type,a2.project
+        from
+            (
+                select
+                    a1.address,
+                    a2.label_type,
+                    a2.type,
+                    a2.project,
+                    a2.token_name,
+                    -- 分组字段很关键
+                    row_number() over( partition by a2.type,a2.project
 		order by
 			balance desc,
 			address asc) as rn
-		from
-			(
-			select
-				address,
-				type,
-				project,
-				sum(balance) as balance
-			from
-				(
-				-- project-type
-				select
-					address,
-					type ,
-					project,
-					balance
-				from
-					web3_transaction_record_summary
-				where
-					balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
-			union all
-				-- project(ALL)-type
-				select
-					address,
-					type,
-					'ALL' as project,
-					balance
-				from
-					web3_transaction_record_summary
-				where
-					balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
-			union all
-				-- project(ALL)-type(ALL)
-				select
-					address,
-					'ALL' as type,
-					'ALL' as project,
-					balance
-				from
-					web3_transaction_record_summary
-				where
-					balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
-			union all
-				-- project-type(ALL)
-				select
-					address,
-					'ALL' as type,
-					project,
-					balance
-				from
-					web3_transaction_record_summary
-				where
-					balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
-               ) totala
-			group by
-				address,
-				type,
-				project)
-            a1
-		inner join dim_project_type a2
-            on
-			a1.project = a2.project
-			and a1.type = a2.type
-			and a2.data_subject = 'balance_top'
-    ) s1
-    where
-    s1.rn <= 100) t ;
+                from
+                    (
+                        select
+                            address,
+                            type,
+                            project,
+                            sum(balance) as balance
+                        from
+                            (
+                                -- project-type
+                                select
+                                    address,
+                                    type ,
+                                    project,
+                                    balance
+                                from
+                                    web3_transaction_record_summary
+                                where
+                                        balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+                                union all
+                                -- project(ALL)-type
+                                select
+                                    address,
+                                    type,
+                                    'ALL' as project,
+                                    balance
+                                from
+                                    web3_transaction_record_summary
+                                where
+                                        balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+                                union all
+                                -- project(ALL)-type(ALL)
+                                select
+                                    address,
+                                    'ALL' as type,
+                                    'ALL' as project,
+                                    balance
+                                from
+                                    web3_transaction_record_summary
+                                where
+                                        balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+                                union all
+                                -- project-type(ALL)
+                                select
+                                    address,
+                                    'ALL' as type,
+                                    project,
+                                    balance
+                                from
+                                    web3_transaction_record_summary
+                                where
+                                        balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+                            ) totala
+                        group by
+                            address,
+                            type,
+                            project)
+                        a1
+                        inner join dim_project_type a2
+                                   on
+                                               a1.project = a2.project
+                                           and a1.type = a2.type
+                                           and a2.data_subject = 'balance_top'
+            ) s1
+        where
+                s1.rn <= 100) t ;

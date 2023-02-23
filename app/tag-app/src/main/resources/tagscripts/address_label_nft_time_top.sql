@@ -7,16 +7,16 @@ CREATE TABLE public.address_label_nft_time_top (
                                                    label_type varchar(512) NULL,
                                                    label_name varchar(1024) NULL,
                                                    updated_at timestamp(6) NULL,
-    "group" varchar(1) NULL,
-    "level" varchar(50) NULL,
-    category varchar(50) NULL,
-    trade_type varchar(50) NULL,
-    project varchar(50) NULL,
-    asset varchar(50) NULL
+                                                   "group" varchar(1) NULL,
+                                                   "level" varchar(80) NULL,
+                                                   category varchar(80) NULL,
+                                                   trade_type varchar(80) NULL,
+                                                   project varchar(80) NULL,
+                                                   asset varchar(80) NULL
 );
 truncate table public.address_label_nft_time_top;
 insert into public.address_label_nft_time_top(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
- select
+select
     s1.address,
     s1.label_type,
     s1.label_type as label_name,
@@ -29,7 +29,7 @@ insert into public.address_label_nft_time_top(address,label_type,label_name,data
     s1.type as trade_type,
     s1.project_name as project,
     s1.token_name as asset
-    from
+from
     (
         select
             a1.address,
@@ -63,5 +63,5 @@ insert into public.address_label_nft_time_top(address,label_type,label_name,data
                                    and (a2.project = ''
                                    or a2.project = 'ALL')
     ) s1
-    where
+where
         s1.rn <= 100 ;
