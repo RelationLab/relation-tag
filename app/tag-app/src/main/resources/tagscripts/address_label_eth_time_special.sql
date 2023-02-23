@@ -6,7 +6,13 @@ CREATE TABLE public.address_label_eth_time_special (
                                                        wired_type varchar(20) NULL,
                                                        label_type varchar(512) NULL,
                                                        label_name varchar(1024) NULL,
-                                                       updated_at timestamp(6) NULL
+                                                       updated_at timestamp(6) NULL,
+                                                       "group" varchar(1) NULL,
+                                                       "level" varchar(20) NULL,
+                                                       category varchar(20) NULL,
+                                                       trade_type varchar(30) NULL,
+                                                       project varchar(50) NULL,
+                                                       asset varchar(50) NULL
 );
 truncate table public.address_label_eth_time_special;
 insert into public.address_label_eth_time_special(address,label_type,label_name,data,wired_type,updated_at)
@@ -45,7 +51,13 @@ CREATE TABLE public.address_label_crowd_long_term_holder (
                                                              wired_type varchar(20) NULL,
                                                              label_type varchar(512) NULL,
                                                              label_name varchar(1024) NULL,
-                                                             updated_at timestamp(6) NULL
+                                                             updated_at timestamp(6) NULL,
+                                                             "group" varchar(1) NULL,
+                                                             "level" varchar(20) NULL,
+                                                             category varchar(20) NULL,
+                                                             trade_type varchar(30) NULL,
+                                                             project varchar(50) NULL,
+                                                             asset varchar(50) NULL
 );
 truncate table public.address_label_crowd_long_term_holder;
 insert into public.address_label_crowd_long_term_holder(address,label_type,label_name,data,wired_type,updated_at)
