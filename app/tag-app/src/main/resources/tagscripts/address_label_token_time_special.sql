@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_token_time_special (
                                                          asset varchar(50) NULL
 );
 truncate table public.address_label_token_time_special;
-insert into public.address_label_token_time_special(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_token_time_special(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
     select
     a1.address ,
     a2.label_type,
@@ -27,7 +27,7 @@ insert into public.address_label_token_time_special(address,label_type,label_nam
     counter  as data,
     'DEFI'  as wired_type,
     now() as updated_at,
-    't'  as group,
+    't'  as "group",
     case
     when counter >= 155 then 'LONG_TERM_HOLDER'
     when counter >= 1

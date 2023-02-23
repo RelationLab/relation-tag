@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_univ3_count_grade (
                                                         asset varchar(50) NULL
 );
 truncate table public.address_label_univ3_count_grade;
-insert into public.address_label_univ3_count_grade(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_univ3_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
     select
     a1.address ,
     a2.label_type,
@@ -41,7 +41,7 @@ insert into public.address_label_univ3_count_grade(address,label_type,label_name
     total_transfer_count  as data,
     'DEFI'  as wired_type,
     now() as updated_at,
-    'c'  as group,
+    'c'  as "group",
     case
     when total_transfer_count >= 1
     and total_transfer_count < 10 then 'L1'

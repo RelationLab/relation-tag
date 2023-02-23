@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_eth_time_special (
                                                        asset varchar(50) NULL
 );
 truncate table public.address_label_eth_time_special;
-insert into public.address_label_eth_time_special(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_eth_time_special(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
  select
     a1.address,
     a2.label_type,
@@ -27,7 +27,7 @@ insert into public.address_label_eth_time_special(address,label_type,label_name,
     a1.counter  as data,
     'DEFI'  as wired_type,
     now() as updated_at,
-    't'  as group,
+    't'  as "group",
     case
     when counter >= 155 then 'LONG_TERM_HOLDER'
     when counter >= 1
@@ -70,7 +70,7 @@ CREATE TABLE public.address_label_crowd_long_term_holder (
                                                              asset varchar(50) NULL
 );
 truncate table public.address_label_crowd_long_term_holder;
-insert into public.address_label_crowd_long_term_holder(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_crowd_long_term_holder(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
  select
            a1.address ,
            'crowd_long_term_holder' as label_type,
@@ -78,7 +78,7 @@ insert into public.address_label_crowd_long_term_holder(address,label_type,label
            0  as data,
            'CROWD'  as wired_type,
            now() as updated_at,
-           'g'  as group,
+           'g'  as "group",
            'crowd_long_term_holder' level,
             'other' as category,
             'all' trade_type,

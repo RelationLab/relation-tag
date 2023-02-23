@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_univ3_volume_rank (
                                                         asset varchar(50) NULL
 );
 truncate table public.address_label_univ3_volume_rank;
-insert into public.address_label_univ3_volume_rank(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_univ3_volume_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
     select
     tb1.address,
     tb2.label_type,
@@ -31,7 +31,7 @@ insert into public.address_label_univ3_volume_rank(address,label_type,label_name
     zb_rate  as data,
     'DEFI'  as wired_type,
     now() as updated_at,
-    'v'  as group,
+    'v'  as "group",
     case
     when zb_rate > 0.025
     and zb_rate <= 0.1 then 'MEDIUM'

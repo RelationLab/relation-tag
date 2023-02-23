@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_token_time_first_stake (
                                                              asset varchar(50) NULL
 );
 truncate table address_label_token_time_first_stake;
-insert into public.address_label_token_time_first_stake(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_token_time_first_stake(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
     select
     s1.address,
     s1.label_type,
@@ -23,7 +23,7 @@ insert into public.address_label_token_time_first_stake(address,label_type,label
     rn  as data,
     'DEFI'  as wired_type,
     now() as updated_at,
-    't'  as group,
+    't'  as "group",
     s1.label_type  as level,
     'other'  as category,
     'all' trade_type,

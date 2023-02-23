@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_nft_count_grade (
                                                       asset varchar(50) NULL
 );
 truncate table public.address_label_nft_count_grade;
-insert into public.address_label_nft_count_grade(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_nft_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
  select
     address,
     label_type,
@@ -41,7 +41,7 @@ insert into public.address_label_nft_count_grade(address,label_type,label_name,d
     sum_count  as data,
     'NFT'  as wired_type,
     now() as updated_at,
-    'c'  as group,
+    'c'  as "group",
     case
     when sum_count >= 1
     and sum_count < 10 then 'L1'
@@ -140,7 +140,7 @@ CREATE TABLE public.address_label_crowd_nft_active_users (
                                                              asset varchar(50) NULL
 );
 truncate table public.address_label_crowd_nft_active_users;
-insert into public.address_label_crowd_nft_active_users(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_crowd_nft_active_users(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
  select
            a1.address ,
            'crowd_nft_active_users' as label_type,
@@ -148,7 +148,7 @@ insert into public.address_label_crowd_nft_active_users(address,label_type,label
            0  as data,
            'CROWD'  as wired_type,
            now() as updated_at,
-           'g'  as group,
+           'g'  as "group",
             'crowd_nft_active_users'  as level,
             'other' as category,
             'all' as trade_type,

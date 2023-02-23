@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_eth_time_grade (
                                                      asset varchar(50) NULL
 );
 truncate table public.address_label_eth_time_grade;
-insert into public.address_label_eth_time_grade(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_eth_time_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
  select
     a1.address,
     a2.label_type,
@@ -35,7 +35,7 @@ insert into public.address_label_eth_time_grade(address,label_type,label_name,da
     a1.counter  as data,
     'DEFI'  as wired_type,
     now() as updated_at,
-    't'  as group,
+    't'  as "group",
     case
     when counter = 1 then 'L1'
     when counter > 1

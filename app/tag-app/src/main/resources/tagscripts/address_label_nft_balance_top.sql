@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_nft_balance_top (
                                                       asset varchar(50) NULL
 );
 truncate table address_label_nft_balance_top;
-insert into public.address_label_nft_balance_top(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_nft_balance_top(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
 select
     address,
     label_type,
@@ -23,7 +23,7 @@ select
     rn  as data,
     'NFT'  as wired_type,
     now() as updated_at,
-    'b'  as group,
+    'b'  as "group",
     'WHALE'  as level,
         'top' as category,
         t.type as trade_type,

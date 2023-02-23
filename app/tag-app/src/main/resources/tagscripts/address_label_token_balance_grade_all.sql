@@ -9,7 +9,7 @@ CREATE TABLE public.address_label_token_balance_grade_all (
                                                               updated_at timestamp(6) NULL
 );
 truncate table public.address_label_token_balance_grade_all;
-insert into public.address_label_token_balance_grade_all(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_token_balance_grade_all(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
     select
     address,
     a2.label_type,
@@ -33,7 +33,7 @@ insert into public.address_label_token_balance_grade_all(address,label_type,labe
     balance_usd  as data,
     'DEFI'  as wired_type,
     now() as updated_at,
-    'b'  as group,
+    'b'  as "group",
     case
     when balance_usd >= 100
     and balance_usd < 1000 then 'L1'
@@ -98,7 +98,7 @@ select
            0  as data,
            'CROWD'  as wired_type,
            now() as updated_at,
-           'g'  as group,
+           'g'  as "group",
     'crowd_token_whale'  as level,
     'other'  as category,
     'all' trade_type,

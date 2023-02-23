@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_nft_transfer_count_grade (
                                                                asset varchar(50) NULL
 );
 truncate table public.address_label_nft_transfer_count_grade;
-insert into public.address_label_nft_transfer_count_grade(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_nft_transfer_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
 select
     address,
     label_type,
@@ -41,7 +41,7 @@ select
     sum_count  as data,
     'NFT'  as wired_type,
     now() as updated_at,
-    'c'  as group,
+    'c'  as "group",
     case
     when sum_count >= 1
     and sum_count < 10 then 'L1'

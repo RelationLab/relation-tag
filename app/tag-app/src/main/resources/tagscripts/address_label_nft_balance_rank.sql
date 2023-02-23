@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_nft_balance_rank (
                                                        asset varchar(50) NULL
 );
 truncate  table public.address_label_nft_balance_rank;
-insert into public.address_label_nft_balance_rank(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_nft_balance_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
 select
     address,
     label_type,
@@ -31,7 +31,7 @@ select
     zb_rate  as data,
     'NFT'  as wired_type,
     now() as updated_at,
-    'b'  as group,
+    'b'  as "group",
     case
     when zb_rate > 0.01
     and zb_rate <= 0.025 then 'RARE_NFT_COLLECTOR'
@@ -203,7 +203,7 @@ CREATE TABLE public.address_label_crowd_nft_whale (
                                                       asset varchar(50) NULL
 );
 truncate table public.address_label_crowd_nft_whale;
-insert into public.address_label_crowd_nft_whale(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_crowd_nft_whale(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
  select
            a1.address ,
            'crowd_nft_whale' as label_type,
@@ -211,7 +211,7 @@ insert into public.address_label_crowd_nft_whale(address,label_type,label_name,d
            0  as data,
            'CROWD'  as wired_type,
            now() as updated_at,
-           'g'  as group,
+           'g'  as "group",
         'crowd_nft_whale'  as level,
         'other' as category,
         'all' as trade_type,

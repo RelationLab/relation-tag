@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_nft_time_top (
                                                    asset varchar(50) NULL
 );
 truncate table public.address_label_nft_time_top;
-insert into public.address_label_nft_time_top(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_nft_time_top(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
  select
     s1.address,
     s1.label_type,
@@ -23,7 +23,7 @@ insert into public.address_label_nft_time_top(address,label_type,label_name,data
     s1.rn  as data,
     'NFT'  as wired_type,
     now() as updated_at,
-    't'  as group,
+    't'  as "group",
     s1.label_type as level,
     'top' as category,
     s1.type as trade_type,

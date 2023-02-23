@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_nft_transfer_volume_rank (
                                                                asset varchar(50) NULL
 );
 truncate table public.address_label_nft_transfer_volume_rank;
-insert into public.address_label_nft_transfer_volume_rank(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_nft_transfer_volume_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
  select
     address ,
     label_type,
@@ -31,7 +31,7 @@ insert into public.address_label_nft_transfer_volume_rank(address,label_type,lab
     zb_rate  as data,
     'NFT'  as wired_type,
     now() as updated_at,
-    'v'  as group,
+    'v'  as "group",
     case
     when volume_usd >= 100
     and volume_usd < 1000 then 'L1'

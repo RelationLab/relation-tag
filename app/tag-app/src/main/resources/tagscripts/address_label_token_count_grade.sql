@@ -41,7 +41,7 @@ insert into public.address_label_token_count_grade(address,label_type,label_name
     total_transfer_count  as data,
     'DEFI'  as wired_type,
     now() as updated_at,
-    'c'  as group,
+    'c'  as "group",
     case
     when total_transfer_count >= 1
     and total_transfer_count < 10 then 'L1'
@@ -119,7 +119,7 @@ CREATE TABLE public.address_label_crowd_defi_active_users (
                                                               asset varchar(50) NULL
 );
 truncate table public.address_label_crowd_defi_active_users;
-insert into public.address_label_crowd_defi_active_users(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_crowd_defi_active_users(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
 select
            a1.address ,
            'crowd_defi_active_users' as label_type,
@@ -127,7 +127,7 @@ select
            0  as data,
            'CROWD'  as wired_type,
            now() as updated_at,
-           'g'  as group,
+           'g'  as "group",
     'crowd_defi_active_users'  as level,
     'other'  as category,
     'all' trade_type,
@@ -155,7 +155,7 @@ CREATE TABLE public.address_label_crowd_active_users (
                                                          asset varchar(50) NULL
 );
 truncate table public.address_label_crowd_active_users;
-insert into public.address_label_crowd_active_users(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_crowd_active_users(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
          select
              a1.address ,
              'crowd_active_users' as label_type,
@@ -163,7 +163,7 @@ insert into public.address_label_crowd_active_users(address,label_type,label_nam
              0  as data,
              'CROWD'  as wired_type,
              now() as updated_at,
-             'g'  as group,
+             'g'  as "group",
     'crowd_active_users'  as level,
     'other'  as category,
     'all' trade_type,
