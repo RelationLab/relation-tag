@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_nft_volume_rank (
                                                       asset varchar(50) NULL
 );
 truncate  table public.address_label_nft_volume_rank;
-insert into public.address_label_nft_volume_rank(address,label_type,label_name,data,wired_type,updated_at)
+insert into public.address_label_nft_volume_rank(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
 select
     address ,
     label_type,
@@ -198,7 +198,7 @@ CREATE TABLE public.address_label_crowd_nft_high_demander (
                                                               asset varchar(50) NULL
 );
 truncate table public.address_label_crowd_nft_high_demander;
-insert into public.address_label_crowd_nft_high_demander(address,label_type,label_name,data,wired_type,updated_at)
+insert into public.address_label_crowd_nft_high_demander(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
 select
            a1.address ,
            'crowd_nft_high_demander' as label_type,

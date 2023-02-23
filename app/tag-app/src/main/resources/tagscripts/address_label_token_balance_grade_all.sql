@@ -9,7 +9,7 @@ CREATE TABLE public.address_label_token_balance_grade_all (
                                                               updated_at timestamp(6) NULL
 );
 truncate table public.address_label_token_balance_grade_all;
-insert into public.address_label_token_balance_grade_all(address,label_type,label_name,data,wired_type,updated_at)
+insert into public.address_label_token_balance_grade_all(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
     select
     address,
     a2.label_type,
@@ -69,7 +69,7 @@ CREATE TABLE public.address_label_crowd_token_whale (
                                                         asset varchar(50) NULL
 );
 truncate table public.address_label_crowd_token_whale;
-insert into public.address_label_crowd_token_whale(address,label_type,label_name,data,wired_type,updated_at)
+insert into public.address_label_crowd_token_whale(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
 select
            a1.address ,
            'crowd_token_whale' as label_type,

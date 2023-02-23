@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_token_balance_rank_all (
                                                              asset varchar(50) NULL
 );
 truncate table public.address_label_token_balance_rank_all;
-insert into public.address_label_token_balance_rank_all(address,label_type,label_name,data,wired_type,updated_at)
+insert into public.address_label_token_balance_rank_all(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
     select
     tb1.address,
     tb2.label_type,

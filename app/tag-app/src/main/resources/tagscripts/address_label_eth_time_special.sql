@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_eth_time_special (
                                                        asset varchar(50) NULL
 );
 truncate table public.address_label_eth_time_special;
-insert into public.address_label_eth_time_special(address,label_type,label_name,data,wired_type,updated_at)
+insert into public.address_label_eth_time_special(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
  select
     a1.address,
     a2.label_type,
@@ -60,7 +60,7 @@ CREATE TABLE public.address_label_crowd_long_term_holder (
                                                              asset varchar(50) NULL
 );
 truncate table public.address_label_crowd_long_term_holder;
-insert into public.address_label_crowd_long_term_holder(address,label_type,label_name,data,wired_type,updated_at)
+insert into public.address_label_crowd_long_term_holder(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
  select
            a1.address ,
            'crowd_long_term_holder' as label_type,

@@ -1,5 +1,5 @@
 truncate table public.address_label_crowd_long_term_holder;
-insert into public.address_label_crowd_long_term_holder(address,label_type,label_name,data,wired_type,updated_at)
+insert into public.address_label_crowd_long_term_holder(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
 select
     address ,
     label_type,
