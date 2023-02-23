@@ -49,3 +49,5 @@ insert into dim_project_type(project, type, label_type, label_name, content, ope
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( '0xde30da39c46104798bb5aa3fe8b9e0e1f348163f', 'Airdrop Recipient', 'WEB3_Gitcoin_AirdropRecipient_ACTIVITY', '', '', 'T', 'Gitcoin_AirdropRecipient', 'count', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( '0xc9a42690912f6bd134dbc4e2493158b3d72cad21', 'NFT Recipient', 'WEB3_RabbitHole_NFTRecipient_ACTIVITY', '', '', 'T', 'RabbitHole_NFTRecipient', 'count', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( '0x5bd25d2f4f26bc82a34de016d34612a28a0cd492', 'NFT Recipient', 'WEB3_ProjectGalaxy_NFTRecipient_ACTIVITY', '', '', 'T', 'ProjectGalaxy_NFTRecipient', 'count', now());
+
+update dim_project_type set token_name = split_part(label_type  ,'_', 2);
