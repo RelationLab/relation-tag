@@ -145,7 +145,7 @@ CREATE TABLE public.address_label_crowd_defi_high_demander (
                                                                asset varchar(80) NULL
 );
 truncate table public.address_label_crowd_defi_high_demander;
-insert into public.address_label_crowd_defi_high_demander(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_crowd_defi_high_demander(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
 select
     a1.address ,
     'crowd_defi_high_demander' as label_type,
@@ -153,7 +153,7 @@ select
     0  as data,
     'CROWD'  as wired_type,
     now() as updated_at,
-    'g'  as group,
+    'g'  as "group",
     'crowd_defi_high_demander' level,
     'other' as category,
     'all' trade_type,
@@ -180,7 +180,7 @@ CREATE TABLE public.address_label_crowd_elite (
                                                   asset varchar(80) NULL
 );
 truncate table public.address_label_crowd_elite;
-insert into public.address_label_crowd_elite(address,label_type,label_name,data,wired_type,updated_at,group,level,category,trade_type,project,asset)
+insert into public.address_label_crowd_elite(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
 select
     a1.address ,
     'crowd_elite' as label_type,
@@ -188,7 +188,7 @@ select
     0  as data,
     'CROWD'  as wired_type,
     now() as updated_at,
-    'g'  as group,
+    'g'  as "group",
     'crowd_elite' level,
     'other' as category,
     'all' trade_type,
