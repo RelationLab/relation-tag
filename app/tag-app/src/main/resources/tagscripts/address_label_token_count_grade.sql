@@ -8,7 +8,6 @@ CREATE TABLE public.address_label_token_count_grade (
                                                         label_name varchar(1024) NULL,
                                                         updated_at timestamp(6) NULL,
                                                         "group" varchar(1) NULL,
-    ...
                                                         "level" varchar(50) NULL,
     category varchar(50) NULL,
     trade_type varchar(50) NULL,

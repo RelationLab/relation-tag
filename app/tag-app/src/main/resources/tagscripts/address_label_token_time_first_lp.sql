@@ -1,6 +1,5 @@
 drop table if exists address_label_token_time_first_lp;
 CREATE TABLE public.address_label_token_time_first_lp (
-
                                                           address varchar(512) NULL,
                                                           data numeric(280, 20) NULL,
                                                           wired_type varchar(20) NULL,

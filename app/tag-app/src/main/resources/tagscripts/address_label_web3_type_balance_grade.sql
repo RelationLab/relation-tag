@@ -1,6 +1,5 @@
 drop table if exists address_label_web3_type_balance_grade;
 CREATE TABLE public.address_label_web3_type_balance_grade (
-
                                                               address varchar(512) NULL,
                                                               data numeric(250, 20) NULL,
                                                               wired_type varchar(20) NULL,

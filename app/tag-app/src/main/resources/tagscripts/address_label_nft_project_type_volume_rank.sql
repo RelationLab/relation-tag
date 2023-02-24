@@ -1,6 +1,5 @@
 drop table if exists address_label_nft_project_type_volume_rank;
 CREATE TABLE public.address_label_nft_project_type_volume_rank (
-
                                                                    address varchar(512) NULL,
                                                                    data numeric(250, 20) NULL,
                                                                    wired_type varchar(20) NULL,

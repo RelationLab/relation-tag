@@ -1,6 +1,5 @@
 drop table if exists address_label_eth_time_special;
 CREATE TABLE public.address_label_eth_time_special (
-
                                                        address varchar(512) NULL,
                                                        data numeric(280, 20) NULL,
                                                        wired_type varchar(20) NULL,

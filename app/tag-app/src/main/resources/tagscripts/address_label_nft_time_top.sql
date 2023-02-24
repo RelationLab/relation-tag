@@ -1,6 +1,5 @@
 drop table if exists address_label_nft_time_top;
 CREATE TABLE public.address_label_nft_time_top (
-
                                                    address varchar(512) NULL,
                                                    data numeric(250, 20) NULL,
                                                    wired_type varchar(20) NULL,
