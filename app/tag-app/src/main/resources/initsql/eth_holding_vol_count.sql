@@ -1,5 +1,6 @@
 drop table if exists eth_holding_vol_count_tmp;
-create table eth_holding_vol_count_tmp as select * from eth_holding_vol_count;
+ALTER TABLE public.eth_holding_vol_count RENAME TO eth_holding_vol_count_tmp;
+create table eth_holding_vol_count as select * from eth_holding_vol_count_tmp limit 1;
 truncate table eth_holding_vol_count;
 insert
 into
@@ -37,7 +38,7 @@ from
         union  all
         select
             from_address address,
-            max(block_height) as block_height,
+            max(block_number) as block_height,
             sum(amount) total_transfer_volume,
             sum(1) total_transfer_count,
             0 as total_transfer_to_count,
@@ -53,7 +54,7 @@ from
         union all
         select
             to_address address,
-            max(block_height) as block_height,
+            max(block_number) as block_height,
             0 as total_transfer_volume,
             0 as total_transfer_count,
             sum(1) as total_transfer_to_count,

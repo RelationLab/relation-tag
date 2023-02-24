@@ -1,5 +1,6 @@
 drop table if exists token_holding_vol_count_tmp;
-create table token_holding_vol_count_tmp as select * from token_holding_vol_count;
+ALTER TABLE public.token_holding_vol_count RENAME TO token_holding_vol_count_tmp;
+create table token_holding_vol_count as select * from token_holding_vol_count_tmp limit 1;
 truncate table token_holding_vol_count;
 insert into
     token_holding_vol_count(address,
@@ -38,10 +39,10 @@ from
         group by
             address,
             token
-            union all
+        union all
         select
             from_address address,
-            max(block_height) as block_height,
+            max(block_number) as block_height,
             token,
             sum(amount) total_transfer_volume,
             sum(1) total_transfer_count,
@@ -57,7 +58,7 @@ from
 
         union all select
                       to_address address,
-                      max(block_height) as block_height,
+                      max(block_number) as block_height,
                       token,
                       0 as total_transfer_volume,
                       0 as total_transfer_count,
@@ -70,7 +71,3 @@ from
         group by
             to_address,
             token ) atb where address !='' group by  address,token;
-
-
-
-
