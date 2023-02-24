@@ -5,6 +5,7 @@ truncate table eth_holding_vol_count;
 insert
 into
     eth_holding_vol_count(address,
+                          block_height,
                           total_transfer_volume,
                           total_transfer_count,
                           total_transfer_to_count,
