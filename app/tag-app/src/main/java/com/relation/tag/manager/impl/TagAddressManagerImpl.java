@@ -130,6 +130,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rule_sql_content.sql")), "dim_rule_sql_content.sql");
         iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat("dim_rank_token.sql")), "dim_rank_token.sql");
 
+        execSql("dim_rank_token", "white_list_erc20.sql");
         execSql("dim_rank_token", "platform_nft_volume_usd.sql");
         execSql("platform_nft_volume_usd", "nft_transfer_holding.sql");
         execSql("nft_transfer_holding", "nft_volume_count.sql");
@@ -142,16 +143,16 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
         Thread.sleep(1 * 60 * 1000);
         log.info("eth_holding_vol_count Thread start.....");
-        boolean token_holding_vol_countcheck = execSql("web3_transaction_record_summary", "eth_holding_vol_count.sql");
+        boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql");
         log.info("eth_holding_vol_count Thread end .....");
         if (!token_holding_vol_countcheck) {
             Thread.sleep(1 * 60 * 1000);
         }
         log.info("token_holding_vol_count Thread start .....");
-        boolean dms_syn_blockcheck = execSql("web3_transaction_record_summary", "token_holding_vol_count.sql");
+        boolean dms_syn_blockcheck = execSql("dex_tx_volume_count_summary", "token_holding_vol_count.sql");
         log.info("token_holding_vol_count Thread end .....");
         if (!dms_syn_blockcheck) {
-            Thread.sleep(5 * 60 * 1000);
+            Thread.sleep(40 * 60 * 1000);
         }
         log.info("token_volume_usd Thread start .....");
         execSql("token_holding_vol_count", "dms_syn_block.sql");
@@ -167,7 +168,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private boolean execSql(String lastTableName, String sqlName) {
         String tableName = sqlName.split("\\.")[0];
-        if (StringUtils.equalsAny(tableName, "token_holding_vol_count", "eth_holding_vol_count")) {
+        if (StringUtils.equalsAny(tableName, "token_holding_vol_count", "eth_holding_vol_count","white_list_erc20")) {
             tableName = tableName.concat("_tmp");
         }
         String finalTableName = tableName;
