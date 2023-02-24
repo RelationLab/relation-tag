@@ -54,19 +54,19 @@ where
   and a2.token_type = 'token' and address <>'0x000000000000000000000000000000000000dead';
 
 drop table if exists address_label_crowd_long_term_holder;
-CREATE TABLE public.address_label_crowd_long_term_holder (
-                                                             address varchar(512) NULL,
-                                                             data numeric(280, 20) NULL,
-                                                             wired_type varchar(20) NULL,
-                                                             label_type varchar(512) NULL,
-                                                             label_name varchar(1024) NULL,
-                                                             updated_at timestamp(6) NULL,
-                                                             "group" varchar(1) NULL,
-                                                             "level" varchar(80 NULL,
-                                                             category varchar(80) NULL,
-                                                             trade_type varchar(80) NULL,
-                                                             project varchar(80) NULL,
-                                                             asset varchar(80) NULL
+CREATE TABLE public.address_label_crowd_long_term_holder(
+                                                            address varchar(512) NULL,
+                                                            data numeric(280, 20) NULL,
+                                                            wired_type varchar(20) NULL,
+                                                            label_type varchar(512) NULL,
+                                                            label_name varchar(1024) NULL,
+                                                            updated_at timestamp(6) NULL,
+                                                            "group" varchar(1) NULL,
+                                                            "level" varchar(80) NULL,
+                                                            category varchar(80) NULL,
+                                                            trade_type varchar(80) NULL,
+                                                            project varchar(80) NULL,
+                                                            asset varchar(80) NULL
 );
 truncate table public.address_label_crowd_long_term_holder;
 insert into public.address_label_crowd_long_term_holder(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
