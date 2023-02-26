@@ -81,6 +81,7 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
                                    and a1.project = a2.project
                                    and a1.type = a2.type
                                    and a2.data_subject = 'count'
+        WHERE  a2.label_type not like '%NFT%'
         group by
             a1.address,
             a2.label_type,
@@ -104,7 +105,7 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
                                    and a2.project = 'ALL'
                                    and a1.type = a2.type
                                    and a2.data_subject = 'count'
-        where  (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
+        where  (a1.token,a1.project) in (select distinct token,project from dim_project_token_type) and a2.label_type not like '%NFT%'
         group by
             a1.address,
             a2.label_type,
@@ -128,7 +129,7 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
                                    and a1.project = a2.project
                                    and a1.type = a2.type
                                    and a2.data_subject = 'count'
-        where  a1.token in (select distinct(token) from dim_project_token_type)
+        where  a1.token in (select distinct(token) from dim_project_token_type) and a2.label_type not like '%NFT%'
         group by
             a1.address,
             a2.label_type,
@@ -152,7 +153,7 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
                                    and a2.project = 'ALL'
                                    and a1.type = a2.type
                                    and a2.data_subject = 'count'
-        where (a1.token,a1.project) in (select distinct token,project from dim_project_token_type)
+        where (a1.token,a1.project) in (select distinct token,project from dim_project_token_type) and a2.label_type not like '%NFT%'
         group by
             a1.address,
             a2.label_type,
