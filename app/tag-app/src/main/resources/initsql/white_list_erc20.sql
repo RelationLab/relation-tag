@@ -15,7 +15,7 @@ select * from white_list_erc20;
 update
     white_list_erc20 b
 set
-    price = A.price
+    b.price = A.price
     from
 	(
 	select
