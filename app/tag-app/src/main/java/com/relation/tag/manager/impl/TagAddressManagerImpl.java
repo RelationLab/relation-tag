@@ -168,7 +168,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private boolean execSql(String lastTableName, String sqlName) {
         String tableName = sqlName.split("\\.")[0];
-        if (StringUtils.equalsAny(tableName, "token_holding_vol_count", "eth_holding_vol_count","white_list_erc20")) {
+        if (StringUtils.equalsAny(tableName, "token_holding_vol_count", "eth_holding_vol_count")) {
             tableName = tableName.concat("_tmp");
         }
         String finalTableName = tableName;
