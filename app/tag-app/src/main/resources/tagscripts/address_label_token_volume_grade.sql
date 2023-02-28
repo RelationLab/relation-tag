@@ -64,7 +64,7 @@ insert into public.address_label_token_volume_grade(address,label_type,label_nam
         select
             address,
             token,
-            volume_usd
+            round(volume_usd,3) volume_usd
         from
             token_volume_usd tbvutk
     )

@@ -90,7 +90,7 @@ from
                                                 select
                                                     token,
                                                     address,
-                                                    total_transfer_volume_usd as volume_usd
+                                                    round(total_transfer_volume_usd,3) as volume_usd
                                                 from
                                                     dex_tx_volume_count_summary dtvcs
                                                 where

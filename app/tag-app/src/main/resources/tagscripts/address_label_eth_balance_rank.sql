@@ -75,7 +75,7 @@ from
                                                 select
                                                     token,
                                                     address,
-                                                    balance_usd
+                                                    round(balance_usd,3) balance_usd
                                                 from
                                                     token_balance_volume_usd
                                                 where

@@ -69,7 +69,7 @@ insert into public.address_label_token_balance_rank_all(address,label_type,label
                                         select
                                             'ALL' token,
                                             s1.address,
-                                            sum(s1.balance_usd) as balance_usd
+                                            sum(round(s1.balance_usd,3)) as balance_usd
                                         from
                                             total_balance_volume_usd s1  where address <>'0x000000000000000000000000000000000000dead'
                                         group by

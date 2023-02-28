@@ -84,7 +84,7 @@ from
                                         select
                                             'ALL' token,
                                             s1.address,
-                                            s1.volume_usd
+                                            round(s1.volume_usd,3) volume_usd
                                         from
                                             total_volume_usd s1
                                         where
@@ -105,7 +105,7 @@ from
                                                 select
                                                     'ALL' token,
                                                     address,
-                                                    volume_usd
+                                                    round(volume_usd,3) volume_usd
                                                 from
                                                     total_volume_usd
                                                 where

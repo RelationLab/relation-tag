@@ -50,7 +50,7 @@ insert into public.address_label_token_balance_top(address,label_type,label_name
                         select
                             address,
                             token,
-                            balance_usd,
+                            round(balance_usd,3) balance_usd,
                             volume_usd
                         from
                             token_balance_volume_usd

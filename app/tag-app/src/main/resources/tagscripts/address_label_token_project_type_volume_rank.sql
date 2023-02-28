@@ -114,7 +114,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         select
                                                             address,
                                                             token,
-                                                            total_transfer_volume_usd,
+                                                            round(total_transfer_volume_usd,3) total_transfer_volume_usd,
                                                             type,
                                                             project
                                                         from
@@ -126,7 +126,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         select
                                                             address,
                                                             'ALL' as token,
-                                                            total_transfer_volume_usd,
+                                                            round(total_transfer_volume_usd,3) total_transfer_volume_usd,
                                                             type,
                                                             'ALL' as project
                                                         from
@@ -139,7 +139,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         select
                                                             address,
                                                             token,
-                                                            total_transfer_volume_usd,
+                                                            round(total_transfer_volume_usd,3) total_transfer_volume_usd,
                                                             'ALL' as type,
                                                             'ALL' as project
                                                         from
@@ -152,7 +152,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         select
                                                             address,
                                                             'ALL' as token,
-                                                            total_transfer_volume_usd,
+                                                            round(total_transfer_volume_usd,3) total_transfer_volume_usd,
                                                             type,
                                                             project
                                                         from
@@ -165,7 +165,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         select
                                                             address,
                                                             token,
-                                                            total_transfer_volume_usd,
+                                                            round(total_transfer_volume_usd,3) total_transfer_volume_usd,
                                                             type,
                                                             'ALL' as project
                                                         from
@@ -208,7 +208,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             token,
                                                             type,
                                                             project,
-                                                            total_transfer_volume_usd
+                                                            round(total_transfer_volume_usd,3) total_transfer_volume_usd
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
@@ -220,7 +220,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             'ALL' as token,
                                                             type,
                                                             'ALL' as project,
-                                                            total_transfer_volume_usd
+                                                            round(total_transfer_volume_usd,3) total_transfer_volume_usd
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
@@ -233,7 +233,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             'ALL' as token,
                                                             type,
                                                             project,
-                                                            total_transfer_volume_usd
+                                                            round(total_transfer_volume_usd,3) total_transfer_volume_usd
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
@@ -246,7 +246,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             token,
                                                             type,
                                                             'ALL' as project,
-                                                            total_transfer_volume_usd
+                                                            round(total_transfer_volume_usd,3) total_transfer_volume_usd
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where

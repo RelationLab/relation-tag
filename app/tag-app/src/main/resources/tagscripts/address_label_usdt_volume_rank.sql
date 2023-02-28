@@ -90,7 +90,7 @@ from
                                                 select
                                                     token,
                                                     address,
-                                                    volume_usd
+                                                    round(volume_usd,3) volume_usd
                                                 from
                                                     token_volume_usd
                                                 where

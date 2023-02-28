@@ -13,4 +13,4 @@ CREATE TABLE public.total_volume_usd (
 truncate table total_volume_usd;
 
 insert into total_volume_usd(address, volume_usd)
-    (select address,  sum(volume_usd) from token_volume_usd where address is not null group by address);
+    (select address,  sum(round(volume_usd,3)) from token_volume_usd where address is not null group by address);

@@ -64,7 +64,7 @@ insert into public.address_label_token_balance_grade_all(address,label_type,labe
         select
             address,
             'ALL' as token ,
-            sum(balance_usd) as balance_usd
+            sum(round(balance_usd,3)) as balance_usd
         from
             total_balance_volume_usd tbvu
         group by
