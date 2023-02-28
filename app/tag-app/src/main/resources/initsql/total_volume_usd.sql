@@ -9,7 +9,7 @@ CREATE TABLE public.total_volume_usd (
                                          updated_at timestamp(6) NULL,
                                          removed bool NULL
 )
-    DISTRIBUTED RANDOMLY;
+    distributed by (address);
 truncate table total_volume_usd;
 
 insert into total_volume_usd(address, volume_usd)
