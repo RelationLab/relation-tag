@@ -20,7 +20,7 @@ create table address_label_gp
 
 truncate table address_label_gp;
 insert into public.address_label_gp(address,label_type,label_name,wired_type,data,updated_at,owner,source,"group",level,category,trade_type,project,asset)
-select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset rom address_label_eth_count_grade  union all
+select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset from address_label_eth_count_grade  union all
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset from address_label_token_project_type_count_grade  union all
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset from address_label_token_project_type_volume_grade  union all
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset from address_label_token_project_type_volume_rank  union all
@@ -123,7 +123,7 @@ select
                     'asset',asset
                 )
                 order by label_type desc)::jsonb as labels,
-    CURRENT_TIMESTAMP as updated_at
+                CURRENT_TIMESTAMP as updated_at
 from
     address_label_gp
 group by address;
