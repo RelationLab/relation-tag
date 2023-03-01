@@ -19,6 +19,7 @@ create table address_label_gp
 
 
 truncate table address_label_gp;
+vacuum address_label_gp;
 insert into public.address_label_gp(address,label_type,label_name,wired_type,data,updated_at,owner,source,"group",level,category,trade_type,project,asset)
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset from address_label_eth_count_grade  union all
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset from address_label_token_project_type_count_grade  union all
@@ -103,12 +104,15 @@ create table address_labels_json_gin
 -- 用户标签
 truncate
     table public.address_labels_json_gin;
+vacuum address_labels_json_gin;
 insert into
     address_labels_json_gin(address,
+                            address_type,
                             labels,
                             updated_at)
 select
     address,
+    'p',
     json_agg(
             json_build_object(
                     'type', label_type,
@@ -128,36 +132,30 @@ from
     address_label_gp
 group by address;
 
-update
-    address_info b
-set
-    days = trunc((extract(epoch from cast( now() as TIMESTAMP)) - A."timestamp")/(24 * 60 * 60))
-    from
-	block_timestamp A
-where
-    A.height = b.first_up_chain_block_height
-  and b.days is null;
-
-UPDATE address_labels_json_gin b
-SET days = A.days
-    FROM
-address_info A
-WHERE
-    A.address = b.address and b.days is null;
-
-update
-    address_labels_json_gin
-set
-    address_type ='p';
-
-update
-    address_labels_json_gin b
-set
-    address_type ='c'
-    from
-	contract  A
-where
-    b.address  = A.contract_address;
+-- update
+--     address_info b
+-- set
+--     days = trunc((extract(epoch from cast( now() as TIMESTAMP)) - A."timestamp")/(24 * 60 * 60))
+--     from
+-- 	block_timestamp A
+-- where
+--     A.height = b.first_up_chain_block_height
+--   and b.days is null;
+--
+-- UPDATE address_labels_json_gin b
+-- SET days = A.days
+--     FROM
+-- address_info A
+-- WHERE
+--     A.address = b.address and b.days is null;
+-- update
+--     address_labels_json_gin b
+-- set
+--     address_type ='c'
+--     from
+-- 	contract  A
+-- where
+--     b.address  = A.contract_address;
 
 create table tag_result as select * from address_labels_json_gin limit 1;
 
