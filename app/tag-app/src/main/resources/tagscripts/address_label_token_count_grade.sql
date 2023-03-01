@@ -9,11 +9,11 @@ CREATE TABLE public.address_label_token_count_grade (
                                                         updated_at timestamp(6) NULL,
                                                         "group" varchar(1) NULL,
                                                         "level" varchar(50) NULL,
-    category varchar(50) NULL,
-    trade_type varchar(50) NULL,
-    project varchar(50) NULL,
-    asset varchar(50) NULL
-    );
+                                                        category varchar(50) NULL,
+                                                        trade_type varchar(50) NULL,
+                                                        project varchar(50) NULL,
+                                                        asset varchar(50) NULL
+)distributed by (address);
 truncate table public.address_label_token_count_grade;
 insert into public.address_label_token_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
 select
@@ -72,6 +72,7 @@ from
             total_transfer_count
         from
             token_holding_vol_count th1
+        where total_transfer_count >=1
         union all
         select
             address,
@@ -83,13 +84,13 @@ from
                     address,
                     total_transfer_count
                 from
-                    eth_holding_vol_count th
+                    eth_holding_vol_count th where total_transfer_count >=1
                 union all
                 select
                     address,
                     total_transfer_count
                 from
-                    token_holding_vol_count th where th.token in (select token_id from dim_rank_token)
+                    token_holding_vol_count th where  total_transfer_count >=1 and th.token in (select token_id from dim_rank_token)
             ) th2
         group by
             address

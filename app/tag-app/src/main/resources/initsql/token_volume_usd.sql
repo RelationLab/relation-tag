@@ -31,7 +31,7 @@ into
 select
     distinct th.address,
              token,
-             total_transfer_all_volume * round(wle.price,3) as volume_usd
+             total_transfer_all_volume * round(wle.price,10) as volume_usd
 from
     token_holding_vol_count th
         inner join (select * from white_list_erc20 where address  in (

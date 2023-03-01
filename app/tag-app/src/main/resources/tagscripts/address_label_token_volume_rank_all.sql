@@ -12,7 +12,7 @@ CREATE TABLE public.address_label_token_volume_rank_all (
                                                             trade_type varchar(80) NULL,
                                                             project varchar(80) NULL,
                                                             asset varchar(80) NULL
-);
+)distributed by (address);
 truncate table public.address_label_token_volume_rank_all;
 insert into public.address_label_token_volume_rank_all(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
 select
