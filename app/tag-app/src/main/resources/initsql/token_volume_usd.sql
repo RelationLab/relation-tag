@@ -18,7 +18,7 @@ into
 select
     distinct eh.address as address,
              'eth' as token,
-             eh.total_transfer_all_volume * wle.price  as volume_usd
+             eh.total_transfer_all_volume * round(cast(wle.price as numeric),3)  as volume_usd
 from
     eth_holding_vol_count eh
         inner join (select * from white_list_erc20 where symbol = 'WETH')  wle  on 1=1
@@ -31,7 +31,7 @@ into
 select
     distinct th.address,
              token,
-             total_transfer_all_volume * wle.price as volume_usd
+             total_transfer_all_volume *  round(cast(wle.price as numeric),3)  as volume_usd
 from
     token_holding_vol_count th
         inner join (select * from white_list_erc20 where address  in (
