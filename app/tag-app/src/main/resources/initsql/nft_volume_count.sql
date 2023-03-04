@@ -25,7 +25,7 @@ insert into nft_volume_count(address, token, type, transfer_volume, transfer_cou
 
 insert into nft_volume_count(address, token, type, transfer_volume, transfer_count)
     select address, token , 'ALL', total_transfer_all_volume,
-           total_transfer_count + total_transfer_mint_count + total_transfer_burn_count as total_transfer_count from nft_holding;
+           total_transfer_all_count as total_transfer_count from nft_holding;
 
 insert into nft_volume_count(address, token, type, transfer_volume, transfer_count)
     select address, token , 'Transfer', total_transfer_volume, total_transfer_count from nft_transfer_holding;
