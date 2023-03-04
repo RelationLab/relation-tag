@@ -8,21 +8,21 @@ CREATE TABLE public.token_volume_usd (
                                          updated_at timestamp NULL,
                                          removed bool NULL
 )
-distributed by (address);
+    distributed by (address);
 truncate table token_volume_usd;
 insert
-    into
+into
     token_volume_usd(address,
                      token,
                      volume_usd)
-    select
+select
     distinct eh.address as address,
              'eth' as token,
-             eh.total_transfer_all_volume * round(wle.price,3)  as volume_usd
-    from
+             eh.total_transfer_all_volume * wle.price  as volume_usd
+from
     eth_holding_vol_count eh
-        inner join (select * from white_list_erc20 where symbol = 'WETH')  wle
-    where eh.total_transfer_all_volume>0;
+        inner join (select * from white_list_erc20 where symbol = 'WETH')  wle  on 1=1
+where eh.total_transfer_all_volume>0;
 insert
 into
     token_volume_usd(address,
@@ -31,7 +31,7 @@ into
 select
     distinct th.address,
              token,
-             total_transfer_all_volume * round(wle.price,10) as volume_usd
+             total_transfer_all_volume * wle.price as volume_usd
 from
     token_holding_vol_count th
         inner join (select * from white_list_erc20 where address  in (
@@ -42,7 +42,7 @@ from
                 th.token = wle.address
             and ignored = false
 where
-     th.total_transfer_all_volume>0
+        th.total_transfer_all_volume>0
   and th.token in (
     select
         token_id
