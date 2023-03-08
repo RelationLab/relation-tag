@@ -1,8 +1,32 @@
+
+    drop table if exists dim_project_type;
+    create table dim_project_type
+    (
+    project  varchar(100)
+    ,type   varchar(100)
+    ,label_type   varchar(100)
+    ,label_name  varchar(100)
+    ,content   varchar(100)
+    ,operate_type   varchar(100)
+    ,seq_flag varchar(100)
+    ,data_subject varchar(100)
+    ,etl_update_time timestamp
+    );
+
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'NFT Recipient', 'WEB3_ALL_NFTRecipient_BALANCE_GRADE', '', '', 'T', 'ALL_NFTRecipient', 'balance_grade', now());
+insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'NFT Recipient', 'WEB3_ALL_Write_BALANCE_GRADE', '', '', 'T', 'ALL_NFTRecipient', 'balance_grade', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'NFT Recipient', 'WEB3_ALL_NFTRecipient_BALANCE_TOP', '', '', 'T', 'ALL_NFTRecipient', 'balance_top', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'NFT Recipient', 'WEB3_ALL_NFTRecipient_BALANCE_RANK', '', '', 'T', 'ALL_NFTRecipient', 'balance_rank', now());
+insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'write', 'WEB3_ALL_Write_BALANCE_TOP', '', '', 'T', 'ALL_Write', 'balance_top', now());
+insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'write', 'WEB3_ALL_Write_BALANCE_RANK', '', '', 'T', 'ALL_Write', 'balance_rank', now());
+insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'All', 'WEB3_ALL_ALL_ACTIVITY', '', '', 'T', 'ALL_ALL', 'count', now());
+insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'registerer', 'WEB3_ALL_Registerer_ACTIVITY', '', '', 'T', 'ALL_Registerer', 'count', now());
+insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'renewer', 'WEB3_ALL_Renewer_ACTIVITY', '', '', 'T', 'ALL_Renewer', 'count', now());
+insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'Airdrop Recipient', 'WEB3_ALL_AirdropRecipient_ACTIVITY', '', '', 'T', 'ALL_AirdropRecipient', 'count', now());
+insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'donator', 'WEB3_ALL_Donator_ACTIVITY', '', '', 'T', 'ALL_Donator', 'count', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'NFT Recipient', 'WEB3_ALL_NFTRecipient_ACTIVITY', '', '', 'T', 'ALL_NFTRecipient', 'count', now());
-insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'ALL', 'WEB3_ALL_ALL_ACTIVITY', '', '', 'T', 'ALL_ALL', 'count', now());
+insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'write', 'WEB3_ALL_Write_ACTIVITY', '', '', 'T', 'ALL_Write', 'count', now());
+insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'mint', 'WEB3_ALL_Mint_ACTIVITY', '', '', 'T', 'ALL_Mint', 'count', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( '0xaf89c5e115ab3437fc965224d317d09faa66ee3e', 'NFT Recipient', 'WEB3_Mirror_NFTRecipient_BALANCE_GRADE', '', '', 'T', 'Mirror_NFTRecipient', 'balance_grade', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( '0xaf89c5e115ab3437fc965224d317d09faa66ee3e', 'write', 'WEB3_Mirror_Write_BALANCE_GRADE', '', '', 'T', 'Mirror_Write', 'balance_grade', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( '0x283af0b28c62c092c9727f1ee09c02ca627eb7f5', 'NFT Recipient', 'WEB3_ENS_NFTRecipient_BALANCE_GRADE', '', '', 'T', 'ENS_NFTRecipient', 'balance_grade', now());
@@ -50,4 +74,6 @@ insert into dim_project_type(project, type, label_type, label_name, content, ope
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( '0xc9a42690912f6bd134dbc4e2493158b3d72cad21', 'NFT Recipient', 'WEB3_RabbitHole_NFTRecipient_ACTIVITY', '', '', 'T', 'RabbitHole_NFTRecipient', 'count', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( '0x5bd25d2f4f26bc82a34de016d34612a28a0cd492', 'NFT Recipient', 'WEB3_ProjectGalaxy_NFTRecipient_ACTIVITY', '', '', 'T', 'ProjectGalaxy_NFTRecipient', 'count', now());
 
+
 update dim_project_type set token_name = split_part(label_type  ,'_', 2);
+
