@@ -115,7 +115,7 @@ select
 								platform,
 								token,
 								type,
-								volume_usd
+                                round(volume_usd,3) as volume_usd
 							from
 								platform_nft_type_volume_count
 							where
@@ -128,8 +128,8 @@ select
 								platform,
 								'ALL' as token,
 								type,
-								volume_usd
-							from
+                                round(volume_usd,3) as volume_usd
+                            from
 								platform_nft_type_volume_count
 							where
 								volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
@@ -171,8 +171,8 @@ select
 								platform_group,
 								token,
 								type,
-								volume_usd
-							from
+                                round(volume_usd,3) as volume_usd
+                            from
 								platform_nft_type_volume_count
 							where
 								volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead'
@@ -183,7 +183,7 @@ select
 								platform_group,
 								'ALL' as token,
 								type,
-								volume_usd
+                                round(volume_usd,3) as volume_usd
 							from
 								platform_nft_type_volume_count
 							where

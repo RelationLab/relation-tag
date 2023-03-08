@@ -113,7 +113,7 @@ from
                                                             platform,
                                                             token,
                                                             type,
-                                                            volume_usd,
+                                                            round(volume_usd,3) as volume_usd,
                                                             transfer_count
                                                         from
                                                             platform_nft_type_volume_count
@@ -127,40 +127,13 @@ from
                                                             platform,
                                                             'ALL' as token,
                                                             type,
-                                                            volume_usd,
+                                                            round(volume_usd,3) as volume_usd,
                                                             transfer_count
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
                                                                 volume_usd > 0 and address <>'0x000000000000000000000000000000000000dead'
-                                                        union all
-                                                        -- project-token(ALL)-type(ALL)
-                                                        select
-                                                            address,
-                                                            platform_group,
-                                                            platform,
-                                                            'ALL' as token,
-                                                            'ALL' as type,
-                                                            volume_usd,
-                                                            transfer_count
-                                                        from
-                                                            platform_nft_type_volume_count
-                                                        where
-                                                                volume_usd > 0 and address <>'0x000000000000000000000000000000000000dead'
-                                                        union all
-                                                        -- project-token-type(ALL)
-                                                        select
-                                                            address,
-                                                            platform_group,
-                                                            platform,
-                                                            token,
-                                                            'ALL' as type,
-                                                            volume_usd,
-                                                            transfer_count
-                                                        from
-                                                            platform_nft_type_volume_count
-                                                        where
-                                                                volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead') s1
+                                                        ) s1
                                                         inner join dim_project_token_type s2
                                                                    on
                                                                                s1.token = s2.token
@@ -197,7 +170,7 @@ from
                                                             platform_group,
                                                             token,
                                                             type,
-                                                            volume_usd
+                                                            round(volume_usd,3) as volume_usd
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
@@ -209,7 +182,7 @@ from
                                                             platform_group,
                                                             'ALL' as token,
                                                             type,
-                                                            volume_usd
+                                                            round(volume_usd,3) as volume_usd
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
