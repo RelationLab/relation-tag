@@ -100,4 +100,31 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             a2.type,
             a2.project_name ,
             a2.token_name
+        -- project(null)+nft（ALL）+type
+        union all
+        select
+            a1.address,
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
+            sum(transfer_count) as sum_count
+        from
+            platform_nft_type_volume_count a1
+                inner join dim_project_token_type a2
+                           on
+                                       a2.token = 'ALL'
+                                   and (a2.project = ''
+                                   or a2.project = 'ALL')
+                                   and a1.type = a2.type
+                                   and a2.type != 'Transfer'
+            and a2.data_subject = 'count'
+            and a2.label_type like '%NFT%'
+            and a2.label_type not like '%WEB3%'
+        group by
+            a1.address,
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
     ) t where sum_count >= 1 and address <>'0x000000000000000000000000000000000000dead';
