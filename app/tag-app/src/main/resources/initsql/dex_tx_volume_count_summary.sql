@@ -46,9 +46,6 @@ from
     token_holding_uni_cal th
         inner join white_list_erc20 w on
     w.address = th.price_token
-where
-    (th.balance >= 0
-  and th.total_transfer_volume >= 0)
 group by
     th.address,
     th.token,
