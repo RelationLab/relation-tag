@@ -118,7 +118,8 @@ select
 								nft_holding
 							where
 								balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
-    )
+							  and token in (select token_id from dim_project_token_type_rank dpttr)
+                            )
     s1
 						inner join dim_project_token_type s2
     on
@@ -159,7 +160,9 @@ select
 						from
 							nft_holding
 						where
-							balance >= 1 and address <>'0x000000000000000000000000000000000000dead') totala
+							balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+						  and token in (select token_id from dim_project_token_type_rank dpttr)
+                        ) totala
 					inner join dim_project_token_type tb2
     on
 						totala.token = tb2.token

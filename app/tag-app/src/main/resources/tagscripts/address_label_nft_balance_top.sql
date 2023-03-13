@@ -67,7 +67,9 @@ select
 					'ALL' as token,
 					balance
 				from
-					nft_holding where address <>'0x000000000000000000000000000000000000dead') totala
+					nft_holding where address <>'0x000000000000000000000000000000000000dead'
+					              and token in (select token_id from dim_project_token_type_rank dpttr)
+                ) totala
 			inner join dim_project_token_type a2
     on
 				totala.token = a2.token

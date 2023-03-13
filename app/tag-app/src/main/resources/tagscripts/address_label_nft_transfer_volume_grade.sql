@@ -102,6 +102,7 @@ select
                                    and a2.label_type not like '%WEB3%'
                                    and (a2.project = ''
                                    or a2.project = 'ALL')
+        where a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,
             a2.label_type,

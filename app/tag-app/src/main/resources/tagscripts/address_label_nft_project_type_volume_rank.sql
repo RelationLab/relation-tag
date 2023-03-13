@@ -133,6 +133,7 @@ select
 								platform_nft_type_volume_count
 							where
 								volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
+                                and token in (select token_id from dim_project_token_type_rank dpttr)
 						 )
                                          s1
 						inner join dim_project_token_type s2
@@ -188,6 +189,7 @@ select
 								platform_nft_type_volume_count
 							where
 								volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
+                                and token in (select token_id from dim_project_token_type_rank dpttr)
 						 ) totala
 						inner join dim_project_token_type tb2
  												on

@@ -105,18 +105,17 @@ select
 						union all
 							-- project(null)+nft（ALL）+type
 							select
-								address
-                                              ,
-								'ALL' as token
-                                              ,
-								total_transfer_volume
-                                              ,
+								address,
+								'ALL' as token,
+								total_transfer_volume,
 								total_transfer_count
 							from
 								nft_transfer_holding
 							where
-								total_transfer_volume >= 1 and address <>'0x000000000000000000000000000000000000dead'
-                                     ) s1
+								total_transfer_volume >= 1
+							  and address <>'0x000000000000000000000000000000000000dead'
+                            and token in (select token_id from dim_project_token_type_rank dpttr)
+							) s1
 						inner join dim_project_token_type s2
                                                     on
 							s1.token = s2.token
@@ -157,7 +156,10 @@ select
 						from
 							nft_transfer_holding
 						where
-							total_transfer_volume >= 1 and address <>'0x000000000000000000000000000000000000dead') totala
+							total_transfer_volume >= 1
+						  and address <>'0x000000000000000000000000000000000000dead'
+                            and token in (select token_id from dim_project_token_type_rank dpttr)
+						) totala
 					inner join
      dim_project_token_type tb2
      on

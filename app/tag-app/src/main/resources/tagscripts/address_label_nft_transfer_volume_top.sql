@@ -72,7 +72,10 @@ insert into public.address_label_nft_transfer_volume_top(address,label_type,labe
 				from
 					nft_transfer_holding
 				where
-					total_transfer_volume >= 1 and address <>'0x000000000000000000000000000000000000dead') totala
+					total_transfer_volume >= 1
+				  and address <>'0x000000000000000000000000000000000000dead'
+                    and token in (select token_id from dim_project_token_type_rank dpttr)
+				) totala
 			inner join dim_project_token_type a2
                            on
 				totala.token = a2.token

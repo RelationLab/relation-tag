@@ -93,7 +93,7 @@ end   as level,
             a2.type,
             a2.project_name ,
             a2.token_name
-            -- project(null)+nft（ALL）+type
+--             project(null)+nft（ALL）+type
 --         union all
 --         select
 --             a1.address,

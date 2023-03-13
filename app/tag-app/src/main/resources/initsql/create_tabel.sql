@@ -14,6 +14,11 @@ create table dim_project_token_type
     ,token_name   varchar(100)
     ,project_name varchar(100)
 );
+drop table if exists dim_project_token_type_rank;
+create table dim_project_token_type_rank
+(
+    token_id   varchar(512)
+);
 
 drop table if exists dim_project_type;
 create table dim_project_type

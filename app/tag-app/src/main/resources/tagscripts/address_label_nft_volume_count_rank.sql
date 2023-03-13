@@ -119,7 +119,9 @@ select
                                                         from
                                                             nft_volume_count
                                                         where
-                                                                transfer_volume>0 and address <>'0x000000000000000000000000000000000000dead') s1
+                                                                transfer_volume>0
+                                                          and address <>'0x000000000000000000000000000000000000dead'
+                                                            and token in (select token_id from dim_project_token_type_rank dpttr)) s1
                                                         inner join dim_project_token_type s2 on
                                                                 s1.token = s2.token
                                                             and s1.type = s2.type
@@ -159,7 +161,10 @@ select
                                                 from
                                                     nft_volume_count
                                                 where
-                                                        transfer_volume>0 and address <>'0x000000000000000000000000000000000000dead') totala
+                                                        transfer_volume>0
+                                                  and address <>'0x000000000000000000000000000000000000dead'
+                                                    and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                ) totala
                                                 inner join dim_project_token_type tb2 on
                                                         totala.token = tb2.token
                                                     and totala.type = tb2.type
