@@ -21,7 +21,7 @@ truncate table web3_transaction_record_summary;
                                         project,
                                         balance)
     select
-        address,
+        lower(address) as address,
         sum(total_transfer_volume) as total_transfer_volume ,
         sum(total_transfer_count) as total_transfer_count ,
         type ,
