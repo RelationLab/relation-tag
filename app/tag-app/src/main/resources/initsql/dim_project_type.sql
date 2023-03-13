@@ -11,6 +11,7 @@
     ,seq_flag varchar(100)
     ,data_subject varchar(100)
     ,etl_update_time timestamp
+    ,token_name varchar(100)
     );
 
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'All', 'WEB3_ALL_ALL_BALANCE_GRADE', '', '', 'T', 'ALL_ALL', 'balance_grade', now());
