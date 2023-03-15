@@ -81,7 +81,7 @@ from
                                                 where
                                                         project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                                   and balance_usd >= 100
-                                                  and type = 'lp' and address <>'0x000000000000000000000000000000000000dead') s1
+                                                  and type = 'lp' and address <>'0x000000000000000000000000000000000000dead'  and address <> '0x0000000000000000000000000000000000000000') s1
                                                 inner join dim_rank_token s2
                                                            on
                                                                    s1.token = s2.token_id
@@ -105,7 +105,7 @@ from
                                         where
                                                 project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                           and balance_usd >= 100
-                                          and type = 'lp'  and address <>'0x000000000000000000000000000000000000dead') tbvu2
+                                          and type = 'lp'  and address <>'0x000000000000000000000000000000000000dead'  and address <> '0x0000000000000000000000000000000000000000') tbvu2
                                 group by
                                     token) as a10
                             on

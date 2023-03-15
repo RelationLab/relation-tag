@@ -82,4 +82,4 @@ from
             and a2.label_type  like 'Uniswap_v3%'
 where
         a1.total_transfer_count >= 1
-  and a2.data_subject = 'count' and address <>'0x000000000000000000000000000000000000dead';
+  and a2.data_subject = 'count' and address <>'0x000000000000000000000000000000000000dead'  and address <> '0x0000000000000000000000000000000000000000';

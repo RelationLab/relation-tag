@@ -56,7 +56,7 @@ from
                         where
                                 project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                           and balance_usd >= 100
-                          and type = 'lp' and address <>'0x000000000000000000000000000000000000dead'
+                          and type = 'lp' and address <>'0x000000000000000000000000000000000000dead'  and address <> '0x0000000000000000000000000000000000000000'
                     ) totala
                 group by
                     address,
