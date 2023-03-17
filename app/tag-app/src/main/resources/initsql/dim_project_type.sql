@@ -1,4 +1,3 @@
-
 drop table if exists dim_project_type;
 create table dim_project_type
 (
@@ -11,8 +10,9 @@ create table dim_project_type
     ,seq_flag varchar(100)
     ,data_subject varchar(100)
     ,etl_update_time timestamp
-    ,token_name varchar(100)
+    ,token_name   varchar(100)
 );
+truncate table dim_project_type;
 
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'ALL', 'WEB3_ALL_ALL_BALANCE_GRADE', '', '', 'T', 'ALL_ALL', 'balance_grade', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'ALL', 'WEB3_ALL_ALL_BALANCE_TOP', '', '', 'T', 'ALL_ALL', 'balance_top', now());

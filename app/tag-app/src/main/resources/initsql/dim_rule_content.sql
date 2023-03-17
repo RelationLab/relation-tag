@@ -1,4 +1,3 @@
-
 drop table if exists dim_rule_content;
 create table dim_rule_content
 (
@@ -11,6 +10,14 @@ create table dim_rule_content
     token_name   varchar(20),
     token_type   varchar(20)
 );
+truncate table dim_rule_content;
+drop table if exists dim_rank_token;
+create table dim_rank_token
+(
+    token_id   varchar(512),
+    asset_type varchar(10)
+);
+truncate table dim_rank_token;
 
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_1', '0x9c4fe5ffd9a9fc5678cfbd93aa2d4fd684b67c4c', 'Uniswap_v2_WETH/PAXG_BALANCE_GRADE', 'T', 'balance_grade', now(), 'WETH/PAXG', 'lp');
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_2', '0x63b61e73d3fa1fb96d51ce457cabe89fffa7a1f1', 'Uniswap_v2_WETH/SHINJA_BALANCE_GRADE', 'T', 'balance_grade', now(), 'WETH/SHINJA', 'lp');
