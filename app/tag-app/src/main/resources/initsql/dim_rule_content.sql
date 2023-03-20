@@ -9891,7 +9891,5 @@ insert into dim_rule_content(rule_code, token, label_type, operate_type, data_su
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_9492', '0xe0b7927c4af23765cb51314a0e0521a9645f0e2a', 'ALL_DGD_ALL_VOLUME_RANK', 'T', 'volume_rank', now(), 'DGD', 'token');
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_9493', '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0', 'ALL_MATIC_ALL_VOLUME_RANK', 'T', 'volume_rank', now(), 'MATIC', 'token');
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_9494', '0xae7ab96520de3a18e5e111b5eaab095312d7fe84', 'ALL_stETH_ALL_VOLUME_RANK', 'T', 'volume_rank', now(), 'stETH', 'token');
-
-
 insert into dim_rank_token select distinct token,token_type from dim_rule_content;
 
