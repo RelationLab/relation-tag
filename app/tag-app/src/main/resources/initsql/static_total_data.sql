@@ -67,7 +67,7 @@ update
     static_total_data
 set
     avg_balance = (select
-                       balance_usd
+                       avg(balance_usd) balance_usd
                    from
                        (
                            select
@@ -77,29 +77,23 @@ set
 			balance_usd asc) as rn
                            from
                                token_balance_volume_usd
-                           where
-                                   token in (
-                                   select
-                                       token_id
-                                   from
-                                       dim_rank_token
-                                   where
-                                           asset_type = 'token')
                        ) out_t
                    where
-                           rn =(
+                           rn >=(
                            select
-                                   count(1)/ 2
+                               case
+                                   when count(1)%2 = 0 then count(1)/ 2
+                                   else count(1)/ 2 + 1
+                                   end
                            from
                                token_balance_volume_usd
-                           where
-                                   token in (
-                                   select
-                                       token_id
-                                   from
-                                       dim_rank_token
-                                   where
-                                           asset_type = 'token')))
+                       )
+                     and rn <=(
+                       select
+                                   count(1)/ 2 + 1
+                       from
+                           token_balance_volume_usd
+                   ))
 where
         code = 'static_total';
 
@@ -107,46 +101,88 @@ update
     static_total_data
 set
     avg_volume = (select
-                      volume_usd
-                   from
-                       (
-                           select
-                               volume_usd,
-                               row_number() over( partition by 1 = 1
+                      avg(volume_usd) volume_usd
+                  from
+                      (
+                          select
+                              volume_usd,
+                              row_number() over( partition by 1 = 1
 	order by
 			volume_usd asc) as rn
-                           from
-                               token_volume_usd
-                           where
-                                   token in (
-                                   select
-                                       token_id
-                                   from
-                                       dim_rank_token
-                                   where
-                                           asset_type = 'token')
-                       ) out_t
-                   where
-                           rn =(
-                           select
-                                   count(1)/ 2
-                           from
-                               token_volume_usd
-                           where
-                                   token in (
-                                   select
-                                       token_id
-                                   from
-                                       dim_rank_token
-                                   where
-                                           asset_type = 'token')))
+                          from
+                              total_volume_usd
+
+                      ) out_t
+                  where
+                          rn >=(
+                          select
+                              case
+                                  when count(1)%2 = 0 then count(1)/ 2
+                                  else count(1)/ 2 + 1
+                                  end
+                          from
+                              total_volume_usd
+                      )
+                    and rn <=(
+                      select
+                                  count(1)/ 2 + 1
+                      from
+                          total_volume_usd
+                  ))
+where
+        code = 'static_total';
+
+
+DROP TABLE if EXISTS  address_activity;
+create table address_activity
+(
+    address  varchar(200) not null,
+    activity_num numeric(250, 20) NULL
+);
+truncate table address_activity;
+insert into address_activity(address,activity_num)
+select
+    from token_holding_vol_count
+
+update
+    static_total_data
+set
+    avg_activity = (select
+                        avg(activity_num) activity_num
+                    from
+                        (
+                            select
+                                activity_num,
+                                row_number() over( partition by 1 = 1
+	order by
+			activity_num asc) as rn
+                            from
+                                address_activity
+
+                        ) out_t
+                    where
+                            rn >=(
+                            select
+                                case
+                                    when count(1)%2 = 0 then count(1)/ 2
+                                    else count(1)/ 2 + 1
+                                    end
+                            from
+                                address_activity
+                        )
+                      and rn <=(
+                        select
+                                    count(1)/ 2 + 1
+                        from
+                            address_activity
+                    ))
 where
         code = 'static_total';
 
 update
     static_total_data
 set
-    avg_balance = (select
+    avg_birthday = (select
                        balance_usd
                    from
                        (
@@ -156,7 +192,7 @@ set
 	order by
 			balance_usd asc) as rn
                            from
-                               token_balance_volume_usd
+                               total_balance_volume_usd
                            where
                                    token in (
                                    select
@@ -171,47 +207,7 @@ set
                            select
                                    count(1)/ 2
                            from
-                               token_balance_volume_usd
-                           where
-                                   token in (
-                                   select
-                                       token_id
-                                   from
-                                       dim_rank_token
-                                   where
-                                           asset_type = 'token')))
-where
-        code = 'static_total';
-
-update
-    static_total_data
-set
-    avg_balance = (select
-                       balance_usd
-                   from
-                       (
-                           select
-                               balance_usd,
-                               row_number() over( partition by 1 = 1
-	order by
-			balance_usd asc) as rn
-                           from
-                               token_balance_volume_usd
-                           where
-                                   token in (
-                                   select
-                                       token_id
-                                   from
-                                       dim_rank_token
-                                   where
-                                           asset_type = 'token')
-                       ) out_t
-                   where
-                           rn =(
-                           select
-                                   count(1)/ 2
-                           from
-                               token_balance_volume_usd
+                               total_balance_volume_usd
                            where
                                    token in (
                                    select
