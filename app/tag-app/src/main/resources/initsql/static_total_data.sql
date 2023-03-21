@@ -141,8 +141,16 @@ create table address_activity
 );
 truncate table address_activity;
 insert into address_activity(address,activity_num)
+select sum(activity_num),address
 select
-    from token_holding_vol_count
+    from sum(total_transfer_count) as activity_num,address from  token_holding_vol_count group by address
+union all
+select
+from sum(total_transfer_count) as activity_num,address from  web3_transaction_record_summary group by address
+    union all
+select
+from sum(total_transfer_all_count) as activity_num,address from  nft_holding group by address)
+ out_t group by address;
 
 update
     static_total_data
@@ -183,39 +191,8 @@ update
     static_total_data
 set
     avg_birthday = (select
-                       balance_usd
-                   from
-                       (
-                           select
-                               balance_usd,
-                               row_number() over( partition by 1 = 1
-	order by
-			balance_usd asc) as rn
-                           from
-                               total_balance_volume_usd
-                           where
-                                   token in (
-                                   select
-                                       token_id
-                                   from
-                                       dim_rank_token
-                                   where
-                                           asset_type = 'token')
-                       ) out_t
-                   where
-                           rn =(
-                           select
-                                   count(1)/ 2
-                           from
-                               total_balance_volume_usd
-                           where
-                                   token in (
-                                   select
-                                       token_id
-                                   from
-                                       dim_rank_token
-                                   where
-                                           asset_type = 'token')))
+                        avg(days) as avg_birthday
+                   from address_info)
 where
         code = 'static_total';
 

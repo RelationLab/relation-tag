@@ -114,7 +114,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private void tag() throws Exception {
         innit();
-        Thread.sleep(2 * 60 * 1000);
+//        Thread.sleep(2 * 60 * 1000);
         check("total_volume_usd", 1 * 60 * 1000);
         List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
         List<FileEntity> fileList = Lists.newArrayList();
@@ -143,25 +143,25 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
         execSql("token_holding_uni_cal", "dex_tx_volume_count_summary.sql");
 
-        Thread.sleep(1 * 60 * 1000);
+//        Thread.sleep(1 * 60 * 1000);
         log.info("eth_holding_vol_count Thread start.....");
         boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql");
         log.info("eth_holding_vol_count Thread end .....");
         if (!token_holding_vol_countcheck) {
-            Thread.sleep(1 * 60 * 1000);
+//            Thread.sleep(1 * 60 * 1000);
         }
         log.info("token_holding_vol_count Thread start .....");
         boolean dms_syn_blockcheck = execSql("dex_tx_volume_count_summary", "token_holding_vol_count.sql");
         log.info("token_holding_vol_count Thread end .....");
         if (!dms_syn_blockcheck) {
-            Thread.sleep(1 * 60 * 1000);
+//            Thread.sleep(1 * 60 * 1000);
         }
         log.info("token_volume_usd Thread start .....");
         execSql("token_holding_vol_count", "dms_syn_block.sql");
         boolean total_volume_usdcheck = execSql("token_holding_vol_count", "token_volume_usd.sql");
         log.info("token_volume_usd Thread end .....");
         if (!total_volume_usdcheck) {
-            Thread.sleep(5 * 60 * 1000);
+//            Thread.sleep(5 * 60 * 1000);
         }
         log.info("total_volume_usd Thread start .....");
         execSql("token_volume_usd", "total_volume_usd.sql");
@@ -204,11 +204,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void tagMerge() throws Exception {
-        try {
-            Thread.sleep(40 * 60 * 1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            Thread.sleep(40 * 60 * 1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         execSql(null,"address_label_gp.sql");
     }
 }
