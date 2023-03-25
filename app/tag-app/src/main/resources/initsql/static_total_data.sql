@@ -140,16 +140,16 @@ create table address_activity
     activity_num numeric(250, 20) NULL
 );
 truncate table address_activity;
-insert into address_activity(address,activity_num)
-select sum(activity_num),address
-select
-    from sum(total_transfer_count) as activity_num,address from  token_holding_vol_count group by address
-union all
-select
-from sum(total_transfer_count) as activity_num,address from  web3_transaction_record_summary group by address
-    union all
-select
-from sum(total_transfer_all_count) as activity_num,address from  nft_holding group by address)
+insert into address_activity(activity_num,address)
+select sum(activity_num),address from(
+ select
+     sum(total_transfer_count) as activity_num,address from  token_holding_vol_count group by address
+ union all
+ select
+     sum(total_transfer_count) as activity_num,address from  web3_transaction_record_summary group by address
+ union all
+ select
+     sum(total_transfer_all_count) as activity_num,address from  nft_holding group by address)
  out_t group by address;
 
 update
