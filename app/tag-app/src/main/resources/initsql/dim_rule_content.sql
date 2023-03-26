@@ -10041,3 +10041,4 @@ insert into dim_rule_content(rule_code, token, label_type, operate_type, data_su
 
 insert into dim_rank_token select distinct token,token_type from dim_rule_content;
 
+
