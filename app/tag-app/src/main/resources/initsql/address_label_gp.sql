@@ -106,6 +106,7 @@ create table address_labels_json_gin
 truncate
     table public.address_labels_json_gin;
 vacuum address_labels_json_gin;
+
 insert into
     address_labels_json_gin(address,
                             address_type,
@@ -142,25 +143,44 @@ set
 where
     b.address  = A.contract_address;
 
-update
-    address_info b
-set
-    days = trunc((extract(epoch from cast( now() as TIMESTAMP)) - A."timestamp")/(24 * 60 * 60))
-    from
-	block_timestamp A
-where
-    A.height = b.first_up_chain_block_height
-  and b.days is null;
 
-UPDATE address_labels_json_gin b
-SET days = A.days
-    FROM
-address_info A
-WHERE
-    A.address = b.address and b.days is null;
+update
+    address_labels_json_gin
+set
+    days = subquery.days
+    from
+	(
+	select
+		address_info.address,
+		trunc((extract(epoch from cast(now() as TIMESTAMP)) - block_timestamp.timestamp) / (24 * 60 * 60)) as days
+	from
+		block_timestamp
+	left join address_info
+                         on
+		(address_info.first_up_chain_block_height = block_timestamp.height)) as subquery
+where
+    address_labels_json_gin.address = subquery.address;
 
 
 create table tag_result as select * from address_labels_json_gin limit 1;
+--
+-- update
+--     address_info b
+-- set
+--     days = trunc((extract(epoch from cast( now() as TIMESTAMP)) - A."timestamp")/(24 * 60 * 60))
+--     from
+-- 	block_timestamp A
+-- where
+--     A.height = b.first_up_chain_block_height
+--   and b.days is null;
+--
+-- UPDATE address_labels_json_gin b
+-- SET days = A.days
+--     FROM
+-- address_info A
+-- WHERE
+--     A.address = b.address and b.days is null;
+
 
 
 
