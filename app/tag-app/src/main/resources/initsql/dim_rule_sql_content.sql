@@ -3808,5 +3808,8 @@ insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_crowd_active_users','address_label_crowd_active_users',1);
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_crowd_elite','address_label_crowd_elite',1);
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_crowd_nft_active_users','address_label_crowd_nft_active_users',1);
+
 
 
