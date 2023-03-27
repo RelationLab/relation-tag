@@ -48,18 +48,17 @@
 --     token,
 --     code_type;
 
-DROP TABLE if EXISTS  static_asset_data;
-create table static_asset_data
+DROP TABLE if EXISTS  static_asset_level_data;
+create table static_asset_level_data
 (
-    code  varchar(200) not null,
-    balance_address_num numeric(250, 20) NULL,
-    volume_address_num numeric(250, 20) NULL,
-    activity_address_num numeric(250, 20) NULL,
-    code_type varchar(50)  null,
-    token_type varchar(50)  null
+    static_code  varchar(200) not null,
+    address_num numeric(250, 20) NULL,
+    dimension_type varchar(50)  null,---维度类型:token\project\action
+    bus_type varchar(50)  null,---业务类型:vol balance activity
+    level_type varchar(50)  null----级别类型 L1\L2....
 );
 
-insert into static_asset_data  (code,volume_address_num,code_type,token_type)
+insert into static_asset_level_data  (code,address_num,dimension_type,bus_type,level_type)
 select
     token as code,
     count(1) as volume_address_num,
