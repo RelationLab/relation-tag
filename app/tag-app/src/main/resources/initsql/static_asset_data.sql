@@ -55,17 +55,18 @@ create table static_asset_level_data
     address_num numeric(250, 20) NULL,
     dimension_type varchar(50)  null,---维度类型:token\project\action
     bus_type varchar(50)  null,---业务类型:vol balance activity
-    level_type varchar(50)  null----级别类型 L1\L2....
+    "level" varchar(50)  null----级别类型 L1\L2....
 );
 
-insert into static_asset_level_data  (code,address_num,dimension_type,bus_type,level_type)
+insert into static_asset_level_data(static_code,address_num,dimension_type,bus_type,level)
 select
-    token as code,
-    count(1) as volume_address_num,
-    'token' as code_type,
-    'DEFI' AS token_type
+    token as static_code,
+    count(1) as address_num,
+    'token' as dimension_type,
+    'balance' AS bus_type,
+        as level
 from
-    token_volume_usd
+    address_label_gp
 group by token
 UNION ALL
 select

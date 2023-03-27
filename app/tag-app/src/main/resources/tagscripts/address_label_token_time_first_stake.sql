@@ -11,7 +11,8 @@ CREATE TABLE public.address_label_token_time_first_stake (
                                                              category varchar(80) NULL,
                                                              trade_type varchar(80) NULL,
                                                              project varchar(80) NULL,
-                                                             asset varchar(80) NULL
+                                                             asset varchar(80) NULL,
+                                                             bus_type varchar(20) NULL
 );
 truncate table address_label_token_time_first_stake;
 insert into public.address_label_token_time_first_stake(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)

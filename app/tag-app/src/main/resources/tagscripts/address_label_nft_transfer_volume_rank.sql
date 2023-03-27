@@ -11,7 +11,8 @@ CREATE TABLE public.address_label_nft_transfer_volume_rank (
                                                                category varchar(50) NULL,
                                                                trade_type varchar(50) NULL,
                                                                project varchar(50) NULL,
-                                                               asset varchar(50) NULL
+                                                               asset varchar(50) NULL,
+                                                               bus_type varchar(20) NULL
 );
 truncate table public.address_label_nft_transfer_volume_rank;
 insert

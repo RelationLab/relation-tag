@@ -11,7 +11,8 @@ CREATE TABLE public.address_label_token_balance_provider (
                                                              category varchar(50) NULL,
                                                              trade_type varchar(50) NULL,
                                                              project varchar(50) NULL,
-                                                             asset varchar(50) NULL
+                                                             asset varchar(50) NULL,
+                                                             bus_type varchar(20) NULL
 );
 truncate table address_label_token_balance_provider;
 insert into public.address_label_token_balance_provider(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
