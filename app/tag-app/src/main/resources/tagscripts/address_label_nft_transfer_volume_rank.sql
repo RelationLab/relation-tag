@@ -26,9 +26,8 @@ into
                                                   "group",
                                                   level,
                                                   category,
-                                                  trade_type,
-                                                  project,
-                                                  asset)
+                                                  trade_type
+    ,project,asset,bus_type)
 select
     address ,
     label_type,

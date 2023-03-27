@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_token_volume_rank (
                                                         bus_type varchar(20) NULL
 );
 truncate table public.address_label_token_volume_rank;
-insert into public.address_label_token_volume_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
+insert into public.address_label_token_volume_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
     tb1.address,
     tb2.label_type,

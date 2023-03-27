@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_univ3_balance_grade (
                                                           bus_type varchar(20) NULL
 );
 truncate table public.address_label_univ3_balance_grade;
-insert into public.address_label_univ3_balance_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
+insert into public.address_label_univ3_balance_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
     address,
     a2.label_type,

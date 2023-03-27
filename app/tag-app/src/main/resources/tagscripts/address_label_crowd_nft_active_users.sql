@@ -15,7 +15,7 @@ CREATE TABLE public.address_label_crowd_nft_active_users (
                                                              bus_type varchar(20) NULL
 );
 truncate table public.address_label_crowd_nft_active_users;
-insert into public.address_label_crowd_nft_active_users(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
+insert into public.address_label_crowd_nft_active_users(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
     a1.address ,
     'crowd_nft_active_users' as label_type,

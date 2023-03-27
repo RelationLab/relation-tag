@@ -16,7 +16,7 @@ CREATE TABLE public.address_label_token_count_grade (
                                                         bus_type varchar(20) NULL
 )distributed by (address);
 truncate table public.address_label_token_count_grade;
-insert into public.address_label_token_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
+insert into public.address_label_token_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
     a1.address ,
     a2.label_type,
@@ -122,7 +122,7 @@ CREATE TABLE public.address_label_crowd_defi_active_users (
                                                               bus_type varchar(20) NULL
 );
 truncate table public.address_label_crowd_defi_active_users;
-insert into public.address_label_crowd_defi_active_users(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset)
+insert into public.address_label_crowd_defi_active_users(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
     a1.address ,
     'crowd_defi_active_users' as label_type,
