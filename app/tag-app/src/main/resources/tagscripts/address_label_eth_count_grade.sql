@@ -64,7 +64,8 @@ insert into public.address_label_eth_count_grade(address,label_type,label_name,d
     'grade' as category,
     'all' trade_type,
     'all' as project,
-    a2.token_name as asset
+    a2.token_name as asset,
+    'activity' as bus_type
     from
     (
         select

@@ -28,7 +28,8 @@ insert into public.address_label_token_balance_rank(address,label_type,label_nam
     'rank'  as category,
     'all' trade_type,
     'all' as project,
-    tb2.token_name as asset
+    tb2.token_name as asset,
+    'balance' as bus_type
     from
     (
         select

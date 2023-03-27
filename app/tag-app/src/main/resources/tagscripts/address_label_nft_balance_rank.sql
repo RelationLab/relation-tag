@@ -220,7 +220,8 @@ insert into public.address_label_crowd_nft_whale(address,label_type,label_name,d
         'other' as category,
         'all' as trade_type,
         'all' as project,
-        'all' as asset
+        'all' as asset,
+        'CROWD' as bus_type
        from (
                 select address from address_label_nft_balance_rank
                 where label_name = 'ALL_NFT_BALANCE_RANK_RARE_NFT_COLLECTOR'

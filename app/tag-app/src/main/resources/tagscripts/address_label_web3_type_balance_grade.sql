@@ -49,7 +49,8 @@ select
     'grade' as category,
     t.type as trade_type,
     'all' as project,
-    t.token_name as asset
+    t.token_name as asset,
+    'balance' as bus_type
 from
     (
         -- project-type

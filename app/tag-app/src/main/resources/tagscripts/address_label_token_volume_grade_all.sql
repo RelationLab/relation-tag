@@ -59,7 +59,8 @@ insert into public.address_label_token_volume_grade_all(address,label_type,label
     'grade'  as category,
     'all' trade_type,
     'all' as project,
-    'all' as asset
+    'all' as asset,
+    'volume' as bus_type
     from
     (
         select

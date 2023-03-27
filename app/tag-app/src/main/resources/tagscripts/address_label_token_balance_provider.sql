@@ -28,7 +28,8 @@ insert into public.address_label_token_balance_provider(address,label_type,label
     'other'  as category,
     'all' trade_type,
     'all' as project,
-    s1.token_name as asset
+    s1.token_name as asset,
+    'balance' as bus_type
     from
     (
         select

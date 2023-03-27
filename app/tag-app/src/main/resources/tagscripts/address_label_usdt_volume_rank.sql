@@ -43,7 +43,8 @@ select
     'rank'  as category,
     'all' trade_type,
     'all' as project,
-    tb2.token_name as asset
+    tb2.token_name as asset,
+    'volume' as bus_type
 from
     (
         select

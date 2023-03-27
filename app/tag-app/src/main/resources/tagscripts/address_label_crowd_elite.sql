@@ -28,7 +28,8 @@ select
     'other' as category,
     'all' trade_type,
     'all' as project,
-    'all' as asset
+    'all' as asset,
+    'CROWD' as bus_type
 from (
          select address from address_label_nft_volume_count_rank
          where label_name = 'ALL_ALL_ALL_NFT_VOLUME_ELITE_ELITE_NFT_TRADER'

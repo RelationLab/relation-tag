@@ -51,7 +51,8 @@ select
     'grade' as category,
     a2.type as trade_type,
     a2.project_name as project,
-    a2.token_name as asset
+    a2.token_name as asset,
+    'time' as bus_type
     from
     (
         select

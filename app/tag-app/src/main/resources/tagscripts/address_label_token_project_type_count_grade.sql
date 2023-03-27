@@ -63,7 +63,8 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
     'grade' as category,
     t.type as trade_type,
     t.project_name as project,
-    t.token_name as asset
+    t.token_name as asset,
+    'activity' as bus_type
     from
     (
         -- project-token-type(含ALL)

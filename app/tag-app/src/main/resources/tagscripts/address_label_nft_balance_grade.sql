@@ -50,7 +50,8 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
         'grade' as category,
         t.type as trade_type,
         t.project_name as project,
-        t.token_name as asset
+        t.token_name as asset,
+        'balance' as bus_type
     from (
          -- project(null)+nft+type(null)
          select a1.address,

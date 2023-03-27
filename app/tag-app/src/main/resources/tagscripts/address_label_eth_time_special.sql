@@ -36,7 +36,8 @@ select
     'other' as category,
     'all' trade_type,
     'all' as project,
-    a2.token_name as asset
+    a2.token_name as asset,
+    'time' as bus_type
 from
     (
         select
@@ -84,7 +85,8 @@ select
     'other' as category,
     'all' trade_type,
     'all' as project,
-    'all' as asset
+    'all' as asset,
+    'CROWD' as bus_type
 from (
          select address from address_label_eth_time_special
          where label_name = 'ETH_HOLDING_TIME_SPECIAL_LONG_TERM_HOLDER'

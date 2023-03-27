@@ -110,7 +110,8 @@ select
     'other'  as category,
     'all' trade_type,
     'all' as project,
-    'all' as asset
+    'all' as asset,
+    'CROWD' as bus_type
        from (
                 select address from
                     address_label_token_balance_grade_all

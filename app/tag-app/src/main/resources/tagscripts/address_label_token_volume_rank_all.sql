@@ -43,7 +43,8 @@ select
     'rank'  as category,
     'all' trade_type,
     'all' as project,
-    'all' as asset
+    'all' as asset,
+    'volume' as bus_type
 from
     (
         select
@@ -160,7 +161,8 @@ select
     'other' as category,
     'all' trade_type,
     'all' as project,
-    'all' as asset  from address_label_token_volume_rank_all a1
+    'all' as asset,
+    'CROWD' as bus_type  from address_label_token_volume_rank_all a1
 where (label_name = 'ALL_ALL_ALL_VOLUME_RANK_MEDIUM' or label_name = 'ALL_ALL_ALL_VOLUME_RANK_HEAVY'
    or label_name = 'ALL_ALL_ALL_VOLUME_RANK_ELITE'  or label_name = 'ALL_ALL_ALL_VOLUME_RANK_LEGENDARY')
   and

@@ -43,7 +43,8 @@ insert into public.address_label_eth_volume_rank(address,label_type,label_name,d
     'rank' as category,
     'all' trade_type,
     'all' as project,
-    tb2.token_name as asset
+    tb2.token_name as asset,
+    'volume' as bus_type
     from
     (
         select

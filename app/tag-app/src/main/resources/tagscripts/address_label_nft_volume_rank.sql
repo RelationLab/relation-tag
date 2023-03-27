@@ -43,7 +43,8 @@ select
     'rank' as category,
     t.type as trade_type,
     t.project_name as project,
-    t.token_name as asset
+    t.token_name as asset,
+    'volume' as bus_type
 from
     (
         select
@@ -227,7 +228,8 @@ select
     'other' as category,
     'all' as trade_type,
     'all' as project,
-    'all' as asset
+    'all' as asset,
+    'CROWD' as bus_type
 from address_label_nft_volume_rank a1
 where (label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_RARE_NFT_TRADER'
     or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_EPIC_NFT_TRADER'

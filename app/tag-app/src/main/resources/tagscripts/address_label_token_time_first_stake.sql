@@ -28,7 +28,8 @@ select
     'other'  as category,
     'all' trade_type,
     'all' as project,
-    s1.token_name as asset
+    s1.token_name as asset,
+    'time' as bus_type
 from
     (
         select

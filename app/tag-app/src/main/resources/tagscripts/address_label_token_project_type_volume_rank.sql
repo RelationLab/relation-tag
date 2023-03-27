@@ -43,7 +43,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
     'rank' as category,
     t.type as trade_type,
     t.project_name as project,
-    t.token_name as asset
+    t.token_name as asset,
+    'volume' as bus_type
     from
     (
         select
