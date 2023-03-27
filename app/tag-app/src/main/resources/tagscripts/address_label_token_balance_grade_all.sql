@@ -59,7 +59,8 @@ insert into public.address_label_token_balance_grade_all(address,label_type,labe
     'grade' as category,
     'all' trade_type,
     'all' as project,
-    'all' as asset
+    'all' as asset,
+    'balance' as bus_type
     from
     (
         select

@@ -46,7 +46,8 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
     'top' as category,
     t.type as trade_type,
     'all' as project,
-    t.token_name as asset
+    t.token_name as asset,
+    'activity' as bus_type
     from
     (
         -- project-type
