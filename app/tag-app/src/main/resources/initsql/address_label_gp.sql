@@ -108,62 +108,48 @@ truncate
     table public.address_labels_json_gin;
 vacuum address_labels_json_gin;
 
-insert into
-    address_labels_json_gin(address,
-                            address_type,
-                            labels,
-                            updated_at)
-select
-    address,
-    'p',
-    json_agg(
-            json_build_object(
-                    'type', label_type,
-                    'name', label_name,
-                    'wired_type', wired_type,
-                    'data', data::text,
-                    'group',"group",
-                    'level',level,
-                    'category',category,
-                    'trade_type',trade_type,
-                    'project',project,
-                    'asset',asset
-                )
-                order by label_type desc)::jsonb as labels,
-                CURRENT_TIMESTAMP as updated_at
-from
-    address_label_gp
-group by address;
+INSERT INTO address_labels_json_gin(address,
+                                    address_type,
+                                    labels,
+                                    updated_at)
+SELECT address_label_gp.address,
+       CASE
+           WHEN COUNT(contract_address) > 0 THEN 'c'
+           ELSE 'p'
+           END                                                                                            AS address_type,
+       JSON_AGG(
+               JSON_BUILD_OBJECT(
+                       'type', label_type,
+                       'name', label_name,
+                       'wired_type', wired_type,
+                       'data', data :: TEXT,
+                       'group', "group",
+                       'level', level,
+                       'category', category,
+                       'trade_type', trade_type,
+                       'project', project,
+                       'asset', asset
+                   )
+               ORDER BY
+                   label_type DESC
+           )::JSONB                                                                                       AS labels,
+       CURRENT_TIMESTAMP                                                                                  AS updated_at
+FROM address_label_gp
+         LEFT JOIN "contract" ON (address_label_gp.address = contract.contract_address)
+         LEFT JOIN address_info ON (address_label_gp.address = address_info.address)
+GROUP BY (address_label_gp.address, address_info.days);
 
-update
-    address_labels_json_gin b
-set
-    address_type ='c'
-    from
-	contract  A
-where
-    b.address  = A.contract_address;
-
-
-update
-    address_labels_json_gin
-set
-    days = subquery.days
-    from
-	(
-	select
-		address_info.address,
-		trunc((extract(epoch from cast(now() as TIMESTAMP)) - block_timestamp.timestamp) / (24 * 60 * 60)) as days
-	from
-		block_timestamp
-	left join address_info
-                         on
-		(address_info.first_up_chain_block_height = block_timestamp.height)) as subquery
-where
-    address_labels_json_gin.address = subquery.address;
+UPDATE address_labels_json_gin
+SET days = subquery.days
+FROM (SELECT address_info.address,
+             trunc((extract(epoch FROM CAST(NOW() AS TIMESTAMP)) - block_timestamp.timestamp) / (24 * 60 * 60)) AS days
+      FROM block_timestamp
+               LEFT JOIN address_info
+                         ON (address_info.first_up_chain_block_height = block_timestamp.height)) AS subquery
+WHERE address_labels_json_gin.address = subquery.address;
 
 
-create table tag_result as select * from address_labels_json_gin limit 1;
+CREATE TABLE tag_result AS SELECT * FROM address_labels_json_gin LIMIT 1;
 --
 -- update
 --     address_info b
