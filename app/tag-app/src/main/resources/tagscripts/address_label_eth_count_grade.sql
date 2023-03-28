@@ -63,7 +63,7 @@ insert into public.address_label_eth_count_grade(address,label_type,label_name,d
     end as level,
     'grade' as category,
     'ALL' trade_type,
-    'ALL' as project,
+    '' as project,
     a2.token_name as asset,
     'activity' as bus_type
     from

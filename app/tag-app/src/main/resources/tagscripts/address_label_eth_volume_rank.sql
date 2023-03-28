@@ -42,7 +42,7 @@ insert into public.address_label_eth_volume_rank(address,label_type,label_name,d
     when zb_rate <= 0.001 then 'LEGENDARY' end as level,
     'rank' as category,
     'ALL' trade_type,
-    'ALL' as project,
+    '' as project,
     tb2.token_name as asset,
     'volume' as bus_type
     from

@@ -58,7 +58,7 @@ insert into public.address_label_token_volume_grade(address,label_type,label_nam
     when volume_usd >= 1000000000 then 'Billion' end  as level,
     'grade'  as category,
     'ALL' trade_type,
-    'ALL' as project,
+    '' as project,
     a2.token_name as asset,
     'volume' as bus_type
     from

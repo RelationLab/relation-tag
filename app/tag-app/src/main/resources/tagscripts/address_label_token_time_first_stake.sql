@@ -27,7 +27,7 @@ select
     s1.label_type  as level,
     'other'  as category,
     'ALL' trade_type,
-    'ALL' as project,
+    '' as project,
     s1.token_name as asset,
     'time' as bus_type
 from

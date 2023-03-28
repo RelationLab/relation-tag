@@ -42,7 +42,7 @@ select
         when zb_rate <= 0.001 then 'LEGENDARY' end    as level,
     'rank'  as category,
     'ALL' trade_type,
-    'ALL' as project,
+    '' as project,
     tb2.token_name as asset,
     'volume' as bus_type
 from

@@ -84,7 +84,7 @@ select
     'crowd_long_term_holder' level,
     'other' as category,
     'ALL' trade_type,
-    'ALL' as project,
+    '' as project,
     'ALL' as asset,
     'CROWD' as bus_type
 from (

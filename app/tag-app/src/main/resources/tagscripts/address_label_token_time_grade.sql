@@ -50,7 +50,7 @@ insert into public.address_label_token_time_grade(address,label_type,label_name,
     and counter <= 365 then 'L6' end  as level,
     'grade'  as category,
     'ALL' trade_type,
-    'ALL' as project,
+    '' as project,
     a2.token_name as asset,
     'time' as bus_type
     from
