@@ -26,8 +26,8 @@ insert into public.address_label_usdt_balance_rank(address,label_type,label_name
     'b'  as "group",
     'HIGH_BALANCE'    as level,
     'rank'  as category,
-    'all' trade_type,
-    'all' as project,
+    'ALL' trade_type,
+    'ALL' as project,
     tb2.token_name as asset,
     'balance' as bus_type
     from

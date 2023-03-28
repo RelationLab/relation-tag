@@ -26,9 +26,9 @@ select
     'g'  as "group",
     'crowd_elite' level,
     'other' as category,
-    'all' trade_type,
-    'all' as project,
-    'all' as asset,
+    'ALL' trade_type,
+    'ALL' as project,
+    'ALL' as asset,
     'CROWD' as bus_type
 from (
          select address from address_label_nft_volume_count_rank

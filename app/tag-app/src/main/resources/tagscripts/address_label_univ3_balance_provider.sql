@@ -26,8 +26,8 @@ insert into public.address_label_univ3_balance_provider(address,label_type,label
     'b'  as "group",
     s1.label_type  as level,
     'other'  as category,
-    'all' trade_type,
-    'all' as project,
+    'ALL' trade_type,
+    'ALL' as project,
     s1.token_name as asset,
     'balance' as bus_type
     from

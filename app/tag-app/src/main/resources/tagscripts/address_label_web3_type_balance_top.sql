@@ -27,7 +27,7 @@ select
     'WHALE'     as level,
     'top' as category,
     t.type as trade_type,
-    'all' as project,
+    'ALL' as project,
     t.token_name as asset,
     'balance' as bus_type
 from

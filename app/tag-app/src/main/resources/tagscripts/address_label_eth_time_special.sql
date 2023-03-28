@@ -34,8 +34,8 @@ select
             and counter < 155 then 'SHORT_TERM_HOLDER'
         end  as level,
     'other' as category,
-    'all' trade_type,
-    'all' as project,
+    'ALL' trade_type,
+    'ALL' as project,
     a2.token_name as asset,
     'time' as bus_type
 from
@@ -83,9 +83,9 @@ select
     'g'  as "group",
     'crowd_long_term_holder' level,
     'other' as category,
-    'all' trade_type,
-    'all' as project,
-    'all' as asset,
+    'ALL' trade_type,
+    'ALL' as project,
+    'ALL' as asset,
     'CROWD' as bus_type
 from (
          select address from address_label_eth_time_special

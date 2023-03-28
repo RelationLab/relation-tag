@@ -219,9 +219,9 @@ insert into public.address_label_crowd_nft_whale(address,label_type,label_name,d
            'g'  as "group",
         'crowd_nft_whale'  as level,
         'other' as category,
-        'all' as trade_type,
-        'all' as project,
-        'all' as asset,
+        'ALL' as trade_type,
+        'ALL' as project,
+        'ALL' as asset,
         'CROWD' as bus_type
        from (
                 select address from address_label_nft_balance_rank

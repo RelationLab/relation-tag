@@ -26,9 +26,9 @@ select
     'g'  as "group",
     'crowd_nft_active_users'  as level,
     'other' as category,
-    'all' as trade_type,
-    'all' as project,
-    'all' as asset,
+    'ALL' as trade_type,
+    'ALL' as project,
+    'ALL' as asset,
     'CROWD' as bus_type
 from address_label_nft_count_grade a1
 where (label_name = 'ALL_ALL_ALL_NFT_ACTIVITY_Low'

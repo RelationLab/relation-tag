@@ -62,8 +62,8 @@ select
             and total_transfer_count < 619 then 'Medium'
         when total_transfer_count >= 619 then 'High' end  as level,
     'grade'  as category,
-    'all' trade_type,
-    'all' as project,
+    'ALL' trade_type,
+    'ALL' as project,
     a2.token_name as asset,
     'activity' as bus_type
 from
@@ -134,9 +134,9 @@ select
     'g'  as "group",
     'crowd_defi_active_users'  as level,
     'other'  as category,
-    'all' trade_type,
-    'all' as project,
-    'all' as asset,
+    'ALL' trade_type,
+    'ALL' as project,
+    'ALL' as asset,
     'CROWD' as bus_type
 from address_label_token_count_grade a1
 where (label_name = 'ALL_ALL_ALL_ACTIVITY_High'

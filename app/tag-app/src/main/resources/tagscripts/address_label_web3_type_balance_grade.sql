@@ -48,7 +48,7 @@ select
         when balance >= 101 then 'L6' end    as level,
     'grade' as category,
     t.type as trade_type,
-    'all' as project,
+    'ALL' as project,
     t.token_name as asset,
     'balance' as bus_type
 from

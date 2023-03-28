@@ -26,8 +26,8 @@ insert into public.address_label_token_balance_staked(address,label_type,label_n
     'b'  as "group",
     s1.label_type  as level,
     'other'  as category,
-    'all' trade_type,
-    'all' as project,
+    'ALL' trade_type,
+    'ALL' as project,
     s1.token_name as asset,
     'balance' as bus_type
     from

@@ -33,8 +33,8 @@ insert into public.address_label_token_time_special(address,label_type,label_nam
     when counter >= 1
     and counter < 155 then 'SHORT_TERM_HOLDER' end  as level,
     'other'  as category,
-    'all' trade_type,
-    'all' as project,
+    'ALL' trade_type,
+    'ALL' as project,
     a2.token_name as asset,
     'time' as bus_type
     from

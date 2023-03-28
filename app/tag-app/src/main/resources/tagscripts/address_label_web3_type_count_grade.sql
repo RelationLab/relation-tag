@@ -45,7 +45,7 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
     'WHALE'     as level,
     'top' as category,
     t.type as trade_type,
-    'all' as project,
+    'ALL' as project,
     t.token_name as asset,
     'activity' as bus_type
     from
@@ -161,9 +161,9 @@ insert into public.address_label_crowd_web3_active_users(address,label_type,labe
            'g'  as "group",
     'crowd_web3_active_users' level,
     'other' as category,
-    'all' trade_type,
-    'all' as project,
-    'all' as asset,
+    'ALL' trade_type,
+    'ALL' as project,
+    'ALL' as asset,
     'CROWD' as bus_type
        from  address_label_web3_type_count_grade a1
        where (label_name = 'WEB3_ALL_ALL_ACTIVITY_High'

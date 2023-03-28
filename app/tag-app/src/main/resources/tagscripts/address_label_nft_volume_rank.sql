@@ -226,9 +226,9 @@ select
     'g'  as "group",
     'crowd_nft_high_demander'    as level,
     'other' as category,
-    'all' as trade_type,
-    'all' as project,
-    'all' as asset,
+    'ALL' as trade_type,
+    'ALL' as project,
+    'ALL' as asset,
     'CROWD' as bus_type
 from address_label_nft_volume_rank a1
 where (label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_RARE_NFT_TRADER'

@@ -26,9 +26,9 @@ insert into public.address_label_token_balance_rank_all(address,label_type,label
     'b'  as "group",
     'HIGH_BALANCE'  as level,
     'rank'  as category,
-    'all' trade_type,
-    'all' as project,
-    'all' as asset,
+    'ALL' trade_type,
+    'ALL' as project,
+    'ALL' as asset,
     'balance' as bus_type
     from
     (

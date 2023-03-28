@@ -49,8 +49,8 @@ insert into public.address_label_token_time_grade(address,label_type,label_name,
     when counter > 180
     and counter <= 365 then 'L6' end  as level,
     'grade'  as category,
-    'all' trade_type,
-    'all' as project,
+    'ALL' trade_type,
+    'ALL' as project,
     a2.token_name as asset,
     'time' as bus_type
     from

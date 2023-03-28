@@ -57,9 +57,9 @@ insert into public.address_label_token_balance_grade_all(address,label_type,labe
     and balance_usd < 1000000000 then 'Millionaire'
     when balance_usd >= 1000000000 then 'Billionaire' end as level,
     'grade' as category,
-    'all' trade_type,
-    'all' as project,
-    'all' as asset,
+    'ALL' trade_type,
+    'ALL' as project,
+    'ALL' as asset,
     'balance' as bus_type
     from
     (
@@ -109,9 +109,9 @@ select
            'g'  as "group",
     'crowd_token_whale'  as level,
     'other'  as category,
-    'all' trade_type,
-    'all' as project,
-    'all' as asset,
+    'ALL' trade_type,
+    'ALL' as project,
+    'ALL' as asset,
     'CROWD' as bus_type
        from (
                 select address from
