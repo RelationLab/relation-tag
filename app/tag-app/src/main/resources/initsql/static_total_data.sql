@@ -1,5 +1,3 @@
-
-
 DROP TABLE if EXISTS  static_total_data;
 create table static_total_data
 (
@@ -30,12 +28,14 @@ create table static_total_data
 );
 truncate table static_total_data;
 
+-----计算合约和个人地址数
 insert into static_total_data  (code,individual_address_num,contract_address_num)
 select 'static_total' as code,
        sum(case when address_type='p' then 1 else 0 end ) as  individual_address_num,
        sum(case when address_type='c' then 1 else 0 end) as contract_address_num
 from address_labels_json_gin ;
 
+-----更新总地址数
 update
     static_total_data
 set
@@ -56,6 +56,7 @@ set
 where
         code = 'static_total';
 
+-----更新余额中位数
 update
     static_total_data
 set
@@ -90,6 +91,7 @@ set
 where
         code = 'static_total';
 
+-----更新交易额中位数
 update
     static_total_data
 set
@@ -126,13 +128,13 @@ where
         code = 'static_total';
 
 
+-----计算活跃度中位数
 DROP TABLE if EXISTS  address_activity;
 create table address_activity
 (
     address  varchar(200) not null,
     activity_num numeric(250, 20) NULL
 );
-
 truncate table address_activity;
 insert into address_activity(activity_num,address)
 select sum(activity_num),address from(
@@ -146,6 +148,7 @@ select sum(activity_num),address from(
      sum(total_transfer_all_count) as activity_num,address from  nft_holding group by address)
  out_t group by address;
 
+-----更新活跃度中位数
 update
     static_total_data
 set
@@ -181,6 +184,7 @@ set
 where
         code = 'static_total';
 
+-----更新诞生天数平均值
 update
     static_total_data
 set
@@ -190,16 +194,37 @@ set
 where
         code = 'static_total';
 
-
+-----更新三大类地址数统计值
 update
     static_total_data
-set  defi_address_num =(select address_num from static_wired_type_address where wired_type='DEFI') ,
-    nft_address_num  =(select address_num from static_wired_type_address where wired_type='NFT') ,
-    web3_address_num  =(select address_num from static_wired_type_address where wired_type='WEB3')
+set
+    defi_address_num = static_wired_type_address.defi_address_num,
+    nft_address_num = static_wired_type_address.nft_address_num,
+    web3_address_num = static_wired_type_address.web3_address_num
+    from
+	(
+	select
+		sum(defi_address_num) as defi_address_num,
+		sum(nft_address_num) as nft_address_num,
+		sum(web3_address_num) as web3_address_num
+	from
+		(
+		select
+			'wired_type' as wired_type,
+			max(case wired_type when 'DEFI' then address_num else 0 end) as defi_address_num,
+			max(case wired_type when 'NFT' then address_num else 0 end) as nft_address_num,
+			max(case wired_type when 'WEB3' then address_num else 0 end) as web3_address_num
+		from
+			static_wired_type_address
+		group by
+			wired_type) out_t
+	group by
+		wired_type
+        ) static_wired_type_address
 where
-        code = 'static_total';
+    code = 'static_total';
 
-
+-----更新资产级别地址数统计值
 update static_total_data set json_text= (select '{'||string_agg('"'||
                                                                 case when dimension_type = 'project' and bus_type='balance' then 'platform_label_balance'
                                                                      when dimension_type = 'token' and bus_type='balance'  then 'token_label_balance'
@@ -218,7 +243,7 @@ update static_total_data set json_text= (select '{'||string_agg('"'||
                                          from static_asset_data_json)
 where  code = 'static_total';
 
-
+-----更新人群标签地址数统计值
 update static_total_data set crowd_active_users=static_crowd_data.crowd_active_users,
     crowd_elite=static_crowd_data.crowd_elite,
     crowd_nft_active_users=static_crowd_data.crowd_nft_active_users,
@@ -229,17 +254,38 @@ update static_total_data set crowd_active_users=static_crowd_data.crowd_active_u
     crowd_defi_active_users =static_crowd_data.crowd_defi_active_users,
     crowd_defi_high_demander =static_crowd_data.crowd_defi_high_demander,
     crowd_web3_active_users =static_crowd_data.crowd_web3_active_users
-        from (select case static_code when 'crowd_active_users' then address_num else 0 end as crowd_active_users,
-            case static_code when 'crowd_elite' then address_num else 0 end as crowd_elite,
-            case static_code when 'crowd_nft_active_users' then address_num else 0 end as crowd_nft_active_users,
-            case static_code when 'crowd_long_term_holder' then address_num else 0 end as crowd_long_term_holder,
-            case static_code when 'crowd_nft_whale' then address_num else 0 end as crowd_nft_whale,
-            case static_code when 'crowd_nft_high_demander' then address_num else 0 end as crowd_nft_high_demander,
-            case static_code when 'crowd_token_whale' then address_num else 0 end as crowd_token_whale,
-            case static_code when 'crowd_defi_active_users' then address_num else 0 end as crowd_defi_active_users,
-            case static_code when 'crowd_defi_high_demander' then address_num else 0 end as crowd_defi_high_demander,
-            case static_code when 'crowd_web3_active_users' then address_num else 0 end as crowd_web3_active_users
-            from static_crowd_data) as static_crowd_data
+        from (
+select
+	sum(crowd_active_users) as crowd_active_users,
+	sum(crowd_elite) as crowd_elite,
+	sum(crowd_nft_active_users) as crowd_nft_active_users,
+	sum(crowd_long_term_holder) as crowd_long_term_holder,
+	sum(crowd_nft_whale) as crowd_nft_whale,
+	sum(crowd_nft_high_demander) as crowd_nft_high_demander,
+	sum(crowd_token_whale) as crowd_token_whale,
+	sum(crowd_defi_active_users) as crowd_defi_active_users,
+	sum(crowd_defi_high_demander) as crowd_defi_high_demander,
+	sum(crowd_web3_active_users) as crowd_web3_active_users
+from
+	(
+	select
+		'define' static_code,
+		max(case static_code when 'crowd_active_users' then address_num else 0 end) as crowd_active_users,
+		max(case static_code when 'crowd_elite' then address_num else 0 end) as crowd_elite,
+		max(case static_code when 'crowd_nft_active_users' then address_num else 0 end) as crowd_nft_active_users,
+		max(case static_code when 'crowd_long_term_holder' then address_num else 0 end) as crowd_long_term_holder,
+		max(case static_code when 'crowd_nft_whale' then address_num else 0 end) as crowd_nft_whale,
+		max(case static_code when 'crowd_nft_high_demander' then address_num else 0 end) as crowd_nft_high_demander,
+		max(case static_code when 'crowd_token_whale' then address_num else 0 end) as crowd_token_whale,
+		max(case static_code when 'crowd_defi_active_users' then address_num else 0 end) as crowd_defi_active_users,
+		max(case static_code when 'crowd_defi_high_demander' then address_num else 0 end) as crowd_defi_high_demander,
+		max(case static_code when 'crowd_web3_active_users' then address_num else 0 end) as crowd_web3_active_users
+	from
+		static_crowd_data
+	group by
+		static_code) out_t
+group by
+	static_code) as static_crowd_data
 where  code = 'static_total';
 
 
