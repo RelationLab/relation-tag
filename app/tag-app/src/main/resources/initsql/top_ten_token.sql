@@ -7,7 +7,6 @@ create table top_ten_token
     token_type varchar(20) not null
 );
 
-
 insert into top_ten_token(token,rownumber,token_name,token_type) values ('ALL',0,'ALL','token');
 insert into top_ten_token(token,rownumber,token_name,token_type) values ('ALL',0,'ALL','nft');
 

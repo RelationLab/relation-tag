@@ -1,0 +1,24 @@
+DROP TABLE if EXISTS  static_wired_type_address;
+create table static_wired_type_address
+(
+    wired_type  varchar(200) not null,
+    address_num numeric(250, 20) NULL
+);
+truncate table static_wired_type_address;
+insert into static_wired_type_address  (wired_type,address_num)
+select
+    wired_type,
+    count(1) as address_num
+from
+    (
+        select
+            count(address),
+            wired_type,
+            address
+        from
+            address_label_gp
+        group by
+            wired_type,
+            address) out_t
+group by
+    wired_type;
