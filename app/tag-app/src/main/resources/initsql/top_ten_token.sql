@@ -7,7 +7,7 @@ create table top_ten_token
     token_type varchar(20) not null
 );
 
-insert into top_ten_token(token,rownumber,token_name,token_type) values ('ALL',0,'ALL','token');
+insert into top_ten_token(token,rownumber,token_name,token_type) values ('ALL',0,'ALL','defi');
 insert into top_ten_token(token,rownumber,token_name,token_type) values ('ALL',0,'ALL','nft');
 
 ----token排名前10
@@ -15,7 +15,7 @@ insert into top_ten_token(token,rownumber,token_name,token_type)
 select s2.token as token,
        s2.rn as rownumber,
        drc.token_name as token_name ,
-       'token' as token_type from (
+       'defi' as token_type from (
                                       select
                                           token,
                                           rn
