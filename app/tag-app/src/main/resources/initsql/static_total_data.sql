@@ -12,17 +12,6 @@ create table static_total_data
     defi_address_num numeric(250, 20) NULL,
     nft_address_num numeric(250, 20) NULL,
     web3_address_num numeric(250, 20) NULL,
-
---     crowd_active_users numeric(250, 20) NULL,
---     crowd_elite numeric(250, 20) NULL,
---     crowd_nft_active_users numeric(250, 20) NULL,
---     crowd_long_term_holder numeric(250, 20) NULL,
---     crowd_nft_whale numeric(250, 20) NULL,
---     crowd_nft_high_demander numeric(250, 20) NULL,
---     crowd_token_whale numeric(250, 20) NULL,
---     crowd_defi_active_users numeric(250, 20) NULL,
---     crowd_defi_high_demander numeric(250, 20) NULL,
---     crowd_web3_active_users numeric(250, 20) NULL,
     crowd_json_text text NULL,
     json_text text NULL
 );
@@ -238,49 +227,6 @@ update static_total_data set crowd_json_text= (select
                                                from
                                                    static_crowd_data)
 where  code = 'static_total';
--- update static_total_data set crowd_active_users=static_crowd_data.crowd_active_users,
---     crowd_elite=static_crowd_data.crowd_elite,
---     crowd_nft_active_users=static_crowd_data.crowd_nft_active_users,
---     crowd_long_term_holder=static_crowd_data.crowd_long_term_holder,
---     crowd_nft_whale=static_crowd_data.crowd_nft_whale,
---     crowd_nft_high_demander =static_crowd_data.crowd_nft_high_demander,
---     crowd_token_whale =static_crowd_data.crowd_token_whale,
---     crowd_defi_active_users =static_crowd_data.crowd_defi_active_users,
---     crowd_defi_high_demander =static_crowd_data.crowd_defi_high_demander,
---     crowd_web3_active_users =static_crowd_data.crowd_web3_active_users
---         from (
--- select
--- 	sum(crowd_active_users) as crowd_active_users,
--- 	sum(crowd_elite) as crowd_elite,
--- 	sum(crowd_nft_active_users) as crowd_nft_active_users,
--- 	sum(crowd_long_term_holder) as crowd_long_term_holder,
--- 	sum(crowd_nft_whale) as crowd_nft_whale,
--- 	sum(crowd_nft_high_demander) as crowd_nft_high_demander,
--- 	sum(crowd_token_whale) as crowd_token_whale,
--- 	sum(crowd_defi_active_users) as crowd_defi_active_users,
--- 	sum(crowd_defi_high_demander) as crowd_defi_high_demander,
--- 	sum(crowd_web3_active_users) as crowd_web3_active_users
--- from
--- 	(
--- 	select
--- 		'define' static_code,
--- 		max(case static_code when 'crowd_active_users' then address_num else 0 end) as crowd_active_users,
--- 		max(case static_code when 'crowd_elite' then address_num else 0 end) as crowd_elite,
--- 		max(case static_code when 'crowd_nft_active_users' then address_num else 0 end) as crowd_nft_active_users,
--- 		max(case static_code when 'crowd_long_term_holder' then address_num else 0 end) as crowd_long_term_holder,
--- 		max(case static_code when 'crowd_nft_whale' then address_num else 0 end) as crowd_nft_whale,
--- 		max(case static_code when 'crowd_nft_high_demander' then address_num else 0 end) as crowd_nft_high_demander,
--- 		max(case static_code when 'crowd_token_whale' then address_num else 0 end) as crowd_token_whale,
--- 		max(case static_code when 'crowd_defi_active_users' then address_num else 0 end) as crowd_defi_active_users,
--- 		max(case static_code when 'crowd_defi_high_demander' then address_num else 0 end) as crowd_defi_high_demander,
--- 		max(case static_code when 'crowd_web3_active_users' then address_num else 0 end) as crowd_web3_active_users
--- 	from
--- 		static_crowd_data
--- 	group by
--- 		static_code) out_t
--- group by
--- 	static_code) as static_crowd_data
--- where  code = 'static_total';
 
 
 

@@ -29,16 +29,16 @@ from
                 ,
             address
         from
-            address_label_gp_test where label_name in('crowd_active_users',
-                                                      'crowd_elite',
-                                                      'crowd_nft_active_users',
-                                                      'crowd_long_term_holder',
-                                                      'crowd_nft_whale',
-                                                      'crowd_nft_high_demander',
-                                                      'crowd_token_whale',
-                                                      'crowd_defi_active_users',
-                                                      'crowd_defi_high_demander',
-                                                      'crowd_web3_active_users')
+            address_label_gp where label_name in('crowd_active_users',
+                                                 'crowd_elite',
+                                                 'crowd_nft_active_users',
+                                                 'crowd_long_term_holder',
+                                                 'crowd_nft_whale',
+                                                 'crowd_nft_high_demander',
+                                                 'crowd_token_whale',
+                                                 'crowd_defi_active_users',
+                                                 'crowd_defi_high_demander',
+                                                 'crowd_web3_active_users')
         group by
             label_name,
             address) out_t
