@@ -94,6 +94,17 @@ select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'S
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at, owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_third_party union all
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at,owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_ugc;
 
+
+update
+    address_info b
+set
+    days = trunc((extract(epoch from cast( now() as TIMESTAMP)) - A."timestamp")/(24 * 60 * 60))
+    from
+	block_timestamp A
+where
+    A.height = b.first_up_chain_block_height
+  and b.days is null;
+
 drop table if exists address_labels_json_gin;
 create table address_labels_json_gin
 (
@@ -109,10 +120,12 @@ truncate
 vacuum address_labels_json_gin;
 
 INSERT INTO address_labels_json_gin(address,
+                                    days,
                                     address_type,
                                     labels,
                                     updated_at)
 SELECT address_label_gp.address,
+       address_info.days,
        CASE
            WHEN COUNT(contract_address) > 0 THEN 'c'
            ELSE 'p'
@@ -139,14 +152,14 @@ FROM address_label_gp
          LEFT JOIN address_info ON (address_label_gp.address = address_info.address)
 GROUP BY (address_label_gp.address, address_info.days);
 
-UPDATE address_labels_json_gin
-SET days = subquery.days
-FROM (SELECT address_info.address,
-             trunc((extract(epoch FROM CAST(NOW() AS TIMESTAMP)) - block_timestamp.timestamp) / (24 * 60 * 60)) AS days
-      FROM block_timestamp
-               LEFT JOIN address_info
-                         ON (address_info.first_up_chain_block_height = block_timestamp.height)) AS subquery
-WHERE address_labels_json_gin.address = subquery.address;
+-- UPDATE address_labels_json_gin
+-- SET days = subquery.days
+-- FROM (SELECT address_info.address,
+--              trunc((extract(epoch FROM CAST(NOW() AS TIMESTAMP)) - block_timestamp.timestamp) / (24 * 60 * 60)) AS days
+--       FROM block_timestamp
+--                LEFT JOIN address_info
+--                          ON (address_info.first_up_chain_block_height = block_timestamp.height)) AS subquery
+-- WHERE address_labels_json_gin.address = subquery.address;
 
 
 CREATE TABLE tag_result AS SELECT * FROM address_labels_json_gin LIMIT 1;
