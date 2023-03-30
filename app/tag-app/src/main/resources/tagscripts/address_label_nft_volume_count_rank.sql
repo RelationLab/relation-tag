@@ -129,6 +129,7 @@ select
                                                             and s1.type = s2.type
                                                             and (s2.project = ''
                                                             or s2.project = 'ALL')
+                                                            and s2.type != 'Transfer'
                                                             and s2.data_subject = 'volume_elite'
                                                             and s2.label_type like '%NFT%'
                                                             and s2.label_type not like '%WEB3%'
@@ -172,6 +173,7 @@ select
                                                     and totala.type = tb2.type
                                                     and (tb2.project = ''
                                                     or tb2.project = 'ALL')
+                                                    and tb2.type != 'Transfer'
                                                     and tb2.data_subject = 'volume_elite'
                                                     and tb2.label_type like '%NFT%'
                                                     and tb2.label_type not like '%WEB3%'
@@ -186,6 +188,7 @@ select
     or dptt.project = 'ALL')
     and dptt.data_subject = 'volume_elite'
     and dptt.label_type like '%NFT%'
+    and dptt.type != 'Transfer'
     and dptt.label_type not like '%WEB3%')
         where
                 tb1.transfer_volume >= 1

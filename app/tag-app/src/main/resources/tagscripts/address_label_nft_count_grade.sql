@@ -84,7 +84,7 @@ end   as level,
                                    and (a2.project = ''
                                    or a2.project = 'ALL')
                                    and a1.type = a2.type
-                                   and a2.type != 'Transfer'
+                                   and a2.type != 'Transfer' and a2.type != 'Buy'  and a2.type != 'Sale'
 		and
                                 a2.data_subject = 'count'
 		and a2.label_type like '%NFT%'
@@ -112,7 +112,7 @@ end   as level,
             and (a2.project = ''
             or a2.project = 'ALL')
             and a1.type = a2.type
-            and a2.type != 'Transfer'
+            and a2.type != 'Transfer' and a2.type != 'Buy'  and a2.type != 'Sale'
             and a2.data_subject = 'count'
             and a2.label_type like '%NFT%'
             and a2.label_type not like '%WEB3%'
