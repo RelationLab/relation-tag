@@ -32,18 +32,28 @@ set
         select
             count(distinct address)
         from
-            (
-                select
-                    distinct address
-                from
-                    token_volume_usd
-                union all
-                select
-                    distinct address
-                from
-                    nft_holding) out_t)
+            address_labels_json_gin out_t)
 where
         code = 'static_total';
+-- update
+--     static_total_data
+-- set
+--     address_num = (
+--         select
+--             count(distinct address)
+--         from
+--             (
+--                 select
+--                     distinct address
+--                 from
+--                     token_volume_usd
+--                 union all
+--                 select
+--                     distinct address
+--                 from
+--                     nft_holding) out_t)
+-- where
+--         code = 'static_total';
 
 -----更新余额中位数
 update
@@ -59,7 +69,7 @@ set
 	order by
 			balance_usd asc) as rn
                            from
-                               token_balance_volume_usd
+                               token_balance_volume_usd where balance_usd>=100
                        ) out_t
                    where
                            rn >=(
@@ -69,13 +79,13 @@ set
                                    else count(1)/ 2 + 1
                                    end
                            from
-                               token_balance_volume_usd
+                               token_balance_volume_usd where balance_usd>=100
                        )
                      and rn <=(
                        select
                                    count(1)/ 2 + 1
                        from
-                           token_balance_volume_usd
+                           token_balance_volume_usd where balance_usd>=100
                    ))
 where
         code = 'static_total';
@@ -94,7 +104,7 @@ set
 	order by
 			volume_usd asc) as rn
                           from
-                              total_volume_usd
+                              total_volume_usd where volume_usd>=100
 
                       ) out_t
                   where
@@ -105,13 +115,13 @@ set
                                   else count(1)/ 2 + 1
                                   end
                           from
-                              total_volume_usd
+                              total_volume_usd where volume_usd>=100
                       )
                     and rn <=(
                       select
                                   count(1)/ 2 + 1
                       from
-                          total_volume_usd
+                          total_volume_usd where volume_usd>=100
                   ))
 where
         code = 'static_total';
