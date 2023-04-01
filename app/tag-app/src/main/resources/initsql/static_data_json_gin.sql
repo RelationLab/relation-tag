@@ -30,6 +30,12 @@
 --            )
 --                      AS static_text
 -- FROM static_total_data where code='static_total' ;
+-- create table if not exists home_data_analysis
+-- (
+--     analysis_date bigint,
+--     analysis_result text
+-- );
+
 insert into home_data_analysis(analysis_date,analysis_result)
 select floor(EXTRACT(epoch FROM NOW())*1000-836001000) as analysis_date,
        JSON_BUILD_OBJECT(
