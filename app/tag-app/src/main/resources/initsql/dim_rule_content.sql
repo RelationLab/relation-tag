@@ -2,7 +2,7 @@
   drop table if exists dim_rule_content;
   create table dim_rule_content
   (
-      rule_code    varchar(50),
+      rule_code    varchar(100),
       token        varchar(300),
       label_type   varchar(300),
       operate_type varchar(300),

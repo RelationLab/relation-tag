@@ -7,11 +7,11 @@ CREATE TABLE public.address_label_nft_project_type_volume_count_rank (
                                                                          label_name varchar(1024) NULL,
                                                                          updated_at timestamp(6) NULL,
                                                                          "group" varchar(1) NULL,
-                                                                         "level" varchar(50) NULL,
-                                                                         category varchar(50) NULL,
-                                                                         trade_type varchar(50) NULL,
-                                                                         project varchar(50) NULL,
-                                                                         asset varchar(50) NULL,
+                                                                         "level" varchar(100) NULL,
+                                                                         category varchar(100) NULL,
+                                                                         trade_type varchar(100) NULL,
+                                                                         project varchar(100) NULL,
+                                                                         asset varchar(100) NULL,
                                                                          bus_type varchar(20) NULL
 );
 truncate table public.address_label_nft_project_type_volume_count_rank;

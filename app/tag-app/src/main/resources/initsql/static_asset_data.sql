@@ -3,10 +3,10 @@ create table static_asset_level_data
 (
     static_code  varchar(200) not null,
     address_num numeric(250, 20) NULL,
-    dimension_type varchar(50)  null,---维度类型:asset\project\action
-    wired_type varchar(50)  null,---维度类型:token\project\action
-    bus_type varchar(50)  null,---业务类型:vol balance activity
-    "level" varchar(50)  null----级别类型 L1\L2....
+    dimension_type varchar(100)  null,---维度类型:asset\project\action
+    wired_type varchar(100)  null,---维度类型:token\project\action
+    bus_type varchar(100)  null,---业务类型:vol balance activity
+    "level" varchar(100)  null----级别类型 L1\L2....
 );
 
 ----按资产+级别
@@ -57,9 +57,9 @@ DROP TABLE if EXISTS  static_asset_level_data_json;
 create table static_asset_level_data_json
 (
     static_code  varchar(200) not null,
-    dimension_type varchar(50)  null,---维度类型:asset\project\action
-    wired_type varchar(50)  null,---维度类型:token\nft\web3
-    bus_type varchar(50)  null,---业务类型:vol balance activity
+    dimension_type varchar(100)  null,---维度类型:asset\project\action
+    wired_type varchar(100)  null,---维度类型:token\nft\web3
+    bus_type varchar(100)  null,---业务类型:vol balance activity
     json_text text
 );
 insert
@@ -88,8 +88,8 @@ DROP TABLE if EXISTS  static_item_json;
 create table static_item_json
 (
     static_code  varchar(200) not null,
-    dimension_type varchar(50)  null,---维度类型:token\project\action
-    wired_type varchar(50)  null,---维度类型:token\nft\web3
+    dimension_type varchar(100)  null,---维度类型:token\project\action
+    wired_type varchar(100)  null,---维度类型:token\nft\web3
     json_text text
 );
 insert into static_item_json(static_code,dimension_type,wired_type,json_text)
@@ -109,8 +109,8 @@ group by
 DROP TABLE if EXISTS  static_type_json;
 create table static_type_json
 (
-    dimension_type varchar(50)  null,---维度类型:asset\project\action
-    wired_type varchar(50)  null,---维度类型:token\nft\web3
+    dimension_type varchar(100)  null,---维度类型:asset\project\action
+    wired_type varchar(100)  null,---维度类型:token\nft\web3
     json_text text
 );
 
@@ -128,7 +128,7 @@ group by
 DROP TABLE if EXISTS  static_category_json;
 create table static_category_json
 (
-    dimension_type varchar(50)  null,---维度类型:token\project\action
+    dimension_type varchar(100)  null,---维度类型:token\project\action
     json_text text
 );
 
