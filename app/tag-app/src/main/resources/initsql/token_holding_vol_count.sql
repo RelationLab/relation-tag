@@ -1,6 +1,26 @@
 drop table if exists token_holding_vol_count_tmp;
 ALTER TABLE public.token_holding_vol_count RENAME TO token_holding_vol_count_tmp;
-create table token_holding_vol_count as select * from token_holding_vol_count_tmp limit 1;
+CREATE TABLE public.token_holding_vol_count (
+                                                address varchar(256) NULL,
+                                                "token" varchar(256) NULL,
+                                                balance numeric(125, 30) NULL,
+                                                block_height bigint NULL,
+                                                total_transfer_volume numeric(125, 30) NULL,
+                                                total_transfer_count bigint NULL,
+                                                status varchar(128) NULL,
+                                                created_at timestamp NULL,
+                                                updated_at timestamp NULL,
+                                                removed bool NULL,
+                                                fail_count int4 NULL,
+                                                error_code int4 NULL,
+                                                error_message text NULL,
+                                                node_name varchar(512) NULL,
+                                                total_transfer_to_count bigint NULL,
+                                                total_transfer_all_count bigint NULL,
+                                                total_transfer_to_volume numeric(120, 30) NULL,
+                                                total_transfer_all_volume numeric(120, 30) NULL
+) distributed by (address);
+
 truncate table token_holding_vol_count;
 insert into
     token_holding_vol_count(address,

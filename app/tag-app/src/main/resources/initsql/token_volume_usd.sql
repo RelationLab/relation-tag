@@ -20,7 +20,7 @@ select
              'eth' as token,
              eh.total_transfer_all_volume * round(cast(wle.price as numeric),3)  as volume_usd
 from
-    eth_holding_vol_count eh
+    SELECT eth_holding_vol_count eh
         inner join (select * from white_list_erc20 where symbol = 'WETH')  wle  on 1=1
 where eh.total_transfer_all_volume>0;
 insert

@@ -1,6 +1,25 @@
 drop table if exists eth_holding_vol_count_tmp;
 ALTER TABLE public.eth_holding_vol_count RENAME TO eth_holding_vol_count_tmp;
-create table eth_holding_vol_count as select * from eth_holding_vol_count_tmp limit 1;
+CREATE TABLE public.eth_holding_vol_count (
+                                              address varchar(256) NULL,
+                                              balance numeric(125, 30) NULL,
+                                              total_transfer_count int8 NULL,
+                                              block_height int8 NULL,
+                                              total_transfer_volume numeric(120, 30) NULL,
+                                              status varchar(128) NULL,
+                                              created_at timestamp NULL,
+                                              updated_at timestamp NULL,
+                                              removed bool NULL,
+                                              fail_count int4 NULL,
+                                              error_code int4 NULL,
+                                              error_message text NULL,
+                                              node_name varchar(512) NULL,
+                                              total_transfer_to_count int8 NULL,
+                                              total_transfer_all_count int8 NULL,
+                                              total_transfer_to_volume numeric(120, 30) NULL,
+                                              total_transfer_all_volume numeric(120, 30) NULL
+) distributed by (address);
+
 truncate table eth_holding_vol_count;
 insert
 into
