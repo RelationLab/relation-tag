@@ -8,7 +8,7 @@ CREATE TABLE public.token_volume_usd (
                                          updated_at timestamp NULL,
                                          removed bool NULL
 )
-    distributed by (token);
+distributed by (token);
 truncate table token_volume_usd;
 insert
 into
@@ -16,37 +16,57 @@ into
                      token,
                      volume_usd)
 select
-    distinct eh.address as address,
-             'eth' as token,
-             eh.total_transfer_all_volume * round(cast(wle.price as numeric),3)  as volume_usd
+    eh.address as address,
+    'eth' as token,
+    eh.total_transfer_all_volume * round(cast(wle.price as numeric),3)  as volume_usd
 from
-    SELECT eth_holding_vol_count eh
-        inner join (select * from white_list_erc20 where symbol = 'WETH')  wle  on 1=1
-where eh.total_transfer_all_volume>0;
+    (select address,sum(total_transfer_all_volume) as total_transfer_all_volume  from eth_holding_vol_count  where total_transfer_all_volume>0
+     group by address
+    ) eh
+        inner join (select price from white_list_erc20 where symbol = 'WETH'  group by price)  wle  on 1=1;
+
+
 insert
 into
     token_volume_usd(address,
                      token,
                      volume_usd)
 select
-    distinct th.address,
-             token,
-             total_transfer_all_volume *  round(cast(wle.price as numeric),3)  as volume_usd
+    th.address,
+    token,
+    total_transfer_all_volume * round(cast(wle.price as numeric), 3) as volume_usd
 from
-    token_holding_vol_count th
-        inner join (select * from white_list_erc20 where address  in (
+    (
         select
-            token_id
+            address,
+            token,
+            total_transfer_all_volume
         from
-            dim_rank_token)) wle on
+            token_holding_vol_count
+        where
+                total_transfer_all_volume>0
+          and token in (
+            select
+                token_id
+            from
+                dim_rank_token)
+        group by
+            address,
+            token,
+            total_transfer_all_volume
+    ) th
+        inner join (
+        select
+            *
+        from
+            white_list_erc20
+        where
+                address in (
+                select
+                    token_id
+                from
+                    dim_rank_token)) wle on
                 th.token = wle.address
-            and ignored = false
-where
-        th.total_transfer_all_volume>0
-  and th.token in (
-    select
-        token_id
-    from
-        dim_rank_token);
+            and ignored = false;
 
 
