@@ -8,7 +8,7 @@ CREATE TABLE public.token_volume_usd (
                                          updated_at timestamp NULL,
                                          removed bool NULL
 )
-distributed by (token);
+distributed by (address);
 truncate table token_volume_usd;
 insert
 into
