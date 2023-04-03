@@ -67,7 +67,7 @@ from
                                        a1.project = a2.project
                                    and a1.type = a2.type
                                    and a2.data_subject = 'balance_grade'
-        and (a2.type='NFT Recipient' or a2.type='write')
+        and (a1.type='NFT Recipient' or a1.type='write')
         group by
             a1.address,
             a2.label_type,
@@ -88,7 +88,7 @@ from
                                        a2.project = 'ALL'
                                    and a1.type = a2.type
                                    and a2.data_subject = 'balance_grade'
-                                           and (a2.type='NFT Recipient' or a2.type='write')
+                                           and (a1.type='NFT Recipient' or a1.type='write')
         group by
             a1.address,
             a2.label_type,
@@ -109,7 +109,7 @@ from
                                        a2.project = 'ALL'
                                    and a2.type = 'ALL'
                                    and a2.data_subject = 'balance_grade'
-                                   and (a2.type='NFT Recipient' or a2.type='write')
+                                   and (a1.type='NFT Recipient' or a1.type='write')
         group by
             a1.address,
             a2.label_type,
@@ -130,7 +130,7 @@ from
                                        a1.project = a2.project
                                    and a2.type = 'ALL'
                                    and a2.data_subject = 'balance_grade'
-                                   and (a2.type='NFT Recipient' or a2.type='write')
+                                   and (a1.type='NFT Recipient' or a1.type='write')
         group by
             a1.address,
             a2.label_type,
