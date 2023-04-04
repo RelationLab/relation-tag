@@ -78,6 +78,7 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
             on a1.token=a2.token and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = 'count'
+        where a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,
             a2.label_type,

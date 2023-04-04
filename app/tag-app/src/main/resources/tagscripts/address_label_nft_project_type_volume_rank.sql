@@ -122,7 +122,8 @@ select
 								platform_nft_type_volume_count
 							where
 								volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead'
-						union all
+                                and token in (select token_id from dim_project_token_type_rank dpttr)
+                            union all
 							-- project-token(ALL)-type
 							select
 								address,
@@ -179,7 +180,8 @@ select
 								platform_nft_type_volume_count
 							where
 								volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead'
-						union all
+                                and token in (select token_id from dim_project_token_type_rank dpttr)
+                            union all
 							-- project-token(ALL)-type
 							select
 								address,

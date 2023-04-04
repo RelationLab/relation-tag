@@ -121,6 +121,7 @@ from
                                                         where
                                                                 total_transfer_volume >= 1
                                                           and address <> '0x000000000000000000000000000000000000dead'
+                                                          and token in (select token_id from dim_project_token_type_rank dpttr)
                                                         union all
                                                         -- project(null)+nft（ALL）+type
                                                         select
@@ -164,6 +165,7 @@ from
                                                 where
                                                         total_transfer_volume >= 1
                                                   and address <> '0x000000000000000000000000000000000000dead'
+                                                  and token in (select token_id from dim_project_token_type_rank dpttr)
                                                 union all
                                                 -- project(null)+nft（ALL）+type
                                                 select

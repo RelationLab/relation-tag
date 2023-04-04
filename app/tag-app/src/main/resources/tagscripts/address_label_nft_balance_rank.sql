@@ -110,7 +110,8 @@ select
 								nft_holding
 							where
 								balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
-						union all
+                                and token in (select token_id from dim_project_token_type_rank dpttr)
+                            union all
 							-- project(null)-token(ALL)-type(null)
 							select
 								address,
@@ -153,7 +154,8 @@ select
 							nft_holding
 						where
 							balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
-					union all
+                          and token in (select token_id from dim_project_token_type_rank dpttr)
+                        union all
 						-- project(null)-token(ALL)-type(null)
 						select
 							address,

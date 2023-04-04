@@ -47,7 +47,8 @@ select
             nft_holding_time nht
         where
             nht.latest_tx_time is not null
-          and balance > 0) a1
+          and balance > 0     and token in (select token_id from dim_project_token_type_rank dpttr)
+    ) a1
         inner join
     dim_project_token_type a2
     on
@@ -61,4 +62,5 @@ select
   and (a2.type = ''
     or a2.type = 'ALL')
   and (a2.project = ''
-    or a2.project = 'ALL') and address <>'0x000000000000000000000000000000000000dead';
+    or a2.project = 'ALL') and address <>'0x000000000000000000000000000000000000dead'
+;

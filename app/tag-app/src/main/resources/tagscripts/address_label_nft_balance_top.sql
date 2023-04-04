@@ -63,7 +63,8 @@ select
 					balance
 				from
 					nft_holding where address <>'0x000000000000000000000000000000000000dead'
-			union all
+                    and token in (select token_id from dim_project_token_type_rank dpttr)
+                union all
 				select
 					address,
 					'ALL' as token,

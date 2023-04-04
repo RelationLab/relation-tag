@@ -74,6 +74,7 @@ select
                                    and a2.type != 'Transfer'
 		and
                                 a2.data_subject = 'volume_grade'
+        where  a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,
             a2.label_type,
