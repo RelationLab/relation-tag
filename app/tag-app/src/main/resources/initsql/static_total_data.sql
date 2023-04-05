@@ -226,7 +226,7 @@ where
 -----更新资产级别地址数统计值
 update static_total_data set json_text= (
     select
-        json_agg(json_text::jsonb)
+        '{'||string_agg(json_text,',')||'}'
     from
         static_category_json)
 where  code = 'static_total';
