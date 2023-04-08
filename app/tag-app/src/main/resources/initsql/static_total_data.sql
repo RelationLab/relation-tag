@@ -20,9 +20,9 @@ truncate table static_total_data;
 -----计算合约和个人地址数
 insert into static_total_data  (code,individual_address_num,contract_address_num)
 select 'static_total' as code,
-       sum(case when address_type='p' then 1 else 0 end ) as  individual_address_num,
-       sum(case when address_type='c' then 1 else 0 end) as contract_address_num
-from address_labels_json_gin ;
+       sum(case when aljg.address_type='p' then 1 else 0 end ) as  individual_address_num,
+       sum(case when aljg.address_type='c' then 1 else 0 end) as contract_address_num
+from address_labels_json_gin aljg ;
 
 -----更新总地址数
 update
@@ -35,25 +35,6 @@ set
             address_labels_json_gin out_t)
 where
         code = 'static_total';
--- update
---     static_total_data
--- set
---     address_num = (
---         select
---             count(distinct address)
---         from
---             (
---                 select
---                     distinct address
---                 from
---                     token_volume_usd
---                 union all
---                 select
---                     distinct address
---                 from
---                     nft_holding) out_t)
--- where
---         code = 'static_total';
 
 -----更新余额中位数
 update
@@ -69,7 +50,7 @@ set
 	order by
 			balance_usd asc) as rn
                            from
-                               token_balance_volume_usd where balance_usd>=100
+                               total_balance_volume_usd where balance_usd>=100
                        ) out_t
                    where
                            rn >=(
@@ -79,13 +60,13 @@ set
                                    else count(1)/ 2 + 1
                                    end
                            from
-                               token_balance_volume_usd where balance_usd>=100
+                               total_balance_volume_usd where balance_usd>=100
                        )
                      and rn <=(
                        select
                                    count(1)/ 2 + 1
                        from
-                           token_balance_volume_usd where balance_usd>=100
+                           total_balance_volume_usd where balance_usd>=100
                    ))
 where
         code = 'static_total';
@@ -128,14 +109,14 @@ where
 
 
 -----计算活跃度中位数
-DROP TABLE if EXISTS  address_activity;
-create table address_activity
+DROP TABLE if EXISTS  address_activity_init;
+create table address_activity_init
 (
     address  varchar(200) not null,
     activity_num numeric(250, 20) NULL
 );
-truncate table address_activity;
-insert into address_activity(activity_num,address)
+truncate table address_activity_init;
+insert into address_activity_init(activity_num,address)
 select sum(activity_num),address from(
  select
      sum(total_transfer_count) as activity_num,address from  token_holding_vol_count group by address
@@ -161,7 +142,7 @@ set
 	order by
 			activity_num asc) as rn
                             from
-                                address_activity
+                                address_activity_init
 
                         ) out_t
                     where
@@ -172,13 +153,13 @@ set
                                     else count(1)/ 2 + 1
                                     end
                             from
-                                address_activity
+                                address_activity_init
                         )
                       and rn <=(
                         select
                                     count(1)/ 2 + 1
                         from
-                            address_activity
+                            address_activity_init
                     ))
 where
         code = 'static_total';

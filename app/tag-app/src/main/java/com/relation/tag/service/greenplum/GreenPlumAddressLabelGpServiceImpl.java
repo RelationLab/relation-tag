@@ -31,9 +31,4 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
     public List<Integer> exceSelectSql(String exceSelectSql) {
         return baseMapper.exceSelectSql(exceSelectSql);
     }
-
-    @Override
-    public List<String> selectQueryStr() {
-        return baseMapper.selectQueryStr();
-    }
 }

@@ -1,5 +1,5 @@
-DROP TABLE if EXISTS  top_ten_token;
-create table top_ten_token
+DROP TABLE if EXISTS  static_top_ten_token;
+create table static_top_ten_token
 (
     token  varchar(200) not null,
     rownumber numeric(250, 20) NULL,
@@ -7,11 +7,11 @@ create table top_ten_token
     token_type varchar(20) not null
 );
 
-insert into top_ten_token(token,rownumber,token_name,token_type) values ('ALL',0,'ALL','defi');
-insert into top_ten_token(token,rownumber,token_name,token_type) values ('ALL',0,'ALL','nft');
+insert into static_top_ten_token(token,rownumber,token_name,token_type) values ('ALL',0,'ALL','defi');
+insert into static_top_ten_token(token,rownumber,token_name,token_type) values ('ALL',0,'ALL','nft');
 
 ----token排名前10
-insert into top_ten_token(token,rownumber,token_name,token_type)
+insert into static_top_ten_token(token,rownumber,token_name,token_type)
 select distinct s2.token as token,
                 s2.rn as rownumber,
                 drc.token_name as token_name ,
@@ -43,7 +43,7 @@ select distinct s2.token as token,
 ----nft排名前10
 INSERT
 INTO
-    top_ten_token(token,
+    static_top_ten_token(token,
                   rownumber,
                   token_name,
                   token_type)

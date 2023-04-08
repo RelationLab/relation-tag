@@ -28,9 +28,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Qualifier("greenPlumAddressLabelGpServiceImpl")
     protected IAddressLabelGpService iAddressLabelService;
     protected static ForkJoinPool forkJoinPool = new ForkJoinPool(500);
-    static String FILEPATH = "initsql";
+    static String INIT_PATH = "initsql";
 
-    static String SCRIPTSPATH = "tagscripts";
+    public static String SCRIPTSPATH = "tagscripts";
 
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList) {
         try {
@@ -46,20 +46,20 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void execContentSql(FileEntity ruleSql) {
-        try{
+        try {
             String tableName = ruleSql.getFileName();
             String table = tableName.split("\\.")[0];
             if (checkResult(table)) {
                 return;
             }
             iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
-        }catch (Exception ex){
+        } catch (Exception ex) {
             try {
-                Thread.sleep(1*60*1000);
+                Thread.sleep(1 * 60 * 1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            execContentSql( ruleSql);
+            execContentSql(ruleSql);
         }
 
     }
@@ -114,7 +114,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private void tag() throws Exception {
         innit();
-//        Thread.sleep(10 * 60 * 1000);
+        Thread.sleep(10 * 60 * 1000);
         check("total_volume_usd", 1 * 60 * 1000);
         List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
         List<FileEntity> fileList = Lists.newArrayList();
@@ -188,7 +188,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
             if (checkResult(tableName)) {
                 return;
             }
-            iAddressLabelService.exceSql(FileUtils.readFile(FILEPATH.concat(File.separator).concat(sqlName)), sqlName);
+            String exceSql = FileUtils.readFile(INIT_PATH.concat(File.separator).concat(sqlName));
+            iAddressLabelService.exceSql(exceSql, sqlName);
         } catch (Exception e) {
             try {
                 Thread.sleep(1 * 60 * 1000);
@@ -200,14 +201,30 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
     }
 
-
     @Override
     public void tagMerge() throws Exception {
-//        try {
-//            Thread.sleep(40 * 60 * 1000);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-        execSql(null,"address_label_gp.sql");
+        try {
+            Thread.sleep(40 * 60 * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        execSql(null, "address_label_gp.sql");
+        try {
+            Thread.sleep(2 * 60 * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        staticData();
+    }
+
+    @Override
+    public void staticData() {
+        execSql("address_labels_json_gin", "static_top_ten_token.sql");
+        execSql("static_top_ten_token", "static_crowd_data.sql");
+        execSql("static_top_ten_token", "static_asset_level_data.sql");
+        execSql("static_top_ten_token", "static_wired_type_address.sql");
+        execSql("static_type_json", "static_total_data.sql");
+        execSql("static_total_data", "static_home_data_analysis.sql");
+        execSql("static_total_data", "static_drop.sql");
     }
 }
