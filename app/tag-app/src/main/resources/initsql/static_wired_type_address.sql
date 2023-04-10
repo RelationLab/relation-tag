@@ -5,6 +5,8 @@ create table static_wired_type_address
     address_num numeric(250, 20) NULL
 );
 truncate table static_wired_type_address;
+vacuum static_wired_type_address;
+
 insert into static_wired_type_address  (wired_type,address_num)
 select
     wired_type,

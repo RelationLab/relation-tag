@@ -11,6 +11,8 @@ create table nft_transfer_holding
     removed               boolean   default false
 );
 truncate table nft_transfer_holding;
+vacuum nft_transfer_holding;
+
 insert into nft_transfer_holding (address, token, total_transfer_volume, total_transfer_count)
     (select nh.address,
             nh.token,

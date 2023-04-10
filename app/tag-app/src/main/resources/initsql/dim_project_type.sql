@@ -13,9 +13,10 @@
       ,etl_update_time timestamp
       ,token_name   varchar(100)
   );
-  truncate table dim_project_type;      
-  
-insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'ALL', 'WEB3_ALL_ALL_BALANCE_GRADE', '', '', 'T', 'ALL_ALL', 'balance_grade', now());
+  truncate table dim_project_type;
+  vacuum dim_project_type;
+
+  insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'ALL', 'WEB3_ALL_ALL_BALANCE_GRADE', '', '', 'T', 'ALL_ALL', 'balance_grade', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'ALL', 'WEB3_ALL_ALL_BALANCE_TOP', '', '', 'T', 'ALL_ALL', 'balance_top', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'ALL', 'WEB3_ALL_ALL_BALANCE_RANK', '', '', 'T', 'ALL_ALL', 'balance_rank', now());
 insert into dim_project_type(project, type, label_type, label_name, content, operate_type, seq_flag, data_subject, etl_update_time) values ( 'ALL', 'All', 'WEB3_ALL_ALL_ACTIVITY', '', '', 'T', 'ALL_ALL', 'count', now());

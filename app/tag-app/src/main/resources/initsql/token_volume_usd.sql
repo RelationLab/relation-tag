@@ -10,6 +10,7 @@ CREATE TABLE public.token_volume_usd (
 )
 distributed by (address);
 truncate table token_volume_usd;
+vacuum token_volume_usd;
 
 
 insert

@@ -9,6 +9,8 @@ CREATE TABLE public.dms_syn_block (
                                       block_height int8 NULL
 );
 truncate table dms_syn_block;
+vacuum dms_syn_block;
+
 insert into dms_syn_block(syn_type,block_height)
 select 'eth_tx_record' as syn_type,max(block_number) from eth_tx_record;
 

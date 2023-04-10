@@ -5,6 +5,7 @@ create table static_crowd_data
     address_num numeric(250, 20) NULL
 );
 truncate table static_crowd_data;
+vacuum static_crowd_data;
 
 insert into static_crowd_data(static_code,address_num)
 select

@@ -15,6 +15,8 @@ CREATE TABLE public.address_label_token_time_first_lp (
                                                           bus_type varchar(20) NULL
 );
 truncate table address_label_token_time_first_lp;
+vacuum address_label_token_time_first_lp;
+
 insert into public.address_label_token_time_first_lp(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
     s1.address,

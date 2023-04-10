@@ -31,6 +31,8 @@ CREATE TABLE public.token_holding_uni_cal (
                                               "type" varchar(30) NULL
 );
 truncate table token_holding_uni_cal;
+vacuum token_holding_uni_cal;
+
 insert into token_holding_uni_cal(address
                                  ,token
                                  ,balance

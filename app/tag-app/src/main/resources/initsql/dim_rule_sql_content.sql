@@ -5,6 +5,7 @@ CREATE TABLE public.dim_rule_sql_content (
                                              rule_order int8 NULL
 );
 truncate table dim_rule_sql_content;
+vacuum dim_rule_sql_content;
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_eth_count_grade','truncate

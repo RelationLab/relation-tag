@@ -16,6 +16,8 @@ create table static_total_data
     json_text text NULL
 );
 truncate table static_total_data;
+vacuum static_total_data;
+
 
 -----计算合约和个人地址数
 insert into static_total_data  (code,individual_address_num,contract_address_num)

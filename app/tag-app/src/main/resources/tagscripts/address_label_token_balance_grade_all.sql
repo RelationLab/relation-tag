@@ -15,6 +15,8 @@ CREATE TABLE public.address_label_token_balance_grade_all (
                                                               bus_type varchar(20) NULL
 );
 truncate table public.address_label_token_balance_grade_all;
+vacuum address_label_token_balance_grade_all;
+
 insert into public.address_label_token_balance_grade_all(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
     select
     address,

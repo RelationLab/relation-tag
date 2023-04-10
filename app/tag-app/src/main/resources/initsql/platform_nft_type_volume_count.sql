@@ -14,6 +14,7 @@ CREATE TABLE public.platform_nft_type_volume_count (
                                                        CONSTRAINT uk_pntvu_address_token_type_platform UNIQUE (address, token, type, quote_token, platform, platform_group)
 );
 truncate table platform_nft_type_volume_count;
+vacuum platform_nft_type_volume_count;
 
 insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
     select pnvu.address, pnvu.platform_group, pnvu.platform, pnvu.quote_token, pnvu.token, 'Buy', pnvu.buy_volume_usd, pnh.total_transfer_to_count from

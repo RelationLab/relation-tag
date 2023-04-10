@@ -13,6 +13,8 @@
       token_type   varchar(20)
   );
   truncate table dim_rule_content;
+  vacuum dim_rule_content;
+
   drop table if exists dim_rank_token;
   create table dim_rank_token
   (
@@ -20,7 +22,8 @@
       asset_type varchar(10)
   );
   truncate table dim_rank_token;
-  
+    vacuum dim_rank_token;
+
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_1', '0x9c4fe5ffd9a9fc5678cfbd93aa2d4fd684b67c4c', 'Uniswap_v2_WETH/PAXG_BALANCE_GRADE', 'T', 'balance_grade', now(), 'WETH/PAXG', 'lp');
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_2', '0x63b61e73d3fa1fb96d51ce457cabe89fffa7a1f1', 'Uniswap_v2_WETH/SHINJA_BALANCE_GRADE', 'T', 'balance_grade', now(), 'WETH/SHINJA', 'lp');
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_3', '0x1d42064fc4beb5f8aaf85f4617ae8b3b5b8bd801', 'Uniswap_v3_UNI/WETH_BALANCE_GRADE', 'T', 'balance_grade', now(), 'UNI/WETH', 'lp');
@@ -9405,7 +9408,5 @@ insert into dim_rule_content(rule_code, token, label_type, operate_type, data_su
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_9004', '0xb9ef770b6a5e12e45983c5d80545258aa38f3b78', 'ALL_ZCN(0xb9ef77)_ALL_VOLUME_RANK', 'T', 'volume_rank', now(), 'ZCN(0xb9ef77)', 'token');
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_9005', '0x0763fdccf1ae541a5961815c0872a8c5bc6de4d7', 'ALL_SUKU(0x0763fd)_ALL_VOLUME_RANK', 'T', 'volume_rank', now(), 'SUKU(0x0763fd)', 'token');
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_9006', '0x50d1c9771902476076ecfc8b2a83ad6b9355a4c9', 'ALL_FTX Token(0x50d1c9)_ALL_VOLUME_RANK', 'T', 'volume_rank', now(), 'FTX Token(0x50d1c9)', 'token');
-
-
 insert into dim_rank_token select distinct token,token_type from dim_rule_content;
 

@@ -11,6 +11,8 @@ CREATE TABLE public.nft_volume_count (
                                          CONSTRAINT uk_nvc_address_token UNIQUE (address, token, type)
 );
 truncate table nft_volume_count;
+vacuum nft_volume_count;
+
 insert into nft_volume_count(address, token, type, transfer_volume, transfer_count)
     select address, token , 'Mint', total_transfer_mint_volume, total_transfer_mint_count from nft_holding;
 

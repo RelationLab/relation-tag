@@ -15,6 +15,8 @@ CREATE TABLE public.address_label_nft_transfer_volume_grade (
                                                                 bus_type varchar(20) NULL
 );
 truncate table public.address_label_nft_transfer_volume_grade;
+vacuum address_label_nft_transfer_volume_grade;
+
 insert into public.address_label_nft_transfer_volume_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
     address,

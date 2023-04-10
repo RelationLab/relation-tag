@@ -12,6 +12,8 @@ CREATE TABLE  public.web3_transaction_record_summary
     balance numeric(125,30) NOT NULL DEFAULT 0
 );
 truncate table web3_transaction_record_summary;
+vacuum web3_transaction_record_summary;
+
     insert
     into
         web3_transaction_record_summary(address,

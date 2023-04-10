@@ -15,6 +15,8 @@ CREATE TABLE public.address_label_web3_type_balance_rank (
                                                              bus_type varchar(20) NULL
 );
 truncate table public.address_label_web3_type_balance_rank;
+vacuum address_label_web3_type_balance_rank;
+
 insert into public.address_label_web3_type_balance_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
     select
     address ,

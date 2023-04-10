@@ -15,6 +15,8 @@ CREATE TABLE public.address_label_eth_time_special (
                                                        bus_type varchar(20) NULL
 );
 truncate table public.address_label_eth_time_special;
+vacuum address_label_eth_time_special;
+
 insert into public.address_label_eth_time_special(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
     a1.address,

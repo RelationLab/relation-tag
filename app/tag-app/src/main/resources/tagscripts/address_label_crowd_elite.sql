@@ -15,6 +15,8 @@ CREATE TABLE public.address_label_crowd_elite (
                                                   bus_type varchar(20) NULL
 );
 truncate table public.address_label_crowd_elite;
+vacuum address_label_crowd_elite;
+
 insert into public.address_label_crowd_elite(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
     a1.address ,

@@ -15,6 +15,8 @@ CREATE TABLE public.address_label_nft_transfer_volume_rank (
                                                                bus_type varchar(20) NULL
 );
 truncate table public.address_label_nft_transfer_volume_rank;
+vacuum address_label_nft_transfer_volume_rank;
+
 insert
 into
     public.address_label_nft_transfer_volume_rank(address,

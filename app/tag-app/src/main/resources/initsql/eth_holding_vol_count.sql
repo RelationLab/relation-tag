@@ -19,8 +19,9 @@ CREATE TABLE public.eth_holding_vol_count (
                                               total_transfer_to_volume numeric(120, 30) NULL,
                                               total_transfer_all_volume numeric(120, 30) NULL
 ) distributed by (address);
-
 truncate table eth_holding_vol_count;
+vacuum eth_holding_vol_count;
+
 insert
 into
     eth_holding_vol_count(address,

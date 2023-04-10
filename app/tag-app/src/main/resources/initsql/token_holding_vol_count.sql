@@ -22,6 +22,8 @@ CREATE TABLE public.token_holding_vol_count (
 ) distributed by (address);
 
 truncate table token_holding_vol_count;
+vacuum token_holding_vol_count;
+
 insert into
     token_holding_vol_count(address,
                             block_height,

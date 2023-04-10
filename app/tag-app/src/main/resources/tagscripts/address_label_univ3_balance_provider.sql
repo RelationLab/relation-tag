@@ -15,6 +15,8 @@ CREATE TABLE public.address_label_univ3_balance_provider (
                                                              bus_type varchar(20) NULL
 );
 truncate table address_label_univ3_balance_provider;
+vacuum address_label_univ3_balance_provider;
+
 insert into public.address_label_univ3_balance_provider(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
     select
     s1.address,

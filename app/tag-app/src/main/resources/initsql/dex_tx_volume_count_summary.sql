@@ -20,6 +20,8 @@ CREATE TABLE public.dex_tx_volume_count_summary (
                                                     balance_usd numeric(125, 30) DEFAULT 0
 );
 truncate table dex_tx_volume_count_summary;
+vacuum dex_tx_volume_count_summary;
+
 ---汇总UNIv3的LP数据
 insert
 into

@@ -6,6 +6,8 @@ create table static_top_ten_token
     token_name varchar(200) not null,
     token_type varchar(20) not null
 );
+truncate table static_top_ten_token;
+vacuum static_top_ten_token;
 
 insert into static_top_ten_token(token,rownumber,token_name,token_type) values ('ALL',0,'ALL','defi');
 insert into static_top_ten_token(token,rownumber,token_name,token_type) values ('ALL',0,'ALL','nft');
