@@ -23,7 +23,7 @@ insert into public.address_label_univ3_balance_provider(address,label_type,label
     s1.label_type,
     s1.label_type as label_name,
     rn  as data,
-    'WEB3'  as wired_type,
+    'DEFI'  as wired_type,
     now() as updated_at,
     'b'  as "group",
     s1.label_type  as level,
