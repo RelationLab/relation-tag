@@ -4,7 +4,7 @@ create table address_label_gp
     "owner" varchar(256) NULL,
     address varchar(512) NULL,
     "data" numeric(250, 20) NULL,
-    wired_type varchar(20) NULL,
+    wired_type varchar(100) NULL,
     label_type varchar(512) NULL,
     label_name varchar(1024) NULL,
     "source" varchar(100) NULL,
@@ -15,7 +15,7 @@ create table address_label_gp
     trade_type varchar(80) NULL,
     project varchar(80) NULL,
     asset varchar(80) NULL,
-    bus_type varchar(20) NULL
+    bus_type varchar(100) NULL
 ) distributed by (address);
 
 

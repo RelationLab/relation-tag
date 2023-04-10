@@ -5,7 +5,7 @@ CREATE TABLE public.platform_nft_type_volume_count (
                                                        platform varchar(512) NOT NULL,
                                                        quote_token varchar(512) NOT NULL,
                                                        "token" varchar(512) NOT NULL,
-                                                       type varchar(20) NOT NULL,
+                                                       type varchar(100) NOT NULL,
                                                        volume_usd numeric(128, 30) NULL,
                                                        transfer_count int8 null,
                                                        created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,

@@ -4,7 +4,7 @@ create table static_top_ten_token
     token  varchar(200) not null,
     rownumber numeric(250, 20) NULL,
     token_name varchar(200) not null,
-    token_type varchar(20) not null
+    token_type varchar(100) not null
 );
 truncate table static_top_ten_token;
 vacuum static_top_ten_token;

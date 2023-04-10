@@ -6,11 +6,11 @@
       token        varchar(300),
       label_type   varchar(300),
       operate_type varchar(300),
-      data_subject varchar(20),
+      data_subject varchar(100),
       create_time  timestamp,
-      token_name   varchar(20),
+      token_name   varchar(100),
       
-      token_type   varchar(20)
+      token_type   varchar(100)
   );
   truncate table dim_rule_content;
   vacuum dim_rule_content;
