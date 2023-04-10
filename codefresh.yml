@@ -22,17 +22,16 @@ steps:
   pulumiUp:
     title: "Pulumi Up"
     stage: prepare
-    image: "pulumi/pulumi"
+    image: "pulumi/pulumi-nodejs:latest"
     working_directory: "${{clone}}"
     commands:
       - npm install
       - pulumi login
-      - pulumi stack select dev
-      - pulumi up --refresh --non-interactive --yes
+      - pulumi stack select prod
       - cf_export AWS_ECR_REPO_NAME=$(pulumi stack output ecrRepositoryName)
       - cf_export AWS_ECR_REPO_URL=$(pulumi stack output ecrRepositoryUrl)
-      - cf_export WIRED_AUTO_TAG_AWS_SECRET_ID=$(pulumi stack output wiredAutoTagAwsSecretId)
-      - cf_export WIRED_AUTO_TAG_GREENPLUM_HOST=$(pulumi stack output wiredAutoTagGreenplumHost)
+      - cf_export WIRED_AUTO_TAG_AWS_SECRET_ID=$(pulumi stack output --show-secrets wiredAutoTagAwsSecretId)
+      - cf_export WIRED_AUTO_TAG_GREENPLUM_HOST=$(pulumi stack output --show-secrets wiredAutoTagGreenplumHost)
     
   prepareArtifacts:
     type: "parallel"
@@ -72,7 +71,7 @@ steps:
     arguments:
       chart_name: helm
       release_name: wired-tag
-      helm_version: 3.6.1
+      helm_version: 3.9.0
       namespace: dev
       kube_context: wired-eks-prod
       custom_values:
