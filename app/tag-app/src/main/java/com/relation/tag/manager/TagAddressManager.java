@@ -6,4 +6,6 @@ public interface TagAddressManager {
     void tagMerge() throws Exception;
     void check(String tableName, long sleepTime) throws Exception;
      boolean checkResult(String tableName);
+    void staticData() throws Exception;
+
 }

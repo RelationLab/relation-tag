@@ -162,7 +162,6 @@ GROUP BY (address_label_gp.address, address_info.days);
 -- WHERE address_labels_json_gin.address = subquery.address;
 
 
-CREATE TABLE tag_result AS SELECT * FROM address_labels_json_gin LIMIT 1;
 --
 -- update
 --     address_info b

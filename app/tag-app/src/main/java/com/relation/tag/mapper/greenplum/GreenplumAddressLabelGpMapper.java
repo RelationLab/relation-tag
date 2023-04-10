@@ -11,5 +11,4 @@ public interface GreenplumAddressLabelGpMapper extends BaseMapper<AddressLabelGp
 
     List<Integer> exceSelectSql(String exceSelectSql);
 
-    List<String> selectQueryStr();
 }

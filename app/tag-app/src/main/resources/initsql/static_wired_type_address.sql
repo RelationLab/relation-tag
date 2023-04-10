@@ -16,7 +16,7 @@ from
             wired_type,
             address
         from
-            address_label_gp
+            address_label_gp where 1=1 
         group by
             wired_type,
             address) out_t

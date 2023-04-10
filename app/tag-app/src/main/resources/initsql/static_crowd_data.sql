@@ -38,7 +38,7 @@ from
                                                  'crowd_token_whale',
                                                  'crowd_defi_active_users',
                                                  'crowd_defi_high_demander',
-                                                 'crowd_web3_active_users')
+                                                 'crowd_web3_active_users')  
         group by
             label_name,
             address) out_t
