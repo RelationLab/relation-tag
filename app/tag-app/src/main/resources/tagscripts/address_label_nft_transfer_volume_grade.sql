@@ -20,34 +20,34 @@ select
     address,
     label_type,
     label_type || '_' || case
-                             when volume_usd >= 100
-                                 and volume_usd < 1000 then 'L1'
-                             when volume_usd >= 1000
-                                 and volume_usd < 10000 then 'L2'
-                             when volume_usd >= 10000
-                                 and volume_usd < 50000 then 'L3'
-                             when volume_usd >= 50000
-                                 and volume_usd < 100000 then 'L4'
-                             when volume_usd >= 100000
-                                 and volume_usd < 500000 then 'L5'
-                             when volume_usd >= 500000 then 'L6'
+                             when volume >= 1
+                                 and volume <= 2 then 'L1'
+                             when volume >= 3
+                                 and volume <= 6 then 'L2'
+                             when volume >= 7
+                                 and volume <= 20 then 'L3'
+                             when volume >= 21
+                                 and volume <= 100 then 'L4'
+                             when volume >= 101
+                                 and volume <= 200 then 'L5'
+                             when volume >= 201 then 'L6'
         end as label_name,
-    volume_usd  as data,
+    volume  as data,
     'NFT'  as wired_type,
     now() as updated_at,
     'v'  as "group",
     case
-    when volume_usd >= 100
-    and volume_usd < 1000 then 'L1'
-    when volume_usd >= 1000
-    and volume_usd < 10000 then 'L2'
-    when volume_usd >= 10000
-    and volume_usd < 50000 then 'L3'
-    when volume_usd >= 50000
-    and volume_usd < 100000 then 'L4'
-    when volume_usd >= 100000
-    and volume_usd < 500000 then 'L5'
-    when volume_usd >= 500000 then 'L6' end      as level,
+    when volume >= 1
+    and volume <= 2 then 'L1'
+    when volume >= 3
+    and volume <= 6 then 'L2'
+    when volume >= 7
+    and volume <= 20 then 'L3'
+    when volume >= 21
+    and volume <= 100 then 'L4'
+    when volume >= 101
+    and volume <= 200 then 'L5'
+    when volume >= 201 then 'L6' end      as level,
     'grade' as category,
     t.type as trade_type,
     t.project_name as project,
@@ -62,7 +62,7 @@ select
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(total_transfer_volume) as volume_usd
+            sum(total_transfer_volume) as volume
         from
             nft_transfer_holding a1
                 inner join dim_project_token_type a2
@@ -90,7 +90,7 @@ select
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(total_transfer_volume) as volume_usd
+            sum(total_transfer_volume) as volume
         from
             nft_transfer_holding a1
                 inner join dim_project_token_type a2
@@ -112,4 +112,4 @@ select
             a2.project_name ,
             a2.token_name) t
     where
-        volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead';
+        volume >= 1 and address <>'0x000000000000000000000000000000000000dead';
