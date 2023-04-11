@@ -22,7 +22,7 @@ select
     level
 from
     address_label_gp where (bus_type='balance' or bus_type='activity' or bus_type='volume') and category='grade'
-                       and asset in(select distinct token_name from top_ten_token)
+                       and asset in(select distinct token_name from static_top_ten_token)
 group by asset,wired_type,bus_type,level;
 
 ----按平台+级别
@@ -35,7 +35,7 @@ select
     bus_type,
     level
 from
-    address_label_gp where (bus_type='balance' or bus_type='activity' or bus_type='volume') and category='grade' 
+    address_label_gp where (bus_type='balance' or bus_type='activity' or bus_type='volume') and category='grade'
 group by project,wired_type,bus_type,level;
 
 
@@ -49,7 +49,7 @@ select
     bus_type,
     level
 from
-    address_label_gp where (bus_type='balance' or bus_type='activity' or bus_type='volume') and category='grade' 
+    address_label_gp where (bus_type='balance' or bus_type='activity' or bus_type='volume') and category='grade'
 group by trade_type,wired_type,bus_type,level;
 
 ------计算聚合级别数据（vol balance activity 聚合）
