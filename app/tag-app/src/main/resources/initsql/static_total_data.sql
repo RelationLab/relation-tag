@@ -171,8 +171,9 @@ update
     static_total_data
 set
     avg_birthday = (select
-                        avg(days) as avg_birthday
-                   from address_info)
+                        avg(ai.days) as avg_birthday
+                   from address_info ai inner join address_labels_json_gin aljg on (ai.address=aljg.address)
+                   )
 where
         code = 'static_total';
 

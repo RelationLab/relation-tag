@@ -2,7 +2,7 @@ drop table if exists address_label_nft_transfer_count_grade;
 CREATE TABLE public.address_label_nft_transfer_count_grade (
                                                                address varchar(512) NULL,
                                                                data numeric(250, 20) NULL,
-                                                               wired_type varchar(20) NULL,
+                                                               wired_type varchar(100) NULL,
                                                                label_type varchar(512) NULL,
                                                                label_name varchar(1024) NULL,
                                                                updated_at timestamp(6) NULL,
@@ -12,7 +12,7 @@ CREATE TABLE public.address_label_nft_transfer_count_grade (
                                                                trade_type varchar(100) NULL,
                                                                project varchar(100) NULL,
                                                                asset varchar(100) NULL,
-                                                               bus_type varchar(20) NULL
+                                                               bus_type varchar(100) NULL
 );
 truncate table public.address_label_nft_transfer_count_grade;
 vacuum address_label_nft_transfer_count_grade;

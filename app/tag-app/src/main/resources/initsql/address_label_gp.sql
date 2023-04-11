@@ -120,12 +120,10 @@ truncate
 vacuum address_labels_json_gin;
 
 INSERT INTO address_labels_json_gin(address,
-                                    days,
                                     address_type,
                                     labels,
                                     updated_at)
 SELECT address_label_gp.address,
-       address_info.days,
        CASE
            WHEN COUNT(contract_address) > 0 THEN 'c'
            ELSE 'p'
@@ -149,8 +147,7 @@ SELECT address_label_gp.address,
        CURRENT_TIMESTAMP                                                                                  AS updated_at
 FROM address_label_gp
          LEFT JOIN "contract" ON (address_label_gp.address = contract.contract_address)
-         LEFT JOIN address_info ON (address_label_gp.address = address_info.address)
-GROUP BY (address_label_gp.address, address_info.days);
+GROUP BY (address_label_gp.address);
 
 -- UPDATE address_labels_json_gin
 -- SET days = subquery.days
