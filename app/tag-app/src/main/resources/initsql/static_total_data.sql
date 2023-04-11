@@ -20,23 +20,13 @@ vacuum static_total_data;
 
 
 -----计算合约和个人地址数
-insert into static_total_data  (code,individual_address_num,contract_address_num)
+insert into static_total_data  (code,address_num,individual_address_num,contract_address_num)
 select 'static_total' as code,
+       count(1)  as address_num,
        sum(case when aljg.address_type='p' then 1 else 0 end ) as  individual_address_num,
        sum(case when aljg.address_type='c' then 1 else 0 end) as contract_address_num
 from address_labels_json_gin aljg ;
 
------更新总地址数
-update
-    static_total_data
-set
-    address_num = (
-        select
-            count(distinct address)
-        from
-            address_labels_json_gin out_t)
-where
-        code = 'static_total';
 
 -----更新余额中位数
 update
@@ -120,15 +110,15 @@ create table address_activity_init
 truncate table address_activity_init;
 insert into address_activity_init(activity_num,address)
 select sum(activity_num),address from(
- select
-     sum(total_transfer_count) as activity_num,address from  token_holding_vol_count group by address
- union all
- select
-     sum(total_transfer_count) as activity_num,address from  web3_transaction_record_summary group by address
- union all
- select
-     sum(total_transfer_all_count) as activity_num,address from  nft_holding group by address)
- out_t group by address;
+                                         select
+                                             sum(total_transfer_count) as activity_num,address from  token_holding_vol_count group by address
+                                         union all
+                                         select
+                                             sum(total_transfer_count) as activity_num,address from  web3_transaction_record_summary group by address
+                                         union all
+                                         select
+                                             sum(total_transfer_all_count) as activity_num,address from  nft_holding group by address)
+                                         out_t group by address;
 
 -----更新活跃度中位数
 update
@@ -172,8 +162,8 @@ update
 set
     avg_birthday = (select
                         avg(ai.days) as avg_birthday
-                   from address_info ai inner join address_labels_json_gin aljg on (ai.address=aljg.address)
-                   )
+                    from address_info ai inner join address_labels_json_gin aljg on (ai.address=aljg.address)
+    )
 where
         code = 'static_total';
 
@@ -210,7 +200,7 @@ where
 -----更新资产级别地址数统计值
 update static_total_data set json_text= (
     select
-        '{'||string_agg(json_text,',')||'}'
+            '{'||string_agg(json_text,',')||'}'
     from
         static_category_json)
 where  code = 'static_total';
@@ -221,6 +211,3 @@ update static_total_data set crowd_json_text= (select
                                                from
                                                    static_crowd_data)
 where  code = 'static_total';
-
-
-
