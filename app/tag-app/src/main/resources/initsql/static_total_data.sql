@@ -196,6 +196,12 @@ set
         ) static_wired_type_address
 where
     code = 'static_total';
+-----更新人群标签地址数统计值
+update static_total_data set crowd_json_text= (select
+                                                   json_agg(JSON_BUILD_OBJECT('content', static_code, 'number', address_num))
+                                               from
+                                                   static_crowd_data)
+where  code = 'static_total';
 
 -----更新资产级别地址数统计值
 update static_total_data set json_text= (
@@ -205,9 +211,4 @@ update static_total_data set json_text= (
         static_category_json)
 where  code = 'static_total';
 
------更新人群标签地址数统计值
-update static_total_data set crowd_json_text= (select
-                                                   jsonb_agg(JSON_BUILD_OBJECT('content', static_code, 'number', address_num))
-                                               from
-                                                   static_crowd_data)
-where  code = 'static_total';
+

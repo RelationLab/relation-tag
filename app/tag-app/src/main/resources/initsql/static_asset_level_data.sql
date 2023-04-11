@@ -22,22 +22,59 @@ select
     level
 from
     address_label_gp where (bus_type='balance' or bus_type='activity' or bus_type='volume') and category='grade'
-                       and asset in(select distinct token_name from static_top_ten_token)
+                       and asset in(select distinct token_name from static_top_ten_token) and wired_type<>'WEB3'
 group by asset,wired_type,bus_type,level;
 
 ----按平台+级别
 insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level)
 select
-    case when project is null  or project='' then 'total' else  project end  as static_code,
+    case
+        when project is null
+            or project = '' then 'total'
+        else project
+        end as static_code,
     count(1) as address_num,
     'platform' as dimension_type,
-    case when lower(wired_type)='defi' then 'token' else lower(wired_type) end as wired_type,
+    case
+        when lower(wired_type)= 'defi' then 'token'
+        else lower(wired_type)
+        end as wired_type,
     bus_type,
     level
 from
-    address_label_gp where (bus_type='balance' or bus_type='activity' or bus_type='volume') and category='grade'
-group by project,wired_type,bus_type,level;
+    (
+        select
+            address,
+            data,
+            wired_type,
+            label_type,
+            label_name,
+            updated_at,
+            "group",
+            level,
+            category,
+            trade_type,
+            asset,
+            bus_type,
+            case
+                when wired_type = 'WEB3' then asset
+                else project
+                end as project
+        from
+            address_label_gp) T
 
+where
+    ((bus_type = 'balance'
+        and wired_type = 'WEB3')
+        or bus_type = 'activity'
+        or (bus_type = 'volume'
+            and wired_type = 'DEFI'))
+  and category = 'grade'
+group by
+    project,
+    wired_type,
+    bus_type,
+    level;
 
 ----按行为+级别
 insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level)
@@ -49,7 +86,27 @@ select
     bus_type,
     level
 from
-    address_label_gp where (bus_type='balance' or bus_type='activity' or bus_type='volume') and category='grade'
+    (
+        select
+            address,
+            data,
+            wired_type,
+            label_type,
+            label_name,
+            updated_at,
+            "group",
+            level,
+            category,
+            trade_type,
+            asset,
+            bus_type,
+            case
+                when wired_type = 'WEB3' then asset
+                else project
+                end as project
+        from
+            address_label_gp) T where ((bus_type='balance' and wired_type = 'WEB3') or bus_type='activity' or (bus_type = 'volume'
+                       and wired_type = 'DEFI')) and category='grade'
 group by trade_type,wired_type,bus_type,level;
 
 ------计算聚合级别数据（vol balance activity 聚合）
