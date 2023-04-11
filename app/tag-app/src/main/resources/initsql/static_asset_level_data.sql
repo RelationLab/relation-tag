@@ -7,7 +7,7 @@ create table static_asset_level_data
     wired_type varchar(100)  null,---维度类型:token\project\action
     bus_type varchar(100)  null,---业务类型:vol balance activity
     "level" varchar(100)  null----级别类型 L1\L2....
-);
+) distributed by (static_code,dimension_type,wired_type,bus_type,level);
 truncate table static_asset_level_data;
 vacuum static_asset_level_data;
 
@@ -97,7 +97,7 @@ select
     sald.static_code ,
     sald.dimension_type,
     sald.wired_type,
-    JSON_BUILD_OBJECT('item_code',static_code, 'item_entity',('{'||string_agg(json_text,',')||'}')::jsonb)
+    JSON_BUILD_OBJECT('item_code',static_code, 'item_entity',('{'||string_agg(json_text,',')||'}')::jsonb)::jsonb
 from
     static_asset_level_data_json sald
 group by
