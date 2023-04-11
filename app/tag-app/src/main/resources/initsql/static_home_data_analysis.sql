@@ -19,10 +19,12 @@ select floor(EXTRACT(epoch FROM NOW())*1000-836001000) as analysis_date,
                        'activity_median', avg_activity,
                        'live_day_median', avg_birthday
                    ),
-               'level_address_statistics',json_text::jsonb
+               'level_address_statistics',json_text::jsonb,
+               'address_image_text',address_image_text::jsonb
 
            )
                                                        AS analysis_result
 FROM static_total_data where code='static_total' ;
+
 CREATE TABLE tag_result AS SELECT * FROM address_labels_json_gin LIMIT 1;
 
