@@ -81,8 +81,7 @@ select
 				and a2.data_subject = 'balance_top'
 				and a2.label_type like '%NFT%'
 				and a2.label_type not like '%WEB3%'
-				and (a2.project = ''
-					or a2.project = 'ALL')
+				and a2.project = ''
 				and (a2.type = ''
 					or a2.type = 'ALL')
 			where
@@ -96,8 +95,7 @@ select
                   and dptt.data_subject = 'balance_top'
                   and dptt.label_type like '%NFT%'
                   and dptt.label_type not like '%WEB3%'
-                  and (dptt.project = ''
-                    or dptt.project = 'ALL')
+                  and dptt.project = ''
                   and (dptt.type = ''
                     or dptt.type = 'ALL')
     )

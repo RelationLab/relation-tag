@@ -64,8 +64,7 @@ from
                                    and a2.label_type not like '%WEB3%'
                                    and (a2.type = ''
                                    or a2.type = 'ALL')
-                                   and (a2.project = ''
-                                   or a2.project = 'ALL')
+                                   and a2.project = ''
     ) s1
 where
         s1.rn <= 100 ;

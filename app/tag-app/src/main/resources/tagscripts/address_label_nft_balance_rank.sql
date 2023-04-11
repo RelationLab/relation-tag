@@ -129,8 +129,7 @@ select
 						inner join dim_project_token_type s2
     on
 							s1.token = s2.token
-							and (s2.project = ''
-								or s2.project = 'ALL')
+							and s2.project = ''
 							and (s2.type = ''
 								or s2.type = 'ALL')
 							and s2.data_subject = 'balance_rank'
@@ -172,8 +171,7 @@ select
 					inner join dim_project_token_type tb2
     on
 						totala.token = tb2.token
-						and (tb2.project = ''
-							or tb2.project = 'ALL')
+						and tb2.project = ''
 						and (tb2.type = ''
 							or tb2.type = 'ALL')
 						and tb2.data_subject = 'balance_rank'
@@ -184,8 +182,7 @@ select
     on
 					a10.seq_flag = a1.seq_flag) as a2) as t1
     ) tb1 inner join dim_project_token_type dptt on(dptt.seq_flag = tb1.seq_flag
-                  and (dptt.project = ''
-                    or dptt.project = 'ALL')
+                  and dptt.project = ''
                   and (dptt.type = ''
                     or dptt.type = 'ALL')
                   and dptt.data_subject = 'balance_rank'

@@ -130,8 +130,7 @@ select
                                                         inner join dim_project_token_type s2 on
                                                                 s1.token = s2.token
                                                             and s1.type = s2.type
-                                                            and (s2.project = ''
-                                                            or s2.project = 'ALL')
+                                                            and s2.project = ''
                                                             and s2.type != 'Transfer'
                                                             and s2.data_subject = 'volume_elite'
                                                             and s2.label_type like '%NFT%'
@@ -175,8 +174,7 @@ select
                                                 inner join dim_project_token_type tb2 on
                                                         totala.token = tb2.token
                                                     and totala.type = tb2.type
-                                                    and (tb2.project = ''
-                                                    or tb2.project = 'ALL')
+                                                    and tb2.project = ''
                                                     and tb2.type != 'Transfer'
                                                     and tb2.data_subject = 'volume_elite'
                                                     and tb2.label_type like '%NFT%'
@@ -188,8 +186,7 @@ select
                                             and a10.type = a1.type) as a2) as t1 ) tb1 inner join dim_project_token_type dptt
     on(dptt.seq_flag = tb1.seq_flag
     and dptt.type = tb1.type
-    and (dptt.project = ''
-    or dptt.project = 'ALL')
+    and dptt.project = ''
     and dptt.data_subject = 'volume_elite'
     and dptt.label_type like '%NFT%'
     and dptt.type != 'Transfer'

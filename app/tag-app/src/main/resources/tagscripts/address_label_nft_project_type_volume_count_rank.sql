@@ -139,6 +139,36 @@ from
                                                         where
                                                                 volume_usd > 0 and address <>'0x000000000000000000000000000000000000dead'
                                                           and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                        union all
+                                                        -- project(ALL)-token(ALL)-type
+                                                        select
+                                                            address,
+                                                            'ALL' as platform_group,
+                                                            platform,
+                                                            'ALL' as token,
+                                                            type,
+                                                            round(volume_usd,3) as volume_usd,
+                                                            transfer_count
+                                                        from
+                                                            platform_nft_type_volume_count
+                                                        where
+                                                                volume_usd > 0 and address <>'0x000000000000000000000000000000000000dead'
+                                                          and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                        union all
+                                                        -- project(ALL)-token-type
+                                                        select
+                                                            address,
+                                                            'ALL' as platform_group,
+                                                            platform,
+                                                            token,
+                                                            type,
+                                                            round(volume_usd,3) as volume_usd,
+                                                            transfer_count
+                                                        from
+                                                            platform_nft_type_volume_count
+                                                        where
+                                                                volume_usd > 0 and address <>'0x000000000000000000000000000000000000dead'
+                                                          and token in (select token_id from dim_project_token_type_rank dpttr)
                                                         ) s1
                                                         inner join dim_project_token_type s2
                                                                    on
@@ -188,6 +218,32 @@ from
                                                             address,
                                                             platform_group,
                                                             'ALL' as token,
+                                                            type,
+                                                            round(volume_usd,3) as volume_usd
+                                                        from
+                                                            platform_nft_type_volume_count
+                                                        where
+                                                                volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
+                                                          and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                        union all
+                                                        -- project(ALL)-token(ALL)-type
+                                                        select
+                                                            address,
+                                                            'ALL' as platform_group,
+                                                            'ALL' as token,
+                                                            type,
+                                                            round(volume_usd,3) as volume_usd
+                                                        from
+                                                            platform_nft_type_volume_count
+                                                        where
+                                                                volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
+                                                          and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                        union all
+                                                        -- project(ALL)-token-type
+                                                        select
+                                                            address,
+                                                            'ALL' as platform_group,
+                                                            token,
                                                             type,
                                                             round(volume_usd,3) as volume_usd
                                                         from

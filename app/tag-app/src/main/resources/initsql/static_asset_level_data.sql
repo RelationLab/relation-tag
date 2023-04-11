@@ -68,7 +68,7 @@ where
         and wired_type = 'WEB3')
         or bus_type = 'activity'
         or (bus_type = 'volume'
-            and wired_type = 'DEFI'))
+            and wired_type <> 'WEB3'))
   and category = 'grade'
 group by
     project,
@@ -106,7 +106,7 @@ from
                 end as project
         from
             address_label_gp) T where ((bus_type='balance' and wired_type = 'WEB3') or bus_type='activity' or (bus_type = 'volume'
-                       and wired_type = 'DEFI')) and category='grade'
+                       and wired_type <> 'WEB3')) and category='grade'
 group by trade_type,wired_type,bus_type,level;
 
 ------计算聚合级别数据（vol balance activity 聚合）

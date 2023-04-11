@@ -83,8 +83,7 @@ end   as level,
                 inner join dim_project_token_type a2
                            on
                                        a1.token = a2.token
-                                   and (a2.project = ''
-                                   or a2.project = 'ALL')
+                                   and a2.project = ''
                                    and a1.type = a2.type
                                    and a2.type != 'Transfer' and a2.type != 'Buy'  and a2.type != 'Sale'
 		and
@@ -112,8 +111,7 @@ end   as level,
             inner join dim_project_token_type a2
         on
             a2.token = 'ALL'
-            and (a2.project = ''
-            or a2.project = 'ALL')
+            and a2.project = ''
             and a1.type = a2.type
             and a2.type != 'Transfer' and a2.type != 'Buy'  and a2.type != 'Sale'
             and a2.data_subject = 'count'

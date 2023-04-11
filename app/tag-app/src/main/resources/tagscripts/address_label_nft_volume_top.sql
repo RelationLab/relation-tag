@@ -133,8 +133,7 @@ from
                                                    and a2.label_type like '%NFT%'
                                                    and a2.label_type not like '%WEB3%'
                                                    and a2.type != 'Transfer'
-                                                   and (a2.project = ''
-                                                   or a2.project = 'ALL')
+                                                   and a2.project = ''
                         group by
                             address,
                             seq_flag,
@@ -145,7 +144,6 @@ from
                 and dptt.label_type like '%NFT%'
                 and dptt.label_type not like '%WEB3%'
                 and dptt.type != 'Transfer'
-                and (dptt.project = ''
-                    or dptt.project = 'ALL'))
+                and dptt.project = '')
         where
                 s1.rn <= 100) t;
