@@ -13,6 +13,7 @@ create table static_total_data
     nft_address_num numeric(250, 20) NULL,
     web3_address_num numeric(250, 20) NULL,
     crowd_json_text text NULL,
+    address_image_text text NULL,
     json_text text NULL
 );
 truncate table static_total_data;
@@ -27,6 +28,28 @@ select 'static_total' as code,
        sum(case when aljg.address_type='c' then 1 else 0 end) as contract_address_num
 from address_labels_json_gin aljg ;
 
+
+update  static_total_data
+set
+    address_image_text =  (select
+                               json_agg(address)
+                           from
+                               (
+                                   select
+                                       distinct address
+                                   from
+                                       (
+                                           select
+                                               address
+                                           from
+                                               address_label_gp
+                                           where
+                                                   1 = 1
+                                               limit 10000) t
+                                       limit 4) a
+    )
+where
+        code = 'static_total';
 
 -----更新余额中位数
 update
