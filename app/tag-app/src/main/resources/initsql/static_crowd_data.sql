@@ -21,7 +21,7 @@ from
                  when label_name='crowd_long_term_holder' then 'Long-term holder'
                  when label_name='crowd_nft_whale' then 'NFT whale'
                  when label_name='crowd_nft_high_demander' then 'NFT high demander'
-                 when label_name='crowd_token_whale' then 'oken whale'
+                 when label_name='crowd_token_whale' then 'token whale'
                  when label_name='crowd_defi_active_users' then 'DeFi active users'
                  when label_name='crowd_defi_high_demander' then 'DeFi high demander'
                  when label_name='crowd_web3_active_users' then 'Web3 active users'
