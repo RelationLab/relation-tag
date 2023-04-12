@@ -35,7 +35,14 @@ select distinct s2.token as token,
                                                                   sum(balance_usd) as balance_usd,
                                                                   token
                                                               from
-                                                                  token_balance_volume_usd tbvu where token in(select token_id from dim_rank_token)
+                                                                  token_balance_volume_usd tbvu where
+                                                                token in(select token_id from dim_rank_token)
+                                                                and not exists
+                                                                    (select 1 from token_balance_volume_usd tbvu2
+                                                                              where tbvu2.token='0x839e71613f9aa06e5701cf6de63e303616b0dde3'
+                                                                                and address='0xf6e06de459057d3efa8f0ebd3656e06f66ea02da'
+                                                                                and tbvu.token=tbvu2.token
+                                                                                and tbvu.address=tbvu2.address)
                                                               group by
                                                                   token)
                                                               rowtable ) s1
