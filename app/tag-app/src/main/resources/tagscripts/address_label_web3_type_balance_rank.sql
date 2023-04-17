@@ -114,7 +114,9 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 								project,
 								balance
 							from
-								web3_transaction_record_summary where balance >= 1 and address not in (select address from exclude_address)
+								web3_transaction_record_summary
+							where balance >= 1 and address not in (select address from exclude_address)
+                              and (type='NFT Recipient' or type='write')
 						union all
 							-- project(ALL)-type
 							select
@@ -125,7 +127,9 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 								'ALL' as project,
 								balance
 							from
-								web3_transaction_record_summary where  balance >= 1 and address not in (select address from exclude_address)
+								web3_transaction_record_summary
+							where  balance >= 1 and address not in (select address from exclude_address)
+                              and (type='NFT Recipient' or type='write')
 						union all
 							-- project(ALL)-type(ALL)
 							select
@@ -136,7 +140,9 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 								'ALL' as project,
 								balance
 							from
-								web3_transaction_record_summary where  balance >= 1 and address not in (select address from exclude_address)
+								web3_transaction_record_summary where
+                                    balance >= 1 and address not in (select address from exclude_address)
+                                                                  and (type='NFT Recipient')
 						union all
 							-- project-type(ALL)
 							select
@@ -147,9 +153,10 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 								project,
 								balance
 							from
-								web3_transaction_record_summary where  balance >= 1 and address not in (select address from exclude_address)
-                                     )
-                                         s1
+								web3_transaction_record_summary
+							where  balance >= 1 and address not in (select address from exclude_address)
+                              and (type='NFT Recipient')
+                             ) s1
 						inner join dim_project_type s2
                                                     on
 							s1.project = s2.project
@@ -178,6 +185,7 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 							web3_transaction_record_summary
 						where
 							balance >= 1 and address not in (select address from exclude_address)
+                          and (type='NFT Recipient' or type='write')
 					union all
 						-- project(ALL)-type
 						select
@@ -188,6 +196,7 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 							web3_transaction_record_summary
 						where
 							balance >= 1 and address not in (select address from exclude_address)
+                          and (type='NFT Recipient' or type='write')
 					union all
 						-- project(ALL)-type(ALL)
 						select
@@ -198,6 +207,7 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 							web3_transaction_record_summary
 						where
 							balance >= 1 and address not in (select address from exclude_address)
+                          and (type='NFT Recipient')
 					union all
 						-- project-type(ALL)
 						select
@@ -207,7 +217,8 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 						from
 							web3_transaction_record_summary
 						where
-							balance >= 1 and address not in (select address from exclude_address)) w3trs
+							balance >= 1 and address not in (select address from exclude_address)
+                          and (type='NFT Recipient') w3trs
 					group by
 						type,
 						project) as a10
