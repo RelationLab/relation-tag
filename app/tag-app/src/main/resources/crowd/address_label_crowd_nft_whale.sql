@@ -23,4 +23,4 @@ from (
     select address from
     address_label_nft_balance_top  ) a1
 where
-        address <>'0x000000000000000000000000000000000000dead';
+         address not in (select address from exclude_address);

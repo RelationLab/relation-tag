@@ -98,7 +98,7 @@ insert into public.address_label_eth_volume_rank(address,label_type,label_name,d
                                                 from
                                                     token_volume_usd
                                                 where
-                                                        token = 'eth'and address <>'0x000000000000000000000000000000000000dead'
+                                                        token = 'eth'and address not in (select address from exclude_address)
                                                   and volume_usd >= 100) s1
                                                 inner join dim_rank_token s2
                                                            on
@@ -115,7 +115,7 @@ insert into public.address_label_eth_volume_rank(address,label_type,label_name,d
                                 from
                                     token_volume_usd
                                 where
-                                        token = 'eth'and address <>'0x000000000000000000000000000000000000dead'
+                                        token = 'eth'and address not in (select address from exclude_address)
                                   and volume_usd >= 100) as a10
                             on
                                     1 = 1) as a2) as t1) tb1

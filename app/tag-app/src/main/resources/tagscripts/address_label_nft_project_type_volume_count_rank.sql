@@ -122,7 +122,7 @@ from
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
-                                                                volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead'
+                                                                volume_usd >= 100 and address not in (select address from exclude_address)
                                                             and token in (select token_id from dim_project_token_type_rank dpttr)
                                                         union all
                                                         -- project-token(ALL)-type
@@ -137,7 +137,7 @@ from
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
-                                                                volume_usd > 0 and address <>'0x000000000000000000000000000000000000dead'
+                                                                volume_usd > 0 and address not in (select address from exclude_address)
                                                           and token in (select token_id from dim_project_token_type_rank dpttr)
                                                         union all
                                                         -- project(ALL)-token(ALL)-type
@@ -152,7 +152,7 @@ from
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
-                                                                volume_usd > 0 and address <>'0x000000000000000000000000000000000000dead'
+                                                                volume_usd > 0 and address not in (select address from exclude_address)
                                                           and token in (select token_id from dim_project_token_type_rank dpttr)
                                                         union all
                                                         -- project(ALL)-token-type
@@ -167,7 +167,7 @@ from
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
-                                                                volume_usd > 0 and address <>'0x000000000000000000000000000000000000dead'
+                                                                volume_usd > 0 and address not in (select address from exclude_address)
                                                           and token in (select token_id from dim_project_token_type_rank dpttr)
                                                         ) s1
                                                         inner join dim_project_token_type s2
@@ -210,7 +210,7 @@ from
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
-                                                                volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead'
+                                                                volume_usd >= 100 and address not in (select address from exclude_address)
                                                             and token in (select token_id from dim_project_token_type_rank dpttr)
                                                         union all
                                                         -- project-token(ALL)-type
@@ -223,7 +223,7 @@ from
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
-                                                                volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
+                                                                volume_usd >0 and address not in (select address from exclude_address)
                                                           and token in (select token_id from dim_project_token_type_rank dpttr)
                                                         union all
                                                         -- project(ALL)-token(ALL)-type
@@ -236,7 +236,7 @@ from
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
-                                                                volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
+                                                                volume_usd >0 and address not in (select address from exclude_address)
                                                           and token in (select token_id from dim_project_token_type_rank dpttr)
                                                         union all
                                                         -- project(ALL)-token-type
@@ -249,7 +249,7 @@ from
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
-                                                                volume_usd >0 and address <>'0x000000000000000000000000000000000000dead'
+                                                                volume_usd >0 and address not in (select address from exclude_address)
                                                           and token in (select token_id from dim_project_token_type_rank dpttr)
                                                     ) totala
                                                         inner join

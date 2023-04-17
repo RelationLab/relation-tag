@@ -55,7 +55,7 @@ from
 where
         a2.data_subject = 'time_special'
   and counter >= 1
-  and a2.token_type = 'token' and address <>'0x000000000000000000000000000000000000dead';
+  and a2.token_type = 'token' and address not in (select address from exclude_address);
 
 drop table if exists address_label_crowd_long_term_holder;
 CREATE TABLE public.address_label_crowd_long_term_holder(
@@ -99,4 +99,4 @@ from (
          select address from address_label_nft_time_rank
          where label_name like '%_NFT_TIME_SPECIAL_LONG_TERM_HOLDER'
      ) a1
-where  address <>'0x000000000000000000000000000000000000dead';
+where   address not in (select address from exclude_address);

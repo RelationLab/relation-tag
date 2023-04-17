@@ -59,7 +59,7 @@ insert into public.address_label_token_balance_top(address,label_type,label_name
                         from
                             token_balance_volume_usd
                         where
-                                balance_usd>100 and address <>'0x000000000000000000000000000000000000dead'
+                                balance_usd>100 and address not in (select address from exclude_address)
                     ) totala
                 group by
                     address,

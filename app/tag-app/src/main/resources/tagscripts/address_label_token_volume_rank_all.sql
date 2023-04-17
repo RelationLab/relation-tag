@@ -92,7 +92,18 @@ from
                                         from
                                             total_volume_usd s1
                                         where
-                                                volume_usd >0 and address <>'0x000000000000000000000000000000000000dead') as a1) as a1
+                                                volume_usd >=100 and address not in (select address from exclude_address)
+                                        union all
+                                        select
+                                            'ALL' as token ,
+                                            address,
+                                            sum(round(total_transfer_volume_usd,3)) as volume_usd
+                                        from
+                                            dex_tx_volume_count_summary th
+                                        where
+                                                th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88' and th.type='ALL'
+                                          and th.total_transfer_volume_usd >=100
+                                        ) as a1) as a1
                                 inner join
                             (
                                 select
@@ -113,7 +124,18 @@ from
                                                 from
                                                     total_volume_usd
                                                 where
-                                                        volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead') totala
+                                                        volume_usd >= 100 and address not in (select address from exclude_address)
+                                                union all
+                                                select
+                                                    'ALL' as token ,
+                                                    address,
+                                                    sum(round(total_transfer_volume_usd,3)) as volume_usd
+                                                from
+                                                    dex_tx_volume_count_summary th
+                                                where
+                                                        th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88' and th.type='ALL'
+                                                  and th.total_transfer_volume_usd >=100
+                                                ) totala
                                         group by
                                             token,
                                             address) tbvu
@@ -168,4 +190,4 @@ select
 where (label_name = 'ALL_ALL_ALL_VOLUME_RANK_MEDIUM' or label_name = 'ALL_ALL_ALL_VOLUME_RANK_HEAVY'
    or label_name = 'ALL_ALL_ALL_VOLUME_RANK_ELITE'  or label_name = 'ALL_ALL_ALL_VOLUME_RANK_LEGENDARY')
   and
-    address <>'0x000000000000000000000000000000000000dead';
+     address not in (select address from exclude_address);

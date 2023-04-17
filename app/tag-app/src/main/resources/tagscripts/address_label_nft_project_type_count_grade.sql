@@ -160,4 +160,4 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             a2.type,
             a2.project_name ,
             a2.token_name
-    ) t where sum_count >= 1 and address <>'0x000000000000000000000000000000000000dead';
+    ) t where sum_count >= 1 and address not in (select address from exclude_address);

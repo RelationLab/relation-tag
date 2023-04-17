@@ -21,4 +21,4 @@ from (
            or label_name = 'ALL_ALL_ALL_BALANCE_TOP_WHALE'
     union all
     select address from address_label_token_balance_rank_all  ) a1
-    where address <>'0x000000000000000000000000000000000000dead';
+    where  address not in (select address from exclude_address);

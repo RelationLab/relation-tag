@@ -166,5 +166,5 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
             a2.token_name
     ) t
     where
-        total_transfer_count >= 1 and address <>'0x000000000000000000000000000000000000dead';
+        total_transfer_count >= 1 and address not in (select address from exclude_address);
 

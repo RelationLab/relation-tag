@@ -111,4 +111,4 @@ select
             a2.project_name ,
             a2.token_name) t
     where
-        volume_usd >= 1 and address <>'0x000000000000000000000000000000000000dead';
+        volume_usd >= 1 and address not in (select address from exclude_address);

@@ -111,7 +111,7 @@ select
 							from
 								nft_holding
 							where
-								balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+								balance >= 1 and address not in (select address from exclude_address)
                                 and token in (select token_id from dim_project_token_type_rank dpttr)
                             union all
 							-- project(null)-token(ALL)-type(null)
@@ -122,7 +122,7 @@ select
 							from
 								nft_holding
 							where
-								balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+								balance >= 1 and address not in (select address from exclude_address)
 							  and token in (select token_id from dim_project_token_type_rank dpttr)
                             )
     s1
@@ -154,7 +154,7 @@ select
 						from
 							nft_holding
 						where
-							balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+							balance >= 1 and address not in (select address from exclude_address)
                           and token in (select token_id from dim_project_token_type_rank dpttr)
                         union all
 						-- project(null)-token(ALL)-type(null)
@@ -165,7 +165,7 @@ select
 						from
 							nft_holding
 						where
-							balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+							balance >= 1 and address not in (select address from exclude_address)
 						  and token in (select token_id from dim_project_token_type_rank dpttr)
                         ) totala
 					inner join dim_project_token_type tb2
@@ -234,4 +234,4 @@ insert into public.address_label_crowd_nft_whale(address,label_type,label_name,d
                 select address from
                     address_label_nft_balance_top  ) a1
        where
-               address <>'0x000000000000000000000000000000000000dead';
+                address not in (select address from exclude_address);

@@ -71,7 +71,7 @@ from
                                 from
                                     web3_transaction_record_summary
                                 where
-                                        balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+                                        balance >= 1 and address not in (select address from exclude_address)
                                 union all
                                 -- project(ALL)-type
                                 select
@@ -82,7 +82,7 @@ from
                                 from
                                     web3_transaction_record_summary
                                 where
-                                        balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+                                        balance >= 1 and address not in (select address from exclude_address)
                                 union all
                                 -- project(ALL)-type(ALL)
                                 select
@@ -93,7 +93,7 @@ from
                                 from
                                     web3_transaction_record_summary
                                 where
-                                        balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+                                        balance >= 1 and address not in (select address from exclude_address)
                                 union all
                                 -- project-type(ALL)
                                 select
@@ -104,7 +104,7 @@ from
                                 from
                                     web3_transaction_record_summary
                                 where
-                                        balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+                                        balance >= 1 and address not in (select address from exclude_address)
                             ) totala
                         group by
                             address,

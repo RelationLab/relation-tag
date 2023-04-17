@@ -98,7 +98,7 @@ from
                                                 from
                                                     token_volume_usd
                                                 where
-                                                        token <> 'eth' and address <>'0x000000000000000000000000000000000000dead'
+                                                        token <> 'eth' and address not in (select address from exclude_address)
                                                   and token <> '0xdac17f958d2ee523a2206206994597c13d831ec7') s1
                                                 inner join dim_rank_token s2
                                                            on
@@ -121,7 +121,7 @@ from
                                         from
                                             token_volume_usd
                                         where
-                                                token <> 'eth' and address <>'0x000000000000000000000000000000000000dead'
+                                                token <> 'eth' and address not in (select address from exclude_address)
                                           and token <> '0xdac17f958d2ee523a2206206994597c13d831ec7'
                                           and volume_usd >= 100 ) tbvu2
                                 group by

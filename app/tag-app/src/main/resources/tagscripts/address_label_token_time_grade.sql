@@ -70,4 +70,4 @@ insert into public.address_label_token_time_grade(address,label_type,label_name,
     where
         a2.data_subject = 'time_grade'
   and counter >= 1
-  and counter <= 365 and address <>'0x000000000000000000000000000000000000dead';
+  and counter <= 365 and address not in (select address from exclude_address);

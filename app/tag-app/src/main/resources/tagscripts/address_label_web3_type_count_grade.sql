@@ -150,7 +150,7 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
     a2.token_name
     ) t
     where
-        total_transfer_count >= 1 and address <>'0x000000000000000000000000000000000000dead';
+        total_transfer_count >= 1 and address not in (select address from exclude_address);
 
 drop table if exists address_label_crowd_web3_active_users;
 CREATE TABLE public.address_label_crowd_web3_active_users (
@@ -188,4 +188,4 @@ insert into public.address_label_crowd_web3_active_users(address,label_type,labe
        where (label_name = 'WEB3_ALL_ALL_ACTIVITY_High'
            or label_name = 'WEB3_ALL_ALL_ACTIVITY_Medium'
            or label_name = 'WEB3_ALL_ALL_ACTIVITY_Low')
-         and address <>'0x000000000000000000000000000000000000dead';
+         and address not in (select address from exclude_address);

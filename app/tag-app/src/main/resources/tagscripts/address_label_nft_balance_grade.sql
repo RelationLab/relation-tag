@@ -90,4 +90,4 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
             a2.token_name,
             a2.project_name,
             a2.type
-     ) t where balance>=1 and address <>'0x000000000000000000000000000000000000dead';
+     ) t where balance>=1 and address not in (select address from exclude_address);

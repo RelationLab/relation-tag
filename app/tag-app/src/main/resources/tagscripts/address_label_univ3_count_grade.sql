@@ -85,5 +85,6 @@ from
                 a1.token = a2.token
             and a2.label_type  like 'Uniswap_v3%'
 where
-        a1.total_transfer_count >= 1
-  and a2.data_subject = 'count' and address <>'0x000000000000000000000000000000000000dead'  and address <> '0x0000000000000000000000000000000000000000';
+        a1.total_transfer_count >= 1 and (( a1.type<>'ALL' AND a2.token_type='token')
+                                              or (a1.type='ALL' AND a2.token_type='lp'))
+  and a2.data_subject = 'count' and address not in (select address from exclude_address);

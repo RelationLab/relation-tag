@@ -140,4 +140,4 @@ from
             a2.token_name
     ) t
 where
-        balance >= 1 and address <>'0x000000000000000000000000000000000000dead';
+        balance >= 1 and address not in (select address from exclude_address);

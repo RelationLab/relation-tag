@@ -3814,3 +3814,11 @@ values ('address_label_crowd_nft_active_users','address_label_crowd_nft_active_u
 
 
 
+drop table if exists exclude_address;
+CREATE TABLE public.exclude_address (
+                                             address varchar(100) NULL
+);
+truncate table exclude_address;
+vacuum exclude_address;
+insert into exclude_address(address) values ('0x0000000000000000000000000000000000000000');
+insert into exclude_address(address) values ('0x000000000000000000000000000000000000dead');

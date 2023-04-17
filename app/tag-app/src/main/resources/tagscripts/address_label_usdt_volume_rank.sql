@@ -98,7 +98,7 @@ from
                                                 from
                                                     token_volume_usd
                                                 where
-                                                        token = '0xdac17f958d2ee523a2206206994597c13d831ec7' and address <>'0x000000000000000000000000000000000000dead') s1
+                                                        token = '0xdac17f958d2ee523a2206206994597c13d831ec7' and address not in (select address from exclude_address)) s1
                                                 inner join dim_rank_token s2
                                                            on
                                                                    s1.token = s2.token_id
@@ -114,7 +114,7 @@ from
                                 from
                                     token_volume_usd
                                 where
-                                        token = '0xdac17f958d2ee523a2206206994597c13d831ec7' and address <>'0x000000000000000000000000000000000000dead'
+                                        token = '0xdac17f958d2ee523a2206206994597c13d831ec7' and address not in (select address from exclude_address)
                                   and volume_usd >= 100) as a10
                             on
                                     1 = 1) as a2) as t1) tb1

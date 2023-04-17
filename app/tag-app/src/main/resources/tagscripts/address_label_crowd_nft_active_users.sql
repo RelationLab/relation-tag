@@ -37,4 +37,4 @@ where (label_name = 'ALL_ALL_ALL_NFT_ACTIVITY_Low'
     or label_name = 'ALL_ALL_ALL_NFT_ACTIVITY_Medium'
     or label_name = 'ALL_ALL_ALL_NFT_ACTIVITY_High')
   and
-        address <>'0x000000000000000000000000000000000000dead';
+         address not in (select address from exclude_address);

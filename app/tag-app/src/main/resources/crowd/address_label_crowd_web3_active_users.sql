@@ -17,4 +17,4 @@ from  address_label_web3_type_count_grade a1
          where (label_name = 'WEB3_ALL_NFTRecipient_ACTIVITY_High'
             or label_name = 'WEB3_ALL_NFTRecipient_ACTIVITY_Medium'
             or label_name = 'WEB3_ALL_NFTRecipient_ACTIVITY_Low')
-and address <>'0x000000000000000000000000000000000000dead';
+and address not in (select address from exclude_address);

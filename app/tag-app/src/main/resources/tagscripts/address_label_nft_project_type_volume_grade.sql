@@ -132,4 +132,4 @@ select
             a2.type,
             a2.project_name ,
             a2.token_name
-    ) t where volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead';
+    ) t where volume_usd >= 100 and address not in (select address from exclude_address);

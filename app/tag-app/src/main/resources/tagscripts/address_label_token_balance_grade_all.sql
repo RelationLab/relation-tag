@@ -81,7 +81,7 @@ insert into public.address_label_token_balance_grade_all(address,label_type,labe
     where
         a1.balance_usd >= 100
   and a2.data_subject = 'balance_grade'
-  and a2.token_type = 'token' and address <>'0x000000000000000000000000000000000000dead';
+  and a2.token_type = 'token' and address not in (select address from exclude_address);
 
 drop table if exists address_label_crowd_token_whale;
 CREATE TABLE public.address_label_crowd_token_whale (
@@ -123,5 +123,5 @@ select
                    or label_name = 'ALL_ALL_ALL_BALANCE_TOP_WHALE'
                 union all
                 select address from address_label_token_balance_rank_all  ) a1
-       where address <>'0x000000000000000000000000000000000000dead';
+       where  address not in (select address from exclude_address);
 

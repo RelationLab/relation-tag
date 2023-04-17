@@ -168,4 +168,4 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
             a2.project_name ,
             a2.token_name
     ) t where
-        total_transfer_volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead';
+        total_transfer_volume_usd >= 100 and address not in (select address from exclude_address);

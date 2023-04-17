@@ -19,4 +19,4 @@ from ( select
             or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_UNCOMMON_NFT_TRADER'
             or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_LEGENDARY_NFT_TRADER')
     and
-        address <>'0x000000000000000000000000000000000000dead';
+         address not in (select address from exclude_address);

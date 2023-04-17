@@ -40,4 +40,4 @@ from (
          where label_name = 'ALL_ALL_ALL_VOLUME_RANK_ELITE'
      ) a1
 where
-        address <>'0x000000000000000000000000000000000000dead';
+         address not in (select address from exclude_address);

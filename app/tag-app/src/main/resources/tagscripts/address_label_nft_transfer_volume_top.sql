@@ -66,7 +66,7 @@ insert into public.address_label_nft_transfer_volume_top(address,label_type,labe
 				from
 					nft_transfer_holding
 				where
-					total_transfer_volume >= 1 and address <>'0x000000000000000000000000000000000000dead'
+					total_transfer_volume >= 1 and address not in (select address from exclude_address)
                   and token in (select token_id from dim_project_token_type_rank dpttr)
 			union all
 				-- project(null)+nft（ALL）+type
@@ -78,7 +78,7 @@ insert into public.address_label_nft_transfer_volume_top(address,label_type,labe
 					nft_transfer_holding
 				where
 					total_transfer_volume >= 1
-				  and address <>'0x000000000000000000000000000000000000dead'
+				  and address not in (select address from exclude_address)
                     and token in (select token_id from dim_project_token_type_rank dpttr)
 				) totala
 			inner join dim_project_token_type a2

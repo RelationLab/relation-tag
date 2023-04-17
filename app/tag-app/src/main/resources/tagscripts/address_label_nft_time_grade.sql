@@ -79,4 +79,4 @@ select
   and counter <= 365
   and (a2.type = ''
     or a2.type = 'ALL')
-  and a2.project = '' and address <>'0x000000000000000000000000000000000000dead';
+  and a2.project = '' and address not in (select address from exclude_address);

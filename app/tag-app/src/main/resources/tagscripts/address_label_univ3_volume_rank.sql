@@ -99,7 +99,7 @@ from
                                                     dex_tx_volume_count_summary dtvcs
                                                 where
                                                         dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
-                                                  and dtvcs.total_transfer_volume_usd >= 100 and address <>'0x000000000000000000000000000000000000dead'  and address <> '0x0000000000000000000000000000000000000000') s1
+                                                  and dtvcs.total_transfer_volume_usd >= 100 and address not in (select address from exclude_address)  and address <> '0x0000000000000000000000000000000000000000') s1
                                                 inner join dim_rank_token s2
                                                            on
                                                                    s1.token = s2.token_id
@@ -122,7 +122,7 @@ from
                                             dex_tx_volume_count_summary dtvcs
                                         where
                                                 dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
-                                          and dtvcs.total_transfer_volume_usd >= 100  and address <>'0x000000000000000000000000000000000000dead'  and address <> '0x0000000000000000000000000000000000000000') tbvu2
+                                          and dtvcs.total_transfer_volume_usd >= 100  and address not in (select address from exclude_address)) tbvu2
                                 group by
                                     token ) as a10
                             on
@@ -136,4 +136,6 @@ from
 where
         tb1.volume_usd >= 100
   and tb2.data_subject = 'volume_rank'
+  and (( tb1.type<>'ALL' AND tb2.token_type='token')
+    or (tb1.type='ALL' AND tb2.token_type='lp'))
   and zb_rate <= 0.1;

@@ -84,6 +84,6 @@ from
                 a1.token = a2.token
             and a2.label_type  like 'Uniswap_v3%'
 where
-        a2.data_subject = 'balance_grade' and address <>'0x000000000000000000000000000000000000dead' and address <> '0x0000000000000000000000000000000000000000';
+        a2.data_subject = 'balance_grade' and address not in (select address from exclude_address);
 
 

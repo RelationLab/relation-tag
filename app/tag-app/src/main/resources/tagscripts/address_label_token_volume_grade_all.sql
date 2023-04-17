@@ -70,7 +70,17 @@ insert into public.address_label_token_volume_grade_all(address,label_type,label
             'ALL' as token ,
             round(volume_usd,3) volume_usd
         from
-            total_volume_usd tbvu
+            total_volume_usd tbvu where colume_usd>=100
+        union all
+        select
+            address,
+            'ALL' as token ,
+            sum(round(total_transfer_volume_usd,3)) as volume_usd
+        from
+            dex_tx_volume_count_summary th
+        where
+                th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
+          and th.type='ALL' and th.total_transfer_volume_usd >=100
     )
         a1
         inner join
@@ -80,4 +90,4 @@ insert into public.address_label_token_volume_grade_all(address,label_type,label
     where
         a1.volume_usd >= 100
   and a2.data_subject = 'volume_grade'
-  and a2.token_type = 'token' and address <>'0x000000000000000000000000000000000000dead';
+  and a2.token_type = 'token' and address not in (select address from exclude_address);

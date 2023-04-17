@@ -95,7 +95,16 @@ from
                     total_transfer_count
                 from
                     token_holding_vol_count th where  total_transfer_count >=1 and th.token in (select token_id from dim_rank_token)
-            ) th2
+                union all
+                select
+                    address,
+                    total_transfer_count as total_transfer_count
+                from
+                    dex_tx_volume_count_summary th
+                where
+                        th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88' and th.type='ALL'
+                        and total_transfer_count >=1 and th.token in (select token_id from dim_rank_token)
+                 ) th2
         group by
             address
     ) a1
@@ -106,7 +115,7 @@ from
             and a2.label_type not like 'Uniswap_v3%'
 where
         a1.total_transfer_count >= 1
-  and a2.data_subject = 'count' and address <>'0x000000000000000000000000000000000000dead';
+  and a2.data_subject = 'count' and address not in (select address from exclude_address);
 
 drop table if exists address_label_crowd_defi_active_users;
 CREATE TABLE public.address_label_crowd_defi_active_users (
@@ -144,5 +153,5 @@ from address_label_token_count_grade a1
 where (label_name = 'ALL_ALL_ALL_ACTIVITY_High'
     or label_name = 'ALL_ALL_ALL_ACTIVITY_Medium'
     or label_name = 'ALL_ALL_ALL_ACTIVITY_Low')
-  and  address <>'0x000000000000000000000000000000000000dead';
+  and   address not in (select address from exclude_address);
 

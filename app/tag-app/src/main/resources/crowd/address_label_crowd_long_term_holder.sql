@@ -23,4 +23,4 @@ from (
          select address from address_label_nft_time_rank
          where label_name like '%_NFT_TIME_SPECIAL_LONG_TERM_HOLDER'
      ) a1
-where  address <>'0x000000000000000000000000000000000000dead';
+where   address not in (select address from exclude_address);

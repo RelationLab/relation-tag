@@ -130,4 +130,4 @@ select
             a2.project_name ,
             a2.token_name) t
     where
-        sum_count >= 1 and address <>'0x000000000000000000000000000000000000dead';
+        sum_count >= 1 and address not in (select address from exclude_address);

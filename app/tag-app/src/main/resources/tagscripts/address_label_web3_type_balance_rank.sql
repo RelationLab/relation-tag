@@ -114,7 +114,7 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 								project,
 								balance
 							from
-								web3_transaction_record_summary where balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+								web3_transaction_record_summary where balance >= 1 and address not in (select address from exclude_address)
 						union all
 							-- project(ALL)-type
 							select
@@ -125,7 +125,7 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 								'ALL' as project,
 								balance
 							from
-								web3_transaction_record_summary where  balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+								web3_transaction_record_summary where  balance >= 1 and address not in (select address from exclude_address)
 						union all
 							-- project(ALL)-type(ALL)
 							select
@@ -136,7 +136,7 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 								'ALL' as project,
 								balance
 							from
-								web3_transaction_record_summary where  balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+								web3_transaction_record_summary where  balance >= 1 and address not in (select address from exclude_address)
 						union all
 							-- project-type(ALL)
 							select
@@ -147,7 +147,7 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 								project,
 								balance
 							from
-								web3_transaction_record_summary where  balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+								web3_transaction_record_summary where  balance >= 1 and address not in (select address from exclude_address)
                                      )
                                          s1
 						inner join dim_project_type s2
@@ -177,7 +177,7 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 						from
 							web3_transaction_record_summary
 						where
-							balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+							balance >= 1 and address not in (select address from exclude_address)
 					union all
 						-- project(ALL)-type
 						select
@@ -187,7 +187,7 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 						from
 							web3_transaction_record_summary
 						where
-							balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+							balance >= 1 and address not in (select address from exclude_address)
 					union all
 						-- project(ALL)-type(ALL)
 						select
@@ -197,7 +197,7 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 						from
 							web3_transaction_record_summary
 						where
-							balance >= 1 and address <>'0x000000000000000000000000000000000000dead'
+							balance >= 1 and address not in (select address from exclude_address)
 					union all
 						-- project-type(ALL)
 						select
@@ -207,7 +207,7 @@ insert into public.address_label_web3_type_balance_rank(address,label_type,label
 						from
 							web3_transaction_record_summary
 						where
-							balance >= 1 and address <>'0x000000000000000000000000000000000000dead') w3trs
+							balance >= 1 and address not in (select address from exclude_address)) w3trs
 					group by
 						type,
 						project) as a10

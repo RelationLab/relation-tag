@@ -71,7 +71,7 @@ from
                                 from
                                     nft_volume_count
                                 where
-                                        transfer_volume >= 1 and address <>'0x000000000000000000000000000000000000dead'
+                                        transfer_volume >= 1 and address not in (select address from exclude_address)
                                   and token in (select token_id from dim_project_token_type_rank dpttr)
                                 union all
                                 -- project(null)+nft(ALL)+type(null)
@@ -84,7 +84,7 @@ from
                                     nft_volume_count
                                 where
                                         transfer_volume >= 1
-                                  and address <>'0x000000000000000000000000000000000000dead'
+                                  and address not in (select address from exclude_address)
                                   and token in (select token_id from dim_project_token_type_rank dpttr)
                                 union all
                                 -- project(null)+nft+type
@@ -96,7 +96,7 @@ from
                                 from
                                     nft_volume_count
                                 where
-                                        transfer_volume >= 1 and address <>'0x000000000000000000000000000000000000dead'
+                                        transfer_volume >= 1 and address not in (select address from exclude_address)
                                   and token in (select token_id from dim_project_token_type_rank dpttr)
                                 union all
                                 -- project(null)+nft+type(ALL)
@@ -109,7 +109,7 @@ from
                                     nft_volume_count
                                 where
                                         transfer_volume >= 1
-                                  and address <>'0x000000000000000000000000000000000000dead'
+                                  and address not in (select address from exclude_address)
                                     and token in (select token_id from dim_project_token_type_rank dpttr)
                                 union all
                                 -- project(null)+nft（ALL）+type
@@ -122,7 +122,7 @@ from
                                     nft_volume_count
                                 where
                                         transfer_volume >= 1
-                                  and address <>'0x000000000000000000000000000000000000dead'
+                                  and address not in (select address from exclude_address)
                                     and token in (select token_id from dim_project_token_type_rank dpttr)
                             ) tatola
                                 inner join dim_project_token_type a2

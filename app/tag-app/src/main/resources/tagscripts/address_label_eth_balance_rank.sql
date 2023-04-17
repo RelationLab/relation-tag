@@ -83,7 +83,7 @@ from
                                                 from
                                                     token_balance_volume_usd
                                                 where
-                                                        token = 'eth' and address <>'0x000000000000000000000000000000000000dead') s1
+                                                        token = 'eth' and address not in (select address from exclude_address)) s1
                                                 inner join dim_rank_token s2
                                                            on
                                                                    s1.token = s2.token_id
@@ -99,7 +99,7 @@ from
                                 from
                                     token_balance_volume_usd
                                 where
-                                        token = 'eth' and address <>'0x000000000000000000000000000000000000dead'
+                                        token = 'eth' and address not in (select address from exclude_address)
                                   and balance_usd >= 100) as a10
                             on
                                     1 = 1) as a2) as t1

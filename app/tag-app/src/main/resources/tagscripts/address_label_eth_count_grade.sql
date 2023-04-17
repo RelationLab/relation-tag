@@ -84,4 +84,4 @@ insert into public.address_label_eth_count_grade(address,label_type,label_name,d
     where
         a1.total_transfer_count >= 1
   and a2.data_subject = 'count'
-  and a2.token_type = 'token' and address <>'0x000000000000000000000000000000000000dead';
+  and a2.token_type = 'token' and address not in (select address from exclude_address);
