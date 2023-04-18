@@ -1,3 +1,6 @@
+update dex_tx_volume_count_record_from_gp set project='0x1111111254fb6c44bac0bed2854e76f90643097d'
+                                          where project='0x1111111254fb6c44bAC0beD2854e76F90643097d';
+
 drop table if exists dex_tx_volume_count_summary;
 CREATE TABLE public.dex_tx_volume_count_summary (
                                                     address varchar(256) NOT NULL,
