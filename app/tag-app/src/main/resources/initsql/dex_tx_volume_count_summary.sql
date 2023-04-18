@@ -40,10 +40,10 @@ select
     th.type as type,
     '0xc36442b4a4522e871399cd717abdd847ab11fe88' as project,
     max(th.block_height) as block_height,
-    sum(round(th.total_transfer_volume * round(cast(w.price as numeric), 3),3)) as total_transfer_volume_usd,
+    sum(round(th.total_transfer_volume * round(cast(w.price as numeric), 18),3)) as total_transfer_volume_usd,
         sum(total_transfer_count) as total_transfer_count,
         min(first_updated_block_height) as first_updated_block_height,
-        sum(round(th.balance * round(cast (w.price as numeric), 3),3)) as balance_usd
+        sum(round(th.balance * round(cast (w.price as numeric), 18),3)) as balance_usd
         from
         token_holding_uni_cal th
         inner join (
@@ -81,10 +81,10 @@ select
     type,
     project,
     max(block_height) block_height,
-    sum(round(total_transfer_volume * round(cast (w.price as numeric), 3),3) ) as total_transfer_volume_usd,
+    sum(round(total_transfer_volume * round(cast (w.price as numeric), 18),3) ) as total_transfer_volume_usd,
     sum(total_transfer_count) total_transfer_count,
     min(first_updated_block_height) first_updated_block_height,
-    sum(round(balance * round(cast (w.price as numeric), 3),3)) as balance_usd
+    sum(round(balance * round(cast (w.price as numeric), 18),3)) as balance_usd
 from
     dex_tx_volume_count_record  dtvcr
         inner join (
