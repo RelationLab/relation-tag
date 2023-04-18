@@ -134,7 +134,7 @@ select dtvcr.address as address
      ,'ALL' as type
      ,dtvcr.project as project
      ,min(dtvcr.block_height) as block_height
-     ,dtvcr.total_transfer_volume_usd as total_transfer_volume_usd
+     ,sum(dtvcr.total_transfer_volume_usd) as total_transfer_volume_usd
      ,min(dtvcr.total_transfer_count) as total_transfer_count
      ,min(dtvcr.first_updated_block_height) as first_updated_block_height
      ,max(dtvcr.balance_usd)  as balance_usd from
@@ -143,6 +143,5 @@ group by
     dtvcr.address,
     dtvcr."token",
     dtvcr.transaction_hash,
-    dtvcr.project,
-    dtvcr.total_transfer_volume_usd;
+    dtvcr.project;
 
