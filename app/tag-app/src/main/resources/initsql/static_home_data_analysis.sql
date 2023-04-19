@@ -25,6 +25,6 @@ select floor(EXTRACT(epoch FROM NOW())*1000-836001000) as analysis_date,
            )
                                                        AS analysis_result
 FROM static_total_data where code='static_total' ;
-
-CREATE TABLE tag_result AS SELECT * FROM address_labels_json_gin LIMIT 1;
+insert into tag_result(table_name,batch_date)  SELECT 'static_home_data_analysis' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'tag_result' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 

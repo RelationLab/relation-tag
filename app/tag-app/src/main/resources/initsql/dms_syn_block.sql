@@ -16,3 +16,5 @@ select 'eth_tx_record' as syn_type,max(block_number) from eth_tx_record;
 
 insert into dms_syn_block(syn_type,block_height)
 select 'erc20_tx_record' as syn_type,max(block_number) from erc20_tx_record;
+insert into tag_result(table_name,batch_date)  SELECT 'dms_syn_block' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+

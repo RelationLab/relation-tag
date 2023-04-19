@@ -81,5 +81,7 @@ from
         group by
             price) wle on
             1 = 1;
+insert into tag_result(table_name,batch_date)  SELECT 'token_volume_usd' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+
 
 

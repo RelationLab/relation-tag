@@ -31,3 +31,4 @@ insert into nft_volume_count(address, token, type, transfer_volume, transfer_cou
 
 insert into nft_volume_count(address, token, type, transfer_volume, transfer_count)
     select address, token , 'Transfer', total_transfer_volume, total_transfer_count from nft_transfer_holding;
+insert into tag_result(table_name,batch_date)  SELECT 'nft_volume_count' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

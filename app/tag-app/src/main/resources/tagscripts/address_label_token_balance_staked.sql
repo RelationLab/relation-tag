@@ -61,3 +61,4 @@ insert into public.address_label_token_balance_staked(address,label_type,label_n
     ) s1
     where
         s1.rn <= 200;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_balance_staked' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

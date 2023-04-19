@@ -1,3 +1,11 @@
+drop table if exists tag_result;
+CREATE TABLE public.tag_result (
+                                             table_name varchar(100) NULL,
+                                             batch_date varchar(100) NULL
+);
+truncate table tag_result;
+vacuum tag_result;
+
 drop table if exists dim_rule_sql_content;
 CREATE TABLE public.dim_rule_sql_content (
                                              rule_name varchar(100) NULL,
@@ -3822,3 +3830,4 @@ truncate table exclude_address;
 vacuum exclude_address;
 insert into exclude_address(address) values ('0x0000000000000000000000000000000000000000');
 insert into exclude_address(address) values ('0x000000000000000000000000000000000000dead');
+insert into tag_result(table_name,batch_date)  SELECT 'dim_rule_sql_content' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

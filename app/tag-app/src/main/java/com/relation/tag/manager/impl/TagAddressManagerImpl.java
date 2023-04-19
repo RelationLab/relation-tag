@@ -32,24 +32,24 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     public static String SCRIPTSPATH = "tagscripts";
 
-    private void tagByRuleSqlList(List<FileEntity> ruleSqlList) {
+    private void tagByRuleSqlList(List<FileEntity> ruleSqlList, String batchDate) {
         try {
             forkJoinPool.execute(() -> {
                 ruleSqlList.parallelStream().forEach(ruleSql -> {
-                    execContentSql(ruleSql);
+                    execContentSql(ruleSql, batchDate);
                 });
             });
-            tagMerge();
+            tagMerge(batchDate);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void execContentSql(FileEntity ruleSql) {
+    private void execContentSql(FileEntity ruleSql, String batchDate) {
         try {
             String tableName = ruleSql.getFileName();
             String table = tableName.split("\\.")[0];
-            if (checkResult(table)) {
+            if (checkResult(table, batchDate)) {
                 return;
             }
             iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
@@ -59,17 +59,17 @@ public class TagAddressManagerImpl implements TagAddressManager {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            execContentSql(ruleSql);
+            execContentSql(ruleSql, batchDate);
         }
 
     }
 
-    public boolean checkResult(String tableName) {
+    public boolean checkResult(String tableName, String batchDate) {
         if (StringUtils.isEmpty(tableName)) {
             return false;
         }
         try {
-            List<Integer> tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
+            List<Integer> tagList = checkResultData(tableName, batchDate);
             log.info("tableName==={},tagList.size===={}", tableName, CollectionUtils.isEmpty(tagList) ? 0 : tagList.size());
             return !CollectionUtils.isEmpty(tagList);
         } catch (Exception ex) {
@@ -77,13 +77,18 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
     }
 
-    public void check(String tableName, long sleepTime) {
+    private List<Integer> checkResultData(String tableName, String batchDate) {
+        return iAddressLabelService.exceSelectSql("select 1 from ".concat("tag_result where 1=1 and table_name=‘").concat(tableName)
+                .concat("' and batch_date='").concat(batchDate).concat("’ limit 1"));
+    }
+
+    public void check(String tableName, long sleepTime, String batchDate) {
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
         while (true) {
             try {
-                List<Integer> tagList = iAddressLabelService.exceSelectSql("select 1 from ".concat(tableName).concat(" limit 1"));
+                List<Integer> tagList = checkResultData(tableName, batchDate);
                 if (tagList != null && !CollectionUtils.isEmpty(tagList)) {
                     log.info("check table ===={} end.......tagList.size===={}", tableName, tagList.size());
                     break;
@@ -94,7 +99,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-//                log.error(ex.getMessage(),ex);
             }
             try {
                 Thread.sleep(sleepTime);
@@ -106,16 +110,16 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     @Override
-    public void refreshAllLabel() throws Exception {
-        if (!checkResult("address_labels_json_gin")) {
-            tag();
+    public void refreshAllLabel(String batchDate) throws Exception {
+        if (!checkResult("address_labels_json_gin", batchDate)) {
+            tag(batchDate);
         }
     }
 
-    private void tag() throws Exception {
-        innit();
+    private void tag(String batchDate) throws Exception {
+        innit(batchDate);
 //        Thread.sleep(10 * 60 * 1000);
-        check("total_volume_usd", 1 * 60 * 1000);
+        check("total_volume_usd", 1 * 60 * 1000, batchDate);
         List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
         List<FileEntity> fileList = Lists.newArrayList();
         for (DimRuleSqlContent item : ruleSqlList) {
@@ -124,50 +128,50 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     .fileContent(FileUtils.readFile(SCRIPTSPATH.concat(File.separator)
                             .concat(fileName))).build());
         }
-        tagByRuleSqlList(fileList);
+        tagByRuleSqlList(fileList, batchDate);
     }
 
-    private void innit() throws Exception {
-        execSql(null, "dim_rule_sql_content.sql");
-        execSql("dim_rule_sql_content", "dim_project_token_type.sql");
-        execSql("dim_project_token_type", "dim_project_type.sql");
-        execSql("dim_project_type", "dim_rule_content.sql");
-        execSql("dim_rank_token", "white_list_erc20.sql");
-        execSql("white_list_erc20", "platform_nft_volume_usd.sql");
-        execSql("platform_nft_volume_usd", "nft_transfer_holding.sql");
-        execSql("nft_transfer_holding", "nft_volume_count.sql");
-        execSql("nft_volume_count", "platform_nft_type_volume_count.sql");
-        execSql("platform_nft_type_volume_count", "token_holding_uni_cal.sql");
-        execSql("token_holding_uni_cal", "token_balance_volume_usd.sql");
-        execSql("token_balance_volume_usd", "total_balance_volume_usd.sql");
-        execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql");
-        execSql("token_holding_uni_cal", "dex_tx_volume_count_summary.sql");
+    private void innit(String batchDate) throws Exception {
+        execSql(null, "dim_rule_sql_content.sql", batchDate);
+        execSql("dim_rule_sql_content", "dim_project_token_type.sql", batchDate);
+        execSql("dim_project_token_type", "dim_project_type.sql", batchDate);
+        execSql("dim_project_type", "dim_rule_content.sql", batchDate);
+        execSql("dim_rule_content", "white_list_erc20.sql", batchDate);
+        execSql("white_list_erc20", "platform_nft_volume_usd.sql", batchDate);
+        execSql("platform_nft_volume_usd", "nft_transfer_holding.sql", batchDate);
+        execSql("nft_transfer_holding", "nft_volume_count.sql", batchDate);
+        execSql("nft_volume_count", "platform_nft_type_volume_count.sql", batchDate);
+        execSql("platform_nft_type_volume_count", "token_holding_uni_cal.sql", batchDate);
+        execSql("token_holding_uni_cal", "token_balance_volume_usd.sql", batchDate);
+        execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate);
+        execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql", batchDate);
+        execSql("token_holding_uni_cal", "dex_tx_volume_count_summary.sql", batchDate);
 //        Thread.sleep(3 * 60 * 1000);
         log.info("eth_holding_vol_count Thread start.....");
-        boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql");
+        boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql", batchDate);
         log.info("eth_holding_vol_count Thread end .....");
         if (!token_holding_vol_countcheck) {
 //            Thread.sleep(1 * 60 * 1000);
         }
         log.info("token_holding_vol_count Thread start .....");
-        boolean dms_syn_blockcheck = execSql("dex_tx_volume_count_summary", "token_holding_vol_count.sql");
+        boolean dms_syn_blockcheck = execSql("dex_tx_volume_count_summary", "token_holding_vol_count.sql", batchDate);
         log.info("token_holding_vol_count Thread end .....");
         if (!dms_syn_blockcheck) {
 //            Thread.sleep(1 * 60 * 1000);
         }
         log.info("token_volume_usd Thread start .....");
-        execSql("token_holding_vol_count", "dms_syn_block.sql");
-        boolean total_volume_usdcheck = execSql("token_holding_vol_count", "token_volume_usd.sql");
+        execSql("token_holding_vol_count", "dms_syn_block.sql", batchDate);
+        boolean total_volume_usdcheck = execSql("token_holding_vol_count", "token_volume_usd.sql", batchDate);
         log.info("token_volume_usd Thread end .....");
         if (!total_volume_usdcheck) {
 //            Thread.sleep(5 * 60 * 1000);
         }
         log.info("total_volume_usd Thread start .....");
-        execSql("token_volume_usd", "total_volume_usd.sql");
+        execSql("token_volume_usd", "total_volume_usd.sql", batchDate);
         log.info("total_volume_usd Thread end .....");
     }
 
-    private boolean execSql(String lastTableName, String sqlName) {
+    private boolean execSql(String lastTableName, String sqlName, String batchDate) {
         String tableName = sqlName.split("\\.")[0];
         if (StringUtils.equalsAny(tableName, "token_holding_vol_count", "eth_holding_vol_count")) {
             tableName = tableName.concat("_tmp");
@@ -176,56 +180,56 @@ public class TagAddressManagerImpl implements TagAddressManager {
         forkJoinPool.execute(new Runnable() {
             @Override
             public void run() {
-                execSynSql(lastTableName, sqlName, finalTableName);
+                execSynSql(lastTableName, sqlName, finalTableName, batchDate);
             }
         });
-        return checkResult(finalTableName);
+        return checkResult(finalTableName, batchDate);
     }
 
-    private void execSynSql(String lastTableName, String sqlName, String tableName) {
-        check(lastTableName, 20 * 1000);
+    private void execSynSql(String lastTableName, String sqlName, String tableName, String batchDate) {
+        check(lastTableName, 20 * 1000, batchDate);
         try {
-            if (checkResult(tableName)) {
+            if (checkResult(tableName, batchDate)) {
                 return;
             }
             String exceSql = FileUtils.readFile(INIT_PATH.concat(File.separator).concat(sqlName));
             iAddressLabelService.exceSql(exceSql, sqlName);
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             try {
                 Thread.sleep(1 * 60 * 1000);
             } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
             }
             log.info("sqlName==={} try ......", sqlName);
-            execSynSql(lastTableName, sqlName, tableName);
+            execSynSql(lastTableName, sqlName, tableName, batchDate);
         }
     }
 
     @Override
-    public void tagMerge() throws Exception {
-//        try {
-//            Thread.sleep(40 * 60 * 1000);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-        execSql(null, "address_label_gp.sql");
+    public void tagMerge(String batchDate) throws Exception {
+        try {
+            Thread.sleep(40 * 60 * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        execSql(null, "address_label_gp.sql", batchDate);
         try {
             Thread.sleep(2 * 60 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        staticData();
+        staticData(batchDate);
     }
 
     @Override
-    public void staticData() {
-        execSql("address_labels_json_gin", "static_top_ten_token.sql");
-        execSql("static_top_ten_token", "static_crowd_data.sql");
-        execSql("static_top_ten_token", "static_asset_level_data.sql");
-        execSql("static_top_ten_token", "static_wired_type_address.sql");
-        execSql("static_type_json", "static_total_data.sql");
-        execSql("static_total_data", "static_home_data_analysis.sql");
-        execSql("static_total_data", "static_drop.sql");
+    public void staticData(String batchDate) {
+        execSql("address_labels_json_gin", "static_top_ten_token.sql", batchDate);
+        execSql("static_top_ten_token", "static_crowd_data.sql", batchDate);
+        execSql("static_top_ten_token", "static_asset_level_data.sql", batchDate);
+        execSql("static_top_ten_token", "static_wired_type_address.sql", batchDate);
+        execSql("static_type_json", "static_total_data.sql", batchDate);
+        execSql("static_total_data", "static_home_data_analysis.sql", batchDate);
+        execSql("static_total_data", "static_drop.sql", batchDate);
     }
 }

@@ -85,5 +85,7 @@ from
             and a2.label_type  like 'Uniswap_v3%'
 where
         a2.data_subject = 'balance_grade' and address not in (select address from exclude_address);
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_univ3_balance_grade' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+
 
 

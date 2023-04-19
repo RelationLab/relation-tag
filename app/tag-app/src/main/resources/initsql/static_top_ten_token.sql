@@ -88,3 +88,4 @@ FROM
                 s1.rn <= 10) s2
         INNER JOIN dim_project_token_type drc ON
         (drc.token = s2.token);
+insert into tag_result(table_name,batch_date)  SELECT 'static_top_ten_token' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

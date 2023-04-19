@@ -124,4 +124,5 @@ select
                 union all
                 select address from address_label_token_balance_rank_all  ) a1
        where  address not in (select address from exclude_address);
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_balance_grade_all' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 

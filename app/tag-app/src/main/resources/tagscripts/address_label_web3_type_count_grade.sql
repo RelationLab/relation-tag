@@ -189,3 +189,4 @@ insert into public.address_label_crowd_web3_active_users(address,label_type,labe
            or label_name = 'WEB3_ALL_ALL_ACTIVITY_Medium'
            or label_name = 'WEB3_ALL_ALL_ACTIVITY_Low')
          and address not in (select address from exclude_address);
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_web3_type_count_grade' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

@@ -93,24 +93,4 @@ from
         group by
             to_address,
             token ) atb where address !='' group by  address,token;
-
-insert into
-    token_holding_vol_count_tmp(address,
-                            block_height,
-                            token,
-                            total_transfer_volume,
-                            total_transfer_count,
-                            total_transfer_to_count,
-                            total_transfer_all_count,
-                            total_transfer_to_volume,
-                            total_transfer_all_volume)
-select address,
-       block_height,
-       token,
-       total_transfer_volume,
-       total_transfer_count,
-       total_transfer_to_count,
-       total_transfer_all_count,
-       total_transfer_to_volume,
-       total_transfer_all_volume
-from token_holding_vol_count limit 10;
+insert into tag_result(table_name,batch_date)  SELECT 'token_holding_vol_count_tmp' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

@@ -88,3 +88,4 @@ where
         a1.total_transfer_count >= 1 and (( a1.type<>'ALL' AND a2.token_type='token')
                                               or (a1.type='ALL' AND a2.token_type='lp'))
   and a2.data_subject = 'count' and address not in (select address from exclude_address);
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_univ3_count_grade' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

@@ -233,5 +233,6 @@ update static_total_data set json_text= (
     from
         static_category_json)
 where  code = 'static_total';
+insert into tag_result(table_name,batch_date)  SELECT 'static_total_data' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
 

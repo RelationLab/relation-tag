@@ -57,3 +57,4 @@ insert into public.address_label_token_time_special(address,label_type,label_nam
         a2.data_subject = 'time_special'
   and counter >= 1
   and a2.token_type = 'token';
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_time_special' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

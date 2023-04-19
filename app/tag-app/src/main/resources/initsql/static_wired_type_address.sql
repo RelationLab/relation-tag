@@ -24,3 +24,4 @@ from
             address) out_t
 group by
     wired_type;
+insert into tag_result(table_name,batch_date)  SELECT 'static_wired_type_address' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

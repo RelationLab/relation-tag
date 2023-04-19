@@ -148,6 +148,8 @@ SELECT address_label_gp.address,
 FROM address_label_gp
          LEFT JOIN "contract" ON (address_label_gp.address = contract.contract_address)
 GROUP BY (address_label_gp.address);
+insert into tag_result(table_name,batch_date)  SELECT 'address_labels_json_gin' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+
 
 -- UPDATE address_labels_json_gin
 -- SET days = subquery.days

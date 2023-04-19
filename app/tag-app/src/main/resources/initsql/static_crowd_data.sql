@@ -45,5 +45,6 @@ from
             address) out_t
 group by
     label_name;
+insert into tag_result(table_name,batch_date)  SELECT 'static_crowd_data' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
 

@@ -144,4 +144,6 @@ group by
     dtvcr."token",
     dtvcr.transaction_hash,
     dtvcr.project;
+insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_volume_count_summary' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+
 

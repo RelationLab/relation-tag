@@ -91,3 +91,4 @@ insert into public.address_label_token_volume_grade_all(address,label_type,label
         a1.volume_usd >= 100
   and a2.data_subject = 'volume_grade'
   and a2.token_type = 'token' and address not in (select address from exclude_address);
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_volume_grade_all' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

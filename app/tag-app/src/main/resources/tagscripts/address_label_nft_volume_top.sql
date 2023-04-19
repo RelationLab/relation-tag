@@ -147,3 +147,4 @@ from
                 and dptt.project = '')
         where
                 s1.rn <= 100) t;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_volume_top' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

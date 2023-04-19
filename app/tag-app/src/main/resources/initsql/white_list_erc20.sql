@@ -28,8 +28,9 @@
 
 DROP TABLE IF EXISTS public.white_list_erc20;
 CREATE TABLE public.white_list_erc20 as
-select * from white_list_erc20_temp;
+select * from white_list_price;
 
 DROP TABLE IF EXISTS public.white_list_erc20_tag;
 CREATE TABLE public.white_list_erc20_tag as
 select * from white_list_erc20;
+insert into tag_result(table_name,batch_date)  SELECT 'white_list_erc20' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

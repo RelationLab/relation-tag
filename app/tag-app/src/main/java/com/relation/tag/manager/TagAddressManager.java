@@ -1,11 +1,11 @@
 package com.relation.tag.manager;
 
 public interface TagAddressManager {
-    void refreshAllLabel() throws Exception;
+    void refreshAllLabel(String batchDate) throws Exception;
 
-    void tagMerge() throws Exception;
-    void check(String tableName, long sleepTime) throws Exception;
-     boolean checkResult(String tableName);
-    void staticData() throws Exception;
+    void tagMerge(String batchDate) throws Exception;
+    void check(String tableName, long sleepTime, String batchDate) throws Exception;
+     boolean checkResult(String tableName, String batchDate);
+    void staticData(String batchDate) throws Exception;
 
 }

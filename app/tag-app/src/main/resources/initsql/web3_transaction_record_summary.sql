@@ -38,3 +38,5 @@ vacuum web3_transaction_record_summary;
 
 update web3_transaction_record_summary set type ='mint' where type='Mint';
 update web3_transaction_record_summary set type ='write' where type='Write';
+insert into tag_result(table_name,batch_date)  SELECT 'web3_transaction_record_summary' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+

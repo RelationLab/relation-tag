@@ -21,4 +21,5 @@ select distinct th.address, token, th.balance * price as balance_usd, total_tran
                                                                                                                               inner join white_list_erc20 wle  on th.token = wle.address and ignored = false where
     (th.balance > 0 or th.total_transfer_all_volume>0) and th.token in (select token_id from dim_rank_token);
 
+insert into tag_result(table_name,batch_date)  SELECT 'token_balance_volume_usd' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 

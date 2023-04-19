@@ -139,3 +139,4 @@ where
   and (( tb1.type<>'ALL' AND tb2.token_type='token')
     or (tb1.type='ALL' AND tb2.token_type='lp'))
   and zb_rate <= 0.1;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_univ3_volume_rank' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

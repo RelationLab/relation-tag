@@ -90,24 +90,7 @@ from
             to_address) atb where address !=''
 group by
     address;
+insert into tag_result(table_name,batch_date)  SELECT 'eth_holding_vol_count_tmp' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
-
-insert into
-    eth_holding_vol_count_tmp(address,
-                          block_height,
-                          total_transfer_volume,
-                          total_transfer_count,
-                          total_transfer_to_count,
-                          total_transfer_all_count,
-                          total_transfer_to_volume,
-                          total_transfer_all_volume) select address,
-                                                            block_height,
-                                                            total_transfer_volume,
-                                                            total_transfer_count,
-                                                            total_transfer_to_count,
-                                                            total_transfer_all_count,
-                                                            total_transfer_to_volume,
-                                                            total_transfer_all_volume
-from eth_holding_vol_count limit 10;
 
 

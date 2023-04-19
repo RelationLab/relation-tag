@@ -123,3 +123,4 @@ insert into public.address_label_token_balance_rank(address,label_type,label_nam
         tb1.balance_usd >= 100
   and tb1.zb_rate <= 0.1
   and tb2.data_subject = 'balance_rank';
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_balance_rank' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
