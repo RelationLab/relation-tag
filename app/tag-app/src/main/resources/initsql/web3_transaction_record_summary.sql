@@ -30,7 +30,7 @@ vacuum web3_transaction_record_summary;
         project,
         sum(balance) as balance
     from
-        web3_transaction_record
+        snapshot_web3_transaction_record
     group by
         address,
         type ,

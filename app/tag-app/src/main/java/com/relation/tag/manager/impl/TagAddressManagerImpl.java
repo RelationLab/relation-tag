@@ -12,7 +12,6 @@ import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.io.File;
 import java.util.List;
@@ -31,6 +30,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
     static String INIT_PATH = "initsql";
 
     public static String SCRIPTSPATH = "tagscripts";
+
+    public static String SNAPSHOTPATH = "snapshot";
 
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList, String batchDate) {
         try {
@@ -69,28 +70,28 @@ public class TagAddressManagerImpl implements TagAddressManager {
             return false;
         }
         try {
-            List<Integer> tagList = checkResultData(tableName, batchDate);
-            log.info("tableName==={},tagList.size===={}", tableName, CollectionUtils.isEmpty(tagList) ? 0 : tagList.size());
-            return !CollectionUtils.isEmpty(tagList);
+            Integer tagInteger = checkResultData(tableName, batchDate);
+            log.info("tableName==={},tagList.size===={}", tableName, tagInteger);
+            return tagInteger!=null&&tagInteger.intValue()>0;
         } catch (Exception ex) {
             return false;
         }
     }
 
-    private List<Integer> checkResultData(String tableName, String batchDate) {
-        return iAddressLabelService.exceSelectSql("select 1 from ".concat("tag_result where 1=1 and table_name=‘").concat(tableName)
-                .concat("' and batch_date='").concat(batchDate).concat("’ limit 1"));
+    private Integer checkResultData(String tableName, String batchDate) {
+        return iAddressLabelService.exceSelectSql("select count(1) from ".concat("tag_result where 1=1 and table_name=‘").concat(tableName)
+                .concat("' and batch_date='").concat(batchDate).concat("'"));
     }
 
-    public void check(String tableName, long sleepTime, String batchDate) {
+    public void check(String tableName, long sleepTime, String batchDate, int resultNum) {
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
         while (true) {
             try {
-                List<Integer> tagList = checkResultData(tableName, batchDate);
-                if (tagList != null && !CollectionUtils.isEmpty(tagList)) {
-                    log.info("check table ===={} end.......tagList.size===={}", tableName, tagList.size());
+                Integer tagInteger = checkResultData(tableName, batchDate);
+                if (tagInteger != null &&tagInteger.intValue()>=resultNum) {
+                    log.info("check table ===={} end.......tagList.size===={}", tableName, tagInteger);
                     break;
                 }
             } catch (Exception ex) {
@@ -117,9 +118,10 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void tag(String batchDate) throws Exception {
+        snapshot(batchDate);
         innit(batchDate);
-//        Thread.sleep(10 * 60 * 1000);
-        check("total_volume_usd", 1 * 60 * 1000, batchDate);
+        Thread.sleep(10 * 60 * 1000);
+        check("total_volume_usd", 1 * 60 * 1000, batchDate, 1);
         List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
         List<FileEntity> fileList = Lists.newArrayList();
         for (DimRuleSqlContent item : ruleSqlList) {
@@ -131,13 +133,32 @@ public class TagAddressManagerImpl implements TagAddressManager {
         tagByRuleSqlList(fileList, batchDate);
     }
 
+    private void snapshot(String batchDate) {
+        execSql(null, "snapshot_address_info.sql", batchDate);
+        execSql(null, "snapshot_block_timestamp.sql", batchDate);
+        execSql(null, "snapshot_dex_tx_volume_count_record.sql", batchDate);
+        execSql(null, "snapshot_erc20_tx_record.sql", batchDate);
+        execSql(null, "snapshot_eth_holding.sql", batchDate);
+        execSql(null, "snapshot_eth_holding_time.sql", batchDate);
+        execSql(null, "snapshot_eth_tx_record.sql", batchDate);
+        execSql(null, "snapshot_nft_buy_sell_holding.sql", batchDate);
+        execSql(null, "snapshot_nft_holding.sql", batchDate);
+        execSql(null, "snapshot_nft_holding_time.sql", batchDate);
+        execSql(null, "snapshot_platform_nft_holding.sql", batchDate);
+        execSql(null, "snapshot_token_holding.sql", batchDate);
+        execSql(null, "snapshot_token_holding_time.sql", batchDate);
+        execSql(null, "snapshot_token_holding_uni.sql", batchDate);
+        execSql(null, "snapshot_web3_transaction_record.sql", batchDate);
+        check("snapshot_table", 60*1000,  batchDate, 15);
+    }
+
     private void innit(String batchDate) throws Exception {
         execSql(null, "dim_rule_sql_content.sql", batchDate);
         execSql("dim_rule_sql_content", "dim_project_token_type.sql", batchDate);
         execSql("dim_project_token_type", "dim_project_type.sql", batchDate);
         execSql("dim_project_type", "dim_rule_content.sql", batchDate);
         execSql("dim_rule_content", "white_list_erc20.sql", batchDate);
-        execSql("white_list_erc20", "platform_nft_volume_usd.sql", batchDate);
+        execSql("white_list_erc20", "snapshot_platform_nft_volume_usd.sql", batchDate);
         execSql("platform_nft_volume_usd", "nft_transfer_holding.sql", batchDate);
         execSql("nft_transfer_holding", "nft_volume_count.sql", batchDate);
         execSql("nft_volume_count", "platform_nft_type_volume_count.sql", batchDate);
@@ -146,25 +167,25 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate);
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql", batchDate);
         execSql("token_holding_uni_cal", "dex_tx_volume_count_summary.sql", batchDate);
-//        Thread.sleep(3 * 60 * 1000);
+        Thread.sleep(3 * 60 * 1000);
         log.info("eth_holding_vol_count Thread start.....");
-        boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql", batchDate);
+        boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "snapshot_eth_tx_record.sql", batchDate);
         log.info("eth_holding_vol_count Thread end .....");
         if (!token_holding_vol_countcheck) {
-//            Thread.sleep(1 * 60 * 1000);
+            Thread.sleep(1 * 60 * 1000);
         }
         log.info("token_holding_vol_count Thread start .....");
         boolean dms_syn_blockcheck = execSql("dex_tx_volume_count_summary", "token_holding_vol_count.sql", batchDate);
         log.info("token_holding_vol_count Thread end .....");
         if (!dms_syn_blockcheck) {
-//            Thread.sleep(1 * 60 * 1000);
+            Thread.sleep(1 * 60 * 1000);
         }
         log.info("token_volume_usd Thread start .....");
         execSql("token_holding_vol_count", "dms_syn_block.sql", batchDate);
         boolean total_volume_usdcheck = execSql("token_holding_vol_count", "token_volume_usd.sql", batchDate);
         log.info("token_volume_usd Thread end .....");
         if (!total_volume_usdcheck) {
-//            Thread.sleep(5 * 60 * 1000);
+            Thread.sleep(5 * 60 * 1000);
         }
         log.info("total_volume_usd Thread start .....");
         execSql("token_volume_usd", "total_volume_usd.sql", batchDate);
@@ -187,7 +208,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void execSynSql(String lastTableName, String sqlName, String tableName, String batchDate) {
-        check(lastTableName, 20 * 1000, batchDate);
+        check(lastTableName, 20 * 1000, batchDate, 1);
         try {
             if (checkResult(tableName, batchDate)) {
                 return;

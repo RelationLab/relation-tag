@@ -71,7 +71,7 @@ insert into token_holding_uni_cal(address
                                              ,token0
                                              ,token1
                                              ,handle
-                                             ,type from token_holding_uni where type='swap';
+                                             ,type from snapshot_token_holding_uni where type='swap';
 
 insert into token_holding_uni_cal(address
                                  ,token
@@ -120,6 +120,6 @@ from (
               ,max(first_updated_block_height) first_updated_block_height
               ,price_token
               ,sum(liquidity) liquidity
-              ,max(type) as type from token_holding_uni where type='lp'
+              ,max(type) as type from snapshot_token_holding_uni where type='lp'
          group by address,token,nft_token_id,price_token ) tb1 ;
 insert into tag_result(table_name,batch_date)  SELECT 'token_holding_uni_cal' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

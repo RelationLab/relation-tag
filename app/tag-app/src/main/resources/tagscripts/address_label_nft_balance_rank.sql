@@ -109,7 +109,7 @@ select
 								token,
 								balance
 							from
-								nft_holding
+                                snapshot_nft_holding
 							where
 								balance >= 1 and address not in (select address from exclude_address)
                                 and token in (select token_id from dim_project_token_type_rank dpttr)
@@ -120,7 +120,7 @@ select
 								'ALL' as token,
 								balance
 							from
-								nft_holding
+                                snapshot_nft_holding
 							where
 								balance >= 1 and address not in (select address from exclude_address)
 							  and token in (select token_id from dim_project_token_type_rank dpttr)
@@ -152,7 +152,7 @@ select
 							token,
 							balance
 						from
-							nft_holding
+                            snapshot_nft_holding
 						where
 							balance >= 1 and address not in (select address from exclude_address)
                           and token in (select token_id from dim_project_token_type_rank dpttr)
@@ -163,7 +163,7 @@ select
 							'ALL' as token,
 							balance
 						from
-							nft_holding
+                            snapshot_nft_holding
 						where
 							balance >= 1 and address not in (select address from exclude_address)
 						  and token in (select token_id from dim_project_token_type_rank dpttr)

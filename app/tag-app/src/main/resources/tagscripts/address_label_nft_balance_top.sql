@@ -64,7 +64,7 @@ select
 					token,
 					balance
 				from
-					nft_holding where  address not in (select address from exclude_address)
+                    snapshot_nft_holding where  address not in (select address from exclude_address)
                     and token in (select token_id from dim_project_token_type_rank dpttr)
                 union all
 				select
@@ -72,7 +72,7 @@ select
 					'ALL' as token,
 					balance
 				from
-					nft_holding where  address not in (select address from exclude_address)
+                    snapshot_nft_holding where  address not in (select address from exclude_address)
 					              and token in (select token_id from dim_project_token_type_rank dpttr)
                 ) totala
 			inner join dim_project_token_type a2

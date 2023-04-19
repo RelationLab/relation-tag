@@ -67,9 +67,10 @@ from
             0 as total_transfer_to_volume,
             sum(amount) total_transfer_all_volume
         from
-            eth_tx_record
+            eth_tx_record etr
         where
                 amount>0
+            and etr.block_number > (select block_height from dms_syn_block where syn_type='eth_tx_record')
         group by
             from_address
         union all
@@ -83,9 +84,10 @@ from
             sum(amount) as total_transfer_to_volume,
             sum(amount) total_transfer_all_volume
         from
-            eth_tx_record
+            eth_tx_record etr
         where
                 amount>0
+          and etr.block_number > (select block_height from dms_syn_block where syn_type='eth_tx_record')
         group by
             to_address) atb where address !=''
 group by

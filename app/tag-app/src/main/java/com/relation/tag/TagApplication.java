@@ -34,7 +34,7 @@ public class TagApplication {
         }).start();
         Thread.sleep(120*60*1000);
         log.info("check address_labels_json_gin start...........");
-        tagAddressManager.check("tag_result", 1 * 60 * 1000, batchDate);
+        tagAddressManager.check("tag_result", 1 * 60 * 1000, batchDate, 1);
         log.info("tag end...........");
         System.exit(0);
     }

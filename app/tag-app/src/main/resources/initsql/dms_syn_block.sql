@@ -12,9 +12,9 @@ truncate table dms_syn_block;
 vacuum dms_syn_block;
 
 insert into dms_syn_block(syn_type,block_height)
-select 'eth_tx_record' as syn_type,max(block_number) from eth_tx_record;
+select 'eth_tx_record' as syn_type,max(block_height) from eth_holding_vol_count;
 
 insert into dms_syn_block(syn_type,block_height)
-select 'erc20_tx_record' as syn_type,max(block_number) from erc20_tx_record;
+select 'erc20_tx_record' as syn_type,max(block_height) from token_holding_vol_count;
 insert into tag_result(table_name,batch_date)  SELECT 'dms_syn_block' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
