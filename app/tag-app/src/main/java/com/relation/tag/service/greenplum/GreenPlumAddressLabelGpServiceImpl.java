@@ -28,7 +28,7 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
     }
 
     @Override
-    public List<Integer> exceSelectSql(String exceSelectSql) {
+    public Integer exceSelectSql(String exceSelectSql) {
         return baseMapper.exceSelectSql(exceSelectSql);
     }
 }
