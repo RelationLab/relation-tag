@@ -45,7 +45,7 @@ into
                                 balance_usd)
 select
     th.address,
-    th.token,
+    th.price_token as token,
     th.type as type,
     '0xc36442b4a4522e871399cd717abdd847ab11fe88' as project,
     max(th.block_height) as block_height,
@@ -69,7 +69,7 @@ select
         w.address = th.price_token
         group by
         th.address,
-        th.token,
+        th.price_token,
         th.type;
 
 ---先把snapshot_dex_tx_volume_count_record的USD计算出来
