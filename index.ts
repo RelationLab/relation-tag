@@ -8,18 +8,12 @@ const wiredAwsEcrStackRef = new pulumi.StackReference(
   `${maintainer}/wired-aws-ecr/prod`
 );
 
-const wiredAutoTagStackRefOutputs = new pulumi.StackReference(
-  `${maintainer}/wired-auto-tag/prod`
-).getOutput("outputs");
+const wiredGpClusterStackRef = new pulumi.StackReference(`${maintainer}/wired-gp-cluster/prod`);
 
 export const ecrRepositoryName = name;
 export const ecrRepositoryUrl = wiredAwsEcrStackRef
   .getOutput("ecrRepositories")
   .apply((repos) => repos[name]);
 
-export const wiredAutoTagAwsSecretId = wiredAutoTagStackRefOutputs.apply(
-  (outputs) => outputs["awsSecretId"]
-);
-export const wiredAutoTagGreenplumHost = wiredAutoTagStackRefOutputs.apply(
-  (outputs) => outputs["gpHost"]
-);
+export const wiredGpClusterSecretId = wiredGpClusterStackRef.getOutput("awsSecretId");
+export const wiredGpClusterDomain = wiredGpClusterStackRef.getOutput("coordinatorDomain");
