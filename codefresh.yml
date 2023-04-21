@@ -44,7 +44,7 @@ steps:
           AWS_DEFAULT_REGION: "${{AWS_DEFAULT_REGION}}"
           secrets:
             - secret_arn: "${{WIRED_GP_CLUSTER_AWS_SECRET_ID}}"
-              key: "adminPassword"
+              key: "gpAdminPassword"
               store_in: WIRED_GP_CLUSTER_ADMIN_PASSWORD
       buildWiredTagImage:
         title: "Build Wired Tag Docker Image"
