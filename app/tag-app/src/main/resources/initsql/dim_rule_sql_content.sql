@@ -1,11 +1,3 @@
-drop table if exists tag_result;
-CREATE TABLE public.tag_result (
-                                             table_name varchar(100) NULL,
-                                             batch_date varchar(100) NULL
-);
-truncate table tag_result;
-vacuum tag_result;
-
 drop table if exists dim_rule_sql_content;
 CREATE TABLE public.dim_rule_sql_content (
                                              rule_name varchar(100) NULL,
