@@ -159,7 +159,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql(null, "snapshot_token_holding_time.sql", batchDate, dir, null);
         execSql(null, "snapshot_token_holding_uni.sql", batchDate, dir, null);
         execSql(null, "snapshot_web3_transaction_record.sql", batchDate, dir, null);
-        check("snapshot_table", 60 * 1000, batchDate, 15);
+        execSql(null, "snapshot_dms_syn_block.sql", batchDate, dir, null);
+        check("snapshot_table", 60 * 1000, batchDate, 16);
     }
 
     private void innit(String batchDate) throws Exception {

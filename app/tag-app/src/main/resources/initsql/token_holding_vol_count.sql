@@ -74,7 +74,7 @@ from
             sum(amount) total_transfer_all_volume
         from
             snapshot_erc20_tx_record e20tr
-        where e20tr.block_number > (select block_height from dms_syn_block where syn_type='erc20_tx_record')
+        where e20tr.block_number > (select block_height from snapshot_dms_syn_block where syn_type='erc20_tx_record')
         group by
             from_address,
             token
@@ -91,7 +91,7 @@ from
                       sum(amount) total_transfer_all_volume
         from
             snapshot_erc20_tx_record e20tr
-        where e20tr.block_number > (select block_height from dms_syn_block where syn_type='erc20_tx_record')
+        where e20tr.block_number > (select block_height from snapshot_dms_syn_block where syn_type='erc20_tx_record')
         group by
             to_address,
             token ) atb where address !='' group by  address,token;

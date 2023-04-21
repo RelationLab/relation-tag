@@ -70,7 +70,7 @@ from
             eth_tx_record etr
         where
                 amount>0
-            and etr.block_number > (select block_height from dms_syn_block where syn_type='eth_tx_record')
+            and etr.block_number > (select block_height from snapshot_dms_syn_block where syn_type='eth_tx_record')
         group by
             from_address
         union all
@@ -87,7 +87,7 @@ from
             eth_tx_record etr
         where
                 amount>0
-          and etr.block_number > (select block_height from dms_syn_block where syn_type='eth_tx_record')
+          and etr.block_number > (select block_height from snapshot_dms_syn_block where syn_type='eth_tx_record')
         group by
             to_address) atb where address !=''
 group by
