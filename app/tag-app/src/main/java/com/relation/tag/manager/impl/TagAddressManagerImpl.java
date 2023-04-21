@@ -39,6 +39,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     public static String STATICDATA_PATH = "staticdata";
 
+    public static String STAG = "stag";
+
+
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList, String batchDate) {
         try {
             forkJoinPool.execute(() -> {
@@ -46,7 +49,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
                     execContentSql(ruleSql, batchDate);
                 });
             });
-            tagMerge(batchDate);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -124,19 +126,24 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void tag(String batchDate) throws Exception {
-        snapshot(batchDate);
-        innit(batchDate);
-        Thread.sleep(10 * 60 * 1000);
-        check("total_volume_usd", 1 * 60 * 1000, batchDate, 1);
-        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
-        List<FileEntity> fileList = Lists.newArrayList();
-        for (DimRuleSqlContent item : ruleSqlList) {
-            String fileName = item.getRuleName().concat(".sql");
-            fileList.add(FileEntity.builder().fileName(fileName)
-                    .fileContent(FileUtils.readFile(SCRIPTSPATH.concat(File.separator)
-                            .concat(fileName))).build());
+        if(StringUtils.equals(STAG,configEnvironment)){
+            snapshot(batchDate);
+            innit(batchDate);
+            Thread.sleep(10 * 60 * 1000);
+            check("total_volume_usd", 1 * 60 * 1000, batchDate, 1);
+            List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
+            List<FileEntity> fileList = Lists.newArrayList();
+            for (DimRuleSqlContent item : ruleSqlList) {
+                String fileName = item.getRuleName().concat(".sql");
+                fileList.add(FileEntity.builder().fileName(fileName)
+                        .fileContent(FileUtils.readFile(SCRIPTSPATH.concat(File.separator)
+                                .concat(fileName))).build());
+            }
+            tagByRuleSqlList(fileList, batchDate);
         }
-        tagByRuleSqlList(fileList, batchDate);
+        tagMerge(batchDate);
+        Thread.sleep(2 * 60 * 1000);
+        staticData(batchDate);
     }
 
     private void snapshot(String batchDate) {
@@ -250,12 +257,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
             throw new RuntimeException(e);
         }
         execSql(null, "address_label_gp.sql", batchDate, INIT_PATH, configEnvironment);
-        try {
-            Thread.sleep(2 * 60 * 1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        staticData(batchDate);
     }
 
     @Override
