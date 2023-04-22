@@ -87,7 +87,7 @@ into
 select
     dtvcr.address,
     token,
-    type,
+    dtvcr.type,
     project,
     max(block_height) block_height,
     sum(round(total_transfer_volume * round(cast (w.price as numeric), 18),3) ) as total_transfer_volume_usd,
@@ -111,7 +111,7 @@ from
 group by
     dtvcr.address,
     token,
-    type,
+    dtvcr.type,
     project;
 
 ---再计算dex_tx_volume_count_summary的ALL(有些同一笔交易txHash同时LP和SWAP)
