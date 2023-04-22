@@ -87,7 +87,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private Integer checkResultData(String tableName, String batchDate) {
-        return iAddressLabelService.exceSelectSql("select count(1) from ".concat("tag_result where 1=1 and table_name=‘").concat(tableName)
+        return iAddressLabelService.exceSelectSql("select count(1) from ".concat("tag_result where 1=1 and table_name='").concat(tableName)
                 .concat("' and batch_date='").concat(batchDate).concat("'"));
     }
 
