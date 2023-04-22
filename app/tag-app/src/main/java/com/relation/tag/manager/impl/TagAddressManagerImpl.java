@@ -177,7 +177,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("dim_project_token_type", "dim_project_type.sql", batchDate, dir, null);
         execSql("dim_project_type", "dim_rule_content.sql", batchDate, dir, null);
         execSql("dim_rule_content", "white_list_erc20.sql", batchDate, dir, null);
-        execSql("white_list_erc20", "snapshot_platform_nft_volume_usd.sql", batchDate, dir, null);
+        execSql("white_list_erc20", "platform_nft_volume_usd.sql", batchDate, dir, null);
         execSql("platform_nft_volume_usd", "nft_transfer_holding.sql", batchDate, dir, null);
         execSql("nft_transfer_holding", "nft_volume_count.sql", batchDate, dir, null);
         execSql("nft_volume_count", "platform_nft_type_volume_count.sql", batchDate, dir, null);
