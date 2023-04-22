@@ -58,7 +58,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         try {
             String tableName = ruleSql.getFileName();
             String table = tableName.split("\\.")[0];
-            if (checkResult(table, batchDate)) {
+            if (checkResult(table, batchDate, 1)) {
                 return;
             }
             iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
@@ -73,14 +73,14 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     }
 
-    public boolean checkResult(String tableName, String batchDate) {
+    public boolean checkResult(String tableName, String batchDate, Integer result) {
         if (StringUtils.isEmpty(tableName)) {
             return false;
         }
         try {
             Integer tagInteger = checkResultData(tableName, batchDate);
             log.info("tableName==={},tagList.size===={}", tableName, tagInteger);
-            return tagInteger != null && tagInteger.intValue() > 0;
+            return tagInteger != null && tagInteger.intValue() >= result;
         } catch (Exception ex) {
             return false;
         }
@@ -120,7 +120,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void refreshAllLabel(String batchDate) throws Exception {
-        if (!checkResult("address_labels_json_gin", batchDate)) {
+        if (!checkResult("address_labels_json_gin", batchDate, 1)) {
             tag(batchDate);
         }
     }
@@ -147,7 +147,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void snapshot(String batchDate) {
-        if (checkResult("snapshot_table", batchDate)) {
+        if (checkResult("snapshot_table", batchDate, 1)) {
             return;
         }
         String dir = SNAPSHOTPATH;
@@ -167,7 +167,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 //        execSql(null, "snapshot_token_holding_uni.sql", batchDate, dir, null);
 //        execSql(null, "snapshot_web3_transaction_record.sql", batchDate, dir, null);
         execSql(null, "snapshot_dms_syn_block.sql", batchDate, dir, null);
-        check("snapshot_table", 60 * 1000, batchDate, 16);
+        check("snapshot_table", 60 * 1000, batchDate, 1);
     }
 
     private void innit(String batchDate) throws Exception {
@@ -223,13 +223,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 execSynSql(lastTableName, sqlName, finalTableName, batchDate, dir, tableSuffix);
             }
         });
-        return checkResult(finalTableName, batchDate);
+        return checkResult(finalTableName, batchDate, 1);
     }
 
     private void execSynSql(String lastTableName, String sqlName, String tableName, String batchDate, String dir, String tableSuffix) {
         check(lastTableName, 20 * 1000, batchDate, 1);
         try {
-            if (checkResult(tableName, batchDate)) {
+            if (checkResult(tableName, batchDate, 1)) {
                 return;
             }
             String exceSql = FileUtils.readFile(dir.concat(File.separator).concat(sqlName));
