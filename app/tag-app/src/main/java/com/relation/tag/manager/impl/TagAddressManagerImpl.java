@@ -196,7 +196,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             Thread.sleep(1 * 60 * 1000);
         }
         execSql("token_holding_vol_count_tmp", "dms_syn_block.sql", batchDate, dir, null);
-        boolean total_volume_usdcheck = execSql("token_holding_vol_count", "token_volume_usd.sql", batchDate, dir, null);
+        boolean total_volume_usdcheck = execSql("token_holding_vol_count_tmp", "token_volume_usd.sql", batchDate, dir, null);
         if (!total_volume_usdcheck) {
             Thread.sleep(5 * 60 * 1000);
         }
