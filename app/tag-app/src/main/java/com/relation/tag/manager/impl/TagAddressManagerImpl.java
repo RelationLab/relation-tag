@@ -129,7 +129,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         if(StringUtils.equals(STAG,configEnvironment)){
             snapshot(batchDate);
             innit(batchDate);
-            Thread.sleep(10 * 60 * 1000);
+//            Thread.sleep(10 * 60 * 1000);
             check("total_volume_usd", 1 * 60 * 1000, batchDate, 1);
             List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
             List<FileEntity> fileList = Lists.newArrayList();
