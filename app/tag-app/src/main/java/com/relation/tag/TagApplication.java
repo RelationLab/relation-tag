@@ -18,7 +18,7 @@ public class TagApplication {
         ConfigurableApplicationContext ctx = SpringApplication.run(TagApplication.class, args);
         TagAddressManager tagAddressManager = ctx.getBean(TagAddressManager.class);
         String batchDate = DateUtils.formatDate(new Date(), "YYYY-MM-dd");
-        if (tagAddressManager.checkResult("tag_result", batchDate, 1)){
+        if (tagAddressManager.checkResult("address_labels_json_gin", batchDate, 1)){
             log.info("checkResult tag end...........");
             System.exit(0);
         }

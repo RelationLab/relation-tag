@@ -142,8 +142,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
             tagByRuleSqlList(fileList, batchDate);
         }
         tagMerge(batchDate);
-        Thread.sleep(2 * 60 * 1000);
-        staticData(batchDate);
+//        Thread.sleep(2 * 60 * 1000);
+//        staticData(batchDate);
     }
 
     private void snapshot(String batchDate) {
