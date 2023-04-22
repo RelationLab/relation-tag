@@ -70,11 +70,12 @@ select
 from
     (
         select
-            token,
-            address,
+            th.token,
+            th.address,
             total_transfer_count as total_transfer_count
         from
-            dex_tx_volume_count_summary th
+            dex_tx_volume_count_summary_univ3 th inner join dim_rule_content drc
+                                                      on( th.token = drc.token)
         where
                 th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
 
@@ -85,7 +86,6 @@ from
                 a1.token = a2.token
             and a2.label_type  like 'Uniswap_v3%'
 where
-        a1.total_transfer_count >= 1 and (( a1.type<>'ALL' AND a2.token_type='token')
-                                              or (a1.type='ALL' AND a2.token_type='lp'))
+        a1.total_transfer_count >= 1
   and a2.data_subject = 'count' and address not in (select address from exclude_address);
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_univ3_count_grade' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

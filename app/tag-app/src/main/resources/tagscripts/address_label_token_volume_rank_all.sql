@@ -103,7 +103,8 @@ from
                                         where
                                                 th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88' and th.type='ALL'
                                           and th.total_transfer_volume_usd >=100
-                                        ) as a1) as a1
+                                        group by address
+                                    ) as a1) as a1
                                 inner join
                             (
                                 select
@@ -134,8 +135,8 @@ from
                                                     dex_tx_volume_count_summary th
                                                 where
                                                         th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88' and th.type='ALL'
-                                                  and th.total_transfer_volume_usd >=100
-                                                ) totala
+                                                  and th.total_transfer_volume_usd >=100  group by address
+                                            ) totala
                                         group by
                                             token,
                                             address) tbvu
@@ -188,7 +189,7 @@ select
     'ALL' as asset,
     'CROWD' as bus_type  from address_label_token_volume_rank_all a1
 where (label_name = 'ALL_ALL_ALL_VOLUME_RANK_MEDIUM' or label_name = 'ALL_ALL_ALL_VOLUME_RANK_HEAVY'
-   or label_name = 'ALL_ALL_ALL_VOLUME_RANK_ELITE'  or label_name = 'ALL_ALL_ALL_VOLUME_RANK_LEGENDARY')
+    or label_name = 'ALL_ALL_ALL_VOLUME_RANK_ELITE'  or label_name = 'ALL_ALL_ALL_VOLUME_RANK_LEGENDARY')
   and
-     address not in (select address from exclude_address);
+        address not in (select address from exclude_address);
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_volume_rank_all' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

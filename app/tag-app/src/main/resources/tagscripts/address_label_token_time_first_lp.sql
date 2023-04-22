@@ -51,8 +51,7 @@ from
                 from
                     token_holding_time
                 where
-                        type = 'lp'
-                  and  address not in (select address from exclude_address)) a1
+                        address not in (select address from exclude_address)) a1
                 inner join dim_project_token_type a2
                            on
                                        a1.token = a2.token

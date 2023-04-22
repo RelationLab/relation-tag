@@ -92,14 +92,16 @@ from
                                         from
                                             (
                                                 select
-                                                    token,
+                                                    dtvcs.token,
                                                     address,
                                                     round(total_transfer_volume_usd,3) as volume_usd
                                                 from
-                                                    dex_tx_volume_count_summary dtvcs
+                                                    dex_tx_volume_count_summary_univ3 dtvcs inner join dim_rule_content drc
+                                                                     on( dtvcs.token = drc.token)
                                                 where
                                                         dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
-                                                  and dtvcs.total_transfer_volume_usd >= 100 and address not in (select address from exclude_address)  and address <> '0x0000000000000000000000000000000000000000') s1
+                                                  and dtvcs.total_transfer_volume_usd >= 100 and address not in (select address from exclude_address)
+                                                  ) s1
                                                 inner join dim_rank_token s2
                                                            on
                                                                    s1.token = s2.token_id
@@ -116,13 +118,17 @@ from
                                 from
                                     (
                                         select
-                                            token,
+                                            dtvcs.token,
                                             address
                                         from
-                                            dex_tx_volume_count_summary dtvcs
+                                            dex_tx_volume_count_summary_univ3 dtvcs inner join dim_rule_content drc
+                                                on( dtvcs.token = drc.token)
+
                                         where
                                                 dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
-                                          and dtvcs.total_transfer_volume_usd >= 100  and address not in (select address from exclude_address)) tbvu2
+                                          and dtvcs.total_transfer_volume_usd >= 100  and
+                                          address not in (select address from exclude_address)
+                                          ) tbvu2
                                 group by
                                     token ) as a10
                             on
@@ -136,7 +142,5 @@ from
 where
         tb1.volume_usd >= 100
   and tb2.data_subject = 'volume_rank'
-  and (( tb1.type<>'ALL' AND tb2.token_type='token')
-    or (tb1.type='ALL' AND tb2.token_type='lp'))
   and zb_rate <= 0.1;
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_univ3_volume_rank' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
