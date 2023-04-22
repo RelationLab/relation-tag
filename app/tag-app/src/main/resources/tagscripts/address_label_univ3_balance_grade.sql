@@ -72,7 +72,7 @@ from
             project,
             type
         from
-            dex_tx_volume_count_summary tbvutk
+            dex_tx_volume_count_summary_univ3 tbvutk
         where
                 project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
           and balance_usd >= 100
