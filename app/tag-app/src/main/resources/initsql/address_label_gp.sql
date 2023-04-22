@@ -96,11 +96,11 @@ select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at,
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at,owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_ugc_${tableSuffix};
 
 update
-    snapshot_address_info b
+    address_info b
 set
     days = trunc((extract(epoch from cast( now() as TIMESTAMP)) - A."timestamp")/(24 * 60 * 60))
     from
-	snapshot_block_timestamp A
+	block_timestamp A
 where
     A.height = b.first_up_chain_block_height
   and b.days is null;

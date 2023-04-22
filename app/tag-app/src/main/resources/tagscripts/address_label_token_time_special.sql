@@ -46,7 +46,7 @@ insert into public.address_label_token_time_special(address,label_type,label_nam
             token,
             counter
         from
-            snapshot_token_holding_time tbvutk
+            token_holding_time tbvutk
         where
                 balance>0 and address not in (select address from exclude_address)) a1
         inner join

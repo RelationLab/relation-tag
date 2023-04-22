@@ -49,7 +49,7 @@ from
                 select
                     *
                 from
-                    snapshot_token_holding_time
+                    token_holding_time
                 where
                         type = 'lp'
                   and  address not in (select address from exclude_address)) a1

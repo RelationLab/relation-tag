@@ -151,21 +151,21 @@ public class TagAddressManagerImpl implements TagAddressManager {
             return;
         }
         String dir = SNAPSHOTPATH;
-        execSql(null, "snapshot_address_info.sql", batchDate, dir, null);
-        execSql(null, "snapshot_block_timestamp.sql", batchDate, dir, null);
-        execSql(null, "snapshot_dex_tx_volume_count_record.sql", batchDate, dir, null);
-        execSql(null, "snapshot_erc20_tx_record.sql", batchDate, dir, null);
-        execSql(null, "snapshot_eth_holding.sql", batchDate, dir, null);
-        execSql(null, "snapshot_eth_holding_time.sql", batchDate, dir, null);
-        execSql(null, "snapshot_eth_tx_record.sql", batchDate, dir, null);
-        execSql(null, "snapshot_nft_buy_sell_holding.sql", batchDate, dir, null);
-        execSql(null, "snapshot_nft_holding.sql", batchDate, dir, null);
-        execSql(null, "snapshot_nft_holding_time.sql", batchDate, dir, null);
-        execSql(null, "snapshot_platform_nft_holding.sql", batchDate, dir, null);
-        execSql(null, "snapshot_token_holding.sql", batchDate, dir, null);
-        execSql(null, "snapshot_token_holding_time.sql", batchDate, dir, null);
-        execSql(null, "snapshot_token_holding_uni.sql", batchDate, dir, null);
-        execSql(null, "snapshot_web3_transaction_record.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_address_info.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_block_timestamp.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_dex_tx_volume_count_record.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_erc20_tx_record.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_eth_holding.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_eth_holding_time.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_eth_tx_record.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_nft_buy_sell_holding.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_nft_holding.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_nft_holding_time.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_platform_nft_holding.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_token_holding.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_token_holding_time.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_token_holding_uni.sql", batchDate, dir, null);
+//        execSql(null, "snapshot_web3_transaction_record.sql", batchDate, dir, null);
         execSql(null, "snapshot_dms_syn_block.sql", batchDate, dir, null);
         check("snapshot_table", 60 * 1000, batchDate, 16);
     }

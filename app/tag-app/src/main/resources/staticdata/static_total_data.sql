@@ -140,7 +140,7 @@ select sum(activity_num),address from(
                                              sum(total_transfer_count) as activity_num,address from  web3_transaction_record_summary group by address
                                          union all
                                          select
-                                             sum(total_transfer_all_count) as activity_num,address from  snapshot_nft_holding group by address)
+                                             sum(total_transfer_all_count) as activity_num,address from  nft_holding group by address)
                                          out_t group by address;
 
 -----更新活跃度中位数
@@ -185,7 +185,7 @@ update
 set
     avg_birthday = (select
                         avg(ai.days) as avg_birthday
-                    from snapshot_address_info ai inner join address_labels_json_gin aljg on (ai.address=aljg.address)
+                    from address_info ai inner join address_labels_json_gin aljg on (ai.address=aljg.address)
     )
 where
         code = 'static_total';

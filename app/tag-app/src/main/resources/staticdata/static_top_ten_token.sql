@@ -80,7 +80,7 @@ FROM
                             sum(balance) AS balance,
                             token
                         FROM
-                            snapshot_nft_holding tbvu where token in(select token_id from dim_project_token_type_rank)
+                            nft_holding tbvu where token in(select token_id from dim_project_token_type_rank)
                         GROUP BY
                             token)
                         rowtable ) s1

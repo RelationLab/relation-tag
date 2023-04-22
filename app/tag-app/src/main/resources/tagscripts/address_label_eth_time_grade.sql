@@ -63,7 +63,7 @@ insert into public.address_label_eth_time_grade(address,label_type,label_name,da
             'eth' as token,
             floor((floor(extract(epoch from now())) - latest_tx_time) / (24 * 3600)) as counter
         from
-            snapshot_eth_holding_time tbvutk) a1
+            eth_holding_time tbvutk) a1
         inner join
     dim_rule_content a2
     on

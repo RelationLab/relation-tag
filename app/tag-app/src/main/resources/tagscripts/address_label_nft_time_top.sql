@@ -53,7 +53,7 @@ from
                     balance,
                     first_tx_time
                 from
-                    snapshot_nft_holding_time where  address not in (select address from exclude_address)
+                    nft_holding_time where  address not in (select address from exclude_address)
                                        and token in (select token_id from dim_project_token_type_rank dpttr)
             ) a1
                 inner join dim_project_token_type a2
