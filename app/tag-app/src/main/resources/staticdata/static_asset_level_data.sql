@@ -18,12 +18,13 @@ select
     count(1) as address_num,
     'asset' as dimension_type,
     case when lower(wired_type)='defi' then 'token' else lower(wired_type) end as wired_type,
-    bus_type,
+    alg.bus_type,
     level
 from
-    address_label_gp where (bus_type='balance' or bus_type='activity' or bus_type='volume') and category='grade'
-                       and asset in(select distinct token_name from static_top_ten_token) and wired_type<>'WEB3'
-group by asset,wired_type,bus_type,level;
+    address_label_gp alg inner join static_top_ten_token sttt  on(alg.asset=sttt.token_name and alg.bus_type=sttt.bus_type)
+where (alg.bus_type='balance' or alg.bus_type='activity' or alg.bus_type='volume') and category='grade'
+                        and wired_type<>'WEB3'
+group by asset,wired_type,alg.bus_type,level;
 
 ----按平台+级别
 insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level)
