@@ -268,4 +268,5 @@ set
 where
     A.contract_address = b.address;
 
+
 insert into tag_result(table_name,batch_date)  SELECT 'static_top_ten_token' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

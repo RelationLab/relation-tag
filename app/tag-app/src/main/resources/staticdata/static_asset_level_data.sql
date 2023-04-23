@@ -6,28 +6,30 @@ create table static_asset_level_data
     dimension_type varchar(100)  null,---维度类型:asset\project\action
     wired_type varchar(100)  null,---维度类型:token\project\action
     bus_type varchar(100)  null,---业务类型:vol balance activity
-    "level" varchar(100)  null----级别类型 L1\L2....
+    "level" varchar(100)  null,----级别类型 L1\L2....
+    rownumber numeric(250, 20) NULL
 ) distributed by (static_code,dimension_type,wired_type,bus_type,level);
 truncate table static_asset_level_data;
 vacuum static_asset_level_data;
 
 ----按资产+级别
-insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level)
+insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level,rownumber)
 select
     case when asset is null  or asset='' or asset='ALL' then 'total' else  asset end   as static_code,
     count(1) as address_num,
     'asset' as dimension_type,
     case when lower(wired_type)='defi' then 'token' else lower(wired_type) end as wired_type,
     alg.bus_type,
-    level
+    level,
+    sttt.rownumber
 from
     address_label_gp alg inner join static_top_ten_token sttt  on(alg.asset=sttt.token_name and alg.bus_type=sttt.bus_type)
 where (alg.bus_type='balance' or alg.bus_type='activity' or alg.bus_type='volume') and category='grade'
                         and wired_type<>'WEB3'
-group by asset,wired_type,alg.bus_type,level;
+group by asset,wired_type,alg.bus_type,level,sttt.rownumber;
 
 ----按平台+级别
-insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level)
+insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level,rownumber)
 select
     case
         when project is null
@@ -40,8 +42,9 @@ select
         when lower(wired_type)= 'defi' then 'token'
         else lower(wired_type)
         end as wired_type,
-    bus_type,
-    level
+    alg.bus_type,
+    level,
+    sttt.rownumber
 from
     (
         select
@@ -62,30 +65,32 @@ from
                 else project
                 end as project
         from
-            address_label_gp) T
-
+            address_label_gp) alg
+        inner join static_top_ten_platform sttt
+            on(alg.project=sttt.token_name and alg.bus_type=sttt.bus_type)
 where
-    ((bus_type = 'balance'
+    ((alg.bus_type = 'balance'
         and wired_type = 'WEB3')
-        or bus_type = 'activity'
-        or (bus_type = 'volume'
+        or alg.bus_type = 'activity'
+        or (alg.bus_type = 'volume'
             and wired_type <> 'WEB3'))
   and category = 'grade'
 group by
     project,
     wired_type,
-    bus_type,
-    level;
+    alg.bus_type,
+    level,sttt.rownumber;
 
 ----按行为+级别
-insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level)
+insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level,rownumber)
 select
     case when trade_type is null or trade_type='' or trade_type='ALL' then 'total' else  trade_type end  as static_code,
     count(1) as address_num,
     'action' as dimension_type,
     case when lower(wired_type)='defi' then 'token' else lower(wired_type) end as wired_type,
-    bus_type,
-    level
+    alg.bus_type,
+    level,
+    sttt.rownumber
 from
     (
         select
@@ -106,9 +111,13 @@ from
                 else project
                 end as project
         from
-            address_label_gp) T where ((bus_type='balance' and wired_type = 'WEB3') or bus_type='activity' or (bus_type = 'volume'
+            address_label_gp)  alg
+        inner join static_top_ten_platform sttt
+                   on(alg.trade_type=sttt.token_name and alg.bus_type=sttt.bus_type)
+    where ((alg.bus_type='balance' and wired_type = 'WEB3') or alg.bus_type='activity' or (alg.bus_type = 'volume'
                        and wired_type <> 'WEB3')) and category='grade'
-group by trade_type,wired_type,bus_type,level;
+group by trade_type,wired_type,alg.bus_type,level,
+         sttt.rownumber;
 
 ------计算聚合级别数据（vol balance activity 聚合）
 DROP TABLE if EXISTS  static_asset_level_data_json;
@@ -118,7 +127,8 @@ create table static_asset_level_data_json
     dimension_type varchar(100)  null,---维度类型:asset\project\action
     wired_type varchar(100)  null,---维度类型:token\nft\web3
     bus_type varchar(100)  null,---业务类型:vol balance activity
-    json_text text
+    json_text text,
+    rownumber numeric(250, 20) NULL
 );
 insert
 into
@@ -126,20 +136,22 @@ into
                                  dimension_type,
                                  wired_type,
                                  bus_type,
-                                 json_text)
+                                 json_text,rownumber)
 select
     sald.static_code ,
     sald.dimension_type ,
     sald.wired_type ,
     sald.bus_type,
-    '"'|| bus_type||'":'||json_agg(JSON_BUILD_OBJECT('level_name', level, 'level_address_num', address_num))
+    '"'|| bus_type||'":'||json_agg(JSON_BUILD_OBJECT('level_name', level, 'level_address_num', address_num)),
+    sald.rownumber
 from
     static_asset_level_data sald
 group by
     static_code,
     dimension_type,
     wired_type,
-    bus_type;
+    bus_type,
+    sald.rownumber;
 
 ------计算聚合项目数据（static_code聚合）
 DROP TABLE if EXISTS  static_item_json;
@@ -148,20 +160,22 @@ create table static_item_json
     static_code  varchar(200) not null,
     dimension_type varchar(100)  null,---维度类型:asset\project\action
     wired_type varchar(100)  null,
-    json_text jsonb
+    json_text jsonb,
+    rownumber numeric(250, 20) NULL
 );
-insert into static_item_json(static_code,dimension_type,wired_type,json_text)
+insert into static_item_json(static_code,dimension_type,wired_type,json_text,rownumber)
 select
     sald.static_code ,
     sald.dimension_type,
     sald.wired_type,
-    JSON_BUILD_OBJECT('item_code',static_code, 'item_entity',('{'||string_agg(json_text,',')||'}')::jsonb)::jsonb
+    JSON_BUILD_OBJECT('item_code',static_code, 'item_entity',('{'||string_agg(json_text,',')||'}')::jsonb)::jsonb,
+    sald.rownumber
 from
     static_asset_level_data_json sald
 group by
     static_code,
     dimension_type,
-    wired_type;
+    wired_type,sald.rownumber;
 
 ------计算聚合类型数据（dimension_type聚合）token\project\action
 DROP TABLE if EXISTS  static_type_json;
@@ -177,7 +191,7 @@ select
     sald.dimension_type,
     sald.wired_type,
 
-    '"'||wired_type||'":'||(json_agg (json_text))
+    '"'||wired_type||'":'||(json_agg (json_text,order by sald.rownumber))
 from
     static_item_json sald
 group by
