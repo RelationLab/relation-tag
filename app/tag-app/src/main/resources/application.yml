@@ -35,5 +35,5 @@ logging:
   config: classpath:logback-spring-yun.xml
 
 config:
-    environment: stag
+    environment: ${CONFIG_ENVIRONMENT:stag}
 

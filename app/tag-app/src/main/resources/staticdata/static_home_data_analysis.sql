@@ -20,7 +20,10 @@ select floor(EXTRACT(epoch FROM NOW())*1000-836001000) as analysis_date,
                        'live_day_median', avg_birthday
                    ),
                'level_address_statistics',json_text::jsonb,
-               'address_image_text',address_image_text::jsonb
+               'address_image_text',address_image_text::jsonb,
+               'asset',asset_range::jsonb,
+               'platform',platform_range::jsonb,
+               'action',action_range::jsonb
 
            )
                                                        AS analysis_result

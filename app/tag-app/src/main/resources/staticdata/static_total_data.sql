@@ -14,7 +14,18 @@ create table static_total_data
     web3_address_num numeric(250, 20) NULL,
     crowd_json_text text NULL,
     address_image_text text NULL,
-    json_text text NULL
+    json_text text NULL,
+    asset_range text NULL,
+    platform_range text NULL,
+    action_range text NULL
+--     token_balance_range text NULL,
+--     token_volume_range text NULL,
+--     token_activity_range text NULL,
+--     platform_balance_range text NULL,
+--     platform_volume_range text NULL,
+--     platform_activity_range text NULL,
+--     action_volume_range text NULL,
+--     action_activity_range text NULL
 );
 truncate table static_total_data;
 vacuum static_total_data;
@@ -233,6 +244,88 @@ update static_total_data set json_text= (
     from
         static_category_json)
 where  code = 'static_total';
+
+-----更新asset_range
+update static_total_data set asset_range= (
+    select
+        ('{' || string_agg(json_text::text, ',')|| '}')::jsonb
+    from
+        (
+            select
+                    '"' || token_type || '":' || ('{' || string_agg(json_text::text, ',')|| '}')::jsonb as json_text
+            from
+                (
+                    select
+                        case
+                            when sttt.token_type = 'defi' then 'token'
+                            else token_type
+                            end token_type,
+                        '"' || bus_type || '":' || json_agg( token_name order by rownumber) as json_text
+                    from
+                        static_top_ten_token sttt
+                    where
+                            token_name <> 'ALL'
+                    group by
+                        bus_type,
+                        token_type) t
+            group by
+                token_type ) tout)
+where  code = 'static_total';
+
+-----更新platform_range
+update static_total_data set platform_range= (
+    select
+        ('{' || string_agg(json_text::text, ',')|| '}')::jsonb
+    from
+        (
+            select
+                    '"' || token_type || '":' || ('{' || string_agg(json_text::text, ',')|| '}')::jsonb as json_text
+            from
+                (
+                    select
+                        case
+                            when sttt.token_type = 'defi' then 'token'
+                            else token_type
+                            end token_type,
+                        '"' || bus_type || '":' || json_agg( token_name order by rownumber) as json_text
+                    from
+                        static_top_ten_platform sttt
+                    where
+                            token_name <> 'ALL'
+                    group by
+                        bus_type,
+                        token_type) t
+            group by
+                token_type ) tout)
+where  code = 'static_total';
+
+-----更新action_range
+update static_total_data set action_range= (
+    select
+        ('{' || string_agg(json_text::text, ',')|| '}')::jsonb
+    from
+        (
+            select
+                    '"' || token_type || '":' || ('{' || string_agg(json_text::text, ',')|| '}')::jsonb as json_text
+            from
+                (
+                    select
+                        case
+                            when sttt.token_type = 'defi' then 'token'
+                            else token_type
+                            end token_type,
+                        '"' || bus_type || '":' || json_agg( token_name order by rownumber) as json_text
+                    from
+                        static_top_ten_action sttt
+                    where
+                            token_name <> 'ALL'
+                    group by
+                        bus_type,
+                        token_type) t
+            group by
+                token_type ) tout)
+where  code = 'static_total';
+
 insert into tag_result(table_name,batch_date)  SELECT 'static_total_data' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
 
