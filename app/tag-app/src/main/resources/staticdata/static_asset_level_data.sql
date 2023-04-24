@@ -23,7 +23,7 @@ select
     level,
     sttt.rownumber
 from
-    address_label_gp alg inner join static_top_ten_token sttt  on(alg.asset=sttt.token_name and alg.bus_type=sttt.bus_type)
+    address_label_gp alg inner join static_top_ten_token sttt  on(alg.asset=sttt.token_name and alg.bus_type=sttt.bus_type and lower(alg.wired_type)=sttt.token_type )
 where (alg.bus_type='balance' or alg.bus_type='activity' or alg.bus_type='volume') and category='grade'
                         and wired_type<>'WEB3'
 group by asset,wired_type,alg.bus_type,level,sttt.rownumber;
@@ -67,7 +67,7 @@ from
         from
             address_label_gp) alg
         inner join static_top_ten_platform sttt
-            on(alg.project=sttt.token_name and alg.bus_type=sttt.bus_type)
+            on(alg.project=sttt.token_name and alg.bus_type=sttt.bus_type and lower(alg.wired_type)=sttt.token_type )
 where
     ((alg.bus_type = 'balance'
         and wired_type = 'WEB3')
@@ -112,8 +112,8 @@ from
                 end as project
         from
             address_label_gp)  alg
-        inner join static_top_ten_platform sttt
-                   on(alg.trade_type=sttt.token_name and alg.bus_type=sttt.bus_type)
+        inner join static_top_ten_action sttt
+                   on(alg.trade_type=sttt.token_name and alg.bus_type=sttt.bus_type and lower(alg.wired_type)=sttt.token_type )
     where ((alg.bus_type='balance' and wired_type = 'WEB3') or alg.bus_type='activity' or (alg.bus_type = 'volume'
                        and wired_type <> 'WEB3')) and category='grade'
 group by trade_type,wired_type,alg.bus_type,level,
@@ -160,22 +160,20 @@ create table static_item_json
     static_code  varchar(200) not null,
     dimension_type varchar(100)  null,---维度类型:asset\project\action
     wired_type varchar(100)  null,
-    json_text jsonb,
-    rownumber numeric(250, 20) NULL
+    json_text jsonb
 );
-insert into static_item_json(static_code,dimension_type,wired_type,json_text,rownumber)
+insert into static_item_json(static_code,dimension_type,wired_type,json_text)
 select
     sald.static_code ,
     sald.dimension_type,
     sald.wired_type,
-    JSON_BUILD_OBJECT('item_code',static_code, 'item_entity',('{'||string_agg(json_text,',')||'}')::jsonb)::jsonb,
-    sald.rownumber
+    JSON_BUILD_OBJECT('item_code',static_code, 'item_entity',('{'||string_agg(json_text,',')||'}')::jsonb)::jsonb
 from
     static_asset_level_data_json sald
 group by
     static_code,
     dimension_type,
-    wired_type,sald.rownumber;
+    wired_type;
 
 ------计算聚合类型数据（dimension_type聚合）token\project\action
 DROP TABLE if EXISTS  static_type_json;
@@ -190,8 +188,7 @@ insert into static_type_json
 select
     sald.dimension_type,
     sald.wired_type,
-
-    '"'||wired_type||'":'||(json_agg (json_text,order by sald.rownumber))
+    '"'||wired_type||'":'||(json_agg (json_text))
 from
     static_item_json sald
 group by
