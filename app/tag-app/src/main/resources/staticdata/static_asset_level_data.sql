@@ -32,8 +32,7 @@ group by asset,wired_type,alg.bus_type,level,sttt.rownumber;
 insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level,rownumber)
 select
     case
-        when project is null
-            or project = '' then 'total'
+        when project = 'ALL' then 'total'
         else project
         end as static_code,
     count(1) as address_num,
@@ -65,7 +64,8 @@ from
                 else project
                 end as project
         from
-            address_label_gp) alg
+            address_label_gp WHERE (project is not null
+            or project <> '')) alg
         inner join static_top_ten_platform sttt
             on(alg.project=sttt.token_name and alg.bus_type=sttt.bus_type and lower(alg.wired_type)=sttt.token_type )
 where
