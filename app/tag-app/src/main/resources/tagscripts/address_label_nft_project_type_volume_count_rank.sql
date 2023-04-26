@@ -280,5 +280,5 @@ from
         where
                 tb1.volume_usd >= 100
           and zb_rate <= 0.01
-          and zb_rate_transfer_count <= 0.01) t;
+          and zb_rate_transfer_count <= 0.01 and label_type not like '%_DEX_%' ) t;
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_project_type_volume_count_rank' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

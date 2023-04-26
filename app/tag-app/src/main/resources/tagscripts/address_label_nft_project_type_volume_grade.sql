@@ -132,5 +132,5 @@ select
             a2.type,
             a2.project_name ,
             a2.token_name
-    ) t where volume_usd >= 100 and address not in (select address from exclude_address);
+    ) t where volume_usd >= 100 and address not in (select address from exclude_address) 		and label_type not like '%_DEX_%' ;
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_project_type_volume_grade' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
