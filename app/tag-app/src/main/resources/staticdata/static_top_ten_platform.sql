@@ -247,3 +247,4 @@ from (
                          rowtable ) s1
          where
                  s1.rn <= 1000) s2 inner join dim_project_type drc on(drc.project=s2.token);
+insert into tag_result(table_name,batch_date)  SELECT 'static_top_ten_platform' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

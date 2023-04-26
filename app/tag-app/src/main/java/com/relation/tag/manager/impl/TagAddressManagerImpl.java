@@ -258,9 +258,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
     public void staticData(String batchDate) {
         String dir = STATICDATA_PATH;
         execSql("address_labels_json_gin", "static_top_ten_token.sql", batchDate, dir, null);
-        execSql("static_top_ten_token", "static_crowd_data.sql", batchDate, dir, null);
-        execSql("static_top_ten_token", "static_asset_level_data.sql", batchDate, dir, null);
-        execSql("static_top_ten_token", "static_wired_type_address.sql", batchDate, dir, null);
+        execSql("static_top_ten_token", "static_top_ten_platform.sql", batchDate, dir, null);
+        execSql("static_top_ten_platform", "static_top_ten_action.sql", batchDate, dir, null);
+        execSql("static_top_ten_action", "static_asset_level_data.sql", batchDate, dir, null);
+
+        execSql("address_labels_json_gin", "static_crowd_data.sql", batchDate, dir, null);
+        execSql("address_labels_json_gin", "static_wired_type_address.sql", batchDate, dir, null);
         execSql("static_type_json", "static_total_data.sql", batchDate, dir, null);
         execSql("static_total_data", "static_home_data_analysis.sql", batchDate, dir, null);
     }
