@@ -15,18 +15,55 @@ vacuum static_asset_level_data;
 ----按资产+级别
 insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level,rownumber)
 select
-    case when asset is null  or asset='' or asset='ALL' then 'total' else  asset end   as static_code,
+    case
+        when asset is null
+            or asset = ''
+            or asset = 'ALL' then 'total'
+        else asset
+        end as static_code,
     count(1) as address_num,
     'asset' as dimension_type,
-    case when lower(wired_type)='defi' then 'token' else lower(wired_type) end as wired_type,
+    case
+        when lower(wired_type)= 'defi' then 'token'
+        else lower(wired_type)
+        end as wired_type,
     alg.bus_type,
     level,
     sttt.rownumber
 from
-    address_label_gp alg inner join static_top_ten_token sttt  on(alg.asset=sttt.token_name and alg.bus_type=sttt.bus_type and lower(alg.wired_type)=sttt.token_type )
-where (alg.bus_type='balance' or alg.bus_type='activity' or alg.bus_type='volume') and category='grade'
-                        and wired_type<>'WEB3'
-group by asset,wired_type,alg.bus_type,level,sttt.rownumber;
+    (
+        select
+            case
+                when asset = 'undefined' then 'ALL'
+                else asset
+                end asset,
+            wired_type,
+            bus_type,
+            level,
+            category,
+            trade_type
+        from
+            address_label_gp
+        where
+            (trade_type = 'ALL'
+                and project = '' and wired_type='DEFI') or (trade_type = ''
+            and project is null and wired_type='NFT')) alg
+        inner join static_top_ten_token sttt on
+        (alg.asset = sttt.token_name
+            and alg.bus_type = sttt.bus_type
+            and lower(alg.wired_type)= sttt.token_type )
+where
+    (alg.bus_type = 'balance'
+        or alg.bus_type = 'activity'
+        or alg.bus_type = 'volume')
+  and category = 'grade'
+  and wired_type <> 'WEB3'
+group by
+    asset,
+    wired_type,
+    alg.bus_type,
+    level,
+    sttt.rownumber;
 
 ----按平台+级别
 insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level,rownumber)
@@ -65,7 +102,7 @@ from
                 end as project
         from
             address_label_gp WHERE (project is not null
-            or project <> '')) alg
+            or project <> '') and trade_type='ALL' and asset='ALL') alg
         inner join static_top_ten_platform sttt
             on(alg.project=sttt.token_name and alg.bus_type=sttt.bus_type and lower(alg.wired_type)=sttt.token_type )
 where
@@ -111,7 +148,7 @@ from
                 else project
                 end as project
         from
-            address_label_gp)  alg
+            address_label_gp where  project='ALL' and asset='ALL')  alg
         inner join static_top_ten_action sttt
                    on(alg.trade_type=sttt.token_name and alg.bus_type=sttt.bus_type and lower(alg.wired_type)=sttt.token_type )
     where ((alg.bus_type='balance' and wired_type = 'WEB3') or alg.bus_type='activity' or (alg.bus_type = 'volume'

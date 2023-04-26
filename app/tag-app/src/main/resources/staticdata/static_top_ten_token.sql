@@ -93,8 +93,8 @@ FROM
         INNER JOIN dim_project_token_type drc ON
         (drc.token = s2.token);
 
-insert into static_top_ten_token(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','defi','vol');
-insert into static_top_ten_token(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','nft','vol');
+insert into static_top_ten_token(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','defi','volume');
+insert into static_top_ten_token(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','nft','volume');
 ----token vol排名前10
 insert into static_top_ten_token(token,rownumber,token_name,token_type,bus_type)
 select distinct s2.token as token,
