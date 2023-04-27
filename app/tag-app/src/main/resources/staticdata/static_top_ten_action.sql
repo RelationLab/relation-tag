@@ -89,7 +89,7 @@ FROM
 
 insert into static_top_ten_action(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','web3','activity');
 ----web3 activity
-insert into static_top_ten_platform(token,rownumber,token_name,token_type,bus_type)
+insert into static_top_ten_action(token,rownumber,token_name,token_type,bus_type)
 select distinct s2.token as token,
                 s2.rn as rownumber,
                 drc.type as token_name ,

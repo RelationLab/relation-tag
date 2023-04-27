@@ -45,9 +45,9 @@ from
         from
             address_label_gp
         where
-            (trade_type = 'ALL'
-                and project = '' and wired_type='DEFI') or (trade_type = ''
-            and project is null and wired_type='NFT')) alg
+            (trade_type = 'ALL' and project = '' and wired_type='DEFI')
+           or (trade_type = '' and project is null and wired_type='NFT' and bus_type = 'balance' )
+           or (trade_type = 'ALL' and project='ALL' and wired_type='NFT' and (bus_type = 'volume' or bus_type = 'activity'))  ) alg
         inner join static_top_ten_token sttt on
         (alg.asset = sttt.token_name
             and alg.bus_type = sttt.bus_type
@@ -101,17 +101,12 @@ from
                 else project
                 end as project
         from
-            address_label_gp WHERE (project is not null
-            or project <> '') and trade_type='ALL' and asset='ALL') alg
+            address_label_gp WHERE category = 'grade' and ((
+                        (project is not null or project <> '') and trade_type='ALL' and asset='ALL'
+                        and  (bus_type = 'activity' or bus_type = 'volume') and wired_type <> 'WEB3')
+                        or ((bus_type = 'balance' or bus_type = 'activity' ) and wired_type = 'WEB3' and (trade_type='NFT Recipient' OR trade_type='ALL')))) alg
         inner join static_top_ten_platform sttt
             on(alg.project=sttt.token_name and alg.bus_type=sttt.bus_type and lower(alg.wired_type)=sttt.token_type )
-where
-    ((alg.bus_type = 'balance'
-        and wired_type = 'WEB3')
-        or alg.bus_type = 'activity'
-        or (alg.bus_type = 'volume'
-            and wired_type <> 'WEB3'))
-  and category = 'grade'
 group by
     project,
     wired_type,
@@ -148,11 +143,11 @@ from
                 else project
                 end as project
         from
-            address_label_gp where  project='ALL' and asset='ALL')  alg
+            address_label_gp where
+            (project='ALL' and asset='ALL' and category='grade') and (bus_type='activity'  or
+             (bus_type = 'volume' and wired_type <> 'WEB3') ))  alg
         inner join static_top_ten_action sttt
-                   on(alg.trade_type=sttt.token_name and alg.bus_type=sttt.bus_type and lower(alg.wired_type)=sttt.token_type )
-    where ((alg.bus_type='balance' and wired_type = 'WEB3') or alg.bus_type='activity' or (alg.bus_type = 'volume'
-                       and wired_type <> 'WEB3')) and category='grade'
+       on(alg.trade_type=sttt.token_name and alg.bus_type=sttt.bus_type and lower(alg.wired_type)=sttt.token_type )
 group by trade_type,wired_type,alg.bus_type,level,
          sttt.rownumber;
 

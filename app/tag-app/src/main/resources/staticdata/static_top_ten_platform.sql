@@ -39,11 +39,12 @@ from (
                          from
                              web3_transaction_record_summary tbvu where
                                  project in(select project from dim_project_type)
+                                  and (type='NFT Recipient' or type='write')
                          group by
                              project)
                          rowtable ) s1
          where
-                 s1.rn <= 1000) s2 inner join dim_project_type drc on(drc.project=s2.token);
+                 s1.rn <= 10) s2 inner join dim_project_type drc on(drc.project=s2.token);
 
 
 insert into static_top_ten_platform(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','defi','volume');
@@ -88,7 +89,7 @@ from
                             project)
                         rowtable ) s1
         where
-                s1.rn <= 100) s2
+                s1.rn <= 10) s2
         inner join dim_project_token_type drc on
         (drc.project = s2.token
             and (drc.project_name <> 'Uniswap_v2'
@@ -131,7 +132,7 @@ FROM
                             platform_group)
                         rowtable ) s1
         WHERE
-                s1.rn <= 100) s2
+                s1.rn <= 10) s2
         INNER JOIN dim_project_token_type drc ON
         (drc.project = s2.token);
 
@@ -169,7 +170,7 @@ from (
                              project)
                          rowtable ) s1
          where
-                 s1.rn <= 100) s2  inner join dim_project_token_type drc on
+                 s1.rn <= 10) s2  inner join dim_project_token_type drc on
     (drc.project = s2.token
         and (drc.project_name <> 'Uniswap_v2'
             and drc.project_name <> 'Uniswap_v3')) ;
@@ -211,7 +212,7 @@ FROM
                             platform_group)
                         rowtable ) s1
         WHERE
-                s1.rn <= 100) s2
+                s1.rn <= 10) s2
         INNER JOIN dim_project_token_type drc ON
         (drc.project = s2.token);
 
@@ -246,5 +247,5 @@ from (
                              project)
                          rowtable ) s1
          where
-                 s1.rn <= 1000) s2 inner join dim_project_type drc on(drc.project=s2.token);
+                 s1.rn <= 10) s2 inner join dim_project_type drc on(drc.project=s2.token);
 insert into tag_result(table_name,batch_date)  SELECT 'static_top_ten_platform' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
