@@ -19,7 +19,7 @@ vacuum address_label_crowd_elite;
 
 insert into public.address_label_crowd_elite(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
-    a1.address ,
+    distinct a1.address ,
     'crowd_elite' as label_type,
     'crowd_elite' as label_name,
     0  as data,

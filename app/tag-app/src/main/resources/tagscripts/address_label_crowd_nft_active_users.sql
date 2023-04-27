@@ -19,7 +19,7 @@ vacuum address_label_crowd_nft_active_users;
 
 insert into public.address_label_crowd_nft_active_users(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
-    a1.address ,
+    distinct a1.address ,
     'crowd_nft_active_users' as label_type,
     'crowd_nft_active_users' as label_name,
     0  as data,

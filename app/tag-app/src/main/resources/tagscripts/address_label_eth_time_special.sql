@@ -76,7 +76,7 @@ CREATE TABLE public.address_label_crowd_long_term_holder(
 truncate table public.address_label_crowd_long_term_holder;
 insert into public.address_label_crowd_long_term_holder(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
-    a1.address ,
+    distinct a1.address ,
     'crowd_long_term_holder' as label_type,
     'crowd_long_term_holder' as label_name,
     0  as data,
