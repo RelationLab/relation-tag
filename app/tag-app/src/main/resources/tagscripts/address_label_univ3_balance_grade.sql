@@ -81,7 +81,7 @@ from
         inner join
     dim_rule_content a2
     on
-                a1.token = a2.token
+                a1.token = a2.token and a2.data_subject = 'balance_grade'
             and a2.label_type  like 'Uniswap_v3%'
 where
         a2.data_subject = 'balance_grade' and address not in (select address from exclude_address);

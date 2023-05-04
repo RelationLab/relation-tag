@@ -71,7 +71,7 @@ from
             round(total_transfer_volume_usd,3)  as volume_usd
         from
             dex_tx_volume_count_summary_univ3 dtvcs inner join dim_rule_content drc
-                                                         on( dtvcs.token = drc.token)
+                                                         on( dtvcs.token = drc.token and drc.data_subject = 'volume_grade')
         where
                 dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
           and dtvcs.total_transfer_volume_usd >= 100
