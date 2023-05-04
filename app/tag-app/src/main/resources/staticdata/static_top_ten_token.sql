@@ -46,6 +46,7 @@ from (
                                                                                 and address='0xf6e06de459057d3efa8f0ebd3656e06f66ea02da'
                                                                                 and tbvu.token=tbvu2.token
                                                                                 and tbvu.address=tbvu2.address)
+                                                                and  token not in (select token from exclude_token)
                                                               group by
                                                                   token)
                                                               rowtable ) s1
@@ -128,6 +129,7 @@ from (
                                     and address='0xf6e06de459057d3efa8f0ebd3656e06f66ea02da'
                                     and tbvu.token=tbvu2.token
                                     and tbvu.address=tbvu2.address)
+                                 and  token not in (select token from exclude_token)
                          group by
                              token)
                          rowtable ) s1
@@ -212,6 +214,7 @@ from (
                                     and address='0xf6e06de459057d3efa8f0ebd3656e06f66ea02da'
                                     and tbvu.token=tbvu2.token
                                     and tbvu.address=tbvu2.address)
+                                                            and  token not in (select token from exclude_token)
                          group by
                              token)
                          rowtable ) s1

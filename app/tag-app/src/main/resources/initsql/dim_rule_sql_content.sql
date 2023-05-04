@@ -3822,4 +3822,16 @@ truncate table exclude_address;
 vacuum exclude_address;
 insert into exclude_address(address) values ('0x0000000000000000000000000000000000000000');
 insert into exclude_address(address) values ('0x000000000000000000000000000000000000dead');
+
+drop table if exists exclude_token;
+CREATE TABLE public.exclude_token (
+    token varchar(100) NULL
+);
+truncate table exclude_token;
+vacuum exclude_token;
+insert into exclude_token(token) values ('0x6dd4e4aad29a40edd6a409b9c1625186c9855b4d');
+insert into exclude_token(token) values ('0x818fc6c2ec5986bc6e2cbf00939d90556ab12ce5');
+insert into exclude_token(token) values ('0x2b591e99afe9f32eaa6214f7b7629768c40eeb39');
+
+
 insert into tag_result(table_name,batch_date)  SELECT 'dim_rule_sql_content' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
