@@ -102,7 +102,7 @@ from
                 end as project
         from
             address_label_gp WHERE category = 'grade' and ((
-                        (project is not null or project <> '') and trade_type='ALL' and asset='ALL'
+                        (project is not null or project <> '') and ((trade_type='ALL' and asset='ALL') or project='Frax' or project='RocketPool' or project='Lido' )
                         and  (bus_type = 'activity' or bus_type = 'volume') and wired_type <> 'WEB3')
                         or ((bus_type = 'balance' or bus_type = 'activity' ) and wired_type = 'WEB3' and (trade_type='NFT Recipient' OR trade_type='ALL')))) alg
         inner join static_top_ten_platform sttt
@@ -116,7 +116,7 @@ group by
 ----按行为+级别
 insert into static_asset_level_data(static_code,address_num,dimension_type,wired_type,bus_type,level,rownumber)
 select
-    case when trade_type is null or trade_type='' or trade_type='ALL' then 'total' else  trade_type end  as static_code,
+    case when  trade_type='ALL' then 'total' else  trade_type end  as static_code,
     count(1) as address_num,
     'action' as dimension_type,
     case when lower(wired_type)='defi' then 'token' else lower(wired_type) end as wired_type,
@@ -144,7 +144,7 @@ from
                 end as project
         from
             address_label_gp where
-            (project='ALL' and asset='ALL' and category='grade') and (bus_type='activity'  or
+            project='ALL' and asset='ALL' and category='grade' and (bus_type='activity'  or
              (bus_type = 'volume' and wired_type <> 'WEB3') ))  alg
         inner join static_top_ten_action sttt
        on(alg.trade_type=sttt.token_name and alg.bus_type=sttt.bus_type and lower(alg.wired_type)=sttt.token_type )
