@@ -33,12 +33,18 @@ vacuum static_total_data;
 
 -----计算合约和个人地址数
 insert into static_total_data  (code,address_num,individual_address_num,contract_address_num)
-select 'static_total' as code,
-       count(1)  as address_num,
-       sum(case when aljg.address_type is null or aljg.address_type='p' then 1 else 0 end ) as  individual_address_num,
-       sum(case when aljg.address_type='c' then 1 else 0 end) as contract_address_num
-from address_info aljg inner join  address_labels_json_gin aljg2 on(aljg.address=aljg2.address);
-
+select
+    'static_total' as code,
+    count(1) as address_num,
+    sum(case when aljg.contract_address is null then 1 else 0 end ) as individual_address_num,
+    sum(case when aljg.contract_address is not null then 1 else 0 end) as contract_address_num
+from
+    (
+        select
+            distinct address
+        from
+            address_label_gp algin ) alg
+        left join contract aljg on (alg.address = aljg.contract_address);
 
 update  static_total_data
 set
