@@ -47,6 +47,7 @@ from (
                                                                                 and tbvu.token=tbvu2.token
                                                                                 and tbvu.address=tbvu2.address)
                                                                 and  token not in (select token from exclude_token)
+                                                                                                  and balance_usd >=100
                                                               group by
                                                                   token)
                                                               rowtable ) s1
@@ -130,6 +131,8 @@ from (
                                     and tbvu.token=tbvu2.token
                                     and tbvu.address=tbvu2.address)
                                  and  token not in (select token from exclude_token)
+                                                     and volume_usd >=100
+
                          group by
                              token)
                          rowtable ) s1
