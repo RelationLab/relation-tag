@@ -266,7 +266,7 @@ update static_total_data set asset_range= (
                             when sttt.token_type = 'defi' then 'token'
                             else token_type
                             end token_type,
-                        '"' || bus_type || '":' || json_agg( token_name order by rownumber) as json_text
+                        '"' || bus_type || '":' || json_agg( JSON_BUILD_OBJECT('name',token_name,'address',token) order by rownumber) as json_text
                     from
                         static_top_ten_token sttt
                     where
