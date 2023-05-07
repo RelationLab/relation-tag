@@ -94,16 +94,16 @@ select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'S
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset,bus_type from  address_label_univ3_balance_provider union all
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at, owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_third_party_${tableSuffix} union all
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at,owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_ugc_${tableSuffix};
-
-update
-    address_info b
-set
-    days = trunc((extract(epoch from cast( now() as TIMESTAMP)) - A."timestamp")/(24 * 60 * 60))
-    from
-	block_timestamp A
-where
-    A.height = b.first_up_chain_block_height
-  and b.days is null;
+--
+-- update
+--     address_info b
+-- set
+--     days = trunc((extract(epoch from cast( now() as TIMESTAMP)) - A."timestamp")/(24 * 60 * 60))
+--     from
+-- 	block_timestamp A
+-- where
+--     A.height = b.first_up_chain_block_height
+--   and b.days is null;
 
 drop table if exists address_labels_json_gin;
 create table address_labels_json_gin
