@@ -106,48 +106,83 @@ select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at,
 --   and b.days is null;
 
 drop table if exists address_labels_json_gin;
-create table address_labels_json_gin
+CREATE TABLE address_labels_json_gin
 (
-    address    varchar(512),
-    labels     jsonb,
-    updated_at timestamp,
-    address_type varchar(1),
-    days int8 NULL
-) distributed by (address);
--- 用户标签
+    id      BIGSERIAL,
+    address TEXT  NOT NULL,
+    data    JSONB NOT NULL
+) WITH (appendoptimized = true, orientation = column) DISTRIBUTED BY (address);
+CREATE INDEX idx_address_labels_json_gin_test_id ON address_labels_json_gin(id);
 truncate
     table public.address_labels_json_gin;
 vacuum address_labels_json_gin;
 
-INSERT INTO address_labels_json_gin(address,
-                                    address_type,
-                                    labels,
-                                    updated_at)
+INSERT INTO address_labels_json_gin(address, data)
 SELECT address_label_gp.address,
-       CASE
-           WHEN COUNT(contract_address) > 0 THEN 'c'
-           ELSE 'p'
-           END                                                                                            AS address_type,
-       JSON_AGG(
-               JSON_BUILD_OBJECT(
-                       'type', label_type,
-                       'name', label_name,
-                       'wired_type', wired_type,
-                       'data', data :: TEXT,
-                       'group', "group",
-                       'level', level,
-                       'category', category,
-                       'trade_type', trade_type,
-                       'project', project,
-                       'asset', asset
-                   )
-               ORDER BY
-                   label_type DESC
-           )::JSONB                                                                                       AS labels,
-       CURRENT_TIMESTAMP                                                                                  AS updated_at
+       JSONB_BUILD_OBJECT(
+               'address_type', CASE WHEN COUNT(contract_address) > 0 THEN 'c' ELSE 'p' END,
+               'labels', JSONB_AGG(
+                       JSONB_BUILD_OBJECT(
+                               'type', label_type,
+                               'name', label_name,
+                               'wired_type', wired_type,
+                               'data', data :: TEXT,
+                               'group', "group",
+                               'level', level,
+                               'category', category,
+                               'trade_type', trade_type,
+                               'project', project,
+                               'asset', asset
+                           )
+                           ORDER BY label_type DESC
+                   ),
+               'updated_at', CURRENT_TIMESTAMP
+           )
 FROM address_label_gp
-         LEFT JOIN "contract" ON (address_label_gp.address = contract.contract_address)
+         LEFT JOIN contract ON (address_label_gp.address = contract.contract_address)
 GROUP BY (address_label_gp.address);
+-- create table address_labels_json_gin
+-- (
+--     address    varchar(512),
+--     labels     jsonb,
+--     updated_at timestamp,
+--     address_type varchar(1),
+--     days int8 NULL
+-- ) distributed by (address);
+-- -- 用户标签
+-- truncate
+--     table public.address_labels_json_gin;
+-- vacuum address_labels_json_gin;
+--
+-- INSERT INTO address_labels_json_gin(address,
+--                                     address_type,
+--                                     labels,
+--                                     updated_at)
+-- SELECT address_label_gp.address,
+--        CASE
+--            WHEN COUNT(contract_address) > 0 THEN 'c'
+--            ELSE 'p'
+--            END                                                                                            AS address_type,
+--        JSON_AGG(
+--                JSON_BUILD_OBJECT(
+--                        'type', label_type,
+--                        'name', label_name,
+--                        'wired_type', wired_type,
+--                        'data', data :: TEXT,
+--                        'group', "group",
+--                        'level', level,
+--                        'category', category,
+--                        'trade_type', trade_type,
+--                        'project', project,
+--                        'asset', asset
+--                    )
+--                ORDER BY
+--                    label_type DESC
+--            )::JSONB                                                                                       AS labels,
+--        CURRENT_TIMESTAMP                                                                                  AS updated_at
+-- FROM address_label_gp
+--          LEFT JOIN "contract" ON (address_label_gp.address = contract.contract_address)
+-- GROUP BY (address_label_gp.address);
 insert into tag_result(table_name,batch_date)  SELECT 'address_labels_json_gin' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
 
