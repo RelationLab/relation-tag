@@ -151,6 +151,11 @@ truncate table address_activity_init;
 insert into address_activity_init(activity_num,address)
 select sum(activity_num),address from(
                                          select
+                                             sum(total_transfer_count) as activity_num,aljg.address from  eth_holding_vol_count aljg
+                                                                                                              inner join address_init${tableSuffix} ais  on(aljg.address=ais.address)
+                                         group by aljg.address
+                                         union all
+                                         select
                                              sum(total_transfer_count) as activity_num,address from  token_holding_vol_count group by address
                                          union all
                                          select

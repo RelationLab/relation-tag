@@ -1,5 +1,5 @@
 insert into home_data_analysis(analysis_date,analysis_result)
-select floor(EXTRACT(epoch FROM NOW())*1000-836001000) as analysis_date,
+select floor(EXTRACT(epoch FROM NOW())*1000) as analysis_date,
        JSON_BUILD_OBJECT(
                'total_address_num', address_num,
                'refresh_time', CURRENT_TIMESTAMP,
