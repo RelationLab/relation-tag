@@ -145,7 +145,7 @@ from
         from
             address_label_gp where
                 category='grade' and
-                project in('Lido','Frax','RocketPool','ALL' ) and asset='ALL'   and (bus_type='activity'  or (bus_type = 'volume' and wired_type <> 'WEB3') )))  alg
+                project = 'ALL' and (asset = 'ALL' or (asset = 'ETH(eth)' and trade_type = 'stake')) and (bus_type='activity' or (bus_type = 'volume' and wired_type <> 'WEB3') ))  alg
         inner join static_top_ten_action sttt
        on(alg.trade_type=sttt.token_name and alg.bus_type=sttt.bus_type and lower(alg.wired_type)=sttt.token_type )
 group by trade_type,wired_type,alg.bus_type,level,
