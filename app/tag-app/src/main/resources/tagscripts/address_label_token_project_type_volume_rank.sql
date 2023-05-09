@@ -125,6 +125,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             dex_tx_volume_count_summary
                                                         where
                                                                 total_transfer_volume_usd  > 0 and address not in (select address from exclude_address)
+                                                                and token in (select distinct token from dim_project_token_type)
                                                         union all
                                                         -- project(ALL)-token(ALL)-type
                                                         select
@@ -137,7 +138,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             dex_tx_volume_count_summary
                                                         where
                                                                 total_transfer_volume_usd > 0 and address not in (select address from exclude_address)
-                                                          and (token,project) in (select distinct token,project from dim_project_token_type)
+                                                          and token in (select distinct token from dim_project_token_type)
                                                         union all
                                                         -- project(ALL)-token-type(ALL)
                                                         select
@@ -150,7 +151,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             dex_tx_volume_count_summary
                                                         where
                                                                 total_transfer_volume_usd  > 0 and address not in (select address from exclude_address)
-                                                          and (token,project) in (select distinct token,project from dim_project_token_type)
+                                                          and token in (select distinct token from dim_project_token_type)
                                                         union all
                                                         -- project-token(ALL)-type
                                                         select
@@ -163,7 +164,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             dex_tx_volume_count_summary
                                                         where
                                                                 total_transfer_volume_usd > 0 and address not in (select address from exclude_address)
-                                                          and token in (select distinct(token) from dim_project_token_type)
+                                                          and token in (select distinct token from dim_project_token_type)
                                                         union all
                                                         -- project(ALL)-token-type
                                                         select
@@ -176,7 +177,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             dex_tx_volume_count_summary
                                                         where
                                                                 total_transfer_volume_usd  > 0 and address not in (select address from exclude_address)
-                                                          and (token,project) in (select distinct token,project from dim_project_token_type)
+                                                          and token in (select distinct token from dim_project_token_type)
                                                             ) s1
                                                         inner join dim_project_token_type s2
                                                                    on
@@ -217,6 +218,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             dex_tx_volume_count_summary
                                                         where
                                                                 total_transfer_volume_usd  > 0  and address not in (select address from exclude_address)
+                                                          and token in (select distinct token from dim_project_token_type)
                                                         union all
                                                         -- project(ALL)-token(ALL)-type
                                                         select
@@ -229,7 +231,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             dex_tx_volume_count_summary
                                                         where
                                                                 total_transfer_volume_usd > 0  and address not in (select address from exclude_address)
-                                                          and (token,project) in (select distinct token,project from dim_project_token_type)
+                                                          and token in (select distinct token from dim_project_token_type)
                                                         union all
                                                         -- project-token(ALL)-type
                                                         select
@@ -242,7 +244,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             dex_tx_volume_count_summary
                                                         where
                                                                 total_transfer_volume_usd > 0 and address not in (select address from exclude_address)
-                                                          and token in (select distinct(token) from dim_project_token_type)
+                                                          and token in (select distinct token from dim_project_token_type)
                                                         union all
                                                         -- project(ALL)-token-type
                                                         select
@@ -255,7 +257,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             dex_tx_volume_count_summary
                                                         where
                                                                 total_transfer_volume_usd  > 0 and address not in (select address from exclude_address)
-                                                          and (token,project) in (select distinct token,project from dim_project_token_type)
+                                                          and token in (select distinct token from dim_project_token_type)
                                                     ) ta
                                                 group by
                                                     address,

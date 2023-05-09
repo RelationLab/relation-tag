@@ -14,7 +14,7 @@ select
 from
     (
         select
-            count(address),
+            count(distinct address),
             wired_type,
             address
         from
