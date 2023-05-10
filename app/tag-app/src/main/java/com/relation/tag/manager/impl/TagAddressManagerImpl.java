@@ -37,7 +37,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     public static String SNAPSHOTPATH = "snapshot";
 
-    public static String STATICDATA_PATH = "staticdata";
 
     public static String STAG = "stag";
 
@@ -129,7 +128,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         if(StringUtils.equals(STAG,configEnvironment)){
             snapshot(batchDate);
             innit(batchDate);
-//            Thread.sleep(10 * 60 * 1000);
+            Thread.sleep(10 * 60 * 1000);
             check("total_volume_usd", 1 * 60 * 1000, batchDate, 1);
             List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
             List<FileEntity> fileList = Lists.newArrayList();
@@ -142,8 +141,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
             tagByRuleSqlList(fileList, batchDate);
         }
         tagMerge(batchDate);
-//        Thread.sleep(2 * 60 * 1000);
-//        staticData(batchDate);
     }
 
     private void snapshot(String batchDate) {
@@ -151,21 +148,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
             return;
         }
         String dir = SNAPSHOTPATH;
-//        execSql(null, "snapshot_address_info.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_block_timestamp.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_dex_tx_volume_count_record.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_erc20_tx_record.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_eth_holding.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_eth_holding_time.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_eth_tx_record.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_nft_buy_sell_holding.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_nft_holding.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_nft_holding_time.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_platform_nft_holding.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_token_holding.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_token_holding_time.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_token_holding_uni.sql", batchDate, dir, null);
-//        execSql(null, "snapshot_web3_transaction_record.sql", batchDate, dir, null);
         execSql(null, "snapshot_dms_syn_block.sql", batchDate, dir, null);
         check("snapshot_table", 60 * 1000, batchDate, 1);
     }
@@ -189,7 +171,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("token_holding_uni_cal", "dex_tx_volume_count_summary.sql", batchDate, dir, null);
         execSql("dex_tx_volume_count_summary", "token_platform.sql", batchDate, dir, null);
 
-//        Thread.sleep(3 * 60 * 1000);
+        Thread.sleep(3 * 60 * 1000);
         boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql", batchDate, dir, null);
         if (!token_holding_vol_countcheck) {
             Thread.sleep(1 * 60 * 1000);
@@ -254,17 +236,5 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql(null, "address_label_gp.sql", batchDate, INIT_PATH, configEnvironment);
     }
 
-    @Override
-    public void staticData(String batchDate) {
-        String dir = STATICDATA_PATH;
-        execSql("address_labels_json_gin", "static_top_ten_token.sql", batchDate, dir, null);
-        execSql("static_top_ten_token", "static_top_ten_platform.sql", batchDate, dir, null);
-        execSql("static_top_ten_platform", "static_top_ten_action.sql", batchDate, dir, null);
-        execSql("static_top_ten_action", "static_asset_level_data.sql", batchDate, dir, null);
 
-        execSql("address_labels_json_gin", "static_crowd_data.sql", batchDate, dir, null);
-        execSql("address_labels_json_gin", "static_wired_type_address.sql", batchDate, dir, null);
-        execSql("static_type_json", "static_total_data.sql", batchDate, dir, null);
-        execSql("static_total_data", "static_home_data_analysis.sql", batchDate, dir, null);
-    }
 }
