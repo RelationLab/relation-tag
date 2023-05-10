@@ -57,7 +57,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         try {
             String tableName = ruleSql.getFileName();
             String table = tableName.split("\\.")[0];
-            if (checkResult(table, batchDate, 1)) {
+            if (checkResult(table, batchDate, 1, false)) {
                 return;
             }
             iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
@@ -72,12 +72,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     }
 
-    public boolean checkResult(String tableName, String batchDate, Integer result) {
+    public boolean checkResult(String tableName, String batchDate, Integer result, boolean likeKey) {
         if (StringUtils.isEmpty(tableName)) {
             return false;
         }
         try {
-            Integer tagInteger = checkResultData(tableName, batchDate);
+            Integer tagInteger = checkResultData(tableName, batchDate, likeKey);
             log.info("tableName==={},tagList.size===={}", tableName, tagInteger);
             return tagInteger != null && tagInteger.intValue() >= result;
         } catch (Exception ex) {
@@ -85,18 +85,24 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
     }
 
-    private Integer checkResultData(String tableName, String batchDate) {
-        return iAddressLabelService.exceSelectSql("select count(1) from ".concat("tag_result where 1=1 and table_name='").concat(tableName)
-                .concat("' and batch_date='").concat(batchDate).concat("'"));
+    private Integer checkResultData(String tableName, String batchDate, boolean likeKey) {
+        String checkSql = "select count(1) from ".concat(" tag_result where 1=1 and ");
+        if (likeKey) {
+            checkSql = checkSql.concat(" table_name like '").concat(tableName).concat("%");
+        } else {
+            checkSql = checkSql.concat(" table_name='").concat(tableName);
+        }
+        checkSql = checkSql.concat("' and batch_date='").concat(batchDate).concat("'");
+        return iAddressLabelService.exceSelectSql(checkSql);
     }
 
-    public void check(String tableName, long sleepTime, String batchDate, int resultNum) {
+    public void check(String tableName, long sleepTime, String batchDate, int resultNum, boolean likeKey) {
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
         while (true) {
             try {
-                Integer tagInteger = checkResultData(tableName, batchDate);
+                Integer tagInteger = checkResultData(tableName, batchDate, likeKey);
                 if (tagInteger != null && tagInteger.intValue() >= resultNum) {
                     log.info("check table ===={} end.......tagList.size===={}", tableName, tagInteger);
                     break;
@@ -119,17 +125,19 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void refreshAllLabel(String batchDate) throws Exception {
-        if (!checkResult("address_labels_json_gin", batchDate, 1)) {
+        String checkTable = "address_labels_json_gin_".concat(configEnvironment);
+        if (!checkResult(checkTable, batchDate, 1, false)) {
             tag(batchDate);
         }
     }
 
     private void tag(String batchDate) throws Exception {
-        if(StringUtils.equals(STAG,configEnvironment)){
+        if (!checkResult("address_label", batchDate, 62, true)) {
+//        if(StringUtils.equals(STAG,configEnvironment)){
             snapshot(batchDate);
             innit(batchDate);
             Thread.sleep(10 * 60 * 1000);
-            check("total_volume_usd", 1 * 60 * 1000, batchDate, 1);
+            check("total_volume_usd", 1 * 60 * 1000, batchDate, 1, false);
             List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
             List<FileEntity> fileList = Lists.newArrayList();
             for (DimRuleSqlContent item : ruleSqlList) {
@@ -140,16 +148,17 @@ public class TagAddressManagerImpl implements TagAddressManager {
             }
             tagByRuleSqlList(fileList, batchDate);
         }
+        check("address_label", 60 * 1000, batchDate, 62, true);
         tagMerge(batchDate);
     }
 
     private void snapshot(String batchDate) {
-        if (checkResult("snapshot_table", batchDate, 1)) {
+        if (checkResult("snapshot_table", batchDate, 1, false)) {
             return;
         }
         String dir = SNAPSHOTPATH;
         execSql(null, "snapshot_dms_syn_block.sql", batchDate, dir, null);
-        check("snapshot_table", 60 * 1000, batchDate, 1);
+        check("snapshot_table", 60 * 1000, batchDate, 1, false);
     }
 
     private void innit(String batchDate) throws Exception {
@@ -200,18 +209,18 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 execSynSql(lastTableName, sqlName, finalTableName, batchDate, dir, tableSuffix);
             }
         });
-        return checkResult(finalTableName, batchDate, 1);
+        return checkResult(finalTableName, batchDate, 1, false);
     }
 
     private void execSynSql(String lastTableName, String sqlName, String tableName, String batchDate, String dir, String tableSuffix) {
-        check(lastTableName, 20 * 1000, batchDate, 1);
+        check(lastTableName, 20 * 1000, batchDate, 1, false);
         try {
-            if (checkResult(tableName, batchDate, 1)) {
+            if (checkResult(tableName, batchDate, 1, false)) {
                 return;
             }
             String exceSql = FileUtils.readFile(dir.concat(File.separator).concat(sqlName));
-            if (StringUtils.isNotEmpty(tableSuffix)){
-                exceSql = exceSql.replace("${tableSuffix}",tableSuffix);
+            if (StringUtils.isNotEmpty(tableSuffix)) {
+                exceSql = exceSql.replace("${tableSuffix}", tableSuffix);
             }
             iAddressLabelService.exceSql(exceSql, sqlName);
         } catch (Exception e) {
@@ -228,11 +237,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void tagMerge(String batchDate) throws Exception {
-        try {
-            Thread.sleep(5 * 60 * 1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         execSql(null, "address_label_gp.sql", batchDate, INIT_PATH, configEnvironment);
     }
 

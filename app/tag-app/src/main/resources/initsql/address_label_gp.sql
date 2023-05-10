@@ -94,16 +94,6 @@ select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'S
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset,bus_type from  address_label_univ3_balance_provider union all
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at, owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_third_party_${tableSuffix} union all
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at,owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_ugc_${tableSuffix};
---
--- update
---     address_info b
--- set
---     days = trunc((extract(epoch from cast( now() as TIMESTAMP)) - A."timestamp")/(24 * 60 * 60))
---     from
--- 	block_timestamp A
--- where
---     A.height = b.first_up_chain_block_height
---   and b.days is null;
 
 drop table if exists address_labels_json_gin;
 CREATE TABLE address_labels_json_gin
@@ -142,78 +132,7 @@ SELECT address_label_gp.address,
 FROM address_label_gp
          LEFT JOIN contract ON (address_label_gp.address = contract.contract_address)
 GROUP BY (address_label_gp.address);
--- create table address_labels_json_gin
--- (
---     address    varchar(512),
---     labels     jsonb,
---     updated_at timestamp,
---     address_type varchar(1),
---     days int8 NULL
--- ) distributed by (address);
--- -- 用户标签
--- truncate
---     table public.address_labels_json_gin;
--- vacuum address_labels_json_gin;
---
--- INSERT INTO address_labels_json_gin(address,
---                                     address_type,
---                                     labels,
---                                     updated_at)
--- SELECT address_label_gp.address,
---        CASE
---            WHEN COUNT(contract_address) > 0 THEN 'c'
---            ELSE 'p'
---            END                                                                                            AS address_type,
---        JSON_AGG(
---                JSON_BUILD_OBJECT(
---                        'type', label_type,
---                        'name', label_name,
---                        'wired_type', wired_type,
---                        'data', data :: TEXT,
---                        'group', "group",
---                        'level', level,
---                        'category', category,
---                        'trade_type', trade_type,
---                        'project', project,
---                        'asset', asset
---                    )
---                ORDER BY
---                    label_type DESC
---            )::JSONB                                                                                       AS labels,
---        CURRENT_TIMESTAMP                                                                                  AS updated_at
--- FROM address_label_gp
---          LEFT JOIN "contract" ON (address_label_gp.address = contract.contract_address)
--- GROUP BY (address_label_gp.address);
-insert into tag_result(table_name,batch_date)  SELECT 'address_labels_json_gin' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
-
-
--- UPDATE address_labels_json_gin
--- SET days = subquery.days
--- FROM (SELECT address_info.address,
---              trunc((extract(epoch FROM CAST(NOW() AS TIMESTAMP)) - block_timestamp.timestamp) / (24 * 60 * 60)) AS days
---       FROM block_timestamp
---                LEFT JOIN address_info
---                          ON (address_info.first_up_chain_block_height = block_timestamp.height)) AS subquery
--- WHERE address_labels_json_gin.address = subquery.address;
-
-
---
--- update
---     address_info b
--- set
---     days = trunc((extract(epoch from cast( now() as TIMESTAMP)) - A."timestamp")/(24 * 60 * 60))
---     from
--- 	block_timestamp A
--- where
---     A.height = b.first_up_chain_block_height
---   and b.days is null;
---
--- UPDATE address_labels_json_gin b
--- SET days = A.days
---     FROM
--- address_info A
--- WHERE
---     A.address = b.address and b.days is null;
+insert into tag_result(table_name,batch_date)  SELECT 'address_labels_json_gin_${tableSuffix}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
 
 
