@@ -47,22 +47,6 @@ select
     sum(total_transfer_all_volume) total_transfer_all_volume
 from
     (
---         select
---             address,
---             max(block_height) as block_height,
---             token,
---             sum(total_transfer_volume) total_transfer_volume,
---             sum(total_transfer_count) total_transfer_count,
---             sum(total_transfer_to_count) as total_transfer_to_count,
---             sum(total_transfer_all_count) total_transfer_all_count,
---             sum(total_transfer_to_volume) as total_transfer_to_volume,
---             sum(total_transfer_all_volume) total_transfer_all_volume
---         from
---             token_holding_vol_count_tmp thvc
---         group by
---             address,
---             token
---         union all
         select
             from_address address,
             max(block_number) as block_height,
@@ -75,7 +59,7 @@ from
             sum(amount) total_transfer_all_volume
         from
             erc20_tx_record e20tr
-        where e20tr.block_number > (select block_height from snapshot_dms_syn_block where syn_type='erc20_tx_record')
+        where  amount>0
         group by
             from_address,
             token
@@ -92,7 +76,7 @@ from
                       sum(amount) total_transfer_all_volume
         from
             erc20_tx_record e20tr
-        where e20tr.block_number > (select block_height from snapshot_dms_syn_block where syn_type='erc20_tx_record')
+        where  amount>0
         group by
             to_address,
             token ) atb where address !='' group by  address,token;
