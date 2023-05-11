@@ -10,8 +10,8 @@ insert into dms_syn_block(syn_type,block_height)
 select 'dex_tx_volume_count_record' as syn_type,max(block_height) from dex_tx_volume_count_record_cdc;
 insert into dms_syn_block(syn_type,block_height)
 select 'erc20_tx_record' as syn_type, max(block_number) from erc20_tx_record_cdc;
-insert into dms_syn_block(syn_type,block_height)
-select 'eth_holding' as syn_type, max(block_height) from eth_holding_cdc;
+-- insert into dms_syn_block(syn_type,block_height)
+-- select 'eth_holding' as syn_type, max(block_height) from eth_holding_cdc;
 insert into dms_syn_block(syn_type,block_height)
 select 'eth_tx_record' as syn_type, max(block_number) from eth_tx_record_cdc;
 insert into dms_syn_block(syn_type,block_height)
