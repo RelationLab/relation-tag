@@ -134,7 +134,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
     private void tag(String batchDate) throws Exception {
         if (!checkResult("address_label", batchDate, 62, true)) {
 //        if(StringUtils.equals(STAG,configEnvironment)){
-            snapshot(batchDate);
+            createView(batchDate);
+            check("create_view", 60 * 1000, batchDate, 1, false);
             innit(batchDate);
             Thread.sleep(10 * 60 * 1000);
             check("total_volume_usd", 1 * 60 * 1000, batchDate, 1, false);
@@ -152,13 +153,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
         tagMerge(batchDate);
     }
 
-    private void snapshot(String batchDate) {
-        if (checkResult("snapshot_table", batchDate, 1, false)) {
-            return;
-        }
-        String dir = SNAPSHOTPATH;
-        execSql(null, "snapshot_dms_syn_block.sql", batchDate, dir, null);
-        check("snapshot_table", 60 * 1000, batchDate, 1, false);
+    private void createView(String batchDate) {
+        execSql(null, "dms_syn_block.sql", batchDate, INIT_PATH, null);
+        execSql("dms_syn_block", "create_view.sql", batchDate, INIT_PATH, null);
     }
 
     private void innit(String batchDate) throws Exception {
@@ -189,7 +186,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         if (!dms_syn_blockcheck) {
             Thread.sleep(1 * 60 * 1000);
         }
-        execSql("token_holding_vol_count_tmp", "dms_syn_block.sql", batchDate, dir, null);
         boolean total_volume_usdcheck = execSql("token_holding_vol_count_tmp", "token_volume_usd.sql", batchDate, dir, null);
         if (!total_volume_usdcheck) {
             Thread.sleep(5 * 60 * 1000);

@@ -1,8 +1,4 @@
--- public.dms_syn_block definition
 
--- Drop table
-
--- DROP TABLE public.dms_syn_block;
 DROP TABLE IF EXISTS public.dms_syn_block;
 CREATE TABLE public.dms_syn_block (
                                       syn_type varchar(100) NOT NULL,
@@ -10,11 +6,24 @@ CREATE TABLE public.dms_syn_block (
 );
 truncate table dms_syn_block;
 vacuum dms_syn_block;
-
 insert into dms_syn_block(syn_type,block_height)
-select 'eth_tx_record' as syn_type,max(block_height) from eth_holding_vol_count;
-
+select 'dex_tx_volume_count_record' as syn_type,max(block_height) from dex_tx_volume_count_record;
 insert into dms_syn_block(syn_type,block_height)
-select 'erc20_tx_record' as syn_type,max(block_height) from token_holding_vol_count;
+select 'erc20_tx_record' as syn_type,select max(block_number) from erc20_tx_record;
+insert into dms_syn_block(syn_type,block_height)
+select 'eth_holding' as syn_type,select max(block_height) from eth_holding;
+insert into dms_syn_block(syn_type,block_height)
+select 'eth_tx_record' as syn_type,select max(block_number) from eth_tx_record;
+insert into dms_syn_block(syn_type,block_height)
+select 'nft_buy_sell_holding' as syn_type,select max(updated_block_height)  from nft_buy_sell_holding;
+insert into dms_syn_block(syn_type,block_height)
+select 'nft_holding' as syn_type,select max(updated_block_height)  from nft_holding;
+insert into dms_syn_block(syn_type,block_height)
+select 'token_holding' as syn_type,select max(block_height)   from token_holding;
+insert into dms_syn_block(syn_type,block_height)
+select 'token_holding_uni' as syn_type,select max(block_height)   from token_holding_uni;
+insert into dms_syn_block(syn_type,block_height)
+select 'web3_transaction_record' as syn_type,select max(block_height)   from web3_transaction_record;
+
 insert into tag_result(table_name,batch_date)  SELECT 'dms_syn_block' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
