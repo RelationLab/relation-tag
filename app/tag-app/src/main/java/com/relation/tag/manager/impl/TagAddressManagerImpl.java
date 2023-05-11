@@ -186,7 +186,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         if (!dms_syn_blockcheck) {
             Thread.sleep(1 * 60 * 1000);
         }
-        boolean total_volume_usdcheck = execSql("token_holding_vol_count_tmp", "token_volume_usd.sql", batchDate, dir, null);
+        boolean total_volume_usdcheck = execSql("token_holding_vol_count", "token_volume_usd.sql", batchDate, dir, null);
         if (!total_volume_usdcheck) {
             Thread.sleep(5 * 60 * 1000);
         }
@@ -195,9 +195,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private boolean execSql(String lastTableName, String sqlName, String batchDate, String dir, String tableSuffix) {
         String tableName = sqlName.split("\\.")[0];
-        if (StringUtils.equalsAny(tableName, "token_holding_vol_count", "eth_holding_vol_count")) {
-            tableName = tableName.concat("_tmp");
-        }
         String finalTableName = tableName;
         forkJoinPool.execute(new Runnable() {
             @Override

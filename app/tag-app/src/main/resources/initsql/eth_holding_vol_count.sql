@@ -92,7 +92,7 @@ from
             to_address) atb where address !=''
 group by
     address;
-insert into tag_result(table_name,batch_date)  SELECT 'eth_holding_vol_count_tmp' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'eth_holding_vol_count' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
 
 
