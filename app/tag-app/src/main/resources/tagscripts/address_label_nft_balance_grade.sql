@@ -51,7 +51,7 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
         when balance >= 101 then 'L6' end as level,
         'grade' as category,
         t.type as trade_type,
-        t.project_name as project,
+        '' as project,
         t.token_name as asset,
         'balance' as bus_type
     from (

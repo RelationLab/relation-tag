@@ -65,7 +65,7 @@ insert into public.address_label_nft_count_grade(address,label_type,label_name,d
 end   as level,
     'grade' as category,
     t.type as trade_type,
-    t.project_name as project,
+    '' as project,
     t.token_name as asset,
     'activity' as bus_type
     from

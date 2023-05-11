@@ -44,7 +44,7 @@ select
     when zb_rate <= 0.001 then 'LEGENDARY_NFT_COLLECTOR' end as level,
         'rank' as category,
         t.type as trade_type,
-        t.project_name as project,
+        '' as project,
         t.token_name as asset,
     'balance' as bus_type
     from

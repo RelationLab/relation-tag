@@ -52,7 +52,7 @@ select
     and counter <= 365 then 'L6' end  as level,
     'grade' as category,
     a2.type as trade_type,
-    a2.project_name as project,
+    '' as project,
     a2.token_name as asset,
     'time' as bus_type
     from

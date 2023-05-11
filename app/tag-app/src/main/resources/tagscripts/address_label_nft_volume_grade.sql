@@ -62,7 +62,7 @@ select
             a1.address,
             a2.label_type,
             a2.type,
-            a2.project_name ,
+            '' as project_name ,
             a2.token_name,
             sum(transfer_volume) as volume_usd
         from
@@ -88,7 +88,7 @@ select
             a1.address,
             a2.label_type,
             a2.type,
-            a2.project_name ,
+            '' as project_name ,
             a2.token_name,
             sum(transfer_volume) as volume_usd
         from

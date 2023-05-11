@@ -29,7 +29,7 @@ select
     s1.label_type as level,
     'top' as category,
     s1.type as trade_type,
-    s1.project_name as project,
+    '' as project,
     s1.token_name as asset,
     'time' as bus_type
 from

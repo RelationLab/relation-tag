@@ -53,7 +53,7 @@ from
             address,
             dptt.label_type as label_type,
             dptt.type as type,
-            dptt.project_name as project_name,
+            '' as project_name,
             dptt.token_name as token_name,
             zb_rate
         from
