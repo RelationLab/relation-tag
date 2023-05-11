@@ -93,7 +93,9 @@ from
                                                                                         'ALL' as token ,
                                                                                         round(volume_usd,3) volume_usd
                                                                                     from
-                                                                                        total_volume_usd tbvu where volume_usd>=100
+                                                                                        total_volume_usd tbvu
+                                                                                    where volume_usd>=100
+                                                                                        and address not in (select address from exclude_address)
                                                                                     union all
                                                                                     select
                                                                                         address,
@@ -103,7 +105,8 @@ from
                                                                                         dex_tx_volume_count_summary th
                                                                                     where
                                                                                             th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
-                                                                                      and th.type='ALL' and th.total_transfer_volume_usd >=100  group by address
+                                                                                      and th.type='ALL' and th.total_transfer_volume_usd >=100
+                                                                                      and address not in (select address from exclude_address) group by address
                                                                                 ) tout group by address
                                     ) as a1) as a1
                                 inner join
@@ -127,6 +130,7 @@ from
                                                                                              round(volume_usd,3) volume_usd
                                                                                          from
                                                                                              total_volume_usd tbvu where volume_usd>=100
+                                                                                             and address not in (select address from exclude_address)
                                                                                          union all
                                                                                          select
                                                                                              address,
@@ -136,7 +140,8 @@ from
                                                                                              dex_tx_volume_count_summary th
                                                                                          where
                                                                                                  th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
-                                                                                           and th.type='ALL' and th.total_transfer_volume_usd >=100  group by address
+                                                                                           and th.type='ALL' and th.total_transfer_volume_usd >=100
+                                                                                           and address not in (select address from exclude_address) group by address
                                                                                      ) tout group by address
                                             ) totala
                                         group by
