@@ -9390,7 +9390,7 @@ insert into dim_rule_content(rule_code, token, label_type, operate_type, data_su
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_8989', '0x0763fdccf1ae541a5961815c0872a8c5bc6de4d7', 'ALL_SUKU(0x0763fd)_ALL_VOLUME_RANK', 'T', 'volume_rank', now(), 'SUKU', 'token');
 insert into dim_rule_content(rule_code, token, label_type, operate_type, data_subject, create_time, token_name, token_type) values ( 'rule_8990', '0x50d1c9771902476076ecfc8b2a83ad6b9355a4c9', 'ALL_FTX Token(0x50d1c9)_ALL_VOLUME_RANK', 'T', 'volume_rank', now(), 'FTX Token', 'token');
 
-
+update dim_project_token_type set project='0x1111111254fb6c44bac0bed2854e76f90643097d' where project='0x1111111254fb6c44bAC0beD2854e76F90643097d';
 insert into dim_rank_token select distinct token,token_type from dim_rule_content;
 insert into tag_result(table_name,batch_date)  SELECT 'dim_rule_content' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
