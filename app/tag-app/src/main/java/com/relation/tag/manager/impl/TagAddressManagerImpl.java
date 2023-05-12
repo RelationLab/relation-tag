@@ -35,12 +35,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     public static String SCRIPTSPATH = "tagscripts";
 
-    public static String SNAPSHOTPATH = "snapshot";
-
-
-    public static String STAG = "stag";
-
-
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList, String batchDate) {
         try {
             forkJoinPool.execute(() -> {
