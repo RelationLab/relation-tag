@@ -1,9 +1,8 @@
---
--- DROP TABLE IF EXISTS public.dms_syn_block;
--- CREATE TABLE public.dms_syn_block (
---                                       syn_type varchar(100) NOT NULL,
---                                       block_height int8 NULL
--- );
+DROP TABLE IF EXISTS public.dms_syn_block;
+CREATE TABLE public.dms_syn_block (
+                                      syn_type varchar(100) NOT NULL,
+                                      block_height int8 NULL
+);
 truncate table dms_syn_block;
 vacuum dms_syn_block;
 insert into dms_syn_block(syn_type,block_height)
