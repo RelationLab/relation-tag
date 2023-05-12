@@ -102,7 +102,7 @@ from
                                                                                         'ALL' as token ,
                                                                                         sum(round(total_transfer_volume_usd,3)) as volume_usd
                                                                                     from
-                                                                                        dex_tx_volume_count_summary th
+                                                                                        dex_tx_volume_count_summary_univ3 th
                                                                                     where
                                                                                             th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                                                                       and th.type='ALL' and th.total_transfer_volume_usd >=100
@@ -137,7 +137,7 @@ from
                                                                                              'ALL' as token ,
                                                                                              sum(round(total_transfer_volume_usd,3)) as volume_usd
                                                                                          from
-                                                                                             dex_tx_volume_count_summary th
+                                                                                             dex_tx_volume_count_summary_univ3 th
                                                                                          where
                                                                                                  th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                                                                            and th.type='ALL' and th.total_transfer_volume_usd >=100

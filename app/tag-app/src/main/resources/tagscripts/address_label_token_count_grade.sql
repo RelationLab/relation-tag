@@ -100,7 +100,7 @@ from
                     address,
                     total_transfer_count as total_transfer_count
                 from
-                    dex_tx_volume_count_summary th
+                    dex_tx_volume_count_summary_univ3 th
                 where
                         th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88' and th.type='ALL'
                         and total_transfer_count >=1 and th.token in (select token_id from dim_rank_token)
