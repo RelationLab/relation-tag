@@ -138,6 +138,3 @@ delete from  tag_result where  table_name='tagging';
 
 
 
-
-
-
