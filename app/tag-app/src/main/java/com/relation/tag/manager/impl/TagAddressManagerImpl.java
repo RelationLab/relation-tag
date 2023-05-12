@@ -150,7 +150,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
     private void createView(String batchDate) {
         execSql(null, "drop_view.sql", batchDate, INIT_PATH, null);
         execSql("drop_view", "dms_syn_block.sql", batchDate, INIT_PATH, null);
-        execSql("dms_syn_block", "create_view.sql", batchDate, INIT_PATH, null);
+        execSql("dms_syn_block", "snapshot_table.sql", batchDate, INIT_PATH, null);
+        execSql("snapshot_table", "create_view.sql", batchDate, INIT_PATH, null);
     }
 
     private void innit(String batchDate) throws Exception {
