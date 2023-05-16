@@ -110,6 +110,7 @@ vacuum address_labels_json_gin;
 INSERT INTO address_labels_json_gin(address, data)
 SELECT address_label_gp.address,
        JSONB_BUILD_OBJECT(
+
                'address', address_label_gp.address,
                'address_type', CASE WHEN COUNT(contract_address) > 0 THEN 'c' ELSE 'p' END,
                'labels', JSONB_AGG(

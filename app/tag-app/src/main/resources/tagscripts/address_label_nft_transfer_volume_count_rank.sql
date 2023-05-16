@@ -29,7 +29,7 @@ select
    'ELITE_NFT_TRADER'      as level,
     'rank' as category,
     t.type as trade_type,
-    t.project_name as project,
+    '' as project ,
     t.token_name as asset,
     'volume' as bus_type
     from

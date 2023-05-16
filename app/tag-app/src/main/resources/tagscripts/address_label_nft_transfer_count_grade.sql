@@ -64,7 +64,7 @@ select
     when sum_count >= 619 then 'High'  end    as level,
     'grade' as category,
     t.type as trade_type,
-    t.project_name as project,
+    '' as project,
     t.token_name as asset,
     'activity' as bus_type
     from
