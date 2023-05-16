@@ -95,17 +95,12 @@ select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'S
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at, owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_third_party_${tableSuffix} union all
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at,owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_ugc_${tableSuffix};
 
-drop table if exists address_labels_json_gin;
+DROP TABLE IF EXISTS address_labels_json_gin CASCADE;
 CREATE TABLE address_labels_json_gin
 (
-    id      BIGSERIAL,
     address TEXT  NOT NULL,
     data    JSONB NOT NULL
 ) WITH (appendoptimized = true, orientation = column) DISTRIBUTED BY (address);
-CREATE INDEX idx_address_labels_json_gin_test_id ON address_labels_json_gin(id);
-truncate
-    table public.address_labels_json_gin;
-vacuum address_labels_json_gin;
 
 INSERT INTO address_labels_json_gin(address, data)
 SELECT address_label_gp.address,
