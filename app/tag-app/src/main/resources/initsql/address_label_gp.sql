@@ -99,7 +99,7 @@ DROP TABLE IF EXISTS address_labels_json_gin CASCADE;
 CREATE TABLE address_labels_json_gin
 (
     address TEXT  NOT NULL,
-    data    JSONB NOT NULL
+    data    TEXT NOT NULL
 ) WITH (appendoptimized = true, orientation = column) DISTRIBUTED BY (address);
 
 INSERT INTO address_labels_json_gin(address, data)
@@ -124,7 +124,7 @@ SELECT address_label_gp.address,
                            ORDER BY label_type DESC
                    ),
                'updated_at', CURRENT_TIMESTAMP
-           )
+           )::TEXT
 FROM address_label_gp
          LEFT JOIN contract ON (address_label_gp.address = contract.contract_address)
 GROUP BY (address_label_gp.address);
