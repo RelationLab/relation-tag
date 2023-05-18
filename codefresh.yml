@@ -56,46 +56,46 @@ steps:
         dockerfile: "Dockerfile"
         tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
 
-  devDeploy:
-    title: "Helm install wired-tag"
-    stage: devDeploy
-    type: helm
-    working_directory: "${{clone}}"
-    arguments:
-      chart_name: helm
-      release_name: wired-tag
-      helm_version: 3.9.0
-      namespace: dev
-      kube_context: wired-eks-prod
-      custom_values:
-        - "image_repository=${{AWS_ECR_REPO_URL}}"
-        - "image_tag=${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
-        - "config_env=dev"
-        - "greenplum_host=${{WIRED_GP_CLUSTER_DOMIN}}"
-        - "greenplum_password=${{WIRED_GP_CLUSTER_ADMIN_PASSWORD}}"
+  # devDeploy:
+  #   title: "Helm install wired-tag"
+  #   stage: devDeploy
+  #   type: helm
+  #   working_directory: "${{clone}}"
+  #   arguments:
+  #     chart_name: helm
+  #     release_name: wired-tag
+  #     helm_version: 3.9.0
+  #     namespace: dev
+  #     kube_context: wired-eks-prod
+  #     custom_values:
+  #       - "image_repository=${{AWS_ECR_REPO_URL}}"
+  #       - "image_tag=${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+  #       - "config_env=dev"
+  #       - "greenplum_host=${{WIRED_GP_CLUSTER_DOMIN}}"
+  #       - "greenplum_password=${{WIRED_GP_CLUSTER_ADMIN_PASSWORD}}"
 
-  askForStagPermission:
-    type: pending-approval
-    stage: stagDeploy
-    title: Deploy to staging?
+  # askForStagPermission:
+  #   type: pending-approval
+  #   stage: stagDeploy
+  #   title: Deploy to staging?
 
-  stagDeploy:
-    title: "Helm install wired-tag"
-    stage: stagDeploy
-    type: helm
-    working_directory: "${{clone}}"
-    arguments:
-      chart_name: helm
-      release_name: wired-tag
-      helm_version: 3.9.0
-      namespace: stag
-      kube_context: wired-eks-prod
-      custom_values:
-        - "image_repository=${{AWS_ECR_REPO_URL}}"
-        - "image_tag=${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
-        - "config_env=stag"
-        - "greenplum_host=${{WIRED_GP_CLUSTER_DOMIN}}"
-        - "greenplum_password=${{WIRED_GP_CLUSTER_ADMIN_PASSWORD}}"
+  # stagDeploy:
+  #   title: "Helm install wired-tag"
+  #   stage: stagDeploy
+  #   type: helm
+  #   working_directory: "${{clone}}"
+  #   arguments:
+  #     chart_name: helm
+  #     release_name: wired-tag
+  #     helm_version: 3.9.0
+  #     namespace: stag
+  #     kube_context: wired-eks-prod
+  #     custom_values:
+  #       - "image_repository=${{AWS_ECR_REPO_URL}}"
+  #       - "image_tag=${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+  #       - "config_env=stag"
+  #       - "greenplum_host=${{WIRED_GP_CLUSTER_DOMIN}}"
+  #       - "greenplum_password=${{WIRED_GP_CLUSTER_ADMIN_PASSWORD}}"
 
   askForProdPermission:
     type: pending-approval
