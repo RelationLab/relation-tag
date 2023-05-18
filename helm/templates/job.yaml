@@ -28,6 +28,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env: 
+            - name: CONFIG_ENVIRONMENT
+              value: {{ .Values.config.env | quote }}
             - name: GREENPLUM_DB_HOST
               value: {{ .Values.greenplum.host | quote }}
             - name: GREENPLUM_DB_PORT

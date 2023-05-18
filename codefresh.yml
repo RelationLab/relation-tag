@@ -6,7 +6,9 @@ version: "1.0"
 stages:
   - "clone"
   - "prepare"
-  - "deploy"
+  - "devDeploy"
+  - "stagDeploy"
+  - "prodDeploy"
 
 steps:
   clone:
@@ -54,18 +56,9 @@ steps:
         dockerfile: "Dockerfile"
         tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
 
-  uninstall:
-    title: "Helm uninsall wired-tag"
-    image: "thorstenhans/helm3"
-    stage: deploy
-    commands:
-      - kubectl config use-context wired-eks-prod
-      - kubectl delete job -n dev wired-tag || exit_code=$?
-      - helm uninstall -n dev wired-tag || exit_code=$?
-
-  install:
+  devDeploy:
     title: "Helm install wired-tag"
-    stage: deploy
+    stage: devDeploy
     type: helm
     working_directory: "${{clone}}"
     arguments:
@@ -77,5 +70,52 @@ steps:
       custom_values:
         - "image_repository=${{AWS_ECR_REPO_URL}}"
         - "image_tag=${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+        - "config_env=dev"
+        - "greenplum_host=${{WIRED_GP_CLUSTER_DOMIN}}"
+        - "greenplum_password=${{WIRED_GP_CLUSTER_ADMIN_PASSWORD}}"
+
+  askForStagPermission:
+    type: pending-approval
+    stage: stagDeploy
+    title: Deploy to staging?
+
+  stagDeploy:
+    title: "Helm install wired-tag"
+    stage: stagDeploy
+    type: helm
+    working_directory: "${{clone}}"
+    arguments:
+      chart_name: helm
+      release_name: wired-tag
+      helm_version: 3.9.0
+      namespace: stag
+      kube_context: wired-eks-prod
+      custom_values:
+        - "image_repository=${{AWS_ECR_REPO_URL}}"
+        - "image_tag=${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+        - "config_env=stag"
+        - "greenplum_host=${{WIRED_GP_CLUSTER_DOMIN}}"
+        - "greenplum_password=${{WIRED_GP_CLUSTER_ADMIN_PASSWORD}}"
+
+  askForProdPermission:
+    type: pending-approval
+    stage: prodDeploy
+    title: Deploy to produtcion?
+
+  prodDeploy:
+    title: "Helm install wired-tag"
+    stage: pordDeploy
+    type: helm
+    working_directory: "${{clone}}"
+    arguments:
+      chart_name: helm
+      release_name: wired-tag
+      helm_version: 3.9.0
+      namespace: prod
+      kube_context: wired-eks-prod
+      custom_values:
+        - "image_repository=${{AWS_ECR_REPO_URL}}"
+        - "image_tag=${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+        - "config_env=prod"
         - "greenplum_host=${{WIRED_GP_CLUSTER_DOMIN}}"
         - "greenplum_password=${{WIRED_GP_CLUSTER_ADMIN_PASSWORD}}"
