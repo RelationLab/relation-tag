@@ -1,5 +1,5 @@
-DROP TABLE if EXISTS  address_label_gp;
-create table address_label_gp
+DROP TABLE if EXISTS  address_label_gp_${tableSuffix};
+create table address_label_gp_${tableSuffix}
 (
     "owner" varchar(256) NULL,
     address varchar(512) NULL,
@@ -19,10 +19,10 @@ create table address_label_gp
 ) distributed by (address);
 
 
-truncate table address_label_gp;
-vacuum address_label_gp;
+truncate table address_label_gp_${tableSuffix};
+vacuum address_label_gp_${tableSuffix};
 
-insert into public.address_label_gp(address,label_type,label_name,wired_type,data,updated_at,owner,source,"group",level,category,trade_type,project,asset,bus_type)
+insert into public.address_label_gp_${tableSuffix}(address,label_type,label_name,wired_type,data,updated_at,owner,source,"group",level,category,trade_type,project,asset,bus_type)
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset,bus_type from address_label_eth_count_grade  union all
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset,bus_type from address_label_token_project_type_count_grade  union all
 select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset,bus_type from address_label_token_project_type_volume_grade  union all
@@ -95,18 +95,18 @@ select address,label_type,label_name,wired_type,data,updated_at,'-1' as owner,'S
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at, owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_third_party_${tableSuffix} union all
 select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at,owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_ugc_${tableSuffix};
 
-DROP TABLE IF EXISTS address_labels_json_gin CASCADE;
-CREATE TABLE address_labels_json_gin
+DROP TABLE IF EXISTS address_labels_json_gin_${tableSuffix} CASCADE;
+CREATE TABLE address_labels_json_gin_${tableSuffix}
 (
     address TEXT  NOT NULL,
     data    JSONB NOT NULL
 ) WITH (appendoptimized = true, orientation = column) DISTRIBUTED BY (address);
 
-INSERT INTO address_labels_json_gin(address, data)
-SELECT address_label_gp.address,
+INSERT INTO address_labels_json_gin_${tableSuffix}(address, data)
+SELECT address_label_gp_${tableSuffix}.address,
        JSONB_BUILD_OBJECT(
 
-               'address', address_label_gp.address,
+               'address', address_label_gp_${tableSuffix}.address,
                'address_type', CASE WHEN COUNT(contract_address) > 0 THEN 'c' ELSE 'p' END,
                'labels', JSONB_AGG(
                        JSONB_BUILD_OBJECT(
@@ -125,9 +125,9 @@ SELECT address_label_gp.address,
                    ),
                'updated_at', CURRENT_TIMESTAMP
            )
-FROM address_label_gp
-         LEFT JOIN contract ON (address_label_gp.address = contract.contract_address)
-GROUP BY (address_label_gp.address);
+FROM address_label_gp_${tableSuffix}
+         LEFT JOIN contract ON (address_label_gp_${tableSuffix}.address = contract.contract_address)
+GROUP BY (address_label_gp_${tableSuffix}.address);
 insert into tag_result(table_name,batch_date)  SELECT 'address_labels_json_gin_${tableSuffix}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 delete from  tag_result where  table_name='tagging';
 

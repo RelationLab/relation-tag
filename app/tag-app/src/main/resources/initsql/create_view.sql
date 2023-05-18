@@ -2,13 +2,6 @@
     CREATE VIEW address_info AS  select * from  address_info_cdc;
     DROP VIEW if EXISTS public.block_timestamp;
     CREATE VIEW block_timestamp AS  select * from  block_timestamp_cdc;
-    DROP VIEW if EXISTS public.eth_holding_time;
-    CREATE VIEW eth_holding_time AS  select * from  eth_holding_time_cdc;
-    DROP VIEW if EXISTS public.nft_holding_time;
-    CREATE VIEW nft_holding_time AS  select * from  nft_holding_time_cdc;
-    DROP VIEW if EXISTS public.token_holding_time;
-    CREATE VIEW token_holding_time AS  select * from  token_holding_time_cdc;
-
     DROP VIEW if EXISTS public.nft_sync_buy_sell_address;
     CREATE VIEW nft_sync_buy_sell_address AS  select * from  nft_sync_buy_sell_address_cdc;
     DROP VIEW if EXISTS public.nft_sync_address;
