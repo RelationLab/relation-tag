@@ -104,7 +104,7 @@ steps:
 
   prodDeploy:
     title: "Helm install wired-tag"
-    stage: pordDeploy
+    stage: prodDeploy
     type: helm
     working_directory: "${{clone}}"
     arguments:
