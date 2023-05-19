@@ -126,8 +126,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void tag(String batchDate) throws Exception {
+        /****
+         * 如果正在打标签，等待.....
+         */
+        checkTagging(batchDate);
         if (!checkResult("address_label", batchDate, 62, true)) {
-//        if(StringUtils.equals(STAG,configEnvironment)){
             createView(batchDate);
             check("create_view", 60 * 1000, batchDate, 1, false);
             innit(batchDate);
@@ -145,6 +148,16 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
         check("address_label", 60 * 1000, batchDate, 62, true);
         tagMerge(batchDate);
+    }
+
+    private void checkTagging(String batchDate) throws InterruptedException {
+        while (true){
+            boolean taggingFlag = checkResult("tagging", batchDate, 1, false);
+            if (!taggingFlag){
+                break;
+            }
+            Thread.sleep(10 * 60 * 1000);
+        }
     }
 
     private void createView(String batchDate) {
