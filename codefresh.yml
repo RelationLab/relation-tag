@@ -102,6 +102,14 @@ steps:
     stage: prodDeploy
     title: Deploy to produtcion?
 
+  prodUninstall:
+    title: "Helm uninsall wired-tag"
+    image: "thorstenhans/helm3"
+    stage: prodDeploy
+    commands:
+      - kubectl config use-context wired-eks-prod
+      - helm uninstall -n prod wired-tag || exit_code=$?
+
   prodDeploy:
     title: "Helm install wired-tag"
     stage: prodDeploy
