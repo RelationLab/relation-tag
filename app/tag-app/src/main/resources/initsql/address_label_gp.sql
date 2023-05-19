@@ -129,7 +129,7 @@ FROM address_label_gp_${tableSuffix}
          LEFT JOIN contract ON (address_label_gp_${tableSuffix}.address = contract.contract_address)
 GROUP BY (address_label_gp_${tableSuffix}.address);
 
-insert into tag_result(table_name,batch_date)  SELECT 'address_labels_json_gin_${tableSuffix}_${tableSuffix}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'address_labels_json_gin_${tableSuffix}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 delete from  tag_result where  table_name='tagging';
 
 
