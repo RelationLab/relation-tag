@@ -54,7 +54,7 @@ from
                         select
                             address,
                             token,
-                            round(balance_usd,3) balance_usd
+                             balance_usd
                         from
                             dex_tx_volume_count_summary_univ3
                         where

@@ -68,7 +68,7 @@ insert into public.address_label_nft_project_type_volume_top(address,label_type,
                                     platform_group,
                                     token,
                                     type,
-                                    round(volume_usd,3) as volume_usd
+                                    volume_usd
                                 from
                                     platform_nft_type_volume_count where    address not in (select address from exclude_address)
                                     and token in (select token_id from dim_project_token_type_rank dpttr)
@@ -79,7 +79,7 @@ insert into public.address_label_nft_project_type_volume_top(address,label_type,
                                     platform_group,
                                     'ALL' as token,
                                     type,
-                                    round(volume_usd,3) as volume_usd
+                                   volume_usd
                                 from
                                     platform_nft_type_volume_count where    address not in (select address from exclude_address)
                                      and token in (select token_id from dim_project_token_type_rank dpttr)
@@ -90,7 +90,7 @@ insert into public.address_label_nft_project_type_volume_top(address,label_type,
                                     'ALL' as platform_group,
                                     'ALL' as token,
                                     type,
-                                    round(volume_usd,3) as volume_usd
+                                   volume_usd
                                 from
                                     platform_nft_type_volume_count where    address not in (select address from exclude_address)
                                                                      and token in (select token_id from dim_project_token_type_rank dpttr)
@@ -101,7 +101,7 @@ insert into public.address_label_nft_project_type_volume_top(address,label_type,
                                     'ALL' as platform_group,
                                     token,
                                     type,
-                                    round(volume_usd,3) as volume_usd
+                                   volume_usd
                                 from
                                     platform_nft_type_volume_count where    address not in (select address from exclude_address)
                                                                      and token in (select token_id from dim_project_token_type_rank dpttr)

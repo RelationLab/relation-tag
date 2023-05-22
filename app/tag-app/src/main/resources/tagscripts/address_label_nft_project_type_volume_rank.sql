@@ -119,7 +119,7 @@ from
                                                             platform,
                                                             token,
                                                             type,
-                                                            round(volume_usd,3) as volume_usd
+                                                            volume_usd
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
@@ -133,7 +133,7 @@ from
                                                             platform,
                                                             'ALL' as token,
                                                             type,
-                                                            round(volume_usd,3) as volume_usd
+                                                            volume_usd
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
@@ -147,7 +147,7 @@ from
                                                             platform,
                                                             'ALL' as token,
                                                             type,
-                                                            round(volume_usd,3) as volume_usd
+                                                            volume_usd
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
@@ -161,7 +161,7 @@ from
                                                             platform,
                                                             token,
                                                             type,
-                                                            round(volume_usd,3) as volume_usd
+                                                            volume_usd
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
@@ -205,7 +205,7 @@ from
                                                             platform_group,
                                                             token,
                                                             type,
-                                                            round(volume_usd,3) as volume_usd
+                                                            volume_usd
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
@@ -218,7 +218,7 @@ from
                                                             platform_group,
                                                             'ALL' as token,
                                                             type,
-                                                            round(volume_usd,3) as volume_usd
+                                                            volume_usd
                                                         from
                                                             platform_nft_type_volume_count
                                                         where

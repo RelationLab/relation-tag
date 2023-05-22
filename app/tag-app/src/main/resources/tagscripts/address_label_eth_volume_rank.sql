@@ -94,7 +94,7 @@ insert into public.address_label_eth_volume_rank(address,label_type,label_name,d
                                                 select
                                                     token,
                                                     address,
-                                                    round(volume_usd,3) volume_usd
+                                                    volume_usd
                                                 from
                                                     token_volume_usd
                                                 where

@@ -73,7 +73,7 @@ insert into public.address_label_token_balance_rank_all(address,label_type,label
                                         select
                                             'ALL' token,
                                             s1.address,
-                                            sum(round(s1.balance_usd,3)) as balance_usd
+                                            sum(balance_usd) as balance_usd
                                         from
                                             total_balance_volume_usd s1  where  address not in (select address from exclude_address)
                                         group by

@@ -53,7 +53,7 @@ insert into public.address_label_token_balance_top_all(address,label_type,label_
                         select
                             address,
                             'ALL' as token,
-                            round(balance_usd,3) balance_usd,
+                             balance_usd,
                             volume_usd
                         from
                             total_balance_volume_usd
