@@ -68,7 +68,7 @@ from
         select
             dtvcs.address,
             dtvcs.token,
-            round(total_transfer_volume_usd,3)  as volume_usd
+            round(total_transfer_volume_usd,8)  as volume_usd
         from
             dex_tx_volume_count_summary_univ3 dtvcs inner join dim_rule_content drc
                                                          on( dtvcs.token = drc.token and drc.data_subject = 'volume_grade')

@@ -98,7 +98,7 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(round(total_transfer_volume_usd,3)) as total_transfer_volume_usd
+            sum(round(total_transfer_volume_usd,8)) as total_transfer_volume_usd
         from
             dex_tx_volume_count_summary a1
                 inner join dim_project_token_type a2
@@ -124,7 +124,7 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(round(total_transfer_volume_usd,3)) as total_transfer_volume_usd
+            sum(round(total_transfer_volume_usd,8)) as total_transfer_volume_usd
         from
             dex_tx_volume_count_summary a1
                 inner join dim_project_token_type a2
@@ -150,7 +150,7 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(round(total_transfer_volume_usd,3)) as total_transfer_volume_usd
+            sum(round(total_transfer_volume_usd,8)) as total_transfer_volume_usd
         from
             dex_tx_volume_count_summary a1
                 inner join dim_project_token_type a2

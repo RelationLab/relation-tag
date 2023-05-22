@@ -71,14 +71,14 @@ from
                                                     select
                                                         address,
                                                         'ALL' as token ,
-                                                        round(volume_usd,3) volume_usd
+                                                        round(volume_usd,8) volume_usd
                                                     from
                                                         total_volume_usd tbvu where volume_usd>=100
                                                     union all
                                                     select
                                                         address,
                                                         'ALL' as token ,
-                                                        sum(round(total_transfer_volume_usd,3)) as volume_usd
+                                                        sum(round(total_transfer_volume_usd,8)) as volume_usd
                                                     from
                                                         dex_tx_volume_count_summary_univ3 th
                                                     where

@@ -68,7 +68,7 @@ from
         select
             address,
             token,
-            round(balance_usd,3) balance_usd,
+            round(balance_usd,8) balance_usd,
             project,
             type
         from

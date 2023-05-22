@@ -68,7 +68,7 @@ insert into public.address_label_token_balance_grade(address,label_type,label_na
         select
             address,
             token,
-            round(balance_usd,3) balance_usd
+            round(balance_usd,8) balance_usd
         from
             token_balance_volume_usd tbvutk
     ) a1

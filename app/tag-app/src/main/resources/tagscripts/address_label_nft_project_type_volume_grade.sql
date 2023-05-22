@@ -64,7 +64,7 @@ select
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum( round(volume_usd,3)) as volume_usd
+            sum( round(volume_usd,8)) as volume_usd
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
             on a1.token=a2.token and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = 'volume_grade'
@@ -83,7 +83,7 @@ select
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum( round(volume_usd,3)) as volume_usd
+            sum( round(volume_usd,8)) as volume_usd
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
         on a2.token='ALL' and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = 'volume_grade'
@@ -102,7 +102,7 @@ select
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum( round(volume_usd,3)) as volume_usd
+            sum( round(volume_usd,8)) as volume_usd
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
                                                           on a2.token='ALL' and a2.project='ALL' and a1.type=a2.type and a2.data_subject = 'volume_grade'
@@ -121,7 +121,7 @@ select
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum( round(volume_usd,3)) as volume_usd
+            sum( round(volume_usd,8)) as volume_usd
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
                                                           on a2.token=a1.token and a2.project='ALL' and a1.type=a2.type and a2.data_subject = 'volume_grade'

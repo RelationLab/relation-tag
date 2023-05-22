@@ -21,7 +21,7 @@ into
 select
     th.address,
     token,
-    round(total_transfer_all_volume * round(cast(wle.price as numeric), 18),3) as volume_usd
+    round(total_transfer_all_volume * round(cast(wle.price as numeric), 18),8) as volume_usd
 from
     (
         select
@@ -60,7 +60,7 @@ into
 select
     eh.address as address,
     'eth' as token,
-    round(eh.total_transfer_all_volume * round(cast(wle.price as numeric), 18),3) as volume_usd
+    round(eh.total_transfer_all_volume * round(cast(wle.price as numeric), 18),8) as volume_usd
 from
     (
         select

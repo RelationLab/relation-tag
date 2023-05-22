@@ -54,7 +54,7 @@ insert into public.address_label_univ3_balance_provider(address,label_type,label
                         select
                             address,
                             token,
-                            round(balance_usd,3) balance_usd
+                            round(balance_usd,8) balance_usd
                         from
                             dex_tx_volume_count_summary_univ3
                         where
