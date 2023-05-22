@@ -28,7 +28,7 @@
 
 DROP TABLE IF EXISTS public.white_list_erc20;
 CREATE TABLE public.white_list_erc20 as
-select * from white_list_price;
+select * from white_list_price_cdc;
 
 DROP TABLE IF EXISTS public.white_list_erc20_tag;
 CREATE TABLE public.white_list_erc20_tag as
