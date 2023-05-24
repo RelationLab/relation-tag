@@ -109,6 +109,11 @@ from
                 from
                     dim_rank_token)) w on
             w.address = dtvcr."token"
+                and  (token,project) not in(('0x5e8422345238f34275888049021821e8e08caa1f','0xbafa44efe7901e04e39dad13167d089c559c1138'),
+                                  ('0xae7ab96520de3a18e5e111b5eaab095312d7fe84','0xae7ab96520de3a18e5e111b5eaab095312d7fe84'),
+                                    ('0xae78736cd615f374d3085123a210448e74fc6393','0x4d05e3d48a938db4b7a9a59a802d5b45011bde58'),
+                                    ('0xac3e018457b222d93114458476f3e3416abbe38f','0xbafa44efe7901e04e39dad13167d089c559c1138'))
+                and
 group by
     dtvcr.address,
     token,
@@ -136,7 +141,7 @@ select dtvcr.address as address
      ,dtvcr.project as project
      ,min(dtvcr.block_height) as block_height
      ,sum(dtvcr.total_transfer_volume_usd) as total_transfer_volume_usd
-     ,min(dtvcr.total_transfer_count) as total_transfer_count
+     ,sum(dtvcr.total_transfer_count) as total_transfer_count
      ,min(dtvcr.first_updated_block_height) as first_updated_block_height
      ,max(dtvcr.balance_usd)  as balance_usd from
     dex_tx_volume_count_summary  dtvcr
