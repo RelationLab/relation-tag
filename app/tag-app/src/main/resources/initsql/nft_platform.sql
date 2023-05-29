@@ -12,5 +12,5 @@ truncate table nft_platform;
 vacuum nft_platform;
 
 insert into nft_platform (address, platform,platform_name)
-select address, platform,platform_group  from platform_nft_holding
-group by address, platform,platform_group;
+select token, platform,platform_group  from platform_nft_holding
+group by token, platform,platform_group;
