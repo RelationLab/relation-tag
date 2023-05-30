@@ -108,7 +108,7 @@ select
 from (
          select address
               ,token
-              ,sum(case when nft_token_id='-1' then 0 else balance end ) balance
+              ,sum(case when type!='lp'  || nft_token_id='-1' then 0 else balance end ) balance
               ,max(block_height) block_height
               ,sum(total_transfer_volume) total_transfer_volume
               ,sum(total_transfer_count) total_transfer_count
@@ -120,6 +120,6 @@ from (
               ,max(first_updated_block_height) first_updated_block_height
               ,price_token
               ,sum(liquidity) liquidity
-              ,max(type) as type from token_holding_uni where type='lp'
+              ,max(type) as type from token_holding_uni
          group by address,token,nft_token_id,price_token ) tb1 ;
 insert into tag_result(table_name,batch_date)  SELECT 'token_holding_uni_cal' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
