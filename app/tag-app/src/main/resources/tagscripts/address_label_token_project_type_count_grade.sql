@@ -103,7 +103,7 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
             a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
-            dex_tx_volume_count_summary a1
+            dex_tx_count_summary a1
                 inner join dim_project_token_type a2
                            on
                                        a2.token = 'ALL'
@@ -128,7 +128,7 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
             a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
-            dex_tx_volume_count_summary a1
+            dex_tx_count_summary a1
                 inner join dim_project_token_type a2
                            on
                                        a2.token = 'ALL'

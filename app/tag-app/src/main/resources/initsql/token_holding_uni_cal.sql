@@ -44,50 +44,10 @@ insert into token_holding_uni_cal(address
                                  ,out_transfer_volume
                                  ,in_transfer_count
                                  ,out_transfer_count
-                                 ,event
-                                 ,first_updated_block_height
-                                 ,transaction_hash
-                                 ,price_token
-                                 ,liquidity
-                                 ,token0
-                                 ,token1
-                                 ,handle
-                                 ,type) select address
-                                             ,token
-                                             ,balance
-                                             ,block_height
-                                             ,total_transfer_volume
-                                             ,total_transfer_count
-                                             ,nft_token_id
-                                             ,in_transfer_volume
-                                             ,out_transfer_volume
-                                             ,in_transfer_count
-                                             ,out_transfer_count
-                                             ,event
-                                             ,first_updated_block_height
-                                             ,transaction_hash
-                                             ,price_token
-                                             ,liquidity
-                                             ,token0
-                                             ,token1
-                                             ,handle
-                                             ,type from token_holding_uni where type='swap';
-
-insert into token_holding_uni_cal(address
-                                 ,token
-                                 ,balance
-                                 ,block_height
-                                 ,total_transfer_volume
-                                 ,total_transfer_count
-                                 ,nft_token_id
-                                 ,in_transfer_volume
-                                 ,out_transfer_volume
-                                 ,in_transfer_count
-                                 ,out_transfer_count
                                  ,first_updated_block_height
                                  ,price_token
                                  ,liquidity
-                                 ,type)
+                                 ,type,transaction_hash)
 
 select
     address
@@ -105,10 +65,11 @@ select
      ,price_token
      ,liquidity
      ,type
+     ,transaction_hash
 from (
          select address
               ,token
-              ,sum(case when type!='lp'  || nft_token_id='-1' then 0 else balance end ) balance
+              ,sum(case when (type!='lp'  or nft_token_id='-1') then 0 else balance end ) balance
               ,max(block_height) block_height
               ,sum(total_transfer_volume) total_transfer_volume
               ,sum(total_transfer_count) total_transfer_count
@@ -120,6 +81,5 @@ from (
               ,max(first_updated_block_height) first_updated_block_height
               ,price_token
               ,sum(liquidity) liquidity
-              ,max(type) as type from token_holding_uni
-         group by address,token,nft_token_id,price_token ) tb1 ;
-insert into tag_result(table_name,batch_date)  SELECT 'token_holding_uni_cal' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+              ,max(type) as type,transaction_hash from token_holding_uni
+         group by address,token,nft_token_id,price_token,transaction_hash ) tb1 ;
