@@ -184,6 +184,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql", batchDate, dir, null);
         execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql", batchDate, dir, null);
         execSql("token_holding_uni_cal", "dex_tx_volume_count_summary.sql", batchDate, dir, null);
+        execSql("dex_tx_volume_count_summary", "dex_tx_count_summary.sql", batchDate, dir, null);
         execSql("dex_tx_volume_count_summary", "token_platform.sql", batchDate, dir, null);
         execSql("token_platform", "nft_platform.sql", batchDate, dir, null);
 
