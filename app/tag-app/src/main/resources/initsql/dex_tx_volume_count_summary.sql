@@ -37,7 +37,6 @@ insert
 into
     dex_tx_volume_count_summary(address,
                                 token,
-                                transaction_hash,
                                 type,
                                 project,
                                 block_height,
@@ -48,14 +47,13 @@ into
 select
     th.address,
     th.price_token as token,
-    th.transaction_hash as transaction_hash,
     th.type as type,
     '0xc36442b4a4522e871399cd717abdd847ab11fe88' as project,
     max(th.block_height) as block_height,
     sum(round(th.total_transfer_volume * round(cast(w.price as numeric), 18),8)) as total_transfer_volume_usd,
-        sum(total_transfer_count) as total_transfer_count,
-        min(first_updated_block_height) as first_updated_block_height,
-        sum(round(th.balance * round(cast (w.price as numeric), 18),8)) as balance_usd
+    sum(total_transfer_count) as total_transfer_count,
+    min(first_updated_block_height) as first_updated_block_height,
+    sum(round(th.balance * round(cast (w.price as numeric), 18),8)) as balance_usd
         from
         token_holding_uni_cal th
         inner join (
@@ -73,15 +71,54 @@ select
         group by
         th.address,
         th.price_token,
-        th.transaction_hash,
         th.type;
+
+---汇总UNIv3的LP数据
+insert
+into
+    dex_tx_volume_count_summary(address,
+                                token,
+                                type,
+                                project,
+                                block_height,
+                                total_transfer_volume_usd,
+                                total_transfer_count,
+                                first_updated_block_height,
+                                balance_usd)
+select
+    th.address,
+    'ALL' as token,
+    th.type as type,
+    '0xc36442b4a4522e871399cd717abdd847ab11fe88' as project,
+    max(th.block_height) as block_height,
+    sum(round(th.total_transfer_volume * round(cast(w.price as numeric), 18),8)) as total_transfer_volume_usd,
+    sum(total_transfer_count) as total_transfer_count,
+    min(first_updated_block_height) as first_updated_block_height,
+    sum(round(th.balance * round(cast (w.price as numeric), 18),8)) as balance_usd
+from
+    token_holding_uni_cal th
+        inner join (
+        select
+            *
+        from
+            white_list_erc20
+        where
+                address in (
+                select
+                    token_id
+                from
+                    dim_rank_token)) w on
+            w.address = th.price_token
+            and triggered_flag = '1'
+group by
+    th.address,
+    th.type;
 
 ---先把dex_tx_volume_count_record的USD计算出来
 insert
 into
     dex_tx_volume_count_summary(address,
                                 token,
-                                transaction_hash,
                                 type,
                                 project,
                                 block_height,
@@ -92,7 +129,6 @@ into
 select
     dtvcr.address,
     token,
-    dtvcr.transaction_hash as transaction_hash,
     dtvcr.type,
     project,
     max(block_height) block_height,
@@ -121,7 +157,52 @@ from
 group by
     dtvcr.address,
     token,
-    dtvcr.transaction_hash,
+    dtvcr.type,
+    project;
+
+---计算token为ALL的 也是从dex_tx_volume_count_record的USD计算出来
+insert
+into
+    dex_tx_volume_count_summary(address,
+                                token,
+                                type,
+                                project,
+                                block_height,
+                                total_transfer_volume_usd,
+                                total_transfer_count,
+                                first_updated_block_height,
+                                balance_usd)
+select
+    dtvcr.address,
+    'ALL' AS token,
+    dtvcr.type,
+    project,
+    max(block_height) block_height,
+    sum(round(total_transfer_volume * round(cast (w.price as numeric), 18),8) ) as total_transfer_volume_usd,
+    sum(total_transfer_count) total_transfer_count,
+    min(first_updated_block_height) first_updated_block_height,
+    sum(round(balance * round(cast (w.price as numeric), 18),8)) as balance_usd
+from
+    dex_tx_volume_count_record  dtvcr
+        inner join (
+        select
+            *
+        from
+            white_list_erc20
+        where
+                address in (
+                select
+                    token_id
+                from
+                    dim_rank_token)) w on
+                w.address = dtvcr."token"
+            and  (token,project) not in(('0x5e8422345238f34275888049021821e8e08caa1f','0xbafa44efe7901e04e39dad13167d089c559c1138'),
+                                        ('0xae7ab96520de3a18e5e111b5eaab095312d7fe84','0xae7ab96520de3a18e5e111b5eaab095312d7fe84'),
+                                        ('0xae78736cd615f374d3085123a210448e74fc6393','0x4d05e3d48a938db4b7a9a59a802d5b45011bde58'),
+                                        ('0xac3e018457b222d93114458476f3e3416abbe38f','0xbafa44efe7901e04e39dad13167d089c559c1138'))
+            and triggered_flag = '1'
+group by
+    dtvcr.address,
     dtvcr.type,
     project;
 
@@ -130,7 +211,6 @@ insert
 into
     dex_tx_volume_count_summary (address,
                                  token,
-                                 transaction_hash,
                                  type,
                                  project,
                                  block_height,
@@ -141,7 +221,6 @@ into
 
 select dtvcr.address as address
      ,dtvcr.token as token
-     ,dtvcr.transaction_hash as transaction_hash
      ,'ALL' as type
      ,dtvcr.project as project
      ,min(dtvcr.block_height) as block_height
@@ -153,7 +232,6 @@ select dtvcr.address as address
 group by
     dtvcr.address,
     dtvcr."token",
-    dtvcr.transaction_hash,
     dtvcr.project;
 insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_volume_count_summary' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 

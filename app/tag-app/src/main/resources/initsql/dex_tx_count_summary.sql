@@ -28,7 +28,7 @@ SELECT
     transaction_hash,
     max(total_transfer_count) AS total_transfer_count
 FROM
-    dex_tx_volume_count_summary
+    dex_tx_volume_count_record
 WHERE
         token IN (
         SELECT

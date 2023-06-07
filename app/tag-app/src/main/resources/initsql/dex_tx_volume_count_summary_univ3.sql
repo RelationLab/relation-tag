@@ -58,6 +58,7 @@ from
                 from
                     dim_rank_token)) w on
             w.address = th.price_token
+        where  triggered_flag='1'
 group by
     th.address,
     th.token,

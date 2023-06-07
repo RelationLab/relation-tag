@@ -28,7 +28,8 @@ CREATE TABLE public.token_holding_uni_cal (
                                               token0 varchar(150) NULL,
                                               token1 varchar(150) NULL,
                                               handle bool NULL,
-                                              "type" varchar(30) NULL
+                                              "type" varchar(30) NULL,
+                                              triggered_flag varchar(1) NULL
 );
 truncate table token_holding_uni_cal;
 vacuum token_holding_uni_cal;
@@ -47,7 +48,7 @@ insert into token_holding_uni_cal(address
                                  ,first_updated_block_height
                                  ,price_token
                                  ,liquidity
-                                 ,type,transaction_hash)
+                                 ,type,transaction_hash,triggered_flag)
 
 select
     address
@@ -66,6 +67,7 @@ select
      ,liquidity
      ,type
      ,transaction_hash
+     ,triggered_flag
 from (
          select address
               ,token
@@ -81,5 +83,6 @@ from (
               ,max(first_updated_block_height) first_updated_block_height
               ,price_token
               ,sum(liquidity) liquidity
-              ,max(type) as type,transaction_hash from token_holding_uni
+              ,max(type) as type,transaction_hash
+              ,max(triggered_flag) as triggered_flag from token_holding_uni
          group by address,token,nft_token_id,price_token,transaction_hash ) tb1 ;
