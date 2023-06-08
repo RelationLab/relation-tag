@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @SpringBootApplication(scanBasePackages = {"com.relation.tag",
@@ -21,7 +22,11 @@ public class TagApplication {
         log.info("configEnvironment====={}",configEnvironment);
         configEnvironment = StringUtils.isEmpty(configEnvironment)?"stag":configEnvironment;
         TagAddressManager tagAddressManager = ctx.getBean(TagAddressManager.class);
-        String batchDate = DateUtils.formatDate(new Date(), "YYYY-MM-dd");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR,calendar.get(Calendar.HOUR) + 8);
+        String batchDate = DateUtils.formatDate(calendar.getTime(), "YYYY-MM-dd");
         String checkTable = "address_labels_json_gin_".concat(configEnvironment);
         if (tagAddressManager.checkResult(checkTable, batchDate, 1, false)){
             log.info("checkResult tag end...........");
