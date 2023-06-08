@@ -56,7 +56,7 @@ select
     th.type as type,
     '0xc36442b4a4522e871399cd717abdd847ab11fe88' as project,
     transaction_hash,
-    sum(total_transfer_count) as total_transfer_count
+    max(total_transfer_count) as total_transfer_count
 from
     token_holding_uni_cal th
 group by
