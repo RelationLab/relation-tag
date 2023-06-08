@@ -56,24 +56,12 @@ select
     th.type as type,
     '0xc36442b4a4522e871399cd717abdd847ab11fe88' as project,
     transaction_hash,
-    max(total_transfer_count) as total_transfer_count
+    sum(total_transfer_count) as total_transfer_count
 from
     token_holding_uni_cal th
-        inner join (
-        select
-            *
-        from
-            white_list_erc20
-        where
-                address in (
-                select
-                    token_id
-                from
-                    dim_rank_token)) w on
-                w.address = th.price_token
-            and triggered_flag = '1'
 group by
     th.address,
     th.type,
     transaction_hash;
+
 insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_count_summary' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
