@@ -18,7 +18,7 @@ truncate table public.address_label_token_project_type_count_grade;
 vacuum address_label_token_project_type_count_grade;
 
 insert into public.address_label_token_project_type_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
-    select
+select
     address,
     label_type,
     label_type || '_' || case
@@ -67,7 +67,7 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
     t.project_name as project,
     t.token_name as asset,
     'activity' as bus_type
-    from
+from
     (
         -- project-token-type(含ALL)
         select
@@ -85,8 +85,9 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
                                    and a1.project = a2.project
                                    and a1.type = a2.type
                                    and a2.data_subject = 'count'
+                                   and a1.token!='ALL'
         WHERE  a2.label_type not like '%NFT%'
-      and a1.token in (select distinct token from dim_project_token_type)
+          and a1.token in (select distinct token from dim_project_token_type)
         group by
             a1.address,
             a2.label_type,
@@ -104,12 +105,12 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
             sum(total_transfer_count) as total_transfer_count
         from
             dex_tx_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a2.token = 'ALL'
-                                   and a2.project = 'ALL'
-                                   and a1.type = a2.type
-                                   and a2.data_subject = 'count'
+            inner join dim_project_token_type a2
+        on
+            a2.token = 'ALL'
+            and a2.project = 'ALL'
+            and a1.type = a2.type
+            and a2.data_subject = 'count'
         where       a1.token in (select distinct token from dim_project_token_type)
           and a2.label_type not like '%NFT%'
         group by
@@ -129,12 +130,12 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
             sum(total_transfer_count) as total_transfer_count
         from
             dex_tx_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a2.token = 'ALL'
-                                   and a1.project = a2.project
-                                   and a1.type = a2.type
-                                   and a2.data_subject = 'count'
+            inner join dim_project_token_type a2
+        on
+            a2.token = 'ALL'
+            and a1.project = a2.project
+            and a1.type = a2.type
+            and a2.data_subject = 'count'
         where  a1.token in (select distinct token from dim_project_token_type) and a2.label_type not like '%NFT%'
         group by
             a1.address,
@@ -153,12 +154,13 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
             sum(total_transfer_count) as total_transfer_count
         from
             dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a1.token = a2.token
-                                   and a2.project = 'ALL'
-                                   and a1.type = a2.type
-                                   and a2.data_subject = 'count'
+            inner join dim_project_token_type a2
+        on
+            a1.token = a2.token
+            and a2.project = 'ALL'
+            and a1.type = a2.type
+            and a1.token!='ALL'
+            and a2.data_subject = 'count'
         where a1.token in (select distinct token from dim_project_token_type) and a2.label_type not like '%NFT%'
         group by
             a1.address,
@@ -167,7 +169,7 @@ insert into public.address_label_token_project_type_count_grade(address,label_ty
             a2.project_name ,
             a2.token_name
     ) t
-    where
+where
         total_transfer_count >= 1 and address not in (select address from exclude_address);
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_project_type_count_grade' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
