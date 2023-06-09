@@ -86,3 +86,5 @@ from (
               ,max(type) as type,transaction_hash
               ,max(triggered_flag) as triggered_flag from token_holding_uni
          group by address,token,nft_token_id,price_token,transaction_hash ) tb1 ;
+insert into tag_result(table_name,batch_date)  SELECT 'token_holding_uni_cal' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+
