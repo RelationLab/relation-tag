@@ -90,58 +90,6 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
             a2.type,
             a2.project_name ,
             a2.token_name
-            -- project(ALL)-token(ALL)-type
-        union all
-        select
-            a1.address,
-            a2.label_type,
-            a2.type,
-            a2.project_name ,
-            a2.token_name,
-            sum(round(total_transfer_volume_usd,8)) as total_transfer_volume_usd
-        from
-            dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a2.token = 'ALL'
-                                   and a2.project = 'ALL'
-                                   and a1.type = a2.type
-                                   and a2.data_subject = 'volume_grade'
-                                   and a2.label_type not like '%NFT%'
-                                   and a2.label_type not like '%WEB3%'
-        where  a1.token in (select distinct token from dim_project_token_type)
-        group by
-            a1.address,
-            a2.label_type,
-            a2.type,
-            a2.project_name ,
-            a2.token_name
-            -- project-token(ALL)-type
-        union all
-        select
-            a1.address,
-            a2.label_type,
-            a2.type,
-            a2.project_name ,
-            a2.token_name,
-            sum(round(total_transfer_volume_usd,8)) as total_transfer_volume_usd
-        from
-            dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
-                           on
-                                       a2.token = 'ALL'
-                                   and a1.project = a2.project
-                                   and a1.type = a2.type
-                                   and a2.data_subject = 'volume_grade'
-                                   and a2.label_type not like '%NFT%'
-                                   and a2.label_type not like '%WEB3%'
-        where  a1.token in (select distinct token from dim_project_token_type)
-        group by
-            a1.address,
-            a2.label_type,
-            a2.type,
-            a2.project_name ,
-            a2.token_name
             -- project(ALL)-token-type
         union all
         select
