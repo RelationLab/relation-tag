@@ -7,6 +7,7 @@ DROP TABLE if EXISTS public.nft_holding_time;
 DROP TABLE if EXISTS public.eth_holding_time;
 DROP TABLE if EXISTS public.token_holding_time;
 DROP TABLE if EXISTS public.white_list_lp;
+DROP TABLE if EXISTS public.white_list_price;
 
 CREATE TABLE public.platform_nft_holding (
                                              id bigserial NOT NULL,
@@ -40,6 +41,8 @@ create table nft_holding_time as select * from nft_holding_time_cdc;
 create table eth_holding_time as select * from eth_holding_time_cdc;
 create table token_holding_time as select * from token_holding_time_cdc;
 create table  white_list_lp as select * from white_list_lp_cdc;
+create table  white_list_price as select * from white_list_price_cdc;
+
 update platform_nft_holding set quote_token='0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',weth_token_flag='1' where quote_token='0x0000000000a39bb272e79075ade125fd351887ac';
 
 insert into tag_result(table_name,batch_date)  SELECT 'snapshot_table' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
