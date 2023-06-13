@@ -14,8 +14,6 @@
     CREATE VIEW total_nft_tx_count AS  select * from  total_nft_tx_count_cdc;
     DROP VIEW if EXISTS public.total_tx_count;
     CREATE VIEW total_tx_count AS  select * from  total_tx_count_cdc;
-    DROP VIEW if EXISTS public.white_list_price;
-    CREATE VIEW white_list_price AS  select * from  white_list_price_cdc;
     DROP VIEW if EXISTS public.contract;
     CREATE VIEW contract AS  select * from  contract_cdc;
 
