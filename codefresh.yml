@@ -55,6 +55,14 @@ steps:
         dockerfile: "Dockerfile"
         tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
 
+  stagUninstall:
+    title: "Helm uninsall wired-tag"
+    stage: stagDeploy
+    image: "thorstenhans/helm3"
+    commands:
+      - kubectl config use-context wired-eks-prod
+      - helm uninstall -n stag wired-tag || exit_code=$?
+
   stagDeploy:
     title: "Helm install wired-tag"
     stage: stagDeploy
