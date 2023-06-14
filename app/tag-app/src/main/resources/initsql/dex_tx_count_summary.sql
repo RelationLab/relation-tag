@@ -64,4 +64,32 @@ group by
     th.type,
     transaction_hash;
 
+INSERT
+INTO
+    dex_tx_count_summary(address,
+                         token,
+                         TYPE,
+                         project,
+                         transaction_hash,
+                         total_transfer_count)
+SELECT
+    address,
+    'ALL' AS token,
+    'ALL' as TYPE,
+    project,
+    transaction_hash,
+    sum(total_transfer_count) AS total_transfer_count
+FROM
+    dex_tx_volume_count_record
+WHERE
+        token IN (
+        SELECT
+            token_id
+        FROM
+            dim_rank_token)
+GROUP BY
+    address,
+    project,
+    transaction_hash;
+
 insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_count_summary' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

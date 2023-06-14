@@ -108,6 +108,7 @@ from
             inner join dim_project_token_type a2
         on
             a2.token = 'ALL'
+            and a1.token = a2.token
             and a2.project = 'ALL'
             and a1.type = a2.type
             and a2.data_subject = 'count'
@@ -133,6 +134,7 @@ from
             inner join dim_project_token_type a2
         on
             a2.token = 'ALL'
+            and a1.token = a2.token
             and a1.project = a2.project
             and a1.type = a2.type
             and a2.data_subject = 'count'
