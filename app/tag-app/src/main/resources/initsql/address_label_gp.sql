@@ -130,6 +130,6 @@ GROUP BY (address_label_gp_${tableSuffix}.address);
 
 insert into tag_result(table_name,batch_date)  SELECT 'address_labels_json_gin_${tableSuffix}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 delete from  tag_result where  table_name='tagging';
-
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO readonly;
 
 
