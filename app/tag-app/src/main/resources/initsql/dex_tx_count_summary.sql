@@ -80,7 +80,7 @@ SELECT
     transaction_hash,
     sum(total_transfer_count) AS total_transfer_count
 FROM
-    dex_tx_volume_count_record
+    dex_tx_count_summary
 WHERE
         token IN (
         SELECT
