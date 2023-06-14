@@ -184,13 +184,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate, dir, null);
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql", batchDate, dir, null);
         execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql", batchDate, dir, null);
-        execSql("token_holding_uni_cal", "dex_tx_volume_count_summary.sql", batchDate, dir, null);
-        execSql("dex_tx_volume_count_summary", "dex_tx_count_summary.sql", batchDate, dir, null);
+        execSql("dex_tx_volume_count_summary_univ3", "dex_tx_count_summary.sql", batchDate, dir, null);
+        execSql("dex_tx_count_summary", "dex_tx_volume_count_summary.sql", batchDate, dir, null);
         execSql("dex_tx_volume_count_summary", "token_platform.sql", batchDate, dir, null);
         execSql("token_platform", "nft_platform.sql", batchDate, dir, null);
 
         Thread.sleep(3 * 60 * 1000);
-        boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql", batchDate, dir, null);
+        boolean token_holding_vol_countcheck = execSql("nft_platform", "eth_holding_vol_count.sql", batchDate, dir, null);
         if (!token_holding_vol_countcheck) {
             Thread.sleep(1 * 60 * 1000);
         }
