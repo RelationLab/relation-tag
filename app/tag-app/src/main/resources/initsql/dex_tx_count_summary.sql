@@ -27,7 +27,7 @@ SELECT
     TYPE,
     project,
     transaction_hash,
-    max(total_transfer_count) AS total_transfer_count
+    total_transfer_count AS total_transfer_count
 FROM
     dex_tx_volume_count_record
 WHERE
@@ -36,7 +36,7 @@ WHERE
             token_id
         FROM
             dim_rank_token)
-and triggered_flag = '1'
+and triggered_flag = '1' and total_transfer_count = 1
 GROUP BY
     address,
     TYPE,
