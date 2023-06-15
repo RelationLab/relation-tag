@@ -27,7 +27,7 @@ SELECT
     TYPE,
     project,
     transaction_hash,
-    total_transfer_count AS total_transfer_count
+    max(total_transfer_count) AS total_transfer_count
 FROM
     dex_tx_volume_count_record
 WHERE
