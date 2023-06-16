@@ -48,7 +48,7 @@ insert into token_holding_uni_cal(address
                                  ,first_updated_block_height
                                  ,price_token
                                  ,liquidity
-                                 ,type,transaction_hash,triggered_flag)
+                                 ,type,triggered_flag)
 
 select
     address
@@ -66,7 +66,6 @@ select
      ,price_token
      ,liquidity
      ,type
-     ,transaction_hash
      ,triggered_flag
 from (
          select address
@@ -83,8 +82,8 @@ from (
               ,max(first_updated_block_height) first_updated_block_height
               ,price_token
               ,sum(liquidity) liquidity
-              ,max(type) as type,transaction_hash
+              ,max(type) as type
               ,max(triggered_flag) as triggered_flag from token_holding_uni
-         group by address,token,nft_token_id,price_token,transaction_hash ) tb1 ;
+         group by address,token,nft_token_id,price_token ) tb1 ;
 insert into tag_result(table_name,batch_date)  SELECT 'token_holding_uni_cal' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
