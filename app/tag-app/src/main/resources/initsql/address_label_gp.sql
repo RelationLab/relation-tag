@@ -98,9 +98,11 @@ select address,label_type,label_name,'OTHER' as wired_type,0 as data,updated_at,
 DROP TABLE IF EXISTS address_labels_json_gin_${tableSuffix} CASCADE;
 CREATE TABLE address_labels_json_gin_${tableSuffix}
 (
+    id      BIGSERIAL,
     address TEXT  NOT NULL,
     data    TEXT NOT NULL
 ) WITH (appendoptimized = true, orientation = column) DISTRIBUTED BY (address);
+CREATE INDEX idx_address_labels_json_gin_${tableSuffix}_id ON address_labels_json_gin_${tableSuffix}(id);
 
 INSERT INTO address_labels_json_gin_${tableSuffix}(address, data)
 SELECT address_label_gp_${tableSuffix}.address,
