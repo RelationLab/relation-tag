@@ -30,13 +30,8 @@ SELECT
     max(total_transfer_count) AS total_transfer_count
 FROM
     dex_tx_volume_count_record
-WHERE
-        token IN (
-        SELECT
-            token_id
-        FROM
-            dim_rank_token)
-and triggered_flag = '1' and total_transfer_count = 1
+        INNER JOIN dim_rank_token ON (dex_tx_volume_count_record.token = dim_rank_token.token_id)
+WHERE triggered_flag = '1' and total_transfer_count = 1
 GROUP BY
     address,
     TYPE,
@@ -82,12 +77,6 @@ SELECT
     sum(total_transfer_count) AS total_transfer_count
 FROM
     dex_tx_count_summary
-WHERE
-        token IN (
-        SELECT
-            token_id
-        FROM
-            dim_rank_token)
 GROUP BY
     address,
     project,
