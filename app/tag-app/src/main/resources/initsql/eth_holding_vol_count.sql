@@ -55,7 +55,7 @@ from
         from
             eth_tx_record etr
         where
-                amount>0
+            tx_type!='ETH_INTERNAL'
         group by
             from_address
         union all

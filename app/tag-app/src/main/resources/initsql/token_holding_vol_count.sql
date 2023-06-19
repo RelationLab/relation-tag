@@ -59,7 +59,6 @@ from
             sum(amount) total_transfer_all_volume
         from
             erc20_tx_record e20tr
-        where  amount>0
         group by
             from_address,
             token
