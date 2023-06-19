@@ -48,19 +48,19 @@ select
 from
     (
         select
-            from_address address,
-            max(block_number) as block_height,
+            address address,
+            max(block_height) as block_height,
             token,
-            sum(amount) total_transfer_volume,
-            sum(1) total_transfer_count,
+            sum(total_transfer_volume) total_transfer_volume,
+            sum(total_transfer_count) total_transfer_count,
             0 as total_transfer_to_count,
-            sum(1) total_transfer_all_count,
+            sum(total_transfer_all_count) total_transfer_all_count,
             0 as total_transfer_to_volume,
-            sum(amount) total_transfer_all_volume
+            sum(total_transfer_all_volume) total_transfer_all_volume
         from
-            erc20_tx_record e20tr
+            erc20_tx_record_hash e20tr
         group by
-            from_address,
+            address,
             token
 
         union all select

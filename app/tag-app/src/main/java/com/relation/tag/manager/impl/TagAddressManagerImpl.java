@@ -190,11 +190,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("token_platform", "nft_platform.sql", batchDate, dir, null);
 
         Thread.sleep(3 * 60 * 1000);
+        execSql("nft_platform", "erc20_tx_record_hash.sql", batchDate, dir, null);
         boolean token_holding_vol_countcheck = execSql("nft_platform", "eth_holding_vol_count.sql", batchDate, dir, null);
         if (!token_holding_vol_countcheck) {
             Thread.sleep(1 * 60 * 1000);
         }
-        boolean dms_syn_blockcheck = execSql("eth_holding_vol_count", "token_holding_vol_count.sql", batchDate, dir, null);
+        boolean dms_syn_blockcheck = execSql("erc20_tx_record_hash", "token_holding_vol_count.sql", batchDate, dir, null);
         if (!dms_syn_blockcheck) {
             Thread.sleep(1 * 60 * 1000);
         }
