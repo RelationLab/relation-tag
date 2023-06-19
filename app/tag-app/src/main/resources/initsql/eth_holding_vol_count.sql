@@ -71,7 +71,7 @@ from
         from
             eth_tx_record etr
         where
-                amount>0
+                tx_type!='ETH_INTERNAL'
         group by
             to_address) atb where address !=''
 group by

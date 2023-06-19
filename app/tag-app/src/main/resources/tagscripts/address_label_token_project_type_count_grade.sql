@@ -94,55 +94,57 @@ from
             a2.type,
             a2.project_name ,
             a2.token_name
---             -- project(ALL)-token(ALL)-type(含ALL)
---         union all
---         select
---             a1.address,
---             a2.label_type,
---             a2.type,
---             a2.project_name ,
---             a2.token_name,
---             sum(total_transfer_count) as total_transfer_count
---         from
---             dex_tx_count_summary a1
---             inner join dim_project_token_type a2
---         on
---             a2.token = 'ALL'
---             and a2.project = 'ALL'
---             and a1.type = a2.type
---             and a2.data_subject = 'count'
---         where       a1.token in (select distinct token from dim_project_token_type)
---           and a2.label_type not like '%NFT%'
---         group by
---             a1.address,
---             a2.label_type,
---             a2.type,
---             a2.project_name ,
---             a2.token_name
---             -- project-token(ALL)-type(含ALL)
---         union all
---         select
---             a1.address,
---             a2.label_type,
---             a2.type,
---             a2.project_name ,
---             a2.token_name,
---             sum(total_transfer_count) as total_transfer_count
---         from
---             dex_tx_count_summary a1
---             inner join dim_project_token_type a2
---         on
---             a2.token = 'ALL'
---             and a1.project = a2.project
---             and a1.type = a2.type
---             and a2.data_subject = 'count'
---         where  a1.token in (select distinct token from dim_project_token_type) and a2.label_type not like '%NFT%'
---         group by
---             a1.address,
---             a2.label_type,
---             a2.type,
---             a2.project_name ,
---             a2.token_name
+            -- project(ALL)-token(ALL)-type(含ALL)
+        union all
+        select
+            a1.address,
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
+            sum(total_transfer_count) as total_transfer_count
+        from
+            dex_tx_count_summary a1
+            inner join dim_project_token_type a2
+        on
+            a2.token = 'ALL'
+            and a1.token = a2.token
+            and a2.project = 'ALL'
+            and a1.type = a2.type
+            and a2.data_subject = 'count'
+        where       a1.token in (select distinct token from dim_project_token_type)
+          and a2.label_type not like '%NFT%'
+        group by
+            a1.address,
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
+            -- project-token(ALL)-type(含ALL)
+        union all
+        select
+            a1.address,
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
+            sum(total_transfer_count) as total_transfer_count
+        from
+            dex_tx_count_summary a1
+            inner join dim_project_token_type a2
+        on
+            a2.token = 'ALL'
+            and a1.token = a2.token
+            and a1.project = a2.project
+            and a1.type = a2.type
+            and a2.data_subject = 'count'
+        where  a1.token in (select distinct token from dim_project_token_type) and a2.label_type not like '%NFT%'
+        group by
+            a1.address,
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name
             -- project(ALL)-token-type(含ALL)
         union all
         select

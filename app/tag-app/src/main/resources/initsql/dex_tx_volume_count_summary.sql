@@ -206,6 +206,7 @@ group by
     dtvcr.type,
     project;
 
+
 ---再计算dex_tx_volume_count_summary的ALL(有些同一笔交易txHash同时LP和SWAP)
 insert
 into
