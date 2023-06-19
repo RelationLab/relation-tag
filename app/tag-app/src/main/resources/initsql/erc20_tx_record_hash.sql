@@ -31,7 +31,7 @@ insert into
 select
     from_address address,
     token,
-    max(block_height) as block_height,
+    max(block_number) as block_height,
     sum(amount) total_transfer_volume,
     1 total_transfer_count,
     0 as total_transfer_to_count,
