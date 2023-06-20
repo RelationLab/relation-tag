@@ -1,4 +1,5 @@
 --------------balance_grade  ALL_DAI(0x6b1754)_ALL_BALANCE_GRADE
+
 insert
 into
     dim_rule_content(rule_code,

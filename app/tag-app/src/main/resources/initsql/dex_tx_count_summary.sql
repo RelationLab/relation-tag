@@ -22,11 +22,11 @@ INTO
                          transaction_hash,
                          total_transfer_count)
 SELECT
-    address,
+    dex_tx_volume_count_record.address,
     'ALL' AS token,
-    TYPE,
-    project,
-    transaction_hash,
+    dex_tx_volume_count_record.TYPE,
+    dex_tx_volume_count_record.project,
+    dex_tx_volume_count_record.transaction_hash,
     max(total_transfer_count) AS total_transfer_count
 FROM
     dex_tx_volume_count_record
@@ -34,10 +34,10 @@ FROM
             top_token_1000 ON (dex_tx_volume_count_record.token = top_token_1000.address)
 WHERE triggered_flag = '1' and total_transfer_count = 1
 GROUP BY
-    address,
-    TYPE,
-    project,
-    transaction_hash;
+    dex_tx_volume_count_record.address,
+    dex_tx_volume_count_record.TYPE,
+    dex_tx_volume_count_record.project,
+    dex_tx_volume_count_record.transaction_hash;
 
 INSERT
 INTO
