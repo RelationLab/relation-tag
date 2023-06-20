@@ -30,7 +30,8 @@ SELECT
     max(total_transfer_count) AS total_transfer_count
 FROM
     dex_tx_volume_count_record
-        INNER JOIN dim_rank_token ON (dex_tx_volume_count_record.token = dim_rank_token.token_id)
+        INNER JOIN (select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true)
+            top_token_1000 ON (dex_tx_volume_count_record.token = top_token_1000.address)
 WHERE triggered_flag = '1' and total_transfer_count = 1
 GROUP BY
     address,
@@ -54,7 +55,8 @@ select
     transaction_hash,
     max(total_transfer_count) as total_transfer_count
 from
-    token_holding_uni_cal th
+    token_holding_uni_cal th  INNER JOIN (select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true)
+        top_token_1000 ON (th.price_token = top_token_1000.address)
 group by
     th.address,
     th.type,
