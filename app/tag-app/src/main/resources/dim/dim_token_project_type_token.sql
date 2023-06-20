@@ -35,9 +35,64 @@ from
           and removed <> 'true') top_token_1000 on
         (token_platform.address = top_token_1000.address)
         INNER JOIN trade_type ON  (1=1);
-
-
-
+insert
+into
+    public."label" ("owner",
+                    "type",
+                    "name",
+                    "source",
+                    visible_type,
+                    strategy,
+                    "content",
+                    rule_type,
+                    rule_group,
+                    value_type,
+                    run_order,
+                    created_at,
+                    refresh_time,
+                    wired_type,
+                    label_order,
+                    sync_es_status)
+select
+    'RelationTeam' "owner",
+    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
+    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' || level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    platform.platform_name || ' ' || upper(top_token_1000.symbol)|| ' ' || (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_alis end)||' '||level_def.level_name  "content",
+    'SQL' rule_type,
+    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'DEFI' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from
+    token_platform
+        inner join platform on
+        (token_platform.platform = platform.platform)
+        inner join (
+        select
+            *
+        from
+            top_token_1000
+        where
+                holders >= 100
+          and removed <> 'true') top_token_1000 on
+        (token_platform.address = top_token_1000.address)
+        inner join trade_type on
+        (1 = 1)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'count') level_def on
+        (1 = 1);
 
 ---------------count ALL_USDC(0xa0b869)_ALL_ACTIVITY_DEX
 insert
@@ -53,7 +108,7 @@ into
                             token_name)
 select
     'ALL' as project,
-    token_platform.address as token,
+    top_token_1000.address as token,
     trade_type.trade_type as type,
     'ALL' || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_ACTIVITY_DEX' as label_type,
     'T' as operate_type,
@@ -62,18 +117,68 @@ select
     'ALL' project_name,
     upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
 from
-    token_platform
-        inner join (
+    (
         select
             *
         from
             top_token_1000
         where
                 holders >= 100
-          and removed <> 'true') top_token_1000 on
-        (token_platform.address = top_token_1000.address)
+          and removed <> 'true') top_token_1000
         INNER JOIN trade_type ON  (1=1);
-
+insert
+into
+    public."label" ("owner",
+                    "type",
+                    "name",
+                    "source",
+                    visible_type,
+                    strategy,
+                    "content",
+                    rule_type,
+                    rule_group,
+                    value_type,
+                    run_order,
+                    created_at,
+                    refresh_time,
+                    wired_type,
+                    label_order,
+                    sync_es_status)
+select
+    'RelationTeam' "owner",
+    'ALL' || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
+    'ALL' || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' || level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+     upper(top_token_1000.symbol)|| ' ' || (CASE WHEN trade_type.trade_type='ALL' THEN 'DEX' else trade_type.trade_type_alis end)||' '||level_def.level_name "content",
+    'SQL' rule_type,
+    'ALL' || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'DEFI' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from
+     (
+        select
+            *
+        from
+            top_token_1000
+        where
+                holders >= 100
+          and removed <> 'true') top_token_1000
+        INNER JOIN trade_type ON  (1=1)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'count') level_def on
+        (1 = 1);
 
 
 
@@ -114,9 +219,63 @@ from
           and removed <> 'true') top_token_1000 on
         (token_platform.address = top_token_1000.address)
         INNER JOIN trade_type ON  (1=1);
-
-
-
+insert
+into
+    public."label" ("owner",
+                    "type",
+                    "name",
+                    "source",
+                    visible_type,
+                    strategy,
+                    "content",
+                    rule_type,
+                    rule_group,
+                    value_type,
+                    run_order,
+                    created_at,
+                    refresh_time,
+                    wired_type,
+                    label_order,
+                    sync_es_status)
+select
+    'RelationTeam' "owner",
+    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
+    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' || level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    platform.platform_name || ' ' || upper(top_token_1000.symbol)|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_alis end)|| ' '||level_def.level_name  "content",
+    'SQL' rule_type,
+    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'DEFI' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from
+    token_platform
+        inner join platform on
+        (token_platform.platform = platform.platform)
+        inner join (
+        select
+            *
+        from
+            top_token_1000
+        where
+                holders >= 100
+          and removed <> 'true') top_token_1000 on
+        (token_platform.address = top_token_1000.address)
+        INNER JOIN trade_type ON  (1=1)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'defi_volume_grade') level_def on
+        (1 = 1);
 
 ---------------volume_grade ALL_USDC(0xa0b869)_ALL_VOLUME_DEX_GRADE
 insert
@@ -132,7 +291,7 @@ into
                             token_name)
 select
     'ALL' as project,
-    token_platform.address as token,
+    top_token_1000.address as token,
     trade_type.trade_type as type,
     'ALL' || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_VOLUME_DEX_GRADE' as label_type,
     'T' as operate_type,
@@ -141,18 +300,70 @@ select
     'ALL' project_name,
     upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
 from
-    token_platform
-        inner join (
+    (
         select
             *
         from
             top_token_1000
         where
                 holders >= 100
-          and removed <> 'true') top_token_1000 on
-        (token_platform.address = top_token_1000.address)
+          and removed <> 'true') top_token_1000
         INNER JOIN trade_type ON  (1=1);
 
+insert
+into
+    public."label" ("owner",
+                    "type",
+                    "name",
+                    "source",
+                    visible_type,
+                    strategy,
+                    "content",
+                    rule_type,
+                    rule_group,
+                    value_type,
+                    run_order,
+                    created_at,
+                    refresh_time,
+                    wired_type,
+                    label_order,
+                    sync_es_status)
+select
+    'RelationTeam' "owner",
+    'ALL' || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
+    'ALL' || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' || level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    upper(top_token_1000.symbol)|| ' ' || (case when trade_type.trade_type='ALL' and (level_def.level='Million' or level_def.level='Billion') then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_alis end)||
+    (case when trade_type.trade_type<>'ALL' and (level_def.level='Million' or level_def.level='Billion') then ' '||level_def.level else '' end )|| ' '||level_def.level_name  "content",
+    'SQL' rule_type,
+    'ALL'|| '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'DEFI' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from
+     (
+        select
+            *
+        from
+            top_token_1000
+        where
+                holders >= 100
+          and removed <> 'true') top_token_1000
+        INNER JOIN trade_type ON  (1=1)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'defi_volume_grade') level_def on
+        (1 = 1);
 
 ---------------volume_rank 0x_USDC(0xa0b869)_ALL_VOLUME_DEX_RANK
 insert
@@ -191,7 +402,63 @@ from
           and removed <> 'true') top_token_1000 on
         (token_platform.address = top_token_1000.address)
         INNER JOIN trade_type ON  (1=1);
-
+insert
+into
+    public."label" ("owner",
+                    "type",
+                    "name",
+                    "source",
+                    visible_type,
+                    strategy,
+                    "content",
+                    rule_type,
+                    rule_group,
+                    value_type,
+                    run_order,
+                    created_at,
+                    refresh_time,
+                    wired_type,
+                    label_order,
+                    sync_es_status)
+select
+    'RelationTeam' "owner",
+    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' as "type",
+    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' || level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    platform.platform_name || ' ' || upper(top_token_1000.symbol)|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_alis end)|| ' '||level_def.level_name  "content",
+    'SQL' rule_type,
+    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'DEFI' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from
+    token_platform
+        inner join platform on
+        (token_platform.platform = platform.platform)
+        inner join (
+        select
+            *
+        from
+            top_token_1000
+        where
+                holders >= 100
+          and removed <> 'true') top_token_1000 on
+        (token_platform.address = top_token_1000.address)
+        INNER JOIN trade_type ON  (1=1)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'defi_volume_rank') level_def on
+        (1 = 1);
 
 
 
@@ -209,7 +476,7 @@ into
                             token_name)
 select
     'ALL' as project,
-    token_platform.address as token,
+    top_token_1000.address as token,
     trade_type.trade_type as type,
     'ALL' || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_VOLUME_DEX_RANK' as label_type,
     'T' as operate_type,
@@ -218,17 +485,69 @@ select
     'ALL' project_name,
     upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
 from
-    token_platform
-        inner join (
+   (
         select
             *
         from
             top_token_1000
         where
                 holders >= 100
-          and removed <> 'true') top_token_1000 on
-        (token_platform.address = top_token_1000.address)
+          and removed <> 'true') top_token_1000
         INNER JOIN trade_type ON  (1=1);
+insert
+into
+    public."label" ("owner",
+                    "type",
+                    "name",
+                    "source",
+                    visible_type,
+                    strategy,
+                    "content",
+                    rule_type,
+                    rule_group,
+                    value_type,
+                    run_order,
+                    created_at,
+                    refresh_time,
+                    wired_type,
+                    label_order,
+                    sync_es_status)
+select
+    'RelationTeam' "owner",
+    'ALL' || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' as "type",
+    'ALL' || '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' || level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    upper(top_token_1000.symbol)|| ' ' || (case when trade_type.trade_type='ALL'  then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_alis end)||
+    (case when trade_type.trade_type<>'ALL'  then ' '||level_def.level else '' end )|| ' '||level_def.level_name  "content",
+    'SQL' rule_type,
+    'ALL'|| '_' || upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'DEFI' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from
+    (
+        select
+            *
+        from
+            top_token_1000
+        where
+                holders >= 100
+          and removed <> 'true') top_token_1000
+        INNER JOIN trade_type ON  (1=1)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'defi_volume_rank') level_def on
+        (1 = 1);
 
 ---------------count 1inch_ALL_ALL
 insert
@@ -242,6 +561,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
+
 select
     token_platform.platform as project,
     'ALL' as token,
