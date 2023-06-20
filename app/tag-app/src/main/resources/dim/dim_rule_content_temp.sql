@@ -17,7 +17,7 @@ select 'ALL_'||upper(t.symbol)||'_'||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_B
        now() as create_time,
        t.symbol as token_name,
        'token' as token_type
-from top_token_1000 t;
+from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 INSERT INTO dim_rule_content (rule_code,"token",label_type,operate_type,data_subject,create_time,token_name,token_type) VALUES
     ('rule_2247','ALL','ALL_ALL_ALL_BALANCE_GRADE','T','balance_grade','2023-06-20 00:27:36.873','ALL','token');
 
@@ -41,7 +41,7 @@ select 'ALL_'||upper(t.symbol)||'_'||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_B
        now() as create_time,
        t.symbol as token_name,
        'token' as token_type
-from top_token_1000 t;
+from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 INSERT INTO dim_rule_content (rule_code,"token",label_type,operate_type,data_subject,create_time,token_name,token_type) VALUES
     ('rule_4496','ALL','ALL_ALL_ALL_BALANCE_RANK','T','balance_rank','2023-06-20 00:27:41.348','ALL','token');
 
@@ -65,7 +65,7 @@ select 'ALL_'||upper(t.symbol)||'_'||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_B
        now() as create_time,
        t.symbol as token_name,
        'token' as token_type
-from top_token_1000 t;
+from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 INSERT INTO dim_rule_content (rule_code,"token",label_type,operate_type,data_subject,create_time,token_name,token_type) VALUES
     ('rule_4495','ALL','ALL_ALL_ALL_BALANCE_TOP','T','balance_top','2023-06-20 00:27:41.348','ALL','token');
 
@@ -88,7 +88,7 @@ select 'ALL_'||upper(t.symbol)||'_'||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_A
        now() as create_time,
        t.symbol as token_name,
        'token' as token_type
-from top_token_1000 t;
+from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 INSERT INTO dim_rule_content (rule_code,"token",label_type,operate_type,data_subject,create_time,token_name,token_type) VALUES
     ('rule_6743','ALL','ALL_ALL_ALL_ACTIVITY','A','count','2023-06-20 00:27:45.374','ALL','token');
 
@@ -111,7 +111,7 @@ select upper(t.symbol)||'_'||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_
        now() as create_time,
        t.symbol as token_name,
        'token' as token_type
-from top_token_1000 t;
+from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 --------------time_special  DAI(0x6b1754)_HOLDING_TIME_SPECIAL
 insert
@@ -132,7 +132,7 @@ select upper(t.symbol)||'_'||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_
        now() as create_time,
        t.symbol as token_name,
        'token' as token_type
-from top_token_1000 t;
+from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 
 --------------volume_grade  ALL_DAI(0x6b1754)_ALL_VOLUME_GRADE
@@ -154,7 +154,7 @@ select 'ALL_'||upper(t.symbol)||'_'||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_V
        now() as create_time,
        t.symbol as token_name,
        'token' as token_type
-from top_token_1000 t;
+from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 INSERT INTO dim_rule_content (rule_code,"token",label_type,operate_type,data_subject,create_time,token_name,token_type) VALUES
     ('rule_3371','ALL','ALL_ALL_ALL_VOLUME_GRADE','T','volume_grade','2023-06-20 00:27:38.850','ALL','token');
 
@@ -178,7 +178,7 @@ select 'ALL_'||upper(t.symbol)||'_'||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_V
        now() as create_time,
        t.symbol as token_name,
        'token' as token_type
-from top_token_1000 t;
+from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 INSERT INTO dim_rule_content (rule_code,"token",label_type,operate_type,data_subject,create_time,token_name,token_type) VALUES
     ('rule_7867','ALL','ALL_ALL_ALL_VOLUME_RANK','T','volume_rank','2023-06-20 00:27:47.836','ALL','token');
 
