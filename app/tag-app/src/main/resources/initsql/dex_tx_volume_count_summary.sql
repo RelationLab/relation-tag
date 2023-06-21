@@ -58,7 +58,7 @@ select
         token_holding_uni_cal th
         inner join (
             select
-                *
+                white_list_erc20.*
             from
                 white_list_erc20
                     INNER JOIN (select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true)
@@ -95,15 +95,11 @@ from
     token_holding_uni_cal th
         inner join (
         select
-            *
+            white_list_erc20.*
         from
             white_list_erc20
-        where
-                address in (
-                select
-                    token_id
-                from
-                    dim_rank_token)) w on
+                INNER JOIN (select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true)
+                top_token_1000 ON (white_list_erc20.address = top_token_1000.address)) w on
             w.address = th.price_token
             and triggered_flag = '1'
 group by
@@ -136,7 +132,7 @@ from
     dex_tx_volume_count_record  dtvcr
         inner join (
         select
-            *
+            white_list_erc20.*
         from
             white_list_erc20   INNER JOIN (select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true)
                 top_token_1000 ON (white_list_erc20.address = top_token_1000.address) ) w on
@@ -177,15 +173,10 @@ from
     dex_tx_volume_count_record  dtvcr
         inner join (
         select
-            *
+            white_list_erc20.*
         from
-            white_list_erc20
-        where
-                address in (
-                select
-                    token_id
-                from
-                    dim_rank_token)) w on
+            white_list_erc20   INNER JOIN (select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true)
+                top_token_1000 ON (white_list_erc20.address = top_token_1000.address) ) w on
                 w.address = dtvcr."token"
             and  (token,project) not in(('0x5e8422345238f34275888049021821e8e08caa1f','0xbafa44efe7901e04e39dad13167d089c559c1138'),
                                         ('0xae7ab96520de3a18e5e111b5eaab095312d7fe84','0xae7ab96520de3a18e5e111b5eaab095312d7fe84'),
@@ -220,8 +211,7 @@ select dtvcr.address as address
      ,sum(dtvcr.total_transfer_count) as total_transfer_count
      ,min(dtvcr.first_updated_block_height) as first_updated_block_height
      ,max(dtvcr.balance_usd)  as balance_usd from
-
-      dtvcr
+    dex_tx_volume_count_summary dtvcr
 group by
     dtvcr.address,
     dtvcr."token",
