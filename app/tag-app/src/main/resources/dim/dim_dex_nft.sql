@@ -749,8 +749,8 @@ into
                         label_category)
 select
     nft_sync_address.platform asset,
-    project,
-    trade_type,
+    mp_nft_platform.platform_name project,
+    nft_trade_type.nft_trade_type trade_type,
     '' balance,
     'TOP' volume,
     '' activity,
@@ -867,9 +867,9 @@ into
                         asset_type,
                         label_category)
 select
-    'ALL_NFT' asset,
-    project,
-    trade_type,
+    nft_sync_address.platform asset,
+    'ALL' project,
+    nft_trade_type.nft_trade_type trade_type,
     '' balance,
     'TOP' volume,
     '' activity,
