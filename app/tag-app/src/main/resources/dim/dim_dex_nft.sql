@@ -748,7 +748,7 @@ into
                         asset_type,
                         label_category)
 select
-    'ALL_NFT' asset,
+    nft_sync_address.platform asset,
     project,
     trade_type,
     '' balance,
@@ -761,6 +761,10 @@ select
     'nft' asset_type,
     'TOP' label_category
 from nft_sync_address
+         inner join nft_platform on
+    (nft_sync_address.address = nft_platform.address)
+         inner join mp_nft_platform on
+    (mp_nft_platform.platform = nft_platform.platform)
          inner join nft_trade_type  on(1=1)
          inner join (
     select
@@ -847,4 +851,42 @@ from
         where
                 type = 'nft_volume_top') level_def on
         (1 = 1)
+where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    'ALL_NFT' asset,
+    project,
+    trade_type,
+    '' balance,
+    'TOP' volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP_'|| level_def.level label_name,
+    'MP ' ||nft_sync_address.platform||' '||level_def.level_name "content",
+    'nft' asset_type,
+    'TOP' label_category
+from nft_sync_address
+         inner join nft_trade_type  on(1=1)
+         inner join (
+    select
+        *
+    from
+        level_def
+    where
+            type = 'nft_volume_top') level_def on
+    (1 = 1)
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
