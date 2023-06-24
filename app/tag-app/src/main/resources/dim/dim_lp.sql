@@ -117,6 +117,67 @@ from
         where
                 type = 'defi_balance_grade') level_def on
         (1 = 1);
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    lpt.factory_content project,
+    '' trade_type,
+    level_def.level balance,
+    '' volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_GRADE_'||level_def.level  label_name,
+    lpt.factory_content||' '||symbol_wired||' '||level_def.level_name "content",
+    'token' asset_type,
+    'GRADE' label_category
+from
+    (select wlp.name,
+            wlp.symbol_wired,
+            wlp.address as pool,
+            wlp.factory,
+            wlp.factory_type,
+            wlp.factory_content,
+            wlp.pool_id,
+            wlp.symbols[1] as symbol1,
+            wlp.symbols[2] as symbol2,
+            wlp.type,
+            wlp.tokens,
+            wlp.decimals,
+            wlp.price,
+            wlp.tvl,
+            wlp.fee as fee,
+            SUBSTR(wlp.address, 1, 6) as poolPrefix,
+            wlp.total_supply,
+            wslp.factory AS stakePool,
+            wslp.factory_type as stakeRouter
+     from white_list_lp wlp
+              left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+     where wlp.tvl > 5000000
+       and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp."type" = 'LP') lpt
+        inner join platform_detail on(lpt.factory_type=platform_detail.platform_name)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'defi_balance_grade') level_def on
+        (1 = 1);
 
 
 -----balance_rank  Uniswap_v3_UNI/WETH_0x1d42_BALANCE_RANK
@@ -238,6 +299,67 @@ from
         where
                 type = 'defi_balance_rank') level_def on
         (1 = 1);
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    lpt.factory_content project,
+    '' trade_type,
+    level_def.level balance,
+    '' volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_RANK_'||level_def.level  label_name,
+    lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
+    'token' asset_type,
+    'RANK' label_category
+from
+    (select wlp.name,
+            wlp.symbol_wired,
+            wlp.address as pool,
+            wlp.factory,
+            wlp.factory_type,
+            wlp.factory_content,
+            wlp.pool_id,
+            wlp.symbols[1] as symbol1,
+            wlp.symbols[2] as symbol2,
+            wlp.type,
+            wlp.tokens,
+            wlp.decimals,
+            wlp.price,
+            wlp.tvl,
+            wlp.fee as fee,
+            SUBSTR(wlp.address, 1, 6) as poolPrefix,
+            wlp.total_supply,
+            wslp.factory AS stakePool,
+            wslp.factory_type as stakeRouter
+     from white_list_lp wlp
+              left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+     where wlp.tvl > 5000000
+       and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp."type" = 'LP') lpt
+        inner join platform_detail on(lpt.factory_type=platform_detail.platform_name)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'defi_balance_rank') level_def on
+        (1 = 1);
 
 -----balance_top  Uniswap_v3_UNI/WETH_0x1d42_BALANCE_TOP
 insert
@@ -325,6 +447,67 @@ select
     'WAITING' sync_es_status
 from
 
+    (select wlp.name,
+            wlp.symbol_wired,
+            wlp.address as pool,
+            wlp.factory,
+            wlp.factory_type,
+            wlp.factory_content,
+            wlp.pool_id,
+            wlp.symbols[1] as symbol1,
+            wlp.symbols[2] as symbol2,
+            wlp.type,
+            wlp.tokens,
+            wlp.decimals,
+            wlp.price,
+            wlp.tvl,
+            wlp.fee as fee,
+            SUBSTR(wlp.address, 1, 6) as poolPrefix,
+            wlp.total_supply,
+            wslp.factory AS stakePool,
+            wslp.factory_type as stakeRouter
+     from white_list_lp wlp
+              left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+     where wlp.tvl > 5000000
+       and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp."type" = 'LP') lpt
+        inner join platform_detail on(lpt.factory_type=platform_detail.platform_name)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'defi_balance_top') level_def on
+        (1 = 1);
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    lpt.factory_content project,
+    '' trade_type,
+    level_def.level balance,
+    '' volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_TOP_'||level_def.level  label_name,
+    lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
+    'token' asset_type,
+    'TOP' label_category
+from
     (select wlp.name,
             wlp.symbol_wired,
             wlp.address as pool,
@@ -479,6 +662,67 @@ from
         where
                 type = 'defi_count') level_def on
         (1 = 1);
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    lpt.factory_content project,
+    '' trade_type,
+    '' balance,
+    '' volume,
+    level_def.level activity,
+    '' hold_time,
+    now() created_at,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_ACTIVITY_'||level_def.level  label_name,
+    lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
+    'token' asset_type,
+    'GRADE' label_category
+from
+    (select wlp.name,
+            wlp.symbol_wired,
+            wlp.address as pool,
+            wlp.factory,
+            wlp.factory_type,
+            wlp.factory_content,
+            wlp.pool_id,
+            wlp.symbols[1] as symbol1,
+            wlp.symbols[2] as symbol2,
+            wlp.type,
+            wlp.tokens,
+            wlp.decimals,
+            wlp.price,
+            wlp.tvl,
+            wlp.fee as fee,
+            SUBSTR(wlp.address, 1, 6) as poolPrefix,
+            wlp.total_supply,
+            wslp.factory AS stakePool,
+            wslp.factory_type as stakeRouter
+     from white_list_lp wlp
+              left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+     where wlp.tvl > 5000000
+       and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp."type" = 'LP') lpt
+        inner join platform_detail on(lpt.factory_type=platform_detail.platform_name)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'defi_count') level_def on
+        (1 = 1);
 
 -----volume_grade  Uniswap_v3_UNI/WETH_0x1d42_VOLUME_GRADE
 insert
@@ -599,6 +843,67 @@ from
         where
                 type = 'defi_volume_grade') level_def on
         (1 = 1);
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    lpt.factory_content project,
+    '' trade_type,
+    '' balance,
+    level_def.level  volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_VOLUME_GRADE_'||level_def.level label_name,
+    lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name   "content",
+    'token' asset_type,
+    'GRADE' label_category
+from
+    (select wlp.name,
+            wlp.symbol_wired,
+            wlp.address as pool,
+            wlp.factory,
+            wlp.factory_type,
+            wlp.factory_content,
+            wlp.pool_id,
+            wlp.symbols[1] as symbol1,
+            wlp.symbols[2] as symbol2,
+            wlp.type,
+            wlp.tokens,
+            wlp.decimals,
+            wlp.price,
+            wlp.tvl,
+            wlp.fee as fee,
+            SUBSTR(wlp.address, 1, 6) as poolPrefix,
+            wlp.total_supply,
+            wslp.factory AS stakePool,
+            wslp.factory_type as stakeRouter
+     from white_list_lp wlp
+              left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+     where wlp.tvl > 5000000
+       and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp."type" = 'LP') lpt
+        inner join platform_detail on(lpt.factory_type=platform_detail.platform_name)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'defi_volume_grade') level_def on
+        (1 = 1);
 
 -----volume_rank  Uniswap_v3_UNI/WETH_0x1d42_VOLUME_RANK
 insert
@@ -686,6 +991,67 @@ select
     'WAITING' sync_es_status
 from
 
+    (select wlp.name,
+            wlp.symbol_wired,
+            wlp.address as pool,
+            wlp.factory,
+            wlp.factory_type,
+            wlp.factory_content,
+            wlp.pool_id,
+            wlp.symbols[1] as symbol1,
+            wlp.symbols[2] as symbol2,
+            wlp.type,
+            wlp.tokens,
+            wlp.decimals,
+            wlp.price,
+            wlp.tvl,
+            wlp.fee as fee,
+            SUBSTR(wlp.address, 1, 6) as poolPrefix,
+            wlp.total_supply,
+            wslp.factory AS stakePool,
+            wslp.factory_type as stakeRouter
+     from white_list_lp wlp
+              left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+     where wlp.tvl > 5000000
+       and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp."type" = 'LP') lpt
+        inner join platform_detail on(lpt.factory_type=platform_detail.platform_name)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'token_volume_rank') level_def on
+        (1 = 1);
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    lpt.factory_content project,
+    '' trade_type,
+    '' balance,
+    level_def.level  volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_VOLUME_RANK_'||level_def.level  label_name,
+    lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name   "content",
+    'token' asset_type,
+    'RANK' label_category
+from
     (select wlp.name,
             wlp.symbol_wired,
             wlp.address as pool,
