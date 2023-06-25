@@ -110,7 +110,7 @@ into
 select
     upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) asset,
     platform.platform_name project,
-    nft_trade_type.nft_trade_type trade_type,
+    trade_type.trade_type trade_type,
     '' balance,
     '' volume,
     level_def.level activity,
@@ -245,7 +245,7 @@ into
 select
         upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) asset,
         'ALL' project,
-        nft_trade_type.nft_trade_type trade_type,
+        trade_type.trade_type trade_type,
         '' balance,
         '' volume,
         level_def.level activity,
@@ -385,7 +385,7 @@ into
 select
         upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) asset,
         platform.platform_name project,
-        nft_trade_type.nft_trade_type trade_type,
+        trade_type.trade_type trade_type,
         '' balance,
         level_def.level volume,
         '' activity,
@@ -521,7 +521,7 @@ into
 select
         upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) asset,
         'ALL' project,
-        nft_trade_type.nft_trade_type trade_type,
+        trade_type.trade_type trade_type,
         '' balance,
         level_def.level volume,
         '' activity,
@@ -662,7 +662,7 @@ into
 select
         upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) asset,
         platform.platform_name project,
-        nft_trade_type.nft_trade_type trade_type,
+        trade_type.trade_type trade_type,
         '' balance,
         level_def.level volume,
         '' activity,
@@ -798,7 +798,7 @@ into
 select
         upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) asset,
         'ALL' project,
-        nft_trade_type.nft_trade_type trade_type,
+        trade_type.trade_type trade_type,
         '' balance,
         level_def.level volume,
         '' activity,
@@ -931,7 +931,7 @@ into
 select
         upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) asset,
         platform.platform_name project,
-        nft_trade_type.nft_trade_type trade_type,
+        trade_type.trade_type trade_type,
         '' balance,
         '' volume,
         level_def.level activity,
@@ -1049,7 +1049,7 @@ into
 select
         upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) asset,
         'ALL' project,
-        nft_trade_type.nft_trade_type trade_type,
+        trade_type.trade_type trade_type,
         '' balance,
         level_def.level volume,
         '' activity,
@@ -1173,7 +1173,7 @@ into
 select
         upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) asset,
         platform.platform_name project,
-        nft_trade_type.nft_trade_type trade_type,
+        trade_type.trade_type trade_type,
         '' balance,
         level_def.level volume,
         '' activity,
@@ -1295,7 +1295,7 @@ into
 select
         upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) asset,
         'ALL' project,
-        nft_trade_type.nft_trade_type trade_type,
+        trade_type.trade_type trade_type,
         '' balance,
         level_def.level volume,
         '' activity,
@@ -1421,7 +1421,7 @@ into
 select
         upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) asset,
         platform.platform_name project,
-        nft_trade_type.nft_trade_type trade_type,
+        trade_type.trade_type trade_type,
         '' balance,
         level_def.level volume,
         '' activity,
@@ -1542,7 +1542,7 @@ into
 select
         upper(top_token_1000.symbol)|| '_' || '(' || SUBSTRING(top_token_1000.address, 1, 8) asset,
         'ALL' project,
-        nft_trade_type.nft_trade_type trade_type,
+        trade_type.trade_type trade_type,
         '' balance,
         level_def.level volume,
         '' activity,
