@@ -510,7 +510,6 @@ select
     'WAITING' sync_es_status
 from
     nft_sync_address
-        inner join nft_trade_type  on(1=1)
         inner join (
         select
             *
@@ -519,7 +518,45 @@ from
         where
                 type = 'nft_time_grade') level_def on
         (1 = 1)
-where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
+where nft_sync_address.type<>'ERC1155' ;
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    platform asset,
+    '' project,
+    '' trade_type,
+    '' balance,
+    ''  volume,
+    '' activity,
+    level_def.level  hold_time,
+    now() created_at,
+    platform||'_NFT_TIME_GRADE_' || level_def.level  label_name,
+    nft_sync_address.platform||' '||level_def.level_name     "content",
+    'nft' asset_type,
+    'GRADE' label_category
+from
+    nft_sync_address
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'nft_time_grade') level_def on
+        (1 = 1)
+where nft_sync_address.type<>'ERC1155' ;
 
 --------time_rank CryptoPunks_NFT_TIME_SMART_NFT_EARLY_ADOPTER
 insert
@@ -582,7 +619,6 @@ select
     'WAITING' sync_es_status
 from
     nft_sync_address
-        inner join nft_trade_type  on(1=1)
         inner join (
         select
             *
@@ -591,8 +627,45 @@ from
         where
                 type = 'nft_time_rank') level_def on
         (1 = 1)
-where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
-
+where nft_sync_address.type<>'ERC1155' ;
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    platform asset,
+    '' project,
+    '' trade_type,
+    '' balance,
+    ''  volume,
+    '' activity,
+    'SMART_NFT_EARLY_ADOPTER'  hold_time,
+    now() created_at,
+    platform||'_NFT_TIME_SMART_NFT_EARLY_ADOPTER'  label_name,
+    nft_sync_address.platform||' '||level_def.level_name   "content",
+    'nft' asset_type,
+    'RANK' label_category
+from
+    nft_sync_address
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'nft_time_rank') level_def on
+        (1 = 1)
+where nft_sync_address.type<>'ERC1155' ;
 
 --------time_special CryptoPunks_NFT_TIME_SPECIAL
 insert
@@ -656,7 +729,6 @@ select
     'WAITING' sync_es_status
 from
     nft_sync_address
-        inner join nft_trade_type  on(1=1)
         inner join (
         select
             *
@@ -665,8 +737,46 @@ from
         where
                 type = 'nft_time_special') level_def on
         (1 = 1)
-where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
+where nft_sync_address.type<>'ERC1155' ;
 
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    platform asset,
+    '' project,
+    '' trade_type,
+    '' balance,
+    ''  volume,
+    '' activity,
+    level_def.level  hold_time,
+    now() created_at,
+    platform||'_NFT_TIME_SPECIAL_'||level_def.level  label_name,
+    nft_sync_address.platform||' '||level_def.level_name "content",
+    'nft' asset_type,
+    'SPECIAL' label_category
+from
+    nft_sync_address
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'nft_time_special') level_def on
+        (1 = 1)
+where nft_sync_address.type<>'ERC1155' ;
 
 --------volume_elite ALL_CryptoPunks_ALL_NFT_VOLUME_ELITE
 -- ALL_CryptoPunks_Transfer_NFT_VOLUME_ELITE
@@ -746,7 +856,46 @@ from
                 type = 'nft_volume_elite') level_def on
         (1 = 1)
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    nft_sync_address.platform  asset,
+    '' project,
+    nft_trade_type.nft_trade_type trade_type,
+    '' balance,
+    level_def.level volume,
+     '' activity,
+    '' hold_time,
+    now() created_at,
+    'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_ELITE_'||level_def.level  label_name,
+    nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)   "content",
+    'nft' asset_type,
+    'ELITE' label_category
+from
 
+    nft_sync_address
+        inner join nft_trade_type  on(1=1)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'nft_volume_elite') level_def on
+        (1 = 1)
+where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 --------volume_grade ALL_CryptoPunks_ALL_NFT_VOLUME_GRADE
 -- ALL_CryptoPunks_Transfer_NFT_VOLUME_GRADE
@@ -826,7 +975,45 @@ from
                 type = 'nft_volume_grade') level_def on
         (1 = 1)
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
-
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    nft_sync_address.platform  asset,
+    '' project,
+    nft_trade_type.nft_trade_type trade_type,
+    '' balance,
+    level_def.level volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_GRADE_'||level_def.level label_name,
+    nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
+    'nft' asset_type,
+    'GRADE' label_category
+from
+    nft_sync_address
+        inner join nft_trade_type  on(1=1)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'nft_volume_grade') level_def on
+        (1 = 1)
+where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 --------volume_rank ALL_CryptoPunks_ALL_NFT_VOLUME_RANK
 -- ALL_CryptoPunks_Transfer_NFT_VOLUME_RANK
@@ -906,7 +1093,45 @@ from
                 type = 'nft_volume_rank') level_def on
         (1 = 1)
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
-
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    nft_sync_address.platform  asset,
+    '' project,
+    nft_trade_type.nft_trade_type trade_type,
+    '' balance,
+    level_def.level volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_RANK_'||level_def.level label_name,
+    nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
+    'nft' asset_type,
+    'RANK' label_category
+from
+    nft_sync_address
+        inner join nft_trade_type  on(1=1)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'nft_volume_rank') level_def on
+        (1 = 1)
+where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 --------volume_top ALL_CryptoPunks_ALL_NFT_VOLUME_TOP
 -- ALL_CryptoPunks_Transfer_NFT_VOLUME_TOP
@@ -974,6 +1199,45 @@ select
     'NFT' wired_type,
     999 label_order,
     'WAITING' sync_es_status
+from
+    nft_sync_address
+        inner join nft_trade_type  on(1=1)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'nft_volume_top') level_def on
+        (1 = 1)
+where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    nft_sync_address.platform  asset,
+    '' project,
+    nft_trade_type.nft_trade_type trade_type,
+    '' balance,
+    level_def.level volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_TOP_'||level_def.level label_name,
+    nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
+    'nft' asset_type,
+    'TOP' label_category
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
