@@ -15,5 +15,4 @@ import org.apache.ibatis.annotations.Param;
 public interface UgcLabelDataAnalysisRecordMapper extends BaseMapper<UgcLabelDataAnalysisRecord> {
 
 
-    int updateDownloadPath(@Param("uldaId") Long uldaId, @Param("downloadPath") String downloadPath);
 }

@@ -18,8 +18,6 @@
         <result column="analysis_at" property="analysisAt" />
         <result column="analysis_address_num" property="analysisAddressNum" />
         <result column="address_image_text" property="addressImageText" />
-        <result column="download_status" property="downloadStatus" />
-        <result column="download_path" property="downloadPath" />
     </resultMap>
 
 </mapper>

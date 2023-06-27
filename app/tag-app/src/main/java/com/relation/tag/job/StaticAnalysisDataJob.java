@@ -18,14 +18,6 @@ public class StaticAnalysisDataJob {
         staticManager.staticLabelDataAnalysis();
     }
 
-//    @MethodDesc("Scheduled task: ugcDataAnalysisDownloadTimeout")
-//    @Scheduled(cron = "0/30 * * * * ?")
-////    @XxlJob("ugcDataAnalysisDownloadTimeout")
-//    public void ugcDataAnalysisDownloadTimeout() {
-//        staticManager.ugcDataAnalysisDownloadTimeout();
-//    }
-
-
     @Scheduled(cron = "0/30 * * * * ?")
 //    @XxlJob("synAnalysisData2Pg")
     public void synAnalysisData2Pg() {

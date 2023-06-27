@@ -29,8 +29,6 @@ public interface UgcLabelDataAnalysisMapper extends BaseMapper<UgcLabelDataAnaly
 
     void updateResult(UgcLabelDataAnalysis result, String configEnvironment);
 
-    void updateDownload(@Param("id") Long id, @Param("downloadPath") String downloadPath);
-
     void resetRecord2TODO(@Param("updatedAt") Date updatedAt);
 
     List<UgcLabelDataAnalysis> selectTimeoutRecord(@Param("timeoutHour") Integer timeoutHour);

@@ -28,7 +28,6 @@ public interface IUgcLabelDataAnalysisService extends IService<UgcLabelDataAnaly
 
     void updateResult(UgcLabelDataAnalysis result, String configEnvironment);
 
-    void updateDownload(Long id, String downloadPath);
 
     void resetRecord2TODO(Date updatedAt);
 

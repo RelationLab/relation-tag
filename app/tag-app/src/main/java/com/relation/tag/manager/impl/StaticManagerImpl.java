@@ -27,7 +27,6 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -325,10 +324,6 @@ public class StaticManagerImpl implements StaticManager {
             });
         });
     }
-
-    @Value("${relation-ugc.label-download.timeout:12}")
-    private Integer timeoutHour;
-
 
     @Override
     public void staticData(UgcLabelDataAnalysis entity, String configEnvironment) {

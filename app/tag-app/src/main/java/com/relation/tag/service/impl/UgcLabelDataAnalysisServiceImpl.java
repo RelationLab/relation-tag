@@ -56,11 +56,6 @@ public class UgcLabelDataAnalysisServiceImpl extends ServiceImpl<UgcLabelDataAna
     }
 
     @Override
-    public void updateDownload(Long id, String downloadPath) {
-        this.baseMapper.updateDownload(id, downloadPath);
-    }
-
-    @Override
     public void resetRecord2TODO(Date updatedAt) {
         this.baseMapper.resetRecord2TODO(updatedAt);
     }

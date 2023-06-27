@@ -17,9 +17,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class UgcLabelDataAnalysisRecordServiceImpl extends ServiceImpl<UgcLabelDataAnalysisRecordMapper, UgcLabelDataAnalysisRecord> implements IUgcLabelDataAnalysisRecordService {
 
-
-    @Override
-    public int updateDownloadPath(Long uldaId, String downloadPath) {
-        return this.baseMapper.updateDownloadPath(uldaId, downloadPath);
-    }
 }

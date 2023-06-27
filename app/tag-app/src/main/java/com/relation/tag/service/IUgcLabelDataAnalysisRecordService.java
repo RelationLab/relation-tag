@@ -14,5 +14,4 @@ import com.relation.tag.entity.UgcLabelDataAnalysisRecord;
 public interface IUgcLabelDataAnalysisRecordService extends IService<UgcLabelDataAnalysisRecord> {
 
 
-    int updateDownloadPath(Long uldaId, String downloadPath);
 }
