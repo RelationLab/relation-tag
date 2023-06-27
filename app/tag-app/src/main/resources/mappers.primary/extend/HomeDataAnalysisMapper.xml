@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.relation.tag.mapper.primary.HomeDataAnalysisMapper">
-    <sql id="TableName">home_data_analysis</sql>
-
-    <select id="selectResult" resultType="java.lang.String">
-        select analysis_result from <include refid="TableName"/> order by analysis_date desc limit 1
-    </select>
-</mapper>
