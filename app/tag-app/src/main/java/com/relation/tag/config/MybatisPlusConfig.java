@@ -22,7 +22,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.relation.ugc.mapper.primary", sqlSessionTemplateRef = "sqlSessionTemplate")
+@MapperScan(basePackages = "com.relation.tag.mapper.primary", sqlSessionTemplateRef = "sqlSessionTemplate")
 public class MybatisPlusConfig {
     private String mappers = "classpath*:mappers/primary/**/*Mapper.xml";
 
