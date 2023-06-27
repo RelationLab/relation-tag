@@ -14,4 +14,75 @@
     <select id="selectQueryStr" resultType="java.lang.String" timeout="864000">
         select query from pg_stat_activity
     </select>
+
+
+    <select id="selectDataAnalysis" resultType="com.relation.tag.entity.UgcLabelDataAnalysis">
+        select id,
+               name,
+               address,
+               api_level,
+               mode,
+               labels,
+               status,
+               analysis_result,
+               created_at,
+               updated_at,
+               analysis_at,
+               analysis_address_num,
+               address_image_text,
+               removed,
+               download_path,
+               download_status
+        from ugc_label_data_analysis
+        where (status = 'DONE' or status='FAIL') and config_environment=#{configEnvironment}
+        order by updated_at ASC limit 20
+    </select>
+
+    <update id="updateBatch">
+        update ugc_label_data_analysis set status='FINISHED'
+        where id in
+        (<foreach collection="list" item="item" separator=",">
+        #{item.id}
+    </foreach>) and status = 'DONE'  and config_environment = #{configEnvironment}
+    </update>
+
+    <update id="updateDataAnalysisFail">
+        update ugc_label_data_analysis set status='FAIL'
+        where id = #{id}  and config_environment = #{configEnvironment}
+    </update>
+
+
+
+    <update id="insertBatch">
+        insert into ugc_label_data_analysis(id,name,
+        address,
+        api_level,
+        mode,
+        labels,
+        status,
+        analysis_result,
+        created_at,
+        updated_at,
+        removed,
+        config_environment,
+        download_path,
+        download_status)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id}, #{item.name},#{item.address},#{item.apiLevel},#{item.mode},#{item.labels},
+            #{item.status},#{item.analysisResult},#{item.createdAt},#{item.updatedAt}, #{item.removed}, #{configEnvironment}, #{item.downloadPath}, #{item.downloadStatus})
+        </foreach>
+        on conflict (id, config_environment) do update set status=EXCLUDED.status, name = EXCLUDED.name, api_level = EXCLUDED.api_level, download_path=EXCLUDED.download_path, download_status=EXCLUDED.download_status
+    </update>
+
+    <select id="selectTagResult" resultType="java.lang.String">
+        select batch_date
+        from tag_result where table_name = #{resultTableName} order by batch_date desc limit 1
+    </select>
+
+    <select id="selectHomeDataAnalysis" resultType="com.relation.tag.entity.HomeDataAnalysis">
+        select analysis_date,analysis_result
+        from home_data_analysis where config_environment = #{configEnvironment} order by analysis_date desc limit 1
+    </select>
+
 </mapper>

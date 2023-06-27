@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relation.tag.mapper.primary.UgcLabelDataAnalysisMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.relation.tag.entity.UgcLabelDataAnalysis">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="address" property="address" />
+        <result column="api_level" property="apiLevel" />
+        <result column="mode" property="mode" />
+        <result column="labels" property="labels" />
+        <result column="status" property="status" />
+        <result column="analysis_result" property="analysisResult" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="removed" property="removed" />
+        <result column="analysis_at" property="analysisAt" />
+        <result column="analysis_address_num" property="analysisAddressNum" />
+        <result column="address_image_text" property="addressImageText" />
+        <result column="download_status" property="downloadStatus" />
+        <result column="download_path" property="downloadPath" />
+    </resultMap>
+
+</mapper>

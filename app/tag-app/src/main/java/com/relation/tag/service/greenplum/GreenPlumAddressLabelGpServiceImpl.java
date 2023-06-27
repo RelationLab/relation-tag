@@ -2,6 +2,8 @@ package com.relation.tag.service.greenplum;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.relation.tag.entity.AddressLabelGp;
+import com.relation.tag.entity.HomeDataAnalysis;
+import com.relation.tag.entity.UgcLabelDataAnalysis;
 import com.relation.tag.mapper.greenplum.GreenplumAddressLabelGpMapper;
 import com.relation.tag.service.IAddressLabelGpService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,5 +32,37 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
     @Override
     public Integer exceSelectSql(String exceSelectSql) {
         return baseMapper.exceSelectSql(exceSelectSql);
+    }
+
+
+    @Override
+    public List<UgcLabelDataAnalysis> selectDataAnalysis(String configEnvironment) {
+        return baseMapper.selectDataAnalysis(configEnvironment);
+    }
+
+    @Override
+    public void updateBatch(List<UgcLabelDataAnalysis> list, String configEnvironment) {
+        baseMapper.updateBatch(list,configEnvironment);
+    }
+
+    @Override
+    public void insertBatch(List<UgcLabelDataAnalysis> entityList, String configEnvironment) {
+        baseMapper.insertBatch(entityList,configEnvironment);
+    }
+
+
+    @Override
+    public String selectTagResult(String resultTableName) {
+        return baseMapper.selectTagResult(resultTableName);
+    }
+
+    @Override
+    public HomeDataAnalysis selectHomeDataAnalysis(String configEnvironment) {
+        return baseMapper.selectHomeDataAnalysis(configEnvironment);
+    }
+
+    @Override
+    public void updateDataAnalysisFail(String id, String configEnvironment) {
+        baseMapper.updateDataAnalysisFail(Long.parseLong(id),configEnvironment);
     }
 }

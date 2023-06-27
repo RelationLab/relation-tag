@@ -73,4 +73,33 @@ public class FileUtils {
         log.info(String.format("resolveSqlFile end  sqlList length：%s", sqlList.size()));
         return sqlList;
     }
+
+    /**
+     * read TXT file
+     *
+     * @param filePath
+     */
+    public static String readFileByStringInput(String filePath) throws Exception {
+//        log.info(String.format("readFile %s start.........",filePath));
+        StringBuffer stringBuffer = new StringBuffer();
+        InputStreamReader read = null;
+        try {
+            Resource resource = new ClassPathResource(filePath);
+            read = new InputStreamReader(resource.getInputStream(), "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(read);
+            String lineTxt = null;
+            while ((lineTxt = bufferedReader.readLine()) != null) {
+                stringBuffer.append(lineTxt).append("\n");
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+        } finally {
+            if (read != null) {
+                read.close();
+            }
+        }
+//        log.info(String.format("readFile %s end.........",filePath));
+        return stringBuffer.toString();
+    }
+
 }
