@@ -7,12 +7,14 @@ import org.apache.http.client.utils.DateUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Calendar;
 import java.util.Date;
 
 @SpringBootApplication(scanBasePackages = {"com.relation.tag",
         "org.springframework.boot.extension"})
+@EnableScheduling
 @Slf4j
 public class TagApplication {
 
