@@ -40,6 +40,10 @@ spec:
               value: {{ .Values.greenplum.username | quote }}
             - name: GREENPLUM_DB_PASSWORD
               value: {{ .Values.greenplum.password | quote }}
+            - name: DB_HOST
+              value: {{ .Values.ugcDatabase.host | quote }}
+            - name: DB_PASSWORD
+              value: {{ .Values.ugcDatabase.password | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
