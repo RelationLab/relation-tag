@@ -26,6 +26,10 @@ greenplum:
   #username: "postgres"
   password: ""
 
+ugcDatabase:
+  host: ""
+  password: ""
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

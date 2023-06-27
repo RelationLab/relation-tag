@@ -9,6 +9,8 @@ const wiredAwsEcrStackRef = new pulumi.StackReference(
 );
 
 const wiredGpClusterStackRef = new pulumi.StackReference(`${maintainer}/wired-gp-cluster/prod`);
+const wiredUgcInfraStagStackRef = new pulumi.StackReference(`${maintainer}/wired-ugc-infra/stag`);
+const wiredUgcInfraProdStackRef = new pulumi.StackReference(`${maintainer}/wired-ugc-infra/prod`);
 
 export const ecrRepositoryName = name;
 export const ecrRepositoryUrl = wiredAwsEcrStackRef
@@ -17,3 +19,9 @@ export const ecrRepositoryUrl = wiredAwsEcrStackRef
 
 export const wiredGpClusterSecretId = wiredGpClusterStackRef.getOutput("awsSecretId");
 export const wiredGpClusterDomain = wiredGpClusterStackRef.getOutput("coordinatorDomain");
+
+export const wiredUgcSecretIdStag = wiredUgcInfraStagStackRef.getOutput("awsSecretId");
+export const wiredUgcSecretIdProd = wiredUgcInfraProdStackRef.getOutput("awsSecretId");
+
+export const wiredUgcDataBaseHostStag = wiredUgcInfraStagStackRef.getOutput("rdsDatabaseDomain");
+export const wiredUgcDataBaseHostProd = wiredUgcInfraProdStackRef.getOutput("rdsDatabaseDomain");

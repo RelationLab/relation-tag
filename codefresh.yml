@@ -33,13 +33,17 @@ steps:
       - cf_export AWS_ECR_REPO_URL=$(pulumi stack output ecrRepositoryUrl)
       - cf_export WIRED_GP_CLUSTER_AWS_SECRET_ID=$(pulumi stack output wiredGpClusterSecretId)
       - cf_export WIRED_GP_CLUSTER_DOMIN=$(pulumi stack output wiredGpClusterDomain)
+      - cf_export WIRED_UGC_AWS_SECRET_ID_STAG=$(pulumi stack output wiredUgcSecretIdStag)
+      - cf_export WIRED_UGC_AWS_SECRET_ID_PROD=$(pulumi stack output wiredUgcSecretIdProd)
+      - cf_export WIRED_UGC_DATABASE_HOST_STAG=$(pulumi stack output wiredUgcDataBaseHostStag)
+      - cf_export WIRED_UGC_DATABASE_HOST_PROD=$(pulumi stack output wiredUgcDataBaseHostProd)
 
   prepareArtifacts:
     type: "parallel"
     stage: prepare
     steps:
       fetchSecrets:
-        title: "Fetch AWS Secrets"
+        title: "Fetch GP AWS Secrets"
         type: aws-secrets-manager
         arguments:
           AWS_DEFAULT_REGION: "${{AWS_DEFAULT_REGION}}"
@@ -48,12 +52,23 @@ steps:
               key: "gpAdminPassword"
               store_in: WIRED_GP_CLUSTER_ADMIN_PASSWORD
       buildWiredTagImage:
-        title: "Build Wired Tag Docker Image"
+        title: "Build Docker Image"
         type: "build"
         working_directory: "${{clone}}/app"
         image_name: "${{AWS_ECR_REPO_NAME}}"
         dockerfile: "Dockerfile"
         tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+
+  fetchSecretsStag:
+    title: "Fetch UGC AWS Secrets"
+    stage: stagDeploy
+    type: aws-secrets-manager
+    arguments:
+      AWS_DEFAULT_REGION: "${{AWS_DEFAULT_REGION}}"
+      secrets:
+        - secret_arn: "${{WIRED_UGC_AWS_SECRET_ID_STAG}}"
+          key: "dbPassword"
+          store_in: WIRED_UGC_DATABASE_PASSWORD_STAG
 
   stagUninstall:
     title: "Helm uninsall wired-tag"
@@ -80,11 +95,24 @@ steps:
         - "config_env=stag"
         - "greenplum_host=${{WIRED_GP_CLUSTER_DOMIN}}"
         - "greenplum_password=${{WIRED_GP_CLUSTER_ADMIN_PASSWORD}}"
+        - "ugcDatabase_host=${{WIRED_UGC_DATABASE_HOST_STAG}}"
+        - "ugcDatabase_password=${{WIRED_UGC_DATABASE_PASSWORD_STAG}}"
 
   askForProdPermission:
     type: pending-approval
     stage: prodDeploy
     title: Deploy to produtcion?
+
+  fetchSecretsProd:
+    title: "Fetch UGC AWS Secrets"
+    stage: prodDeploy
+    type: aws-secrets-manager
+    arguments:
+      AWS_DEFAULT_REGION: "${{AWS_DEFAULT_REGION}}"
+      secrets:
+        - secret_arn: "${{WIRED_UGC_AWS_SECRET_ID_PROD}}"
+          key: "dbPassword"
+          store_in: WIRED_UGC_DATABASE_PASSWORD_PROD
 
   prodUninstall:
     title: "Helm uninsall wired-tag"
@@ -111,3 +139,5 @@ steps:
         - "config_env=prod"
         - "greenplum_host=${{WIRED_GP_CLUSTER_DOMIN}}"
         - "greenplum_password=${{WIRED_GP_CLUSTER_ADMIN_PASSWORD}}"
+        - "ugcDatabase_host=${{WIRED_UGC_DATABASE_HOST_PROD}}"
+        - "ugcDatabase_password=${{WIRED_UGC_DATABASE_PASSWORD_PROD}}"
