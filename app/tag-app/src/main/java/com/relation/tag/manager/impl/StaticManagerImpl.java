@@ -257,6 +257,10 @@ public class StaticManagerImpl implements StaticManager {
         if (checkResult(synTableName, 1, null, tagBatch)) {
             return;
         }
+        synHomeDataAnalysis(synTableName,tagBatch);
+    }
+
+    private void synHomeDataAnalysis(String synTableName, String tagBatch) {
         HomeDataAnalysis entity = iAddressLabelService.selectHomeDataAnalysis(configEnvironment);
         if (Objects.isNull(entity)) {
             log.info("HomeDataAnalysis entity isEmpty....");
@@ -426,5 +430,7 @@ public class StaticManagerImpl implements StaticManager {
         return iAddressLabelService.exceSelectSql(execSql);
     }
 
-
+//    void synLabel(){
+//        return iAddressLabelService.exceSelectSql(execSql);
+//    }
 }
