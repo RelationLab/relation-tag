@@ -9,9 +9,9 @@ spring:
     enabled: true
   datasource:
     primary:
-      url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}?currentSchema=public&characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&stringtype=unspecified
+      url: jdbc:postgresql://${DB_HOST:wired-ugc-stag-rds8938bb4.cyaangry9qtf.ap-southeast-1.rds.amazonaws.com}:${DB_PORT:5432}/${DB_NAME:ugc}?currentSchema=public&characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&stringtype=unspecified
       username: ${DB_USERNAME:postgres}
-      password: ${DB_PASSWORD:hojil@123!}
+      password: ${DB_PASSWORD:cwhAmb9aFFRDeepJ}
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: org.postgresql.Driver
       #      druid:
