@@ -133,18 +133,18 @@ public class StaticManagerImpl implements StaticManager {
             iAddressLabelService.exceSql(exceSql, sqlName);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-//            try {
-//                Thread.sleep(1 * 60 * 1000);
-//            } catch (InterruptedException ex) {
-//                throw new RuntimeException(ex);
-//            }
-//            log.info("sqlName==={} try ......tryCount={}", sqlName, tryCount);
-//
-//            if (tryCount == 5) {
-//                saveFailRecord(paramsMap);
-//                return;
-//            }
-//            execSynSql(lastTableName, sqlName, tableName, paramsMap, result, dir, tableSuffix, batchDate, tryCount);
+            try {
+                Thread.sleep(1 * 60 * 1000);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+            log.info("sqlName==={} try ......tryCount={}", sqlName, tryCount);
+
+            if (tryCount == 5) {
+                saveFailRecord(paramsMap);
+                return;
+            }
+            execSynSql(lastTableName, sqlName, tableName, paramsMap, result, dir, tableSuffix, batchDate, tryCount);
         }
     }
 
