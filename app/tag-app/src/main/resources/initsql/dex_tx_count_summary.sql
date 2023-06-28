@@ -45,22 +45,19 @@ INTO
                          token,
                          TYPE,
                          project,
-                         transaction_hash,
                          total_transfer_count)
 select
     th.address,
     'ALL' as token,
     th.type as type,
     '0xc36442b4a4522e871399cd717abdd847ab11fe88' as project,
-    transaction_hash,
     max(total_transfer_count) as total_transfer_count
 from
     token_holding_uni_cal th  INNER JOIN (select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true)
         top_token_1000 ON (th.price_token = top_token_1000.address)
 group by
     th.address,
-    th.type,
-    transaction_hash;
+    th.type;
 
 INSERT
 INTO
