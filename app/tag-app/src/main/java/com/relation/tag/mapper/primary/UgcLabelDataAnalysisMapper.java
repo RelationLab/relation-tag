@@ -27,7 +27,7 @@ public interface UgcLabelDataAnalysisMapper extends BaseMapper<UgcLabelDataAnaly
 
     void updateDoingDataAnalysis(List<UgcLabelDataAnalysis> list);
 
-    void updateResult(UgcLabelDataAnalysis result, String configEnvironment);
+    void updateResult(@Param("param") UgcLabelDataAnalysis result, String configEnvironment);
 
     void resetRecord2TODO(@Param("updatedAt") Date updatedAt);
 

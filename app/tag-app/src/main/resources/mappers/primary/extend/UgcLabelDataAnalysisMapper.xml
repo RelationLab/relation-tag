@@ -53,7 +53,9 @@
         analysis_result,
         created_at,
         updated_at,
-        removed
+        removed,
+        redo,
+        restore_vip_usage
         from
         <include refid="TableName"/>
         where removed = false and status = #{status}
@@ -76,9 +78,12 @@
     <update id="updateResult">
         update
         <include refid="TableName"/>
-        set status=#{status},
-        analysis_result=#{analysisResult}
-        where id = #{id} and status = 'DOING'
+        set status=#{param.status},
+        <if test="param.restoreVipUsage != null">
+            restore_vip_usage = #{param.restoreVipUsage}
+        </if>
+        analysis_result=#{param.analysisResult}
+        where id = #{param.id} and status = 'DOING'
     </update>
 
     <update id="resetRecord2TODO">
