@@ -430,8 +430,4 @@ public class StaticManagerImpl implements StaticManager {
                 .concat("' ").concat(StringUtils.isBlank(batchDate) ? "" : ("and batch_date='".concat(batchDate).concat("' ")));
         return iAddressLabelService.exceSelectSql(execSql);
     }
-
-//    void synLabel(){
-//        return iAddressLabelService.exceSelectSql(execSql);
-//    }
 }

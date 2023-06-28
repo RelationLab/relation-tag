@@ -17,7 +17,7 @@ public interface StaticManager {
 
     void synHomePageData();
 
-//    void synLabel();
+
 
 
 }
