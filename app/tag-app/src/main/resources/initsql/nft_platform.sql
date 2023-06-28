@@ -3,8 +3,8 @@ CREATE TABLE public.nft_platform (
                                        address varchar NOT NULL,
                                        platform varchar NOT NULL,
                                        platform_name varchar NULL,
-                                       created_at timestamptz NULL DEFAULT CURRENT_TIMESTAMP,
-                                       updated_at timestamptz NULL DEFAULT CURRENT_TIMESTAMP,
+                                       created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+                                       updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                        "removed" bool DEFAULT false,
                                        CONSTRAINT nft_platform_un UNIQUE (address, platform)
 );

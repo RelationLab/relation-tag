@@ -321,6 +321,7 @@ public class StaticManagerImpl implements StaticManager {
                 try {
                     staticData(entity, configEnvironment);
                 } catch (Exception e) {
+                    entity.setRestoreVipUsage(true);
                     entity.setStatus(DataAnalysisStatusEnum.FAIL.name());
                     ugcLabelDataAnalysisService.updateResult(entity, configEnvironment);
                     log.error("staticLabelDataAnalysis failed, param: {}", JSON.toJSONString(entity), e);

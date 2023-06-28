@@ -51,4 +51,9 @@ public class UgcLabelDataAnalysis implements Serializable {
     private Long analysisAddressNum;
 
     private String addressImageText;
+
+    private Long uldrId;
+
+    private Boolean redo;
+    private Boolean restoreVipUsage;
 }
