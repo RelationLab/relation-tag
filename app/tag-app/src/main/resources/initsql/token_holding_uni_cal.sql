@@ -46,7 +46,7 @@ insert into token_holding_uni_cal(address
                                  ,in_transfer_count
                                  ,out_transfer_count
                                  ,first_updated_block_height
-
+                                 ,price_token
                                  ,liquidity
                                  ,type,triggered_flag)
 
@@ -63,25 +63,27 @@ select
      ,in_transfer_count
      ,out_transfer_count
      ,first_updated_block_height
+     ,price_token
      ,liquidity
      ,type
      ,triggered_flag
 from (
          select address
               ,token
-              ,max(case when (type!='lp'  or nft_token_id='-1') then 0 else balance end ) balance
+              ,sum(case when (type!='lp'  or nft_token_id='-1') then 0 else balance end ) balance
               ,max(block_height) block_height
-              ,max(total_transfer_volume) total_transfer_volume
-              ,max(total_transfer_count) total_transfer_count
+              ,sum(total_transfer_volume) total_transfer_volume
+              ,sum(total_transfer_count) total_transfer_count
               ,nft_token_id
-              ,max(in_transfer_volume) in_transfer_volume
-              ,max(out_transfer_volume) out_transfer_volume
-              ,max(in_transfer_count) in_transfer_count
-              ,max(out_transfer_count) out_transfer_count
+              ,sum(in_transfer_volume) in_transfer_volume
+              ,sum(out_transfer_volume) out_transfer_volume
+              ,sum(in_transfer_count) in_transfer_count
+              ,sum(out_transfer_count) out_transfer_count
               ,max(first_updated_block_height) first_updated_block_height
-              ,max(liquidity) liquidity
+              ,price_token
+              ,sum(liquidity) liquidity
               ,max(type) as type
               ,max(triggered_flag) as triggered_flag from token_holding_uni
-         group by address,token,nft_token_id,transaction_hash ) tb1 ;
+         group by address,token,nft_token_id,price_token ) tb1 ;
 insert into tag_result(table_name,batch_date)  SELECT 'token_holding_uni_cal' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
