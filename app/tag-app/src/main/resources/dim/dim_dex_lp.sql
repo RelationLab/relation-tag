@@ -49,7 +49,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -215,7 +215,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -380,7 +380,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -546,7 +546,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",

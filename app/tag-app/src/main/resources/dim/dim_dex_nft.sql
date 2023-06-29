@@ -101,7 +101,7 @@ into
 select
     distinct
     nft_sync_address.platform asset,
-    nft_platform.platform_name  project,
+    mp_nft_platform.platform_name  project,
     nft_trade_type.nft_trade_type trade_type,
     '' balance,
     '' volume,
@@ -466,14 +466,7 @@ into
                         label_category)
 select distinct
     'ALL_NFT' asset,
-    (
-        select
-            nft_platform.platform_name
-        from
-            nft_platform
-        where
-                mp_nft_platform.platform = nft_platform.platform
-              limit 1)   project,
+    mp_nft_platform.platform_name  project,
     nft_trade_type.nft_trade_type trade_type,
     '' balance,
     '' volume,
@@ -847,15 +840,8 @@ into
                         asset_type,
                         label_category)
 select distinct
-    'ALL' asset,
-    (
-        select
-            nft_platform.platform_name
-        from
-            nft_platform
-        where
-                mp_nft_platform.platform = nft_platform.platform
-          limit 1)   project,
+    'ALL_NFT' asset,
+    mp_nft_platform.platform_name  project,
     nft_trade_type.nft_trade_type trade_type,
     '' balance,
     '' volume,
@@ -880,8 +866,7 @@ from
     (1 = 1)
 where
     nft_trade_type.type = '1' ;
-('ALL_NFT','','','','ELITE_NFT_TRADER','','','2023-06-20 07:49:34.394','2023-06-20 07:49:34.394',false,'ALL_ALL_ALL_NFT_VOLUME_ELITE_ELITE_NFT_TRADER','Elite NFT Trader','nft','ELITE'),
-                                                                                                                                                                             ('ALL_NFT','ALL','','','ELITE_NFT_TRADER','','','2023-06-20 07:49:34.394','2023-06-20 07:49:34.394',false,'ALL_ALL_ALL_MP_NFT_VOLUME_ELITE_ELITE_NFT_TRADER','MP NFT Elite Trader','nft','ELITE');
+
 --------volume_elite project(ALL)+token(ALL)
 -- ALL_ALL_ALL_MP_NFT_VOLUME_ELITE
 -- ALL_ALL_Buy_MP_NFT_VOLUME_ELITE
@@ -1347,15 +1332,8 @@ into
                         asset_type,
                         label_category)
 select distinct
-    'ALL' asset,
-    (
-        select
-            nft_platform.platform_name
-        from
-            nft_platform
-        where
-                mp_nft_platform.platform = nft_platform.platform
-          limit 1)   project,
+    'ALL_NFT' asset,
+    mp_nft_platform.platform_name  project,
     nft_trade_type.nft_trade_type trade_type,
     '' balance,
     '' volume,
@@ -1492,7 +1470,7 @@ from  nft_trade_type
     where
             type = 'nft_volume_grade') level_def on
     (1 = 1)
-where  nft_trade_type.type='1';                                                                                                                                                                     ('ALL_NFT','ALL','','','L6','','','2023-06-20 07:49:34.394','2023-06-20 07:49:34.394',false,'ALL_ALL_ALL_MP_NFT_VOLUME_GRADE_L6','MP NFT VOL Lv6 Trader','nft','GRADE');
+where  nft_trade_type.type='1';
 
 --------volume_rank
 -- Blur_CryptoPunks_ALL_MP_NFT_VOLUME_RANK
@@ -1840,15 +1818,8 @@ into
                         asset_type,
                         label_category)
 select distinct
-    'ALL' asset,
-    (
-        select
-            nft_platform.platform_name
-        from
-            nft_platform
-        where
-                mp_nft_platform.platform = nft_platform.platform
-          limit 1)   project,
+    'ALL_NFT' asset,
+    mp_nft_platform.platform_name  project,
     nft_trade_type.nft_trade_type trade_type,
     '' balance,
     '' volume,
@@ -1986,8 +1957,7 @@ from  nft_trade_type
     where
             type = 'nft_volume_rank') level_def on
     (1 = 1)
-where  nft_trade_type.type='1';                                                                                                                                                              ('ALL_NFT','ALL','','','RARE_NFT_TRADER','','','2023-06-20 07:49:34.394','2023-06-20 07:49:34.394',false,'ALL_ALL_ALL_MP_NFT_VOLUME_RANK_RARE_NFT_TRADER','MP NFT Rare Trader','nft','RANK'),
-                                                                                                                                                                             ('ALL_NFT','ALL','','','UNCOMMON_NFT_TRADER','','','2023-06-20 07:49:34.394','2023-06-20 07:49:34.394',false,'ALL_ALL_ALL_MP_NFT_VOLUME_RANK_UNCOMMON_NFT_TRADER','MP NFT Uncommon Trader','nft','RANK');
+where  nft_trade_type.type='1';
 
 --------volume_top
 -- Blur_CryptoPunks_ALL_MP_NFT_VOLUME_TOP
@@ -2336,15 +2306,8 @@ into
                         asset_type,
                         label_category)
 select distinct
-    'ALL' asset,
-    (
-        select
-            nft_platform.platform_name
-        from
-            nft_platform
-        where
-                mp_nft_platform.platform = nft_platform.platform
-          limit 1)   project,
+    'ALL_NFT' asset,
+    mp_nft_platform.platform_name  project,
     nft_trade_type.nft_trade_type trade_type,
     '' balance,
     '' volume,

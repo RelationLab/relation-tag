@@ -26,7 +26,7 @@ from
 
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -42,7 +42,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     platform||'_NFT_BALANCE_GRADE' as "type",
     platform||'_NFT_BALANCE_GRADE_'|| level_def.level as "name",
@@ -84,7 +84,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         platform asset,
         '' project,
         '' trade_type,
@@ -134,7 +134,7 @@ select
     'ALL' token_name;
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -150,7 +150,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL' ||  '_NFT_BALANCE_GRADE'  as "type",
     'ALL' ||  '_NFT_BALANCE_GRADE_' || level_def.level as "name",
@@ -182,7 +182,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_NFT'  asset,
     '' project,
     '' trade_type,
@@ -225,7 +225,7 @@ from
 
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -241,7 +241,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     platform||'_NFT_BALANCE_RANK' as "type",
     platform||'_NFT_BALANCE_RANK_'|| level_def.level as "name",
@@ -283,7 +283,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     platform asset,
     '' project,
     '' trade_type,
@@ -332,7 +332,7 @@ select
     'ALL' token_name;
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -348,7 +348,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL' ||  '_NFT_BALANCE_RANK'  as "type",
     'ALL' ||  '_NFT_BALANCE_RANK_' || level_def.level as "name",
@@ -380,7 +380,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_NFT'  asset,
     '' project,
     '' trade_type,
@@ -422,7 +422,7 @@ from
 
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -438,7 +438,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     platform||'_NFT_BALANCE_TOP' as "type",
     platform||'_NFT_BALANCE_TOP_'|| level_def.level as "name",
@@ -480,7 +480,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     platform asset,
     '' project,
     '' trade_type,
@@ -530,7 +530,7 @@ select
     'ALL' token_name;
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -546,7 +546,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL' ||  '_NFT_BALANCE_TOP'  as "type",
     'ALL' ||  '_NFT_BALANCE_TOP_' || level_def.level as "name",
@@ -578,7 +578,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_NFT'  asset,
     '' project,
     '' trade_type,
@@ -626,7 +626,7 @@ from
  where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -642,7 +642,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_ACTIVITY'  as "type",
     'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_ACTIVITY_' || level_def.level as "name",
@@ -685,7 +685,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform  asset,
     '' project,
     nft_trade_type.nft_trade_type trade_type,
@@ -744,7 +744,7 @@ from nft_trade_type
 where nft_trade_type.type='0';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -760,7 +760,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_ACTIVITY'  as "type",
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_ACTIVITY_' || level_def.level as "name",
@@ -801,7 +801,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_NFT'  asset,
     '' project,
     nft_trade_type.nft_trade_type trade_type,
@@ -852,7 +852,7 @@ from
     public.nft_sync_address where nft_sync_address.type<>'ERC1155';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -868,7 +868,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     platform||'_NFT_TIME_GRADE'  as "type",
     platform||'_NFT_TIME_GRADE_' || level_def.level as "name",
@@ -910,7 +910,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     platform asset,
     '' project,
     '' trade_type,
@@ -961,7 +961,7 @@ from
     public.nft_sync_address where nft_sync_address.type<>'ERC1155';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -977,7 +977,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     platform||'_NFT_TIME_SMART_NFT_EARLY_ADOPTER'  as "type",
     platform||'_NFT_TIME_SMART_NFT_EARLY_ADOPTER' as "name",
@@ -1019,7 +1019,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     platform asset,
     '' project,
     '' trade_type,
@@ -1071,7 +1071,7 @@ from
     public.nft_sync_address where nft_sync_address.type<>'ERC1155';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -1087,7 +1087,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     platform||'_NFT_TIME_SPECIAL'  as "type",
     platform||'_NFT_TIME_SPECIAL_'||level_def.level as "name",
@@ -1130,7 +1130,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     platform asset,
     '' project,
     '' trade_type,
@@ -1188,7 +1188,7 @@ from
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -1204,7 +1204,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_ELITE'  as "type",
     'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_ELITE_'||level_def.level as "name",
@@ -1247,7 +1247,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform  asset,
     '' project,
     nft_trade_type.nft_trade_type trade_type,
@@ -1306,7 +1306,7 @@ from nft_trade_type
 where nft_trade_type.type='0';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -1322,7 +1322,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_ELITE'  as "type",
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_ELITE_' || level_def.level as "name",
@@ -1363,7 +1363,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_NFT'  asset,
     '' project,
     nft_trade_type.nft_trade_type trade_type,
@@ -1421,7 +1421,7 @@ from
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -1437,7 +1437,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_GRADE'  as "type",
     'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_GRADE_'||level_def.level as "name",
@@ -1480,7 +1480,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform  asset,
     '' project,
     nft_trade_type.nft_trade_type trade_type,
@@ -1538,7 +1538,7 @@ from nft_trade_type
 where nft_trade_type.type='0';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -1554,7 +1554,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_GRADE'  as "type",
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_GRADE_' || level_def.level as "name",
@@ -1595,7 +1595,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_NFT'  asset,
     '' project,
     nft_trade_type.nft_trade_type trade_type,
@@ -1653,7 +1653,7 @@ from
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -1669,7 +1669,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_RANK'  as "type",
     'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_RANK_'||level_def.level as "name",
@@ -1712,7 +1712,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform  asset,
     '' project,
     nft_trade_type.nft_trade_type trade_type,
@@ -1769,7 +1769,7 @@ from nft_trade_type
 where nft_trade_type.type='0';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -1785,7 +1785,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_RANK'  as "type",
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_RANK_' || level_def.level as "name",
@@ -1826,7 +1826,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_NFT'  asset,
     '' project,
     nft_trade_type.nft_trade_type trade_type,
@@ -1884,7 +1884,7 @@ from
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -1900,7 +1900,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_TOP'  as "type",
     'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_TOP_'||level_def.level as "name",
@@ -1943,7 +1943,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform  asset,
     '' project,
     nft_trade_type.nft_trade_type trade_type,
@@ -2000,7 +2000,7 @@ from nft_trade_type
 where nft_trade_type.type='0';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -2016,7 +2016,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_TOP'  as "type",
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_TOP_' || level_def.level as "name",
@@ -2057,7 +2057,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_NFT'  asset,
     '' project,
     nft_trade_type.nft_trade_type trade_type,
