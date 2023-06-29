@@ -17,50 +17,50 @@ select
     nft_platform.platform_name project,
     nft_platform.address "token",
     nft_trade_type.nft_trade_type "type",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' label_type,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' label_type,
     'T' operate_type,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type seq_flag,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type seq_flag,
     'count' data_subject,
     mp_nft_platform.platform_name project_name,
-    nft_sync_address.platform token_name
+    replace(nft_sync_address.platform,' ','') token_name
 from
     nft_sync_address
         inner join nft_platform on
         (nft_sync_address.address = nft_platform.address)
         inner join mp_nft_platform on
         (mp_nft_platform.platform = nft_platform.platform)
-inner join nft_trade_type  on(1=1)
+        inner join nft_trade_type  on(1=1)
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select
     distinct
     'RelationTeam' "owner",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' as "type",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY_'|| level_def.level as "name",
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' as "type",
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     mp_nft_platform.platform_name||' ' ||nft_sync_address.platform||' '||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'SQL' rule_type,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' rule_group,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -108,7 +108,7 @@ select
     level_def.level activity,
     '' hold_time,
     now() created_at,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY_'|| level_def.level label_name,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY_'|| level_def.level label_name,
     mp_nft_platform.platform_name||' ' ||nft_sync_address.platform||' '||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
     'nft' asset_type,
@@ -159,22 +159,22 @@ from  nft_trade_type
 where  nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
     'ALL_' ||  'ALL_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' as "type",
@@ -262,45 +262,45 @@ select
     'ALL' project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' label_type,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' label_type,
     'T' operate_type,
-    'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type seq_flag,
+    'ALL_' || replace(nft_sync_address.platform,' ','') ||'_'||nft_trade_type.nft_trade_type seq_flag,
     'count' data_subject,
     'ALL' project_name,
-    nft_sync_address.platform token_name
+    replace(nft_sync_address.platform,' ','') token_name
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' as "type",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY_'|| level_def.level as "name",
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' as "type",
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     'MP ' ||nft_sync_address.platform||' '||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'SQL' rule_type,
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' rule_group,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -343,7 +343,7 @@ select distinct
     level_def.level activity,
     '' hold_time,
     now() created_at,
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY_'|| level_def.level label_name,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY_'|| level_def.level label_name,
     'MP ' ||nft_sync_address.platform||' '||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
     'nft' asset_type,
@@ -401,22 +401,22 @@ where
 
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' as "type",
@@ -465,7 +465,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    'ALL' asset,
+    'ALL_NFT' asset,
     (
         select
             nft_platform.platform_name
@@ -473,7 +473,7 @@ select distinct
             nft_platform
         where
                 mp_nft_platform.platform = nft_platform.platform
-          limit 1)   project,
+              limit 1)   project,
     nft_trade_type.nft_trade_type trade_type,
     '' balance,
     '' volume,
@@ -518,12 +518,12 @@ select
     nft_platform.platform_name project,
     nft_platform.address "token",
     nft_trade_type.nft_trade_type "type",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' label_type,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' label_type,
     'T' operate_type,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type seq_flag,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_elite' data_subject,
     mp_nft_platform.platform_name project_name,
-    nft_sync_address.platform token_name
+    replace(nft_sync_address.platform,' ','') token_name
 from
     nft_sync_address
         inner join nft_platform on
@@ -534,32 +534,32 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' as "type",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE_'|| level_def.level as "name",
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' as "type",
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     mp_nft_platform.platform_name||' ' ||nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'SQL' rule_type,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' rule_group,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -606,7 +606,7 @@ select distinct
     '' activity,
     '' hold_time,
     now() created_at,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE_'|| level_def.level  label_name,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE_'|| level_def.level  label_name,
     mp_nft_platform.platform_name||' ' ||nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'nft' asset_type,
     'ELITE' label_category
@@ -645,44 +645,44 @@ select
     'ALL' project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' label_type,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' label_type,
     'T' operate_type,
-    'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type seq_flag,
+    'ALL_' || replace(nft_sync_address.platform,' ','') ||'_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_elite' data_subject,
     'ALL' project_name,
-    nft_sync_address.platform token_name
+    replace(nft_sync_address.platform,' ','') token_name
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' as "type",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE_'|| level_def.level as "name",
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' as "type",
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     'MP ' ||nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'SQL' rule_type,
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' rule_group,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -726,7 +726,7 @@ select
     '' activity,
     '' hold_time,
     now() created_at,
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE_'|| level_def.level  label_name,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE_'|| level_def.level  label_name,
     'MP ' ||nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'nft' asset_type,
     'ELITE' label_category
@@ -783,22 +783,22 @@ where
 
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' as "type",
@@ -880,7 +880,7 @@ from
     (1 = 1)
 where
     nft_trade_type.type = '1' ;
-                                                                                                                                                               ('ALL_NFT','','','','ELITE_NFT_TRADER','','','2023-06-20 07:49:34.394','2023-06-20 07:49:34.394',false,'ALL_ALL_ALL_NFT_VOLUME_ELITE_ELITE_NFT_TRADER','Elite NFT Trader','nft','ELITE'),
+('ALL_NFT','','','','ELITE_NFT_TRADER','','','2023-06-20 07:49:34.394','2023-06-20 07:49:34.394',false,'ALL_ALL_ALL_NFT_VOLUME_ELITE_ELITE_NFT_TRADER','Elite NFT Trader','nft','ELITE'),
                                                                                                                                                                              ('ALL_NFT','ALL','','','ELITE_NFT_TRADER','','','2023-06-20 07:49:34.394','2023-06-20 07:49:34.394',false,'ALL_ALL_ALL_MP_NFT_VOLUME_ELITE_ELITE_NFT_TRADER','MP NFT Elite Trader','nft','ELITE');
 --------volume_elite project(ALL)+token(ALL)
 -- ALL_ALL_ALL_MP_NFT_VOLUME_ELITE
@@ -911,22 +911,22 @@ from  nft_trade_type
 where  nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
     'ALL_' ||  'ALL_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' as "type",
@@ -1015,12 +1015,12 @@ select
     nft_platform.platform_name project,
     nft_platform.address "token",
     nft_trade_type.nft_trade_type "type",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' label_type,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' label_type,
     'T' operate_type,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type seq_flag,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_grade' data_subject,
     mp_nft_platform.platform_name project_name,
-    nft_sync_address.platform token_name
+    replace(nft_sync_address.platform,' ','') token_name
 from
     nft_sync_address
         inner join nft_platform on
@@ -1031,33 +1031,33 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' as "type",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE_'|| level_def.level as "name",
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' as "type",
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     mp_nft_platform.platform_name||' ' ||nft_sync_address.platform||' '||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'SQL' rule_type,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' rule_group,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1104,7 +1104,7 @@ select distinct
     '' activity,
     '' hold_time,
     now() created_at,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE_'|| level_def.level  label_name,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE_'|| level_def.level  label_name,
     mp_nft_platform.platform_name||' ' ||nft_sync_address.platform||' '||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'nft' asset_type,
@@ -1144,45 +1144,45 @@ select
     'ALL' project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' label_type,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' label_type,
     'T' operate_type,
-    'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type seq_flag,
+    'ALL_' || replace(nft_sync_address.platform,' ','') ||'_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_grade' data_subject,
     'ALL' project_name,
-    nft_sync_address.platform token_name
+    replace(nft_sync_address.platform,' ','') token_name
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' as "type",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE_'|| level_def.level as "name",
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' as "type",
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     'MP ' ||nft_sync_address.platform||' '||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'SQL' rule_type,
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' rule_group,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1225,7 +1225,7 @@ select distinct
     '' activity,
     '' hold_time,
     now() created_at,
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE_'|| level_def.level  label_name,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE_'|| level_def.level  label_name,
     'MP ' ||nft_sync_address.platform||' '||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'nft' asset_type,
@@ -1283,22 +1283,22 @@ where
 
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' as "type",
@@ -1410,22 +1410,22 @@ from  nft_trade_type
 where  nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
     'ALL_' ||  'ALL_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' as "type",
@@ -1513,12 +1513,12 @@ select
     nft_platform.platform_name project,
     nft_platform.address "token",
     nft_trade_type.nft_trade_type "type",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' label_type,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' label_type,
     'T' operate_type,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type seq_flag,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_rank' data_subject,
     mp_nft_platform.platform_name project_name,
-    nft_sync_address.platform token_name
+    replace(nft_sync_address.platform,' ','') token_name
 from
     nft_sync_address
         inner join nft_platform on
@@ -1529,32 +1529,32 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' as "type",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK_'|| level_def.level as "name",
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' as "type",
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     mp_nft_platform.platform_name||' ' ||nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'SQL' rule_type,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' rule_group,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1601,7 +1601,7 @@ select distinct
     '' activity,
     '' hold_time,
     now() created_at,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK_'|| level_def.level  label_name,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK_'|| level_def.level  label_name,
     mp_nft_platform.platform_name||' ' ||nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)   "content",
     'nft' asset_type,
     'RANK' label_category
@@ -1640,44 +1640,44 @@ select
     'ALL' project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' label_type,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' label_type,
     'T' operate_type,
-    'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type seq_flag,
+    'ALL_' || replace(nft_sync_address.platform,' ','') ||'_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_rank' data_subject,
     'ALL' project_name,
-    nft_sync_address.platform token_name
+    replace(nft_sync_address.platform,' ','') token_name
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' as "type",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK_'|| level_def.level as "name",
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' as "type",
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     'MP ' ||nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'SQL' rule_type,
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' rule_group,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1720,7 +1720,7 @@ select distinct
     '' activity,
     '' hold_time,
     now() created_at,
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK_'|| level_def.level   label_name,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK_'|| level_def.level   label_name,
     'MP ' ||nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
     'nft' asset_type,
     'RANK' label_category
@@ -1776,22 +1776,22 @@ where
 
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' as "type",
@@ -1904,22 +1904,22 @@ from  nft_trade_type
 where  nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
     'ALL_' ||  'ALL_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' as "type",
@@ -2008,12 +2008,12 @@ select
     nft_platform.platform_name project,
     nft_platform.address "token",
     nft_trade_type.nft_trade_type "type",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' label_type,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' label_type,
     'T' operate_type,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type seq_flag,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_top' data_subject,
     mp_nft_platform.platform_name project_name,
-    nft_sync_address.platform token_name
+    replace(nft_sync_address.platform,' ','') token_name
 from
     nft_sync_address
         inner join nft_platform on
@@ -2024,32 +2024,32 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' as "type",
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP_'|| level_def.level as "name",
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' as "type",
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     mp_nft_platform.platform_name||' ' ||nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'SQL' rule_type,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' rule_group,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -2096,7 +2096,7 @@ select distinct
     '' activity,
     '' hold_time,
     now() created_at,
-    mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP_'|| level_def.level label_name,
+    mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP_'|| level_def.level label_name,
     mp_nft_platform.platform_name||' ' ||nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
     'nft' asset_type,
     'TOP' label_category
@@ -2135,44 +2135,44 @@ select
     'ALL' project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' label_type,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' label_type,
     'T' operate_type,
-    'ALL_' || nft_sync_address.platform ||'_'||nft_trade_type.nft_trade_type seq_flag,
+    'ALL_' || replace(nft_sync_address.platform,' ','') ||'_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_top' data_subject,
     'ALL' project_name,
-    nft_sync_address.platform token_name
+    replace(nft_sync_address.platform,' ','') token_name
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' as "type",
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP_'|| level_def.level as "name",
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' as "type",
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     'MP ' ||nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'SQL' rule_type,
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' rule_group,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -2215,7 +2215,7 @@ select distinct
     '' activity,
     '' hold_time,
     now() created_at,
-    'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP_'|| level_def.level label_name,
+    'ALL_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP_'|| level_def.level label_name,
     'MP ' ||nft_sync_address.platform||' '||level_def.level_name|| ' '||(case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
     'nft' asset_type,
     'TOP' label_category
@@ -2272,22 +2272,22 @@ where
 
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' as "type",
@@ -2400,22 +2400,22 @@ from  nft_trade_type
 where  nft_trade_type.type='1';
 insert
 into
-    public."label" ("owner",
-                    "type",
-                    "name",
-                    "source",
-                    visible_type,
-                    strategy,
-                    "content",
-                    rule_type,
-                    rule_group,
-                    value_type,
-                    run_order,
-                    created_at,
-                    refresh_time,
-                    wired_type,
-                    label_order,
-                    sync_es_status)
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
 select distinct
     'RelationTeam' "owner",
     'ALL_' ||  'ALL_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' as "type",
