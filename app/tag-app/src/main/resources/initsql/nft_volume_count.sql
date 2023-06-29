@@ -8,7 +8,6 @@ CREATE TABLE public.nft_volume_count (
                                          created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                          updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                          removed bool NULL DEFAULT false,
-                                         CONSTRAINT uk_nvc_address_token UNIQUE (address, token, type)
 );
 truncate table nft_volume_count;
 vacuum nft_volume_count;
