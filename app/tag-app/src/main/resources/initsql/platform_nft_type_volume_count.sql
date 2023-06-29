@@ -27,7 +27,29 @@ insert into platform_nft_type_volume_count(address, platform_group, platform, qu
 
 
     insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
-    select pnh.address, pnh.platform_group, pnh.platform, pnh.quote_token, pnh.token, 'ALL', pnvu.volume_usd, pnh.total_transfer_all_count from
-    platform_nft_holding pnh left join   platform_nft_volume_usd pnvu  on pnvu .address = pnh.address and pnvu."token" = pnh."token"
-    and pnvu.quote_token = pnh.quote_token and pnvu.platform_group = pnh.platform_group and pnvu.platform = pnh.platform ;
+    select
+        pnh.address,
+        pnh.platform_group,
+        pnh.platform,
+        pnh.quote_token,
+        pnh.token,
+        'ALL',
+        pnvu.volume_usd,
+        pnh.total_transfer_all_count
+    from
+        platform_nft_holding pnh
+            inner join (
+            select
+                address
+            from
+                nft_sync_address nsa
+            where
+                    type = 'ERC721') nft_sync_address on
+            (pnh.token = nft_sync_address.address)
+            left join platform_nft_volume_usd pnvu on
+                    pnvu .address = pnh.address
+                and pnvu."token" = pnh."token"
+                and pnvu.quote_token = pnh.quote_token
+                and pnvu.platform_group = pnh.platform_group
+                and pnvu.platform = pnh.platform ;
 insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_type_volume_count' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

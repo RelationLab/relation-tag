@@ -19,48 +19,44 @@ INTO
                          token,
                          TYPE,
                          project,
-                         transaction_hash,
-                         total_transfer_count)
-SELECT
-    dex_tx_volume_count_record.address,
-    'ALL' AS token,
-    dex_tx_volume_count_record.TYPE,
-    dex_tx_volume_count_record.project,
-    dex_tx_volume_count_record.transaction_hash,
-    max(total_transfer_count) AS total_transfer_count
-FROM
-    dex_tx_volume_count_record
-        INNER JOIN (select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true)
-            top_token_1000 ON (dex_tx_volume_count_record.token = top_token_1000.address)
-WHERE triggered_flag = '1' and total_transfer_count = 1
-GROUP BY
-    dex_tx_volume_count_record.address,
-    dex_tx_volume_count_record.TYPE,
-    dex_tx_volume_count_record.project,
-    dex_tx_volume_count_record.transaction_hash;
-
-INSERT
-INTO
-    dex_tx_count_summary(address,
-                         token,
-                         TYPE,
-                         project,
-                         transaction_hash,
                          total_transfer_count)
 select
-    th.address,
+    address,
     'ALL' as token,
-    th.type as type,
-    '0xc36442b4a4522e871399cd717abdd847ab11fe88' as project,
-    transaction_hash,
-    max(total_transfer_count) as total_transfer_count
+    type,
+    project,
+    sum(total_transfer_count) total_transfer_count
 from
-    token_holding_uni_cal th  INNER JOIN (select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true)
-        top_token_1000 ON (th.price_token = top_token_1000.address)
+    (
+        select
+            dex_tx_volume_count_record.address,
+            dex_tx_volume_count_record.TYPE,
+            dex_tx_volume_count_record.project,
+            max(total_transfer_count) as total_transfer_count
+        from
+            dex_tx_volume_count_record
+                inner join (
+                select
+                    address
+                from
+                    top_token_1000 tt2
+                where
+                        tt2.holders >= 100
+                  and removed <> true)
+                top_token_1000 on
+                (dex_tx_volume_count_record.token = top_token_1000.address)
+        where
+                triggered_flag = '1'
+          and total_transfer_count = 1
+        group by
+            dex_tx_volume_count_record.address,
+            dex_tx_volume_count_record.TYPE,
+            dex_tx_volume_count_record.project,
+            dex_tx_volume_count_record.transaction_hash) outt
 group by
-    th.address,
-    th.type,
-    transaction_hash;
+    address,
+    type,
+    project;
 
 INSERT
 INTO
@@ -68,20 +64,59 @@ INTO
                          token,
                          TYPE,
                          project,
-                         transaction_hash,
+                         total_transfer_count)
+select
+    address,
+    'ALL' token,
+    type,
+    '0xc36442b4a4522e871399cd717abdd847ab11fe88' project,
+    sum(total_transfer_count)
+from
+    (
+        select
+            th.address,
+            'ALL' as token,
+            th.type as type,
+            max(total_transfer_count) as total_transfer_count
+        from
+            token_holding_uni th
+                inner join (
+                select
+                    address
+                from
+                    top_token_1000 tt2
+                where
+                        tt2.holders >= 100
+                  and removed <> true)
+                top_token_1000 on
+                (th.price_token = top_token_1000.address)
+        where triggered_flag = '1'
+        group by
+            th.address,
+            th.type,
+            th.transaction_hash) outt
+group by
+    address,
+    type;
+
+
+INSERT
+INTO
+    dex_tx_count_summary(address,
+                         token,
+                         TYPE,
+                         project,
                          total_transfer_count)
 SELECT
     address,
     'ALL' AS token,
     'ALL' as TYPE,
     project,
-    transaction_hash,
     sum(total_transfer_count) AS total_transfer_count
 FROM
     dex_tx_count_summary
 GROUP BY
     address,
-    project,
-    transaction_hash;
+    project;
 
 insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_count_summary' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
