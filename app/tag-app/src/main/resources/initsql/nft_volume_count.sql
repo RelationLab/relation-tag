@@ -7,7 +7,7 @@ CREATE TABLE public.nft_volume_count (
                                          transfer_count int8 NULL,
                                          created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                          updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                                         removed bool NULL DEFAULT false,
+                                         removed bool NULL DEFAULT false
 );
 truncate table nft_volume_count;
 vacuum nft_volume_count;
