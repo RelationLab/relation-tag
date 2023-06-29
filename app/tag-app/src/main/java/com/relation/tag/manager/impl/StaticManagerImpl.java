@@ -213,6 +213,7 @@ public class StaticManagerImpl implements StaticManager {
             target.setId(null);
             target.setUldaId(result.getId());
             if (!StringUtils.equals(result.getStatus(), DataAnalysisStatusEnum.FAIL.name())) {
+                result.setRedo(false);
                 listResultRecord.add(target);
             }
             String tableSuffix = buildTableSuffix(result.getId().toString(), configEnvironment);
