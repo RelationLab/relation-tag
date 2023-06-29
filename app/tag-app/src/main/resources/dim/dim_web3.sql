@@ -25,7 +25,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -143,7 +143,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -166,7 +166,7 @@ select
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    web3_platform.platform_name_alis||' NFT ' ||level_def.level_name||' Collector' "content",
+    web3_platform.platform_name_alis||' '||level_def.level_name||' NFT ' ||'Collector' "content",
     'SQL' rule_type,
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK' rule_group,
     'RESULT' value_type,
@@ -215,7 +215,7 @@ select
     '' hold_time,
     now() created_at,
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK_'|| level_def.level label_name,
-    web3_platform.platform_name_alis||' NFT ' ||level_def.level_name||' Collector' "content",
+    web3_platform.platform_name_alis||' ' ||level_def.level_name||' NFT ' ||'Collector' "content",
     'web3' asset_type,
     'GRADE' label_category
 from web3_action_platform
@@ -260,7 +260,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -377,7 +377,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",

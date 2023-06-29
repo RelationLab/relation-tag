@@ -74,6 +74,18 @@ insert into level_def(level,level_name,type) values('Highest','Highest Activity'
 insert into level_def(level,level_name,type) values('High','High Activity','count');
 insert into level_def(level,level_name,type) values('Medium','Medium Activity','count');
 
+
+insert into level_def(level,level_name,type) values('L1','Activity Lv1','nft_count');
+insert into level_def(level,level_name,type) values('L2','Activity Lv2','nft_count');
+insert into level_def(level,level_name,type) values('L3','Activity Lv3','nft_count');
+insert into level_def(level,level_name,type) values('L4','Activity Lv4','nft_count');
+insert into level_def(level,level_name,type) values('L5','Activity Lv5','nft_count');
+insert into level_def(level,level_name,type) values('L6','Activity Lv6','nft_count');
+insert into level_def(level,level_name,type) values('High','Highest Activity','nft_count');
+insert into level_def(level,level_name,type) values('Medium','High Activity','nft_count');
+insert into level_def(level,level_name,type) values('Low','Medium Activity','nft_count');
+
+
 insert into level_def(level,level_name,type) values('ELITE_NFT_TRADER','Elite','nft_volume_elite');
 
 insert into level_def(level,level_name,type) values('L1','Vol Lv1','nft_volume_grade');
