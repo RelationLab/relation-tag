@@ -626,7 +626,7 @@ into
                     value_type,
                     run_order,
                     created_at,
-                    refresh_time,+
+                    refresh_time,
                     wired_type,
                     label_order,
                     sync_es_status)
@@ -743,7 +743,7 @@ select
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    t.symbol|| (case level_def.level='Million' or level_def.level='Billion' then ' '||level_def.level else '' end)||' '||level_def.level_name  "content",
+    t.symbol|| (case when level_def.level='Million' or level_def.level='Billion' then ' '||level_def.level else '' end)||' '||level_def.level_name  "content",
     'SQL' rule_type,
     upper(t.symbol)||'_'||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' rule_group,
     'RESULT' value_type,
@@ -788,7 +788,7 @@ select
         '' hold_time,
         now() created_at,
         upper(t.symbol)||'_'||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE_'|| level_def.level label_name,
-        t.symbol|| (case level_def.level='Million' or level_def.level='Billion' then ' '||level_def.level else '' end)||' '||level_def.level_name    "content",
+        t.symbol|| (case when level_def.level='Million' or level_def.level='Billion' then ' '||level_def.level else '' end)||' '||level_def.level_name    "content",
         'token' asset_type,
         'GRADE' label_category
 from

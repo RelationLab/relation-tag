@@ -283,7 +283,7 @@ select
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    web3_platform.platform_name_alis || '' '' || level_def.level_name || '' NFT''||'' Collector'' "content",
+    web3_platform.platform_name_alis || ' ' || level_def.level_name || ' NFT'||' Collector' "content",
      'SQL' rule_type,
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_TOP' rule_group,
     'RESULT' value_type,

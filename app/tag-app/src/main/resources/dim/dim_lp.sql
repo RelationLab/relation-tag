@@ -1,26 +1,19 @@
 -----balance_grade  Uniswap_v3_UNI/WETH_0x1d42_BALANCE_GRADE
 insert
 into
-    dim_project_token_type (project,
-                            "token",
-                            "type",
+    dim_rule_content ("token",
                             label_type,
                             operate_type,
-                            seq_flag,
                             data_subject,
-                            project_name,
-                            token_name)
+                            token_name,token_type)
 
 select
-    platform_detail.platform as project,
     lpt.pool as token,
-    'lp' as type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_GRADE' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_GRADE' as label_type,
     'T' as operate_type,
-    lpt.factory_type || '_' || lpt.symbol_wired||'_lp' seq_flag,
     'balance_grade' data_subject,
-    lpt.factory_type project_name,
-    lpt.symbol_wired token_name
+    lpt.symbol_wired token_name,
+    'lp' as token_type
 from
     (select wlp.name,
             wlp.symbol_wired,
@@ -49,7 +42,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -67,14 +60,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_GRADE' as "type",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_GRADE_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_GRADE' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_GRADE_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_GRADE' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -133,14 +126,14 @@ into
                         label_category)
 select
     (lpt.symbol1||'/'||lpt.symbol2) asset,
-    lpt.factory_content project,
+    lpt.factory_type project,
     '' trade_type,
     level_def.level balance,
     '' volume,
     '' activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_GRADE_'||level_def.level  label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_GRADE_'||level_def.level  label_name,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name "content",
     'token' asset_type,
     'GRADE' label_category
@@ -183,26 +176,19 @@ from
 -----balance_rank  Uniswap_v3_UNI/WETH_0x1d42_BALANCE_RANK
 insert
 into
-    dim_project_token_type (project,
-                            "token",
-                            "type",
+    dim_rule_content ("token",
                             label_type,
                             operate_type,
-                            seq_flag,
                             data_subject,
-                            project_name,
-                            token_name)
+                            token_name,token_type)
 
 select
-    platform_detail.platform as project,
     lpt.pool as token,
-    'lp' as type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_RANK' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_RANK' as label_type,
     'T' as operate_type,
-    lpt.factory_type || '_' || lpt.symbol_wired||'_lp' seq_flag,
     'balance_rank' data_subject,
-    lpt.factory_type project_name,
-    lpt.symbol_wired token_name
+    lpt.symbol_wired token_name,
+    'lp' as token_type
 from
     (select wlp.name,
             wlp.symbol_wired,
@@ -231,7 +217,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -249,14 +235,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_RANK' as "type",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_RANK_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_RANK' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_RANK_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_RANK' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_RANK' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -315,14 +301,14 @@ into
                         label_category)
 select
     (lpt.symbol1||'/'||lpt.symbol2) asset,
-    lpt.factory_content project,
+    lpt.factory_type project,
     '' trade_type,
     level_def.level balance,
     '' volume,
     '' activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_RANK_'||level_def.level  label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_RANK_'||level_def.level  label_name,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'token' asset_type,
     'RANK' label_category
@@ -364,26 +350,19 @@ from
 -----balance_top  Uniswap_v3_UNI/WETH_0x1d42_BALANCE_TOP
 insert
 into
-    dim_project_token_type (project,
-                            "token",
-                            "type",
+    dim_rule_content ("token",
                             label_type,
                             operate_type,
-                            seq_flag,
                             data_subject,
-                            project_name,
-                            token_name)
+                            token_name,token_type)
 
 select
-    platform_detail.platform as project,
     lpt.pool as token,
-    'lp' as type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_TOP' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_TOP' as label_type,
     'T' as operate_type,
-    lpt.factory_type || '_' || lpt.symbol_wired||'_lp' seq_flag,
     'balance_top' data_subject,
-    lpt.factory_type project_name,
-    lpt.symbol_wired token_name
+    lpt.symbol_wired token_name,
+    'lp' as token_type
 from
     (select wlp.name,
             wlp.symbol_wired,
@@ -412,7 +391,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -430,14 +409,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_TOP' as "type",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_TOP_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_TOP' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_TOP_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_TOP' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_TOP' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -496,14 +475,14 @@ into
                         label_category)
 select
     (lpt.symbol1||'/'||lpt.symbol2) asset,
-    lpt.factory_content project,
+    lpt.factory_type project,
     '' trade_type,
     level_def.level balance,
     '' volume,
     '' activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_BALANCE_TOP_'||level_def.level  label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_TOP_'||level_def.level  label_name,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'token' asset_type,
     'TOP' label_category
@@ -546,26 +525,19 @@ from
 -----count  Uniswap_v3_UNI/WETH_0x1d42_ACTIVITY
 insert
 into
-    dim_project_token_type (project,
-                            "token",
-                            "type",
+    dim_rule_content ("token",
                             label_type,
                             operate_type,
-                            seq_flag,
                             data_subject,
-                            project_name,
-                            token_name)
+                            token_name,token_type)
 
 select
-    platform_detail.platform as project,
     lpt.pool as token,
-    'lp' as type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_ACTIVITY' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_ACTIVITY' as label_type,
     'T' as operate_type,
-    lpt.factory_type || '_' || lpt.symbol_wired||'_lp' seq_flag,
     'count' data_subject,
-    lpt.factory_type project_name,
-    lpt.symbol_wired token_name
+    lpt.symbol_wired token_name,
+    'lp' as token_type
 from
     (select wlp.name,
             wlp.symbol_wired,
@@ -594,7 +566,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -612,14 +584,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_ACTIVITY' as "type",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_ACTIVITY_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_ACTIVITY' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_ACTIVITY_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_ACTIVITY' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_ACTIVITY' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -678,14 +650,14 @@ into
                         label_category)
 select
     (lpt.symbol1||'/'||lpt.symbol2) asset,
-    lpt.factory_content project,
+    lpt.factory_type project,
     '' trade_type,
     '' balance,
     '' volume,
     level_def.level activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_ACTIVITY_'||level_def.level  label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_ACTIVITY_'||level_def.level  label_name,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'token' asset_type,
     'GRADE' label_category
@@ -727,26 +699,19 @@ from
 -----volume_grade  Uniswap_v3_UNI/WETH_0x1d42_VOLUME_GRADE
 insert
 into
-    dim_project_token_type (project,
-                            "token",
-                            "type",
+    dim_rule_content ("token",
                             label_type,
                             operate_type,
-                            seq_flag,
                             data_subject,
-                            project_name,
-                            token_name)
+                            token_name,token_type)
 
 select
-    platform_detail.platform as project,
     lpt.pool as token,
-    'lp' as type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_VOLUME_GRADE' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_GRADE' as label_type,
     'T' as operate_type,
-    lpt.factory_type || '_' || lpt.symbol_wired||'_lp' seq_flag,
     'volume_grade' data_subject,
-    lpt.factory_type project_name,
-    lpt.symbol_wired token_name
+    lpt.symbol_wired token_name,
+    'lp' as token_type
 from
     (select wlp.name,
             wlp.symbol_wired,
@@ -775,7 +740,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -793,14 +758,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_VOLUME_GRADE' as "type",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_VOLUME_GRADE_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_GRADE' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_GRADE_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name  "content",
     'SQL' rule_type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_VOLUME_GRADE' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -859,14 +824,14 @@ into
                         label_category)
 select
     (lpt.symbol1||'/'||lpt.symbol2) asset,
-    lpt.factory_content project,
+    lpt.factory_type project,
     '' trade_type,
     '' balance,
     level_def.level  volume,
     '' activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_VOLUME_GRADE_'||level_def.level label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_GRADE_'||level_def.level label_name,
     lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name   "content",
     'token' asset_type,
     'GRADE' label_category
@@ -908,26 +873,19 @@ from
 -----volume_rank  Uniswap_v3_UNI/WETH_0x1d42_VOLUME_RANK
 insert
 into
-    dim_project_token_type (project,
-                            "token",
-                            "type",
+    dim_rule_content ("token",
                             label_type,
                             operate_type,
-                            seq_flag,
                             data_subject,
-                            project_name,
-                            token_name)
+                            token_name,token_type)
 
 select
-    platform_detail.platform as project,
     lpt.pool as token,
-    'lp' as type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_VOLUME_RANK' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_RANK' as label_type,
     'T' as operate_type,
-    lpt.factory_type || '_' || lpt.symbol_wired||'_lp' seq_flag,
     'volume_rank' data_subject,
-    lpt.factory_type project_name,
-    lpt.symbol_wired token_name
+    lpt.symbol_wired token_name,
+    'lp' as token_type
 from
     (select wlp.name,
             wlp.symbol_wired,
@@ -956,7 +914,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public."label" ("owner",
+    public.label_test ("owner",
                     "type",
                     "name",
                     "source",
@@ -974,14 +932,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_VOLUME_RANK' as "type",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_VOLUME_RANK_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_RANK' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_RANK_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name  "content",
     'SQL' rule_type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_VOLUME_RANK' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_RANK' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1040,14 +998,14 @@ into
                         label_category)
 select
     (lpt.symbol1||'/'||lpt.symbol2) asset,
-    lpt.factory_content project,
+    lpt.factory_type project,
     '' trade_type,
     '' balance,
     level_def.level  volume,
     '' activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_' || '(' || SUBSTRING(lpt.pool, 1, 6)|| ')'||'_VOLUME_RANK_'||level_def.level  label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_RANK_'||level_def.level  label_name,
     lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name   "content",
     'token' asset_type,
     'RANK' label_category

@@ -50,6 +50,7 @@ into
                     label_order,
                     sync_es_status)
 select
+    distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' as "type",
     mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY_'|| level_def.level as "name",
@@ -98,6 +99,7 @@ into
                         asset_type,
                         label_category)
 select
+    distinct
     nft_sync_address.platform asset,
     nft_platform.platform_name  project,
     nft_trade_type.nft_trade_type trade_type,
@@ -371,7 +373,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' as "type",
     'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY_'|| level_def.level as "name",
@@ -415,7 +417,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform asset,
     'ALL'  project,
     nft_trade_type.nft_trade_type trade_type,
@@ -498,7 +500,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY' as "type",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_ACTIVITY_'||level_def.level as "name",
@@ -545,7 +547,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL' asset,
     (
         select
@@ -631,7 +633,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' as "type",
     mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE_'|| level_def.level as "name",
@@ -678,7 +680,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform asset,
     mp_nft_platform.platform_name   project,
     nft_trade_type.nft_trade_type trade_type,
@@ -754,7 +756,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' as "type",
     'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE_'|| level_def.level as "name",
@@ -798,6 +800,7 @@ into
                         asset_type,
                         label_category)
 select
+    distinct
     nft_sync_address.platform asset,
     'ALL'   project,
     nft_trade_type.nft_trade_type trade_type,
@@ -879,7 +882,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE' as "type",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_ELITE_'||level_def.level as "name",
@@ -926,7 +929,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL' asset,
     (
         select
@@ -1047,7 +1050,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' as "type",
     mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE_'|| level_def.level as "name",
@@ -1095,7 +1098,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform asset,
     mp_nft_platform.platform_name   project,
     nft_trade_type.nft_trade_type trade_type,
@@ -1172,7 +1175,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' as "type",
     'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE_'|| level_def.level as "name",
@@ -1216,7 +1219,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform asset,
     'ALL'   project,
     nft_trade_type.nft_trade_type trade_type,
@@ -1299,7 +1302,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE' as "type",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_GRADE_'||level_def.level as "name",
@@ -1346,7 +1349,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL' asset,
     (
         select
@@ -1562,7 +1565,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' as "type",
     mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK_'|| level_def.level as "name",
@@ -1609,7 +1612,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform asset,
     mp_nft_platform.platform_name   project,
     nft_trade_type.nft_trade_type trade_type,
@@ -1685,7 +1688,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' as "type",
     'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK_'|| level_def.level as "name",
@@ -1728,7 +1731,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform asset,
     'ALL'   project,
     nft_trade_type.nft_trade_type trade_type,
@@ -1809,7 +1812,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK' as "type",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_RANK_'||level_def.level as "name",
@@ -1856,7 +1859,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL' asset,
     (
         select
@@ -2032,7 +2035,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' as "type",
     mp_nft_platform.platform_name || '_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP_'|| level_def.level as "name",
@@ -2079,7 +2082,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform asset,
     mp_nft_platform.platform_name project,
     nft_trade_type.nft_trade_type trade_type,
@@ -2155,7 +2158,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' as "type",
     'ALL_' || nft_sync_address.platform || '_'||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP_'|| level_def.level as "name",
@@ -2198,7 +2201,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     nft_sync_address.platform asset,
     'ALL' project,
     nft_trade_type.nft_trade_type trade_type,
@@ -2280,7 +2283,7 @@ into
                     wired_type,
                     label_order,
                     sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP' as "type",
     mp_nft_platform.platform_name || '_ALL_' ||nft_trade_type.nft_trade_type||'_MP_NFT_VOLUME_TOP_'||level_def.level as "name",
@@ -2327,7 +2330,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL' asset,
     (
         select

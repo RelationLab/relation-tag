@@ -17,3 +17,8 @@ insert into platform(platform,platform_name) values('0x71cd6666064c3a1354a3b4dca
 insert into platform(platform,platform_name) values('0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f','Sushiswap');
 insert into platform(platform,platform_name) values('0xc36442b4a4522e871399cd717abdd847ab11fe88','Uniswap');
 insert into platform(platform,platform_name) values('0x7a250d5630b4cf539739df2c5dacb4c659f2488d','Uniswap');
+
+
+insert into platform(platform,platform_name) values('0xae7ab96520de3a18e5e111b5eaab095312d7fe84','Lido');
+insert into platform(platform,platform_name) values('0xbafa44efe7901e04e39dad13167d089c559c1138','Frax');
+insert into platform(platform,platform_name) values('0x4d05e3d48a938db4b7a9a59a802d5b45011bde58','RocketPool');
