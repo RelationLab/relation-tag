@@ -273,6 +273,222 @@ from (
             type = 'defi_count') level_def on
     (1 = 1);
 
+---------------count 1inch_ALL_ALL_ACTIVITY_DEX
+insert
+into
+    dim_project_token_type (project,
+                            "token",
+                            "type",
+                            label_type,
+                            operate_type,
+                            seq_flag,
+                            data_subject,
+                            project_name,
+                            token_name)
+
+select
+    platform.platform as project,
+    'ALL' as token,
+    trade_type.trade_type as type,
+    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as label_type,
+    'T' as operate_type,
+    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name seq_flag,
+    'count' data_subject,
+    platform.platform_name project_name,
+    'ALL' token_name
+from  platform
+          inner join trade_type on
+    (1 = 1);
+insert
+into
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
+select distinct
+    'RelationTeam' "owner",
+    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
+    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name ||  '_ACTIVITY_DEX_' || level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    platform.platform_name || ' '|| (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)||' '||level_def.level_name  "content",
+    'SQL' rule_type,
+    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name ||  '_ACTIVITY_DEX' rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'DEFI' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from  platform
+          inner join trade_type on
+    (1 = 1)
+          inner join (
+    select
+        *
+    from
+        level_def
+    where
+            type = 'defi_count') level_def on
+    (1 = 1);
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select distinct
+    'ALL_TOKEN'  asset,
+    platform.platform_name project,
+    trade_type.trade_type trade_type,
+    '' balance,
+    '' volume,
+    level_def.level activity,
+    '' hold_time,
+    now() created_at,
+    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name ||  '_ACTIVITY_DEX_' || level_def.level label_name,
+    platform.platform_name || ' '|| (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)||' '||level_def.level_name  "content",
+    'token' asset_type,
+    'GRADE' label_category
+from   platform
+           inner join trade_type on
+    (1 = 1)
+           inner join (
+    select
+        *
+    from
+        level_def
+    where
+            type = 'defi_count') level_def on
+    (1 = 1);
+---------------count ALL_ALL_ALL_ACTIVITY_DEX
+insert
+into
+    dim_project_token_type (project,
+                            "token",
+                            "type",
+                            label_type,
+                            operate_type,
+                            seq_flag,
+                            data_subject,
+                            project_name,
+                            token_name)
+select
+    'ALL' as project,
+    'ALL' as token,
+    trade_type.trade_type as type,
+    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as label_type,
+    'T' as operate_type,
+    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name seq_flag,
+    'count' data_subject,
+    'ALL' project_name,
+    'ALL' token_name
+from
+    trade_type;
+insert
+into
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
+select
+    'RelationTeam' "owner",
+    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
+    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX_'|| level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    (CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||' '||level_def.level_name  "content",
+    'SQL' rule_type,
+    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX' rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'DEFI' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from
+    trade_type
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'defi_count') level_def on
+        (1 = 1);
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    'ALL_TOKEN' asset,
+    'ALL' project,
+    trade_type.trade_type trade_type,
+    '' balance,
+    level_def.level volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX_'|| level_def.level  label_name,
+    (CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||' '||level_def.level_name "content",
+    'token' asset_type,
+    'GRADE' label_category
+from trade_type
+         inner join (
+    select
+        *
+    from
+        level_def
+    where
+            type = 'defi_count') level_def on
+    (1 = 1);
+
 
 ---------------volume_grade 0x_USDC(0xa0b869)_ALL_VOLUME_DEX_GRADE--------------------------
 insert
@@ -541,6 +757,229 @@ from (
                  holders >= 100
            and removed <> 'true') top_token_1000
          INNER JOIN trade_type ON  (1=1)
+         inner join (
+    select
+        *
+    from
+        level_def
+    where
+            type = 'defi_volume_grade') level_def on
+    (1 = 1);
+
+---------------volume_grade 1inch_ALL_ALL_VOLUME_DEX_GRADE
+insert
+into
+    dim_project_token_type (project,
+                            "token",
+                            "type",
+                            label_type,
+                            operate_type,
+                            seq_flag,
+                            data_subject,
+                            project_name,
+                            token_name)
+select
+    platform.platform as project,
+    'ALL' as token,
+    trade_type.trade_type as type,
+    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as label_type,
+    'T' as operate_type,
+    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name seq_flag,
+    'volume_grade' data_subject,
+    platform.platform_name project_name,
+    'ALL' token_name
+from  platform
+          inner join trade_type on
+    (1 = 1);
+insert
+into
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
+select distinct
+    'RelationTeam' "owner",
+    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
+    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name ||  '_VOLUME_DEX_GRADE_' || level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    platform.platform_name || ' '|| (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)||' '||
+    (CASE WHEN level_def.level='Million' or level_def.level='Billion' THEN level_def.level||' ' else '' end) ||level_def.level_name  "content",
+    'SQL' rule_type,
+    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name ||  '_VOLUME_DEX_GRADE' rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'DEFI' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from
+    platform
+        inner join trade_type on
+        (1 = 1)
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'defi_volume_grade') level_def on
+        (1 = 1);
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    'ALL_TOKEN' asset,
+    platform.platform_name project,
+    trade_type.trade_type trade_type,
+    '' balance,
+    level_def.level volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name ||  '_VOLUME_DEX_GRADE_' || level_def.level label_name,
+    platform.platform_name || ' '|| (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)||' '||
+    (CASE WHEN level_def.level='Million' or level_def.level='Billion' THEN level_def.level||' ' else '' end) ||level_def.level_name  "content",
+    'token' asset_type,
+    'GRADE' label_category
+from   platform
+           inner join trade_type on
+    (1 = 1)
+           inner join (
+    select
+        *
+    from
+        level_def
+    where
+            type = 'defi_volume_grade') level_def on
+    (1 = 1);
+
+---------------volume_grade ALL_ALL_ALL_VOLUME_DEX_GRADE
+insert
+into
+    dim_project_token_type (project,
+                            "token",
+                            "type",
+                            label_type,
+                            operate_type,
+                            seq_flag,
+                            data_subject,
+                            project_name,
+                            token_name)
+select
+    'ALL' as project,
+    'ALL' as token,
+    trade_type.trade_type as type,
+    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as label_type,
+    'T' as operate_type,
+    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name seq_flag,
+    'volume_grade' data_subject,
+    'ALL' project_name,
+    'ALL' token_name
+from
+    trade_type;
+insert
+into
+    public.label_test ("owner",
+                       "type",
+                       "name",
+                       "source",
+                       visible_type,
+                       strategy,
+                       "content",
+                       rule_type,
+                       rule_group,
+                       value_type,
+                       run_order,
+                       created_at,
+                       refresh_time,
+                       wired_type,
+                       label_order,
+                       sync_es_status)
+select
+    'RelationTeam' "owner",
+    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
+    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_'|| level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    (CASE WHEN trade_type.trade_type='ALL'  and (level_def.level='Million' or level_def.level='Billion') THEN level_def.level||' ' else '' end)||
+    (CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||' '||
+    (CASE WHEN trade_type.trade_type<>'ALL'  and (level_def.level='Million' or level_def.level='Billion') THEN level_def.level||' ' else '' end)||level_def.level_name  "content",
+    'SQL' rule_type,
+    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'DEFI' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from
+    trade_type
+        inner join (
+        select
+            *
+        from
+            level_def
+        where
+                type = 'defi_volume_grade') level_def on
+        (1 = 1);
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    'ALL_TOKEN' asset,
+    'ALL' project,
+    trade_type.trade_type trade_type,
+    '' balance,
+    level_def.level volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_'|| level_def.level label_name,
+    (CASE WHEN trade_type.trade_type='ALL'  and (level_def.level='Million' or level_def.level='Billion') THEN level_def.level||' ' else '' end)||
+    (CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||' '||
+    (CASE WHEN trade_type.trade_type<>'ALL'  and (level_def.level='Million' or level_def.level='Billion') THEN level_def.level||' ' else '' end)||level_def.level_name "content",
+    'token' asset_type,
+    'GRADE' label_category
+from trade_type
          inner join (
     select
         *
@@ -827,445 +1266,6 @@ from (
             type = 'defi_volume_rank') level_def on
     (1 = 1);
 
----------------count 1inch_ALL_ALL_ACTIVITY_DEX
-insert
-into
-    dim_project_token_type (project,
-                            "token",
-                            "type",
-                            label_type,
-                            operate_type,
-                            seq_flag,
-                            data_subject,
-                            project_name,
-                            token_name)
-
-select
-    platform.platform as project,
-    'ALL' as token,
-    trade_type.trade_type as type,
-    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as label_type,
-    'T' as operate_type,
-    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name seq_flag,
-    'count' data_subject,
-    platform.platform_name project_name,
-    'ALL' token_name
-from  platform
-          inner join trade_type on
-    (1 = 1);
-insert
-into
-    public.label_test ("owner",
-                       "type",
-                       "name",
-                       "source",
-                       visible_type,
-                       strategy,
-                       "content",
-                       rule_type,
-                       rule_group,
-                       value_type,
-                       run_order,
-                       created_at,
-                       refresh_time,
-                       wired_type,
-                       label_order,
-                       sync_es_status)
-select distinct
-    'RelationTeam' "owner",
-    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
-    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name ||  '_ACTIVITY_DEX_' || level_def.level as "name",
-    'SYSTEM' "source",
-    'PUBLIC' visible_type,
-    'TOTAL_PART' strategy,
-    platform.platform_name || ' '|| (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)||' '||level_def.level_name  "content",
-    'SQL' rule_type,
-    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name ||  '_ACTIVITY_DEX' rule_group,
-    'RESULT' value_type,
-    999999 run_order,
-    now() created_at,
-    0 refresh_time,
-    'DEFI' wired_type,
-    999 label_order,
-    'WAITING' sync_es_status
-from  platform
-          inner join trade_type on
-    (1 = 1)
-          inner join (
-    select
-        *
-    from
-        level_def
-    where
-            type = 'defi_count') level_def on
-    (1 = 1);
-insert
-into
-    public.combination (asset,
-                        project,
-                        trade_type,
-                        balance,
-                        volume,
-                        activity,
-                        hold_time,
-                        created_at,
-                        label_name,
-                        "content",
-                        asset_type,
-                        label_category)
-select distinct
-    'ALL_TOKEN'  asset,
-    platform.platform_name project,
-    trade_type.trade_type trade_type,
-    '' balance,
-    '' volume,
-    level_def.level activity,
-    '' hold_time,
-    now() created_at,
-    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name ||  '_ACTIVITY_DEX_' || level_def.level label_name,
-    platform.platform_name || ' '|| (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)||' '||level_def.level_name  "content",
-    'token' asset_type,
-    'GRADE' label_category
-from   platform
-           inner join trade_type on
-    (1 = 1)
-           inner join (
-    select
-        *
-    from
-        level_def
-    where
-            type = 'defi_count') level_def on
-    (1 = 1);
----------------count ALL_ALL_ALL_ACTIVITY_DEX
-insert
-into
-    dim_project_token_type (project,
-                            "token",
-                            "type",
-                            label_type,
-                            operate_type,
-                            seq_flag,
-                            data_subject,
-                            project_name,
-                            token_name)
-select
-    'ALL' as project,
-    'ALL' as token,
-    trade_type.trade_type as type,
-    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as label_type,
-    'T' as operate_type,
-    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name seq_flag,
-    'count' data_subject,
-    'ALL' project_name,
-    'ALL' token_name
-from
-    trade_type;
-insert
-into
-    public.label_test ("owner",
-                       "type",
-                       "name",
-                       "source",
-                       visible_type,
-                       strategy,
-                       "content",
-                       rule_type,
-                       rule_group,
-                       value_type,
-                       run_order,
-                       created_at,
-                       refresh_time,
-                       wired_type,
-                       label_order,
-                       sync_es_status)
-select
-    'RelationTeam' "owner",
-    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
-    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX_'|| level_def.level as "name",
-    'SYSTEM' "source",
-    'PUBLIC' visible_type,
-    'TOTAL_PART' strategy,
-    (CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||' '||level_def.level_name  "content",
-    'SQL' rule_type,
-    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX' rule_group,
-    'RESULT' value_type,
-    999999 run_order,
-    now() created_at,
-    0 refresh_time,
-    'DEFI' wired_type,
-    999 label_order,
-    'WAITING' sync_es_status
-from
-    trade_type
-        inner join (
-        select
-            *
-        from
-            level_def
-        where
-                type = 'defi_count') level_def on
-        (1 = 1);
-insert
-into
-    public.combination (asset,
-                        project,
-                        trade_type,
-                        balance,
-                        volume,
-                        activity,
-                        hold_time,
-                        created_at,
-                        label_name,
-                        "content",
-                        asset_type,
-                        label_category)
-select
-    'ALL_TOKEN' asset,
-    'ALL' project,
-    trade_type.trade_type trade_type,
-    '' balance,
-    level_def.level volume,
-    '' activity,
-    '' hold_time,
-    now() created_at,
-    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX_'|| level_def.level  label_name,
-    (CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||' '||level_def.level_name "content",
-    'token' asset_type,
-    'GRADE' label_category
-from trade_type
-         inner join (
-    select
-        *
-    from
-        level_def
-    where
-            type = 'defi_count') level_def on
-    (1 = 1);
-
----------------volume_grade 1inch_ALL_ALL_VOLUME_DEX_GRADE
-insert
-into
-    dim_project_token_type (project,
-                            "token",
-                            "type",
-                            label_type,
-                            operate_type,
-                            seq_flag,
-                            data_subject,
-                            project_name,
-                            token_name)
-select
-    platform.platform as project,
-    'ALL' as token,
-    trade_type.trade_type as type,
-    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as label_type,
-    'T' as operate_type,
-    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name seq_flag,
-    'volume_grade' data_subject,
-    platform.platform_name project_name,
-    'ALL' token_name
-from  platform
-          inner join trade_type on
-    (1 = 1);
-insert
-into
-    public.label_test ("owner",
-                       "type",
-                       "name",
-                       "source",
-                       visible_type,
-                       strategy,
-                       "content",
-                       rule_type,
-                       rule_group,
-                       value_type,
-                       run_order,
-                       created_at,
-                       refresh_time,
-                       wired_type,
-                       label_order,
-                       sync_es_status)
-select distinct
-    'RelationTeam' "owner",
-    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
-    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name ||  '_VOLUME_DEX_GRADE_' || level_def.level as "name",
-    'SYSTEM' "source",
-    'PUBLIC' visible_type,
-    'TOTAL_PART' strategy,
-    platform.platform_name || ' '|| (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)||' '||
-    (CASE WHEN level_def.level='Million' or level_def.level='Billion' THEN level_def.level||' ' else '' end) ||level_def.level_name  "content",
-    'SQL' rule_type,
-    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name ||  '_VOLUME_DEX_GRADE' rule_group,
-    'RESULT' value_type,
-    999999 run_order,
-    now() created_at,
-    0 refresh_time,
-    'DEFI' wired_type,
-    999 label_order,
-    'WAITING' sync_es_status
-from
-    platform
-        inner join trade_type on
-        (1 = 1)
-        inner join (
-        select
-            *
-        from
-            level_def
-        where
-                type = 'defi_volume_grade') level_def on
-        (1 = 1);
-insert
-into
-    public.combination (asset,
-                        project,
-                        trade_type,
-                        balance,
-                        volume,
-                        activity,
-                        hold_time,
-                        created_at,
-                        label_name,
-                        "content",
-                        asset_type,
-                        label_category)
-select
-    'ALL_TOKEN' asset,
-    platform.platform_name project,
-    trade_type.trade_type trade_type,
-    '' balance,
-    level_def.level volume,
-    '' activity,
-    '' hold_time,
-    now() created_at,
-    platform.platform_name || '_' || 'ALL_' || trade_type.trade_type_name ||  '_VOLUME_DEX_GRADE_' || level_def.level label_name,
-    platform.platform_name || ' '|| (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)||' '||
-    (CASE WHEN level_def.level='Million' or level_def.level='Billion' THEN level_def.level||' ' else '' end) ||level_def.level_name  "content",
-    'token' asset_type,
-    'GRADE' label_category
-from   platform
-           inner join trade_type on
-    (1 = 1)
-           inner join (
-    select
-        *
-    from
-        level_def
-    where
-            type = 'defi_volume_grade') level_def on
-    (1 = 1);
-
----------------volume_grade ALL_ALL_ALL_VOLUME_DEX_GRADE
-insert
-into
-    dim_project_token_type (project,
-                            "token",
-                            "type",
-                            label_type,
-                            operate_type,
-                            seq_flag,
-                            data_subject,
-                            project_name,
-                            token_name)
-select
-    'ALL' as project,
-    'ALL' as token,
-    trade_type.trade_type as type,
-    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as label_type,
-    'T' as operate_type,
-    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name seq_flag,
-    'volume_grade' data_subject,
-    'ALL' project_name,
-    'ALL' token_name
-from
-    trade_type;
-insert
-into
-    public.label_test ("owner",
-                       "type",
-                       "name",
-                       "source",
-                       visible_type,
-                       strategy,
-                       "content",
-                       rule_type,
-                       rule_group,
-                       value_type,
-                       run_order,
-                       created_at,
-                       refresh_time,
-                       wired_type,
-                       label_order,
-                       sync_es_status)
-select
-    'RelationTeam' "owner",
-    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
-    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_'|| level_def.level as "name",
-    'SYSTEM' "source",
-    'PUBLIC' visible_type,
-    'TOTAL_PART' strategy,
-    (CASE WHEN trade_type.trade_type='ALL'  and (level_def.level='Million' or level_def.level='Billion') THEN level_def.level||' ' else '' end)||
-    (CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||' '||
-    (CASE WHEN trade_type.trade_type<>'ALL'  and (level_def.level='Million' or level_def.level='Billion') THEN level_def.level||' ' else '' end)||level_def.level_name  "content",
-    'SQL' rule_type,
-    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' rule_group,
-    'RESULT' value_type,
-    999999 run_order,
-    now() created_at,
-    0 refresh_time,
-    'DEFI' wired_type,
-    999 label_order,
-    'WAITING' sync_es_status
-from
-    trade_type
-        inner join (
-        select
-            *
-        from
-            level_def
-        where
-                type = 'defi_volume_grade') level_def on
-        (1 = 1);
-insert
-into
-    public.combination (asset,
-                        project,
-                        trade_type,
-                        balance,
-                        volume,
-                        activity,
-                        hold_time,
-                        created_at,
-                        label_name,
-                        "content",
-                        asset_type,
-                        label_category)
-select
-    'ALL_TOKEN' asset,
-    'ALL' project,
-    trade_type.trade_type trade_type,
-    '' balance,
-    level_def.level volume,
-    '' activity,
-    '' hold_time,
-    now() created_at,
-    'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_'|| level_def.level label_name,
-    (CASE WHEN trade_type.trade_type='ALL'  and (level_def.level='Million' or level_def.level='Billion') THEN level_def.level||' ' else '' end)||
-    (CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||' '||
-    (CASE WHEN trade_type.trade_type<>'ALL'  and (level_def.level='Million' or level_def.level='Billion') THEN level_def.level||' ' else '' end)||level_def.level_name "content",
-    'token' asset_type,
-    'GRADE' label_category
-from trade_type
-         inner join (
-    select
-        *
-    from
-        level_def
-    where
-            type = 'defi_volume_grade') level_def on
-    (1 = 1);
-
 ---------------volume_rank 1inch_ALL_ALL_VOLUME_DEX_RANK
 insert
 into
@@ -1480,6 +1480,9 @@ from trade_type
     where
             type = 'defi_volume_rank') level_def on
     (1 = 1);
+
+
+
 
 
 

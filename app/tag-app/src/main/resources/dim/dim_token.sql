@@ -104,26 +104,88 @@ from
         (1 = 1)
 where holders>=100 and removed<>'true' ;
 
-INSERT INTO dim_rule_content (rule_code,"token",label_type,operate_type,data_subject,create_time,token_name,token_type) VALUES
-    ('rule_2247','ALL','ALL_ALL_ALL_BALANCE_GRADE','T','balance_grade','2023-06-20 00:27:36.873','ALL','token');
-INSERT INTO label ("owner","type","name","source",visible_type,strategy,"content","rule",default_rule,rule_type,rule_group,value_type,description,run_order,created_at,updated_at,removed,for_init,error_msg,status,popular,refresh_time,mark_type,ar_tx_hash,ar_status,ar_error_msg,ar_error_count,api_level,personal,wired_type,label_order,sync_es_status) VALUES
-('RelationTeam','ALL_ALL_ALL_BALANCE_GRADE','ALL_ALL_ALL_BALANCE_GRADE_L1','SYSTEM','PUBLIC','GRADE','Token Balance Lv1','',NULL,'SQL','ALL_ALL_ALL_BALANCE_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:09.227','2023-06-20 07:52:09.227',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_BALANCE_GRADE','ALL_ALL_ALL_BALANCE_GRADE_L2','SYSTEM','PUBLIC','GRADE','Token Balance Lv2','',NULL,'SQL','ALL_ALL_ALL_BALANCE_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:09.227','2023-06-20 07:52:09.227',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_BALANCE_GRADE','ALL_ALL_ALL_BALANCE_GRADE_L3','SYSTEM','PUBLIC','GRADE','Token Balance Lv3','',NULL,'SQL','ALL_ALL_ALL_BALANCE_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:09.227','2023-06-20 07:52:09.227',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_BALANCE_GRADE','ALL_ALL_ALL_BALANCE_GRADE_L4','SYSTEM','PUBLIC','GRADE','Token Balance Lv4','',NULL,'SQL','ALL_ALL_ALL_BALANCE_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:09.227','2023-06-20 07:52:09.227',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_BALANCE_GRADE','ALL_ALL_ALL_BALANCE_GRADE_L5','SYSTEM','PUBLIC','GRADE','Token Balance Lv5','',NULL,'SQL','ALL_ALL_ALL_BALANCE_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:09.227','2023-06-20 07:52:09.227',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_BALANCE_GRADE','ALL_ALL_ALL_BALANCE_GRADE_L6','SYSTEM','PUBLIC','GRADE','Token Balance Lv6','',NULL,'SQL','ALL_ALL_ALL_BALANCE_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:09.227','2023-06-20 07:52:09.227',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_BALANCE_GRADE','ALL_ALL_ALL_BALANCE_GRADE_Millionaire','SYSTEM','PUBLIC','GRADE','Token Millionaire','',NULL,'SQL','ALL_ALL_ALL_BALANCE_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:09.227','2023-06-20 07:52:09.227',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_BALANCE_GRADE','ALL_ALL_ALL_BALANCE_GRADE_Billionaire','SYSTEM','PUBLIC','GRADE','Token Billionaire','',NULL,'SQL','ALL_ALL_ALL_BALANCE_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:09.227','2023-06-20 07:52:09.227',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING');
-INSERT INTO public.combination (asset,project,trade_type,balance,volume,activity,hold_time,created_at,updated_at,removed,label_name,"content",asset_type,label_category) VALUES
-('ALL_TOKEN','','','L1','','','','2023-06-20 07:58:31.296','2023-06-20 07:58:31.296',false,'ALL_ALL_ALL_BALANCE_GRADE_L1','Token Balance Lv1','token','GRADE'),
-('ALL_TOKEN','','','L2','','','','2023-06-20 07:58:31.296','2023-06-20 07:58:31.296',false,'ALL_ALL_ALL_BALANCE_GRADE_L2','Token Balance Lv2','token','GRADE'),
-('ALL_TOKEN','','','L3','','','','2023-06-20 07:58:31.296','2023-06-20 07:58:31.296',false,'ALL_ALL_ALL_BALANCE_GRADE_L3','Token Balance Lv3','token','GRADE'),
-('ALL_TOKEN','','','L4','','','','2023-06-20 07:58:31.296','2023-06-20 07:58:31.296',false,'ALL_ALL_ALL_BALANCE_GRADE_L4','Token Balance Lv4','token','GRADE'),
-('ALL_TOKEN','','','L5','','','','2023-06-20 07:58:31.296','2023-06-20 07:58:31.296',false,'ALL_ALL_ALL_BALANCE_GRADE_L5','Token Balance Lv5','token','GRADE'),
-('ALL_TOKEN','','','L6','','','','2023-06-20 07:58:31.296','2023-06-20 07:58:31.296',false,'ALL_ALL_ALL_BALANCE_GRADE_L6','Token Balance Lv6','token','GRADE'),
-('ALL_TOKEN','','','Millionaire','','','','2023-06-20 07:58:31.296','2023-06-20 07:58:31.296',false,'ALL_ALL_ALL_BALANCE_GRADE_Millionaire','Token Millionaire','token','GRADE'),
-('ALL_TOKEN','','','Billionaire','','','','2023-06-20 07:58:31.296','2023-06-20 07:58:31.296',false,'ALL_ALL_ALL_BALANCE_GRADE_Billionaire','Token Billionaire','token','GRADE');
+--------balance_grade ALL_ALL_ALL_BALANCE_GRADE
+insert
+into
+    dim_rule_content (
+    "token",
+    label_type,
+    operate_type,
+    seq_flag,
+    data_subject,
+    token_name)
+select
+    'ALL' "token",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_GRADE' label_type,
+    'T' operate_type,
+    'ALL' seq_flag,
+    'balance_grade' data_subject,
+    'ALL' token_name;
+insert
+into
+    public."label" ("owner",
+                    "type",
+                    "name",
+                    "source",
+                    visible_type,
+                    strategy,
+                    "content",
+                    rule_type,
+                    rule_group,
+                    value_type,
+                    run_order,
+                    created_at,
+                    refresh_time,
+                    wired_type,
+                    label_order,
+                    sync_es_status)
+select
+    'RelationTeam' "owner",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_GRADE'  as "type",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_GRADE_'|| level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    'Token '||level_def.level_name  "content",
+    'SQL' rule_type,
+    'ALL' ||  '_BALANCE_GRADE'  rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'NFT' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from level_def where type = 'defi_balance_grade' ;
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    'ALL_NFT'  asset,
+    '' project,
+    '' trade_type,
+    level_def.level balance,
+    ''    volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_GRADE_' || level_def.level  label_name,
+    'Token '||level_def.level_name  "content",
+    'nft' asset_type,
+    'GRADE' label_category
+from level_def where type = 'defi_balance_grade' ;
+
 
 
 --------------balance_rank  ALL_DAI(0x6b1754)_ALL_BALANCE_RANK
@@ -232,12 +294,88 @@ from
         (1 = 1)
 where holders>=100 and removed<>'true' ;
 
-INSERT INTO dim_rule_content (rule_code,"token",label_type,operate_type,data_subject,create_time,token_name,token_type) VALUES
-    ('rule_4496','ALL','ALL_ALL_ALL_BALANCE_RANK','T','balance_rank','2023-06-20 00:27:41.348','ALL','token');
-INSERT INTO label ("owner","type","name","source",visible_type,strategy,"content","rule",default_rule,rule_type,rule_group,value_type,description,run_order,created_at,updated_at,removed,for_init,error_msg,status,popular,refresh_time,mark_type,ar_tx_hash,ar_status,ar_error_msg,ar_error_count,api_level,personal,wired_type,label_order,sync_es_status) VALUES
-    ('RelationTeam','ALL_ALL_ALL_BALANCE_RANK','ALL_ALL_ALL_BALANCE_RANK_HIGH_BALANCE','SYSTEM','PUBLIC','GRADE','Token High Balance','',NULL,'SQL','ALL_ALL_ALL_BALANCE_RANK','RESULT',NULL,999999,'2023-06-20 07:53:38.793','2023-06-20 07:53:38.793',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING');
-INSERT INTO public.combination (asset,project,trade_type,balance,volume,activity,hold_time,created_at,updated_at,removed,label_name,"content",asset_type,label_category) VALUES
-    ('ALL_TOKEN','','','HIGH_BALANCE','','','','2023-06-20 07:58:46.407','2023-06-20 07:58:46.407',false,'ALL_ALL_ALL_BALANCE_RANK_HIGH_BALANCE','Token High Balance','token','RANK');
+
+--------balance_rank ALL_ALL_ALL_BALANCE_RANK
+insert
+into
+    dim_rule_content (
+    "token",
+    label_type,
+    operate_type,
+    seq_flag,
+    data_subject,
+    token_name)
+select
+    'ALL' "token",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_RANK' label_type,
+    'T' operate_type,
+    'ALL' seq_flag,
+    'balance_rank' data_subject,
+    'ALL' token_name;
+insert
+into
+    public."label" ("owner",
+                    "type",
+                    "name",
+                    "source",
+                    visible_type,
+                    strategy,
+                    "content",
+                    rule_type,
+                    rule_group,
+                    value_type,
+                    run_order,
+                    created_at,
+                    refresh_time,
+                    wired_type,
+                    label_order,
+                    sync_es_status)
+select
+    'RelationTeam' "owner",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_RANK'  as "type",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_RANK_'|| level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    'Token '||level_def.level_name  "content",
+    'SQL' rule_type,
+    'ALL' ||  '_BALANCE_RANK'  rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'NFT' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from level_def where type = 'defi_balance_rank' ;
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    'ALL_TOKEN'  asset,
+    '' project,
+    '' trade_type,
+    level_def.level balance,
+    ''    volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_RANK_' || level_def.level  label_name,
+    'Token '||level_def.level_name  "content",
+    'token' asset_type,
+    'RANK' label_category
+from level_def where type = 'defi_balance_rank' ;
 
 
 --------------balance_top  ALL_DAI(0x6b1754)_ALL_BALANCE_TOP
@@ -347,12 +485,87 @@ from
 where holders>=100 and removed<>'true' ;
 
 
-INSERT INTO dim_rule_content (rule_code,"token",label_type,operate_type,data_subject,create_time,token_name,token_type) VALUES
-    ('rule_4495','ALL','ALL_ALL_ALL_BALANCE_TOP','T','balance_top','2023-06-20 00:27:41.348','ALL','token');
-INSERT INTO label ("owner","type","name","source",visible_type,strategy,"content","rule",default_rule,rule_type,rule_group,value_type,description,run_order,created_at,updated_at,removed,for_init,error_msg,status,popular,refresh_time,mark_type,ar_tx_hash,ar_status,ar_error_msg,ar_error_count,api_level,personal,wired_type,label_order,sync_es_status) VALUES
-    ('RelationTeam','ALL_ALL_ALL_BALANCE_TOP','ALL_ALL_ALL_BALANCE_TOP_WHALE','SYSTEM','PUBLIC','GRADE','Token Whale','',NULL,'SQL','ALL_ALL_ALL_BALANCE_TOP','RESULT',NULL,999999,'2023-06-20 07:53:38.793','2023-06-20 07:53:38.793',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING');
-INSERT INTO public.combination (asset,project,trade_type,balance,volume,activity,hold_time,created_at,updated_at,removed,label_name,"content",asset_type,label_category) VALUES
-    ('ALL_TOKEN','','','WHALE','','','','2023-06-20 07:58:46.407','2023-06-20 07:58:46.407',false,'ALL_ALL_ALL_BALANCE_TOP_WHALE','Token Whale','token','TOP');
+--------balance_top ALL_ALL_ALL_BALANCE_TOP
+insert
+into
+    dim_rule_content (
+    "token",
+    label_type,
+    operate_type,
+    seq_flag,
+    data_subject,
+    token_name)
+select
+    'ALL' "token",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_TOP' label_type,
+    'T' operate_type,
+    'ALL' seq_flag,
+    'balance_top' data_subject,
+    'ALL' token_name;
+insert
+into
+    public."label" ("owner",
+                    "type",
+                    "name",
+                    "source",
+                    visible_type,
+                    strategy,
+                    "content",
+                    rule_type,
+                    rule_group,
+                    value_type,
+                    run_order,
+                    created_at,
+                    refresh_time,
+                    wired_type,
+                    label_order,
+                    sync_es_status)
+select
+    'RelationTeam' "owner",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_TOP'  as "type",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_TOP_'|| level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    'Token '||level_def.level_name  "content",
+    'SQL' rule_type,
+    'ALL' ||  '_BALANCE_TOP'  rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'NFT' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from level_def where type = 'defi_balance_top' ;
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    'ALL_TOKEN'  asset,
+    '' project,
+    '' trade_type,
+    level_def.level balance,
+    ''    volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_TOP_' || level_def.level  label_name,
+    'Token '||level_def.level_name  "content",
+    'token' asset_type,
+    'TOP' label_category
+from level_def where type = 'defi_balance_top' ;
 
 
 --------------count  ALL_DAI(0x6b1754)_ALL_ACTIVITY
@@ -461,28 +674,87 @@ from
         (1 = 1)
 where holders>=100 and removed<>'true' ;
 
-INSERT INTO dim_rule_content (rule_code,"token",label_type,operate_type,data_subject,create_time,token_name,token_type) VALUES
-    ('rule_6743','ALL','ALL_ALL_ALL_ACTIVITY','A','count','2023-06-20 00:27:45.374','ALL','token');
-INSERT INTO label ("owner","type","name","source",visible_type,strategy,"content","rule",default_rule,rule_type,rule_group,value_type,description,run_order,created_at,updated_at,removed,for_init,error_msg,status,popular,refresh_time,mark_type,ar_tx_hash,ar_status,ar_error_msg,ar_error_count,api_level,personal,wired_type,label_order,sync_es_status) VALUES
-('RelationTeam','ALL_ALL_ALL_ACTIVITY','ALL_ALL_ALL_ACTIVITY_L1','SYSTEM','PUBLIC','TOTAL_PART','Token Activity Lv1',NULL,'','SQL','ALL_ALL_ALL_ACTIVITY','RESULT',NULL,999999,'2023-06-20 07:53:38.793','2023-06-20 07:53:38.793',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_ACTIVITY','ALL_ALL_ALL_ACTIVITY_L2','SYSTEM','PUBLIC','TOTAL_PART','Token Activity Lv2',NULL,'','SQL','ALL_ALL_ALL_ACTIVITY','RESULT',NULL,999999,'2023-06-20 07:53:38.793','2023-06-20 07:53:38.793',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_ACTIVITY','ALL_ALL_ALL_ACTIVITY_L3','SYSTEM','PUBLIC','TOTAL_PART','Token Activity Lv3',NULL,'','SQL','ALL_ALL_ALL_ACTIVITY','RESULT',NULL,999999,'2023-06-20 07:53:38.793','2023-06-20 07:53:38.793',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_ACTIVITY','ALL_ALL_ALL_ACTIVITY_L4','SYSTEM','PUBLIC','TOTAL_PART','Token Activity Lv4',NULL,'','SQL','ALL_ALL_ALL_ACTIVITY','RESULT',NULL,999999,'2023-06-20 07:53:38.793','2023-06-20 07:53:38.793',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_ACTIVITY','ALL_ALL_ALL_ACTIVITY_L5','SYSTEM','PUBLIC','TOTAL_PART','Token Activity Lv5',NULL,'','SQL','ALL_ALL_ALL_ACTIVITY','RESULT',NULL,999999,'2023-06-20 07:53:38.793','2023-06-20 07:53:38.793',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_ACTIVITY','ALL_ALL_ALL_ACTIVITY_L6','SYSTEM','PUBLIC','TOTAL_PART','Token Activity Lv6',NULL,'','SQL','ALL_ALL_ALL_ACTIVITY','RESULT',NULL,999999,'2023-06-20 07:53:38.793','2023-06-20 07:53:38.793',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_ACTIVITY','ALL_ALL_ALL_ACTIVITY_High','SYSTEM','PUBLIC','TOTAL_PART','Token Highest Activity',NULL,'','SQL','ALL_ALL_ALL_ACTIVITY','RESULT',NULL,999999,'2023-06-20 07:53:38.793','2023-06-20 07:53:38.793',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_ACTIVITY','ALL_ALL_ALL_ACTIVITY_Medium','SYSTEM','PUBLIC','TOTAL_PART','Token High Activity',NULL,'','SQL','ALL_ALL_ALL_ACTIVITY','RESULT',NULL,999999,'2023-06-20 07:53:38.793','2023-06-20 07:53:38.793',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_ACTIVITY','ALL_ALL_ALL_ACTIVITY_Low','SYSTEM','PUBLIC','TOTAL_PART','Token Medium Activity',NULL,'','SQL','ALL_ALL_ALL_ACTIVITY','RESULT',NULL,999999,'2023-06-20 07:53:38.793','2023-06-20 07:53:38.793',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING');
-INSERT INTO public.combination (asset,project,trade_type,balance,volume,activity,hold_time,created_at,updated_at,removed,label_name,"content",asset_type,label_category) VALUES
-('ALL_TOKEN','','','','','L1','','2023-06-20 07:58:46.407','2023-06-20 07:58:46.407',false,'ALL_ALL_ALL_ACTIVITY_L1','Token Activity Lv1','token','GRADE'),
-('ALL_TOKEN','','','','','L2','','2023-06-20 07:58:46.407','2023-06-20 07:58:46.407',false,'ALL_ALL_ALL_ACTIVITY_L2','Token Activity Lv2','token','GRADE'),
-('ALL_TOKEN','','','','','L3','','2023-06-20 07:58:46.407','2023-06-20 07:58:46.407',false,'ALL_ALL_ALL_ACTIVITY_L3','Token Activity Lv3','token','GRADE'),
-('ALL_TOKEN','','','','','L4','','2023-06-20 07:58:46.407','2023-06-20 07:58:46.407',false,'ALL_ALL_ALL_ACTIVITY_L4','Token Activity Lv4','token','GRADE'),
-('ALL_TOKEN','','','','','L5','','2023-06-20 07:58:46.407','2023-06-20 07:58:46.407',false,'ALL_ALL_ALL_ACTIVITY_L5','Token Activity Lv5','token','GRADE'),
-('ALL_TOKEN','','','','','L6','','2023-06-20 07:58:46.407','2023-06-20 07:58:46.407',false,'ALL_ALL_ALL_ACTIVITY_L6','Token Activity Lv6','token','GRADE'),
-('ALL_TOKEN','','','','','High','','2023-06-20 07:58:46.407','2023-06-20 07:58:46.407',false,'ALL_ALL_ALL_ACTIVITY_High','Token Highest Activity','token','GRADE'),
-('ALL_TOKEN','','','','','Medium','','2023-06-20 07:58:46.407','2023-06-20 07:58:46.407',false,'ALL_ALL_ALL_ACTIVITY_Medium','Token High Activity','token','GRADE'),
-('ALL_TOKEN','','','','','Low','','2023-06-20 07:58:46.407','2023-06-20 07:58:46.407',false,'ALL_ALL_ALL_ACTIVITY_Low','Token Medium Activity','token','GRADE');
+--------count ALL_ALL_ALL_ACTIVITY
+insert
+into
+    dim_rule_content (
+    "token",
+    label_type,
+    operate_type,
+    seq_flag,
+    data_subject,
+    token_name)
+select
+    'ALL' "token",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY' label_type,
+    'T' operate_type,
+    'ALL' seq_flag,
+    'count' data_subject,
+    'ALL' token_name;
+insert
+into
+    public."label" ("owner",
+                    "type",
+                    "name",
+                    "source",
+                    visible_type,
+                    strategy,
+                    "content",
+                    rule_type,
+                    rule_group,
+                    value_type,
+                    run_order,
+                    created_at,
+                    refresh_time,
+                    wired_type,
+                    label_order,
+                    sync_es_status)
+select
+    'RelationTeam' "owner",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY'  as "type",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY_'|| level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    'Token '||level_def.level_name  "content",
+    'SQL' rule_type,
+    'ALL' ||  '_ACTIVITY'  rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'NFT' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from level_def where type = 'defi_count' ;
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    'ALL_TOKEN'  asset,
+    '' project,
+    '' trade_type,
+    '' balance,
+    ''    volume,
+    level_def.level activity,
+    '' hold_time,
+    now() created_at,
+    'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY_' || level_def.level  label_name,
+    'Token '||level_def.level_name  "content",
+    'token' asset_type,
+    'GRADE' label_category
+from level_def where type = 'defi_count' ;
 
 --------------time_grade DOP(0x6bb612)_HOLDING_TIME_GRADE
 insert
@@ -801,26 +1073,88 @@ from
                 type = 'defi_volume_grade') level_def on
         (1 = 1)
 where holders>=100 and removed<>'true' ;
-INSERT INTO dim_rule_content (rule_code,"token",label_type,operate_type,data_subject,create_time,token_name,token_type) VALUES
-    ('rule_3371','ALL','ALL_ALL_ALL_VOLUME_GRADE','T','volume_grade','2023-06-20 00:27:38.850','ALL','token');
-INSERT INTO label ("owner","type","name","source",visible_type,strategy,"content","rule",default_rule,rule_type,rule_group,value_type,description,run_order,created_at,updated_at,removed,for_init,error_msg,status,popular,refresh_time,mark_type,ar_tx_hash,ar_status,ar_error_msg,ar_error_count,api_level,personal,wired_type,label_order,sync_es_status) VALUES
-('RelationTeam','ALL_ALL_ALL_VOLUME_GRADE','ALL_ALL_ALL_VOLUME_GRADE_L1','SYSTEM','PUBLIC','GRADE','Token Vol Lv1','',NULL,'SQL','ALL_ALL_ALL_VOLUME_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:17.298','2023-06-20 07:52:17.298',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_VOLUME_GRADE','ALL_ALL_ALL_VOLUME_GRADE_L2','SYSTEM','PUBLIC','GRADE','Token Vol Lv2','',NULL,'SQL','ALL_ALL_ALL_VOLUME_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:17.298','2023-06-20 07:52:17.298',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_VOLUME_GRADE','ALL_ALL_ALL_VOLUME_GRADE_L3','SYSTEM','PUBLIC','GRADE','Token Vol Lv3','',NULL,'SQL','ALL_ALL_ALL_VOLUME_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:17.298','2023-06-20 07:52:17.298',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_VOLUME_GRADE','ALL_ALL_ALL_VOLUME_GRADE_L4','SYSTEM','PUBLIC','GRADE','Token Vol Lv4','',NULL,'SQL','ALL_ALL_ALL_VOLUME_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:17.298','2023-06-20 07:52:17.298',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_VOLUME_GRADE','ALL_ALL_ALL_VOLUME_GRADE_L5','SYSTEM','PUBLIC','GRADE','Token Vol Lv5','',NULL,'SQL','ALL_ALL_ALL_VOLUME_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:17.298','2023-06-20 07:52:17.298',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_VOLUME_GRADE','ALL_ALL_ALL_VOLUME_GRADE_L6','SYSTEM','PUBLIC','GRADE','Token Vol Lv6','',NULL,'SQL','ALL_ALL_ALL_VOLUME_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:17.298','2023-06-20 07:52:17.298',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_VOLUME_GRADE','ALL_ALL_ALL_VOLUME_GRADE_Million','SYSTEM','PUBLIC','GRADE','Token Million Trader','',NULL,'SQL','ALL_ALL_ALL_VOLUME_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:17.298','2023-06-20 07:52:17.298',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_VOLUME_GRADE','ALL_ALL_ALL_VOLUME_GRADE_Billion','SYSTEM','PUBLIC','GRADE','Token Billion Trader','',NULL,'SQL','ALL_ALL_ALL_VOLUME_GRADE','RESULT',NULL,999999,'2023-06-20 07:52:17.298','2023-06-20 07:52:17.298',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING');
-INSERT INTO public.combination (asset,project,trade_type,balance,volume,activity,hold_time,created_at,updated_at,removed,label_name,"content",asset_type,label_category) VALUES
-('ALL_TOKEN','','','','L1','','','2023-06-20 07:58:32.228','2023-06-20 07:58:32.228',false,'ALL_ALL_ALL_VOLUME_GRADE_L1','Token Vol Lv1','token','GRADE'),
-('ALL_TOKEN','','','','L2','','','2023-06-20 07:58:32.228','2023-06-20 07:58:32.228',false,'ALL_ALL_ALL_VOLUME_GRADE_L2','Token Vol Lv2','token','GRADE'),
-('ALL_TOKEN','','','','L3','','','2023-06-20 07:58:32.228','2023-06-20 07:58:32.228',false,'ALL_ALL_ALL_VOLUME_GRADE_L3','Token Vol Lv3','token','GRADE'),
-('ALL_TOKEN','','','','L4','','','2023-06-20 07:58:32.228','2023-06-20 07:58:32.228',false,'ALL_ALL_ALL_VOLUME_GRADE_L4','Token Vol Lv4','token','GRADE'),
-('ALL_TOKEN','','','','L5','','','2023-06-20 07:58:32.228','2023-06-20 07:58:32.228',false,'ALL_ALL_ALL_VOLUME_GRADE_L5','Token Vol Lv5','token','GRADE'),
-('ALL_TOKEN','','','','L6','','','2023-06-20 07:58:32.228','2023-06-20 07:58:32.228',false,'ALL_ALL_ALL_VOLUME_GRADE_L6','Token Vol Lv6','token','GRADE'),
-('ALL_TOKEN','','','','Million','','','2023-06-20 07:58:32.228','2023-06-20 07:58:32.228',false,'ALL_ALL_ALL_VOLUME_GRADE_Million','Token Million Trader','token','GRADE'),
-('ALL_TOKEN','','','','Billion','','','2023-06-20 07:58:32.228','2023-06-20 07:58:32.228',false,'ALL_ALL_ALL_VOLUME_GRADE_Billion','Token Billion Trader','token','GRADE');
+
+--------volume_grade ALL_ALL_ALL_VOLUME_GRADE
+insert
+into
+    dim_rule_content (
+    "token",
+    label_type,
+    operate_type,
+    seq_flag,
+    data_subject,
+    token_name)
+select
+    'ALL' "token",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE' label_type,
+    'T' operate_type,
+    'ALL' seq_flag,
+    'volume_grade' data_subject,
+    'ALL' token_name;
+insert
+into
+    public."label" ("owner",
+                    "type",
+                    "name",
+                    "source",
+                    visible_type,
+                    strategy,
+                    "content",
+                    rule_type,
+                    rule_group,
+                    value_type,
+                    run_order,
+                    created_at,
+                    refresh_time,
+                    wired_type,
+                    label_order,
+                    sync_es_status)
+select
+    'RelationTeam' "owner",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE'  as "type",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE_'|| level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    'Token '||(case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end)||level_def.level_name  "content",
+    'SQL' rule_type,
+    'ALL' ||  '_VOLUME_GRADE'  rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'NFT' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from level_def where type = 'defi_volume_grade' ;
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    'ALL_TOKEN'  asset,
+    '' project,
+    '' trade_type,
+    '' balance,
+    level_def.level     volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE_' || level_def.level  label_name,
+    'Token '||(case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end)||level_def.level_name  "content",
+    'token' asset_type,
+    'GRADE' label_category
+from level_def where type = 'defi_volume_grade' ;
 
 --------------volume_rank  ALL_DAI(0x6b1754)_ALL_VOLUME_RANK
 insert
@@ -929,21 +1263,88 @@ from
         (1 = 1)
 where holders>=100 and removed<>'true' ;
 
-INSERT INTO dim_rule_content (rule_code,"token",label_type,operate_type,data_subject,create_time,token_name,token_type) VALUES
-    ('rule_7867','ALL','ALL_ALL_ALL_VOLUME_RANK','T','volume_rank','2023-06-20 00:27:47.836','ALL','token');
-INSERT INTO label ("owner","type","name","source",visible_type,strategy,"content","rule",default_rule,rule_type,rule_group,value_type,description,run_order,created_at,updated_at,removed,for_init,error_msg,status,popular,refresh_time,mark_type,ar_tx_hash,ar_status,ar_error_msg,ar_error_count,api_level,personal,wired_type,label_order,sync_es_status) VALUES
-('RelationTeam','ALL_ALL_ALL_VOLUME_RANK_LEGENDARY','ALL_ALL_ALL_VOLUME_RANK_LEGENDARY','SYSTEM','PUBLIC','GRADE','Token Legendary Trader','',NULL,'SQL','ALL_ALL_ALL_VOLUME_RANK_LEGENDARY','RESULT',NULL,999999,'2023-06-20 07:57:22.011','2023-06-20 07:57:22.011',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_VOLUME_RANK_ELITE','ALL_ALL_ALL_VOLUME_RANK_ELITE','SYSTEM','PUBLIC','GRADE','Token Elite Trader','',NULL,'SQL','ALL_ALL_ALL_VOLUME_RANK_ELITE','RESULT',NULL,999999,'2023-06-20 07:57:22.011','2023-06-20 07:57:22.011',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_VOLUME_RANK_HEAVY','ALL_ALL_ALL_VOLUME_RANK_HEAVY','SYSTEM','PUBLIC','GRADE','Token Heavy Trader','',NULL,'SQL','ALL_ALL_ALL_VOLUME_RANK_HEAVY','RESULT',NULL,999999,'2023-06-20 07:57:22.011','2023-06-20 07:57:22.011',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING'),
-('RelationTeam','ALL_ALL_ALL_VOLUME_RANK_MEDIUM','ALL_ALL_ALL_VOLUME_RANK_MEDIUM','SYSTEM','PUBLIC','GRADE','Token Medium Trader','',NULL,'SQL','ALL_ALL_ALL_VOLUME_RANK_MEDIUM','RESULT',NULL,999999,'2023-06-20 07:57:22.011','2023-06-20 07:57:22.011',false,false,NULL,'SUCCESS',false,0,NULL,NULL,'PENDING',NULL,0,NULL,0,'DEFI',999,'WAITING');
 
-INSERT INTO public.combination (asset,project,trade_type,balance,volume,activity,hold_time,created_at,updated_at,removed,label_name,"content",asset_type,label_category) VALUES
-         ('ALL_TOKEN','','','','LEGENDARY','','','2023-06-20 07:59:01.212','2023-06-20 07:59:01.212',false,'ALL_ALL_ALL_VOLUME_RANK_LEGENDARY','Token Legendary Trader','token','RANK'),
-         ('ALL_TOKEN','','','','ELITE','','','2023-06-20 07:59:01.212','2023-06-20 07:59:01.212',false,'ALL_ALL_ALL_VOLUME_RANK_ELITE','Token Elite Trader','token','RANK'),
-         ('ALL_TOKEN','','','','HEAVY','','','2023-06-20 07:59:01.212','2023-06-20 07:59:01.212',false,'ALL_ALL_ALL_VOLUME_RANK_HEAVY','Token Heavy Trader','token','RANK'),
-         ('ALL_TOKEN','','','','MEDIUM','','','2023-06-20 07:59:01.212','2023-06-20 07:59:01.212',false,'ALL_ALL_ALL_VOLUME_RANK_MEDIUM','Token Medium Trader','token','RANK');
-
-
+--------volume_rank ALL_ALL_ALL_VOLUME_RANK
+insert
+into
+    dim_rule_content (
+    "token",
+    label_type,
+    operate_type,
+    seq_flag,
+    data_subject,
+    token_name)
+select
+    'ALL' "token",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK' label_type,
+    'T' operate_type,
+    'ALL' seq_flag,
+    'volume_rank' data_subject,
+    'ALL' token_name;
+insert
+into
+    public."label" ("owner",
+                    "type",
+                    "name",
+                    "source",
+                    visible_type,
+                    strategy,
+                    "content",
+                    rule_type,
+                    rule_group,
+                    value_type,
+                    run_order,
+                    created_at,
+                    refresh_time,
+                    wired_type,
+                    label_order,
+                    sync_es_status)
+select
+    'RelationTeam' "owner",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK'  as "type",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK_'|| level_def.level as "name",
+    'SYSTEM' "source",
+    'PUBLIC' visible_type,
+    'TOTAL_PART' strategy,
+    'Token '||level_def.level_name||' Trader' "content",
+    'SQL' rule_type,
+    'ALL' ||  '_VOLUME_RANK'  rule_group,
+    'RESULT' value_type,
+    999999 run_order,
+    now() created_at,
+    0 refresh_time,
+    'NFT' wired_type,
+    999 label_order,
+    'WAITING' sync_es_status
+from level_def where type = 'defi_volume_rank' ;
+insert
+into
+    public.combination (asset,
+                        project,
+                        trade_type,
+                        balance,
+                        volume,
+                        activity,
+                        hold_time,
+                        created_at,
+                        label_name,
+                        "content",
+                        asset_type,
+                        label_category)
+select
+    'ALL_TOKEN'  asset,
+    '' project,
+    '' trade_type,
+    '' balance,
+    level_def.level     volume,
+    '' activity,
+    '' hold_time,
+    now() created_at,
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK_' || level_def.level  label_name,
+    'Token '||level_def.level_name||' Trader' "content",
+    'token' asset_type,
+    'RANK' label_category
+from level_def where type = 'defi_volume_rank' ;
 
 
 
