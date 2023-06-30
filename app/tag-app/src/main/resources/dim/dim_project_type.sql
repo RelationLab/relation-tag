@@ -42,7 +42,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -160,7 +160,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -277,7 +277,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -394,7 +394,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",

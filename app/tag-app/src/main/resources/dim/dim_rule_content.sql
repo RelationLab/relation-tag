@@ -66,7 +66,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -241,7 +241,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -415,7 +415,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -590,7 +590,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -764,7 +764,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -938,7 +938,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1092,7 +1092,7 @@ from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1192,7 +1192,7 @@ select
     'ALL' token_name;
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1280,7 +1280,7 @@ from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1381,7 +1381,7 @@ select
     'ALL' token_name;
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1468,7 +1468,7 @@ from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1569,7 +1569,7 @@ select
     'ALL' token_name;
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1656,7 +1656,7 @@ from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1756,7 +1756,7 @@ select
     'ALL' token_name;
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1842,7 +1842,7 @@ from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1948,7 +1948,7 @@ from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -2054,7 +2054,7 @@ from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -2154,7 +2154,7 @@ select
     'ALL' token_name;
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -2240,7 +2240,7 @@ from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -2341,7 +2341,7 @@ select
     'ALL' token_name;
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",

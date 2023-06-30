@@ -79,7 +79,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -245,7 +245,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -410,7 +410,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -576,7 +576,7 @@ from
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -728,7 +728,7 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -854,7 +854,7 @@ from  nft_trade_type
 where  nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -969,7 +969,7 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1096,7 +1096,7 @@ where
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1222,7 +1222,7 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1345,7 +1345,7 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1471,7 +1471,7 @@ where
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1591,7 +1591,7 @@ from  nft_trade_type
 where  nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1711,7 +1711,7 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1836,7 +1836,7 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -1963,7 +1963,7 @@ where
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -2083,7 +2083,7 @@ from  nft_trade_type
 where  nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -2202,7 +2202,7 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -2325,7 +2325,7 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -2449,7 +2449,7 @@ where
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -2570,7 +2570,7 @@ from  nft_trade_type
 where  nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -2689,7 +2689,7 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -2812,7 +2812,7 @@ from
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -2937,7 +2937,7 @@ where
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -3058,7 +3058,7 @@ from  nft_trade_type
 where  nft_trade_type.type='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -3186,7 +3186,7 @@ from
                    on (token_platform.platform=dex_action_platform.platform and trade_type.trade_type=dex_action_platform.trade_type);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -3328,7 +3328,7 @@ from
         INNER JOIN trade_type ON  (1=1);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -3452,7 +3452,7 @@ from  platform
 where platform.token_all_flag='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -3561,7 +3561,7 @@ from
     trade_type;
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -3683,7 +3683,7 @@ from
                    on (token_platform.platform=dex_action_platform.platform and trade_type.trade_type=dex_action_platform.trade_type);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -3826,7 +3826,7 @@ from
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -3951,7 +3951,7 @@ from  platform
     (1 = 1) where platform.token_all_flag='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -4063,7 +4063,7 @@ from
     trade_type;
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -4187,7 +4187,7 @@ from
                                                    on (token_platform.platform=dex_action_platform.platform and trade_type.trade_type=dex_action_platform.trade_type);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -4329,7 +4329,7 @@ from
         INNER JOIN trade_type ON  (1=1);
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -4454,7 +4454,7 @@ from  platform
     (1 = 1) where platform.token_all_flag='1';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -4562,7 +4562,7 @@ from
     trade_type;
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -4677,7 +4677,7 @@ from
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -4785,7 +4785,7 @@ select
     'ALL' token_name;
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -4876,7 +4876,7 @@ from
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -4983,7 +4983,7 @@ select
     'ALL' token_name;
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -5073,7 +5073,7 @@ from
 
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -5181,7 +5181,7 @@ select
     'ALL' token_name;
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -5277,7 +5277,7 @@ from
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -5395,7 +5395,7 @@ from nft_trade_type
 where nft_trade_type.type='0';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -5503,7 +5503,7 @@ from
     public.nft_sync_address where nft_sync_address.type<>'ERC1155';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -5612,7 +5612,7 @@ from
     public.nft_sync_address where nft_sync_address.type<>'ERC1155';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -5722,7 +5722,7 @@ from
     public.nft_sync_address where nft_sync_address.type<>'ERC1155';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -5839,7 +5839,7 @@ from
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -5957,7 +5957,7 @@ from nft_trade_type
 where nft_trade_type.type='0';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -6072,7 +6072,7 @@ from
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -6189,7 +6189,7 @@ from nft_trade_type
 where nft_trade_type.type='0';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -6304,7 +6304,7 @@ from
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -6420,7 +6420,7 @@ from nft_trade_type
 where nft_trade_type.type='0';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -6535,7 +6535,7 @@ from
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
@@ -6651,7 +6651,7 @@ from nft_trade_type
 where nft_trade_type.type='0';
 insert
 into
-    public.label_test ("owner",
+    public."label" ("owner",
                        "type",
                        "name",
                        "source",
