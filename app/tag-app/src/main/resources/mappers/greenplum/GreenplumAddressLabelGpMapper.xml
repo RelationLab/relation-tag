@@ -30,7 +30,9 @@
                analysis_at,
                analysis_address_num,
                address_image_text,
-               removed
+               removed,
+               download_path,
+               download_status
         from ugc_label_data_analysis
         where (status = 'DONE' or status='FAIL') and config_environment=#{configEnvironment}
         order by updated_at ASC limit 20
