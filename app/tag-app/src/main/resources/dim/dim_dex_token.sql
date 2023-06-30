@@ -15,12 +15,12 @@ select
     token_platform.platform as project,
     token_platform.address as token,
     trade_type.trade_type as type,
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_ACTIVITY_DEX' as label_type,
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_ACTIVITY_DEX' as label_type,
     'T' as operate_type,
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
     'count' data_subject,
     platform.platform_name project_name,
-    upper(top_token_1000.symbol)||  '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
+    top_token_1000.symbol||  '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
 from
     token_platform
         inner join platform on
@@ -55,14 +55,14 @@ into
                        sync_es_status)
 select
     'RelationTeam' "owner",
-    platform.platform_name || '_' || upper(top_token_1000.symbol)||  '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
-    platform.platform_name || '_' || upper(top_token_1000.symbol)||  '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' || level_def.level as "name",
+    platform.platform_name || '_' || top_token_1000.symbol||  '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
+    platform.platform_name || '_' || top_token_1000.symbol||  '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' || level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    platform.platform_name || ' ' || upper(top_token_1000.symbol)|| ' ' || (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)||' '||level_def.level_name  "content",
+    platform.platform_name || ' ' || top_token_1000.symbol|| ' ' || (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' rule_group,
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -108,7 +108,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
+        top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
         platform.platform_name project,
         trade_type.trade_type trade_type,
         '' balance,
@@ -116,8 +116,8 @@ select
         level_def.level activity,
         '' hold_time,
         now() created_at,
-        platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' || level_def.level label_name,
-        platform.platform_name || ' ' || upper(top_token_1000.symbol)|| ' ' || (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)||' '||level_def.level_name "content",
+        platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' || level_def.level label_name,
+        platform.platform_name || ' ' || top_token_1000.symbol|| ' ' || (CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)||' '||level_def.level_name "content",
         'token' asset_type,
         'GRADE' label_category
 from token_platform
@@ -159,12 +159,12 @@ select
     'ALL' as project,
     top_token_1000.address as token,
     trade_type.trade_type as type,
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_ACTIVITY_DEX' as label_type,
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_ACTIVITY_DEX' as label_type,
     'T' as operate_type,
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
     'count' data_subject,
     'ALL' project_name,
-    upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
+    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
 from
     (
         select
@@ -195,14 +195,14 @@ into
                        sync_es_status)
 select
     'RelationTeam' "owner",
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' || level_def.level as "name",
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' || level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    upper(top_token_1000.symbol)|| ' ' || (CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||' '||level_def.level_name "content",
+    top_token_1000.symbol|| ' ' || (CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||' '||level_def.level_name "content",
     'SQL' rule_type,
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' rule_group,
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -243,7 +243,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
+        top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
         'ALL' project,
         trade_type.trade_type trade_type,
         '' balance,
@@ -251,8 +251,8 @@ select
         level_def.level activity,
         '' hold_time,
         now() created_at,
-        'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' || level_def.level label_name,
-        upper(top_token_1000.symbol)|| ' ' || (CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||' '||level_def.level_name "content",
+        'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' || level_def.level label_name,
+        top_token_1000.symbol|| ' ' || (CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||' '||level_def.level_name "content",
         'token' asset_type,
         'GRADE' label_category
 from (
@@ -507,12 +507,12 @@ select
     token_platform.platform as project,
     token_platform.address as token,
     trade_type.trade_type as type,
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_VOLUME_DEX_GRADE' as label_type,
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_VOLUME_DEX_GRADE' as label_type,
     'T' as operate_type,
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
     'volume_grade' data_subject,
     platform.platform_name project_name,
-    upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
+    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
 from
     token_platform
         inner join platform on
@@ -547,14 +547,14 @@ into
                        sync_es_status)
 select
     'RelationTeam' "owner",
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' || level_def.level as "name",
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' || level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    platform.platform_name || ' ' || upper(top_token_1000.symbol)|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)|| ' '||level_def.level_name  "content",
+    platform.platform_name || ' ' || top_token_1000.symbol|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)|| ' '||level_def.level_name  "content",
     'SQL' rule_type,
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' rule_group,
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -599,7 +599,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
+        top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
         platform.platform_name project,
         trade_type.trade_type trade_type,
         '' balance,
@@ -607,8 +607,8 @@ select
         '' activity,
         '' hold_time,
         now() created_at,
-        platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' || level_def.level label_name,
-        platform.platform_name || ' ' || upper(top_token_1000.symbol)|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)|| ' '||level_def.level_name  "content",
+        platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' || level_def.level label_name,
+        platform.platform_name || ' ' || top_token_1000.symbol|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)|| ' '||level_def.level_name  "content",
         'token' asset_type,
         'GRADE' label_category
 from  token_platform
@@ -649,12 +649,12 @@ select
     'ALL' as project,
     top_token_1000.address as token,
     trade_type.trade_type as type,
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_VOLUME_DEX_GRADE' as label_type,
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_VOLUME_DEX_GRADE' as label_type,
     'T' as operate_type,
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
     'volume_grade' data_subject,
     'ALL' project_name,
-    upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
+    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
 from
     (
         select
@@ -686,15 +686,15 @@ into
                        sync_es_status)
 select
     'RelationTeam' "owner",
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' || level_def.level as "name",
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' || level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    upper(top_token_1000.symbol)|| ' ' || (case when trade_type.trade_type='ALL' and (level_def.level='Million' or level_def.level='Billion') then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||
+    top_token_1000.symbol|| ' ' || (case when trade_type.trade_type='ALL' and (level_def.level='Million' or level_def.level='Billion') then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||
     (case when trade_type.trade_type<>'ALL' and (level_def.level='Million' or level_def.level='Billion') then ' '||level_def.level else '' end )|| ' '||level_def.level_name  "content",
     'SQL' rule_type,
-    'ALL'|| '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' rule_group,
+    'ALL'|| '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -735,7 +735,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
+        top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
         'ALL' project,
         trade_type.trade_type trade_type,
         '' balance,
@@ -743,8 +743,8 @@ select
         '' activity,
         '' hold_time,
         now() created_at,
-        'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' || level_def.level label_name,
-        upper(top_token_1000.symbol)|| ' ' || (case when trade_type.trade_type='ALL' and (level_def.level='Million' or level_def.level='Billion') then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||
+        'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' || level_def.level label_name,
+        top_token_1000.symbol|| ' ' || (case when trade_type.trade_type='ALL' and (level_def.level='Million' or level_def.level='Billion') then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||
         (case when trade_type.trade_type<>'ALL' and (level_def.level='Million' or level_def.level='Billion') then ' '||level_def.level else '' end )|| ' '||level_def.level_name "content",
         'token' asset_type,
         'GRADE' label_category
@@ -1006,12 +1006,12 @@ select
     token_platform.platform as project,
     token_platform.address as token,
     trade_type.trade_type as type,
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_VOLUME_DEX_RANK' as label_type,
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_VOLUME_DEX_RANK' as label_type,
     'T' as operate_type,
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
     'volume_rank' data_subject,
     platform.platform_name project_name,
-    upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
+    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
 from
     token_platform
         inner join platform on
@@ -1046,14 +1046,14 @@ into
                        sync_es_status)
 select
     'RelationTeam' "owner",
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' as "type",
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' || level_def.level as "name",
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' as "type",
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' || level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    platform.platform_name || ' ' || upper(top_token_1000.symbol)|| ' '||level_def.level_name||' ' ||(CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)|| ' Trader'  "content",
+    platform.platform_name || ' ' || top_token_1000.symbol|| ' '||level_def.level_name||' ' ||(CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)|| ' Trader'  "content",
     'SQL' rule_type,
-    platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' rule_group,
+    platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1099,7 +1099,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
+        top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
         platform.platform_name project,
         trade_type.trade_type trade_type,
         '' balance,
@@ -1107,8 +1107,8 @@ select
         '' activity,
         '' hold_time,
         now() created_at,
-        platform.platform_name || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' || level_def.level label_name,
-        platform.platform_name || ' ' || upper(top_token_1000.symbol)|| ' '||level_def.level_name||' ' ||(CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)|| ' Trader'  "content",
+        platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' || level_def.level label_name,
+        platform.platform_name || ' ' || top_token_1000.symbol|| ' '||level_def.level_name||' ' ||(CASE WHEN trade_type.trade_type='ALL' THEN '' else trade_type.trade_type_name end)|| ' Trader'  "content",
         'token' asset_type,
         'RANK' label_category
 from   token_platform
@@ -1150,12 +1150,12 @@ select
     'ALL' as project,
     top_token_1000.address as token,
     trade_type.trade_type as type,
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_VOLUME_DEX_RANK' as label_type,
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name||'_VOLUME_DEX_RANK' as label_type,
     'T' as operate_type,
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
     'volume_rank' data_subject,
     'ALL' project_name,
-    upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
+    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
 from
     (
         select
@@ -1186,15 +1186,15 @@ into
                        sync_es_status)
 select
     'RelationTeam' "owner",
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' as "type",
-    'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' || level_def.level as "name",
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' as "type",
+    'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' || level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    upper(top_token_1000.symbol)|| ' ' || (case when trade_type.trade_type='ALL'  then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||
+    top_token_1000.symbol|| ' ' || (case when trade_type.trade_type='ALL'  then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||
     (case when trade_type.trade_type<>'ALL'  then ' '||level_def.level else '' end )|| ' '||level_def.level_name  "content",
     'SQL' rule_type,
-    'ALL'|| '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' rule_group,
+    'ALL'|| '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1235,7 +1235,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
+        top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
         'ALL' project,
         trade_type.trade_type trade_type,
         '' balance,
@@ -1243,8 +1243,8 @@ select
         '' activity,
         '' hold_time,
         now() created_at,
-        'ALL' || '_' || upper(top_token_1000.symbol)|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' || level_def.level label_name,
-        upper(top_token_1000.symbol)|| ' ' || (case when trade_type.trade_type='ALL'  then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||
+        'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' || level_def.level label_name,
+        top_token_1000.symbol|| ' ' || (case when trade_type.trade_type='ALL'  then level_def.level||' ' else '' end )||(CASE WHEN trade_type.trade_type='ALL' THEN 'Dex' else trade_type.trade_type_name end)||
         (case when trade_type.trade_type<>'ALL'  then ' '||level_def.level else '' end )|| ' '||level_def.level_name "content",
         'token' asset_type,
         'RANK' label_category

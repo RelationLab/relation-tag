@@ -9,7 +9,7 @@ into
 
 select
     lpt.pool as token,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_GRADE' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_GRADE' as label_type,
     'T' as operate_type,
     'balance_grade' data_subject,
     lpt.symbol_wired token_name,
@@ -60,14 +60,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_GRADE' as "type",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_GRADE_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_GRADE' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_GRADE_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_GRADE' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -133,7 +133,7 @@ select
     '' activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_GRADE_'||level_def.level  label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_GRADE_'||level_def.level  label_name,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name "content",
     'token' asset_type,
     'GRADE' label_category
@@ -184,7 +184,7 @@ into
 
 select
     lpt.pool as token,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_RANK' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_RANK' as label_type,
     'T' as operate_type,
     'balance_rank' data_subject,
     lpt.symbol_wired token_name,
@@ -235,14 +235,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_RANK' as "type",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_RANK_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_RANK' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_RANK_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_RANK' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_RANK' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -308,7 +308,7 @@ select
     '' activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_RANK_'||level_def.level  label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_RANK_'||level_def.level  label_name,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'token' asset_type,
     'RANK' label_category
@@ -358,7 +358,7 @@ into
 
 select
     lpt.pool as token,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_TOP' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_TOP' as label_type,
     'T' as operate_type,
     'balance_top' data_subject,
     lpt.symbol_wired token_name,
@@ -409,14 +409,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_TOP' as "type",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_TOP_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_TOP' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_TOP_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_TOP' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_TOP' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -482,7 +482,7 @@ select
     '' activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_BALANCE_TOP_'||level_def.level  label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_TOP_'||level_def.level  label_name,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'token' asset_type,
     'TOP' label_category
@@ -533,7 +533,7 @@ into
 
 select
     lpt.pool as token,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_ACTIVITY' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY' as label_type,
     'T' as operate_type,
     'count' data_subject,
     lpt.symbol_wired token_name,
@@ -584,14 +584,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_ACTIVITY' as "type",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_ACTIVITY_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_ACTIVITY' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -657,7 +657,7 @@ select
     level_def.level activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_ACTIVITY_'||level_def.level  label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY_'||level_def.level  label_name,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'token' asset_type,
     'GRADE' label_category
@@ -707,7 +707,7 @@ into
 
 select
     lpt.pool as token,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_GRADE' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE' as label_type,
     'T' as operate_type,
     'volume_grade' data_subject,
     lpt.symbol_wired token_name,
@@ -758,14 +758,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_GRADE' as "type",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_GRADE_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name  "content",
     'SQL' rule_type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_GRADE' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -831,7 +831,7 @@ select
     '' activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_GRADE_'||level_def.level label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE_'||level_def.level label_name,
     lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name   "content",
     'token' asset_type,
     'GRADE' label_category
@@ -881,7 +881,7 @@ into
 
 select
     lpt.pool as token,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_RANK' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK' as label_type,
     'T' as operate_type,
     'volume_rank' data_subject,
     lpt.symbol_wired token_name,
@@ -932,14 +932,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_RANK' as "type",
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_RANK_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name  "content",
     'SQL' rule_type,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_RANK' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1005,7 +1005,7 @@ select
     '' activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)|| '_'  || SUBSTRING(lpt.pool, 1, 6)|| '_VOLUME_RANK_'||level_def.level  label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK_'||level_def.level  label_name,
     lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name   "content",
     'token' asset_type,
     'RANK' label_category

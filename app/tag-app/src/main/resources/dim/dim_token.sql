@@ -9,9 +9,9 @@ into
                      create_time,
                      token_name,
                      token_type)
-select 'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE' as rule_code,
+select 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE' as rule_code,
        t.address as token,
-       'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE' as label_type,
+       'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE' as label_type,
        'T' operate_type,
        'balance_grade' data_subject,
        now() as create_time,
@@ -39,14 +39,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE' as "type",
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE_'|| level_def.level as "name",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE' as "type",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     t.symbol||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE' rule_group,
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -80,7 +80,7 @@ into
                         asset_type,
                         label_category)
 select
-    upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')' asset,
+    t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
     '' project,
     '' trade_type,
     level_def.level balance,
@@ -88,7 +88,7 @@ select
     '' activity,
     '' hold_time,
     now() created_at,
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE_'|| level_def.level label_name,
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE_'|| level_def.level label_name,
     t.symbol||' '||level_def.level_name   "content",
     'token' asset_type,
     'GRADE' label_category
@@ -197,9 +197,9 @@ into
                      create_time,
                      token_name,
                      token_type)
-select 'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK' as rule_code,
+select 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK' as rule_code,
        t.address as token,
-       'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK' as label_type,
+       'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK' as label_type,
        'T' operate_type,
        'balance_rank' data_subject,
        now() as create_time,
@@ -227,14 +227,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK' as "type",
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK_'|| level_def.level as "name",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK' as "type",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     t.symbol||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK' rule_group,
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -268,7 +268,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')' asset,
+        t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
         level_def.level balance,
@@ -276,7 +276,7 @@ select
         '' activity,
         '' hold_time,
         now() created_at,
-        'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK'|| level_def.level label_name,
+        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK'|| level_def.level label_name,
         t.symbol||' '||level_def.level_name   "content",
         'token' asset_type,
         'RANK' label_category
@@ -385,9 +385,9 @@ into
                      create_time,
                      token_name,
                      token_type)
-select 'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP' as rule_code,
+select 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP' as rule_code,
        t.address as token,
-       'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP' as label_type,
+       'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP' as label_type,
        'T' operate_type,
        'balance_top' data_subject,
        now() as create_time,
@@ -415,14 +415,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP' as "type",
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP_'|| level_def.level as "name",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP' as "type",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     t.symbol||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP' rule_group,
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -456,7 +456,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')' asset,
+        t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
         level_def.level balance,
@@ -464,7 +464,7 @@ select
         '' activity,
         '' hold_time,
         now() created_at,
-        'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP_'|| level_def.level label_name,
+        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP_'|| level_def.level label_name,
         t.symbol||' '||level_def.level_name   "content",
         'token' asset_type,
         'TOP' label_category
@@ -573,9 +573,9 @@ into
                      create_time,
                      token_name,
                      token_type)
-select 'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as rule_code,
+select 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as rule_code,
        t.address as token,
-       'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as label_type,
+       'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as label_type,
        'T' operate_type,
        'count' data_subject,
        now() as create_time,
@@ -603,14 +603,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as "type",
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY_'|| level_def.level as "name",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as "type",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     t.symbol||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' rule_group,
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -644,7 +644,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')' asset,
+        t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
         '' balance,
@@ -652,7 +652,7 @@ select
         level_def.level activity,
         '' hold_time,
         now() created_at,
-        'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY_'|| level_def.level label_name,
+        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY_'|| level_def.level label_name,
         t.symbol||' '||level_def.level_name   "content",
         'token' asset_type,
         'GRADE' label_category
@@ -759,9 +759,9 @@ into
                      create_time,
                      token_name,
                      token_type)
-select upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE' as rule_code,
+select t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE' as rule_code,
        t.address as token,
-       upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE' as label_type,
+       t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE' as label_type,
        'T' operate_type,
        'time_grade' data_subject,
        now() as create_time,
@@ -789,14 +789,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE' as "type",
-    upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE_'|| level_def.level as "name",
+    t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE' as "type",
+    t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     t.symbol||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE' rule_group,
+    t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -830,7 +830,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')' asset,
+        t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
         '' balance,
@@ -838,7 +838,7 @@ select
        '' activity,
         level_def.level hold_time,
         now() created_at,
-        upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE_'|| level_def.level  label_name,
+        t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE_'|| level_def.level  label_name,
         t.symbol||' '||level_def.level_name   "content",
         'token' asset_type,
         'GRADE' label_category
@@ -865,9 +865,9 @@ into
                      create_time,
                      token_name,
                      token_type)
-select upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL' as rule_code,
+select t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL' as rule_code,
        t.address as token,
-       upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL' as label_type,
+       t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL' as label_type,
        'T' operate_type,
        'time_special' data_subject,
        now() as create_time,
@@ -895,14 +895,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL' as "type",
-    upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL_'|| level_def.level as "name",
+    t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL' as "type",
+    t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     t.symbol||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL' rule_group,
+    t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -936,7 +936,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')' asset,
+        t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
         '' balance,
@@ -944,7 +944,7 @@ select
         '' activity,
         level_def.level hold_time,
         now() created_at,
-        upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL_'|| level_def.level  label_name,
+        t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL_'|| level_def.level  label_name,
         t.symbol||' '||level_def.level_name   "content",
         'token' asset_type,
         'SPECIAL' label_category
@@ -971,9 +971,9 @@ into
                      create_time,
                      token_name,
                      token_type)
-select 'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as rule_code,
+select 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as rule_code,
        t.address as token,
-       'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as label_type,
+       'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as label_type,
        'T' operate_type,
        'volume_grade' data_subject,
        now() as create_time,
@@ -1001,14 +1001,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as "type",
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE_'|| level_def.level as "name",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as "type",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     t.symbol|| (case when level_def.level='Million' or level_def.level='Billion' then ' '||level_def.level else '' end)||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' rule_group,
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1042,7 +1042,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')' asset,
+        t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
         '' balance,
@@ -1050,7 +1050,7 @@ select
         '' activity,
         '' hold_time,
         now() created_at,
-        'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE_'|| level_def.level label_name,
+        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE_'|| level_def.level label_name,
         t.symbol|| (case when level_def.level='Million' or level_def.level='Billion' then ' '||level_def.level else '' end)||' '||level_def.level_name    "content",
         'token' asset_type,
         'GRADE' label_category
@@ -1157,9 +1157,9 @@ into
                      create_time,
                      token_name,
                      token_type)
-select 'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as rule_code,
+select 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as rule_code,
        t.address as token,
-       'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as label_type,
+       'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as label_type,
        'T' operate_type,
        'volume_rank' data_subject,
        now() as create_time,
@@ -1187,14 +1187,14 @@ into
                     sync_es_status)
 select
     'RelationTeam' "owner",
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as "type",
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK_'|| level_def.level as "name",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as "type",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
     t.symbol||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' rule_group,
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1228,7 +1228,7 @@ into
                         asset_type,
                         label_category)
 select
-        upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')' asset,
+        t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
         '' balance,
@@ -1236,7 +1236,7 @@ select
         '' activity,
         '' hold_time,
         now() created_at,
-        'ALL_'||upper(t.symbol)||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK_'|| level_def.level label_name,
+        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK_'|| level_def.level label_name,
         t.symbol||' '||level_def.level_name    "content",
         'token' asset_type,
         'RANK' label_category
