@@ -38,7 +38,7 @@
     <update id="cancelDataAnalysis">
         update
         <include refid="TableName"/>
-        set status=#{param.status}, name = concat(name, '_', id), updated_at = CURRENT_TIMESTAMP
+        set status=#{param.status},download_status = #{param.downloadStatus}, name = concat(name, '_', id), updated_at = CURRENT_TIMESTAMP
         where id = #{param.id} and address=#{param.address} and status = 'TODO'
     </update>
 
@@ -55,10 +55,12 @@
         updated_at,
         removed,
         redo,
-        restore_vip_usage
+        restore_vip_usage,
+        download_status,
+        download_path
         from
         <include refid="TableName"/>
-        where removed = false and status = #{status}
+        where removed = false and status = #{status} and download_status='COMPLETE'
         <if test="updatedAt != null">
             and updated_at <![CDATA[<=]]> #{updatedAt}
         </if>
@@ -93,6 +95,15 @@
         where status = 'DOING' and updated_at <![CDATA[<=]]> #{updatedAt}
     </update>
 
+    <update id="updateDownload">
+        update
+        <include refid="TableName"/>
+        set download_status='COMPLETE',
+        download_path=#{downloadPath},
+        updated_at=current_timestamp
+        where id=#{id}
+    </update>
+
     <select id="selectTimeoutRecord" resultType="com.relation.tag.entity.UgcLabelDataAnalysis">
         select id,
                name,
@@ -107,9 +118,11 @@
                removed,
                analysis_at,
                analysis_address_num,
-               address_image_text
+               address_image_text,
+               download_status,
+               download_path
         from ugc_label_data_analysis
-        where updated_at + '${timeoutHour} hour' <![CDATA[<=]]> current_timestamp
+        where updated_at + '${timeoutHour} hour' <![CDATA[<=]]> current_timestamp           and download_status = 'PENDING'
     </select>
 
 </mapper>
