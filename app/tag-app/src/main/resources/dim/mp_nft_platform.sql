@@ -1,3 +1,4 @@
+DROP TABLE if EXISTS  mp_nft_platform;
 create table mp_nft_platform
 (
    platform varchar(80) NULL,
