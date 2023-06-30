@@ -39,3 +39,4 @@ CREATE TABLE public."label" (
                                 sync_es_status varchar(20) NOT NULL DEFAULT 'WAITING'::character varying,
                                 CONSTRAINT uk_lbl_name UNIQUE (name)
 );
+insert into tag_result(table_name,batch_date)  SELECT 'label' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

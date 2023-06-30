@@ -169,7 +169,24 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("snapshot_table", "create_view.sql", batchDate, INIT_PATH, null);
         execSql("create_view", "token_platform.sql", batchDate, INIT_PATH, null);
         execSql("token_platform", "nft_platform.sql", batchDate, INIT_PATH, null);
+        execSql("nft_platform", "dim_rule_sql_content.sql", batchDate, INIT_PATH, null);
 
+        execSql("dim_rule_sql_content", "combination.sql", batchDate, DIM_PATH, null);
+        execSql("combination", "dex_action_platform.sql", batchDate, DIM_PATH, null);
+        execSql("dex_action_platform", "label.sql", batchDate, DIM_PATH, null);
+        execSql("label", "level_def.sql", batchDate, DIM_PATH, null);
+        execSql("level_def", "mp_nft_platform.sql", batchDate, DIM_PATH, null);
+        execSql("mp_nft_platform", "nft_trade_type.sql", batchDate, DIM_PATH, null);
+        execSql("nft_trade_type", "platform.sql", batchDate, DIM_PATH, null);
+        execSql("platform", "platform_detail.sql", batchDate, DIM_PATH, null);
+        execSql("platform_detail", "trade_type.sql", batchDate, DIM_PATH, null);
+        execSql("trade_type", "web3_action.sql", batchDate, DIM_PATH, null);
+        execSql("web3_action", "web3_action_platform.sql", batchDate, DIM_PATH, null);
+        execSql("web3_action_platform", "web3_platform.sql", batchDate, DIM_PATH, null);
+
+        execSql("web3_platform", "dim_project_token_type.sql", batchDate, DIM_PATH, null);
+        execSql("dim_project_token_type", "dim_project_type.sql", batchDate, DIM_PATH, null);
+        execSql("dim_project_type", "dim_rule_content.sql", batchDate, DIM_PATH, null);
 
     }
 
@@ -178,7 +195,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 //        execSql(null, "dim_rule_sql_content.sql", batchDate, dir, null);
 //        execSql("dim_rule_sql_content", "dim_project_token_type.sql", batchDate, dir, null);
 //        execSql("dim_project_token_type", "dim_project_type.sql", batchDate, dir, null);
-        execSql("dim_project_type", "dim_rule_content.sql", batchDate, dir, null);
+//        execSql("dim_project_type", "dim_rule_content.sql", batchDate, dir, null);
         execSql("dim_rule_content", "white_list_erc20.sql", batchDate, dir, null);
         execSql("white_list_erc20", "platform_nft_volume_usd.sql", batchDate, dir, null);
         execSql("platform_nft_volume_usd", "nft_transfer_holding.sql", batchDate, dir, null);

@@ -72,3 +72,5 @@ update dim_project_type set token_name = split_part(label_type  ,'_', 2);
   insert into tag_result(table_name,batch_date)  SELECT 'dim_project_type' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
 
+
+

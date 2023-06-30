@@ -22,3 +22,4 @@ CREATE TABLE public.combination (
                                     label_category varchar(50) NULL
 );
 CREATE INDEX combination_idx_label_name ON public.combination USING btree (label_name);
+insert into tag_result(table_name,batch_date)  SELECT 'combination' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

@@ -26,4 +26,5 @@ insert into web3_action_platform(platform,trade_type,dim_type) values('0xde30da3
 insert into web3_action_platform(platform,trade_type,dim_type) values('0xc9a42690912f6bd134dbc4e2493158b3d72cad21','NFT Recipient','1');
 
 insert into web3_action_platform(platform,trade_type,dim_type) values('0xde30da39c46104798bb5aa3fe8b9e0e1f348163f','NFT Recipient','1');
+insert into tag_result(table_name,batch_date)  SELECT 'web3_action_platform' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
