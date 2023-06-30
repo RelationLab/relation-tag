@@ -20,7 +20,7 @@ select
     platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
     'count' data_subject,
     platform.platform_name project_name,
-    top_token_1000.symbol||  '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
+    top_token_1000.symbol||  '(' || SUBSTRING(top_token_1000.address, 1, 8)||  ')'  token_name
 from
     token_platform
         inner join platform on
@@ -34,7 +34,9 @@ from
                 holders >= 100
           and removed <> 'true') top_token_1000 on
         (token_platform.address = top_token_1000.address)
-        INNER JOIN trade_type ON  (1=1);
+        INNER JOIN trade_type ON  (1=1)
+        inner join dex_action_platform
+        on (token_platform.platform=dex_action_platform.platform and trade_type.trade_type=dex_action_platform.trade_type);
 insert
 into
     public.label_test ("owner",
@@ -83,8 +85,9 @@ from
                 holders >= 100
           and removed <> 'true') top_token_1000 on
         (token_platform.address = top_token_1000.address)
-        inner join trade_type on
-        (1 = 1)
+        inner join trade_type on (1 = 1)
+        inner join dex_action_platform
+        on (token_platform.platform=dex_action_platform.platform and trade_type.trade_type=dex_action_platform.trade_type)
         inner join (
         select
             *
@@ -132,8 +135,9 @@ from token_platform
             holders >= 100
       and removed <> 'true') top_token_1000 on
     (token_platform.address = top_token_1000.address)
-         inner join trade_type on
-    (1 = 1)
+         inner join trade_type on (1 = 1)
+         inner join dex_action_platform
+         on (token_platform.platform=dex_action_platform.platform and trade_type.trade_type=dex_action_platform.trade_type)
          inner join (
     select
         *
@@ -164,7 +168,7 @@ select
     'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
     'count' data_subject,
     'ALL' project_name,
-    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
+    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)||  ')'  token_name
 from
     (
         select
@@ -297,8 +301,8 @@ select
     platform.platform_name project_name,
     'ALL' token_name
 from  platform
-          inner join trade_type on
-    (1 = 1);
+          inner join trade_type on (1 = 1)
+where platform.token_all_flag='1';
 insert
 into
     public.label_test ("owner",
@@ -344,7 +348,8 @@ from  platform
         level_def
     where
             type = 'defi_count') level_def on
-    (1 = 1);
+    (1 = 1)
+where platform.token_all_flag='1';
 insert
 into
     public.combination (asset,
@@ -373,8 +378,7 @@ select distinct
     'token' asset_type,
     'GRADE' label_category
 from   platform
-           inner join trade_type on
-    (1 = 1)
+           inner join trade_type on (1 = 1)
            inner join (
     select
         *
@@ -382,7 +386,8 @@ from   platform
         level_def
     where
             type = 'defi_count') level_def on
-    (1 = 1);
+    (1 = 1)
+where platform.token_all_flag='1';
 ---------------count ALL_ALL_ALL_ACTIVITY_DEX
 insert
 into
@@ -512,7 +517,7 @@ select
     platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
     'volume_grade' data_subject,
     platform.platform_name project_name,
-    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
+    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)||  ')'  token_name
 from
     token_platform
         inner join platform on
@@ -526,7 +531,9 @@ from
                 holders >= 100
           and removed <> 'true') top_token_1000 on
         (token_platform.address = top_token_1000.address)
-        INNER JOIN trade_type ON  (1=1);
+        INNER JOIN trade_type ON  (1=1)
+        inner join dex_action_platform
+        on (token_platform.platform=dex_action_platform.platform and trade_type.trade_type=dex_action_platform.trade_type);
 insert
 into
     public.label_test ("owner",
@@ -583,7 +590,9 @@ from
             level_def
         where
                 type = 'defi_volume_grade') level_def on
-        (1 = 1);
+        (1 = 1)
+        inner join dex_action_platform
+       on (token_platform.platform=dex_action_platform.platform and trade_type.trade_type=dex_action_platform.trade_type);
 insert
 into
     public.combination (asset,
@@ -631,7 +640,9 @@ from  token_platform
         level_def
     where
             type = 'defi_volume_grade') level_def on
-    (1 = 1);
+    (1 = 1)
+  inner join dex_action_platform
+ on (token_platform.platform=dex_action_platform.platform and trade_type.trade_type=dex_action_platform.trade_type);
 
 ---------------volume_grade ALL_USDC(0xa0b869)_ALL_VOLUME_DEX_GRADE--------------------------
 insert
@@ -654,7 +665,7 @@ select
     'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
     'volume_grade' data_subject,
     'ALL' project_name,
-    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
+    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)||  ')'  token_name
 from
     (
         select
@@ -790,7 +801,7 @@ select
     'ALL' token_name
 from  platform
           inner join trade_type on
-    (1 = 1);
+    (1 = 1) where platform.token_all_flag='1';
 insert
 into
     public.label_test ("owner",
@@ -838,7 +849,7 @@ from
             level_def
         where
                 type = 'defi_volume_grade') level_def on
-        (1 = 1);
+        (1 = 1) where platform.token_all_flag='1';
 insert
 into
     public.combination (asset,
@@ -877,7 +888,7 @@ from   platform
         level_def
     where
             type = 'defi_volume_grade') level_def on
-    (1 = 1);
+    (1 = 1) where platform.token_all_flag='1';
 
 ---------------volume_grade ALL_ALL_ALL_VOLUME_DEX_GRADE
 insert
@@ -1011,7 +1022,7 @@ select
     platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
     'volume_rank' data_subject,
     platform.platform_name project_name,
-    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
+    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)||  ')'  token_name
 from
     token_platform
         inner join platform on
@@ -1025,7 +1036,8 @@ from
                 holders >= 100
           and removed <> 'true') top_token_1000 on
         (token_platform.address = top_token_1000.address)
-        INNER JOIN trade_type ON  (1=1);
+        INNER JOIN trade_type ON  (1=1) inner join dex_action_platform
+                                                   on (token_platform.platform=dex_action_platform.platform and trade_type.trade_type=dex_action_platform.trade_type);
 insert
 into
     public.label_test ("owner",
@@ -1082,7 +1094,8 @@ from
             level_def
         where
                 type = 'defi_volume_rank') level_def on
-        (1 = 1);
+        (1 = 1) inner join dex_action_platform
+                                              on (token_platform.platform=dex_action_platform.platform and trade_type.trade_type=dex_action_platform.trade_type);
 
 insert
 into
@@ -1131,7 +1144,8 @@ from   token_platform
         level_def
     where
             type = 'defi_volume_rank') level_def on
-    (1 = 1);
+    (1 = 1) inner join dex_action_platform
+                                             on (token_platform.platform=dex_action_platform.platform and trade_type.trade_type=dex_action_platform.trade_type);
 
 
 ---------------volume_rank ALL_USDC(0xa0b869)_ALL_VOLUME_DEX_RANK
@@ -1155,7 +1169,7 @@ select
     'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_'||trade_type.trade_type_name seq_flag,
     'volume_rank' data_subject,
     'ALL' project_name,
-    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8) token_name
+    top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)||  ')'  token_name
 from
     (
         select
@@ -1290,7 +1304,7 @@ select
     'ALL' token_name
 from  platform
           inner join trade_type on
-    (1 = 1);
+    (1 = 1) where platform.token_all_flag='1';
 insert
 into
     public.label_test ("owner",
@@ -1336,7 +1350,7 @@ from platform
         level_def
     where
             type = 'defi_volume_rank') level_def on
-    (1 = 1);
+    (1 = 1) where platform.token_all_flag='1';
 insert
 into
     public.combination (asset,
@@ -1374,7 +1388,7 @@ from   platform
         level_def
     where
             type = 'defi_volume_rank') level_def on
-    (1 = 1);
+    (1 = 1) where platform.token_all_flag='1';
 ---------------volume_rank ALL_ALL_ALL_VOLUME_DEX_RANK
 insert
 into

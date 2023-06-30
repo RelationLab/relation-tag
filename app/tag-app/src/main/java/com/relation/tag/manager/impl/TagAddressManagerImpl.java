@@ -34,6 +34,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     static String INIT_PATH = "initsql";
 
     public static String SCRIPTSPATH = "tagscripts";
+    public static String DIM_PATH = "dim";
 
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList, String batchDate) {
         try {
@@ -166,13 +167,17 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("drop_view", "dms_syn_block.sql", batchDate, INIT_PATH, null);
         execSql("dms_syn_block", "snapshot_table.sql", batchDate, INIT_PATH, null);
         execSql("snapshot_table", "create_view.sql", batchDate, INIT_PATH, null);
+        execSql("create_view", "token_platform.sql", batchDate, INIT_PATH, null);
+        execSql("token_platform", "nft_platform.sql", batchDate, INIT_PATH, null);
+
+
     }
 
     private void innit(String batchDate) throws Exception {
         String dir = INIT_PATH;
-        execSql(null, "dim_rule_sql_content.sql", batchDate, dir, null);
-        execSql("dim_rule_sql_content", "dim_project_token_type.sql", batchDate, dir, null);
-        execSql("dim_project_token_type", "dim_project_type.sql", batchDate, dir, null);
+//        execSql(null, "dim_rule_sql_content.sql", batchDate, dir, null);
+//        execSql("dim_rule_sql_content", "dim_project_token_type.sql", batchDate, dir, null);
+//        execSql("dim_project_token_type", "dim_project_type.sql", batchDate, dir, null);
         execSql("dim_project_type", "dim_rule_content.sql", batchDate, dir, null);
         execSql("dim_rule_content", "white_list_erc20.sql", batchDate, dir, null);
         execSql("white_list_erc20", "platform_nft_volume_usd.sql", batchDate, dir, null);
@@ -186,12 +191,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql", batchDate, dir, null);
         execSql("dex_tx_volume_count_summary_univ3", "dex_tx_count_summary.sql", batchDate, dir, null);
         execSql("dex_tx_count_summary", "dex_tx_volume_count_summary.sql", batchDate, dir, null);
-        execSql("dex_tx_volume_count_summary", "token_platform.sql", batchDate, dir, null);
-        execSql("token_platform", "nft_platform.sql", batchDate, dir, null);
-
         Thread.sleep(3 * 60 * 1000);
-        execSql("nft_platform", "erc20_tx_record_hash.sql", batchDate, dir, null);
-        boolean token_holding_vol_countcheck = execSql("nft_platform", "eth_holding_vol_count.sql", batchDate, dir, null);
+        execSql("dex_tx_volume_count_summary", "erc20_tx_record_hash.sql", batchDate, dir, null);
+        boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql", batchDate, dir, null);
         if (!token_holding_vol_countcheck) {
             Thread.sleep(1 * 60 * 1000);
         }
