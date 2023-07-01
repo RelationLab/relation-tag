@@ -392,6 +392,7 @@ public class StaticManagerImpl implements StaticManager {
         Map<String, String> map = Maps.newHashMap();
         map.put("configEnvironment", configEnvironment);
         map.put("tableSuffix", tableSuffix);
+        log.info("entity====={}",entity);
         if (entity == null) {
             return map;
         }
