@@ -107,6 +107,9 @@ public class StaticManagerImpl implements StaticManager {
 
     }
 
+
+
+
     private boolean execSql(String lastTableName, String sqlName, Map<String, String> paramsMap, Integer result, String batchDate, String dir, int tryCount) {
         String tableName = sqlName.split("\\.")[0];
         tableName = tableName.concat(buildTableSuffix(paramsMap.get("id"), configEnvironment));
