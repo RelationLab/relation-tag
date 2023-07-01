@@ -353,6 +353,9 @@ public class StaticManagerImpl implements StaticManager {
         log.info("staticHomePageData start........");
         String tableSuffix = buildTableSuffix(null, configEnvironment);
         String tagBatch = iAddressLabelService.selectTagResult("address_labels_json_gin".concat(tableSuffix));
+        if (StringUtils.isBlank(tagBatch)){
+            return;
+        }
         String syningTableName = "HomeDataAnalysisSyning".concat(tableSuffix);
         boolean syningFlag = checkResult(syningTableName, 1, null, tagBatch);
         if (syningFlag) {
