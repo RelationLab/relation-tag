@@ -54,4 +54,8 @@ public class UgcLabelDataAnalysisRecord implements Serializable {
 
     private String addressImageText;
 
+    private String type;
+
+    private String sql;
+
 }
