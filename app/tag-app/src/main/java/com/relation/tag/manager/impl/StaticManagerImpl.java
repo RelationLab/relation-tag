@@ -383,7 +383,8 @@ public class StaticManagerImpl implements StaticManager {
         execSql("static_total_data".concat(tableSuffix), "static_home_data_analysis.sql", paramsMap, 1, tagBatch, dir, 0);
     }
 
-    private String buildTableSuffix(String id, String configEnvironment) {
+    private String
+    buildTableSuffix(String id, String configEnvironment) {
         return ("_").concat(configEnvironment.concat((id == null ? "" : ("_").concat(id))));
     }
 
@@ -395,16 +396,14 @@ public class StaticManagerImpl implements StaticManager {
             return map;
         }
         String labels = entity.getLabels();
-        String conditionData = StringUtils.isBlank(labels) ? "" : buildConditionData(labels, entity);
+        String conditionData =(StringUtils.isNotBlank(entity.getType())&&StringUtils.equals(entity.getType(), DataAnalysisTypeEnum.SQL.name()))?entity.getSql(): (StringUtils.isBlank(labels) ? "" : buildConditionData(labels, entity));
         map.put("conditionData", conditionData);
         map.put("id", entity.getId().toString());
         return map;
     }
 
-    private String buildConditionData(String labels, UgcLabelDataAnalysis entity) {
-        if (StringUtils.isNotBlank(entity.getType())&&StringUtils.equals(entity.getType(), DataAnalysisTypeEnum.SQL.name())){
-            return entity.getSql();
-        }
+    private String
+    buildConditionData(String labels, UgcLabelDataAnalysis entity) {
         String tatolStartSql = "select distinct address as address from (";
         String outSql = "select address from (";
         String selectStartSql = " select address from address_label_gp_" + configEnvironment +
