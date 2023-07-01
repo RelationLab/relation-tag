@@ -408,8 +408,7 @@ public class StaticManagerImpl implements StaticManager {
         return map;
     }
 
-    private String
-    buildConditionData(String labels, UgcLabelDataAnalysis entity) {
+    private String buildConditionData(String labels, UgcLabelDataAnalysis entity) {
         String tatolStartSql = "select distinct address as address from (";
         String outSql = "select address from (";
         String selectStartSql = " select address from address_label_gp_" + configEnvironment +
