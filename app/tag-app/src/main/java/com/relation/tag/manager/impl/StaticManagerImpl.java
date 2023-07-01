@@ -7,6 +7,7 @@ import com.relation.tag.entity.HomeDataAnalysis;
 import com.relation.tag.entity.UgcLabelDataAnalysis;
 import com.relation.tag.entity.UgcLabelDataAnalysisRecord;
 import com.relation.tag.enums.DataAnalysisStatusEnum;
+import com.relation.tag.enums.DataAnalysisTypeEnum;
 import com.relation.tag.manager.StaticManager;
 import com.relation.tag.service.IAddressLabelGpService;
 import com.relation.tag.service.IHomeDataAnalysisService;
@@ -284,7 +285,7 @@ public class StaticManagerImpl implements StaticManager {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(20 * 10000);
+                    Thread.sleep(20 * 1000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -401,6 +402,9 @@ public class StaticManagerImpl implements StaticManager {
     }
 
     private String buildConditionData(String labels, UgcLabelDataAnalysis entity) {
+        if (StringUtils.isNotBlank(entity.getType())&&StringUtils.equals(entity.getType(), DataAnalysisTypeEnum.SQL.name())){
+            return entity.getSql();
+        }
         String tatolStartSql = "select distinct address as address from (";
         String outSql = "select address from (";
         String selectStartSql = " select address from address_label_gp_" + configEnvironment +
