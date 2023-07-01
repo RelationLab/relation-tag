@@ -268,7 +268,6 @@ public class StaticManagerImpl implements StaticManager {
             log.info("HomeDataAnalysis entity isEmpty....");
             return;
         }
-        log.info("HomeDataAnalysis entity===={}", entity);
         homeDataAnalysisService.save(entity);
         iAddressLabelService.exceSql("insert into tag_result(table_name,batch_date) " +
                 " SELECT '".concat(synTableName)
