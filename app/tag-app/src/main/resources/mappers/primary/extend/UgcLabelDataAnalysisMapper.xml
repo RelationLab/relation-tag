@@ -93,14 +93,6 @@
         where status = 'DOING' and updated_at <![CDATA[<=]]> #{updatedAt}
     </update>
 
-    <update id="updateDownload">
-        update
-        <include refid="TableName"/>
-        set download_status='COMPLETE',
-        download_path=#{downloadPath},
-        updated_at=current_timestamp
-        where id=#{id}
-    </update>
 
     <select id="selectTimeoutRecord" resultType="com.relation.tag.entity.UgcLabelDataAnalysis">
         select id,
