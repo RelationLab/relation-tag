@@ -1183,13 +1183,14 @@ into
     label_type,
     operate_type,
     data_subject,
-    token_name)
+    token_name,
+    token_type)
 select
     'ALL' "token",
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_GRADE' label_type,
     'T' operate_type,
     'balance_grade' data_subject,
-    'ALL' token_name;
+    'ALL' token_name,'token' as token_type;
 insert
 into
     public."label" ("owner",
@@ -1372,13 +1373,13 @@ into
     label_type,
     operate_type,
     data_subject,
-    token_name)
+    token_name,token_type)
 select
     'ALL' "token",
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_RANK' label_type,
     'T' operate_type,
     'balance_rank' data_subject,
-    'ALL' token_name;
+    'ALL' token_name,'token' as token_type;
 insert
 into
     public."label" ("owner",
@@ -1560,13 +1561,13 @@ into
     label_type,
     operate_type,
     data_subject,
-    token_name)
+    token_name,token_type)
 select
     'ALL' "token",
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_TOP' label_type,
     'T' operate_type,
     'balance_top' data_subject,
-    'ALL' token_name;
+    'ALL' token_name,'token' as token_type;
 insert
 into
     public."label" ("owner",
@@ -1747,13 +1748,13 @@ into
     label_type,
     operate_type,
     data_subject,
-    token_name)
+    token_name,token_type)
 select
     'ALL' "token",
     'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY' label_type,
     'T' operate_type,
     'count' data_subject,
-    'ALL' token_name;
+    'ALL' token_name,'token' as token_type;
 insert
 into
     public."label" ("owner",
@@ -2145,13 +2146,13 @@ into
     label_type,
     operate_type,
     data_subject,
-    token_name)
+    token_name,token_type)
 select
     'ALL' "token",
     'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE' label_type,
     'T' operate_type,
     'volume_grade' data_subject,
-    'ALL' token_name;
+    'ALL' token_name,'token' as token_type;
 insert
 into
     public."label" ("owner",
@@ -2332,13 +2333,13 @@ into
     label_type,
     operate_type,
     data_subject,
-    token_name)
+    token_name,token_type)
 select
     'ALL' "token",
     'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK' label_type,
     'T' operate_type,
     'volume_rank' data_subject,
-    'ALL' token_name;
+    'ALL' token_name,'token' as token_type;
 insert
 into
     public."label" ("owner",

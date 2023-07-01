@@ -214,7 +214,7 @@ select
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||'_BALANCE_HEAVY_LP' as label_type,
     'T' as operate_type,
     lpt.factory_type || '_' || lpt.symbol_wired||'_lp' seq_flag,
-    'FIRST_MOVER_LP' data_subject,
+    'HEAVY_LP' data_subject,
     lpt.factory_type project_name,
     lpt.symbol_wired token_name
 from
