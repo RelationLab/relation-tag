@@ -393,12 +393,11 @@ public class StaticManagerImpl implements StaticManager {
         map.put("configEnvironment", configEnvironment);
         map.put("tableSuffix", tableSuffix);
         if (entity == null) {
-            log.info("entity==============="+entity);
             return map;
         }
-        log.info("entity222222222222222==============="+entity);
         String labels = entity.getLabels();
-        String conditionData =StringUtils.isNotBlank(entity.getSql())?entity.getSql():
+        String conditionData =(StringUtils.isNotBlank(entity.getType())&&StringUtils.equals(entity.getType(), DataAnalysisTypeEnum.SQL.name()))?
+                entity.getSql():
                 (StringUtils.isBlank(labels) ? "" : buildConditionData(labels, entity));
         map.put("conditionData", conditionData);
         map.put("id", entity.getId().toString());
