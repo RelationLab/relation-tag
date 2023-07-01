@@ -60,7 +60,7 @@
         download_path
         from
         <include refid="TableName"/>
-        where removed = false and status = #{status} and download_status='COMPLETE'
+        where removed = false and status = #{status}
         <if test="updatedAt != null">
             and updated_at <![CDATA[<=]]> #{updatedAt}
         </if>
