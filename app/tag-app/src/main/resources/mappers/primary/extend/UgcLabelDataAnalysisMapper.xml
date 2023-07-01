@@ -108,9 +108,7 @@
                removed,
                analysis_at,
                analysis_address_num,
-               address_image_text,
-               download_status,
-               download_path
+               address_image_text
         from ugc_label_data_analysis
         where updated_at + '${timeoutHour} hour' <![CDATA[<=]]> current_timestamp           and download_status = 'PENDING'
     </select>
