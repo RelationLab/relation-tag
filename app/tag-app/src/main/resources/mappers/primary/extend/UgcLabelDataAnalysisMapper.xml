@@ -29,7 +29,9 @@
         analysis_at,
         created_at,
         updated_at,
-        removed
+        removed,
+        type,
+        "sql"
         from
         <include refid="TableName"/>
         where removed = false and status != 'CANCEL'
@@ -55,7 +57,7 @@
         updated_at,
         removed,
         redo,
-        restore_vip_usage
+        restore_vip_usage,
         type,
         "sql"
         from
@@ -110,7 +112,9 @@
                removed,
                analysis_at,
                analysis_address_num,
-               address_image_text
+               address_image_text,
+               type,
+               "sql"
         from ugc_label_data_analysis
         where updated_at + '${timeoutHour} hour' <![CDATA[<=]]> current_timestamp           and download_status = 'PENDING'
     </select>
