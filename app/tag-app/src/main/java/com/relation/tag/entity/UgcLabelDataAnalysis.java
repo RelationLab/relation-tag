@@ -55,8 +55,4 @@ public class UgcLabelDataAnalysis implements Serializable {
     private Boolean redo;
     private Boolean restoreVipUsage;
 
-
-    private String downloadStatus;
-
-    private String downloadPath;
 }

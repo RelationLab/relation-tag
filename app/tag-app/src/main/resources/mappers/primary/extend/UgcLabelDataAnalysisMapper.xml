@@ -55,9 +55,7 @@
         updated_at,
         removed,
         redo,
-        restore_vip_usage,
-        download_status,
-        download_path
+        restore_vip_usage
         from
         <include refid="TableName"/>
         where removed = false and status = #{status}
