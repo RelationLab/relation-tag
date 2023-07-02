@@ -107,6 +107,9 @@ public class StaticManagerImpl implements StaticManager {
 
     }
 
+
+
+
     private boolean execSql(String lastTableName, String sqlName, Map<String, String> paramsMap, Integer result, String batchDate, String dir, int tryCount) {
         String tableName = sqlName.split("\\.")[0];
         tableName = tableName.concat(buildTableSuffix(paramsMap.get("id"), configEnvironment));
@@ -268,7 +271,6 @@ public class StaticManagerImpl implements StaticManager {
             log.info("HomeDataAnalysis entity isEmpty....");
             return;
         }
-        log.info("HomeDataAnalysis entity===={}", entity);
         homeDataAnalysisService.save(entity);
         iAddressLabelService.exceSql("insert into tag_result(table_name,batch_date) " +
                 " SELECT '".concat(synTableName)
@@ -397,12 +399,12 @@ public class StaticManagerImpl implements StaticManager {
             return map;
         }
         String labels = entity.getLabels();
-//        String conditionData =(StringUtils.isNotBlank(entity.getType())&&StringUtils.equals(entity.getType(), DataAnalysisTypeEnum.SQL.name()))?
-//                entity.getSql():
-//                (StringUtils.isBlank(labels) ? "" : buildConditionData(labels, entity));
-        String conditionData =StringUtils.isNotBlank(entity.getSql())?
+        String conditionData =(StringUtils.isNotBlank(entity.getType())&&StringUtils.equals(entity.getType(), DataAnalysisTypeEnum.SQL.name()))?
                 entity.getSql():
                 (StringUtils.isBlank(labels) ? "" : buildConditionData(labels, entity));
+//        String conditionData =StringUtils.isNotBlank(entity.getSql())?
+//                entity.getSql():
+//                (StringUtils.isBlank(labels) ? "" : buildConditionData(labels, entity));
         map.put("conditionData", conditionData);
         map.put("id", entity.getId().toString());
         return map;

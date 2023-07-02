@@ -49,13 +49,17 @@
         created_at,
         updated_at,
         removed,
-        config_environment)
+        config_environment,
+        type,
+        "sql")
         values
         <foreach collection="list" item="item" separator=",">
             (#{item.id}, #{item.name},#{item.address},#{item.apiLevel},#{item.mode},#{item.labels},
-            #{item.status},#{item.analysisResult},#{item.createdAt},#{item.updatedAt}, #{item.removed}, #{configEnvironment})
+            #{item.status},#{item.analysisResult},#{item.createdAt},#{item.updatedAt}, #{item.removed}, #{configEnvironment}
+            ,#{item.type},#{item.sql})
         </foreach>
         on conflict (id, config_environment) do update set status=EXCLUDED.status, name = EXCLUDED.name, api_level = EXCLUDED.api_level
+            , type = EXCLUDED.type, "sql" = EXCLUDED."sql"
     </update>
 
     <select id="selectTagResult" resultType="java.lang.String">
