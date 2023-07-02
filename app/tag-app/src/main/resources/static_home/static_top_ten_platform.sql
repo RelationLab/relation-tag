@@ -146,40 +146,59 @@ insert into static_top_ten_platform${tableSuffix}(token,rownumber,token_name,tok
 
 ----platform defi activity
 insert into static_top_ten_platform${tableSuffix}(token,rownumber,token_name,token_type,bus_type)
-select distinct s2.token as token,
-                s2.rn as rownumber,
-                drc.project_name as token_name ,
-                'defi' as token_type,
-                'activity' as bus_type
-from (
-         select
-             token,
-             rn
-         from
-             (
-                 select
-                     token,
-                     -- 分组字段很关键
-                     row_number() over( partition by 1=1
-	order by
-		total_transfer_count desc) as rn
-                 from
-                     (
-                         select
-                             sum(total_transfer_count) as total_transfer_count,
-                             project as token
-                         from
-                             dex_tx_volume_count_summary tbvu
-                         where  tbvu.address not in (select address from exclude_address)
-                         and total_transfer_count >0
-                         group by
-                             project)
-                         rowtable ) s1
-         where
-                 s1.rn <= 10) s2  inner join dim_project_token_type drc on
-    (drc.project = s2.token
-        and (drc.project_name <> 'Uniswap_v2'
-            and drc.project_name <> 'Uniswap_v3')) ;
+select
+    distinct s2.token as token,
+             s2.rn as rownumber,
+             drc.project_name as token_name ,
+             'defi' as token_type,
+             'activity' as bus_type
+from
+    (
+        select
+            token,
+            rn
+        from
+            (
+                select
+                    token,
+                    -- 分组字段很关键
+                    row_number() over( partition by 1 = 1
+		order by
+			total_transfer_count desc) as rn
+                from
+                    (
+                        select
+                            sum(total_transfer_count) as total_transfer_count,
+                            project as token
+                        from
+                            (
+                                select
+                                    address,
+                                    case
+                                        when project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
+                                            then '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'
+                                        else project
+                                        end as project,
+                                    total_transfer_count
+                                from
+                                    dex_tx_volume_count_summary)
+                                tbvu
+                        where
+                                tbvu.address not in (
+                                select
+                                    address
+                                from
+                                    exclude_address)
+                          and total_transfer_count >0
+                        group by
+                            project)
+                        rowtable ) s1
+        where
+                s1.rn <= 10) s2
+        inner join dim_project_token_type drc on
+        (drc.project = s2.token
+            and (drc.project_name <> 'Uniswap_v2'
+                and drc.project_name <> 'Uniswap_v3'))  ;
 
 ----platform nft activity
 INSERT

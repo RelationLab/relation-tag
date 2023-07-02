@@ -174,7 +174,17 @@ from (
                              sum(total_transfer_count) as total_transfer_count,
                              project as token
                          from
-                             dex_tx_volume_count_summary tbvu
+                             (
+                                 select
+                                     address,
+                                     case
+                                         when project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
+                                             then '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'
+                                         else project
+                                         end as project,
+                                     total_transfer_count
+                                 from
+                                     dex_tx_volume_count_summary) tbvu
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                                  where  tbvu.address not in (select address from exclude_address)
                                     and total_transfer_count>0
