@@ -17,24 +17,7 @@
 
 
     <select id="selectDataAnalysis" resultType="com.relation.tag.entity.UgcLabelDataAnalysis">
-        select id,
-               name,
-               address,
-               api_level,
-               mode,
-               labels,
-               status,
-               analysis_result,
-               created_at,
-               updated_at,
-               analysis_at,
-               analysis_address_num,
-               address_image_text,
-               removed,
-               download_path,
-               download_status,
-               type,
-               "sql"
+        select *
         from ugc_label_data_analysis
         where (status = 'DONE' or status='FAIL') and config_environment=#{configEnvironment}
         order by updated_at ASC limit 20
