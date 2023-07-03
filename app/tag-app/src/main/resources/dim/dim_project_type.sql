@@ -390,8 +390,7 @@ from
         inner join web3_platform on
         (web3_platform.platform = web3_action_platform.platform)
         inner join web3_action on
-        (web3_action.trade_type = web3_action_platform.trade_type)
-WHERE web3_action_platform.dim_type='1';
+        (web3_action.trade_type = web3_action_platform.trade_type);
 insert
 into
     public."label" ("owner",
@@ -440,8 +439,7 @@ from
             level_def
         where
                 type = 'web3_count') level_def on
-        (1 = 1)
-WHERE web3_action_platform.dim_type='1';
+        (1 = 1);
 insert
 into
     public.combination (asset,
@@ -481,6 +479,5 @@ from web3_action_platform
         level_def
     where
             type = 'web3_count') level_def on
-    (1 = 1)
-WHERE web3_action_platform.dim_type='1';
+    (1 = 1);
 insert into tag_result(table_name,batch_date)  SELECT 'dim_project_type' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
