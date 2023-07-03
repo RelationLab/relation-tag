@@ -916,7 +916,7 @@ into
 select distinct
     'ALL_NFT' asset,
     'ALL'  project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     '' volume,
     level_def.level activity,
@@ -1032,7 +1032,7 @@ into
 select distinct
     nft_sync_address.platform asset,
     'ALL'  project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     '' volume,
     level_def.level activity,
@@ -1408,7 +1408,7 @@ select
     distinct
     nft_sync_address.platform asset,
     'ALL'   project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level volume,
     '' activity,
@@ -1653,7 +1653,7 @@ into
 select distinct
     'ALL_NFT' asset,
     'ALL'  project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level volume,
     '' activity,
@@ -1899,7 +1899,7 @@ into
 select distinct
     nft_sync_address.platform asset,
     'ALL'   project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level volume,
     '' activity,
@@ -2145,7 +2145,7 @@ into
 select distinct
     'ALL_NFT' asset,
     'ALL'  project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level volume,
     '' activity,
@@ -2387,7 +2387,7 @@ into
 select distinct
     nft_sync_address.platform asset,
     'ALL'   project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level volume,
     '' activity,
@@ -2632,7 +2632,7 @@ into
 select distinct
     'ALL_NFT' asset,
     'ALL'  project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level volume,
     '' activity,
@@ -2874,7 +2874,7 @@ into
 select distinct
     nft_sync_address.platform asset,
     'ALL' project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     'TOP' volume,
     '' activity,
@@ -3120,7 +3120,7 @@ into
 select distinct
     'ALL_NFT' asset,
     'ALL'  project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
    'TOP' volume,
     '' activity,
@@ -5339,7 +5339,7 @@ into
 select distinct
     nft_sync_address.platform  asset,
     '' project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     ''  volume,
     level_def.level  activity,
@@ -5455,7 +5455,7 @@ into
 select distinct
     'ALL_NFT'  asset,
     '' project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     ''  volume,
     level_def.level  activity,
@@ -5901,7 +5901,7 @@ into
 select distinct
     nft_sync_address.platform  asset,
     '' project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level volume,
     '' activity,
@@ -6017,7 +6017,7 @@ into
 select distinct
     'ALL_NFT'  asset,
     '' project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level    volume,
     '' activity,
@@ -6134,7 +6134,7 @@ into
 select distinct
     nft_sync_address.platform  asset,
     '' project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level volume,
     '' activity,
@@ -6249,7 +6249,7 @@ into
 select distinct
     'ALL_NFT'  asset,
     '' project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level    volume,
     '' activity,
@@ -6366,7 +6366,7 @@ into
 select distinct
     nft_sync_address.platform  asset,
     '' project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level volume,
     '' activity,
@@ -6480,7 +6480,7 @@ into
 select distinct
     'ALL_NFT'  asset,
     '' project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level    volume,
     '' activity,
@@ -6597,7 +6597,7 @@ into
 select distinct
     nft_sync_address.platform  asset,
     '' project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level volume,
     '' activity,
@@ -6711,7 +6711,7 @@ into
 select distinct
     'ALL_NFT'  asset,
     '' project,
-    nft_trade_type.nft_trade_type trade_type,
+    case when  nft_trade_type.nft_trade_type='ALL' THEN '' ELSE nft_trade_type.nft_trade_type END trade_type,
     '' balance,
     level_def.level    volume,
     '' activity,
