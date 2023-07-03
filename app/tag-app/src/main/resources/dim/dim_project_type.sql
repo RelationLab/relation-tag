@@ -25,7 +25,7 @@ into
                       seq_flag,
                       data_subject,
                       token_name)
-select
+select distinct
     web3_platform.platform project,
     web3_action.trade_type "type",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_GRADE' label_type,
@@ -58,7 +58,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_GRADE'  as "type",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_GRADE_' || level_def.level as "name",
@@ -104,7 +104,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     web3_platform.platform_name asset,
     ''  project,
     web3_action.trade_type trade_type,
@@ -143,7 +143,7 @@ into
                       seq_flag,
                       data_subject,
                       token_name)
-select
+select distinct
     web3_platform.platform project,
     web3_action.trade_type "type",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK' label_type,
@@ -176,7 +176,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK'  as "type",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK_' || level_def.level as "name",
@@ -222,7 +222,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     web3_platform.platform_name asset,
     ''  project,
     web3_action.trade_type trade_type,
@@ -260,7 +260,7 @@ into
                       seq_flag,
                       data_subject,
                       token_name)
-select
+select distinct
     web3_platform.platform project,
     web3_action.trade_type "type",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_TOP' label_type,
@@ -293,7 +293,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_TOP'  as "type",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_TOP_' || level_def.level as "name",
@@ -339,7 +339,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     web3_platform.platform_name asset,
     ''  project,
     web3_action.trade_type trade_type,
@@ -377,7 +377,7 @@ into
                       seq_flag,
                       data_subject,
                       token_name)
-select
+select distinct
     web3_platform.platform project,
     web3_action.trade_type "type",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY' label_type,
@@ -410,7 +410,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY'  as "type",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY_' || level_def.level as "name",
@@ -456,7 +456,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     web3_platform.platform_name asset,
     ''  project,
     web3_action.trade_type trade_type,

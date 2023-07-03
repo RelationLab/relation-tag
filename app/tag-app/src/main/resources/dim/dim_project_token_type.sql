@@ -41,7 +41,7 @@ into
                             project_name,
                             token_name)
 
-select
+select distinct
     platform_detail.platform as project,
     lpt.pool as token,
     'lp' as type,
@@ -95,7 +95,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||'_HOLDING_TIME_FIRST_MOVER_LP' as "type",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||'_HOLDING_TIME_FIRST_MOVER_LP' as "name",
@@ -153,7 +153,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     (lpt.symbol1||'/'||lpt.symbol2) asset,
     lpt.factory_content project,
     '' trade_type,
@@ -207,7 +207,7 @@ into
                             project_name,
                             token_name)
 
-select
+select distinct
     platform_detail.platform as project,
     lpt.pool as token,
     'lp' as type,
@@ -261,7 +261,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||'_BALANCE_HEAVY_LP' as "type",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||'_BALANCE_HEAVY_LP' as "name",
@@ -319,7 +319,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     (lpt.symbol1||'/'||lpt.symbol2) asset,
     lpt.factory_content project,
     '' trade_type,
@@ -372,7 +372,7 @@ into
                             project_name,
                             token_name)
 
-select
+select distinct
     platform_detail.platform as project,
     lpt.pool as token,
     'lp' as type,
@@ -426,7 +426,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||'_HOLDING_TIME_FIRST_MOVER_STAKING' as "type",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||'_HOLDING_TIME_FIRST_MOVER_STAKING' as "name",
@@ -484,7 +484,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     (lpt.symbol1||'/'||lpt.symbol2) asset,
     lpt.factory_content project,
     '' trade_type,
@@ -538,7 +538,7 @@ into
                             project_name,
                             token_name)
 
-select
+select distinct
     platform_detail.platform as project,
     lpt.pool as token,
     'lp' as type,
@@ -592,7 +592,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||'_HEAVY_LP_STAKER' as "type",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||'_HEAVY_LP_STAKER' as "name",
@@ -650,7 +650,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     (lpt.symbol1||'/'||lpt.symbol2) asset,
     lpt.factory_content project,
     '' trade_type,
@@ -708,7 +708,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     nft_platform.platform_name project,
     nft_platform.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -840,7 +840,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' project,
     'ALL' "token",
     nft_trade_type.nft_trade_type "type",
@@ -953,7 +953,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -1071,7 +1071,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     (
         select
             nft_platform.platform_name
@@ -1202,7 +1202,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     nft_platform.platform_name project,
     nft_platform.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -1329,7 +1329,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -1446,7 +1446,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     (
         select
             nft_platform.platform_name
@@ -1577,7 +1577,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' project,
     'ALL' "token",
     nft_trade_type.nft_trade_type "type",
@@ -1691,7 +1691,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     nft_platform.platform_name project,
     nft_platform.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -1820,7 +1820,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -1938,7 +1938,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     (
         select
             nft_platform.platform_name
@@ -2069,7 +2069,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' project,
     'ALL' "token",
     nft_trade_type.nft_trade_type "type",
@@ -2182,7 +2182,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     nft_platform.platform_name project,
     nft_platform.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -2309,7 +2309,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -2424,7 +2424,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     (
         select
             nft_platform.platform_name
@@ -2556,7 +2556,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' project,
     'ALL' "token",
     nft_trade_type.nft_trade_type "type",
@@ -2669,7 +2669,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     nft_platform.platform_name project,
     nft_platform.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -2796,7 +2796,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -2912,7 +2912,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     (
         select
             nft_platform.platform_name
@@ -3044,7 +3044,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' project,
     'ALL' "token",
     nft_trade_type.nft_trade_type "type",
@@ -3158,7 +3158,7 @@ into
                             project_name,
                             token_name)
 
-select
+select distinct
     token_platform.platform as project,
     token_platform.address as token,
     trade_type.trade_type as type,
@@ -3202,7 +3202,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     platform.platform_name || '_' || top_token_1000.symbol||  '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
     platform.platform_name || '_' || top_token_1000.symbol||  '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' || level_def.level as "name",
@@ -3257,7 +3257,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
         platform.platform_name project,
         trade_type.trade_type trade_type,
@@ -3306,7 +3306,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' as project,
     top_token_1000.address as token,
     trade_type.trade_type as type,
@@ -3344,7 +3344,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
     'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' || level_def.level as "name",
@@ -3393,7 +3393,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
         'ALL' project,
         trade_type.trade_type trade_type,
@@ -3437,7 +3437,7 @@ into
                             project_name,
                             token_name)
 
-select
+select distinct
     platform.platform as project,
     'ALL' as token,
     trade_type.trade_type as type,
@@ -3547,7 +3547,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' as project,
     'ALL' as token,
     trade_type.trade_type as type,
@@ -3577,7 +3577,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX' as "type",
     'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_DEX_'|| level_def.level as "name",
@@ -3618,7 +3618,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_TOKEN' asset,
     'ALL' project,
     trade_type.trade_type trade_type,
@@ -3655,7 +3655,7 @@ into
                             project_name,
                             token_name)
 
-select
+select distinct
     token_platform.platform as project,
     token_platform.address as token,
     trade_type.trade_type as type,
@@ -3699,7 +3699,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
     platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' || level_def.level as "name",
@@ -3754,7 +3754,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
         platform.platform_name project,
         trade_type.trade_type trade_type,
@@ -3803,7 +3803,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' as project,
     top_token_1000.address as token,
     trade_type.trade_type as type,
@@ -3842,7 +3842,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
     'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' || level_def.level as "name",
@@ -3892,7 +3892,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
         'ALL' project,
         trade_type.trade_type trade_type,
@@ -3936,7 +3936,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     platform.platform as project,
     'ALL' as token,
     trade_type.trade_type as type,
@@ -4011,7 +4011,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_TOKEN' asset,
     platform.platform_name project,
     trade_type.trade_type trade_type,
@@ -4049,7 +4049,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' as project,
     'ALL' as token,
     trade_type.trade_type as type,
@@ -4079,7 +4079,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE' as "type",
     'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_'|| level_def.level as "name",
@@ -4122,7 +4122,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_TOKEN' asset,
     'ALL' project,
     trade_type.trade_type trade_type,
@@ -4160,7 +4160,7 @@ into
                             project_name,
                             token_name)
 
-select
+select distinct
     token_platform.platform as project,
     token_platform.address as token,
     trade_type.trade_type as type,
@@ -4203,7 +4203,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' as "type",
     platform.platform_name || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' || level_def.level as "name",
@@ -4258,7 +4258,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
         platform.platform_name project,
         trade_type.trade_type trade_type,
@@ -4307,7 +4307,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' as project,
     top_token_1000.address as token,
     trade_type.trade_type as type,
@@ -4345,7 +4345,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' as "type",
     'ALL' || '_' || top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' || level_def.level as "name",
@@ -4395,7 +4395,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         top_token_1000.symbol|| '(' || SUBSTRING(top_token_1000.address, 1, 8)|| ')' asset,
         'ALL' project,
         trade_type.trade_type trade_type,
@@ -4439,7 +4439,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     platform.platform as project,
     'ALL' as token,
     trade_type.trade_type as type,
@@ -4548,7 +4548,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     'ALL' as project,
     'ALL' as token,
     trade_type.trade_type as type,
@@ -4578,7 +4578,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK' as "type",
     'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_'|| level_def.level as "name",
@@ -4619,7 +4619,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_TOKEN' asset,
     'ALL' project,
     trade_type.trade_type trade_type,
@@ -4662,7 +4662,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     address "token",
     ''    "type",
@@ -4773,7 +4773,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     'ALL' "token",
     '' "type",
@@ -4861,7 +4861,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     address "token",
     ''    "type",
@@ -4971,7 +4971,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     'ALL' "token",
     '' "type",
@@ -5058,7 +5058,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     address "token",
     ''    "type",
@@ -5169,7 +5169,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     'ALL' "token",
     '' "type",
@@ -5261,7 +5261,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -5381,7 +5381,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     'ALL' "token",
     nft_trade_type.nft_trade_type "type",
@@ -5489,7 +5489,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     address "token",
     ''    "type",
@@ -5598,7 +5598,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     address "token",
     ''    "type",
@@ -5707,7 +5707,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     address "token",
     ''    "type",
@@ -5823,7 +5823,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -5943,7 +5943,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     'ALL' "token",
     nft_trade_type.nft_trade_type "type",
@@ -6056,7 +6056,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -6175,7 +6175,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     'ALL' "token",
     nft_trade_type.nft_trade_type "type",
@@ -6288,7 +6288,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -6406,7 +6406,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     'ALL' "token",
     nft_trade_type.nft_trade_type "type",
@@ -6519,7 +6519,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     nft_sync_address.address "token",
     nft_trade_type.nft_trade_type "type",
@@ -6637,7 +6637,7 @@ into
                             data_subject,
                             project_name,
                             token_name)
-select
+select distinct
     ''  project,
     'ALL' "token",
     nft_trade_type.nft_trade_type "type",

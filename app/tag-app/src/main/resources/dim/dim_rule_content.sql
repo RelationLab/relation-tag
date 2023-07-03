@@ -31,7 +31,7 @@ into
                       data_subject,
                       token_name,token_type)
 
-select
+select distinct
     lpt.pool as token,
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_GRADE' as label_type,
     'T' as operate_type,
@@ -82,7 +82,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_GRADE' as "type",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_GRADE_'||level_def.level as "name",
@@ -148,7 +148,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     (lpt.symbol1||'/'||lpt.symbol2) asset,
     lpt.factory_type project,
     '' trade_type,
@@ -206,7 +206,7 @@ into
                       data_subject,
                       token_name,token_type)
 
-select
+select distinct
     lpt.pool as token,
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_RANK' as label_type,
     'T' as operate_type,
@@ -257,7 +257,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_RANK' as "type",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_RANK_'||level_def.level as "name",
@@ -323,7 +323,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     (lpt.symbol1||'/'||lpt.symbol2) asset,
     lpt.factory_type project,
     '' trade_type,
@@ -380,7 +380,7 @@ into
                       data_subject,
                       token_name,token_type)
 
-select
+select distinct
     lpt.pool as token,
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_TOP' as label_type,
     'T' as operate_type,
@@ -431,7 +431,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_TOP' as "type",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_TOP_'||level_def.level as "name",
@@ -497,7 +497,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     (lpt.symbol1||'/'||lpt.symbol2) asset,
     lpt.factory_type project,
     '' trade_type,
@@ -555,7 +555,7 @@ into
                       data_subject,
                       token_name,token_type)
 
-select
+select distinct
     lpt.pool as token,
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY' as label_type,
     'T' as operate_type,
@@ -606,7 +606,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY' as "type",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY_'||level_def.level as "name",
@@ -672,7 +672,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     (lpt.symbol1||'/'||lpt.symbol2) asset,
     lpt.factory_type project,
     '' trade_type,
@@ -729,7 +729,7 @@ into
                       data_subject,
                       token_name,token_type)
 
-select
+select distinct
     lpt.pool as token,
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE' as label_type,
     'T' as operate_type,
@@ -780,7 +780,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE' as "type",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE_'||level_def.level as "name",
@@ -846,7 +846,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     (lpt.symbol1||'/'||lpt.symbol2) asset,
     lpt.factory_type project,
     '' trade_type,
@@ -903,7 +903,7 @@ into
                       data_subject,
                       token_name,token_type)
 
-select
+select distinct
     lpt.pool as token,
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK' as label_type,
     'T' as operate_type,
@@ -954,7 +954,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK' as "type",
     lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK_'||level_def.level as "name",
@@ -1020,7 +1020,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     (lpt.symbol1||'/'||lpt.symbol2) asset,
     lpt.factory_type project,
     '' trade_type,
@@ -1080,7 +1080,7 @@ into
                      create_time,
                      token_name,
                      token_type)
-select 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE' as rule_code,
+select distinct 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE' as rule_code,
        t.address as token,
        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE' as label_type,
        'T' operate_type,
@@ -1108,7 +1108,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE' as "type",
     'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_GRADE_'|| level_def.level as "name",
@@ -1150,7 +1150,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
@@ -1185,7 +1185,7 @@ into
     data_subject,
     token_name,
     token_type)
-select
+select distinct
     'ALL' "token",
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_GRADE' label_type,
     'T' operate_type,
@@ -1209,7 +1209,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_GRADE'  as "type",
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_GRADE_'|| level_def.level as "name",
@@ -1223,7 +1223,7 @@ select
     999999 run_order,
     now() created_at,
     0 refresh_time,
-    'NFT' wired_type,
+    'DEFI' wired_type,
     999 label_order,
     'WAITING' sync_es_status
 from level_def where type = 'defi_balance_grade' ;
@@ -1241,8 +1241,8 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
-    'ALL_NFT'  asset,
+select distinct
+    'ALL_TOKEN'  asset,
     '' project,
     '' trade_type,
     level_def.level balance,
@@ -1252,7 +1252,7 @@ select
     now() created_at,
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_GRADE_' || level_def.level  label_name,
     'Token '||level_def.level_name  "content",
-    'nft' asset_type,
+    'token' asset_type,
     'GRADE' label_category
 from level_def where type = 'defi_balance_grade' ;
 
@@ -1269,7 +1269,7 @@ into
                      create_time,
                      token_name,
                      token_type)
-select 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK' as rule_code,
+select distinct 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK' as rule_code,
        t.address as token,
        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK' as label_type,
        'T' operate_type,
@@ -1297,7 +1297,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK' as "type",
     'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK_'|| level_def.level as "name",
@@ -1339,7 +1339,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
@@ -1374,7 +1374,7 @@ into
     operate_type,
     data_subject,
     token_name,token_type)
-select
+select distinct
     'ALL' "token",
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_RANK' label_type,
     'T' operate_type,
@@ -1398,7 +1398,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_RANK'  as "type",
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_RANK_'|| level_def.level as "name",
@@ -1412,7 +1412,7 @@ select
     999999 run_order,
     now() created_at,
     0 refresh_time,
-    'NFT' wired_type,
+    'DEFI' wired_type,
     999 label_order,
     'WAITING' sync_es_status
 from level_def where type = 'defi_balance_rank' ;
@@ -1430,7 +1430,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_TOKEN'  asset,
     '' project,
     '' trade_type,
@@ -1457,7 +1457,7 @@ into
                      create_time,
                      token_name,
                      token_type)
-select 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP' as rule_code,
+select distinct 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP' as rule_code,
        t.address as token,
        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP' as label_type,
        'T' operate_type,
@@ -1485,7 +1485,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP' as "type",
     'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_TOP_'|| level_def.level as "name",
@@ -1527,7 +1527,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
@@ -1562,7 +1562,7 @@ into
     operate_type,
     data_subject,
     token_name,token_type)
-select
+select distinct
     'ALL' "token",
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_TOP' label_type,
     'T' operate_type,
@@ -1586,7 +1586,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_TOP'  as "type",
     'ALL_' ||'ALL_' ||'ALL' ||  '_BALANCE_TOP_'|| level_def.level as "name",
@@ -1600,7 +1600,7 @@ select
     999999 run_order,
     now() created_at,
     0 refresh_time,
-    'NFT' wired_type,
+    'DEFI' wired_type,
     999 label_order,
     'WAITING' sync_es_status
 from level_def where type = 'defi_balance_top' ;
@@ -1618,7 +1618,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_TOKEN'  asset,
     '' project,
     '' trade_type,
@@ -1645,7 +1645,7 @@ into
                      create_time,
                      token_name,
                      token_type)
-select 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as rule_code,
+select distinct 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as rule_code,
        t.address as token,
        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as label_type,
        'T' operate_type,
@@ -1673,7 +1673,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as "type",
     'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY_'|| level_def.level as "name",
@@ -1715,7 +1715,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
@@ -1749,7 +1749,7 @@ into
     operate_type,
     data_subject,
     token_name,token_type)
-select
+select distinct
     'ALL' "token",
     'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY' label_type,
     'T' operate_type,
@@ -1773,7 +1773,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY'  as "type",
     'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY_'|| level_def.level as "name",
@@ -1787,7 +1787,7 @@ select
     999999 run_order,
     now() created_at,
     0 refresh_time,
-    'NFT' wired_type,
+    'DEFI' wired_type,
     999 label_order,
     'WAITING' sync_es_status
 from level_def where type = 'defi_count' ;
@@ -1805,7 +1805,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_TOKEN'  asset,
     '' project,
     '' trade_type,
@@ -1831,7 +1831,7 @@ into
                      create_time,
                      token_name,
                      token_type)
-select t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE' as rule_code,
+select distinct t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE' as rule_code,
        t.address as token,
        t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE' as label_type,
        'T' operate_type,
@@ -1859,7 +1859,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE' as "type",
     t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_GRADE_'|| level_def.level as "name",
@@ -1901,7 +1901,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
@@ -1937,7 +1937,7 @@ into
                      create_time,
                      token_name,
                      token_type)
-select t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL' as rule_code,
+select distinct t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL' as rule_code,
        t.address as token,
        t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL' as label_type,
        'T' operate_type,
@@ -1965,7 +1965,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL' as "type",
     t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_HOLDING_TIME_SPECIAL_'|| level_def.level as "name",
@@ -2007,7 +2007,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
@@ -2043,7 +2043,7 @@ into
                      create_time,
                      token_name,
                      token_type)
-select 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as rule_code,
+select distinct 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as rule_code,
        t.address as token,
        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as label_type,
        'T' operate_type,
@@ -2071,7 +2071,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as "type",
     'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE_'|| level_def.level as "name",
@@ -2113,7 +2113,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
@@ -2148,7 +2148,7 @@ into
     data_subject,
     token_name,token_type)
 select
-    'ALL' "token",
+    distinct 'ALL' "token",
     'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE' label_type,
     'T' operate_type,
     'volume_grade' data_subject,
@@ -2171,7 +2171,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE'  as "type",
     'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE_'|| level_def.level as "name",
@@ -2185,7 +2185,7 @@ select
     999999 run_order,
     now() created_at,
     0 refresh_time,
-    'NFT' wired_type,
+    'DEFI' wired_type,
     999 label_order,
     'WAITING' sync_es_status
 from level_def where type = 'defi_volume_grade' ;
@@ -2203,7 +2203,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_TOKEN'  asset,
     '' project,
     '' trade_type,
@@ -2229,7 +2229,7 @@ into
                      create_time,
                      token_name,
                      token_type)
-select 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as rule_code,
+select distinct 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as rule_code,
        t.address as token,
        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as label_type,
        'T' operate_type,
@@ -2257,7 +2257,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as "type",
     'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK_'|| level_def.level as "name",
@@ -2299,7 +2299,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
         t.symbol||'('||SUBSTRING(t.address,1,8)||')' asset,
         '' project,
         '' trade_type,
@@ -2334,7 +2334,7 @@ into
     operate_type,
     data_subject,
     token_name,token_type)
-select
+select distinct
     'ALL' "token",
     'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK' label_type,
     'T' operate_type,
@@ -2358,7 +2358,7 @@ into
                        wired_type,
                        label_order,
                        sync_es_status)
-select
+select distinct
     'RelationTeam' "owner",
     'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK'  as "type",
     'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK_'|| level_def.level as "name",
@@ -2372,7 +2372,7 @@ select
     999999 run_order,
     now() created_at,
     0 refresh_time,
-    'NFT' wired_type,
+    'DEFI' wired_type,
     999 label_order,
     'WAITING' sync_es_status
 from level_def where type = 'defi_volume_rank' ;
@@ -2390,7 +2390,7 @@ into
                         "content",
                         asset_type,
                         label_category)
-select
+select distinct
     'ALL_TOKEN'  asset,
     '' project,
     '' trade_type,
