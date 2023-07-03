@@ -717,7 +717,7 @@ select distinct
     mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type seq_flag,
     'count' data_subject,
     mp_nft_platform.platform_name project_name,
-    replace(nft_sync_address.platform,' ','') token_name
+    nft_sync_address.platform token_name
 from
     nft_sync_address
         inner join nft_platform on
@@ -962,7 +962,7 @@ select distinct
     'ALL_' || replace(nft_sync_address.platform,' ','') ||'_'||nft_trade_type.nft_trade_type seq_flag,
     'count' data_subject,
     'ALL' project_name,
-    replace(nft_sync_address.platform,' ','') token_name
+    nft_sync_address.platform token_name
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
@@ -1211,7 +1211,7 @@ select distinct
     mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_elite' data_subject,
     mp_nft_platform.platform_name project_name,
-    replace(nft_sync_address.platform,' ','') token_name
+    nft_sync_address.platform token_name
 from
     nft_sync_address
         inner join nft_platform on
@@ -1338,7 +1338,7 @@ select distinct
     'ALL_' || replace(nft_sync_address.platform,' ','') ||'_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_elite' data_subject,
     'ALL' project_name,
-    replace(nft_sync_address.platform,' ','') token_name
+    nft_sync_address.platform token_name
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
@@ -1700,7 +1700,7 @@ select distinct
     mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_grade' data_subject,
     mp_nft_platform.platform_name project_name,
-    replace(nft_sync_address.platform,' ','') token_name
+    nft_sync_address.platform token_name
 from
     nft_sync_address
         inner join nft_platform on
@@ -1829,7 +1829,7 @@ select distinct
     'ALL_' || replace(nft_sync_address.platform,' ','') ||'_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_grade' data_subject,
     'ALL' project_name,
-    replace(nft_sync_address.platform,' ','') token_name
+    nft_sync_address.platform token_name
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
@@ -2191,7 +2191,7 @@ select distinct
     mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_rank' data_subject,
     mp_nft_platform.platform_name project_name,
-    replace(nft_sync_address.platform,' ','') token_name
+    nft_sync_address.platform token_name
 from
     nft_sync_address
         inner join nft_platform on
@@ -2318,7 +2318,7 @@ select distinct
     'ALL_' || replace(nft_sync_address.platform,' ','') ||'_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_rank' data_subject,
     'ALL' project_name,
-    replace(nft_sync_address.platform,' ','') token_name
+    nft_sync_address.platform token_name
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
@@ -2678,7 +2678,7 @@ select distinct
     mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform,' ','') || '_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_top' data_subject,
     mp_nft_platform.platform_name project_name,
-    replace(nft_sync_address.platform,' ','') token_name
+    nft_sync_address.platform token_name
 from
     nft_sync_address
         inner join nft_platform on
@@ -2805,7 +2805,7 @@ select distinct
     'ALL_' || replace(nft_sync_address.platform,' ','') ||'_'||nft_trade_type.nft_trade_type seq_flag,
     'volume_top' data_subject,
     'ALL' project_name,
-    replace(nft_sync_address.platform,' ','') token_name
+    nft_sync_address.platform token_name
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
