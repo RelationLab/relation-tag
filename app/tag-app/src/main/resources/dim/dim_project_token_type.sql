@@ -154,7 +154,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')' asset,
     lpt.factory_content project,
     '' trade_type,
     '' balance,
@@ -320,7 +320,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')' asset,
     lpt.factory_content project,
     '' trade_type,
     'HEAVY_LP' balance,
@@ -485,7 +485,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')' asset,
     lpt.factory_content project,
     '' trade_type,
     '' balance,
@@ -651,7 +651,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')' asset,
     lpt.factory_content project,
     '' trade_type,
     '' balance,
