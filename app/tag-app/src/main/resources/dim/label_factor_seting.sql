@@ -71,3 +71,4 @@ from  (select wlp.name,
        where wlp.tvl > 5000000
          and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' ) lpt;
+insert into tag_result(table_name,batch_date)  SELECT 'label_factor_seting' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

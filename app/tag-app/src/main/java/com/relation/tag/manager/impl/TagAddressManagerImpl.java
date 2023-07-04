@@ -184,9 +184,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("web3_action", "web3_action_platform.sql", batchDate, DIM_PATH, null);
         execSql("web3_action_platform", "web3_platform.sql", batchDate, DIM_PATH, null);
 
-        execSql("web3_platform", "dim_project_token_type.sql", batchDate, DIM_PATH, null);
+        execSql("web3_platform", "label_factor_seting.sql", batchDate, DIM_PATH, null);
+        execSql("label_factor_seting", "dim_project_token_type.sql", batchDate, DIM_PATH, null);
         execSql("dim_project_token_type", "dim_project_type.sql", batchDate, DIM_PATH, null);
         execSql("dim_project_type", "dim_rule_content.sql", batchDate, DIM_PATH, null);
+
+
 
     }
 
