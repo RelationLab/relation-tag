@@ -75,9 +75,10 @@ from
                       sum(amount) total_transfer_all_volume
         from
             erc20_tx_record e20tr
+            where sender = from_address
         group by
             to_address,
             token ) atb where address !=''
-            and sender = from_address
+
                         group by  address,token;
 insert into tag_result(table_name,batch_date)  SELECT 'token_holding_vol_count' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
