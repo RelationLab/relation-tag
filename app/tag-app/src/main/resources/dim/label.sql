@@ -36,7 +36,6 @@ CREATE TABLE public."label" (
                                 personal int2 NULL DEFAULT 0,
                                 wired_type varchar(128) NULL,
                                 label_order int4 NULL DEFAULT 999,
-                                sync_es_status varchar(20) NOT NULL DEFAULT 'WAITING'::character varying,
-                                CONSTRAINT uk_lbl_name UNIQUE (name)
+                                sync_es_status varchar(20) NOT NULL DEFAULT 'WAITING'::character varying
 );
 insert into tag_result(table_name,batch_date)  SELECT 'label' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

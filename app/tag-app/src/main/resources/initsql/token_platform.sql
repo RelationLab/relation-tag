@@ -14,8 +14,7 @@ CREATE TABLE public.token_platform (
                                        platform_name varchar NULL,
                                        created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                        updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                                       "removed" bool DEFAULT false,
-                                       CONSTRAINT token_platform_un UNIQUE (address, platform)
+                                       "removed" bool DEFAULT false
 );
 truncate table token_platform;
 vacuum token_platform;

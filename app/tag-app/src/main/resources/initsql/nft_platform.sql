@@ -5,8 +5,7 @@ CREATE TABLE public.nft_platform (
                                        platform_name varchar NULL,
                                        created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                        updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                                       "removed" bool DEFAULT false,
-                                       CONSTRAINT nft_platform_un UNIQUE (address, platform)
+                                       "removed" bool DEFAULT false
 );
 truncate table nft_platform;
 vacuum nft_platform;
