@@ -281,7 +281,7 @@ public class StaticManagerImpl implements StaticManager {
     /***
      * 修复因为升级停机引起的未执行完的任务
      */
-    @PostConstruct
+//    @PostConstruct
     public void repairStaticLabelDataAnalysis() {
         new Thread(new Runnable() {
             @Override
