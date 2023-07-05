@@ -40,7 +40,7 @@ select
     sum(amount) total_transfer_all_volume
 from
     erc20_tx_record e20tr
--- where  sender = from_address
+where  sender = from_address
 group by
     from_address,
     token,

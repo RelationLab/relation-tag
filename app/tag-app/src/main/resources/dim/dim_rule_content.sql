@@ -149,7 +149,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')' asset,
     lpt.factory_type project,
     '' trade_type,
     level_def.level balance,
@@ -324,7 +324,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')' asset,
     lpt.factory_type project,
     '' trade_type,
     level_def.level balance,
@@ -332,7 +332,7 @@ select distinct
     '' activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_RANK_'||level_def.level  label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_RANK_'||level_def.level  label_name,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'token' asset_type,
     'RANK' label_category
@@ -498,7 +498,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')' asset,
     lpt.factory_type project,
     '' trade_type,
     level_def.level balance,
@@ -673,7 +673,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')' asset,
     lpt.factory_type project,
     '' trade_type,
     '' balance,
@@ -847,7 +847,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')' asset,
     lpt.factory_type project,
     '' trade_type,
     '' balance,
@@ -1021,7 +1021,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    (lpt.symbol1||'/'||lpt.symbol2) asset,
+    (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')' asset,
     lpt.factory_type project,
     '' trade_type,
     '' balance,
