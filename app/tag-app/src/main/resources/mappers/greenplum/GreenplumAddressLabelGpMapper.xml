@@ -93,7 +93,7 @@
     </select>
     <update id="setSuggestAddressBatchStatus">
         update suggest_address_batch set status='DONE',
-        <trim prefix="set" suffixOverrides=",">
+        <trim suffixOverrides=",">
             <trim prefix="ugc_label_data_analysis_id = case " suffix=" end, ">
                 <foreach collection="list" item="item">
                     <if test="item.ugcLabelDataAnalysisId != null">
