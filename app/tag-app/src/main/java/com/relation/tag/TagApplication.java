@@ -28,7 +28,6 @@ public class TagApplication {
         log.info("configEnvironment====={}",configEnvironment);
         configEnvironment = StringUtils.isEmpty(configEnvironment)?"stag":configEnvironment;
         TagAddressManager tagAddressManager = ctx.getBean(TagAddressManager.class);
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.set(Calendar.HOUR,calendar.get(Calendar.HOUR) + 8);
@@ -36,8 +35,9 @@ public class TagApplication {
         String checkTable = "address_labels_json_gin_".concat(configEnvironment);
         if (tagAddressManager.checkResult(checkTable, batchDate, 1, false)){
             log.info("checkResult tag end...........");
-            System.exit(0);
+//            System.exit(0);
         }
+        Thread.sleep(100*60*1000);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -52,6 +52,6 @@ public class TagApplication {
         log.info("check address_labels_json_gin start...........");
         tagAddressManager.check(checkTable, 1 * 60 * 1000, batchDate, 1, false);
         log.info("tag end...........");
-        System.exit(0);
+//        System.exit(0);
     }
 }
