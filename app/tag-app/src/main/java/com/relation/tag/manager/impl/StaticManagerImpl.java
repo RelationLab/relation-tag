@@ -266,6 +266,7 @@ public class StaticManagerImpl implements StaticManager {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void scanSuggestAddress() {
         List<SuggestAddressBatch> list = iAddressLabelService.selectSuggestAddressBatch(configEnvironment);
         if (CollectionUtils.isEmpty(list)){
