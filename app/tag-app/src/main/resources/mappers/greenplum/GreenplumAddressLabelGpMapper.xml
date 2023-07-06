@@ -87,7 +87,7 @@
           created_at,
           updated_at
         from suggest_address_batch
-        where status='TO_DO' and config_environment = #{configEnvironment}
+        where status='TODO' and config_environment = #{configEnvironment}
         order by updated_at asc limit 50
     </select>
     <update id="setSuggestAddressBatchStatus">

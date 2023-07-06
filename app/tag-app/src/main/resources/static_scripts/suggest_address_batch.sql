@@ -4,7 +4,7 @@ CREATE TABLE public.suggest_address_batch (
           batch_id bigserial NOT NULL,
           "name" varchar(64) NOT NULL,
           ugc_label_data_analysis_id bigint,
-          status varchar(64) NULL DEFAULT 'TO_DO'::character varying, ------status(TODO,DONE)
+          status varchar(64) NULL DEFAULT 'TODO'::character varying, ------status(TODO,DONE)
           config_environment varchar(64) NOT NULL,------config_environment(dev,stag,prod)
           created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
           updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,

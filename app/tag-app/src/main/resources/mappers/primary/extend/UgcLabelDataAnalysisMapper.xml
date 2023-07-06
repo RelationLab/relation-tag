@@ -134,7 +134,7 @@
         "sql")
         values
         <foreach collection="list" item="item" separator=",">
-            ( #{item.name},'suggest-system-user','PROFESSIONAL','FUZZY','','TODO',null, ,'','')
+            ( #{item.name},'suggest-system-user','PROFESSIONAL','FUZZY','','TODO',null ,'SUGGEST','')
         </foreach>
     </insert>
 </mapper>
