@@ -1,6 +1,7 @@
 package com.relation.tag.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.relation.tag.entity.SuggestAddressBatch;
 import com.relation.tag.entity.UgcLabelDataAnalysis;
 
 import java.util.Date;
@@ -33,4 +34,5 @@ public interface IUgcLabelDataAnalysisService extends IService<UgcLabelDataAnaly
 
     List<UgcLabelDataAnalysis> selectTimeoutRecord(Integer timeoutHour);
 
+    void insertBatchData(List<SuggestAddressBatch> list);
 }

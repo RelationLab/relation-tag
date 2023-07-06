@@ -1,6 +1,7 @@
 package com.relation.tag.mapper.primary;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.relation.tag.entity.SuggestAddressBatch;
 import com.relation.tag.entity.UgcLabelDataAnalysis;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.boot.extension.mapper.PostgresPageMapper;
@@ -33,4 +34,5 @@ public interface UgcLabelDataAnalysisMapper extends BaseMapper<UgcLabelDataAnaly
 
     List<UgcLabelDataAnalysis> selectTimeoutRecord(@Param("timeoutHour") Integer timeoutHour);
 
+    void insertBatchData(List<SuggestAddressBatch> list);
 }

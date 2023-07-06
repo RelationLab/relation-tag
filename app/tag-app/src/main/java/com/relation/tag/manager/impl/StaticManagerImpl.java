@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Maps;
 import com.relation.tag.entity.HomeDataAnalysis;
+import com.relation.tag.entity.SuggestAddressBatch;
 import com.relation.tag.entity.UgcLabelDataAnalysis;
 import com.relation.tag.entity.UgcLabelDataAnalysisRecord;
 import com.relation.tag.enums.DataAnalysisStatusEnum;
@@ -26,7 +27,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
@@ -265,6 +265,17 @@ public class StaticManagerImpl implements StaticManager {
         synHomeDataAnalysis(synTableName,tagBatch);
     }
 
+    @Override
+    public void scanSuggestAddress() {
+        List<SuggestAddressBatch> list = iAddressLabelService.selectSuggestAddressBatch(configEnvironment);
+        if (CollectionUtils.isEmpty(list)){
+            return;
+        }
+        ugcLabelDataAnalysisService.insertBatchData(list);
+        log.warn("list======{}",list);
+        iAddressLabelService.setSuggestAddressBatchStatus(list);
+    }
+
     private void synHomeDataAnalysis(String synTableName, String tagBatch) {
         HomeDataAnalysis entity = iAddressLabelService.selectHomeDataAnalysis(configEnvironment);
         if (Objects.isNull(entity)) {
@@ -385,8 +396,7 @@ public class StaticManagerImpl implements StaticManager {
         execSql("static_total_data".concat(tableSuffix), "static_home_data_analysis.sql", paramsMap, 1, tagBatch, dir, 0);
     }
 
-    private String
-    buildTableSuffix(String id, String configEnvironment) {
+    private String  buildTableSuffix(String id, String configEnvironment) {
         return ("_").concat(configEnvironment.concat((id == null ? "" : ("_").concat(id))));
     }
 
@@ -398,19 +408,29 @@ public class StaticManagerImpl implements StaticManager {
         if (entity == null) {
             return map;
         }
-        String labels = entity.getLabels();
-        String conditionData =(StringUtils.isNotBlank(entity.getType())&&StringUtils.equals(entity.getType(), DataAnalysisTypeEnum.SQL.name()))?
-                entity.getSql():
-                (StringUtils.isBlank(labels) ? "" : buildConditionData(labels, entity));
-//        String conditionData =StringUtils.isNotBlank(entity.getSql())?
-//                entity.getSql():
-//                (StringUtils.isBlank(labels) ? "" : buildConditionData(labels, entity));
+        String conditionData = buildConditionData(entity);
         map.put("conditionData", conditionData);
         map.put("id", entity.getId().toString());
         return map;
     }
 
-    private String buildConditionData(String labels, UgcLabelDataAnalysis entity) {
+    private String buildConditionData(UgcLabelDataAnalysis entity) {
+        if (StringUtils.isNotBlank(entity.getType())&&StringUtils.equals(entity.getType(), DataAnalysisTypeEnum.SQL.name())){
+            return entity.getSql();
+        }
+        if (StringUtils.isNotBlank(entity.getType())&&StringUtils.equals(entity.getType(), DataAnalysisTypeEnum.SUGGEST.name())){
+           return buildConditionDataBySuggest( entity);
+        }
+        String labels = entity.getLabels();
+        return StringUtils.isBlank(labels) ? "" : buildConditionDataByLabel(labels, entity);
+    }
+
+    private String buildConditionDataBySuggest(UgcLabelDataAnalysis entity) {
+        Long batchId = iAddressLabelService.selectBatchId(entity.getId(),configEnvironment);
+        return  "select distinct address as address from suggest_address where batch_id=".concat(batchId.toString());
+    }
+
+    private String buildConditionDataByLabel(String labels, UgcLabelDataAnalysis entity) {
         String tatolStartSql = "select distinct address as address from (";
         String outSql = "select address from (";
         String selectStartSql = " select address from address_label_gp_" + configEnvironment +
@@ -444,4 +464,6 @@ public class StaticManagerImpl implements StaticManager {
                 .concat("' ").concat(StringUtils.isBlank(batchDate) ? "" : ("and batch_date='".concat(batchDate).concat("' ")));
         return iAddressLabelService.exceSelectSql(execSql);
     }
+
+
 }

@@ -72,4 +72,39 @@
         from home_data_analysis where config_environment = #{configEnvironment} order by analysis_date desc limit 1
     </select>
 
+    <select id="selectBatchId" resultType="java.lang.Long">
+        select batch_id
+        from suggest_address_batch where ugc_label_data_analysis_id=#{ugcLabelDataAnalysisId} and
+                 config_environment = #{configEnvironment}
+    </select>
+
+    <select id="selectSuggestAddressBatch" resultType="com.relation.tag.entity.SuggestAddressBatch">
+        select
+          batch_id,
+          ugc_label_data_analysis_id,
+          status,
+          config_environment,
+          created_at,
+          updated_at
+        from suggest_address_batch
+        where config_environment = #{configEnvironment}
+        order by updated_at asc limit 50
+    </select>
+    <update id="setSuggestAddressBatchStatus">
+        update suggest_address_batch set status='DONE',
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix=" `ugc_label_data_analysis_id` = case " suffix=" end, ">
+                <foreach collection="list" item="item">
+                    <if test="item.ugcLabelDataAnalysisId != null">
+                        when batch_id = #{item.batchId} then #{item.ugcLabelDataAnalysisId}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where batch_id in
+        (<foreach collection="list" item="item" separator=",">
+            #{item.batchId}
+        </foreach>) and status = 'TODO'
+    </update>
+
 </mapper>

@@ -18,6 +18,5 @@ public interface StaticManager {
     void synHomePageData();
 
 
-
-
+    void scanSuggestAddress();
 }

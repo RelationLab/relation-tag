@@ -3,6 +3,7 @@ package com.relation.tag.service.greenplum;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.relation.tag.entity.AddressLabelGp;
 import com.relation.tag.entity.HomeDataAnalysis;
+import com.relation.tag.entity.SuggestAddressBatch;
 import com.relation.tag.entity.UgcLabelDataAnalysis;
 import com.relation.tag.mapper.greenplum.GreenplumAddressLabelGpMapper;
 import com.relation.tag.service.IAddressLabelGpService;
@@ -65,4 +66,21 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
     public void updateDataAnalysisFail(String id, String configEnvironment) {
         baseMapper.updateDataAnalysisFail(Long.parseLong(id),configEnvironment);
     }
+
+    @Override
+    public Long selectBatchId(Long ugcLabelDataAnalysisId, String configEnvironment) {
+        return baseMapper.selectBatchId(ugcLabelDataAnalysisId,configEnvironment);
+    }
+
+    @Override
+    public List<SuggestAddressBatch> selectSuggestAddressBatch(String configEnvironment) {
+        return baseMapper.selectSuggestAddressBatch(configEnvironment);
+    }
+
+    @Override
+    public void setSuggestAddressBatchStatus(List<SuggestAddressBatch> list) {
+        baseMapper.setSuggestAddressBatchStatus(list);
+    }
+
+
 }

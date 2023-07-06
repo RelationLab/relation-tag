@@ -36,4 +36,15 @@ public class StaticAnalysisDataJob {
         staticManager.synHomePageData();
     }
 
+
+    /****
+     * 扫描推荐地址，生成人群画像任务
+     */
+    @Scheduled(cron = "0/30 * * * * ?")
+//    @XxlJob("scanSuggestAddress")
+    public void scanSuggestAddress() {
+        log.warn("scanSuggestAddress start.................");
+        staticManager.scanSuggestAddress();
+    }
+
 }

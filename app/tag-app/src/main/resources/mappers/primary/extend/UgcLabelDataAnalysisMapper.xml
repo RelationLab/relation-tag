@@ -119,4 +119,22 @@
         where updated_at + '${timeoutHour} hour' <![CDATA[<=]]> current_timestamp           and download_status = 'PENDING'
     </select>
 
+
+
+
+    <insert id="insertBatchData" useGeneratedKeys="true" keyProperty="ugcLabelDataAnalysisId" >
+        insert into ugc_label_data_analysis(name,
+        address,
+        api_level,
+        mode,
+        labels,
+        status,
+        analysis_result,
+        type,
+        "sql")
+        values
+        <foreach collection="list" item="item" separator=",">
+            ( #{item.name},'suggest-system-user','PROFESSIONAL','FUZZY','','TODO',null, ,'','')
+        </foreach>
+    </insert>
 </mapper>

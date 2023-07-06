@@ -1,6 +1,7 @@
 package com.relation.tag.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.relation.tag.entity.SuggestAddressBatch;
 import com.relation.tag.entity.UgcLabelDataAnalysis;
 import com.relation.tag.mapper.primary.UgcLabelDataAnalysisMapper;
 import com.relation.tag.service.IUgcLabelDataAnalysisService;
@@ -64,5 +65,11 @@ public class UgcLabelDataAnalysisServiceImpl extends ServiceImpl<UgcLabelDataAna
     public List<UgcLabelDataAnalysis> selectTimeoutRecord(Integer timeoutHour) {
         return this.baseMapper.selectTimeoutRecord(timeoutHour);
     }
+
+    @Override
+    public void insertBatchData(List<SuggestAddressBatch> list) {
+        baseMapper.insertBatchData(list);
+    }
+
 
 }
