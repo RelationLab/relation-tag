@@ -84,7 +84,7 @@
         <include refid="TableName"/>
         set status=#{param.status},
         <if test="param.restoreVipUsage != null">
-            restore_vip_usage = #{param.restoreVipUsage}
+            restore_vip_usage = #{param.restoreVipUsage},
         </if>
         analysis_result=#{param.analysisResult}
         where id = #{param.id} and status = 'DOING'
