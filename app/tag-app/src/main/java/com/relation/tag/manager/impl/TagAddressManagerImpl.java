@@ -136,7 +136,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
             createView(batchDate);
             check("create_view", 60 * 1000, batchDate, 1, false);
             innit(batchDate);
-            Thread.sleep(10 * 60 * 1000);
             check("total_volume_usd", 1 * 60 * 1000, batchDate, 1, false);
             List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
             List<FileEntity> fileList = Lists.newArrayList();
