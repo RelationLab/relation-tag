@@ -10,3 +10,8 @@ CREATE TABLE public.suggest_address_batch (
           updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
           CONSTRAINT uidx_suggest_address_batch UNIQUE (batch_id, config_environment)
 );
+
+insert into suggest_address_batch( "name",config_environment)
+values ('panpanceshi1','stag') ;
+insert into suggest_address_batch( "name",config_environment)
+values ('panpanceshi2','stag') ;
