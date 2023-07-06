@@ -81,6 +81,7 @@
     <select id="selectSuggestAddressBatch" resultType="com.relation.tag.entity.SuggestAddressBatch">
         select
           batch_id,
+          "name",
           ugc_label_data_analysis_id,
           status,
           config_environment,
