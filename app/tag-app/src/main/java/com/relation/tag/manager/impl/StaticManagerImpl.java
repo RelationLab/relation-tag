@@ -272,7 +272,7 @@ public class StaticManagerImpl implements StaticManager {
             return;
         }
         ugcLabelDataAnalysisService.insertBatchData(list);
-        log.warn("list======{}",list);
+        log.warn("scanSuggestAddress.list======{}",list);
         iAddressLabelService.setSuggestAddressBatchStatus(list);
     }
 
