@@ -6,6 +6,8 @@ create table web3_action_platform
     dim_type varchar(1) NULL
 ) ;
 insert into web3_action_platform(platform,trade_type,dim_type) values('ALL','ALL','1');
+insert into web3_action_platform(platform,trade_type,dim_type) values('ALL','NFT Recipient','1');
+
 ------Mirror
 insert into web3_action_platform(platform,trade_type,dim_type) values('0xaf89c5e115ab3437fc965224d317d09faa66ee3e','write','1');
 insert into web3_action_platform(platform,trade_type,dim_type) values('0xaf89c5e115ab3437fc965224d317d09faa66ee3e','ALL','0');
