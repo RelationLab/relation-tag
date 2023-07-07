@@ -37,7 +37,6 @@ public class TagApplication {
             log.info("checkResult tag end...........");
 //            System.exit(0);
         }
-        Thread.sleep(100*60*1000);
         new Thread(new Runnable() {
             @Override
             public void run() {

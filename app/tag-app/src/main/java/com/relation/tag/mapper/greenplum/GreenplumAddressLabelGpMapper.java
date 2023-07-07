@@ -29,7 +29,7 @@ public interface GreenplumAddressLabelGpMapper extends BaseMapper<AddressLabelGp
 
     void updateDataAnalysisFail(@Param("id") Long id, @Param("configEnvironment") String configEnvironment);
 
-    Long selectBatchId(Long ugcLabelDataAnalysisId, String configEnvironment);
+    String selectBatchId(Long ugcLabelDataAnalysisId, String configEnvironment);
 
     List<SuggestAddressBatch> selectSuggestAddressBatch(String configEnvironment);
 

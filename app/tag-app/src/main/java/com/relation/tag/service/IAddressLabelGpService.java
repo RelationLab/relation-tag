@@ -25,7 +25,7 @@ public interface IAddressLabelGpService extends IService<AddressLabelGp> {
 
     void updateDataAnalysisFail(String id, String configEnvironment);
 
-    Long selectBatchId(Long batchId, String configEnvironment);
+    String selectBatchId(Long batchId, String configEnvironment);
 
     List<SuggestAddressBatch> selectSuggestAddressBatch(String configEnvironment);
 

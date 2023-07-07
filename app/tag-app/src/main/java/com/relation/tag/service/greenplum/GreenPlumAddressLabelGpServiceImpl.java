@@ -68,7 +68,7 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
     }
 
     @Override
-    public Long selectBatchId(Long ugcLabelDataAnalysisId, String configEnvironment) {
+    public String selectBatchId(Long ugcLabelDataAnalysisId, String configEnvironment) {
         return baseMapper.selectBatchId(ugcLabelDataAnalysisId,configEnvironment);
     }
 

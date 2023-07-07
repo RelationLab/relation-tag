@@ -72,7 +72,7 @@
         from home_data_analysis where config_environment = #{configEnvironment} order by analysis_date desc limit 1
     </select>
 
-    <select id="selectBatchId" resultType="java.lang.Long">
+    <select id="selectBatchId" resultType="java.lang.String">
         select batch_id
         from suggest_address_batch where ugc_label_data_analysis_id=#{ugcLabelDataAnalysisId} and
                  config_environment = #{configEnvironment}

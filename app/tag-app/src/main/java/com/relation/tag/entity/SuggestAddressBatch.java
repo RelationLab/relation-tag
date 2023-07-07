@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @TableName("suggest_address_batch")
 @ApiModel(value="SuggestAddressBatch对象", description="")
 public class SuggestAddressBatch implements Serializable {
-    private Long batchId;
+    private String batchId;
     private Long ugcLabelDataAnalysisId;
     private String name;
     private String  status;

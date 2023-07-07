@@ -427,8 +427,8 @@ public class StaticManagerImpl implements StaticManager {
     }
 
     private String buildConditionDataBySuggest(UgcLabelDataAnalysis entity) {
-        Long batchId = iAddressLabelService.selectBatchId(entity.getId(),configEnvironment);
-        return  "select distinct address as address from suggest_address where batch_id=".concat(batchId.toString());
+        String batchId = iAddressLabelService.selectBatchId(entity.getId(),configEnvironment);
+        return  "select distinct address as address from suggest_address where batch_id='".concat(batchId).concat("'");
     }
 
     private String buildConditionDataByLabel(String labels, UgcLabelDataAnalysis entity) {
