@@ -49,7 +49,7 @@ insert into public.address_label_token_balance_staked(address,label_type,label_n
                 select
                     *
                 from
-                    dex_tx_volume_count_summary
+                    dex_tx_volume_count_summary_stake
                 where
                         type = 'stake'
                   and balance_usd>0 and address not in (select address from exclude_address)) a1

@@ -194,9 +194,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private void innit(String batchDate) throws Exception {
         String dir = INIT_PATH;
-//        execSql("dim_rule_sql_content", "dim_project_token_type.sql", batchDate, dir, null);
-//        execSql("dim_project_token_type", "dim_project_type.sql", batchDate, dir, null);
-//        execSql("dim_project_type", "dim_rule_content.sql", batchDate, dir, null);
         execSql("dim_rule_content", "white_list_erc20.sql", batchDate, dir, null);
         execSql("white_list_erc20", "platform_nft_volume_usd.sql", batchDate, dir, null);
         execSql("platform_nft_volume_usd", "nft_transfer_holding.sql", batchDate, dir, null);
@@ -206,6 +203,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("token_holding_uni_cal", "token_balance_volume_usd.sql", batchDate, dir, null);
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate, dir, null);
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql", batchDate, dir, null);
+        execSql("web3_transaction_record_summary", "dex_tx_volume_count_summary_stake.sql", batchDate, dir, null);
         execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql", batchDate, dir, null);
         execSql("dex_tx_volume_count_summary_univ3", "dex_tx_count_summary.sql", batchDate, dir, null);
         execSql("dex_tx_count_summary", "dex_tx_volume_count_summary.sql", batchDate, dir, null);
