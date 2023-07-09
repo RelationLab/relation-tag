@@ -147,7 +147,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             }
             tagByRuleSqlList(fileList, batchDate);
         }
-        check("address_label", 60 * 1000, batchDate, 62, true);
+        check("address_label", 60 * 1000, batchDate, 61, true);
         tagMerge(batchDate);
     }
 
