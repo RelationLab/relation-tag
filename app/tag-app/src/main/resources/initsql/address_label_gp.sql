@@ -60,7 +60,7 @@ create table address_label_gp_${tableSuffix}
     project varchar(80) NULL,
     asset varchar(80) NULL,
     bus_type varchar(100) NULL,
-    id bigint
+    id int8
 ) distributed by (address);
 
 
