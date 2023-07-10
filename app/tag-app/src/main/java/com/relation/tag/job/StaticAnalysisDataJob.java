@@ -40,11 +40,11 @@ public class StaticAnalysisDataJob {
     /****
      * 扫描推荐地址，生成人群画像任务
      */
-    @Scheduled(cron = "0/30 * * * * ?")
+//    @Scheduled(cron = "0/30 * * * * ?")
 //    @XxlJob("scanSuggestAddress")
-    public void scanSuggestAddress() {
-        log.warn("scanSuggestAddress start.................");
-        staticManager.scanSuggestAddress();
-    }
+//    public void scanSuggestAddress() {
+//        log.warn("scanSuggestAddress start.................");
+//        staticManager.scanSuggestAddress();
+//    }
 
 }

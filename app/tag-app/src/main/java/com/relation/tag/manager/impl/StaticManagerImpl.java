@@ -265,17 +265,17 @@ public class StaticManagerImpl implements StaticManager {
         synHomeDataAnalysis(synTableName,tagBatch);
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void scanSuggestAddress() {
-        List<SuggestAddressBatch> list = iAddressLabelService.selectSuggestAddressBatch(configEnvironment);
-        if (CollectionUtils.isEmpty(list)){
-            return;
-        }
-        ugcLabelDataAnalysisService.insertBatchData(list);
-        log.warn("scanSuggestAddress.list======{}",list);
-        iAddressLabelService.setSuggestAddressBatchStatus(list);
-    }
+//    @Override
+//    @Transactional(rollbackFor = Exception.class)
+//    public void scanSuggestAddress() {
+//        List<SuggestAddressBatch> list = iAddressLabelService.selectSuggestAddressBatch(configEnvironment);
+//        if (CollectionUtils.isEmpty(list)){
+//            return;
+//        }
+//        ugcLabelDataAnalysisService.insertBatchData(list);
+//        log.warn("scanSuggestAddress.list======{}",list);
+//        iAddressLabelService.setSuggestAddressBatchStatus(list);
+//    }
 
     private void synHomeDataAnalysis(String synTableName, String tagBatch) {
         HomeDataAnalysis entity = iAddressLabelService.selectHomeDataAnalysis(configEnvironment);
@@ -427,8 +427,8 @@ public class StaticManagerImpl implements StaticManager {
     }
 
     private String buildConditionDataBySuggest(UgcLabelDataAnalysis entity) {
-        String batchId = iAddressLabelService.selectBatchId(entity.getId(),configEnvironment);
-        return  "select distinct address as address from suggest_address where batch_id='".concat(batchId).concat("'");
+//        String batchId = iAddressLabelService.selectBatchId(entity.getId(),configEnvironment);
+        return  "select distinct address as address from suggest_address where batch_id=".concat(entity.getId().toString());
     }
 
     private String buildConditionDataByLabel(String labels, UgcLabelDataAnalysis entity) {
