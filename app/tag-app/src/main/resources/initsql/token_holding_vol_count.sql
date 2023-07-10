@@ -75,7 +75,7 @@ from
                       sum(amount) total_transfer_all_volume
         from
             erc20_tx_record e20tr
-            where sender = from_address
+            where sender = from_address    --------------------交易额针对to_address，这个判断貌似有争议
         group by
             to_address,
             token ) atb where address !=''
