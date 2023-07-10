@@ -2405,7 +2405,323 @@ select distinct
     'RANK' label_category
 from level_def where type = 'defi_volume_rank' ;
 
+insert
+into
+    combination (asset,
+                 project,
+                 trade_type,
+                 balance,
+                 volume,
+                 activity,
+                 hold_time,
+                 created_at,
+                 updated_at,
+                 removed,
+                 label_name,
+                 "content",
+                 asset_type,
+                 label_category)
+values
+    ('',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '2023-07-09 11:02:30.723',
+     '2023-07-09 11:02:30.723',
+     false,
+     'crowd_token_whale',
+     '',
+     '',
+     '');
+insert
+into
+    combination (asset,
+                 project,
+                 trade_type,
+                 balance,
+                 volume,
+                 activity,
+                 hold_time,
+                 created_at,
+                 updated_at,
+                 removed,
+                 label_name,
+                 "content",
+                 asset_type,
+                 label_category)
+values
+    ('',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '2023-07-09 11:02:30.723',
+     '2023-07-09 11:02:30.723',
+     false,
+     'crowd_nft_whale',
+     '',
+     '',
+     '');
 
+
+insert
+into
+    combination (asset,
+                 project,
+                 trade_type,
+                 balance,
+                 volume,
+                 activity,
+                 hold_time,
+                 created_at,
+                 updated_at,
+                 removed,
+                 label_name,
+                 "content",
+                 asset_type,
+                 label_category)
+values
+    ('',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '2023-07-09 11:02:30.723',
+     '2023-07-09 11:02:30.723',
+     false,
+     'crowd_active_users',
+     '',
+     '',
+     '');
+insert
+into
+    combination (asset,
+                 project,
+                 trade_type,
+                 balance,
+                 volume,
+                 activity,
+                 hold_time,
+                 created_at,
+                 updated_at,
+                 removed,
+                 label_name,
+                 "content",
+                 asset_type,
+                 label_category)
+values
+    ('',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '2023-07-09 11:02:30.723',
+     '2023-07-09 11:02:30.723',
+     false,
+     'crowd_defi_active_users',
+     '',
+     '',
+     '');
+
+insert
+into
+    combination (asset,
+                 project,
+                 trade_type,
+                 balance,
+                 volume,
+                 activity,
+                 hold_time,
+                 created_at,
+                 updated_at,
+                 removed,
+                 label_name,
+                 "content",
+                 asset_type,
+                 label_category)
+values
+    ('',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '2023-07-09 11:02:30.723',
+     '2023-07-09 11:02:30.723',
+     false,
+     'crowd_nft_active_users',
+     '',
+     '',
+     '');
+insert
+into
+    combination (asset,
+                 project,
+                 trade_type,
+                 balance,
+                 volume,
+                 activity,
+                 hold_time,
+                 created_at,
+                 updated_at,
+                 removed,
+                 label_name,
+                 "content",
+                 asset_type,
+                 label_category)
+values
+    ('',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '2023-07-09 11:02:30.723',
+     '2023-07-09 11:02:30.723',
+     false,
+     'crowd_web3_active_users',
+     '',
+     '',
+     '');
+
+
+insert
+into
+    combination (asset,
+                 project,
+                 trade_type,
+                 balance,
+                 volume,
+                 activity,
+                 hold_time,
+                 created_at,
+                 updated_at,
+                 removed,
+                 label_name,
+                 "content",
+                 asset_type,
+                 label_category)
+values
+    ('',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '2023-07-09 11:02:30.723',
+     '2023-07-09 11:02:30.723',
+     false,
+     'crowd_long_term_holder',
+     '',
+     '',
+     '');
+insert
+into
+    combination (asset,
+                 project,
+                 trade_type,
+                 balance,
+                 volume,
+                 activity,
+                 hold_time,
+                 created_at,
+                 updated_at,
+                 removed,
+                 label_name,
+                 "content",
+                 asset_type,
+                 label_category)
+values
+    ('',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '2023-07-09 11:02:30.723',
+     '2023-07-09 11:02:30.723',
+     false,
+     'crowd_defi_high_demander',
+     '',
+     '',
+     '');
+
+
+insert
+into
+    combination (asset,
+                 project,
+                 trade_type,
+                 balance,
+                 volume,
+                 activity,
+                 hold_time,
+                 created_at,
+                 updated_at,
+                 removed,
+                 label_name,
+                 "content",
+                 asset_type,
+                 label_category)
+values
+    ('',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '2023-07-09 11:02:30.723',
+     '2023-07-09 11:02:30.723',
+     false,
+     'crowd_nft_high_demander',
+     '',
+     '',
+     '');
+insert
+into
+    combination (asset,
+                 project,
+                 trade_type,
+                 balance,
+                 volume,
+                 activity,
+                 hold_time,
+                 created_at,
+                 updated_at,
+                 removed,
+                 label_name,
+                 "content",
+                 asset_type,
+                 label_category)
+values
+    ('',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '',
+     '2023-07-09 11:02:30.723',
+     '2023-07-09 11:02:30.723',
+     false,
+     'crowd_elite',
+     '',
+     '',
+     '');
 insert into dim_rank_token select distinct token,token_type from dim_rule_content;
 insert into tag_result(table_name,batch_date)  SELECT 'dim_rule_content' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 

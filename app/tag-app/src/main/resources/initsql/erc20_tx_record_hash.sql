@@ -33,16 +33,14 @@ select
     token,
     max(block_number) as block_height,
     sum(amount) total_transfer_volume,
-    1 total_transfer_count,
+    case when sender = from_address 1 else 0 end total_transfer_count,
     0 as total_transfer_to_count,
-    1 total_transfer_all_count,
+    case when sender = from_address 1 else 0 end  total_transfer_all_count,
     0 as total_transfer_to_volume,
     sum(amount) total_transfer_all_volume
 from
     erc20_tx_record e20tr
-where  sender = from_address
 group by
     from_address,
-    token,
-    hash;
+    token;
 insert into tag_result(table_name,batch_date)  SELECT 'erc20_tx_record_hash' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
