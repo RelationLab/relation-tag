@@ -1,6 +1,6 @@
 -----推荐地址表
--- drop table suggest_address;
-CREATE TABLE public.suggest_address(
+-- drop table recommend_address;
+CREATE TABLE public.recommend_address(
     batch_id bigint,----批次号id，从suggest_address_batch获取
     "address" varchar(2048) NOT NULL,------推荐地址集
     created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,

@@ -419,7 +419,7 @@ public class StaticManagerImpl implements StaticManager {
         if (StringUtils.isNotBlank(entity.getType())&&StringUtils.equals(entity.getType(), DataAnalysisTypeEnum.SQL.name())){
             return entity.getSql();
         }
-        if (StringUtils.isNotBlank(entity.getType())&&StringUtils.equals(entity.getType(), DataAnalysisTypeEnum.SUGGEST.name())){
+        if (StringUtils.isNotBlank(entity.getType())&&StringUtils.equals(entity.getType(), DataAnalysisTypeEnum.RECOMMEND.name())){
            return buildConditionDataBySuggest( entity);
         }
         String labels = entity.getLabels();
@@ -428,7 +428,7 @@ public class StaticManagerImpl implements StaticManager {
 
     private String buildConditionDataBySuggest(UgcLabelDataAnalysis entity) {
 //        String batchId = iAddressLabelService.selectBatchId(entity.getId(),configEnvironment);
-        return  "select distinct address as address from suggest_address where batch_id=".concat(entity.getId().toString());
+        return  "select distinct address as address from recommend_address where batch_id=".concat(entity.getId().toString());
     }
 
     private String buildConditionDataByLabel(String labels, UgcLabelDataAnalysis entity) {
