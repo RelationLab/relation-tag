@@ -60,7 +60,7 @@ select
         select
             token,
             address,
-            floor((floor(extract(epoch from now())) - nht.latest_tx_time) / (24 * 3600)) as counter
+            floor((floor(extract(epoch from now())) - floor(extract(epoch from nht.latest_tx_time))) / (24 * 3600)) as counter
         from
             nft_holding_time nht
         where
