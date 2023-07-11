@@ -33,9 +33,9 @@ select
     token,
     max(block_number) as block_height,
     sum(amount) total_transfer_volume,
-    case when sender = from_address 1 else 0 end total_transfer_count,
+    case when sender = from_address then 1 else 0 end total_transfer_count,
     0 as total_transfer_to_count,
-    case when sender = from_address 1 else 0 end  total_transfer_all_count,
+    case when sender = from_address then 1 else 0 end  total_transfer_all_count,
     0 as total_transfer_to_volume,
     sum(amount) total_transfer_all_volume
 from
