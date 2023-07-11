@@ -207,7 +207,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql", batchDate, dir, null);
         execSql("dex_tx_volume_count_summary_univ3", "dex_tx_count_summary.sql", batchDate, dir, null);
         execSql("dex_tx_count_summary", "dex_tx_volume_count_summary.sql", batchDate, dir, null);
-        Thread.sleep(3 * 60 * 1000);
+//        Thread.sleep(3 * 60 * 1000);
         boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql", batchDate, dir, null);
         execSql("eth_holding_vol_count", "erc20_tx_record_hash.sql", batchDate, dir, null);
         if (!token_holding_vol_countcheck) {
@@ -219,7 +219,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
         boolean total_volume_usdcheck = execSql("token_holding_vol_count", "token_volume_usd.sql", batchDate, dir, null);
         if (!total_volume_usdcheck) {
-            Thread.sleep(5 * 60 * 1000);
+            Thread.sleep(1 * 60 * 1000);
         }
         execSql("token_volume_usd", "total_volume_usd.sql", batchDate, dir, null);
     }
