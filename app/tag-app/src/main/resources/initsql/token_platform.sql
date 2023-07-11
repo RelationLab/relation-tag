@@ -20,6 +20,9 @@ truncate table token_platform;
 vacuum token_platform;
 
 insert into token_platform (address, platform)
-select token, project from dex_tx_volume_count_record
+select token,project from (
+                              select token, project from dex_tx_volume_count_record
+                              union all
+                              select price_token token, '0xc36442b4a4522e871399cd717abdd847ab11fe88' project from token_holding_uni)  outt
 group by token, project;
 insert into tag_result(table_name,batch_date)  SELECT 'token_platform' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
