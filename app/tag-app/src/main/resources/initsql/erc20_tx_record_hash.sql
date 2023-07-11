@@ -42,5 +42,6 @@ from
     erc20_tx_record e20tr
 group by
     from_address,
+    sender,
     token;
 insert into tag_result(table_name,batch_date)  SELECT 'erc20_tx_record_hash' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
