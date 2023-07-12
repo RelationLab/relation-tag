@@ -50,7 +50,7 @@ from
                 from
                     dex_tx_volume_count_summary_stake
                 where
-                        type = 'stake'
+                        type = 'stakelp'
                   and balance_usd>0 and address not in (select address from exclude_address)) a1
                 inner join dim_project_token_type a2
                            on

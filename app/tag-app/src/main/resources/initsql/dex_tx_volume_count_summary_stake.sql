@@ -60,7 +60,7 @@ from
                     and wlp."type" = 'LP'
             ) lpt
             ON (white_list_erc20.address = lpt.address) ) w on w.address = dtvcr."token"
-    where dtvcr.type='stake'
+    where dtvcr.type='stakelp'
 group by
     dtvcr.address,
     token,
