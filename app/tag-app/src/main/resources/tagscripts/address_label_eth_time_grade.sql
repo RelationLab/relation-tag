@@ -61,7 +61,7 @@ insert into public.address_label_eth_time_grade(address,label_type,label_name,da
         select
             address,
             'eth' as token,
-            floor((floor(extract(epoch from now())) - latest_tx_time) / (24 * 3600)) as counter
+            floor((floor(extract(epoch from now())) - floor(extract(epoch from latest_tx_time))) / (24 * 3600)) as counter
         from
             eth_holding_time tbvutk) a1
         inner join

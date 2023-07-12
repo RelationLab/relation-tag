@@ -73,7 +73,7 @@ from
             wslp.factory_type as stakeRouter
      from white_list_lp wlp
               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-     where wlp.tvl > 5000000
+     where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
@@ -135,7 +135,7 @@ from
             wslp.factory_type as stakeRouter
      from white_list_lp wlp
               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-     where wlp.tvl > 5000000
+     where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
   and wlp."type" = 'LP') lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
@@ -189,7 +189,7 @@ from
             wslp.factory_type as stakeRouter
      from white_list_lp wlp
               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-     where wlp.tvl > 5000000
+     where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
   and wlp."type" = 'LP') lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
@@ -239,7 +239,7 @@ from
             wslp.factory_type as stakeRouter
      from white_list_lp wlp
               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-     where wlp.tvl > 5000000
+     where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
@@ -301,7 +301,7 @@ from
             wslp.factory_type as stakeRouter
      from white_list_lp wlp
               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-     where wlp.tvl > 5000000
+     where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
@@ -354,7 +354,7 @@ from
             wslp.factory_type as stakeRouter
      from white_list_lp wlp
               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-     where wlp.tvl > 5000000
+     where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
@@ -404,7 +404,7 @@ from
             wslp.factory_type as stakeRouter
      from white_list_lp wlp
               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-     where wlp.tvl > 5000000
+     where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
@@ -466,7 +466,7 @@ from
             wslp.factory_type as stakeRouter
      from white_list_lp wlp
               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-     where wlp.tvl > 5000000
+     where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap') ) lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
@@ -519,7 +519,7 @@ from
             wslp.factory_type as stakeRouter
      from white_list_lp wlp
               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-     where wlp.tvl > 5000000
+     where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
@@ -570,7 +570,7 @@ from
             wslp.factory_type as stakeRouter
      from white_list_lp wlp
               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-     where wlp.tvl > 5000000
+     where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
@@ -632,7 +632,7 @@ from
             wslp.factory_type as stakeRouter
      from white_list_lp wlp
               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-     where wlp.tvl > 5000000
+     where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type='Sushiswap' ) lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
@@ -685,7 +685,7 @@ from
             wslp.factory_type as stakeRouter
      from white_list_lp wlp
               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-     where wlp.tvl > 5000000
+     where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);

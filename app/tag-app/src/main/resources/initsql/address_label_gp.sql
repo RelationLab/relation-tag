@@ -235,6 +235,8 @@ CREATE TABLE address_labels_json_gin_${tableSuffix}
     data    TEXT NOT NULL
 ) WITH (appendoptimized = true, orientation = column) DISTRIBUTED BY (address);
 CREATE INDEX idx_address_labels_json_gin_${tableSuffix}_id ON address_labels_json_gin_${tableSuffix}(id);
+truncate table address_labels_json_gin_${tableSuffix};
+vacuum address_labels_json_gin_${tableSuffix};
 
 INSERT INTO address_labels_json_gin_${tableSuffix}(address, data)
 SELECT address_label_gp_${tableSuffix}.address,
