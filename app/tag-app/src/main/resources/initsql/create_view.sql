@@ -37,6 +37,18 @@
     CREATE VIEW web3_transaction_record AS select * from web3_transaction_record_cdc
     where block_height<=(select min(block_height) from dms_syn_block);
 
+--     DROP VIEW if EXISTS public.nft_holding_record;
+--     CREATE VIEW nft_holding_record AS select * from nft_holding_record_cdc
+--     where block_number<=(select min(block_height) from dms_syn_block);
+--
+--     DROP VIEW if EXISTS public.erc721_tx_record;
+--     CREATE VIEW erc721_tx_record AS select * from erc721_tx_record_cdc
+--     where block_number<=(select min(block_height) from dms_syn_block);
+--
+--     DROP VIEW if EXISTS public.platform_nft_tx_record;
+--     CREATE VIEW platform_nft_tx_record AS select * from platform_nft_tx_record_cdc
+--     where block_number<=(select min(block_height) from dms_syn_block);
+
     insert into tag_result(table_name,batch_date)  SELECT 'create_view' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
 
