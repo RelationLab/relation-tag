@@ -99,6 +99,6 @@ select from_address,
        sum(total_transfer_all_volume),
        sum(total_transfer_all_count),
        max(block_number)
-from nft_holding_temp
+from nft_holding_middle
 group by address, token;
 insert into tag_result(table_name,batch_date)  SELECT 'nft_holding' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
