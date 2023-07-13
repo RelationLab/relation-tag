@@ -1,7 +1,28 @@
-
+drop table if exists nft_holding_middle;
+CREATE TABLE public.nft_holding_middle (
+                                    address varchar(512) NOT NULL,
+                                    "token" varchar(512) NOT NULL,
+                                    balance int8 NOT NULL,
+                                    total_transfer_volume int8 NOT NULL,
+                                    total_transfer_count int8 NULL,
+                                    total_transfer_to_volume int8 NOT NULL,
+                                    total_transfer_to_count int8 NULL,
+                                    total_transfer_mint_volume int8 NOT NULL,
+                                    total_transfer_mint_count int8 NULL,
+                                    total_transfer_burn_volume int8 NOT NULL,
+                                    total_transfer_burn_count int8 NULL,
+                                    total_transfer_all_volume int8 NOT NULL,
+                                    total_transfer_all_count int8 NULL,
+                                    updated_block_height int8 NOT NULL,
+                                    created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+                                    updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+                                    removed bool NULL DEFAULT false
+) distributed by (address,"token");
+truncate table nft_holding_middle;
+vacuum nft_holding_middle;
 
 ------from
-insert into nft_holding_temp(address, token, balance, total_transfer_volume, total_transfer_count, total_transfer_to_volume,
+insert into nft_holding_middle(address, token, balance, total_transfer_volume, total_transfer_count, total_transfer_to_volume,
                         total_transfer_to_count, total_transfer_mint_volume, total_transfer_mint_count,
                         total_transfer_burn_volume, total_transfer_burn_count, total_transfer_all_volume,
                         total_transfer_all_count, updated_block_height)
@@ -27,7 +48,7 @@ where to_address != '0x0000000000000000000000000000000000000000'
 group by from_address, token;
 
 ------burn
-insert into nft_holding_temp(address, token, balance, total_transfer_volume, total_transfer_count, total_transfer_to_volume,
+insert into nft_holding_middle(address, token, balance, total_transfer_volume, total_transfer_count, total_transfer_to_volume,
                         total_transfer_to_count, total_transfer_mint_volume, total_transfer_mint_count,
                         total_transfer_burn_volume, total_transfer_burn_count, total_transfer_all_volume,
                         total_transfer_all_count, updated_block_height)
@@ -53,7 +74,7 @@ insert into nft_holding_temp(address, token, balance, total_transfer_volume, tot
      group by from_address, token);
 
 -----------------to
-insert into nft_holding_temp(address, token, balance, total_transfer_volume, total_transfer_count, total_transfer_to_volume,
+insert into nft_holding_middle(address, token, balance, total_transfer_volume, total_transfer_count, total_transfer_to_volume,
                         total_transfer_to_count, total_transfer_mint_volume, total_transfer_mint_count,
                         total_transfer_burn_volume, total_transfer_burn_count, total_transfer_all_volume,
                         total_transfer_all_count, updated_block_height)
@@ -79,7 +100,7 @@ insert into nft_holding_temp(address, token, balance, total_transfer_volume, tot
      group by to_address, token);
 
 -------------------mint
-insert into nft_holding_temp(address, token, balance, total_transfer_volume, total_transfer_count, total_transfer_to_volume,
+insert into nft_holding_middle(address, token, balance, total_transfer_volume, total_transfer_count, total_transfer_to_volume,
                         total_transfer_to_count, total_transfer_mint_volume, total_transfer_mint_count,
                         total_transfer_burn_volume, total_transfer_burn_count, total_transfer_all_volume,
                         total_transfer_all_count, updated_block_height)
@@ -103,3 +124,4 @@ insert into nft_holding_temp(address, token, balance, total_transfer_volume, tot
        and to_address != '0x0000000000000000000000000000000000000000'
                and to_address != '0x000000000000000000000000000000000000dead'
      group by to_address, token);
+insert into tag_result(table_name,batch_date)  SELECT 'nft_holding_middle' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
