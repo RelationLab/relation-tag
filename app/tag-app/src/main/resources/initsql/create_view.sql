@@ -39,7 +39,7 @@
 
     DROP VIEW if EXISTS public.nft_holding_record;
     CREATE VIEW nft_holding_record AS select * from nft_holding_record_cdc
-    where block_number<=(select min(block_height) from dms_syn_block);
+    where updated_block_height<=(select min(block_height) from dms_syn_block);
 
     DROP VIEW if EXISTS public.erc721_tx_record;
     CREATE VIEW erc721_tx_record AS select * from erc721_tx_record_cdc
