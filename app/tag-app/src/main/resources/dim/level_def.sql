@@ -21,13 +21,13 @@ insert into level_def(level,level_name,type) values('Billion','Trader','defi_vol
 insert into level_def(level,level_name,type) values('LEGENDARY','Legendary','defi_volume_rank');
 insert into level_def(level,level_name,type) values('ELITE','Elite','defi_volume_rank');
 insert into level_def(level,level_name,type) values('HEAVY','Heavy','defi_volume_rank');
-insert into level_def(level,level_name,type) values('MEDIUM ','Medium','defi_volume_rank');
+insert into level_def(level,level_name,type) values('MEDIUM','Medium','defi_volume_rank');
 
 
 insert into level_def(level,level_name,type) values('LEGENDARY','Legendary Trader','token_volume_rank');
 insert into level_def(level,level_name,type) values('ELITE','Elite Trader','token_volume_rank');
 insert into level_def(level,level_name,type) values('HEAVY','Heavy Trader','token_volume_rank');
-insert into level_def(level,level_name,type) values('MEDIUM ','Medium Trader','token_volume_rank');
+insert into level_def(level,level_name,type) values('MEDIUM','Medium Trader','token_volume_rank');
 
 insert into level_def(level,level_name,type) values('L1','Balance Lv1','defi_balance_grade');
 insert into level_def(level,level_name,type) values('L2','Balance Lv2','defi_balance_grade');
