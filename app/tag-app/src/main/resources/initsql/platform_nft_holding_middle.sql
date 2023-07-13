@@ -30,7 +30,18 @@ insert into platform_nft_holding_middle (address, platform, quote_token, token, 
                                                                     0,
                                                                     sum(value),
                                                                     sum(count)
-                                                             from platform_nft_tx_record
+                                                             from (select from_address,
+                                                                          platform_address,
+                                                                          quote_token,
+                                                                          token,
+                                                                          sum(value) as value ,
+                                                                          1 as count,
+                                                                          0,
+                                                                          0,
+                                                                          sum(value),
+                                                                         sum(count)
+                                                                   from platform_nft_tx_record
+                                                                   group by from_address, platform_address, hash,quote_token, token) platform_nft_tx_record
                                                              group by from_address, platform_address, quote_token, token);
 
 
@@ -46,6 +57,20 @@ insert into platform_nft_holding_middle (address, platform, quote_token, token, 
                                                                     sum(count),
                                                                     sum(value),
                                                                     sum(count)
-                                                             from platform_nft_tx_record
+                                                             from (select to_address,
+                                                                          platform_address,
+                                                                          quote_token,
+                                                                          token,
+                                                                          0,
+                                                                          0,
+                                                                          sum(value) as value ,
+                                                                        1 as count,
+                                                                        sum(value),
+                                                                        sum(count)
+                                                                   from platform_nft_tx_record group by to_address,
+                                                                       platform_address,
+                                                                       quote_token,
+                                                                       hash,
+                                                                       token) platform_nft_tx_record
                                                              group by to_address, platform_address, quote_token, token);
 insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_holding_middle' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
