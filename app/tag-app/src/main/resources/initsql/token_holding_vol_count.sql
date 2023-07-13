@@ -63,7 +63,8 @@ from
             address,
             token
 
-        union all select
+        union all
+        select
                       to_address address,
                       max(block_number) as block_height,
                       token,
