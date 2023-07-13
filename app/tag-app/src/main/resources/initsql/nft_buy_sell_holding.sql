@@ -25,6 +25,6 @@ insert into nft_buy_sell_holding (address, token, total_transfer_buy_volume, tot
                                        total_transfer_sell_volume, total_transfer_sell_count, updated_block_height)
     (select address, token,  sum(total_transfer_buy_volume),  sum(total_transfer_buy_count),
             sum(total_transfer_sell_volume), sum(total_transfer_sell_count), max(updated_block_height)
-     from nft_buy_sell_holding_temp
+     from nft_buy_sell_holding_middle
      group by address, token);
 insert into tag_result(table_name,batch_date)  SELECT 'nft_buy_sell_holding' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

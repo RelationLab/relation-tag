@@ -85,7 +85,7 @@ insert into nft_holding(address, token, balance, total_transfer_volume, total_tr
                         total_transfer_burn_volume, total_transfer_burn_count, total_transfer_all_volume,
                         total_transfer_all_count, updated_block_height)
 
-select from_address,
+select address,
        token,
        sum(balance),
        sum(total_transfer_volume),
@@ -98,7 +98,7 @@ select from_address,
        sum(total_transfer_burn_count),
        sum(total_transfer_all_volume),
        sum(total_transfer_all_count),
-       max(block_number)
+       max(updated_block_height)
 from nft_holding_middle
 group by address, token;
 insert into tag_result(table_name,batch_date)  SELECT 'nft_holding' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
