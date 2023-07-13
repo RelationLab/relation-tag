@@ -63,18 +63,6 @@ insert into level_def(level,level_name,type) values('LONG_TERM_HOLDER','Long-ter
 insert into level_def(level,level_name,type) values('SHORT_TERM_HOLDER','Short-term Holder','defi_time_special');
 
 --------------------------------------------------nft-----------------------------------------------
-
-insert into level_def(level,level_name,type) values('L1','Activity Lv1','count');
-insert into level_def(level,level_name,type) values('L2','Activity Lv2','count');
-insert into level_def(level,level_name,type) values('L3','Activity Lv3','count');
-insert into level_def(level,level_name,type) values('L4','Activity Lv4','count');
-insert into level_def(level,level_name,type) values('L5','Activity Lv5','count');
-insert into level_def(level,level_name,type) values('L6','Activity Lv6','count');
-insert into level_def(level,level_name,type) values('Highest','Highest Activity','count');
-insert into level_def(level,level_name,type) values('High','High Activity','count');
-insert into level_def(level,level_name,type) values('Medium','Medium Activity','count');
-
-
 insert into level_def(level,level_name,type) values('L1','Activity Lv1','nft_count');
 insert into level_def(level,level_name,type) values('L2','Activity Lv2','nft_count');
 insert into level_def(level,level_name,type) values('L3','Activity Lv3','nft_count');
