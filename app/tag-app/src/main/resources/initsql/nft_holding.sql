@@ -21,12 +21,8 @@ CREATE TABLE public.nft_holding (
                                     updated_block_height int8 NOT NULL,
                                     created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                     updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                                    removed bool NULL DEFAULT false,
-                                    CONSTRAINT uk_nbv_address_token UNIQUE (address, token)
-);
-CREATE INDEX idx_nbv_updatedblockheight ON public.nft_holding USING btree (updated_block_height DESC);
-CREATE INDEX nft_activity_balance_volume_address_gin_trgm ON public.nft_holding USING btree (address);
-CREATE INDEX nft_activity_balance_volume_token_gin_trgm ON public.nft_holding USING btree (token);
+                                    removed bool NULL DEFAULT false
+)distributed by (address,"token");
 truncate table nft_holding;
 vacuum nft_holding;
 

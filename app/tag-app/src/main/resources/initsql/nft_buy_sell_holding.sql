@@ -15,11 +15,8 @@ CREATE TABLE public.nft_buy_sell_holding (
                                              updated_block_height int8 NOT NULL,
                                              created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                              updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                                             removed bool NULL DEFAULT false,
-                                             CONSTRAINT uk_nbsh_address_token UNIQUE (address, token)
-);
-CREATE INDEX idx_nbsh_gin_trgm ON public.nft_buy_sell_holding USING btree (address);
-CREATE INDEX idx_nbsh_updatedblockheight ON public.nft_buy_sell_holding USING btree (updated_block_height DESC);
+                                             removed bool NULL DEFAULT false
+)distributed by (address,"token");
 truncate table nft_buy_sell_holding;
 vacuum nft_buy_sell_holding;
 

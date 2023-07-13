@@ -18,12 +18,8 @@ CREATE TABLE public.platform_nft_holding (
                                              created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                              updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                              removed bool NULL DEFAULT false,
-                                             platform_group varchar(256) NULL,
-                                             CONSTRAINT uk_pnh_address_token UNIQUE (address, token, quote_token, platform)
-);
-CREATE INDEX idx_pnh_address_gin_trgm ON public.platform_nft_holding USING btree (address);
-CREATE INDEX idx_pnh_platform_gin_trgm ON public.platform_nft_holding USING btree (platform);
-CREATE INDEX idx_pnh_token_gin_trgm ON public.platform_nft_holding USING btree (token);
+                                             platform_group varchar(256) NULL
+ )distributed by (address,"token");
 truncate table platform_nft_holding;
 vacuum platform_nft_holding;
 
