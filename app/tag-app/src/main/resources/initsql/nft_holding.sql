@@ -51,56 +51,25 @@ group by address,
          token;
 
 
-insert into nft_holding(address, token, balance, total_transfer_volume, total_transfer_count, total_transfer_to_volume,
+insert into nft_holding(address, token, balance, total_transfer_volume, total_transfer_count,
+                        total_transfer_to_volume,
                         total_transfer_to_count, total_transfer_mint_volume, total_transfer_mint_count,
                         total_transfer_burn_volume, total_transfer_burn_count, total_transfer_all_volume,
                         total_transfer_all_count, updated_block_height)
 
 select from_address,
        token,
-       sum(-1),
-       count(1),
-       count(1),
-       0,
-       0,
-       0,
-       0,
-       0,
-       0,
-       count(1),
-       count(1),
+       sum(balance),
+       sum(total_transfer_volume),
+       sum(total_transfer_count),
+       sum(total_transfer_to_volume),
+       sum(total_transfer_to_count),
+       sum(total_transfer_mint_volume),
+       sum(total_transfer_mint_count),
+       sum(total_transfer_burn_volume),
+       sum(total_transfer_burn_count),
+       sum(total_transfer_all_volume),
+       sum(total_transfer_all_count),
        max(block_number)
-from erc721_tx_record
-where to_address != '0x0000000000000000000000000000000000000000'
-          and to_address != '0x000000000000000000000000000000000000dead'
-          and from_address != '0x0000000000000000000000000000000000000000'
-group by from_address, token;
-
-
-insert into nft_holding(address, token, balance, total_transfer_volume, total_transfer_count, total_transfer_to_volume,
-                        total_transfer_to_count, total_transfer_mint_volume, total_transfer_mint_count,
-                        total_transfer_burn_volume, total_transfer_burn_count, total_transfer_all_volume,
-                        total_transfer_all_count, updated_block_height)
-
-    (select from_address,
-            token,
-            sum(-1),
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            count(1),
-            count(1),
-            count(1),
-            count(1),
-            max(block_number)
-     from erc721_tx_record
-     where (to_address = '0x0000000000000000000000000000000000000000'
-         or to_address = '0x000000000000000000000000000000000000dead')
-       and from_address != '0x0000000000000000000000000000000000000000'
-               and token = #{token}
-                and block_number <![CDATA[<=]]> #{maxHeight}
-                and block_number <![CDATA[>]]> #{minHeight}
-     group by from_address, token)
+from nft_holding_temp
+group by address, token;
