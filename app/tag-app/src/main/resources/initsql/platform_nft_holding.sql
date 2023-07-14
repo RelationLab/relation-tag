@@ -18,6 +18,7 @@ CREATE TABLE public.platform_nft_holding (
                                              created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                              updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                              removed bool NULL DEFAULT false,
+                                             weth_token_flag varchar(2),
                                              platform_group varchar(256) NULL
  )distributed by (address,"token");
 truncate table platform_nft_holding;
@@ -43,5 +44,6 @@ update platform_nft_holding set platform_group='opensea' where platform in ('0x7
 update platform_nft_holding set platform_group='X2Y2' where platform = '0x74312363e45dcaba76c59ec49a7aa8a65a67eed3';
 update platform_nft_holding set platform_group='CryptoPunks' where platform = '0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb';
 update platform_nft_holding set platform_group='Blur.io: Marketplace' where platform in ('0x000000000000ad05ccc4f10045630fb830b95127', '0x39da41747a83aee658334415666f3ef92dd0d541');
+update platform_nft_holding set quote_token='0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',weth_token_flag='1' where quote_token='0x0000000000a39bb272e79075ade125fd351887ac';
 
 insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_holding' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
