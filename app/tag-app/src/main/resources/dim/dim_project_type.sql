@@ -105,7 +105,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    web3_platform.platform_name asset,
+    CASE WHEN  web3_platform.platform_name = 'ALL' THEN 'ALL_WEB3' ELSE web3_platform.platform_name END asset,
     ''  project,
     web3_action.trade_type trade_type,
     level_def.level  balance,
@@ -223,7 +223,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    web3_platform.platform_name asset,
+    CASE WHEN  web3_platform.platform_name = 'ALL' THEN 'ALL_WEB3' ELSE web3_platform.platform_name END asset,
     ''  project,
     web3_action.trade_type trade_type,
     level_def.level  balance,
@@ -340,7 +340,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    web3_platform.platform_name asset,
+    CASE WHEN  web3_platform.platform_name = 'ALL' THEN 'ALL_WEB3' ELSE web3_platform.platform_name END asset,
     ''  project,
     web3_action.trade_type trade_type,
     level_def.level  balance,
@@ -455,7 +455,7 @@ into
                         asset_type,
                         label_category)
 select distinct
-    web3_platform.platform_name asset,
+    CASE WHEN  web3_platform.platform_name = 'ALL' THEN 'ALL_WEB3' ELSE web3_platform.platform_name END asset,
     ''  project,
     web3_action.trade_type trade_type,
     '' balance,
