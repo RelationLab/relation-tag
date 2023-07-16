@@ -29,7 +29,7 @@ insert into nft_buy_sell_holding_middle (address, token, total_transfer_buy_volu
            ) platform_nft_tx_record
      group by from_address, token);
 
-insert into nft_buy_sell_holding (address, token, total_transfer_buy_volume, total_transfer_buy_count,
+insert into nft_buy_sell_holding_middle (address, token, total_transfer_buy_volume, total_transfer_buy_count,
                                   total_transfer_sell_volume, total_transfer_sell_count, updated_block_height)
     (select to_address, token, sum(count), sum(value), 0, 0, max(block_number)
      from (select
