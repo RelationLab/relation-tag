@@ -119,7 +119,7 @@ select
     min(first_updated_block_height) first_updated_block_height,
     sum(round(balance * round(cast (w.price as numeric), 18),8)) as balance_usd
 from
-    dex_tx_volume_count_record  dtvcr
+    dex_tx_volume_count_record_hash  dtvcr
         inner join (
         select
             white_list_erc20.*

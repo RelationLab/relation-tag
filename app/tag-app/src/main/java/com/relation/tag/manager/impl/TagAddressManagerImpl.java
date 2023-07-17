@@ -36,6 +36,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
     public static String SCRIPTSPATH = "tagscripts";
     public static String DIM_PATH = "dim";
 
+    public static String  RECENT_TIME = "recent_time";
+
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList, String batchDate) {
         try {
             forkJoinPool.execute(() -> {
@@ -209,7 +211,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("dex_tx_count_summary", "dex_tx_volume_count_summary.sql", batchDate, dir, null);
 //        Thread.sleep(3 * 60 * 1000);
         boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql", batchDate, dir, null);
-        execSql("eth_holding_vol_count", "erc20_tx_record_hash.sql", batchDate, dir, null);
+        execSql("eth_holding_vol_count", "erc20_tx_record_from.sql", batchDate, dir, null);
         if (!token_holding_vol_countcheck) {
             Thread.sleep(1 * 60 * 1000);
         }
