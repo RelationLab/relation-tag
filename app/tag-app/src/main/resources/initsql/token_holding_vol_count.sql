@@ -45,9 +45,9 @@ from
         union all
         select
                       to_address address,
-                      max(block_number) as block_height,
+                      max(block_height) as block_height,
                       token,
-                      sum(amount)  as total_transfer_volume,
+                      sum(total_transfer_volume)  as total_transfer_volume,
                       0 as total_transfer_count,
                       recent_time_code
         from
