@@ -212,7 +212,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("web3_transaction_record_summary", "dex_tx_volume_count_summary_stake.sql", batchDate, dir, null);
         execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql", batchDate, dir, null);
         execSql("dex_tx_volume_count_summary_univ3", "dex_tx_count_summary.sql", batchDate, dir, null);
-        execSql("dex_tx_count_summary", "dex_tx_volume_count_summary.sql", batchDate, dir, null);
+        execSql("dex_tx_count_summary", "dex_tx_volume_count_record_hash.sql", batchDate, dir, null);
+        execSql("dex_tx_volume_count_record_hash", "dex_tx_volume_count_summary.sql", batchDate, dir, null);
 //        Thread.sleep(3 * 60 * 1000);
         boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql", batchDate, dir, null);
         execSql("eth_holding_vol_count", "erc20_tx_record_hash.sql", batchDate, dir, null);
