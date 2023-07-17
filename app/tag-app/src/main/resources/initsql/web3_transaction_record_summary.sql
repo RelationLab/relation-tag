@@ -13,7 +13,7 @@ CREATE TABLE  public.web3_transaction_record_summary
 );
 truncate table web3_transaction_record_summary;
 vacuum web3_transaction_record_summary;
-update web3_transaction_record_cdc set address = lower(address) where type='write';
+update web3_transaction_record_cdc set address = lower(address),token=lower(token) where type='write';
     insert
     into
         web3_transaction_record_summary(address,

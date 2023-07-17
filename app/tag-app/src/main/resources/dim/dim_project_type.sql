@@ -234,7 +234,7 @@ select distinct
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK_'|| level_def.level label_name,
     web3_platform.platform_name_alis||' ' ||level_def.level_name||' NFT ' ||'Collector' "content",
     'web3' asset_type,
-    'GRADE' label_category
+    'RANK' label_category
 from web3_action_platform
          inner join web3_platform on
     (web3_platform.platform = web3_action_platform.platform)
@@ -351,7 +351,7 @@ select distinct
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_TOP_'|| level_def.level label_name,
     web3_platform.platform_name_alis ||' '||level_def.level_name||' NFT'||' Collector' "content",
     'web3' asset_type,
-    'GRADE' label_category
+    'TOP' label_category
 from web3_action_platform
          inner join web3_platform on
     (web3_platform.platform = web3_action_platform.platform)

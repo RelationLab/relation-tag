@@ -1547,7 +1547,7 @@ select distinct
     mp_nft_platform.platform_name||' NFT '||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
     'nft' asset_type,
-    'GRADE' label_category
+    'ELITE' label_category
 from
     mp_nft_platform
         inner join nft_trade_type on
@@ -1663,7 +1663,7 @@ select distinct
     'MP NFT ' ||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
     'nft' asset_type,
-    'GRADE' label_category
+    'ELITE' label_category
 from  nft_trade_type
           inner join (
     select
@@ -2525,7 +2525,7 @@ select distinct
     mp_nft_platform.platform_name||' NFT '||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
     'nft' asset_type,
-    'GRADE' label_category
+    'RANK' label_category
 from
     mp_nft_platform
         inner join nft_trade_type on
@@ -2642,7 +2642,7 @@ select distinct
     'MP NFT ' ||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
     'nft' asset_type,
-    'GRADE' label_category
+    'RANK' label_category
 from  nft_trade_type
           inner join (
     select
@@ -3013,7 +3013,7 @@ select distinct
     mp_nft_platform.platform_name||' NFT '||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
     'nft' asset_type,
-    'GRADE' label_category
+    'TOP' label_category
 from
     mp_nft_platform
         inner join nft_trade_type on
@@ -3130,7 +3130,7 @@ select distinct
     'MP NFT ' ||level_def.level_name||' '||
     (case when nft_trade_type.nft_trade_type='ALL' then 'Trader' else nft_trade_type.nft_trade_type_name end) "content",
     'nft' asset_type,
-    'GRADE' label_category
+    'TOP' label_category
 from  nft_trade_type
           inner join (
     select
@@ -5043,7 +5043,7 @@ select distinct
     'ALL' ||  '_NFT_BALANCE_RANK_' || level_def.level  label_name,
     'NFT '||level_def.level_name  "content",
     'nft' asset_type,
-    'GRADE' label_category
+    'RANK' label_category
 from level_def where type = 'nft_balance_rank' ;
 
 --------balance_top CryptoPunks_NFT_BALANCE_TOP
@@ -5241,7 +5241,7 @@ select distinct
     'ALL' ||  '_NFT_BALANCE_TOP_' || level_def.level  label_name,
     'NFT '||level_def.level_name  "content",
     'nft' asset_type,
-    'GRADE' label_category
+    'TOP' label_category
 from level_def where type = 'nft_balance_top' ;
 
 --------count ALL_CryptoPunks_ALL_NFT_ACTIVITY
@@ -6026,7 +6026,7 @@ select distinct
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_ELITE_' || level_def.level  label_name,
     level_def.level_name||' NFT '||(case when nft_trade_type.nft_trade_type='ALL' then ' Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'nft' asset_type,
-    'GRADE' label_category
+    'ELITE' label_category
 from
     nft_trade_type
         inner join (
@@ -6489,7 +6489,7 @@ select distinct
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_RANK_' || level_def.level  label_name,
     level_def.level_name||' NFT '||(case when nft_trade_type.nft_trade_type='ALL' then ' Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'nft' asset_type,
-    'GRADE' label_category
+    'RANK' label_category
 from
     nft_trade_type
         inner join (
@@ -6720,7 +6720,7 @@ select distinct
     'ALL_' || 'ALL_'||nft_trade_type.nft_trade_type|| '_NFT_VOLUME_TOP_' || level_def.level  label_name,
     level_def.level_name||' NFT '||(case when nft_trade_type.nft_trade_type='ALL' then ' Trader' else nft_trade_type.nft_trade_type_name end)  "content",
     'nft' asset_type,
-    'GRADE' label_category
+    'TOP' label_category
 from
     nft_trade_type
         inner join (
