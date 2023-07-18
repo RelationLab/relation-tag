@@ -1,5 +1,5 @@
-drop table if exists dex_tx_volume_count_record_hash;
-CREATE TABLE public.dex_tx_volume_count_record_hash (
+drop table if exists dex_tx_volume_count_record_filterate;
+CREATE TABLE public.dex_tx_volume_count_record_filterate (
                                                     address varchar(256) NOT NULL,
                                                     "token" varchar(256) NOT NULL,
                                                     block_height int8 NOT NULL,
@@ -10,22 +10,24 @@ CREATE TABLE public.dex_tx_volume_count_record_hash (
                                                     first_updated_block_height int8 NOT NULL DEFAULT 99999999,
                                                     transaction_hash varchar(100) NULL,
                                                     "type" varchar(10) NULL,
+                                                    triggered_flag varchar(10) NULL,
                                                     project varchar(100) NULL
 ) DISTRIBUTED BY (address);
-truncate table dex_tx_volume_count_record_hash;
-vacuum dex_tx_volume_count_record_hash;
+truncate table dex_tx_volume_count_record_filterate;
+vacuum dex_tx_volume_count_record_filterate;
 
 
 insert
 into
-    dex_tx_volume_count_record_hash(address,
+    dex_tx_volume_count_record_filterate(address,
                                 token,
                                 type,
                                 project,
                                 block_height,
                                 total_transfer_volume_usd,
                                 total_transfer_count,
-                                first_updated_block_height)
+                                first_updated_block_height,
+                                triggered_flag)
 select
     dtvcr.address,
     token,
@@ -34,7 +36,8 @@ select
     max(block_height) block_height,
     max(round(total_transfer_volume * round(cast (w.price as numeric), 18),8) ) as total_transfer_volume_usd,
     sum(1) total_transfer_count,
-    min(first_updated_block_height) first_updated_block_height
+    min(first_updated_block_height) first_updated_block_height,
+    max(triggered_flag) as triggered_flag
 from
     dex_tx_volume_count_record  dtvcr
         inner join (
@@ -54,3 +57,4 @@ group by
     dtvcr.type,
     project,
     transaction_hash;
+insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_volume_count_record_filterate' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

@@ -10,3 +10,4 @@ CREATE TABLE public.erc20_tx_record_to(
 ) distributed by (address,"token");
 truncate table erc20_tx_record_to;
 vacuum erc20_tx_record_to;
+insert into tag_result(table_name,batch_date)  SELECT 'erc20_tx_record_to' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
