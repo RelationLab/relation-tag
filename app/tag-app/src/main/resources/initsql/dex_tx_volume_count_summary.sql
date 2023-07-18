@@ -114,7 +114,7 @@ select
     project,
     max(block_height) block_height,
     sum(total_transfer_volume_usd) as total_transfer_volume_usd,
-    sum(total_transfer_count) total_transfer_count,
+    sum(1) total_transfer_count,
     min(first_updated_block_height) first_updated_block_height
 from
     dex_tx_volume_count_record_hash dtvcr
@@ -143,7 +143,7 @@ select
     project,
     max(block_height) block_height,
     sum(total_transfer_volume_usd) as total_transfer_volume_usd,
-    sum(total_transfer_count) total_transfer_count,
+    sum(1) total_transfer_count,
     min(first_updated_block_height) first_updated_block_height
 from
     dex_tx_volume_count_record_hash dtvcr
