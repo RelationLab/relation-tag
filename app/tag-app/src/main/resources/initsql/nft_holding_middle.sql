@@ -15,8 +15,7 @@ CREATE TABLE public.nft_holding_middle (
                                     total_transfer_all_count int8 NULL,
                                     updated_block_height int8 NOT NULL,
                                     created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                                    updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                                    removed bool NULL DEFAULT false
+                                    updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) distributed by (address,"token");
 truncate table nft_holding_middle;
 vacuum nft_holding_middle;
