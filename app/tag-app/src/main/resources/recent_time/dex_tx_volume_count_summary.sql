@@ -18,7 +18,7 @@ select th.address,
        sum(total_transfer_count)                    as total_transfer_count,
        min(first_updated_block_height)              as first_updated_block_height,
        recent_time.recent_time_code                 as recent_time_code
-from token_holding_uni_cal th
+from token_holding_uni_filterate th
          inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
                     on
                         (th.block_height >= recent_time.block_height)
@@ -47,7 +47,7 @@ select th.address,
        sum(total_transfer_count)                    as total_transfer_count,
        min(first_updated_block_height)              as first_updated_block_height,
        recent_time.recent_time_code                 as recent_time_code
-from token_holding_uni_cal th
+from token_holding_uni_filterate th
          inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
                     on
                         (th.block_height >= recent_time.block_height)

@@ -27,7 +27,8 @@ into
                                 total_transfer_volume_usd,
                                 total_transfer_count,
                                 first_updated_block_height,
-                                triggered_flag)
+                                triggered_flag,
+                                transaction_hash)
 select
     dtvcr.address,
     token,
@@ -37,7 +38,8 @@ select
     max(round(total_transfer_volume * round(cast (w.price as numeric), 18),8) ) as total_transfer_volume_usd,
     sum(1) total_transfer_count,
     min(first_updated_block_height) first_updated_block_height,
-    max(triggered_flag) as triggered_flag
+    max(triggered_flag) as triggered_flag,
+    transaction_hash
 from
     dex_tx_volume_count_record  dtvcr
         inner join (
