@@ -36,11 +36,11 @@ from
             tx_type!='ETH_INTERNAL'
         group by
             to_address) atb
-        left join (select * from  recent_time where recent_time.recent_time_code='7d' ) recent_time on
+        left join (select * from  recent_time where recent_time.recent_time_code='${recent_time_code}' ) recent_time on
         (atb.block_height >= recent_time.block_height)
 where address !=''
 group by
     address,
     recent_time.recent_time_code;
-insert into tag_result(table_name,batch_date)  SELECT 'eth_tx_record_from_to_7d' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'eth_tx_record_from_to_${recent_time_code}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 

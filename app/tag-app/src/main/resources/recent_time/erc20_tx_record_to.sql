@@ -21,12 +21,12 @@ from
         from
             recent_time
         where
-                recent_time.recent_time_code = '15d' ) recent_time on
+                recent_time.recent_time_code = '${recent_time_code}' ) recent_time on
         (erc20_tx_record.block_number >= recent_time.block_height)
 group by
     to_address,
     token,
     recent_time_code;
 
-insert into tag_result(table_name,batch_date)  SELECT 'erc20_tx_record_to_15d' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'erc20_tx_record_to_${recent_time_code}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
