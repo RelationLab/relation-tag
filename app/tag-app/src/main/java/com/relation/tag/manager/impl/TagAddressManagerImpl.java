@@ -196,7 +196,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         String dir = INIT_PATH;
         execSql("dim_rule_content", "white_list_erc20.sql", batchDate, dir, null);
         execSql("white_list_erc20", "nft_holding_middle.sql", batchDate, dir, null);
-        execSql("nft_holding_middle", "nft_holding.sql", batchDate, dir, null);
+        execSql("nft_holding_middle", "nft_holding_record.sql", batchDate, dir, null);
         execSql("nft_holding", "nft_buy_sell_holding_middle.sql", batchDate, dir, null);
         execSql("nft_buy_sell_holding_middle", "nft_buy_sell_holding.sql", batchDate, dir, null);
         execSql("nft_buy_sell_holding", "platform_nft_holding_middle.sql", batchDate, dir, null);

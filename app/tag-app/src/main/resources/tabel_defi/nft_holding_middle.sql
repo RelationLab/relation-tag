@@ -1,5 +1,5 @@
-drop table if exists nft_holding;
-CREATE TABLE public.nft_holding
+drop table if exists nft_holding_middle;
+CREATE TABLE public.nft_holding_middle
 (
     address                    varchar(512) NOT NULL,
     "token"                    varchar(512) NOT NULL,
@@ -17,12 +17,9 @@ CREATE TABLE public.nft_holding
     updated_block_height       int8         NOT NULL,
     recent_time_code           varchar(30) NULL,
     created_at                 timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at                 timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-) distributed by (address, token);
-CREATE INDEX idx_nbv_updatedblockheight ON public.nft_holding USING btree (updated_block_height DESC);
-CREATE INDEX nft_activity_balance_volume_address_gin_trgm ON public.nft_holding USING btree (address);
-CREATE INDEX nft_activity_balance_volume_token_gin_trgm ON public.nft_holding USING btree (token);
-truncate table nft_holding;
-vacuum nft_holding;
+    updated_at                 timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) distributed by (address,"token");
+truncate table nft_holding_middle;
+vacuum nft_holding_middle;
 insert into tag_result(table_name, batch_date)
-SELECT 'nft_holding' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
+SELECT 'nft_holding_middle' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
