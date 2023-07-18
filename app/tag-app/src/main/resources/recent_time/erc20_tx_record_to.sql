@@ -15,7 +15,7 @@ select
     recent_time_code
 from
     erc20_tx_record
-        left join (
+        inner join (
         select
             *
         from

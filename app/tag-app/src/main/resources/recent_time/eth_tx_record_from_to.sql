@@ -36,7 +36,7 @@ from
             tx_type!='ETH_INTERNAL'
         group by
             to_address) atb
-        left join (select * from  recent_time where recent_time.recent_time_code='${recent_time_code}' ) recent_time on
+        inner join (select * from  recent_time where recent_time.recent_time_code='${recent_time_code}' ) recent_time on
         (atb.block_height >= recent_time.block_height)
 where address !=''
 group by

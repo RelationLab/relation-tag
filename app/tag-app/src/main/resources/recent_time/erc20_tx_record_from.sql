@@ -16,7 +16,7 @@ select
         end ) total_transfer_count,
     recent_time_code
 from erc20_tx_record erc20_tx_record
-         left join (select * from  recent_time where recent_time.recent_time_code='${recent_time_code}' ) recent_time on
+         inner join (select * from  recent_time where recent_time.recent_time_code='${recent_time_code}' ) recent_time on
     (erc20_tx_record.block_number >= recent_time.block_height)
 where sender = from_address
 group by
