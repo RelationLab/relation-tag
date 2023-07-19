@@ -72,7 +72,7 @@ public class StaticManagerImpl implements StaticManager {
         }
         try {
             Integer tagInteger = checkResultData(tableName, tableSuffix, batchDate);
-            log.info("tableName==={},tagList.size===={}", tableName, tagInteger);
+//            log.info("tableName==={},tagList.size===={}", tableName, tagInteger);
             return tagInteger != null && tagInteger.intValue() >= result;
         } catch (Exception ex) {
             return false;
@@ -88,7 +88,7 @@ public class StaticManagerImpl implements StaticManager {
             try {
                 Integer tagInteger = checkResultData(tableName, tableSuffix, batchDate);
                 if (tagInteger != null && tagInteger.intValue() >= resultNum) {
-                    log.info("check table ===={} end.......tagList.size===={}", tableName, tagInteger);
+//                    log.info("check table ===={} end.......tagList.size===={}", tableName, tagInteger);
                     break;
                 }
             } catch (Exception ex) {
