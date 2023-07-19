@@ -332,7 +332,7 @@ select distinct
     '' activity,
     '' hold_time,
     now() created_at,
-    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_RANK_'||level_def.level  label_name,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||  '_BALANCE_RANK_'||level_def.level  label_name,
     lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'token' asset_type,
     'RANK' label_category
@@ -1351,7 +1351,7 @@ select distinct
         '' activity,
         '' hold_time,
         now() created_at,
-        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK'|| level_def.level label_name,
+        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_BALANCE_RANK_'|| level_def.level label_name,
         t.symbol||' '||level_def.level_name   "content",
         'token' asset_type,
         'RANK' label_category
