@@ -39,6 +39,7 @@ from (
                          from
                              web3_transaction_record_summary tbvu where
                              project in(select project from dim_project_type)
+                                                                    and recent_time_code='ALL'
                              and tbvu.type='NFT Recipient'  and tbvu.address not in (select address from exclude_address) and  balance >=1
                          group by
                              project)
@@ -86,6 +87,7 @@ from
                                 from
                                     dex_tx_volume_count_summary  where total_transfer_volume_usd >=100
                                     and address not in (select address from exclude_address)
+                                                                   and recent_time_code='ALL'
                                 ) tbvu
                         group by
                             project)
@@ -130,7 +132,7 @@ FROM
                             platform_group as token
                         FROM
                             platform_nft_volume_usd tbvu
-                         where volume_usd >=100
+                         where volume_usd >=100 and recent_time_code='ALL'
                            and tbvu.address not in (select address from exclude_address)
                         GROUP BY
                             platform_group)
@@ -181,7 +183,7 @@ from
                                         end as project,
                                     total_transfer_count
                                 from
-                                    dex_tx_volume_count_summary)
+                                    dex_tx_volume_count_summary where  recent_time_code='ALL')
                                 tbvu
                         where
                                 tbvu.address not in (
@@ -234,7 +236,7 @@ FROM
                         FROM
                             platform_nft_type_volume_count tbvu
                         where   tbvu.address not in (select address from exclude_address)
-                        and transfer_count>0
+                        and transfer_count>0 and recent_time_code='ALL'
                         GROUP BY
                             platform_group)
                         rowtable ) s1
@@ -270,6 +272,7 @@ from (
                          from
                              web3_transaction_record_summary tbvu where
                                  project in(select project from dim_project_type)
+                                                                    and recent_time_code='ALL'
                                 and  tbvu.address not in (select address from exclude_address)
                          group by
                              project)

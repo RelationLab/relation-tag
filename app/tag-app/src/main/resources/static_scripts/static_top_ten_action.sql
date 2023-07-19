@@ -40,6 +40,7 @@ from (
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                         where total_transfer_volume_usd>0
                           and  tbvu.address not in (select address from exclude_address)
+                          and recent_time_code='ALL'
                         group by
                             type)
                         rowtable ) s1
@@ -82,7 +83,7 @@ FROM
                         FROM
                             nft_volume_count tbvu
                           inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
-                        where transfer_volume>0
+                        where transfer_volume>0  and recent_time_code='ALL'
                           and  tbvu.address not in (select address from exclude_address)
                         GROUP BY
                             type)
@@ -122,7 +123,8 @@ from (
                              type,project
                          from
                              web3_transaction_record_summary tbvu  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
-                         where total_transfer_count>0 and  tbvu.address not in (select address from exclude_address)
+                         where total_transfer_count>0  and recent_time_code='ALL'
+                           and  tbvu.address not in (select address from exclude_address)
                          group by
                              type,project)
                          rowtable ) s1
@@ -194,6 +196,7 @@ from (
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                          where total_transfer_count>0
                            and  tbvu.address not in (select address from exclude_address)
+                           and recent_time_code='ALL'
                          group by
                              type)
                          rowtable ) s1
@@ -236,7 +239,7 @@ FROM
                         FROM
                             nft_volume_count tbvu
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
-                        where transfer_count>0
+                        where transfer_count>0  and recent_time_code='ALL'
                           and  tbvu.address not in (select address from exclude_address)
                         GROUP BY
                             type)

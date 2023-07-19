@@ -1,20 +1,4 @@
-DROP TABLE IF EXISTS public.web3_transaction_record_summary;
-CREATE TABLE  public.web3_transaction_record_summary
-(
-    address character varying(256) COLLATE pg_catalog."default" NOT NULL,
-    total_transfer_volume numeric(125,30) NOT NULL DEFAULT 0,
-    total_transfer_count bigint NOT NULL DEFAULT 0,
-    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    type character varying(50) COLLATE pg_catalog."default",
-    project character varying(100) COLLATE pg_catalog."default",
-    balance numeric(125,30) NOT NULL DEFAULT 0,
-    recent_time_code varchar(30) NULL
-);
-truncate table web3_transaction_record_summary;
-vacuum web3_transaction_record_summary;
-update web3_transaction_record_cdc set address = lower(address),token=lower(token) where type='write';
-    insert
+ insert
     into
         web3_transaction_record_summary(address,
                                         total_transfer_volume,
@@ -29,9 +13,14 @@ update web3_transaction_record_cdc set address = lower(address),token=lower(toke
         sum(total_transfer_count) as total_transfer_count ,
         type ,
         project,
-        sum(balance) as balance
+        sum(balance) as balance,
+        recent_time_code
     from
         web3_transaction_record
+            inner join (select *
+                                            from recent_time
+                                            where recent_time.recent_time_code = '${recent_time_code}') recent_time on
+            (web3_transaction_record.block_height >= recent_time.block_height)
     group by
         address,
         type ,
