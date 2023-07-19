@@ -36,6 +36,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
     public static String SCRIPTSPATH = "tagscripts";
     public static String DIM_PATH = "dim";
 
+    public static String  RECENT_TIME = "recent_time";
+
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList, String batchDate) {
         try {
             forkJoinPool.execute(() -> {
@@ -194,7 +196,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         String dir = INIT_PATH;
         execSql("dim_rule_content", "white_list_erc20.sql", batchDate, dir, null);
         execSql("white_list_erc20", "nft_holding_middle.sql", batchDate, dir, null);
-        execSql("nft_holding_middle", "nft_holding.sql", batchDate, dir, null);
+        execSql("nft_holding_middle", "nft_holding_record.sql", batchDate, dir, null);
         execSql("nft_holding", "nft_buy_sell_holding_middle.sql", batchDate, dir, null);
         execSql("nft_buy_sell_holding_middle", "nft_buy_sell_holding.sql", batchDate, dir, null);
         execSql("nft_buy_sell_holding", "platform_nft_holding_middle.sql", batchDate, dir, null);
@@ -203,7 +205,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("platform_nft_volume_usd", "nft_transfer_holding.sql", batchDate, dir, null);
         execSql("nft_transfer_holding", "nft_volume_count.sql", batchDate, dir, null);
         execSql("nft_volume_count", "platform_nft_type_volume_count.sql", batchDate, dir, null);
-        execSql("platform_nft_type_volume_count", "token_holding_uni_cal.sql", batchDate, dir, null);
+        execSql("platform_nft_type_volume_count", "token_holding_uni_filterate.sql", batchDate, dir, null);
         execSql("token_holding_uni_cal", "token_balance_volume_usd.sql", batchDate, dir, null);
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate, dir, null);
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql", batchDate, dir, null);
@@ -214,7 +216,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("dex_tx_volume_count_record_hash", "dex_tx_volume_count_summary.sql", batchDate, dir, null);
 //        Thread.sleep(3 * 60 * 1000);
         boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql", batchDate, dir, null);
-        execSql("eth_holding_vol_count", "erc20_tx_record_hash.sql", batchDate, dir, null);
+        execSql("eth_holding_vol_count", "erc20_tx_record_from.sql", batchDate, dir, null);
         if (!token_holding_vol_countcheck) {
             Thread.sleep(1 * 60 * 1000);
         }

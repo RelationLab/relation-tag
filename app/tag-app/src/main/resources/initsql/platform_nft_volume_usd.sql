@@ -12,14 +12,16 @@ create table platform_nft_volume_usd
     updated_at      timestamp default CURRENT_TIMESTAMP,
     removed         boolean   default false,
     buy_volume_usd  numeric(128, 30),
+    recent_time_code varchar(30)  null,
     sell_volume_usd numeric(128, 30)
 );
 truncate table platform_nft_volume_usd;
 vacuum platform_nft_volume_usd;
 
-insert into platform_nft_volume_usd(address, platform_group, platform, quote_token, token, volume_usd, buy_volume_usd,
+insert into platform_nft_volume_usd(recent_time_code,address, platform_group, platform, quote_token, token, volume_usd, buy_volume_usd,
                                     sell_volume_usd)
-    (select pnh.address,
+    (select pnh.recent_time_code,
+            pnh.address,
             platform_group,
             platform,
             quote_token,

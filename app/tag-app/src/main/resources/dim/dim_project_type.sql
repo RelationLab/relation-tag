@@ -380,9 +380,9 @@ into
 select distinct
     web3_platform.platform project,
     web3_action.trade_type "type",
-    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY' label_type,
+    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY' label_type,
     'T' operate_type,
-    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name seq_flag,
+    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) || 'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name seq_flag,
     'count' data_subject,
     web3_platform.platform_name token_name
 from
@@ -390,7 +390,8 @@ from
         inner join web3_platform on
         (web3_platform.platform = web3_action_platform.platform)
         inner join web3_action on
-        (web3_action.trade_type = web3_action_platform.trade_type);
+        (web3_action.trade_type = web3_action_platform.trade_type)
+        inner join recent_time on(1=1) ;
 insert
 into
     public."label" ("owner",
@@ -411,14 +412,14 @@ into
                        sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY'  as "type",
-    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY_' || level_def.level as "name",
+    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY'  as "type",
+    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY_' || level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    web3_platform.platform_name_alis||'  ' ||level_def.level_name "content",
+    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) || web3_platform.platform_name_alis||'  ' ||level_def.level_name "content",
     'SQL' rule_type,
-    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY' rule_group,
+    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -439,7 +440,7 @@ from
             level_def
         where
                 type = 'web3_count') level_def on
-        (1 = 1);
+        (1 = 1) inner join recent_time on(1=1);
 insert
 into
     public.combination (asset,
@@ -463,8 +464,8 @@ select distinct
     level_def.level  activity,
     '' hold_time,
     now() created_at,
-    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY_'|| level_def.level label_name,
-    web3_platform.platform_name_alis||'  ' ||level_def.level_name "content",
+    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY_'|| level_def.level label_name,
+    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||web3_platform.platform_name_alis||'  ' ||level_def.level_name "content",
     'web3' asset_type,
     'GRADE' label_category
 from web3_action_platform
@@ -479,5 +480,5 @@ from web3_action_platform
         level_def
     where
             type = 'web3_count') level_def on
-    (1 = 1);
+    (1 = 1) inner join recent_time on(1=1);
 insert into tag_result(table_name,batch_date)  SELECT 'dim_project_type' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
