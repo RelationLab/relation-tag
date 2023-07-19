@@ -66,7 +66,7 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
                   inner join dim_project_token_type a2
                              on a1.token = a2.token and a2.project =''  and (a2.type ='' OR a2.type ='ALL') and
                                 a2.data_subject = 'balance_grade' and a2.label_type like '%NFT%' AND  a2.label_type NOT  LIKE '%WEB3%'
-         where a1.token in (select token_id from dim_project_token_type_rank dpttr)
+         where a1.token in (select token_id from dim_project_token_type_rank dpttr) and a1.recent_time_code ='ALL'
          group by a1.address,
              a2.label_type,
             a2.token_name,
@@ -84,7 +84,7 @@ insert into public.address_label_nft_balance_grade(address,label_type,label_name
              inner join dim_project_token_type a2
          on a2.token = 'ALL' and a2.project ='' and (a2.type ='' OR a2.type ='ALL') and
              a2.data_subject = 'balance_grade' and a2.label_type like '%NFT%' AND  a2.label_type NOT  LIKE '%WEB3%'
-         where a1.token in (select token_id from dim_project_token_type_rank dpttr)
+         where a1.token in (select token_id from dim_project_token_type_rank dpttr) and a1.recent_time_code ='ALL'
          group by a1.address,
              a2.label_type,
             a2.token_name,
