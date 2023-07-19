@@ -64,7 +64,8 @@ select
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(total_transfer_volume) as volume
+            sum(total_transfer_volume) as volume,
+            recent_time_code
         from
             nft_transfer_holding a1
                 inner join dim_project_token_type a2
@@ -76,14 +77,15 @@ select
                                        a2.data_subject = 'volume_grade'
                                    and a2.label_type like '%NFT%'
                                    and a2.label_type not like '%WEB3%'
-                                   and (a2.project = ''
-                                   or a2.project = 'ALL')
+                                   and (a2.project = '' or a2.project = 'ALL' )
+                                   and  a1.recent_time_code = a2.recent_code
         group by
             a1.address,
             a2.label_type,
             a2.type,
             a2.project_name ,
-            a2.token_name
+            a2.token_name,
+            recent_time_code
         union all
         -- project(null)+nft（ALL）+type
         select
@@ -92,7 +94,8 @@ select
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(total_transfer_volume) as volume
+            sum(total_transfer_volume) as volume,
+            recent_time_code
         from
             nft_transfer_holding a1
                 inner join dim_project_token_type a2
@@ -104,15 +107,16 @@ select
                                        a2.data_subject = 'volume_grade'
                                    and a2.label_type like '%NFT%'
                                    and a2.label_type not like '%WEB3%'
-                                   and (a2.project = ''
-                                   or a2.project = 'ALL')
+                                   and (a2.project = '' or a2.project = 'ALL')
+                                   and  a1.recent_time_code = a2.recent_code
         where a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,
             a2.label_type,
             a2.type,
             a2.project_name ,
-            a2.token_name) t
+            a2.token_name,
+            recent_time_code) t
     where
         volume >= 1 and address not in (select address from exclude_address);
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_transfer_volume_grade' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

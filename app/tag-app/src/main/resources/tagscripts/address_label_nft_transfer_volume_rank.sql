@@ -68,7 +68,8 @@ from
             dptt.type as type,
             dptt.project_name as project_name,
             dptt.token_name as token_name,
-            zb_rate
+            zb_rate,
+            recent_time_code
         from
             (
                 select
@@ -77,7 +78,8 @@ from
                     t1.total_transfer_volume,
                     t1.count_sum,
                     t1.count_sum_total,
-                    t1.zb_rate
+                    t1.zb_rate,
+                    recent_time_code
                 from
                     (
                         select
@@ -86,7 +88,8 @@ from
                             a2.total_transfer_volume,
                             a2.count_sum,
                             a2.count_sum_total,
-                            cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
+                            cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate,
+                            recent_time_code
                         from
                             (
                                 select
@@ -94,30 +97,32 @@ from
                                     a1.seq_flag,
                                     a1.total_transfer_volume,
                                     a1.count_sum,
-                                    a10.count_sum_total
+                                    a10.count_sum_total,
+                                    a1.recent_time_code
                                 from
                                     (
                                         select
                                             a1.address,
                                             a1.seq_flag,
                                             a1.total_transfer_volume,
-                                            row_number() over(partition by seq_flag
-					order by
-						total_transfer_volume desc,
-						address asc) as count_sum
+                                            row_number() over(partition by a1.seq_flag,a1.recent_time_code
+					                        order by total_transfer_volume desc,address asc) as count_sum,
+                                            a1.recent_time_code
                                         from
                                             (
                                                 select
                                                     s1.address,
                                                     s2.seq_flag,
-                                                    sum(s1.total_transfer_volume) as total_transfer_volume
+                                                    sum(s1.total_transfer_volume) as total_transfer_volume,
+                                                    recent_time_code
                                                 from
                                                     (
                                                         -- project-token-type
                                                         select
                                                             address,
                                                             token,
-                                                            total_transfer_volume
+                                                            total_transfer_volume,
+                                                            recent_time_code
                                                         from
                                                             nft_transfer_holding
                                                         where
@@ -129,7 +134,8 @@ from
                                                         select
                                                             address,
                                                             'ALL' as token,
-                                                            total_transfer_volume
+                                                            total_transfer_volume,
+                                                            recent_time_code
                                                         from
                                                             nft_transfer_holding
                                                         where
@@ -146,22 +152,26 @@ from
                                                                            and s2.data_subject = 'volume_rank'
                                                                            and s2.label_type like '%NFT%'
                                                                            and s2.label_type not like '%WEB3%'
+                                                                           and  s1.recent_time_code = s2.recent_code
                                                 where
                                                         total_transfer_volume >= 1
                                                 group by
                                                     s1.address,
-                                                    s2.seq_flag) as a1) as a1
+                                                    s2.seq_flag,
+                                                    s1.recent_time_code) as a1) as a1
                                         inner join
                                     (
                                         select
-                                            count(distinct address) as count_sum_total ,
-                                            seq_flag
+                                            count(distinct address) as count_sum_total,
+                                            seq_flag,
+                                            recent_time_code
                                         from
                                             (
                                                 -- project-token-type
                                                 select
                                                     address,
-                                                    token
+                                                    token,
+                                                    recent_time_code
                                                 from
                                                     nft_transfer_holding
                                                 where
@@ -172,7 +182,8 @@ from
                                                 -- project(null)+nft（ALL）+type
                                                 select
                                                     address,
-                                                    'ALL' as token
+                                                    'ALL' as token,
+                                                    recent_time_code
                                                 from
                                                     nft_transfer_holding
                                                 where
@@ -190,10 +201,12 @@ from
                                                     and tb2.data_subject = 'volume_rank'
                                                     and tb2.label_type like '%NFT%'
                                                     and tb2.label_type not like '%WEB3%'
+                                                    and  totala.recent_time_code = tb2.recent_code
                                         group by
-                                            seq_flag) as a10
+                                            seq_flag,recent_time_code) as a10
                                     on
-                                            a10.seq_flag = a1.seq_flag) as a2) as t1
+                                            a10.seq_flag = a1.seq_flag
+                                            and a10.recent_time_code = a1.recent_time_code) as a2) as t1
             ) tb1
                 inner join dim_project_token_type dptt on
                 (dptt.seq_flag = tb1.seq_flag
@@ -205,7 +218,8 @@ from
                         or dptt.project = 'ALL')
                     and dptt.data_subject = 'volume_rank'
                     and dptt.label_type like '%NFT%'
-                    and dptt.label_type not like '%WEB3%')
+                    and dptt.label_type not like '%WEB3%'
+                    and  tb1.recent_time_code = dptt.recent_code)
         where
                 tb1.total_transfer_volume >= 1
           and zb_rate <= 0.1) t ;

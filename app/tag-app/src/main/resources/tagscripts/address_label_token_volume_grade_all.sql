@@ -67,30 +67,34 @@ from
     (
         select address,
                'ALL' as token ,
-               sum(volume_usd)  volume_usd from (
+               sum(volume_usd)  volume_usd,
+               recent_time_code from (
                                                     select
                                                         address,
                                                         'ALL' as token ,
-                                                        round(volume_usd,8) volume_usd
+                                                        round(volume_usd,8) volume_usd,
+                                                        recent_time_code
                                                     from
                                                         total_volume_usd tbvu where volume_usd>=100
                                                     union all
                                                     select
                                                         address,
                                                         'ALL' as token ,
-                                                        sum(round(total_transfer_volume_usd,8)) as volume_usd
+                                                        sum(round(total_transfer_volume_usd,8)) as volume_usd,
+                                                        recent_time_code
                                                     from
                                                         dex_tx_volume_count_summary_univ3 th
                                                     where
                                                             th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                                       and th.type='ALL' and th.total_transfer_volume_usd >=100  group by address
-                                                ) tout group by address
+                                                ) tout group by address,
+                                                                recent_time_code
     )
         a1
         inner join
     dim_rule_content a2
     on
-            a1.token = a2.token
+            a1.token = a2.token and  a1.recent_time_code = a2.recent_code
 where
         a1.volume_usd >= 100
   and a2.data_subject = 'volume_grade'

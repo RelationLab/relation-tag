@@ -40,16 +40,17 @@ from
             dptt.type as type,
             dptt.project_name as project_name,
             dptt.token_name as token_name,
-            rn
+            rn,
+            recent_time_code
         from
             (
                 select
                     a1.address,
                     seq_flag,
+                    recent_time_code,
                     type,
                     -- 分组字段很关键
-                    row_number() over( partition by seq_flag,
-			type
+                    row_number() over( partition by seq_flag,recent_time_code,type
 		order by
 			transfer_volume desc,
 			address asc) as rn
@@ -59,7 +60,8 @@ from
                             address,
                             seq_flag,
                             a2.type,
-                            sum(transfer_volume) as transfer_volume
+                            sum(transfer_volume) as transfer_volume,
+                            recent_time_code
                         from
                             (
                                 -- project(null)+nft+type(null)
@@ -67,7 +69,8 @@ from
                                     address,
                                     token,
                                     '' as type,
-                                    transfer_volume
+                                    transfer_volume,
+                                    recent_time_code
                                 from
                                     nft_volume_count
                                 where
@@ -79,7 +82,8 @@ from
                                     address,
                                     'ALL' as token,
                                     '' as type,
-                                    transfer_volume
+                                    transfer_volume,
+                                    recent_time_code
                                 from
                                     nft_volume_count
                                 where
@@ -92,7 +96,8 @@ from
                                     address,
                                     token,
                                     type,
-                                    transfer_volume
+                                    transfer_volume,
+                                    recent_time_code
                                 from
                                     nft_volume_count
                                 where
@@ -104,7 +109,8 @@ from
                                     address,
                                     token,
                                     'ALL' as type,
-                                    transfer_volume
+                                    transfer_volume,
+                                    recent_time_code
                                 from
                                     nft_volume_count
                                 where
@@ -117,7 +123,8 @@ from
                                     address,
                                     'ALL' as token,
                                     type,
-                                    transfer_volume
+                                    transfer_volume,
+                                    recent_time_code
                                 from
                                     nft_volume_count
                                 where
@@ -137,14 +144,15 @@ from
                         group by
                             address,
                             seq_flag,
-                            a2.type) a1
+                            a2.type,
+                            recent_time_code) a1
             ) s1 inner join dim_project_token_type dptt on(dptt.seq_flag = s1.seq_flag
                 and dptt.type = s1.type
                 and dptt.data_subject = 'volume_top'
                 and dptt.label_type like '%NFT%'
                 and dptt.label_type not like '%WEB3%'
                 and dptt.type != 'Transfer'
-                and dptt.project = '')
+                and dptt.project = '' and dptt.recent_code = s1.recent_time_code)
         where
                 s1.rn <= 100) t;
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_volume_top' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

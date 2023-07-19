@@ -76,17 +76,21 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(transfer_count) as sum_count
+            sum(transfer_count) as sum_count,
+            recent_time_code
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-            on a1.token=a2.token and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = 'count'
+            on a1.token=a2.token and a1.platform_group=a2.project
+                   and a1.type=a2.type and a2.data_subject = 'count'
+        and a1.recent_time_code =a2.recent_code
         where a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,
             a2.label_type,
             a2.type,
             a2.project_name ,
-            a2.token_name
+            a2.token_name,
+            recent_time_code
             -- project-token(ALL)-type
         union all
         select
@@ -95,17 +99,21 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(transfer_count) as sum_count
+            sum(transfer_count) as sum_count,
+            recent_time_code
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-        on a2.token='ALL' and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = 'count'
+        on a2.token='ALL' and a1.platform_group=a2.project
+               and a1.type=a2.type and a2.data_subject = 'count'
+            and a1.recent_time_code =a2.recent_code
         where a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,
             a2.label_type,
             a2.type,
             a2.project_name ,
-            a2.token_name
+            a2.token_name,
+            recent_time_code
         -- project(ALL)+token（ALL）+type
         union all
         select
@@ -114,7 +122,8 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(transfer_count) as sum_count
+            sum(transfer_count) as sum_count,
+            recent_time_code
         from
             platform_nft_type_volume_count a1
                 inner join dim_project_token_type a2
@@ -126,13 +135,15 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             and a2.data_subject = 'count'
             and a2.label_type like '%NFT%'
             and a2.label_type not like '%WEB3%'
+        and a1.recent_time_code =a2.recent_code
         where a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,
             a2.label_type,
             a2.type,
             a2.project_name ,
-            a2.token_name
+            a2.token_name,
+            recent_time_code
             -- project(ALL)+token+type
         union all
         select
@@ -141,7 +152,8 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(transfer_count) as sum_count
+            sum(transfer_count) as sum_count,
+            recent_time_code
         from
             platform_nft_type_volume_count a1
             inner join dim_project_token_type a2
@@ -153,13 +165,15 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             and a2.data_subject = 'count'
             and a2.label_type like '%NFT%'
             and a2.label_type not like '%WEB3%'
+            and a1.recent_time_code =a2.recent_code
         where a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,
             a2.label_type,
             a2.type,
             a2.project_name ,
-            a2.token_name
+            a2.token_name,
+            recent_time_code
     ) t where sum_count >= 1 and address not in (select address from exclude_address)
           and label_type not like '%_DEX_%' ;
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_project_type_count_grade' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

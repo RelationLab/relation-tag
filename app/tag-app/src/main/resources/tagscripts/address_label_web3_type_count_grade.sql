@@ -73,9 +73,10 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
         select
             a1.address,
             a2.label_type,
-    a2.type,
-    a2.token_name,
-            sum(total_transfer_count) as total_transfer_count
+            a2.type,
+            a2.token_name,
+            sum(total_transfer_count) as total_transfer_count,
+            recent_time_code
         from
             web3_transaction_record_summary a1
                 inner join dim_project_type a2
@@ -83,19 +84,22 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
                                        a1.project = a2.project
                                    and a1.type = a2.type
                                    and a2.data_subject = 'count'
+                                   and a1.recent_time_code = a2.recent_code
         group by
             a1.address,
             a2.label_type,
-    a2.type,
-    a2.token_name
+            a2.type,
+            a2.token_name,
+            recent_time_code
             -- project(ALL)-type
         union all
         select
             a1.address,
             a2.label_type,
-    a2.type,
-    a2.token_name,
-            sum(total_transfer_count) as total_transfer_count
+            a2.type,
+            a2.token_name,
+            sum(total_transfer_count) as total_transfer_count,
+            recent_time_code
         from
             web3_transaction_record_summary a1
                 inner join dim_project_type a2
@@ -103,19 +107,22 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
                                        a2.project = 'ALL'
                                    and a1.type = a2.type
                                    and a2.data_subject = 'count'
+                               and a1.recent_time_code = a2.recent_code
         group by
             a1.address,
             a2.label_type,
-    a2.type,
-    a2.token_name
+            a2.type,
+            a2.token_name,
+            recent_time_code
             -- project(ALL)-type(ALL)
         union all
         select
             a1.address,
             a2.label_type,
-    a2.type,
-    a2.token_name,
-            sum(total_transfer_count) as total_transfer_count
+            a2.type,
+            a2.token_name,
+            sum(total_transfer_count) as total_transfer_count,
+            recent_time_code
         from
             web3_transaction_record_summary a1
                 inner join dim_project_type a2
@@ -123,19 +130,22 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
                                        a2.project = 'ALL'
                                    and a2.type = 'ALL'
                                    and a2.data_subject = 'count'
+                                   and a1.recent_time_code = a2.recent_code
         group by
             a1.address,
             a2.label_type,
-    a2.type,
-    a2.token_name
+            a2.type,
+            a2.token_name,
+            recent_time_code
             -- project-type(ALL)
         union all
         select
             a1.address,
             a2.label_type,
-    a2.type,
-    a2.token_name,
-            sum(total_transfer_count) as total_transfer_count
+            a2.type,
+            a2.token_name,
+            sum(total_transfer_count) as total_transfer_count,
+            recent_time_code
         from
             web3_transaction_record_summary a1
                 inner join dim_project_type a2
@@ -143,11 +153,13 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
                                        a1.project = a2.project
                                    and a2.type = 'ALL'
                                    and a2.data_subject = 'count'
+                                   nd a1.recent_time_code = a2.recent_code
         group by
             a1.address,
             a2.label_type,
-    a2.type,
-    a2.token_name
+            a2.type,
+            a2.token_name,
+            recent_time_code
     ) t
     where
         total_transfer_count >= 1 and address not in (select address from exclude_address);

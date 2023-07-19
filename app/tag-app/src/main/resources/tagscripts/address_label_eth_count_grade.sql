@@ -73,14 +73,15 @@ insert into public.address_label_eth_count_grade(address,label_type,label_name,d
         select
             address,
             'eth' as token,
-            total_transfer_count
+            total_transfer_count,
+            recent_time_code
         from
             eth_holding_vol_count th1
     ) a1
         inner join
     dim_rule_content a2
     on
-            a1.token = a2.token
+            a1.token = a2.token and a1.recent_time_code = a2.recent_code
     where
         a1.total_transfer_count >= 1
   and a2.data_subject = 'count'

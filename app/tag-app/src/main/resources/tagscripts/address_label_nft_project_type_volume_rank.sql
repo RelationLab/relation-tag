@@ -55,7 +55,8 @@ from
             dptt.type as type,
             dptt.project_name as project_name,
             dptt.token_name as token_name,
-            zb_rate
+            zb_rate,
+            recent_time_code
         from
             (
                 select
@@ -66,7 +67,8 @@ from
                     t1.volume_usd,
                     t1.count_sum,
                     t1.count_sum_total,
-                    t1.zb_rate
+                    t1.zb_rate,
+                    recent_time_code
                 from
                     (
                         select
@@ -77,7 +79,8 @@ from
                             a2.volume_usd,
                             a2.count_sum,
                             a2.count_sum_total,
-                            cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
+                            cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate,
+                            recent_time_code
                         from
                             (
                                 select
@@ -87,7 +90,8 @@ from
                                     a1.type,
                                     a1.volume_usd,
                                     a1.count_sum,
-                                    a10.count_sum_total
+                                    a10.count_sum_total,
+                                    a1.recent_time_code
                                 from
                                     (
                                         select
@@ -96,12 +100,9 @@ from
                                             a1.type,
                                             seq_flag,
                                             a1.volume_usd,
-                                            row_number() over(partition by seq_flag,
-						a1.project,
-						a1.type
-					order by
-						volume_usd desc,
-						address asc) as count_sum
+                                            row_number() over(partition by seq_flag,a1.project,a1.type,recent_time_code
+					                        order by volume_usd desc,address asc) as count_sum,
+                                            recent_time_code
                                         from
                                             (
                                                 select
@@ -109,7 +110,8 @@ from
                                                     s2.seq_flag,
                                                     s1.platform_group as project,
                                                     s1.type,
-                                                    sum(volume_usd) as volume_usd
+                                                    sum(volume_usd) as volume_usd,
+                                                    recent_time_code
                                                 from
                                                     (
                                                         -- project-token-type
@@ -119,7 +121,8 @@ from
                                                             platform,
                                                             token,
                                                             type,
-                                                            volume_usd
+                                                            volume_usd,
+                                                            recent_time_code
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
@@ -133,7 +136,8 @@ from
                                                             platform,
                                                             'ALL' as token,
                                                             type,
-                                                            volume_usd
+                                                            volume_usd,
+                                                            recent_time_code
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
@@ -147,7 +151,8 @@ from
                                                             platform,
                                                             'ALL' as token,
                                                             type,
-                                                            volume_usd
+                                                            volume_usd,
+                                                            recent_time_code
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
@@ -161,7 +166,8 @@ from
                                                             platform,
                                                             token,
                                                             type,
-                                                            volume_usd
+                                                            volume_usd,
+                                                            recent_time_code
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
@@ -175,20 +181,23 @@ from
                                                                            and s1.platform_group = s2.project
                                                                            and s1.type = s2.type
                                                                            and s2.data_subject = 'volume_rank'
+                                                                           and s1.recent_time_code = s2.recent_code
                                                 where
                                                         volume_usd >= 100
                                                 group by
                                                     s1.address,
                                                     s1.type,
                                                     s1.platform_group,
-                                                    s2.seq_flag) as a1) as a1
+                                                    s2.seq_flag,
+                                                    recent_time_code) as a1) as a1
                                         inner join
                                     (
                                         select
                                             count(distinct address) as count_sum_total,
                                             platform_group,
                                             seq_flag,
-                                            type
+                                            type,
+                                            recent_time_code
                                         from
                                             (
                                                 select
@@ -196,7 +205,8 @@ from
                                                     totala.platform_group,
                                                     seq_flag,
                                                     tb2.type,
-                                                    sum(totala.volume_usd) as volume_usd
+                                                    sum(totala.volume_usd) as volume_usd,
+                                                    recent_time_code
                                                 from
                                                     (
                                                         -- project-token-type
@@ -205,7 +215,8 @@ from
                                                             platform_group,
                                                             token,
                                                             type,
-                                                            volume_usd
+                                                            volume_usd,
+                                                            recent_time_code
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
@@ -218,7 +229,8 @@ from
                                                             platform_group,
                                                             'ALL' as token,
                                                             type,
-                                                            volume_usd
+                                                            volume_usd,
+                                                            recent_time_code
                                                         from
                                                             platform_nft_type_volume_count
                                                         where
@@ -235,21 +247,24 @@ from
                                                     address,
                                                     platform_group,
                                                     seq_flag,
-                                                    tb2.type) pntvc
+                                                    tb2.type,
+                                                    recent_time_code) pntvc
                                         where
                                                 volume_usd >= 100
                                         group by
                                             platform_group,
                                             seq_flag,
-                                            type ) as a10 on
+                                            type,
+                                            recent_time_code ) as a10 on
                                                 a10.platform_group = a1.project
                                             and a10.seq_flag = a1.seq_flag
+                                            and a10.recent_time_code = a1.recent_time_code
                                             and a10.type = a1.type) as a2) as t1
             ) tb1 inner join dim_project_token_type dptt on(
                         dptt.project = tb1.project
                     and dptt."type" = tb1.type
                     and dptt.seq_flag = tb1.seq_flag
-                    and dptt.data_subject = 'volume_rank'
+                    and dptt.data_subject = 'volume_rank' and tb1.recent_time_code = dptt.recent_code
                 )
         where
                 tb1.volume_usd >= 100

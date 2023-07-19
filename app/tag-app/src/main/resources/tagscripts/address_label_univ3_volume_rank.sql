@@ -56,6 +56,7 @@ from
             t1.count_sum,
             t1.count_sum_total,
             t1.zb_rate
+            a1.recent_time_code
         from
             (
                 select
@@ -64,7 +65,8 @@ from
                     a2.volume_usd,
                     a2.count_sum,
                     a2.count_sum_total,
-                    cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
+                    cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate,
+                    recent_time_code
                 from
                     (
                         select
@@ -72,32 +74,37 @@ from
                             a1.token,
                             a1.volume_usd,
                             a1.count_sum,
-                            a10.count_sum_total
+                            a10.count_sum_total,
+                            a1.recent_time_code
                         from
                             (
                                 select
                                     a1.address,
                                     a1.token,
                                     a1.volume_usd,
-                                    row_number() over(partition by token
-				order by
-					volume_usd desc,
-					address asc) as count_sum
+                                    row_number() over(partition by token,recent_time_code
+				                    order by volume_usd desc,address asc) as count_sum,
+                                    recent_time_code
                                 from
                                     (
                                         select
                                             s1.token,
                                             s1.address,
-                                            sum(s1.volume_usd) as volume_usd
+                                            sum(s1.volume_usd) as volume_usd,
+                                            recent_time_code
                                         from
                                             (
                                                 select
                                                     dtvcs.token,
                                                     address,
-                                                    total_transfer_volume_usd as volume_usd
+                                                    total_transfer_volume_usd as volume_usd,
+                                                    recent_time_code
                                                 from
-                                                    dex_tx_volume_count_summary_univ3 dtvcs inner join dim_rule_content drc
-                                                                     on( dtvcs.token = drc.token and drc.data_subject = 'volume_rank')
+                                                    dex_tx_volume_count_summary_univ3 dtvcs
+                                                        inner join dim_rule_content drc
+                                                 on( dtvcs.token = drc.token
+                                                         and drc.data_subject = 'volume_rank'
+                                                     and  dtvcs.recent_time_code = drc.recent_code)
                                                 where
                                                         dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                                   and dtvcs.total_transfer_volume_usd >= 100 and address not in (select address from exclude_address)
@@ -119,10 +126,14 @@ from
                                     (
                                         select
                                             dtvcs.token,
-                                            address
+                                            address,
+                                            recent_time_code
                                         from
-                                            dex_tx_volume_count_summary_univ3 dtvcs inner join dim_rule_content drc
-                                                on( dtvcs.token = drc.token and drc.data_subject = 'volume_rank')
+                                            dex_tx_volume_count_summary_univ3 dtvcs
+                                                inner join dim_rule_content drc
+                                                on( dtvcs.token = drc.token
+                                                    and  dtvcs.recent_time_code = drc.recent_code
+                                                        and drc.data_subject = 'volume_rank')
 
                                         where
                                                 dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
@@ -130,15 +141,18 @@ from
                                           address not in (select address from exclude_address)
                                           ) tbvu2
                                 group by
-                                    token ) as a10
+                                    token,
+                                    recent_time_code ) as a10
                             on
-                                    a10.token = a1.token) as a2) as t1
+                                    a10.token = a1.token
+                                        and  a10.recent_time_code = a1.recent_time_code) as a2) as t1
     ) tb1
         inner join
     dim_rule_content tb2
     on
                 tb1.token = tb2.token
             and tb2.label_type  like 'Uniswap_v3%'
+                    and  tb1.recent_time_code = tb2.recent_code
 where
         tb1.volume_usd >= 100
   and tb2.data_subject = 'volume_rank'
