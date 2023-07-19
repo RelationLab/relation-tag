@@ -11,6 +11,7 @@ create table dim_project_type
     ,data_subject varchar(100)
     ,etl_update_time timestamp
     ,token_name   varchar(100)
+    ,recent_code varchar(30)
 );
 truncate table dim_project_type;
 vacuum dim_project_type;
@@ -376,7 +377,8 @@ into
                       operate_type,
                       seq_flag,
                       data_subject,
-                      token_name)
+                      token_name,
+                      recent_code)
 select distinct
     web3_platform.platform project,
     web3_action.trade_type "type",
@@ -384,7 +386,8 @@ select distinct
     'T' operate_type,
     recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) || 'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name seq_flag,
     'count' data_subject,
-    web3_platform.platform_name token_name
+    web3_platform.platform_name token_name,
+    recent_code
 from
     web3_action_platform
         inner join web3_platform on
