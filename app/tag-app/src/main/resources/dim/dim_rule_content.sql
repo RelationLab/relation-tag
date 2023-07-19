@@ -332,7 +332,7 @@ select distinct
         '' activity,
         '' hold_time,
         now() created_at,
-        lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'||  '_BALANCE_RANK_'||level_def.level  label_name,
+        lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_BALANCE_RANK_'||level_def.level  label_name,
         lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
         'token' asset_type,
         'RANK' label_category
@@ -557,7 +557,7 @@ into
 
 select distinct
     lpt.pool as token,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY' as label_type,
     'T' as operate_type,
     'count' data_subject,
     lpt.symbol_wired token_name,
@@ -587,7 +587,6 @@ from
      where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
-        inner join recent_time on(1=1)
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
@@ -609,14 +608,14 @@ into
                     sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY' as "type",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
+    lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -651,7 +650,6 @@ from
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name)
-        inner join recent_time on(1=1)
         inner join (
         select
             *
@@ -683,8 +681,8 @@ select distinct
         level_def.level activity,
         '' hold_time,
         now() created_at,
-        recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY_'||level_def.level  label_name,
-        recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
+        lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_ACTIVITY_'||level_def.level  label_name,
+        lpt.factory_content||' '||symbol_wired||' '||level_def.level_name  "content",
         'token' asset_type,
         'GRADE' label_category
 from
@@ -713,7 +711,6 @@ from
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
         inner join platform_detail on(lpt.factory_type=platform_detail.platform_name)
-        inner join recent_time on(1=1)
         inner join (
         select
             *
@@ -734,7 +731,7 @@ into
 
 select distinct
     lpt.pool as token,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE' as label_type,
     'T' as operate_type,
     'volume_grade' data_subject,
     lpt.symbol_wired token_name,
@@ -764,7 +761,7 @@ from
      where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
-        inner join platform_detail on(lpt.factory_type=platform_detail.platform_name) inner join recent_time on(1=1) ;
+        inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
     public."label" ("owner",
@@ -785,14 +782,14 @@ into
                     sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE' as "type",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name  "content",
+    lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name  "content",
     'SQL' rule_type,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -834,7 +831,7 @@ from
             level_def
         where
                 type = 'defi_volume_grade') level_def on
-        (1 = 1) inner join recent_time on(1=1);
+        (1 = 1);
 insert
 into
     public.combination (asset,
@@ -858,8 +855,8 @@ select distinct
         '' activity,
         '' hold_time,
         now() created_at,
-        recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE_'||level_def.level label_name,
-        recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name   "content",
+        lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_GRADE_'||level_def.level label_name,
+        lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name   "content",
         'token' asset_type,
         'GRADE' label_category
 from
@@ -895,7 +892,7 @@ from
             level_def
         where
                 type = 'defi_volume_grade') level_def on
-        (1 = 1) inner join recent_time on(1=1);
+        (1 = 1);
 
 -----volume_rank  Uniswap_v3_UNI/WETH_0x1d42_VOLUME_RANK
 insert
@@ -908,7 +905,7 @@ into
 
 select distinct
     lpt.pool as token,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK' as label_type,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK' as label_type,
     'T' as operate_type,
     'volume_rank' data_subject,
     lpt.symbol_wired token_name,
@@ -938,7 +935,7 @@ from
      where wlp.tvl > 1000000
        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
-        inner join platform_detail on(lpt.factory_type=platform_detail.platform_name) inner join recent_time on(1=1);
+        inner join platform_detail on(lpt.factory_type=platform_detail.platform_name);
 insert
 into
     public."label" ("owner",
@@ -959,14 +956,14 @@ into
                     sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK' as "type",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK_'||level_def.level as "name",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK' as "type",
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK_'||level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name  "content",
+    lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name  "content",
     'SQL' rule_type,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK' rule_group,
+    lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1008,7 +1005,7 @@ from
             level_def
         where
                 type = 'token_volume_rank') level_def on
-        (1 = 1) inner join recent_time on(1=1) ;
+        (1 = 1);
 insert
 into
     public.combination (asset,
@@ -1032,8 +1029,8 @@ select distinct
         '' activity,
         '' hold_time,
         now() created_at,
-        recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK_'||level_def.level  label_name,
-        recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name   "content",
+        lpt.factory_type || '_' || (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')'|| '_VOLUME_RANK_'||level_def.level  label_name,
+        lpt.factory_content||' '||symbol_wired|| ' ' || (case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end )||level_def.level_name   "content",
         'token' asset_type,
         'RANK' label_category
 from
@@ -1069,7 +1066,7 @@ from
             level_def
         where
                 type = 'token_volume_rank') level_def on
-        (1 = 1) inner join recent_time on(1=1);
+        (1 = 1);
 
 ----------------------------------------dim_token.sql------------------------------------------
 --------------balance_grade  ALL_DAI(0x6b1754)_ALL_BALANCE_GRADE
@@ -1650,13 +1647,13 @@ into
                      token_type)
 select distinct 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as rule_code,
                 t.address as token,
-                recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as label_type,
+                'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as label_type,
                 'T' operate_type,
                 'count' data_subject,
                 now() as create_time,
                 t.symbol as token_name,
                 'token' as token_type
-from (select * from top_token_1000 where holders>=100 and removed<>'true') t inner join recent_time on(1=1);
+from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 insert
 into
@@ -1678,14 +1675,14 @@ into
                     sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as "type",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY_'|| level_def.level as "name",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' as "type",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||t.symbol||' '||level_def.level_name  "content",
+    t.symbol||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' rule_group,
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1702,7 +1699,7 @@ from
             level_def
         where
                 type = 'defi_count') level_def on
-        (1 = 1) inner join recent_time on(1=1)
+        (1 = 1)
 where holders>=100 and removed<>'true' ;
 insert
 into
@@ -1727,8 +1724,8 @@ select distinct
         level_def.level activity,
         '' hold_time,
         now() created_at,
-        recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY_'|| level_def.level label_name,
-        recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||t.symbol||' '||level_def.level_name   "content",
+        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_ACTIVITY_'|| level_def.level label_name,
+        t.symbol||' '||level_def.level_name   "content",
         'token' asset_type,
         'GRADE' label_category
 from
@@ -1740,7 +1737,7 @@ from
             level_def
         where
                 type = 'defi_count') level_def on
-        (1 = 1) inner join recent_time on(1=1)
+        (1 = 1)
 where holders>=100 and removed<>'true' ;
 
 --------count ALL_ALL_ALL_ACTIVITY
@@ -1754,12 +1751,10 @@ into
     token_name,token_type)
 select distinct
     'ALL' "token",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY' label_type,
+    'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY' label_type,
     'T' operate_type,
     'count' data_subject,
-    'ALL' token_name,'token' as token_type
-from   recent_time ;
-
+    'ALL' token_name,'token' as token_type;
 insert
 into
     public."label" ("owner",
@@ -1780,14 +1775,14 @@ into
                     sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY'  as "type",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY_'|| level_def.level as "name",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY'  as "type",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||'Token '||level_def.level_name  "content",
+    'Token '||level_def.level_name  "content",
     'SQL' rule_type,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL' ||  '_ACTIVITY'  rule_group,
+    'ALL' ||  '_ACTIVITY'  rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -1795,7 +1790,7 @@ select distinct
     'DEFI' wired_type,
     999 label_order,
     'WAITING' sync_es_status
-from level_def inner join recent_time on(1=1) where type = 'defi_count' ;
+from level_def where type = 'defi_count' ;
 insert
 into
     public.combination (asset,
@@ -1819,11 +1814,11 @@ select distinct
     level_def.level activity,
     '' hold_time,
     now() created_at,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY_' || level_def.level  label_name,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||'Token '||level_def.level_name  "content",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_ACTIVITY_' || level_def.level  label_name,
+    'Token '||level_def.level_name  "content",
     'token' asset_type,
     'GRADE' label_category
-from level_def inner join recent_time on(1=1) where type = 'defi_count' ;
+from level_def where type = 'defi_count' ;
 
 --------------time_grade DOP(0x6bb612)_HOLDING_TIME_GRADE
 insert
@@ -2050,13 +2045,13 @@ into
                      token_type)
 select distinct 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as rule_code,
                 t.address as token,
-                recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as label_type,
+                'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as label_type,
                 'T' operate_type,
                 'volume_grade' data_subject,
                 now() as create_time,
                 t.symbol as token_name,
                 'token' as token_type
-from (select * from top_token_1000 where holders>=100 and removed<>'true') t inner join recent_time on(1=1);
+from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 insert
 into
@@ -2078,14 +2073,14 @@ into
                     sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as "type",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE_'|| level_def.level as "name",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' as "type",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||t.symbol|| (case when level_def.level='Million' or level_def.level='Billion' then ' '||level_def.level else '' end)||' '||level_def.level_name  "content",
+    t.symbol|| (case when level_def.level='Million' or level_def.level='Billion' then ' '||level_def.level else '' end)||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' rule_group,
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -2102,7 +2097,7 @@ from
             level_def
         where
                 type = 'defi_volume_grade') level_def on
-        (1 = 1) inner join recent_time on(1=1)
+        (1 = 1)
 where holders>=100 and removed<>'true' ;
 insert
 into
@@ -2127,8 +2122,8 @@ select distinct
         '' activity,
         '' hold_time,
         now() created_at,
-        recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE_'|| level_def.level label_name,
-        recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||t.symbol|| (case when level_def.level='Million' or level_def.level='Billion' then ' '||level_def.level else '' end)||' '||level_def.level_name    "content",
+        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_GRADE_'|| level_def.level label_name,
+        t.symbol|| (case when level_def.level='Million' or level_def.level='Billion' then ' '||level_def.level else '' end)||' '||level_def.level_name    "content",
         'token' asset_type,
         'GRADE' label_category
 from
@@ -2140,7 +2135,7 @@ from
             level_def
         where
                 type = 'defi_volume_grade') level_def on
-        (1 = 1) inner join recent_time on(1=1)
+        (1 = 1)
 where holders>=100 and removed<>'true' ;
 
 --------volume_grade ALL_ALL_ALL_VOLUME_GRADE
@@ -2154,10 +2149,10 @@ into
     token_name,token_type)
 select
     distinct 'ALL' "token",
-             recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE' label_type,
+             'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE' label_type,
              'T' operate_type,
              'volume_grade' data_subject,
-             'ALL' token_name,'token' as token_type from  recent_time;
+             'ALL' token_name,'token' as token_type;
 insert
 into
     public."label" ("owner",
@@ -2178,14 +2173,14 @@ into
                     sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE'  as "type",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE_'|| level_def.level as "name",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE'  as "type",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||'Token '||(case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end)||level_def.level_name  "content",
+    'Token '||(case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end)||level_def.level_name  "content",
     'SQL' rule_type,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL' ||  '_VOLUME_GRADE'  rule_group,
+    'ALL' ||  '_VOLUME_GRADE'  rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -2193,8 +2188,7 @@ select distinct
     'DEFI' wired_type,
     999 label_order,
     'WAITING' sync_es_status
-from level_def  inner join recent_time on(1=1)
-where type = 'defi_volume_grade' ;
+from level_def where type = 'defi_volume_grade' ;
 insert
 into
     public.combination (asset,
@@ -2218,12 +2212,11 @@ select distinct
     '' activity,
     '' hold_time,
     now() created_at,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE_' || level_def.level  label_name,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||'Token '||(case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end)||level_def.level_name  "content",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_GRADE_' || level_def.level  label_name,
+    'Token '||(case when level_def.level='Million' or level_def.level='Billion' then level_def.level||' ' else '' end)||level_def.level_name  "content",
     'token' asset_type,
     'GRADE' label_category
-from level_def  inner join recent_time on(1=1)
-where type = 'defi_volume_grade' ;
+from level_def where type = 'defi_volume_grade' ;
 
 --------------volume_rank  ALL_DAI(0x6b1754)_ALL_VOLUME_RANK
 insert
@@ -2238,13 +2231,13 @@ into
                      token_type)
 select distinct 'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as rule_code,
                 t.address as token,
-                recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as label_type,
+                'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as label_type,
                 'T' operate_type,
                 'volume_rank' data_subject,
                 now() as create_time,
                 t.symbol as token_name,
                 'token' as token_type
-from (select * from top_token_1000 where holders>=100 and removed<>'true') t  inner join recent_time on(1=1)  ;
+from (select * from top_token_1000 where holders>=100 and removed<>'true') t;
 
 insert
 into
@@ -2266,14 +2259,14 @@ into
                     sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as "type",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK_'|| level_def.level as "name",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' as "type",
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||t.symbol||' '||level_def.level_name  "content",
+    t.symbol||' '||level_def.level_name  "content",
     'SQL' rule_type,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' rule_group,
+    'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK' rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -2290,7 +2283,7 @@ from
             level_def
         where
                 type = 'token_volume_rank') level_def on
-        (1 = 1)  inner join recent_time on(1=1)
+        (1 = 1)
 where holders>=100 and removed<>'true' ;
 insert
 into
@@ -2315,8 +2308,8 @@ select distinct
         '' activity,
         '' hold_time,
         now() created_at,
-        recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK_'|| level_def.level label_name,
-        recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||t.symbol||' '||level_def.level_name    "content",
+        'ALL_'||t.symbol||'('||SUBSTRING(t.address,1,8)||')'||'_ALL_VOLUME_RANK_'|| level_def.level label_name,
+        t.symbol||' '||level_def.level_name    "content",
         'token' asset_type,
         'RANK' label_category
 from
@@ -2328,7 +2321,7 @@ from
             level_def
         where
                 type = 'token_volume_rank') level_def on
-        (1 = 1)  inner join recent_time on(1=1)
+        (1 = 1)
 where holders>=100 and removed<>'true' ;
 
 
@@ -2343,10 +2336,10 @@ into
     token_name,token_type)
 select distinct
     'ALL' "token",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK' label_type,
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK' label_type,
     'T' operate_type,
     'volume_rank' data_subject,
-    'ALL' token_name,'token' as token_type from recent_time  ;
+    'ALL' token_name,'token' as token_type;
 insert
 into
     public."label" ("owner",
@@ -2367,14 +2360,14 @@ into
                     sync_es_status)
 select distinct
     'RelationTeam' "owner",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK'  as "type",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK_'|| level_def.level as "name",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK'  as "type",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK_'|| level_def.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||'Token '||level_def.level_name||' Trader' "content",
+    'Token '||level_def.level_name||' Trader' "content",
     'SQL' rule_type,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL' ||  '_VOLUME_RANK'  rule_group,
+    'ALL' ||  '_VOLUME_RANK'  rule_group,
     'RESULT' value_type,
     999999 run_order,
     now() created_at,
@@ -2382,7 +2375,7 @@ select distinct
     'DEFI' wired_type,
     999 label_order,
     'WAITING' sync_es_status
-from level_def  inner join recent_time on(1=1)  where type = 'defi_volume_rank' ;
+from level_def where type = 'defi_volume_rank' ;
 insert
 into
     public.combination (asset,
@@ -2406,11 +2399,11 @@ select distinct
     '' activity,
     '' hold_time,
     now() created_at,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK_' || level_def.level  label_name,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||'Token '||level_def.level_name||' Trader' "content",
+    'ALL_' ||'ALL_' ||'ALL' ||  '_VOLUME_RANK_' || level_def.level  label_name,
+    'Token '||level_def.level_name||' Trader' "content",
     'token' asset_type,
     'RANK' label_category
-from level_def   inner join recent_time on(1=1)  where type = 'defi_volume_rank' ;
+from level_def where type = 'defi_volume_rank' ;
 
 insert
 into
