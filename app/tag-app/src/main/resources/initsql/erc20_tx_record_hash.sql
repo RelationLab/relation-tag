@@ -39,7 +39,14 @@ select
     0 as total_transfer_to_volume,
     sum(amount) total_transfer_all_volume
 from
-    erc20_tx_record e20tr
+    erc20_tx_record e20tr where token in (
+	select
+		address
+	from
+		top_token_1000 tt
+	where
+		holders >= 100
+		and removed <> true)
 group by
     from_address,
     sender,
