@@ -167,7 +167,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("dms_syn_block", "snapshot_table.sql", batchDate, INIT_PATH, null);
         execSql("snapshot_table", "create_view.sql", batchDate, INIT_PATH, null);
         execSql("create_view", "mp_nft_platform.sql", batchDate, DIM_PATH, null);
-        execSql("mp_nft_platform", "level_def.sql", batchDate, DIM_PATH, null);
+        execSql("mp_nft_platform", "nft_action_platform.sql", batchDate, DIM_PATH, null);
+        execSql("nft_action_platform", "level_def.sql", batchDate, DIM_PATH, null);
         execSql("level_def", "platform.sql", batchDate, DIM_PATH, null);
         execSql("platform", "platform_detail.sql", batchDate, DIM_PATH, null);
         execSql("platform_detail", "nft_trade_type.sql", batchDate, DIM_PATH, null);

@@ -35,7 +35,7 @@ select
     '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
     pdwtr.quote_token as quote_token ,
     pdwtr."token" as "token" ,
-    pdwtr."type" as "type" ,
+    substring(pdwtr."type" , 1, 1)|| lower(substring(pdwtr."type" , 2, length(pdwtr."type" )-1))  as "type" ,
     sum(pdwtr.quote_value * w.price) as volume_usd ,
     count(1) as transfer_count
 from
@@ -64,7 +64,7 @@ select
     '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
     "token" as quote_token ,
     "token" ,
-    "type" ,
+    'Lend' as "type" ,
     sum(volume_usd) as volume_usd ,
     sum(transfer_count) as transfer_count
 from
@@ -103,7 +103,7 @@ select
     '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
     pltr.lend_token  as quote_token ,
     pltr.lend_token as "token" ,
-    pltr."type" as "type" ,
+    'Lend' as  as "type" ,
     sum(1) as volume_usd ,
     0 as transfer_count
 from
@@ -129,7 +129,7 @@ select
     '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
     "token" as quote_token ,
     "token" ,
-    "type" ,
+    'Bid' "type" ,
     sum(volume_usd) as volume_usd ,
     sum(transfer_count) as transfer_count
 from
@@ -169,7 +169,7 @@ select
     '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
     "token" as quote_token ,
     "token" ,
-    "type" ,
+    'Bid' "type" ,
     sum(volume_usd) as volume_usd ,
     sum(transfer_count) as transfer_count
 from

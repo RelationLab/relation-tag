@@ -725,6 +725,9 @@ from
         inner join mp_nft_platform on
         (mp_nft_platform.platform = nft_platform.platform)
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -778,7 +781,10 @@ from
         where
                 type = 'nft_count') level_def on
         (1 = 1)
-where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
+        INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
+ where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
     public.combination (asset,
@@ -822,8 +828,10 @@ from nft_sync_address
     where
             type = 'nft_count') level_def on
     (1 = 1)
-where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
-
+         INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+    and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+    and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
+    where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 --------count PROJECT(ALL)+token(ALL)
 -- ALL_ALL_ALL_MP_NFT_ACTIVITY
@@ -966,6 +974,9 @@ select distinct
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+         and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -1014,6 +1025,9 @@ from
         where
                 type = 'nft_count') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -1053,6 +1067,9 @@ from  nft_sync_address
     where
             type = 'nft_count') level_def on
     (1 = 1)
+          INNER JOIN nft_action_platform ON
+    (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 
@@ -1091,6 +1108,8 @@ select distinct
 from 	mp_nft_platform
     inner join nft_trade_type on
     (1 = 1)
+    INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+    and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
     nft_trade_type.type = '1' ;
 
@@ -1142,6 +1161,8 @@ from
         where
                 type = 'nft_count') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
         nft_trade_type.type = '1' ;
 
@@ -1184,6 +1205,8 @@ from
         where
                 type = 'nft_count') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
         nft_trade_type.type = '1' ;
 
@@ -1219,6 +1242,9 @@ from
         inner join mp_nft_platform on
         (mp_nft_platform.platform = nft_platform.platform)
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -1270,6 +1296,9 @@ from
         where
                 type = 'nft_volume_elite') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -1312,6 +1341,9 @@ from  nft_sync_address
     where
             type = 'nft_volume_elite') level_def on
     (1 = 1)
+    INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+    and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+    and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 --------volume_elite
@@ -1342,6 +1374,9 @@ select distinct
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -1389,6 +1424,9 @@ from
         where
                 type = 'nft_volume_elite') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -1428,6 +1466,9 @@ from  nft_sync_address
     where
             type = 'nft_volume_elite') level_def on
     (1 = 1)
+    INNER JOIN nft_action_platform ON
+    (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 
@@ -1466,6 +1507,8 @@ select distinct
 from 	mp_nft_platform
     inner join nft_trade_type on
     (1 = 1)
+    INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+    and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
     nft_trade_type.type = '1' ;
 
@@ -1517,6 +1560,8 @@ from
         where
                 type = 'nft_volume_elite') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
         nft_trade_type.type = '1' ;
 
@@ -1559,6 +1604,8 @@ from
         where
                 type = 'nft_volume_elite') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
         nft_trade_type.type = '1' ;
 
@@ -1708,6 +1755,9 @@ from
         inner join mp_nft_platform on
         (mp_nft_platform.platform = nft_platform.platform)
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -1760,6 +1810,9 @@ from
         where
                 type = 'nft_volume_grade') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -1803,6 +1856,9 @@ from  nft_sync_address
     where
             type = 'nft_volume_grade') level_def on
     (1 = 1)
+    INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+    and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+    and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 --------volume_grade
@@ -1833,6 +1889,9 @@ select distinct
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -1881,6 +1940,9 @@ from
         where
                 type = 'nft_volume_grade') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -1920,6 +1982,9 @@ from  nft_sync_address
     where
             type = 'nft_volume_grade') level_def on
     (1 = 1)
+          INNER JOIN nft_action_platform ON
+    (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 
@@ -1958,6 +2023,8 @@ select distinct
 from 	mp_nft_platform
     inner join nft_trade_type on
     (1 = 1)
+    INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+    and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
     nft_trade_type.type = '1' ;
 
@@ -2009,6 +2076,8 @@ from
         where
                 type = 'nft_volume_grade') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
         nft_trade_type.type = '1' ;
 
@@ -2051,6 +2120,8 @@ from
         where
                 type = 'nft_volume_grade') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
         nft_trade_type.type = '1' ;
 
@@ -2199,6 +2270,9 @@ from
         inner join mp_nft_platform on
         (mp_nft_platform.platform = nft_platform.platform)
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -2250,6 +2324,9 @@ from
         where
                 type = 'nft_volume_rank') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -2292,6 +2369,9 @@ from  nft_sync_address
     where
             type = 'nft_volume_rank') level_def on
     (1 = 1)
+          INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+    and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+    and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 --------volume_rank
@@ -2322,6 +2402,9 @@ select distinct
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -2369,6 +2452,9 @@ from
         where
                 type = 'nft_volume_rank') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -2407,6 +2493,9 @@ from  nft_sync_address
     where
             type = 'nft_volume_rank') level_def on
     (1 = 1)
+      INNER JOIN nft_action_platform ON
+    (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 --------volume_rank project+token(ALL)
@@ -2444,6 +2533,8 @@ select distinct
 from 	mp_nft_platform
     inner join nft_trade_type on
     (1 = 1)
+    INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+    and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
     nft_trade_type.type = '1' ;
 
@@ -2495,6 +2586,8 @@ from
         where
                 type = 'nft_volume_rank') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
         nft_trade_type.type = '1' ;
 
@@ -2537,6 +2630,8 @@ from
         where
                 type = 'nft_volume_rank') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
         nft_trade_type.type = '1' ;
 
@@ -2686,6 +2781,9 @@ from
         inner join mp_nft_platform on
         (mp_nft_platform.platform = nft_platform.platform)
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -2737,6 +2835,9 @@ from
         where
                 type = 'nft_volume_top') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -2779,6 +2880,9 @@ from nft_sync_address
     where
             type = 'nft_volume_top') level_def on
     (1 = 1)
+         INNER JOIN nft_action_platform ON (nft_platform.platform= nft_action_platform.platform
+    and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+    and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 --------volume_top
@@ -2809,6 +2913,9 @@ select distinct
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -2856,6 +2963,9 @@ from
         where
                 type = 'nft_volume_top') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 insert
 into
@@ -2894,6 +3004,9 @@ from nft_sync_address
     where
             type = 'nft_volume_top') level_def on
     (1 = 1)
+         INNER JOIN nft_action_platform ON
+    (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+        and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='1';
 
 
@@ -2932,6 +3045,8 @@ select distinct
 from 	mp_nft_platform
     inner join nft_trade_type on
     (1 = 1)
+    INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+    and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
     nft_trade_type.type = '1' ;
 
@@ -2983,6 +3098,8 @@ from
         where
                 type = 'nft_volume_top') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
         nft_trade_type.type = '1' ;
 
@@ -3025,6 +3142,8 @@ from
         where
                 type = 'nft_volume_top') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON (mp_nft_platform.platform= nft_action_platform.platform
+        and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type)
 where
         nft_trade_type.type = '1' ;
 
@@ -5274,6 +5393,9 @@ select distinct
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
@@ -5321,6 +5443,9 @@ from
         where
                 type = 'nft_count') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='0';
 insert
 into
@@ -5360,6 +5485,9 @@ from
         where
                 type = 'nft_count') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='0';
 
 
@@ -5836,6 +5964,9 @@ select distinct
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
@@ -5883,6 +6014,9 @@ from
         where
                 type = 'nft_volume_elite') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='0';
 insert
 into
@@ -5923,6 +6057,9 @@ from
         where
                 type = 'nft_volume_elite') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='0';
 
 
@@ -6069,6 +6206,9 @@ select distinct
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
@@ -6116,6 +6256,9 @@ from
         where
                 type = 'nft_volume_grade') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='0';
 insert
 into
@@ -6155,6 +6298,9 @@ from
         where
                 type = 'nft_volume_grade') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='0';
 
 
@@ -6301,6 +6447,9 @@ select distinct
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
@@ -6348,6 +6497,9 @@ from
         where
                 type = 'nft_volume_rank') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='0';
 insert
 into
@@ -6387,6 +6539,9 @@ from
         where
                 type = 'nft_volume_rank') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='0';
 
 --------volume_rank ALL_ALL_ALL_NFT_VOLUME_RANK
@@ -6532,6 +6687,9 @@ select distinct
 from
     nft_sync_address
         inner join nft_trade_type  on(1=1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155'  and  nft_trade_type.type='0';
 insert
 into
@@ -6579,6 +6737,9 @@ from
         where
                 type = 'nft_volume_top') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='0';
 insert
 into
@@ -6618,6 +6779,9 @@ from
         where
                 type = 'nft_volume_top') level_def on
         (1 = 1)
+        INNER JOIN nft_action_platform ON
+        (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
+            and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type<>'ERC1155' and nft_trade_type.type='0';
 
 --------volume_top ALL_ALL_ALL_NFT_VOLUME_TOP
