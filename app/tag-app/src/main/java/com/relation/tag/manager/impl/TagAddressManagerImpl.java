@@ -121,6 +121,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void refreshAllLabel(String batchDate) throws Exception {
+        execSql(null, "delete.sql", batchDate, INIT_PATH, null);
+        Thread.sleep(30 * 1000);
         String checkTable = "address_labels_json_gin_".concat(configEnvironment);
         if (!checkResult(checkTable, batchDate, 1, false)) {
             tag(batchDate);

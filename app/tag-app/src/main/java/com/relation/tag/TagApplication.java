@@ -21,6 +21,7 @@ public class TagApplication {
     public static void main(String[] args) throws Exception {
         ConfigurableApplicationContext ctx = SpringApplication.run(TagApplication.class, args);
         String configEnvironment = ctx.getEnvironment().getProperty("config.environment");
+        Thread.sleep(180*60*1000);
         String tagFlag = ctx.getEnvironment().getProperty("config.tag.flag");
         if (!StringUtils.equals(tagFlag,"tag")){
             return;
