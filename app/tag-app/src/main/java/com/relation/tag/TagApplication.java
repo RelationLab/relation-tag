@@ -35,6 +35,7 @@ public class TagApplication {
         String checkTable = "address_labels_json_gin_".concat(configEnvironment);
         if (tagAddressManager.checkResult(checkTable, batchDate, 1, false)){
             log.info("checkResult tag end...........");
+            return;
 //            System.exit(0);
         }
         new Thread(new Runnable() {
