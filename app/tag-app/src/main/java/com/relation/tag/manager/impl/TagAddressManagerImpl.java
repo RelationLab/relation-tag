@@ -169,7 +169,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("dms_syn_block", "snapshot_table.sql", batchDate, INIT_PATH, null);
         execSql("snapshot_table", "create_view.sql", batchDate, INIT_PATH, null);
         execSql("create_view", "mp_nft_platform.sql", batchDate, DIM_PATH, null);
-        execSql("mp_nft_platform", "level_def.sql", batchDate, DIM_PATH, null);
+        execSql("mp_nft_platform", "nft_action_platform.sql", batchDate, DIM_PATH, null);
+        execSql("nft_action_platform", "level_def.sql", batchDate, DIM_PATH, null);
         execSql("level_def", "platform.sql", batchDate, DIM_PATH, null);
         execSql("platform", "platform_detail.sql", batchDate, DIM_PATH, null);
         execSql("platform_detail", "nft_trade_type.sql", batchDate, DIM_PATH, null);
@@ -206,6 +207,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("nft_transfer_holding", "nft_volume_count.sql", batchDate, dir, null);
         execSql("nft_volume_count", "platform_nft_type_volume_count.sql", batchDate, dir, null);
         execSql("platform_nft_type_volume_count", "token_holding_uni_filterate.sql", batchDate, dir, null);
+        execSql("nft_transfer_holding", "platform_nft_type_volume_count.sql", batchDate, dir, null);
+        execSql("platform_nft_type_volume_count", "nft_volume_count.sql", batchDate, dir, null);
+        execSql("nft_volume_count", "token_holding_uni_cal.sql", batchDate, dir, null);
         execSql("token_holding_uni_cal", "token_balance_volume_usd.sql", batchDate, dir, null);
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate, dir, null);
         execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql", batchDate, dir, null);

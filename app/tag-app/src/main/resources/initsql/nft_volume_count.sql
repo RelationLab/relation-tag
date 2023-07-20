@@ -29,4 +29,12 @@ insert into nft_volume_count(address, token, type, transfer_volume, transfer_cou
 
 insert into nft_volume_count(address, token, type, transfer_volume, transfer_count,recent_time_code)
     select address, token , 'Transfer', total_transfer_volume, total_transfer_count,recent_time_code from nft_transfer_holding;
+
+insert into nft_volume_count(address, token, type, transfer_volume, transfer_count)
+select address, token , type, volume_usd, transfer_count from platform_nft_type_volume_count
+                                                         where type in('Lend','Bid','Deposit','Withdraw');
+
+
+insert into nft_volume_count(address, token, type, transfer_volume, transfer_count)
+    select address, token , 'Transfer', total_transfer_volume, total_transfer_count from nft_transfer_holding;
 insert into tag_result(table_name,batch_date)  SELECT 'nft_volume_count' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

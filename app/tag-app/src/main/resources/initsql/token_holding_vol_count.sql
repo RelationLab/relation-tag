@@ -1,3 +1,5 @@
+--
+-- ALTER TABLE public.token_holding_vol_count RENAME TO token_holding_vol_count_tmp;
 drop table if exists token_holding_vol_count;
 CREATE TABLE public.token_holding_vol_count (
                                                 address varchar(256) NULL,
