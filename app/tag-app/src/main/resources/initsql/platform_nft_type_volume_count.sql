@@ -17,15 +17,15 @@ truncate table platform_nft_type_volume_count;
 vacuum platform_nft_type_volume_count;
 
 insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
-    select pnvu.address, pnvu.platform_group, pnvu.platform, pnvu.quote_token, pnvu.token, 'Buy', pnvu.buy_volume_usd, pnh.total_transfer_to_count from
+select pnvu.address, pnvu.platform_group, pnvu.platform, pnvu.quote_token, pnvu.token, 'Buy', pnvu.buy_volume_usd, pnh.total_transfer_to_count from
     platform_nft_volume_usd pnvu inner join platform_nft_holding pnh on pnvu .address = pnh.address and pnvu."token" = pnh."token"
-    and pnvu.quote_token = pnh.quote_token and pnvu.platform_group = pnh.platform_group and pnvu.platform = pnh.platform;
+        and pnvu.quote_token = pnh.quote_token and pnvu.platform_group = pnh.platform_group and pnvu.platform = pnh.platform;
 
 
 insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
-    select pnvu.address, pnvu.platform_group, pnvu.platform, pnvu.quote_token, pnvu.token, 'Sale', pnvu.sell_volume_usd, pnh.total_transfer_count from
+select pnvu.address, pnvu.platform_group, pnvu.platform, pnvu.quote_token, pnvu.token, 'Sale', pnvu.sell_volume_usd, pnh.total_transfer_count from
     platform_nft_volume_usd pnvu inner join platform_nft_holding pnh on pnvu .address = pnh.address and pnvu."token" = pnh."token"
-    and pnvu.quote_token = pnh.quote_token and pnvu.platform_group = pnh.platform_group and pnvu.platform = pnh.platform;
+        and pnvu.quote_token = pnh.quote_token and pnvu.platform_group = pnh.platform_group and pnvu.platform = pnh.platform;
 
 ----------------增加blur的DEPOSIT和WITHDRAW
 insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
@@ -56,7 +56,6 @@ group by
     pdwtr."token" ,
     pdwtr."type";
 
-----------------增加blur的lend的from
 insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
 select
     address,
@@ -67,47 +66,186 @@ select
     'Lend' as "type" ,
     sum(volume_usd) as volume_usd ,
     sum(transfer_count) as transfer_count
-from
-    (
-        select
-            pltr.borrower as address,
-            pltr.lend_token as "token" ,
-            pltr."type" as "type" ,
-            sum(1) as volume_usd ,
-            1 as transfer_count
-        from
-            platform_lend_tx_record pltr inner join (
-                select
-                    address
-                from
-                    nft_sync_address nsa
-                where
-                        type = 'ERC721') nft_sync_address on
-                (pltr.lend_token = nft_sync_address.address)
-        group by
-            pltr.borrower ,
-            pltr.lend_token ,
-            pltr."type",
-            hash ) pltrout
+from (
+         ----------------增加blur的lend的from
+         select
+             address,
+             "token" as quote_token ,
+             "token" ,
+             sum(volume_usd) as volume_usd ,
+             sum(transfer_count) as transfer_count
+         from
+             (
+                 select
+                     pltr.borrower as address,
+                     pltr.lend_token as "token" ,
+                     pltr."type" as "type" ,
+                     sum(1) as volume_usd ,
+                     1 as transfer_count
+                 from
+                     platform_lend_tx_record pltr inner join (
+                         select
+                             address
+                         from
+                             nft_sync_address nsa
+                         where
+                                 type = 'ERC721') nft_sync_address on
+                         (pltr.lend_token = nft_sync_address.address)
+                 group by
+                     pltr.borrower ,
+                     pltr.lend_token ,
+                     pltr."type",
+                     hash ) pltrout
+         group by
+             pltrout.address ,
+             pltrout.token
+             ----------------增加blur的lend的to
+         union all
+         select
+             pltr.lender as address,
+             pltr.lend_token  as quote_token ,
+             pltr.lend_token as "token" ,
+             sum(1) as volume_usd ,
+             0 as transfer_count
+         from
+             platform_lend_tx_record pltr
+                 inner join (
+                 select
+                     address
+                 from
+                     nft_sync_address nsa
+                 where
+                         type = 'ERC721') nft_sync_address on
+                 (pltr.lend_token = nft_sync_address.address)
+         group by
+             pltr.lender ,
+             pltr.lend_token) lendt
 group by
-    pltrout.address ,
-    pltrout.token ,
-    pltrout."type";
+    lendt.address ,
+    lendt.token;
 
 
-----------------增加blur的lend的to
-insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
+
+
+insert
+into
+    platform_nft_type_volume_count(address,
+                                   platform_group,
+                                   platform,
+                                   quote_token,
+                                   token,
+                                   type,
+                                   volume_usd,
+                                   transfer_count)
 select
-    pltr.lender as address,
+    address,
     'Blur.io: Marketplace' as platform_group,
     '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
-    pltr.lend_token  as quote_token ,
-    pltr.lend_token as "token" ,
-    'Lend' as  as "type" ,
-    sum(1) as volume_usd ,
-    0 as transfer_count
+    "token" as quote_token ,
+    "token" ,
+    'Bid' "type" ,
+    sum(volume_usd) as volume_usd ,
+    sum(transfer_count) as transfer_count
 from
-    platform_lend_tx_record pltr
+    (
+        ----------------增加blur的bid的buyer(buyer不一定是from)
+        select
+            address,
+            "token" as quote_token ,
+            "token" ,
+            sum(volume_usd) as volume_usd ,
+            sum(transfer_count) as transfer_count
+        from
+            (
+                select
+                    pbtr.buyer as address,
+                    pbtr.nft_token as "token" ,
+                    'Bid' as "type" ,
+                    sum(1) as volume_usd ,
+                    case
+                        when type = 'ASK' then 1
+                        else 0
+                        end as transfer_count
+                from
+                    platform_bid_tx_record pbtr
+                        inner join (
+                        select
+                            address
+                        from
+                            nft_sync_address nsa
+                        where
+                                type = 'ERC721') nft_sync_address on
+                        (pbtr.nft_token = nft_sync_address.address)
+                group by
+                    pbtr.buyer ,
+                    pbtr.nft_token ,
+                    pbtr."type",
+                    hash ) pbtrout
+        group by
+            pbtrout.address ,
+            pbtrout.token
+        union all
+        ----------------增加blur的bid的seller(seller不一定是from)
+        select
+            address,
+            "token" as quote_token ,
+            "token" ,
+            sum(volume_usd) as volume_usd ,
+            sum(transfer_count) as transfer_count
+        from
+            (
+                select
+                    pbtr.seller as address,
+                    pbtr.nft_token as "token" ,
+                    'Bid' as "type" ,
+                    sum(1) as volume_usd ,
+                    case
+                        when type = 'BID' then 1
+                        else 0
+                        end as transfer_count
+                from
+                    platform_bid_tx_record pbtr
+                        inner join (
+                        select
+                            address
+                        from
+                            nft_sync_address nsa
+                        where
+                                type = 'ERC721') nft_sync_address on
+                        (pbtr.nft_token = nft_sync_address.address)
+                group by
+                    pbtr.seller ,
+                    pbtr.nft_token ,
+                    pbtr."type",
+                    hash ) pbtrout
+        group by
+            pbtrout.address ,
+            pbtrout.token) bidt
+group by
+    bidt.address ,
+    bidt.token;
+
+insert
+into
+    platform_nft_type_volume_count(address,
+                                   platform_group,
+                                   platform,
+                                   quote_token,
+                                   token,
+                                   type,
+                                   volume_usd,
+                                   transfer_count)
+select
+    pntvc.address,
+    pntvc.platform_group,
+    pntvc.platform,
+    pntvc.quote_token,
+    pntvc.token,
+    'ALL',
+    sum(pntvc.volume_usd) as volume_usd,
+    sum(pntvc.transfer_count) as transfer_count
+from
+    platform_nft_type_volume_count pntvc
         inner join (
         select
             address
@@ -115,130 +253,13 @@ from
             nft_sync_address nsa
         where
                 type = 'ERC721') nft_sync_address on
-        (pltr.lend_token = nft_sync_address.address)
-group by
-    pltr.lender ,
-    pltr.lend_token ,
-    pltr."type";
-
-----------------增加blur的bid的buyer(buyer不一定是from)
-insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
-select
-    address,
-    'Blur.io: Marketplace' as platform_group,
-    '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
-    "token" as quote_token ,
-    "token" ,
-    'Bid' "type" ,
-    sum(volume_usd) as volume_usd ,
-    sum(transfer_count) as transfer_count
-from
-    (
-        select
-            pbtr.buyer  as address,
-            pbtr.nft_token  as "token" ,
-            pbtr."type" as "type" ,
-            sum(1) as volume_usd ,
-            case  when type='ASK' then 1  else 0 end as transfer_count
-        from
-            platform_bid_tx_record pbtr
-                inner join (
-                select
-                    address
-                from
-                    nft_sync_address nsa
-                where
-                        type = 'ERC721') nft_sync_address on
-                (pbtr.nft_token = nft_sync_address.address)
-        group by
-            pbtr.buyer  ,
-            pbtr.nft_token  ,
-            pbtr."type",
-            hash ) pbtrout
-group by
-    pbtrout.address ,
-    pbtrout.token ,
-    pbtrout."type";
-
-
-----------------增加blur的bid的seller(seller不一定是from)
-insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
-select
-    address,
-    'Blur.io: Marketplace' as platform_group,
-    '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
-    "token" as quote_token ,
-    "token" ,
-    'Bid' "type" ,
-    sum(volume_usd) as volume_usd ,
-    sum(transfer_count) as transfer_count
-from
-    (
-        select
-            pbtr.seller  as address,
-            pbtr.nft_token  as "token" ,
-            pbtr."type" as "type" ,
-            sum(1) as volume_usd ,
-            case  when type='BID' then 1  else 0 end as transfer_count
-        from
-            platform_bid_tx_record pbtr
-                inner join (
-                select
-                    address
-                from
-                    nft_sync_address nsa
-                where
-                        type = 'ERC721') nft_sync_address on
-                (pbtr.nft_token = nft_sync_address.address)
-        group by
-            pbtr.seller  ,
-            pbtr.nft_token  ,
-            pbtr."type",
-            hash ) pbtrout
-group by
-    pbtrout.address ,
-    pbtrout.token ,
-    pbtrout."type";
-
-
-    insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
-    select
-        pntvc.address,
-        pntvc.platform_group,
-        pntvc.platform,
-        pntvc.quote_token,
-        pntvc.token,
-        'ALL',
-        sum(pntvc.volume_usd) as volume_usd,
-        sum(pntvc.transfer_count) as transfer_count
-    from platform_nft_type_volume_count pntvc
-             inner join (
-        select
-            address
-        from
-            nft_sync_address nsa
-        where
-                type = 'ERC721') nft_sync_address on
         (pntvc.token = nft_sync_address.address)
-    group by  pntvc.address,
-              pntvc.platform_group,
-              pntvc.platform,
-              pntvc.quote_token,
-              pntvc.token;
+group by
+    pntvc.address,
+    pntvc.platform_group,
+    pntvc.platform,
+    pntvc.quote_token,
+    pntvc.token;
 
-        platform_nft_holding pnh
-            inner join (
-            select
-                address
-            from
-                nft_sync_address nsa
-            where
-                    type = 'ERC721') nft_sync_address on
-            (pnh.token = nft_sync_address.address)
-            left join platform_nft_volume_usd pnvu on
-                    pnvu .address = pnh.address
-                and pnvu."token" = pnh."token"
-                and pnvu.quote_token = pnh.quote_token
-                and pnvu.platform_group = pnh.platform_group
-                and pnvu.platform = pnh.platform ;
+
 insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_type_volume_count' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
