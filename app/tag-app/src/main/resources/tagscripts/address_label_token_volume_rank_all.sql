@@ -55,7 +55,8 @@ from
             t1.volume_usd,
             t1.count_sum,
             t1.count_sum_total,
-            t1.zb_rate
+            t1.zb_rate,
+            recent_time_code
         from
             (
                 select
@@ -64,7 +65,8 @@ from
                     a2.volume_usd,
                     a2.count_sum,
                     a2.count_sum_total,
-                    cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
+                    cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate,
+                    recent_time_code
                 from
                     (
                         select
@@ -72,62 +74,68 @@ from
                             a1.token,
                             a1.volume_usd,
                             a1.count_sum,
-                            a10.count_sum_total
+                            a10.count_sum_total,
+                            a1.recent_time_code
                         from
                             (
                                 select
                                     a1.address,
                                     a1.token,
                                     a1.volume_usd,
-                                    row_number() over(partition by token
-				order by
-					volume_usd desc,
-					address asc) as count_sum
+                                    row_number() over(partition by token,recent_time_code
+				                    order by volume_usd desc,address asc) as count_sum
                                 from
                                     (
                                         select address,
                                                'ALL' as token ,
-                                               sum(volume_usd)  volume_usd from (
-                                                                                    select
-                                                                                        address,
-                                                                                        'ALL' as token ,
-                                                                                        volume_usd
-                                                                                    from
-                                                                                        total_volume_usd tbvu
-                                                                                    where volume_usd>=100
-                                                                                        and address not in (select address from exclude_address)
-                                                                                    union all
-                                                                                    select
-                                                                                        address,
-                                                                                        'ALL' as token ,
-                                                                                        sum(total_transfer_volume_usd) as volume_usd
-                                                                                    from
-                                                                                        dex_tx_volume_count_summary_univ3 th
-                                                                                    where
-                                                                                            th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
-                                                                                      and th.type='ALL' and th.total_transfer_volume_usd >=100
-                                                                                      and address not in (select address from exclude_address) group by address
-                                                                                ) tout group by address
+                                               sum(volume_usd)  volume_usd,
+                                               recent_time_code from (
+                                                                    select
+                                                                        address,
+                                                                        'ALL' as token ,
+                                                                        volume_usd,
+                                                                        recent_time_code
+                                                                    from
+                                                                        total_volume_usd tbvu
+                                                                    where volume_usd>=100
+                                                                        and address not in (select address from exclude_address)
+                                                                    union all
+                                                                    select
+                                                                        address,
+                                                                        'ALL' as token ,
+                                                                        sum(total_transfer_volume_usd) as volume_usd,
+                                                                        recent_time_code
+                                                                    from
+                                                                        dex_tx_volume_count_summary_univ3 th
+                                                                    where
+                                                                            th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
+                                                                      and th.type='ALL' and th.total_transfer_volume_usd >=100
+                                                                      and address not in (select address from exclude_address) group by address
+                                                                ) tout group by address,recent_time_code
                                     ) as a1) as a1
                                 inner join
                             (
                                 select
                                     count(distinct address) as count_sum_total,
-                                    token
+                                    token,
+                                    recent_time_code
                                 from
                                     (
                                         select
                                             token,
                                             address,
-                                            sum(volume_usd) as volume_usd
+                                            sum(volume_usd) as volume_usd,
+                                            recent_time_code
                                         from
                                             (select address,
                                                     'ALL' as token ,
-                                                    sum(volume_usd)  volume_usd from (
+                                                    sum(volume_usd)  volume_usd ,
+                                                    recent_time_code from (
                                                                                          select
                                                                                              address,
                                                                                              'ALL' as token ,
-                                                                                             volume_usd
+                                                                                             volume_usd,
+                                                                                             recent_time_code
                                                                                          from
                                                                                              total_volume_usd tbvu where volume_usd>=100
                                                                                              and address not in (select address from exclude_address)
@@ -135,28 +143,31 @@ from
                                                                                          select
                                                                                              address,
                                                                                              'ALL' as token ,
-                                                                                             sum(total_transfer_volume_usd) as volume_usd
+                                                                                             sum(total_transfer_volume_usd) as volume_usd,
+                                                                                             recent_time_code
                                                                                          from
                                                                                              dex_tx_volume_count_summary_univ3 th
                                                                                          where
                                                                                                  th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                                                                            and th.type='ALL' and th.total_transfer_volume_usd >=100
                                                                                            and address not in (select address from exclude_address) group by address
-                                                                                     ) tout group by address
+                                                                                     ) tout group by address,recent_time_code
                                             ) totala
                                         group by
                                             token,
-                                            address) tbvu
+                                            address,
+                                            recent_time_code) tbvu
                                 where
                                         volume_usd >= 100
                                 group by
-                                    token) as a10
+                                    token,
+                                    recent_time_code) as a10
                             on
-                                    a10.token = a1.token) as a2) as t1) tb1
+                                    a10.token = a1.token and   a10.recent_time_code = a1.recent_time_code) as a2) as t1) tb1
         inner join
     dim_rule_content tb2
     on
-            tb1.token = tb2.token
+            tb1.token = tb2.token and   tb1.recent_time_code = tb2.recent_code
 where
         tb1.volume_usd >= 100
   and tb2.data_subject = 'volume_rank'

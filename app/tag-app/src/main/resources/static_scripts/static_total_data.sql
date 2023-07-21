@@ -114,7 +114,7 @@ truncate table total_volume_usd_init${tableSuffix};
 insert into total_volume_usd_init${tableSuffix}(address,volume_usd)
 select aljg.address,volume_usd  from total_volume_usd aljg
     inner join address_init${tableSuffix} ais  on(aljg.address=ais.address)
-where volume_usd>=100 ;
+where volume_usd>=100  and recent_time_code='ALL';
 
 update
     static_total_data${tableSuffix}
@@ -165,23 +165,25 @@ select sum(activity_num) as activity_num,address from(
   select
      sum(total_transfer_count) as activity_num,aljg.address from  eth_holding_vol_count aljg
           inner join address_init${tableSuffix} ais  on(aljg.address=ais.address)
-    group by aljg.address
+  where recent_time_code='ALL'
+  group by aljg.address
   union all
  select
      sum(total_transfer_count) as activity_num,aljg.address from  token_holding_vol_count aljg
            inner join address_init${tableSuffix} ais  on(aljg.address=ais.address)
-        where token in(select token_id from dim_rank_token)
+        where token in(select token_id from dim_rank_token)  and recent_time_code='ALL'
     group by aljg.address
  union all
  select
      sum(total_transfer_count) as activity_num,aljg.address from  web3_transaction_record_summary aljg
         inner join address_init${tableSuffix} ais  on(aljg.address=ais.address)
+      where recent_time_code='ALL'
  group by aljg.address
  union all
  select
      sum(total_transfer_all_count) as activity_num,aljg.address from  nft_holding aljg
     inner join address_init${tableSuffix} ais  on(aljg.address=ais.address)
-  where  token in(select token_id from dim_project_token_type_rank)
+  where  token in(select token_id from dim_project_token_type_rank) and recent_time_code='ALL'
   group by aljg.address)
  out_t group by address;
 

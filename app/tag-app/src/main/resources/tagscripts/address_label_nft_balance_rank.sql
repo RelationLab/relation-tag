@@ -113,6 +113,7 @@ select
 							where
 								balance >= 1 and address not in (select address from exclude_address)
                                 and token in (select token_id from dim_project_token_type_rank dpttr)
+                                and recent_time_code ='ALL'
                             union all
 							-- project(null)-token(ALL)-type(null)
 							select
@@ -124,6 +125,7 @@ select
 							where
 								balance >= 1 and address not in (select address from exclude_address)
 							  and token in (select token_id from dim_project_token_type_rank dpttr)
+                              and recent_time_code ='ALL'
                             )
     s1
 						inner join dim_project_token_type s2
@@ -156,6 +158,7 @@ select
 						where
 							balance >= 1 and address not in (select address from exclude_address)
                           and token in (select token_id from dim_project_token_type_rank dpttr)
+                          and recent_time_code ='ALL'
                         union all
 						-- project(null)-token(ALL)-type(null)
 						select
@@ -167,6 +170,7 @@ select
 						where
 							balance >= 1 and address not in (select address from exclude_address)
 						  and token in (select token_id from dim_project_token_type_rank dpttr)
+                          and recent_time_code ='ALL'
                         ) totala
 					inner join dim_project_token_type tb2
     on

@@ -88,7 +88,7 @@ FROM
                             nft_holding tbvu
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                          where token in(select token_id from dim_project_token_type_rank) and   balance >=1
-                           and tbvu.address not in (select address from exclude_address)
+                           and tbvu.address not in (select address from exclude_address) and recent_time_code='ALL'
                         GROUP BY
                             token)
                         rowtable ) s1
@@ -133,7 +133,8 @@ from (
                                   where tbvu2.token='0x839e71613f9aa06e5701cf6de63e303616b0dde3'
                                     and address='0xf6e06de459057d3efa8f0ebd3656e06f66ea02da'
                                     and tbvu.token=tbvu2.token
-                                    and tbvu.address=tbvu2.address)
+                                    and tbvu.address=tbvu2.address  and tbvu2.recent_time_code='ALL')
+                           and tbvu.recent_time_code='ALL'
                            and  token not in (select token from exclude_token)
                            and volume_usd >=100
                            and tbvu.address not in (select address from exclude_address)
@@ -179,6 +180,7 @@ FROM
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                          where token in(select token_id from dim_project_token_type_rank)
                            and   transfer_volume >=1  and tbvu.address not in (select address from exclude_address)
+                           and recent_time_code='ALL'
                         GROUP BY
                             token)
                         rowtable ) s1
@@ -220,6 +222,7 @@ from (
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                          where
                                  token in(select token_id from dim_rank_token)
+                           and recent_time_code='ALL'
                                                              and not exists
                                  (select 1 from token_balance_volume_usd tbvu2
                                   where tbvu2.token='0x839e71613f9aa06e5701cf6de63e303616b0dde3'
@@ -271,7 +274,7 @@ FROM
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                         where token in(select token_id from dim_project_token_type_rank)
                           and tbvu.address not in (select address from exclude_address)
-                        and transfer_count >0
+                        and transfer_count >0  and recent_time_code='ALL'
                         GROUP BY
                             token)
                         rowtable ) s1

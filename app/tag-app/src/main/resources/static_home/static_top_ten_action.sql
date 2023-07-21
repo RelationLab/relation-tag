@@ -38,6 +38,7 @@ from (
                         from
                             dex_tx_volume_count_summary  tbvu where total_transfer_volume_usd>0
                             and  tbvu.address not in (select address from exclude_address)
+                                                                and recent_time_code='ALL'
                         group by
                             type)
                         rowtable ) s1
@@ -78,7 +79,7 @@ FROM
                             sum(transfer_volume) AS transfer_volume,
                             type as token
                         FROM
-                            nft_volume_count tbvu where transfer_volume>0
+                            nft_volume_count tbvu where transfer_volume>0 and recent_time_code='ALL'
                         and  tbvu.address not in (select address from exclude_address)
                         GROUP BY
                             type)
@@ -118,7 +119,7 @@ from (
                              sum(total_transfer_count) as total_transfer_count,
                              type,project
                          from
-                             web3_transaction_record_summary tbvu  where total_transfer_count>0
+                             web3_transaction_record_summary tbvu  where total_transfer_count>0 and recent_time_code='ALL'
                                                                      and  tbvu.address not in (select address from exclude_address)
                          group by
                              type,project)
@@ -155,6 +156,7 @@ from (
                          from
                              dex_tx_volume_count_summary  tbvu  where total_transfer_count>0
                             and  tbvu.address not in (select address from exclude_address)
+                                                                  and recent_time_code='ALL'
                          group by
                              type)
                          rowtable ) s1
@@ -195,7 +197,7 @@ FROM
                             sum(transfer_count) AS transfer_count,
                             type as token
                         FROM
-                            nft_volume_count tbvu  where transfer_count>0
+                            nft_volume_count tbvu  where transfer_count>0 and recent_time_code='ALL'
                          and  tbvu.address not in (select address from exclude_address)
                         GROUP BY
                             type)

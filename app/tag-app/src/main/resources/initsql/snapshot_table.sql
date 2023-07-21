@@ -1,32 +1,12 @@
 DROP TABLE if EXISTS public.nft_buy_sell_holding;
-DROP TABLE if EXISTS public.nft_holding;
 DROP TABLE if EXISTS public.token_holding;
 DROP TABLE if EXISTS public.eth_holding;
-DROP TABLE if EXISTS public.platform_nft_holding;
 DROP TABLE if EXISTS public.nft_holding_time;
 DROP TABLE if EXISTS public.eth_holding_time;
 DROP TABLE if EXISTS public.token_holding_time;
 DROP TABLE if EXISTS public.white_list_lp;
 DROP TABLE if EXISTS public.white_list_price;
 
-CREATE TABLE public.platform_nft_holding (
-                                             id bigserial NOT NULL,
-                                             address varchar(512) NOT NULL,
-                                             platform varchar(512) NOT NULL,
-                                             quote_token varchar(512) NOT NULL,
-                                             "token" varchar(512) NOT NULL,
-                                             total_transfer_volume numeric(128, 30) NULL,
-                                             total_transfer_count int8 NULL,
-                                             total_transfer_to_volume numeric(128, 30) NULL,
-                                             total_transfer_to_count int8 NULL,
-                                             total_transfer_all_volume numeric(128, 30) NULL,
-                                             total_transfer_all_count int8 NULL,
-                                             created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                                             updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                                             removed bool NULL DEFAULT false,
-                                             weth_token_flag varchar(1) NULL,
-                                             platform_group varchar(256) NULL
-);
 
 create table token_holding as select * from token_holding_cdc;
 create table eth_holding as select * from eth_holding_cdc;
@@ -34,7 +14,6 @@ create table eth_holding as select * from eth_holding_cdc;
 create table nft_holding_time as select * from nft_holding_time_cdc;
 create table eth_holding_time as select * from eth_holding_time_cdc;
 create table token_holding_time as select * from token_holding_time_cdc;
--- create table  white_list_lp as select * from white_list_lp_cdc;
 CREATE TABLE "public"."white_list_lp" (
   "id" int8 NOT NULL,
   "chain_id" int4,

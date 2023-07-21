@@ -117,7 +117,7 @@ set
 	order by
 			volume_usd asc) as rn
                           from
-                              total_volume_usd where volume_usd>=100
+                              total_volume_usd where volume_usd>=100   and recent_time_code='ALL'
 
                       ) out_t
                   where
@@ -128,13 +128,13 @@ set
                                   else count(1)/ 2 + 1
                                   end
                           from
-                              total_volume_usd where volume_usd>=100
+                              total_volume_usd where volume_usd>=100 and recent_time_code='ALL'
                       )
                     and rn <=(
                       select
                                   count(1)/ 2 + 1
                       from
-                          total_volume_usd where volume_usd>=100
+                          total_volume_usd where volume_usd>=100  and recent_time_code='ALL'
                   ))
 where
         code = 'static_total';
@@ -152,19 +152,21 @@ insert into address_activity_init${tableSuffix}(activity_num,address)
 select sum(activity_num),address from(
      select
          sum(total_transfer_count) as activity_num,aljg.address from  eth_holding_vol_count aljg
+         where recent_time_code='ALL'
      group by aljg.address
      union all
      select
          sum(total_transfer_count) as activity_num,address from  token_holding_vol_count
-     where  token in(select token_id from dim_rank_token)
+     where  token in(select token_id from dim_rank_token)  and recent_time_code='ALL'
      group by address
      union all
      select
-         sum(total_transfer_count) as activity_num,address from  web3_transaction_record_summary group by address
+         sum(total_transfer_count) as activity_num,address from  web3_transaction_record_summary
+         where  recent_time_code='ALL' group by address
      union all
      select
          sum(total_transfer_all_count) as activity_num,address from  nft_holding
-     where  token in(select token_id from dim_project_token_type_rank)
+     where  token in(select token_id from dim_project_token_type_rank) and recent_time_code='ALL'
       group by address)
      out_t group by address;
 

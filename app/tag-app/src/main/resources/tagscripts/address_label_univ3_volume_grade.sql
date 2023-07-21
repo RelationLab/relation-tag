@@ -68,10 +68,13 @@ from
         select
             dtvcs.address,
             dtvcs.token,
-            round(total_transfer_volume_usd,8)  as volume_usd
+            round(total_transfer_volume_usd,8)  as volume_usd,
+            recent_time_code
         from
-            dex_tx_volume_count_summary_univ3 dtvcs inner join dim_rule_content drc
-                                                         on( dtvcs.token = drc.token and drc.data_subject = 'volume_grade')
+            dex_tx_volume_count_summary_univ3 dtvcs
+                inner join dim_rule_content drc
+            on( dtvcs.token = drc.token and drc.data_subject = 'volume_grade'
+                    and  dtvcs.recent_time_code = drc.recent_code)
         where
                 dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
           and dtvcs.total_transfer_volume_usd >= 100
@@ -82,6 +85,7 @@ from
     on
                 a1.token = a2.token
             and a2.label_type  like 'Uniswap_v3%'
+            and  a1.recent_time_code = a2.recent_code
 where
         a2.data_subject = 'volume_grade'
   and address not in (select address from exclude_address);

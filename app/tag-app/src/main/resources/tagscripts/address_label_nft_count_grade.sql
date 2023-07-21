@@ -77,7 +77,8 @@ end   as level,
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(transfer_count) as sum_count
+            sum(transfer_count) as sum_count,
+            recent_time_code
         from
             nft_volume_count a1
                 inner join dim_project_token_type a2
@@ -86,6 +87,7 @@ end   as level,
                                    and a2.project = ''
                                    and a1.type = a2.type
                                    and a2.type != 'Transfer'
+                                   and  a1.recent_time_code = a2.recent_code
 		and
                                 a2.data_subject = 'count'
 		and a2.label_type like '%NFT%'
@@ -96,7 +98,8 @@ end   as level,
             a2.label_type,
             a2.type,
             a2.project_name ,
-            a2.token_name
+            a2.token_name,
+            recent_time_code
 --             project(null)+nft（ALL）+type
         union all
         select
@@ -117,13 +120,15 @@ end   as level,
             and a2.data_subject = 'count'
             and a2.label_type like '%NFT%'
             and a2.label_type not like '%WEB3%'
-            where a1.token in (select token_id from dim_project_token_type_rank dpttr)
+            and  a1.recent_time_code = a2.recent_code
+        where a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,
             a2.label_type,
             a2.type,
             a2.project_name ,
-            a2.token_name
+            a2.token_name,
+            recent_time_code
         ) t
     where
         sum_count >= 1 and address not in (select address from exclude_address);

@@ -68,7 +68,8 @@ insert into public.address_label_token_volume_grade(address,label_type,label_nam
         select
             address,
             token,
-            round(volume_usd,8) volume_usd
+            round(volume_usd,8) volume_usd,
+            recent_time_code
         from
             token_volume_usd tbvutk
     )
@@ -76,7 +77,7 @@ insert into public.address_label_token_volume_grade(address,label_type,label_nam
         inner join
     dim_rule_content a2
     on
-            a1.token = a2.token
+            a1.token = a2.token and a1.recent_time_code= a2.recent_code
             and a2.label_type not like 'Uniswap_v3%'
     where
         a1.volume_usd >= 100

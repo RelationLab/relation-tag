@@ -73,7 +73,8 @@ from
         select
             address,
             token,
-            total_transfer_count
+            total_transfer_count,
+            recent_time_code
         from
             token_holding_vol_count th1
         where total_transfer_count >=1
@@ -81,24 +82,28 @@ from
         select
             address,
             'ALL' as token ,
-            sum(total_transfer_count) as total_transfer_count
+            sum(total_transfer_count) as total_transfer_count,
+            recent_time_code
         from
             (
                 select
                     address,
-                    total_transfer_count
+                    total_transfer_count,
+                    recent_time_code
                 from
                     eth_holding_vol_count th where total_transfer_count >=1
                 union all
                 select
                     address,
-                    total_transfer_count
+                    total_transfer_count,
+                    recent_time_code
                 from
                     token_holding_vol_count th where  total_transfer_count >=1 and th.token in (select token_id from dim_rank_token)
                 union all
                 select
                     address,
-                    total_transfer_count as total_transfer_count
+                    total_transfer_count as total_transfer_count,
+                    recent_time_code
                 from
                     dex_tx_volume_count_summary_univ3 th
                 where
@@ -106,13 +111,15 @@ from
                         and total_transfer_count >=1 and th.token in (select token_id from dim_rank_token)
                  ) th2
         group by
-            address
+            address,
+            recent_time_code
     ) a1
         inner join
     dim_rule_content a2
     on
                 a1.token = a2.token
             and a2.label_type not like 'Uniswap_v3%'
+            and a1.recent_time_code = a2.recent_code
 where
         a1.total_transfer_count >= 1
   and a2.data_subject = 'count' and address not in (select address from exclude_address);
