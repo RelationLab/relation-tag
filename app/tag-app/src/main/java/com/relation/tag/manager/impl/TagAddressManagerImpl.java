@@ -40,7 +40,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
     public static String DIM_DATA_SCRIPTS_PATH = "dim-data-scripts";
     /*********初始化汇总数据脚本文件路径**********/
     public static String TAG_SUMMARY_INIT_SCRIPTS_PATH = "tag-summary-init-scripts";
-    public static String SCRIPTSPATH = "tagscripts";
+
+    /*********打标签脚本文件路径**********/
+    public static String TAG_SCRIPTS_PATH = "tagscripts";
 
     public static String RECENT_TIME = "tag-summary-init-scripts/recent_time";
 
@@ -227,11 +229,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
     public void refreshAllLabel(String batchDate) throws Exception {
         String checkTable = "address_labels_json_gin_".concat(configEnvironment);
         if (!checkResult(checkTable, batchDate, 1, false)) {
-            tag(batchDate);
+            tag(batchDate, TAG_SCRIPTS_PATH);
         }
     }
 
-    private void tag(String batchDate) throws Exception {
+    private void tag(String batchDate, String filePath) throws Exception {
         /****
          * 如果正在打标签，等待.....
          */
@@ -247,8 +249,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             for (DimRuleSqlContent item : ruleSqlList) {
                 String fileName = item.getRuleName().concat(".sql");
                 fileList.add(FileEntity.builder().fileName(fileName)
-                        .fileContent(FileUtils.readFile(SCRIPTSPATH.concat(File.separator)
-                                .concat(fileName))).build());
+                .fileContent(FileUtils.readFile(filePath.concat(File.separator).concat(fileName))).build());
             }
             tagByRuleSqlList(fileList, batchDate);
         }
