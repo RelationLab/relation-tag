@@ -1,5 +1,5 @@
-drop table if exists dex_tx_volume_count_record_filterate;
-CREATE TABLE public.dex_tx_volume_count_record_filterate (
+drop table if exists dex_tx_volume_count_record_filter;
+CREATE TABLE public.dex_tx_volume_count_record_filter (
                                                     address varchar(256) NOT NULL,
                                                     "token" varchar(256) NOT NULL,
                                                     block_height int8 NOT NULL,
@@ -13,13 +13,13 @@ CREATE TABLE public.dex_tx_volume_count_record_filterate (
                                                     triggered_flag varchar(10) NULL,
                                                     project varchar(100) NULL
 ) DISTRIBUTED BY (address);
-truncate table dex_tx_volume_count_record_filterate;
-vacuum dex_tx_volume_count_record_filterate;
+truncate table dex_tx_volume_count_record_filter;
+vacuum dex_tx_volume_count_record_filter;
 
 
 insert
 into
-    dex_tx_volume_count_record_filterate(address,
+    dex_tx_volume_count_record_filter(address,
                                 token,
                                 type,
                                 project,
@@ -59,4 +59,4 @@ group by
     dtvcr.type,
     project,
     transaction_hash;
-insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_volume_count_record_filterate' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_volume_count_record_filter' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

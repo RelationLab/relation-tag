@@ -51,6 +51,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     /*************数据过滤脚本文件路径*************/
     public static String DATA_FILTER_PATH = "tag-summary-init-scripts/data-filter";
 
+    /***********************************打标签流程代码*******************************************/
     /**
      * 刷新全量标签
      * @param batchDate
@@ -232,6 +233,60 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql(null, "address_label_gp.sql", batchDate, TAG_SCRIPTS_PATH, configEnvironment);
     }
 
+    /*************************************************************执行SQL部分**********************************************************/
+    /**
+     * 异步执行SQL
+     * @param lastTableName
+     * @param sqlName
+     * @param batchDate
+     * @param dir
+     * @param tableSuffix
+     * @return
+     */
+    private boolean execSql(String lastTableName, String sqlName, String batchDate, String dir, String tableSuffix) {
+        String tableName = sqlName.split("\\.")[0];
+        String finalTableName = tableName;
+        forkJoinPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                execSynSql(lastTableName, sqlName, finalTableName, batchDate, dir, tableSuffix);
+            }
+        });
+        return checkResult(finalTableName, batchDate, 1, false);
+    }
+
+    /**
+     * 同步执行SQL
+     * @param lastTableName
+     * @param sqlName
+     * @param tableName
+     * @param batchDate
+     * @param dir
+     * @param tableSuffix
+     */
+    private void execSynSql(String lastTableName, String sqlName, String tableName, String batchDate, String dir, String tableSuffix) {
+        check(lastTableName, 20 * 1000, batchDate, 1, false);
+        try {
+            if (checkResult(tableName, batchDate, 1, false)) {
+                return;
+            }
+            String exceSql = FileUtils.readFile(dir.concat(File.separator).concat(sqlName));
+            if (StringUtils.isNotEmpty(tableSuffix)) {
+                exceSql = exceSql.replace("${tableSuffix}", tableSuffix);
+            }
+            iAddressLabelService.exceSql(exceSql, sqlName);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            try {
+                Thread.sleep(1 * 60 * 1000);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+            log.info("sqlName==={} try ......", sqlName);
+            execSynSql(lastTableName, sqlName, tableName, batchDate, dir, tableSuffix);
+        }
+    }
+
     /************************************基础数据部分****************************************/
     private void buildTagBasicData(String batchDate) {
         /******************生成基础数据前提*****************/
@@ -289,6 +344,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
     private void tagSummaryInit(String batchDate, String filePath) throws Exception {
         execSql("dim_rule_content", "white_list_erc20.sql", batchDate, filePath, null);
 
+        String dataFilterPath = filePath.concat(File.separator).concat(DATA_FILTER_PATH);
+        String tableDefiPath = filePath.concat(File.separator).concat(TABEL_DEFI_PATH);
+        String recentTimePath = filePath.concat(File.separator).concat(RECENT_TIME_PATH);
+        dataFilter(batchDate, dataFilterPath);
+
         /***************先执行***********/
         execSql("white_list_erc20", "nft_holding_middle.sql", batchDate, filePath, null);
         execSql("nft_holding_middle", "nft_holding_record.sql", batchDate, filePath, null);
@@ -300,7 +360,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("platform_nft_volume_usd", "nft_transfer_holding.sql", batchDate, filePath, null);
         execSql("nft_transfer_holding", "nft_volume_count.sql", batchDate, filePath, null);
         execSql("nft_volume_count", "platform_nft_type_volume_count.sql", batchDate, filePath, null);
-        execSql("platform_nft_type_volume_count", "token_holding_uni_filterate.sql", batchDate, filePath, null);
+        execSql("platform_nft_type_volume_count", "token_holding_uni_filter.sql", batchDate, filePath, null);
         execSql("nft_transfer_holding", "platform_nft_type_volume_count.sql", batchDate, filePath, null);
         execSql("platform_nft_type_volume_count", "nft_volume_count.sql", batchDate, filePath, null);
         execSql("nft_volume_count", "token_holding_uni_cal.sql", batchDate, filePath, null);
@@ -329,61 +389,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     }
 
-    /*************************************************************执行SQL部分**********************************************************/
-    /**
-     * 异步执行SQL
-     * @param lastTableName
-     * @param sqlName
+    /****
+     * 处理交易流水中hash重复的数据（做一层过滤）
      * @param batchDate
-     * @param dir
-     * @param tableSuffix
-     * @return
+     * @param filePath
      */
-    private boolean execSql(String lastTableName, String sqlName, String batchDate, String dir, String tableSuffix) {
-        String tableName = sqlName.split("\\.")[0];
-        String finalTableName = tableName;
-        forkJoinPool.execute(new Runnable() {
-            @Override
-            public void run() {
-                execSynSql(lastTableName, sqlName, finalTableName, batchDate, dir, tableSuffix);
-            }
-        });
-        return checkResult(finalTableName, batchDate, 1, false);
+    private void dataFilter(String batchDate, String filePath) {
+        execSql("white_list_erc20", "dex_tx_volume_count_record_filter.sql", batchDate, filePath, null);
+        execSql("dex_tx_volume_count_record_filter", "dex_tx_volume_count_record_filter.sql", batchDate, filePath, null);
     }
-
-    /**
-     * 同步执行SQL
-     * @param lastTableName
-     * @param sqlName
-     * @param tableName
-     * @param batchDate
-     * @param dir
-     * @param tableSuffix
-     */
-    private void execSynSql(String lastTableName, String sqlName, String tableName, String batchDate, String dir, String tableSuffix) {
-        check(lastTableName, 20 * 1000, batchDate, 1, false);
-        try {
-            if (checkResult(tableName, batchDate, 1, false)) {
-                return;
-            }
-            String exceSql = FileUtils.readFile(dir.concat(File.separator).concat(sqlName));
-            if (StringUtils.isNotEmpty(tableSuffix)) {
-                exceSql = exceSql.replace("${tableSuffix}", tableSuffix);
-            }
-            iAddressLabelService.exceSql(exceSql, sqlName);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            try {
-                Thread.sleep(1 * 60 * 1000);
-            } catch (InterruptedException ex) {
-                throw new RuntimeException(ex);
-            }
-            log.info("sqlName==={} try ......", sqlName);
-            execSynSql(lastTableName, sqlName, tableName, batchDate, dir, tableSuffix);
-        }
-    }
-
-
-
-
 }

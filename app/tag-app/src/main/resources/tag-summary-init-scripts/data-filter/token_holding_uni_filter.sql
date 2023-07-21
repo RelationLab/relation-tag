@@ -1,6 +1,6 @@
--- DROP TABLE public.token_holding_uni_filterate;
-DROP TABLE IF EXISTS public.token_holding_uni_filterate;
-CREATE TABLE public.token_holding_uni_filterate (
+-- DROP TABLE public.token_holding_uni_filter;
+DROP TABLE IF EXISTS public.token_holding_uni_filter;
+CREATE TABLE public.token_holding_uni_filter (
                                               address varchar(256) NULL,
                                               "token" varchar(256) NULL,
                                               balance numeric(125, 30) NULL,
@@ -17,10 +17,10 @@ CREATE TABLE public.token_holding_uni_filterate (
                                               "type" varchar(30) NULL,
                                               triggered_flag varchar(1) NULL
 );
-truncate table token_holding_uni_filterate;
-vacuum token_holding_uni_filterate;
+truncate table token_holding_uni_filter;
+vacuum token_holding_uni_filter;
 
-insert into token_holding_uni_filterate(address
+insert into token_holding_uni_filter(address
                                  ,token
                                  ,balance
                                  ,block_height
@@ -67,5 +67,5 @@ from (
                      top_token_1000 ON (white_list_erc20.address = top_token_1000.address)) w on
              (w.address = token_holding_uni.price_token)
          group by token_holding_uni.address,token_holding_uni.token,token_holding_uni.nft_token_id,token_holding_uni.price_token ) tb1 ;
-insert into tag_result(table_name,batch_date)  SELECT 'token_holding_uni_filterate' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'token_holding_uni_filter' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
