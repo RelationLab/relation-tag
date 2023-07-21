@@ -33,7 +33,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     protected static ForkJoinPool forkJoinPool = new ForkJoinPool(500);
 
     /*********构造基础数据前提脚本文件路径**********/
-    public static String BASIC_DATA_PRE_SCRIPTS_PATH = "basic-data-scripts-pre";
+    public static String BASIC_DATA_PRE_SCRIPTS_PATH = "basic-data-pre-scripts";
     /*********构造基础数据脚本文件路径**********/
     public static String BASIC_DATA_SCRIPTS_PATH = "basic-data-scripts";
     /*********构造基维度数据脚本文件路径**********/
