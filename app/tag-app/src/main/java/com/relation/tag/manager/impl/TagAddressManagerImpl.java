@@ -31,12 +31,76 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Value("${config.environment:stag}")
     protected String configEnvironment;
     protected static ForkJoinPool forkJoinPool = new ForkJoinPool(500);
+
+    /*********构造基础数据前提脚本文件路径**********/
+    public static String BASIC_DATA_PRE_SCRIPTS_PATH = "basic-data-scripts-pre";
+    /*********构造基础数据脚本文件路径**********/
+    public static String BASIC_DATA_SCRIPTS_PATH = "basic-data-scripts";
+    /*********构造基维度数据脚本文件路径**********/
+    public static String DIM_DATA_SCRIPTS_PATH = "dim-data-scripts";
+
     static String INIT_PATH = "initsql";
 
     public static String SCRIPTSPATH = "tagscripts";
-    public static String DIM_PATH = "dim";
 
-    public static String  RECENT_TIME = "recent_time";
+    public static String RECENT_TIME = "recent_time";
+
+    /************************************基础数据部分****************************************/
+    private void buildTagBasicData(String batchDate) {
+        /******************生成基础数据前提*****************/
+        basicDataPre(batchDate);
+        /******************基础数据部分****************/
+        basicData(batchDate);
+        /***********维度表部分*********/
+        dimData(batchDate);
+    }
+
+    private void basicDataPre(String batchDate) {
+        execSql(null, "drop_view.sql", batchDate, BASIC_DATA_PRE_SCRIPTS_PATH, null);
+        execSql("drop_view", "dms_syn_block.sql", batchDate, BASIC_DATA_PRE_SCRIPTS_PATH, null);
+        execSql("dms_syn_block", "snapshot_table.sql", batchDate, BASIC_DATA_PRE_SCRIPTS_PATH, null);
+        execSql("snapshot_table", "create_view.sql", batchDate, BASIC_DATA_PRE_SCRIPTS_PATH, null);
+    }
+
+    private void basicData(String batchDate) {
+        /******************级别部分*****************/
+        execSql("create_view.", "level_def.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+
+        /******************DEX部分*****************/
+        execSql("level_def", "platform.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+        execSql("platform", "platform_detail.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+        execSql("platform_detail", "trade_type.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+        execSql("trade_type", "dex_action_platform.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+
+        /******************WEB3部分*****************/
+        execSql("dex_action_platform", "web3_platform.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+        execSql("web3_platform", "web3_action.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+        execSql("web3_action", "web3_action_platform.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+
+        /******************NFT部分*****************/
+        execSql("web3_action_platform", "mp_nft_platform.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+        execSql("mp_nft_platform", "nft_trade_type.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+        execSql("nft_trade_type", "nft_action_platform.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+
+        /************计算token的dex和nft的MP部分*************/
+        execSql("nft_action_platform", "token_platform.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+        execSql("token_platform", "nft_platform.sql", batchDate, BASIC_DATA_SCRIPTS_PATH, null);
+    }
+
+    private void dimData(String batchDate) {
+        execSql("nft_platform", "dim_rule_sql_content.sql", batchDate, DIM_DATA_SCRIPTS_PATH, null);
+        execSql("dim_rule_sql_content", "combination.sql", batchDate, DIM_DATA_SCRIPTS_PATH, null);
+        execSql("combination", "label.sql", batchDate, DIM_DATA_SCRIPTS_PATH, null);
+        execSql("label", "label_factor_seting.sql", batchDate, DIM_DATA_SCRIPTS_PATH, null);
+        execSql("label_factor_seting", "dim_project_token_type.sql", batchDate, DIM_DATA_SCRIPTS_PATH, null);
+        execSql("dim_project_token_type", "dim_project_type.sql", batchDate, DIM_DATA_SCRIPTS_PATH, null);
+        execSql("dim_project_type", "dim_rule_content.sql", batchDate, DIM_DATA_SCRIPTS_PATH, null);
+    }
+
+
+
+
+    /************************************打标签汇总数据部分****************************************/
 
     private void tagByRuleSqlList(List<FileEntity> ruleSqlList, String batchDate) {
         try {
@@ -94,7 +158,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     public void check(String tableName, long sleepTime, String batchDate, int resultNum, boolean likeKey) {
-        log.info("check tableName ===={} batchDate={} resultNum={} start.......", tableName,batchDate,resultNum);
+        log.info("check tableName ===={} batchDate={} resultNum={} start.......", tableName, batchDate, resultNum);
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
@@ -135,7 +199,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
          */
         checkTagging(batchDate);
         if (!checkResult("address_label", batchDate, 62, true)) {
-            createView(batchDate);
+            buildTagBasicData(batchDate);
             check("create_view", 60 * 1000, batchDate, 1, false);
             innit(batchDate);
             check("total_volume_usd", 1 * 60 * 1000, batchDate, 1, false);
@@ -154,54 +218,16 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void checkTagging(String batchDate) throws InterruptedException {
-        while (true){
+        while (true) {
             boolean taggingFlag = checkResult("tagging", batchDate, 1, false);
-            if (!taggingFlag){
+            if (!taggingFlag) {
                 break;
             }
             Thread.sleep(10 * 60 * 1000);
         }
     }
 
-    private void createView(String batchDate) {
-        /******************生成基础数据前提*****************/
-        execSql(null, "drop_view.sql", batchDate, DIM_PATH, null);
-        execSql("drop_view", "dms_syn_block.sql", batchDate, DIM_PATH, null);
-        execSql("dms_syn_block", "snapshot_table.sql", batchDate, DIM_PATH, null);
-        execSql("snapshot_table", "create_view.sql", batchDate, DIM_PATH, null);
 
-        /******************级别部分*****************/
-        execSql("create_view.", "level_def.sql", batchDate, DIM_PATH, null);
-
-        /******************DEX部分*****************/
-        execSql("level_def", "platform.sql", batchDate, DIM_PATH, null);
-        execSql("platform", "platform_detail.sql", batchDate, DIM_PATH, null);
-        execSql("platform_detail", "trade_type.sql", batchDate, DIM_PATH, null);
-        execSql("trade_type", "dex_action_platform.sql", batchDate, DIM_PATH, null);
-
-        /******************WEB3部分*****************/
-        execSql("dex_action_platform", "web3_platform.sql", batchDate, DIM_PATH, null);
-        execSql("web3_platform", "web3_action.sql", batchDate, DIM_PATH, null);
-        execSql("web3_action", "web3_action_platform.sql", batchDate, DIM_PATH, null);
-
-        /******************NFT部分*****************/
-        execSql("web3_action_platform", "mp_nft_platform.sql", batchDate, DIM_PATH, null);
-        execSql("mp_nft_platform", "nft_trade_type.sql", batchDate, DIM_PATH, null);
-        execSql("nft_trade_type", "nft_action_platform.sql", batchDate, DIM_PATH, null);
-
-        /************计算token的dex和nft的MP部分*************/
-        execSql("nft_action_platform", "token_platform.sql", batchDate, DIM_PATH, null);
-        execSql("token_platform", "nft_platform.sql", batchDate, DIM_PATH, null);
-
-        /***********维度表部分*********/
-        execSql("nft_platform", "dim_rule_sql_content.sql", batchDate, INIT_PATH, null);
-        execSql("dim_rule_sql_content", "combination.sql", batchDate, DIM_PATH, null);
-        execSql("combination", "label.sql", batchDate, DIM_PATH, null);
-        execSql("label", "label_factor_seting.sql", batchDate, DIM_PATH, null);
-        execSql("label_factor_seting", "dim_project_token_type.sql", batchDate, DIM_PATH, null);
-        execSql("dim_project_token_type", "dim_project_type.sql", batchDate, DIM_PATH, null);
-        execSql("dim_project_type", "dim_rule_content.sql", batchDate, DIM_PATH, null);
-    }
 
     private void innit(String batchDate) throws Exception {
         String dir = INIT_PATH;
