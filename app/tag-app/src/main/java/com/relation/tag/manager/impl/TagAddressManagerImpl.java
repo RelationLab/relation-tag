@@ -164,23 +164,36 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void createView(String batchDate) {
+        /******************生成基础数据前提*****************/
         execSql(null, "drop_view.sql", batchDate, DIM_PATH, null);
         execSql("drop_view", "dms_syn_block.sql", batchDate, DIM_PATH, null);
         execSql("dms_syn_block", "snapshot_table.sql", batchDate, DIM_PATH, null);
         execSql("snapshot_table", "create_view.sql", batchDate, DIM_PATH, null);
-        execSql("create_view", "mp_nft_platform.sql", batchDate, DIM_PATH, null);
-        execSql("mp_nft_platform", "nft_action_platform.sql", batchDate, DIM_PATH, null);
-        execSql("nft_action_platform", "level_def.sql", batchDate, DIM_PATH, null);
+
+        /******************级别部分*****************/
+        execSql("create_view.", "level_def.sql", batchDate, DIM_PATH, null);
+
+        /******************DEX部分*****************/
         execSql("level_def", "platform.sql", batchDate, DIM_PATH, null);
         execSql("platform", "platform_detail.sql", batchDate, DIM_PATH, null);
-        execSql("platform_detail", "nft_trade_type.sql", batchDate, DIM_PATH, null);
-        execSql("nft_trade_type", "trade_type.sql", batchDate, DIM_PATH, null);
-        execSql("trade_type", "web3_action.sql", batchDate, DIM_PATH, null);
+        execSql("platform_detail", "trade_type.sql", batchDate, DIM_PATH, null);
+        execSql("trade_type", "dex_action_platform.sql", batchDate, DIM_PATH, null);
+
+        /******************WEB3部分*****************/
+        execSql("dex_action_platform", "web3_platform.sql", batchDate, DIM_PATH, null);
+        execSql("web3_platform", "web3_action.sql", batchDate, DIM_PATH, null);
         execSql("web3_action", "web3_action_platform.sql", batchDate, DIM_PATH, null);
-        execSql("web3_action_platform", "web3_platform.sql", batchDate, DIM_PATH, null);
-        execSql("web3_platform", "dex_action_platform.sql", batchDate, DIM_PATH, null);
-        execSql("dex_action_platform", "token_platform.sql", batchDate, INIT_PATH, null);
-        execSql("token_platform", "nft_platform.sql", batchDate, INIT_PATH, null);
+
+        /******************NFT部分*****************/
+        execSql("web3_action_platform", "mp_nft_platform.sql", batchDate, DIM_PATH, null);
+        execSql("mp_nft_platform", "nft_trade_type.sql", batchDate, DIM_PATH, null);
+        execSql("nft_trade_type", "nft_action_platform.sql", batchDate, DIM_PATH, null);
+
+        /************计算token的dex和nft的MP部分*************/
+        execSql("nft_action_platform", "token_platform.sql", batchDate, DIM_PATH, null);
+        execSql("token_platform", "nft_platform.sql", batchDate, DIM_PATH, null);
+
+        /***********维度表部分*********/
         execSql("nft_platform", "dim_rule_sql_content.sql", batchDate, INIT_PATH, null);
         execSql("dim_rule_sql_content", "combination.sql", batchDate, DIM_PATH, null);
         execSql("combination", "label.sql", batchDate, DIM_PATH, null);
@@ -188,9 +201,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("label_factor_seting", "dim_project_token_type.sql", batchDate, DIM_PATH, null);
         execSql("dim_project_token_type", "dim_project_type.sql", batchDate, DIM_PATH, null);
         execSql("dim_project_type", "dim_rule_content.sql", batchDate, DIM_PATH, null);
-
-
-
     }
 
     private void innit(String batchDate) throws Exception {
