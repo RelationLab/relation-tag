@@ -73,7 +73,7 @@ select distinct
     999999 run_order,
     now() created_at,
     0 refresh_time,
-    'NFT' wired_type,
+    'WEB3' wired_type,
     999 label_order,
     'WAITING' sync_es_status
 from
@@ -191,7 +191,7 @@ select distinct
     999999 run_order,
     now() created_at,
     0 refresh_time,
-    'NFT' wired_type,
+    'WEB3' wired_type,
     999 label_order,
     'WAITING' sync_es_status
 from
@@ -308,7 +308,7 @@ select distinct
     999999 run_order,
     now() created_at,
     0 refresh_time,
-    'NFT' wired_type,
+    'WEB3' wired_type,
     999 label_order,
     'WAITING' sync_es_status
 from
@@ -427,7 +427,7 @@ select distinct
     999999 run_order,
     now() created_at,
     0 refresh_time,
-    'NFT' wired_type,
+    'WEB3' wired_type,
     999 label_order,
     'WAITING' sync_es_status
 from
