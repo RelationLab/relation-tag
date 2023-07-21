@@ -1,19 +1,3 @@
-drop table if exists dex_tx_count_summary;
-CREATE TABLE public.dex_tx_count_summary (
-                                             address varchar(256) NOT NULL,
-                                             "token" varchar(256) NOT NULL,
-                                             total_transfer_count int8 DEFAULT 0,
-                                             transaction_hash varchar(100) NULL,
-                                             created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                                             updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                                             removed bool NULL DEFAULT FALSE,
-                                             "type" varchar(10) NULL,
-                                             project varchar(100) NULL,
-                                             recent_time_code varchar(30)  NULL
-) DISTRIBUTED BY (address);
-truncate table dex_tx_count_summary;
-vacuum dex_tx_count_summary;
-
 INSERT
 INTO
     dex_tx_count_summary(address,
@@ -32,24 +16,24 @@ select
 from
     (
         select
-            dex_tx_volume_count_record_filterate.address,
-            dex_tx_volume_count_record_filterate.TYPE,
-            dex_tx_volume_count_record_filterate.project,
+            dex_tx_volume_count_record_filter.address,
+            dex_tx_volume_count_record_filter.TYPE,
+            dex_tx_volume_count_record_filter.project,
             max(total_transfer_count) as total_transfer_count,
             recent_time_code
         from
-            dex_tx_volume_count_record_filterate
+            dex_tx_volume_count_record_filter
                 inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
                            on
-                               (dex_tx_volume_count_record_filterate.block_height >= recent_time.block_height)
+                               (dex_tx_volume_count_record_filter.block_height >= recent_time.block_height)
         where
                 triggered_flag = '1'
           and total_transfer_count = 1
         group by
-            dex_tx_volume_count_record_filterate.address,
-            dex_tx_volume_count_record_filterate.TYPE,
-            dex_tx_volume_count_record_filterate.project,
-            dex_tx_volume_count_record_filterate.transaction_hash,
+            dex_tx_volume_count_record_filter.address,
+            dex_tx_volume_count_record_filter.TYPE,
+            dex_tx_volume_count_record_filter.project,
+            dex_tx_volume_count_record_filter.transaction_hash,
             recent_time_code) outt
 group by
     address,
@@ -81,7 +65,7 @@ from
             max(total_transfer_count) as total_transfer_count,
             recent_time_code
         from
-            token_holding_uni_filterate th
+            token_holding_uni_filter th
                 inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
                            on
                                (th.block_height >= recent_time.block_height)

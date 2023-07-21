@@ -30,4 +30,6 @@ public interface IAddressLabelGpService extends IService<AddressLabelGp> {
     List<SuggestAddressBatch> selectSuggestAddressBatch(String configEnvironment);
 
     void setSuggestAddressBatchStatus(List<SuggestAddressBatch> list);
+
+    List<String> selectRecentTimeList();
 }

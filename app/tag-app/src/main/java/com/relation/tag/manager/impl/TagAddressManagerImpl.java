@@ -9,13 +9,16 @@ import com.relation.tag.util.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
+import org.assertj.core.util.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ForkJoinPool;
 
 @Service
@@ -54,6 +57,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     /***********************************打标签流程代码*******************************************/
     /**
      * 刷新全量标签
+     *
      * @param batchDate
      * @throws Exception
      */
@@ -67,6 +71,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     /**
      * 检查表执行结果（一次性检查不带尝试）
+     *
      * @param tableName
      * @param batchDate
      * @param result
@@ -88,6 +93,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     /**
      * 打标签
+     *
      * @param batchDate
      * @param filePath
      * @throws Exception
@@ -117,6 +123,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     /**
      * 全量锁检查打标签
+     *
      * @param batchDate
      * @throws InterruptedException
      */
@@ -131,7 +138,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     /**
-     *检查表执行结果（带尝试）
+     * 检查表执行结果（带尝试）
+     *
      * @param tableName
      * @param sleepTime
      * @param batchDate
@@ -167,6 +175,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     /**
      * 检查表执行结果
+     *
      * @param tableName
      * @param batchDate
      * @param likeKey
@@ -185,6 +194,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     /**
      * 执行打标签脚本（整个目录下的标签脚本）
+     *
      * @param ruleSqlList
      * @param batchDate
      */
@@ -202,6 +212,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     /**
      * 执行单个打标签脚本
+     *
      * @param ruleSql
      * @param batchDate
      */
@@ -225,52 +236,69 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     /**
      * 合并标签结果
+     *
      * @param batchDate
      * @throws Exception
      */
     @Override
     public void tagMerge(String batchDate) throws Exception {
-        execSql(null, "address_label_gp.sql", batchDate, TAG_SCRIPTS_PATH, configEnvironment);
+        execSql(null, "address_label_gp.sql", batchDate, TAG_SCRIPTS_PATH, Maps.newHashMap("tableSuffix",configEnvironment));
     }
 
     /*************************************************************执行SQL部分**********************************************************/
     /**
      * 异步执行SQL
+     *
      * @param lastTableName
      * @param sqlName
      * @param batchDate
      * @param dir
-     * @param tableSuffix
+     * @param conditionMap
      * @return
      */
-    private boolean execSql(String lastTableName, String sqlName, String batchDate, String dir, String tableSuffix) {
+    private boolean execSql(String lastTableName, String sqlName, String batchDate, String dir, Map<String, String> conditionMap) {
+        return execSql(lastTableName, sqlName, batchDate, dir, 1, false,conditionMap );
+    }
+
+    private boolean execSql(String lastTableName, String sqlName, String batchDate, String dir, int resultNum, boolean likeKey, Map<String, String> conditionMap) {
         String tableName = sqlName.split("\\.")[0];
         String finalTableName = tableName;
         forkJoinPool.execute(new Runnable() {
             @Override
             public void run() {
-                execSynSql(lastTableName, sqlName, finalTableName, batchDate, dir, tableSuffix);
+                execSynSql(lastTableName, sqlName, finalTableName, batchDate, dir, resultNum, likeKey, conditionMap);
             }
         });
-        return checkResult(finalTableName, batchDate, 1, false);
+        return checkResult(finalTableName, batchDate, resultNum, likeKey);
     }
 
     /**
      * 同步执行SQL
+     *
      * @param lastTableName
      * @param sqlName
      * @param tableName
      * @param batchDate
      * @param dir
-     * @param tableSuffix
+     * @param conditionMap
      */
-    private void execSynSql(String lastTableName, String sqlName, String tableName, String batchDate, String dir, String tableSuffix) {
-        check(lastTableName, 20 * 1000, batchDate, 1, false);
+    private void execSynSql(String lastTableName, String sqlName, String tableName,
+                            String batchDate, String dir, int resultNum, boolean likeKey, Map<String, String> conditionMap) {
+        check(lastTableName, 20 * 1000, batchDate, resultNum, likeKey);
         try {
-            if (checkResult(tableName, batchDate, 1, false)) {
+            if (checkResult(tableName, batchDate, resultNum, likeKey)) {
                 return;
             }
             String exceSql = FileUtils.readFile(dir.concat(File.separator).concat(sqlName));
+            String recentTimeCode = null;
+            String tableSuffix = null;
+            if (conditionMap != null && !conditionMap.isEmpty()) {
+                recentTimeCode = conditionMap.getOrDefault("recentTimeCode", null);
+                tableSuffix = conditionMap.getOrDefault("tableSuffix", null);
+            }
+            if (StringUtils.isNotEmpty(recentTimeCode)) {
+                exceSql = exceSql.replace("${recent_time_code}", recentTimeCode);
+            }
             if (StringUtils.isNotEmpty(tableSuffix)) {
                 exceSql = exceSql.replace("${tableSuffix}", tableSuffix);
             }
@@ -283,7 +311,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 throw new RuntimeException(ex);
             }
             log.info("sqlName==={} try ......", sqlName);
-            execSynSql(lastTableName, sqlName, tableName, batchDate, dir, tableSuffix);
+            execSynSql(lastTableName, sqlName, tableName, batchDate, dir, resultNum, likeKey, conditionMap);
         }
     }
 
@@ -343,50 +371,77 @@ public class TagAddressManagerImpl implements TagAddressManager {
     /************************************打标签汇总数据部分****************************************/
     private void tagSummaryInit(String batchDate, String filePath) throws Exception {
         execSql("dim_rule_content", "white_list_erc20.sql", batchDate, filePath, null);
-
         String dataFilterPath = filePath.concat(File.separator).concat(DATA_FILTER_PATH);
         String tableDefiPath = filePath.concat(File.separator).concat(TABEL_DEFI_PATH);
         String recentTimePath = filePath.concat(File.separator).concat(RECENT_TIME_PATH);
         dataFilter(batchDate, dataFilterPath);
+        /***************nft_holding***********/
+        execSql("token_holding_uni_filter", "nft_holding.sql", batchDate, tableDefiPath, null);
+        execSql("nft_holding", "nft_holding_middle.sql", batchDate, tableDefiPath, null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "nft_holding_middle.sql", "nft_holding_middle", 1,false);
+        exceRecentTimeScripts(batchDate, recentTimePath, "nft_holding_record.sql", "nft_holding_middle", 10,true);
+        execSql("nft_holding_record", "nft_holding.sql", batchDate, filePath, 9,true,null);
 
-        /***************先执行***********/
-        execSql("white_list_erc20", "nft_holding_middle.sql", batchDate, filePath, null);
-        execSql("nft_holding_middle", "nft_holding_record.sql", batchDate, filePath, null);
-        execSql("nft_holding", "nft_buy_sell_holding_middle.sql", batchDate, filePath, null);
-        execSql("nft_buy_sell_holding_middle", "nft_buy_sell_holding.sql", batchDate, filePath, null);
-        execSql("nft_buy_sell_holding", "platform_nft_holding_middle.sql", batchDate, filePath, null);
-        execSql("platform_nft_holding_middle", "platform_nft_holding.sql", batchDate, filePath, null);
-        execSql("platform_nft_holding", "platform_nft_volume_usd.sql", batchDate, filePath, null);
-        execSql("platform_nft_volume_usd", "nft_transfer_holding.sql", batchDate, filePath, null);
-        execSql("nft_transfer_holding", "nft_volume_count.sql", batchDate, filePath, null);
-        execSql("nft_volume_count", "platform_nft_type_volume_count.sql", batchDate, filePath, null);
-        execSql("platform_nft_type_volume_count", "token_holding_uni_filter.sql", batchDate, filePath, null);
-        execSql("nft_transfer_holding", "platform_nft_type_volume_count.sql", batchDate, filePath, null);
-        execSql("platform_nft_type_volume_count", "nft_volume_count.sql", batchDate, filePath, null);
-        execSql("nft_volume_count", "token_holding_uni_cal.sql", batchDate, filePath, null);
-        execSql("token_holding_uni_cal", "token_balance_volume_usd.sql", batchDate, filePath, null);
-        execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate, filePath, null);
-        execSql("total_balance_volume_usd", "web3_transaction_record_summary.sql", batchDate, filePath, null);
-        execSql("web3_transaction_record_summary", "dex_tx_volume_count_summary_stake.sql", batchDate, filePath, null);
-        execSql("total_balance_volume_usd", "dex_tx_volume_count_summary_univ3.sql", batchDate, filePath, null);
-        execSql("dex_tx_volume_count_summary_univ3", "dex_tx_count_summary.sql", batchDate, filePath, null);
-        execSql("dex_tx_count_summary", "dex_tx_volume_count_record_hash.sql", batchDate, filePath, null);
-        execSql("dex_tx_volume_count_record_hash", "dex_tx_volume_count_summary.sql", batchDate, filePath, null);
-        boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql", batchDate, filePath, null);
-        execSql("eth_holding_vol_count", "erc20_tx_record_from.sql", batchDate, filePath, null);
-        if (!token_holding_vol_countcheck) {
-            Thread.sleep(1 * 60 * 1000);
-        }
-        boolean dms_syn_blockcheck = execSql("erc20_tx_record_hash", "token_holding_vol_count.sql", batchDate, filePath, null);
-        if (!dms_syn_blockcheck) {
-            Thread.sleep(1 * 60 * 1000);
-        }
-        boolean total_volume_usdcheck = execSql("token_holding_vol_count", "token_volume_usd.sql", batchDate, filePath, null);
-        if (!total_volume_usdcheck) {
-            Thread.sleep(1 * 60 * 1000);
-        }
-        execSql("token_volume_usd", "total_volume_usd.sql", batchDate, filePath, null);
+        /***************nft_buy_sell_holding***********/
+        execSql("nft_holding", "nft_buy_sell_holding_middle.sql", batchDate, tableDefiPath, 2,false,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "nft_buy_sell_holding_middle.sql", "nft_buy_sell_holding_middle", 1,false);
+        execSql("nft_buy_sell_holding_middle", "nft_buy_sell_holding.sql", batchDate, filePath, 10,true,null);
 
+        /***************platform_nft_holding***********/
+        execSql("nft_buy_sell_holding", "platform_nft_holding_middle.sql", batchDate, tableDefiPath, 11,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "platform_nft_holding_middle.sql", "platform_nft_holding_middle", 1,false);
+        execSql("platform_nft_holding_middle", "platform_nft_holding.sql", batchDate, filePath, 10,true,null);
+
+        /***************web3_transaction_record_summary***********/
+        execSql("platform_nft_holding", "web3_transaction_record_summary.sql", batchDate, tableDefiPath, 11,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "web3_transaction_record_summary.sql", "web3_transaction_record_summary", 1,false);
+
+        /***************dex_tx_count_summary***********/
+        execSql("web3_transaction_record_summary", "dex_tx_count_summary.sql", batchDate, tableDefiPath, 10,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_count_summary.sql", "dex_tx_count_summary", 1,false);
+
+        /***************dex_tx_volume_count_summary***********/
+        execSql("dex_tx_count_summary", "dex_tx_volume_count_summary.sql", batchDate, tableDefiPath, 10,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary.sql", "dex_tx_volume_count_summary", 1,false);
+
+        /***************dex_tx_volume_count_summary***********/
+        execSql("dex_tx_volume_count_summary", "dex_tx_volume_count_summary_univ3.sql", batchDate, tableDefiPath, 10,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary_univ3.sql", "dex_tx_volume_count_summary_univ3", 1,false);
+
+        /***************eth_holding_vol_count***********/
+        execSql("dex_tx_volume_count_summary_univ3", "eth_tx_record_from_to.sql", batchDate, tableDefiPath, 10,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "eth_tx_record_from_to.sql", "eth_tx_record_from_to", 1,false);
+        execSql("eth_tx_record_from_to", "eth_holding_vol_count.sql", batchDate, filePath, 10,true,null);
+
+
+        /***************erc20_tx_record_from***********/
+        execSql("eth_holding_vol_count", "erc20_tx_record_from.sql", batchDate, tableDefiPath, 1,false,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_from.sql", "erc20_tx_record_from", 1,false);
+        /***************erc20_tx_record_to***********/
+        execSql("erc20_tx_record_from", "erc20_tx_record_to.sql", batchDate, tableDefiPath, 10,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_to.sql", "erc20_tx_record_to", 1,false);
+        execSql("erc20_tx_record_to", "token_holding_vol_count.sql", batchDate, filePath, 10,true,null);
+
+
+        execSql("token_holding_vol_count", "dex_tx_volume_count_summary_stake.sql", batchDate, filePath, 1,false,null);
+        execSql("dex_tx_volume_count_summary_stake", "nft_transfer_holding.sql", batchDate, filePath, 1,false,null);
+        execSql("nft_transfer_holding", "platform_nft_volume_usd.sql", batchDate, filePath, 1,false,null);
+        execSql("platform_nft_volume_usd", "platform_nft_type_volume_count.sql", batchDate, filePath, 1,false,null);
+        execSql("platform_nft_type_volume_count", "nft_volume_count.sql", batchDate, filePath, 1,false,null);
+        execSql("nft_volume_count", "token_balance_volume_usd.sql", batchDate, filePath, 1,false,null);
+        execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate, filePath, 1,false,null);
+        execSql("total_balance_volume_usd", "token_volume_usd.sql", batchDate, filePath, 1,false,null);
+        execSql("token_volume_usd", "total_volume_usd.sql", batchDate, filePath, 1,false,null);
+    }
+
+    private void exceRecentTimeScripts(String batchDate, String filePath, String fileName, String lastTableName, int resultNum, boolean likeKey) {
+        List<String> list = iAddressLabelService.selectRecentTimeList();
+        if (CollectionUtils.isEmpty(list)) {
+            return;
+        }
+        list.forEach(item -> {
+            execSql(lastTableName, fileName, batchDate, filePath, resultNum,  likeKey,Maps.newHashMap("recentTimeCode",item));
+        });
     }
 
     /****
@@ -396,6 +451,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
      */
     private void dataFilter(String batchDate, String filePath) {
         execSql("white_list_erc20", "dex_tx_volume_count_record_filter.sql", batchDate, filePath, null);
-        execSql("dex_tx_volume_count_record_filter", "dex_tx_volume_count_record_filter.sql", batchDate, filePath, null);
+        execSql("dex_tx_volume_count_record_filter", "token_holding_uni_filter.sql", batchDate, filePath, null);
     }
 }
