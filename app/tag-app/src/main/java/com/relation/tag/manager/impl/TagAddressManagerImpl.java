@@ -164,10 +164,10 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void createView(String batchDate) {
-        execSql(null, "drop_view.sql", batchDate, INIT_PATH, null);
-        execSql("drop_view", "dms_syn_block.sql", batchDate, INIT_PATH, null);
-        execSql("dms_syn_block", "snapshot_table.sql", batchDate, INIT_PATH, null);
-        execSql("snapshot_table", "create_view.sql", batchDate, INIT_PATH, null);
+        execSql(null, "drop_view.sql", batchDate, DIM_PATH, null);
+        execSql("drop_view", "dms_syn_block.sql", batchDate, DIM_PATH, null);
+        execSql("dms_syn_block", "snapshot_table.sql", batchDate, DIM_PATH, null);
+        execSql("snapshot_table", "create_view.sql", batchDate, DIM_PATH, null);
         execSql("create_view", "mp_nft_platform.sql", batchDate, DIM_PATH, null);
         execSql("mp_nft_platform", "nft_action_platform.sql", batchDate, DIM_PATH, null);
         execSql("nft_action_platform", "level_def.sql", batchDate, DIM_PATH, null);
