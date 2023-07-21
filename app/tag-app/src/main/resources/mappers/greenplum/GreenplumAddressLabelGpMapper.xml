@@ -108,4 +108,7 @@
         </foreach>) and status = 'TODO'
     </update>
 
+    <select id="selectRecentTimeList" resultType="java.lang.String">
+        select recent_time_code from recent_time
+    </select>
 </mapper>
