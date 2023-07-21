@@ -386,18 +386,26 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("nft_holding", "nft_buy_sell_holding_middle.sql", batchDate, tableDefiPath, 2,false,null);
         exceRecentTimeScripts(batchDate, recentTimePath, "nft_buy_sell_holding_middle.sql", "nft_buy_sell_holding_middle", 1,false);
         execSql("nft_buy_sell_holding_middle", "nft_buy_sell_holding.sql", batchDate, filePath, 10,true,null);
+        execSql("nft_buy_sell_holding", "nft_transfer_holding.sql", batchDate, filePath, 11,false,null);
 
         /***************platform_nft_holding***********/
-        execSql("nft_buy_sell_holding", "platform_nft_holding_middle.sql", batchDate, tableDefiPath, 11,true,null);
+        execSql("nft_transfer_holding", "platform_nft_holding_middle.sql", batchDate, tableDefiPath, 1,false,null);
         exceRecentTimeScripts(batchDate, recentTimePath, "platform_nft_holding_middle.sql", "platform_nft_holding_middle", 1,false);
         execSql("platform_nft_holding_middle", "platform_nft_holding.sql", batchDate, filePath, 10,true,null);
+        execSql("platform_nft_holding", "platform_nft_volume_usd.sql", batchDate, filePath, 11,true,null);
+
+        /********************platform_nft_type_volume_count*******************/
+        execSql("platform_nft_volume_usd", "platform_nft_type_volume_count.sql", batchDate, tableDefiPath, 1,false,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "platform_nft_type_volume_count.sql", "platform_nft_type_volume_count", 1,false);
+        execSql("platform_nft_type_volume_count", "platform_nft_type_volume_count.sql", batchDate, filePath, 10,true,null);
+        execSql("platform_nft_type_volume_count", "nft_volume_count.sql", batchDate, filePath, 11,false,null);
 
         /***************web3_transaction_record_summary***********/
-        execSql("platform_nft_holding", "web3_transaction_record_summary.sql", batchDate, tableDefiPath, 11,true,null);
+        execSql("nft_volume_count", "web3_transaction_record_summary.sql", batchDate, tableDefiPath, 1,false,null);
         exceRecentTimeScripts(batchDate, recentTimePath, "web3_transaction_record_summary.sql", "web3_transaction_record_summary", 1,false);
 
         /***************dex_tx_count_summary***********/
-        execSql("web3_transaction_record_summary", "dex_tx_count_summary.sql", batchDate, tableDefiPath, 10,true,null);
+        execSql("platform_nft_type_volume_count", "dex_tx_count_summary.sql", batchDate, tableDefiPath, 11,true,null);
         exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_count_summary.sql", "dex_tx_count_summary", 1,false);
 
         /***************dex_tx_volume_count_summary***********/
@@ -424,11 +432,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
 
         execSql("token_holding_vol_count", "dex_tx_volume_count_summary_stake.sql", batchDate, filePath, 1,false,null);
-        execSql("dex_tx_volume_count_summary_stake", "nft_transfer_holding.sql", batchDate, filePath, 1,false,null);
-        execSql("nft_transfer_holding", "platform_nft_volume_usd.sql", batchDate, filePath, 1,false,null);
-        execSql("platform_nft_volume_usd", "platform_nft_type_volume_count.sql", batchDate, filePath, 1,false,null);
-        execSql("platform_nft_type_volume_count", "nft_volume_count.sql", batchDate, filePath, 1,false,null);
-        execSql("nft_volume_count", "token_balance_volume_usd.sql", batchDate, filePath, 1,false,null);
+        execSql("dex_tx_volume_count_summary_stake", "token_balance_volume_usd.sql", batchDate, filePath, 1,false,null);
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate, filePath, 1,false,null);
         execSql("total_balance_volume_usd", "token_volume_usd.sql", batchDate, filePath, 1,false,null);
         execSql("token_volume_usd", "total_volume_usd.sql", batchDate, filePath, 1,false,null);
