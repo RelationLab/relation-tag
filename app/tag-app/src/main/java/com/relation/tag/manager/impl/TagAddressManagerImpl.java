@@ -46,6 +46,187 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     public static String RECENT_TIME = "tag-summary-init-scripts/recent_time";
 
+    /**
+     * 刷新全量标签
+     * @param batchDate
+     * @throws Exception
+     */
+    @Override
+    public void refreshAllLabel(String batchDate) throws Exception {
+        String checkTable = "address_labels_json_gin_".concat(configEnvironment);
+        if (!checkResult(checkTable, batchDate, 1, false)) {
+            tag(batchDate, TAG_SCRIPTS_PATH);
+        }
+    }
+
+    /**
+     * 检查表执行结果（一次性检查不带尝试）
+     * @param tableName
+     * @param batchDate
+     * @param result
+     * @param likeKey
+     * @return
+     */
+    public boolean checkResult(String tableName, String batchDate, Integer result, boolean likeKey) {
+        if (StringUtils.isEmpty(tableName)) {
+            return false;
+        }
+        try {
+            Integer tagInteger = checkResultData(tableName, batchDate, likeKey);
+            log.info("tableName==={},tagList.size===={}", tableName, tagInteger);
+            return tagInteger != null && tagInteger.intValue() >= result;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    /**
+     * 打标签
+     * @param batchDate
+     * @param filePath
+     * @throws Exception
+     */
+    private void tag(String batchDate, String filePath) throws Exception {
+        /****
+         * 如果正在打标签，等待.....
+         */
+        checkTagging(batchDate);
+        if (!checkResult("address_label", batchDate, 62, true)) {
+            buildTagBasicData(batchDate);
+            check("dim_rule_content", 60 * 1000, batchDate, 1, false);
+            tagSummaryInit(batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH);
+            check("total_volume_usd", 1 * 60 * 1000, batchDate, 1, false);
+            List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
+            List<FileEntity> fileList = Lists.newArrayList();
+            for (DimRuleSqlContent item : ruleSqlList) {
+                String fileName = item.getRuleName().concat(".sql");
+                fileList.add(FileEntity.builder().fileName(fileName)
+                        .fileContent(FileUtils.readFile(filePath.concat(File.separator).concat(fileName))).build());
+            }
+            tagByRuleSqlList(fileList, batchDate);
+        }
+        check("address_label", 60 * 1000, batchDate, 59, true);
+        tagMerge(batchDate);
+    }
+
+    /**
+     * 全量锁检查打标签
+     * @param batchDate
+     * @throws InterruptedException
+     */
+    private void checkTagging(String batchDate) throws InterruptedException {
+        while (true) {
+            boolean taggingFlag = checkResult("tagging", batchDate, 1, false);
+            if (!taggingFlag) {
+                break;
+            }
+            Thread.sleep(10 * 60 * 1000);
+        }
+    }
+
+    /**
+     *检查表执行结果（带尝试）
+     * @param tableName
+     * @param sleepTime
+     * @param batchDate
+     * @param resultNum
+     * @param likeKey
+     */
+    public void check(String tableName, long sleepTime, String batchDate, int resultNum, boolean likeKey) {
+        log.info("check tableName ===={} batchDate={} resultNum={} start.......", tableName, batchDate, resultNum);
+        if (StringUtils.isEmpty(tableName)) {
+            return;
+        }
+        while (true) {
+            try {
+                Integer tagInteger = checkResultData(tableName, batchDate, likeKey);
+                if (tagInteger != null && tagInteger.intValue() >= resultNum) {
+                    log.info("check table ===={} end.......tagList.size===={}", tableName, tagInteger);
+                    break;
+                }
+            } catch (Exception ex) {
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            try {
+                Thread.sleep(sleepTime);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    /**
+     * 检查表执行结果
+     * @param tableName
+     * @param batchDate
+     * @param likeKey
+     * @return
+     */
+    private Integer checkResultData(String tableName, String batchDate, boolean likeKey) {
+        String checkSql = "select count(1) from ".concat(" tag_result where 1=1 and ");
+        if (likeKey) {
+            checkSql = checkSql.concat(" table_name like '").concat(tableName).concat("%");
+        } else {
+            checkSql = checkSql.concat(" table_name='").concat(tableName);
+        }
+        checkSql = checkSql.concat("' and batch_date='").concat(batchDate).concat("'");
+        return iAddressLabelService.exceSelectSql(checkSql);
+    }
+
+    /**
+     * 执行打标签脚本（整个目录下的标签脚本）
+     * @param ruleSqlList
+     * @param batchDate
+     */
+    private void tagByRuleSqlList(List<FileEntity> ruleSqlList, String batchDate) {
+        try {
+            forkJoinPool.execute(() -> {
+                ruleSqlList.parallelStream().forEach(ruleSql -> {
+                    execContentSql(ruleSql, batchDate);
+                });
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 执行单个打标签脚本
+     * @param ruleSql
+     * @param batchDate
+     */
+    private void execContentSql(FileEntity ruleSql, String batchDate) {
+        try {
+            String tableName = ruleSql.getFileName();
+            String table = tableName.split("\\.")[0];
+            if (checkResult(table, batchDate, 1, false)) {
+                return;
+            }
+            iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
+        } catch (Exception ex) {
+            try {
+                Thread.sleep(1 * 60 * 1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            execContentSql(ruleSql, batchDate);
+        }
+    }
+
+    /**
+     * 合并标签结果
+     * @param batchDate
+     * @throws Exception
+     */
+    @Override
+    public void tagMerge(String batchDate) throws Exception {
+        execSql(null, "address_label_gp.sql", batchDate, TAG_SCRIPTS_PATH, configEnvironment);
+    }
+
     /************************************基础数据部分****************************************/
     private void buildTagBasicData(String batchDate) {
         /******************生成基础数据前提*****************/
@@ -124,7 +305,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("dex_tx_volume_count_summary_univ3", "dex_tx_count_summary.sql", batchDate, filePath, null);
         execSql("dex_tx_count_summary", "dex_tx_volume_count_record_hash.sql", batchDate, filePath, null);
         execSql("dex_tx_volume_count_record_hash", "dex_tx_volume_count_summary.sql", batchDate, filePath, null);
-//        Thread.sleep(3 * 60 * 1000);
         boolean token_holding_vol_countcheck = execSql("dex_tx_volume_count_summary", "eth_holding_vol_count.sql", batchDate, filePath, null);
         execSql("eth_holding_vol_count", "erc20_tx_record_from.sql", batchDate, filePath, null);
         if (!token_holding_vol_countcheck) {
@@ -142,132 +322,16 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     }
 
-    private void tagByRuleSqlList(List<FileEntity> ruleSqlList, String batchDate) {
-        try {
-            forkJoinPool.execute(() -> {
-                ruleSqlList.parallelStream().forEach(ruleSql -> {
-                    execContentSql(ruleSql, batchDate);
-                });
-            });
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void execContentSql(FileEntity ruleSql, String batchDate) {
-        try {
-            String tableName = ruleSql.getFileName();
-            String table = tableName.split("\\.")[0];
-            if (checkResult(table, batchDate, 1, false)) {
-                return;
-            }
-            iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
-        } catch (Exception ex) {
-            try {
-                Thread.sleep(1 * 60 * 1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            execContentSql(ruleSql, batchDate);
-        }
-
-    }
-
-    public boolean checkResult(String tableName, String batchDate, Integer result, boolean likeKey) {
-        if (StringUtils.isEmpty(tableName)) {
-            return false;
-        }
-        try {
-            Integer tagInteger = checkResultData(tableName, batchDate, likeKey);
-            log.info("tableName==={},tagList.size===={}", tableName, tagInteger);
-            return tagInteger != null && tagInteger.intValue() >= result;
-        } catch (Exception ex) {
-            return false;
-        }
-    }
-
-    private Integer checkResultData(String tableName, String batchDate, boolean likeKey) {
-        String checkSql = "select count(1) from ".concat(" tag_result where 1=1 and ");
-        if (likeKey) {
-            checkSql = checkSql.concat(" table_name like '").concat(tableName).concat("%");
-        } else {
-            checkSql = checkSql.concat(" table_name='").concat(tableName);
-        }
-        checkSql = checkSql.concat("' and batch_date='").concat(batchDate).concat("'");
-        return iAddressLabelService.exceSelectSql(checkSql);
-    }
-
-    public void check(String tableName, long sleepTime, String batchDate, int resultNum, boolean likeKey) {
-        log.info("check tableName ===={} batchDate={} resultNum={} start.......", tableName, batchDate, resultNum);
-        if (StringUtils.isEmpty(tableName)) {
-            return;
-        }
-        while (true) {
-            try {
-                Integer tagInteger = checkResultData(tableName, batchDate, likeKey);
-                if (tagInteger != null && tagInteger.intValue() >= resultNum) {
-                    log.info("check table ===={} end.......tagList.size===={}", tableName, tagInteger);
-                    break;
-                }
-            } catch (Exception ex) {
-                try {
-                    Thread.sleep(sleepTime);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            try {
-                Thread.sleep(sleepTime);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-    }
-
-    @Override
-    public void refreshAllLabel(String batchDate) throws Exception {
-        String checkTable = "address_labels_json_gin_".concat(configEnvironment);
-        if (!checkResult(checkTable, batchDate, 1, false)) {
-            tag(batchDate, TAG_SCRIPTS_PATH);
-        }
-    }
-
-    private void tag(String batchDate, String filePath) throws Exception {
-        /****
-         * 如果正在打标签，等待.....
-         */
-        checkTagging(batchDate);
-        if (!checkResult("address_label", batchDate, 62, true)) {
-            buildTagBasicData(batchDate);
-            check("dim_rule_content", 60 * 1000, batchDate, 1, false);
-
-            tagSummaryInit(batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH);
-            check("total_volume_usd", 1 * 60 * 1000, batchDate, 1, false);
-            List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
-            List<FileEntity> fileList = Lists.newArrayList();
-            for (DimRuleSqlContent item : ruleSqlList) {
-                String fileName = item.getRuleName().concat(".sql");
-                fileList.add(FileEntity.builder().fileName(fileName)
-                .fileContent(FileUtils.readFile(filePath.concat(File.separator).concat(fileName))).build());
-            }
-            tagByRuleSqlList(fileList, batchDate);
-        }
-        check("address_label", 60 * 1000, batchDate, 59, true);
-        tagMerge(batchDate);
-    }
-
-
-    private void checkTagging(String batchDate) throws InterruptedException {
-        while (true) {
-            boolean taggingFlag = checkResult("tagging", batchDate, 1, false);
-            if (!taggingFlag) {
-                break;
-            }
-            Thread.sleep(10 * 60 * 1000);
-        }
-    }
-
+    /*************************************************************执行SQL部分**********************************************************/
+    /**
+     * 异步执行SQL
+     * @param lastTableName
+     * @param sqlName
+     * @param batchDate
+     * @param dir
+     * @param tableSuffix
+     * @return
+     */
     private boolean execSql(String lastTableName, String sqlName, String batchDate, String dir, String tableSuffix) {
         String tableName = sqlName.split("\\.")[0];
         String finalTableName = tableName;
@@ -280,6 +344,15 @@ public class TagAddressManagerImpl implements TagAddressManager {
         return checkResult(finalTableName, batchDate, 1, false);
     }
 
+    /**
+     * 同步执行SQL
+     * @param lastTableName
+     * @param sqlName
+     * @param tableName
+     * @param batchDate
+     * @param dir
+     * @param tableSuffix
+     */
     private void execSynSql(String lastTableName, String sqlName, String tableName, String batchDate, String dir, String tableSuffix) {
         check(lastTableName, 20 * 1000, batchDate, 1, false);
         try {
@@ -303,10 +376,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
     }
 
-    @Override
-    public void tagMerge(String batchDate) throws Exception {
-        execSql(null, "address_label_gp.sql", batchDate, INIT_PATH, configEnvironment);
-    }
+
 
 
 }
