@@ -44,7 +44,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
     /*********打标签脚本文件路径**********/
     public static String TAG_SCRIPTS_PATH = "tagscripts";
 
-    public static String RECENT_TIME = "tag-summary-init-scripts/recent_time";
+    /*************表定义脚本文件路径*************/
+    public static String TABEL_DEFI_PATH = "tabel-defi";
+    /*************时间维度脚本文件路径*************/
+    public static String RECENT_TIME_PATH = "recent-time";
+    /*************数据过滤脚本文件路径*************/
+    public static String DATA_FILTER_PATH = "tag-summary-init-scripts/data-filter";
 
     /**
      * 刷新全量标签
@@ -283,6 +288,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
     /************************************打标签汇总数据部分****************************************/
     private void tagSummaryInit(String batchDate, String filePath) throws Exception {
         execSql("dim_rule_content", "white_list_erc20.sql", batchDate, filePath, null);
+
+        /***************先执行***********/
         execSql("white_list_erc20", "nft_holding_middle.sql", batchDate, filePath, null);
         execSql("nft_holding_middle", "nft_holding_record.sql", batchDate, filePath, null);
         execSql("nft_holding", "nft_buy_sell_holding_middle.sql", batchDate, filePath, null);
