@@ -17,9 +17,6 @@ CREATE TABLE public.platform_nft_holding
     platform_group            varchar(256) NULL,
     recent_time_code          varchar(30) NULL
 ) distributed by (address, token, quote_token, platform);
-CREATE INDEX idx_pnh_address_gin_trgm ON public.platform_nft_holding USING btree (address);
-CREATE INDEX idx_pnh_platform_gin_trgm ON public.platform_nft_holding USING btree (platform);
-CREATE INDEX idx_pnh_token_gin_trgm ON public.platform_nft_holding USING btree (token);
 truncate table platform_nft_holding;
 vacuum platform_nft_holding;
 
