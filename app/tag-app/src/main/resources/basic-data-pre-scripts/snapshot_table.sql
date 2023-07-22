@@ -6,8 +6,9 @@ DROP TABLE if EXISTS public.eth_holding_time;
 DROP TABLE if EXISTS public.token_holding_time;
 DROP TABLE if EXISTS public.white_list_lp;
 DROP TABLE if EXISTS public.white_list_price;
+DROP TABLE if EXISTS public.top_token_1000;
 
-
+create table top_token_1000 as select * from top_token_1000_cdc;
 create table token_holding as select * from token_holding_cdc;
 create table eth_holding as select * from eth_holding_cdc;
 
