@@ -380,14 +380,14 @@ public class TagAddressManagerImpl implements TagAddressManager {
         String recentTimePath = filePath.concat(File.separator).concat(RECENT_TIME_PATH);
         dataFilter(batchDate, dataFilterPath);
         /***************nft_holding***********/
-        execSql("token_holding_uni_filter", "nft_holding.sql", batchDate, tableDefiPath, null);
+        execSql("token_holding_uni_filter", "nft_holding_summary.sql", batchDate, tableDefiPath, null);
         execSql("nft_holding", "nft_holding_middle.sql", batchDate, tableDefiPath, null);
         exceRecentTimeScripts(batchDate, recentTimePath, "nft_holding_middle.sql", "nft_holding_middle", 1,false);
         exceRecentTimeScripts(batchDate, recentTimePath, "nft_holding_record.sql", "nft_holding_middle", 10,true);
-        execSql("nft_holding_record", "nft_holding.sql", batchDate, filePath, 9,true,null);
+        execSql("nft_holding_record", "nft_holding_summary.sql", batchDate, filePath, 9,true,null);
 
         /***************nft_buy_sell_holding***********/
-        execSql("nft_holding_from_middle", "nft_buy_sell_holding_middle.sql", batchDate, tableDefiPath, 1,false,null);
+        execSql("nft_holding_summary", "nft_buy_sell_holding_middle.sql", batchDate, tableDefiPath, 1,false,null);
         exceRecentTimeScripts(batchDate, recentTimePath, "nft_buy_sell_holding_middle.sql", "nft_buy_sell_holding_middle", 1,false);
         execSql("nft_buy_sell_holding_middle", "nft_buy_sell_holding.sql", batchDate, filePath, 10,true,null);
         execSql("nft_buy_sell_holding", "nft_transfer_holding.sql", batchDate, filePath, 11,false,null);
