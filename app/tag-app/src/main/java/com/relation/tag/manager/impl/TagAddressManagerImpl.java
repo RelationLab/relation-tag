@@ -334,7 +334,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private void basicData(String batchDate, String filePath) {
         /******************级别部分*****************/
-        execSql("create_view.", "level_def.sql", batchDate, filePath, null);
+        execSql("create_view", "level_def.sql", batchDate, filePath, null);
 
         /******************DEX部分*****************/
         execSql("level_def", "platform.sql", batchDate, filePath, null);
