@@ -6775,7 +6775,7 @@ select distinct ''                                                              
                 'volume_rank'                                                           data_subject,
                 ''                                                                      project_name,
                 'ALL'                                                                   token_name,
-                recent_code
+                recent_time.recent_time_code
 from nft_trade_type
          inner join recent_time on (1 = 1)
 where nft_trade_type.type = '0';
