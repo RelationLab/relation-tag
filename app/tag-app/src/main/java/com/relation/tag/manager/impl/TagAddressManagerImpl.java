@@ -296,7 +296,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
                 tableSuffix = conditionMap.getOrDefault("tableSuffix", null);
             }
             tableName = StringUtils.isNotBlank(recentTimeCode)?tableName.concat("_").concat(recentTimeCode):tableName;
-            if (checkResult(tableName, batchDate, resultNum, likeKey)) {
+            if (checkResult(tableName, batchDate, 1, false)) {
                 return;
             }
             String exceSql = FileUtils.readFile(dir.concat(File.separator).concat(sqlName));
