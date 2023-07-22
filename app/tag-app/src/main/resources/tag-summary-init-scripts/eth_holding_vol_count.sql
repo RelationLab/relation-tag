@@ -18,7 +18,8 @@ insert
 into eth_holding_vol_count(address,
                            block_height,
                            total_transfer_volume,
-                           total_transfer_count)
+                           total_transfer_count,
+                           recent_time_code)
 select address,
        max(block_height) as       block_height,
        sum(total_transfer_volume) total_transfer_volume,

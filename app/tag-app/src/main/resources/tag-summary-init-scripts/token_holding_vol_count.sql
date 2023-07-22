@@ -21,7 +21,8 @@ insert into
                             block_height,
                             token,
                             total_transfer_volume,
-                            total_transfer_count)
+                            total_transfer_count,
+                            recent_time_code)
 select
     address,
     max(block_height) as block_height,
