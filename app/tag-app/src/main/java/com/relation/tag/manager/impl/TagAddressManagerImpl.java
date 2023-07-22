@@ -440,7 +440,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private void exceRecentTimeScripts(String batchDate, String filePath, String fileName, String lastTableName, int resultNum, boolean likeKey) {
         List<String> list = iAddressLabelService.selectRecentTimeList();
-        log.info("exceRecentTimeScripts start......list={}",list);
+        log.info("exceRecentTimeScripts start......list={},fileName={},lastTableName={},resultNum={},likeKey={}",list,fileName,lastTableName,resultNum,likeKey);
         if (CollectionUtils.isEmpty(list)) {
             return;
         }
