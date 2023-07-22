@@ -82,5 +82,10 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
         baseMapper.setSuggestAddressBatchStatus(list);
     }
 
+    @Override
+    public List<String> selectRecentTimeList() {
+        return baseMapper.selectRecentTimeList();
+    }
+
 
 }

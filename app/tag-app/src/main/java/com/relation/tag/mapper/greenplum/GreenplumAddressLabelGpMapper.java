@@ -34,4 +34,6 @@ public interface GreenplumAddressLabelGpMapper extends BaseMapper<AddressLabelGp
     List<SuggestAddressBatch> selectSuggestAddressBatch(String configEnvironment);
 
     void setSuggestAddressBatchStatus(List<SuggestAddressBatch> list);
+
+    List<String> selectRecentTimeList();
 }
