@@ -155,7 +155,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             try {
                 Integer tagInteger = checkResultData(tableName, batchDate, likeKey);
                 if (tagInteger != null && tagInteger.intValue() >= resultNum) {
-//                    log.info("check table ===={} end.......tagList.size===={}", tableName, tagInteger);
+                    log.info("check table ===={} end.......tagList.size===={}", tableName, tagInteger);
                     break;
                 }
             } catch (Exception ex) {

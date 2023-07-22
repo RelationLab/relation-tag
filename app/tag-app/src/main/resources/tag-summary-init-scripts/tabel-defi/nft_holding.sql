@@ -17,11 +17,8 @@ CREATE TABLE public.nft_holding
     updated_block_height       int8         NOT NULL,
     recent_time_code           varchar(30) NULL,
     created_at                 timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at                 timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at                 timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) distributed by (address, token);
-CREATE INDEX idx_nbv_updatedblockheight ON public.nft_holding USING btree (updated_block_height DESC);
-CREATE INDEX nft_activity_balance_volume_address_gin_trgm ON public.nft_holding USING btree (address);
-CREATE INDEX nft_activity_balance_volume_token_gin_trgm ON public.nft_holding USING btree (token);
 truncate table nft_holding;
 vacuum nft_holding;
 insert into tag_result(table_name, batch_date)
