@@ -22,6 +22,6 @@ insert into nft_transfer_holding (address, token, total_transfer_volume, total_t
      from nft_holding nh
               left join nft_buy_sell_holding nbsh
                         on nh.address = nbsh.address
-                            and nh.token = nbsh.token);
+                            and nh.token = nbsh.token and nh.recent_time_code=nbsh.recent_time_code);
 insert into tag_result(table_name,batch_date)  SELECT 'nft_transfer_holding' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
