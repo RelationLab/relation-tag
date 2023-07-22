@@ -125,3 +125,5 @@ insert into nft_holding_middle(address, token, balance, total_transfer_volume, t
        and to_address != '0x0000000000000000000000000000000000000000'
                and to_address != '0x000000000000000000000000000000000000dead'
      group by to_address, token, recent_time_code);
+insert into tag_result(table_name, batch_date)
+SELECT 'nft_holding_middle_${recent_time_code}' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;

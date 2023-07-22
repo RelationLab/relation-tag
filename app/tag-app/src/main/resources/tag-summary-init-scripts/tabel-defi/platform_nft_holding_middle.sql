@@ -18,4 +18,5 @@ CREATE TABLE public.platform_nft_holding_middle
 ) distributed by (address, token, quote_token, platform);
 truncate table platform_nft_holding_middle;
 vacuum platform_nft_holding_middle;
+insert into tag_result(table_name, batch_date)
 SELECT 'platform_nft_holding_middle' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;

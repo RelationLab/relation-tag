@@ -33,4 +33,4 @@ group by
     th.token,
     th.type,
     recent_time.recent_time_code;
-insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_volume_count_summary_univ3' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_volume_count_summary_univ3_${recent_time_code}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

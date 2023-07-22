@@ -28,5 +28,5 @@
         recent_time_code;
 
 update web3_transaction_record_summary set type ='mint' where type='Mint';
-insert into tag_result(table_name,batch_date)  SELECT 'web3_transaction_record_summary' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'web3_transaction_record_summary_${recent_time_code}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
