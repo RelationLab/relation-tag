@@ -64,20 +64,20 @@ into
 			max(block_number) as block_number,
 			recent_time_code
                 from
-                    platform_nft_tx_record
+                    platform_nft_tx_record inner join (
+                    select
+                    *
+                    from
+                    recent_time
+                    where
+                    recent_time.recent_time_code = '${recent_time_code}') recent_time on
+                    (platform_nft_tx_record.block_number >= recent_time.block_height)
                 group by
                     to_address,
                     token,
                     hash,
                     recent_time_code) platform_nft_tx_record
-                inner join (
-                select
-                    *
-                from
-                    recent_time
-                where
-                        recent_time.recent_time_code = '${recent_time_code}') recent_time on
-                (platform_nft_tx_record.block_number >= recent_time.block_height)
+
         group by
             to_address,
             token,
