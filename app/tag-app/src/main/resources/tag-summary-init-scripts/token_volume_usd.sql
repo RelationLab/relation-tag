@@ -21,14 +21,14 @@ into token_volume_usd(address,
                       recent_time_code)
 select th.address,
        token,
-       round(total_transfer_all_volume * round(cast(wle.price as numeric), 18), 8) as volume_usd,
+       round(total_transfer_volume * round(cast(wle.price as numeric), 18), 8) as volume_usd,
        recent_time_code
 from (select address,
              token,
-             total_transfer_all_volume,
+             total_transfer_volume,
              recent_time_code
       from token_holding_vol_count
-      where total_transfer_all_volume > 0
+      where total_transfer_volume > 0
         and token in (select token_id
                       from dim_rank_token)) th
          inner join (select *
@@ -45,13 +45,13 @@ into token_volume_usd(address,
                       recent_time_code)
 select eh.address                                                                     as address,
        'eth'                                                                          as token,
-       round(eh.total_transfer_all_volume * round(cast(wle.price as numeric), 18), 8) as volume_usd,
+       round(eh.total_transfer_volume * round(cast(wle.price as numeric), 18), 8) as volume_usd,
        recent_time_code as recent_time_code
 from (select address,
-             total_transfer_all_volume,
+             total_transfer_volume,
              recent_time_code
       from eth_holding_vol_count
-      where total_transfer_all_volume > 0) eh
+      where total_transfer_volume > 0) eh
          inner join (select price
                      from white_list_erc20
                      where symbol = 'WETH'
