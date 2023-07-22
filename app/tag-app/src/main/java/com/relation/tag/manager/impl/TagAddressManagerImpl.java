@@ -390,7 +390,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("nft_holding_summary", "nft_buy_sell_holding_middle.sql", batchDate, tableDefiPath, 1,false,null);
         exceRecentTimeScripts(batchDate, recentTimePath, "nft_buy_sell_holding_middle.sql", "nft_buy_sell_holding_middle", 1,false);
         execSql("nft_buy_sell_holding_middle", "nft_buy_sell_holding.sql", batchDate, filePath, 10,true,null);
-        execSql("nft_buy_sell_holding", "nft_transfer_holding.sql", batchDate, filePath, 11,false,null);
+        execSql("nft_buy_sell_holding", "nft_transfer_holding.sql", batchDate, filePath, 11,true,null);
 
         /***************platform_nft_holding***********/
         execSql("nft_transfer_holding", "platform_nft_holding_middle.sql", batchDate, tableDefiPath, 1,false,null);
