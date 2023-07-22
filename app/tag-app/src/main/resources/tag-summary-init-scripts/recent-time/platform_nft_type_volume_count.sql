@@ -164,7 +164,7 @@ from (
                   recent_time_code
          union all
          ----------------增加blur的bid的seller(seller不一定是from)
-         select recent_time_code
+         select recent_time_code,
                                        address,
                 "token"             as quote_token,
                 "token",
@@ -197,7 +197,8 @@ from (
                   pbtrout.token,
                   recent_time_code) bidt
 group by bidt.address,
-         bidt.token;
+         bidt.token,
+         recent_time_code;
 
 insert into tag_result(table_name, batch_date)
 SELECT 'platform_nft_type_volume_count_${recent_time_code}' as table_name,
