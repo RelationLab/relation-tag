@@ -189,7 +189,10 @@ public class TagAddressManagerImpl implements TagAddressManager {
             checkSql = checkSql.concat(" table_name='").concat(tableName);
         }
         checkSql = checkSql.concat("' and batch_date='").concat(batchDate).concat("'");
-        return iAddressLabelService.exceSelectSql(checkSql);
+        log.info("exceSelectSql======={}",checkSql);
+        Integer retVal = iAddressLabelService.exceSelectSql(checkSql);
+        log.info("exceSelectSql======={},retVal=============={}",checkSql,retVal);
+        return retVal;
     }
 
     /**
