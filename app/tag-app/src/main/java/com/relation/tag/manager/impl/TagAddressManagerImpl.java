@@ -52,7 +52,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     /*************时间维度脚本文件路径*************/
     public static String RECENT_TIME_PATH = "recent-time";
     /*************数据过滤脚本文件路径*************/
-    public static String DATA_FILTER_PATH = "tag-summary-init-scripts/data-filter";
+    public static String DATA_FILTER_PATH = "data-filter";
 
     /***********************************打标签流程代码*******************************************/
     /**
