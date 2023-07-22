@@ -95,7 +95,8 @@ into dex_tx_volume_count_summary(address,
                                  block_height,
                                  total_transfer_volume_usd,
                                  total_transfer_count,
-                                 first_updated_block_height)
+                                 first_updated_block_height,
+                                 recent_time_code)
 select dtvcr.address,
        'ALL'                          AS token,
        dtvcr.type,
