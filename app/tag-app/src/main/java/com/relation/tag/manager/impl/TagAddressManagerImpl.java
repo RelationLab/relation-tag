@@ -189,9 +189,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
             checkSql = checkSql.concat(" table_name='").concat(tableName);
         }
         checkSql = checkSql.concat("' and batch_date='").concat(batchDate).concat("'");
-        log.info("exceSelectSql======={}",checkSql);
+//        log.info("exceSelectSql======={}",checkSql);
         Integer retVal = iAddressLabelService.exceSelectSql(checkSql);
-        log.info("exceSelectSql======={},retVal=============={}",checkSql,retVal);
+//        log.info("exceSelectSql======={},retVal=============={}",checkSql,retVal);
         return retVal;
     }
 
@@ -289,16 +289,17 @@ public class TagAddressManagerImpl implements TagAddressManager {
                             String batchDate, String dir, int resultNum, boolean likeKey, Map<String, String> conditionMap) {
         check(lastTableName, 20 * 1000, batchDate, resultNum, likeKey);
         try {
-            if (checkResult(tableName, batchDate, resultNum, likeKey)) {
-                return;
-            }
-            String exceSql = FileUtils.readFile(dir.concat(File.separator).concat(sqlName));
             String recentTimeCode = null;
             String tableSuffix = null;
             if (conditionMap != null && !conditionMap.isEmpty()) {
                 recentTimeCode = conditionMap.getOrDefault("recentTimeCode", null);
                 tableSuffix = conditionMap.getOrDefault("tableSuffix", null);
             }
+            tableName = StringUtils.isNotBlank(recentTimeCode)?tableName.concat("_").concat(recentTimeCode):tableName;
+            if (checkResult(tableName, batchDate, resultNum, likeKey)) {
+                return;
+            }
+            String exceSql = FileUtils.readFile(dir.concat(File.separator).concat(sqlName));
             if (StringUtils.isNotEmpty(recentTimeCode)) {
                 exceSql = exceSql.replace("${recent_time_code}", recentTimeCode);
             }
@@ -443,7 +444,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private void exceRecentTimeScripts(String batchDate, String filePath, String fileName, String lastTableName, int resultNum, boolean likeKey) {
         List<String> list = iAddressLabelService.selectRecentTimeList();
-        log.info("exceRecentTimeScripts start......list={},fileName={},lastTableName={},resultNum={},likeKey={}",list,fileName,lastTableName,resultNum,likeKey);
+//        log.info("exceRecentTimeScripts start......list={},fileName={},lastTableName={},resultNum={},likeKey={}",list,fileName,lastTableName,resultNum,likeKey);
         if (CollectionUtils.isEmpty(list)) {
             return;
         }
