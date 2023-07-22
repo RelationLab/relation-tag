@@ -51,4 +51,4 @@ group by
     pntvc.recent_time_code;
 
 
-insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_type_volume_count' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_type_volume_count_summary' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
