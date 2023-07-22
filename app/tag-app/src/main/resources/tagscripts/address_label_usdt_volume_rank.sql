@@ -17,7 +17,21 @@ CREATE TABLE public.address_label_usdt_volume_rank (
 truncate table public.address_label_usdt_volume_rank;
 vacuum address_label_usdt_volume_rank;
 
-insert into public.address_label_usdt_volume_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
+insert
+into
+    public.address_label_usdt_volume_rank(address,
+                                          label_type,
+                                          label_name,
+                                          data,
+                                          wired_type,
+                                          updated_at,
+                                          "group",
+                                          level,
+                                          category,
+                                          trade_type,
+                                          project,
+                                          asset,
+                                          bus_type)
 select
     tb1.address,
     tb2.label_type,
@@ -30,10 +44,10 @@ select
                                      and zb_rate <= 0.1 then 'MEDIUM'
                                  when zb_rate <= 0.001 then 'LEGENDARY'
         end as label_name,
-    zb_rate  as data,
-    'DEFI'  as wired_type,
+    zb_rate as data,
+    'DEFI' as wired_type,
     now() as updated_at,
-    'v'  as "group",
+    'v' as "group",
     case
         when zb_rate > 0.01
             and zb_rate <= 0.025 then 'HEAVY'
@@ -41,8 +55,9 @@ select
             and zb_rate <= 0.01 then 'ELITE'
         when zb_rate > 0.025
             and zb_rate <= 0.1 then 'MEDIUM'
-        when zb_rate <= 0.001 then 'LEGENDARY' end    as level,
-    'rank'  as category,
+        when zb_rate <= 0.001 then 'LEGENDARY'
+        end as level,
+    'rank' as category,
     'ALL' trade_type,
     '' as project,
     tb2.token_name as asset,
@@ -82,8 +97,9 @@ from
                                     a1.address,
                                     a1.token,
                                     a1.volume_usd,
-                                    row_number() over(order byvolume_usd desc,address asc) as count_sum,
-                                    a1.recent_time_code
+                                    row_number() over(order by volume_usd desc,
+					address asc) as count_sum,
+                                        a1.recent_time_code
                                 from
                                     (
                                         select
@@ -101,7 +117,12 @@ from
                                                 from
                                                     token_volume_usd
                                                 where
-                                                        token = '0xdac17f958d2ee523a2206206994597c13d831ec7' and address not in (select address from exclude_address)) s1
+                                                        token = '0xdac17f958d2ee523a2206206994597c13d831ec7'
+                                                  and address not in (
+                                                    select
+                                                        address
+                                                    from
+                                                        exclude_address)) s1
                                                 inner join dim_rank_token s2
                                                            on
                                                                    s1.token = s2.token_id
@@ -119,14 +140,22 @@ from
                                 from
                                     token_volume_usd
                                 where
-                                        token = '0xdac17f958d2ee523a2206206994597c13d831ec7' and address not in (select address from exclude_address)
-                                  and volume_usd >= 100 group by recent_time_code) as a10
+                                        token = '0xdac17f958d2ee523a2206206994597c13d831ec7'
+                                  and address not in (
+                                    select
+                                        address
+                                    from
+                                        exclude_address)
+                                  and volume_usd >= 100
+                                group by
+                                    recent_time_code) as a10
                             on
-                                    a10.recent_time_code=a1.recent_time_code) as a2) as t1) tb1
+                                    a10.recent_time_code = a1.recent_time_code) as a2) as t1) tb1
         inner join
     dim_rule_content tb2
     on
-            tb1.token = tb2.token and tb1.recent_time_code=tb2.recent_code
+                tb1.token = tb2.token
+            and tb1.recent_time_code = tb2.recent_code
 where
         tb2.data_subject = 'volume_rank'
   and tb2.token_type = 'token'

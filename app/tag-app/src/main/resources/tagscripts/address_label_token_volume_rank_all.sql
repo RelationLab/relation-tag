@@ -83,35 +83,37 @@ from
                                     a1.token,
                                     a1.volume_usd,
                                     row_number() over(partition by token,recent_time_code
-				                    order by volume_usd desc,address asc) as count_sum
+				                    order by volume_usd desc,address asc) as count_sum,
+                                        recent_time_code
                                 from
                                     (
                                         select address,
                                                'ALL' as token ,
                                                sum(volume_usd)  volume_usd,
                                                recent_time_code from (
-                                                                    select
-                                                                        address,
-                                                                        'ALL' as token ,
-                                                                        volume_usd,
-                                                                        recent_time_code
-                                                                    from
-                                                                        total_volume_usd tbvu
-                                                                    where volume_usd>=100
-                                                                        and address not in (select address from exclude_address)
-                                                                    union all
-                                                                    select
-                                                                        address,
-                                                                        'ALL' as token ,
-                                                                        sum(total_transfer_volume_usd) as volume_usd,
-                                                                        recent_time_code
-                                                                    from
-                                                                        dex_tx_volume_count_summary_univ3 th
-                                                                    where
-                                                                            th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
-                                                                      and th.type='ALL' and th.total_transfer_volume_usd >=100
-                                                                      and address not in (select address from exclude_address) group by address
-                                                                ) tout group by address,recent_time_code
+                                                                         select
+                                                                             address,
+                                                                             'ALL' as token ,
+                                                                             volume_usd,
+                                                                             recent_time_code
+                                                                         from
+                                                                             total_volume_usd tbvu
+                                                                         where volume_usd>=100
+                                                                           and address not in (select address from exclude_address)
+                                                                         union all
+                                                                         select
+                                                                             address,
+                                                                             'ALL' as token ,
+                                                                             sum(total_transfer_volume_usd) as volume_usd,
+                                                                             recent_time_code
+                                                                         from
+                                                                             dex_tx_volume_count_summary_univ3 th
+                                                                         where
+                                                                                 th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
+                                                                           and th.type='ALL' and th.total_transfer_volume_usd >=100
+                                                                           and address not in (select address from exclude_address)
+                                                                         group by address,recent_time_code
+                                                                     ) tout group by address,recent_time_code
                                     ) as a1) as a1
                                 inner join
                             (
@@ -131,27 +133,28 @@ from
                                                     'ALL' as token ,
                                                     sum(volume_usd)  volume_usd ,
                                                     recent_time_code from (
-                                                                                         select
-                                                                                             address,
-                                                                                             'ALL' as token ,
-                                                                                             volume_usd,
-                                                                                             recent_time_code
-                                                                                         from
-                                                                                             total_volume_usd tbvu where volume_usd>=100
-                                                                                             and address not in (select address from exclude_address)
-                                                                                         union all
-                                                                                         select
-                                                                                             address,
-                                                                                             'ALL' as token ,
-                                                                                             sum(total_transfer_volume_usd) as volume_usd,
-                                                                                             recent_time_code
-                                                                                         from
-                                                                                             dex_tx_volume_count_summary_univ3 th
-                                                                                         where
-                                                                                                 th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
-                                                                                           and th.type='ALL' and th.total_transfer_volume_usd >=100
-                                                                                           and address not in (select address from exclude_address) group by address
-                                                                                     ) tout group by address,recent_time_code
+                                                                              select
+                                                                                  address,
+                                                                                  'ALL' as token ,
+                                                                                  volume_usd,
+                                                                                  recent_time_code
+                                                                              from
+                                                                                  total_volume_usd tbvu where volume_usd>=100
+                                                                                                          and address not in (select address from exclude_address)
+                                                                              union all
+                                                                              select
+                                                                                  address,
+                                                                                  'ALL' as token ,
+                                                                                  sum(total_transfer_volume_usd) as volume_usd,
+                                                                                  recent_time_code
+                                                                              from
+                                                                                  dex_tx_volume_count_summary_univ3 th
+                                                                              where
+                                                                                      th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
+                                                                                and th.type='ALL' and th.total_transfer_volume_usd >=100
+                                                                                and address not in (select address from exclude_address)
+                                                                              group by address,recent_time_code
+                                                                          ) tout group by address,recent_time_code
                                             ) totala
                                         group by
                                             token,
@@ -163,11 +166,11 @@ from
                                     token,
                                     recent_time_code) as a10
                             on
-                                    a10.token = a1.token and   a10.recent_time_code = a1.recent_time_code) as a2) as t1) tb1
+                                        a10.token = a1.token and   a10.recent_time_code = a1.recent_time_code) as a2) as t1) tb1
         inner join
     dim_rule_content tb2
     on
-            tb1.token = tb2.token and   tb1.recent_time_code = tb2.recent_code
+                tb1.token = tb2.token and   tb1.recent_time_code = tb2.recent_code
 where
         tb1.volume_usd >= 100
   and tb2.data_subject = 'volume_rank'
@@ -194,18 +197,18 @@ truncate table public.address_label_crowd_defi_high_demander;
 insert into public.address_label_crowd_defi_high_demander(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
     distinct a1.address ,
-    'crowd_defi_high_demander' as label_type,
-    'crowd_defi_high_demander' as label_name,
-    0  as data,
-    'CROWD'  as wired_type,
-    now() as updated_at,
-    'g'  as "group",
-    'crowd_defi_high_demander' level,
-    'other' as category,
-    'ALL' trade_type,
-    'ALL' as project,
-    'ALL' as asset,
-    'CROWD' as bus_type  from address_label_token_volume_rank_all a1
+             'crowd_defi_high_demander' as label_type,
+             'crowd_defi_high_demander' as label_name,
+             0  as data,
+             'CROWD'  as wired_type,
+             now() as updated_at,
+             'g'  as "group",
+             'crowd_defi_high_demander' level,
+             'other' as category,
+             'ALL' trade_type,
+             'ALL' as project,
+             'ALL' as asset,
+             'CROWD' as bus_type  from address_label_token_volume_rank_all a1
 where (label_name = 'ALL_ALL_ALL_VOLUME_RANK_MEDIUM' or label_name = 'ALL_ALL_ALL_VOLUME_RANK_HEAVY'
     or label_name = 'ALL_ALL_ALL_VOLUME_RANK_ELITE'  or label_name = 'ALL_ALL_ALL_VOLUME_RANK_LEGENDARY')
   and

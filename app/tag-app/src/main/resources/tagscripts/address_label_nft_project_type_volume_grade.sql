@@ -6,12 +6,12 @@ CREATE TABLE public.address_label_nft_project_type_volume_grade (
                                                                     label_type varchar(512) NULL,
                                                                     label_name varchar(1024) NULL,
                                                                     updated_at timestamp(6) NULL,
-    "group" varchar(1) NULL,
-    "level" varchar(100) NULL,
-    category varchar(100) NULL,
-    trade_type varchar(100) NULL,
-    project varchar(100) NULL,
-    asset varchar(100) NULL,
+                                                                    "group" varchar(1) NULL,
+                                                                    "level" varchar(100) NULL,
+                                                                    category varchar(100) NULL,
+                                                                    trade_type varchar(100) NULL,
+                                                                    project varchar(100) NULL,
+                                                                    asset varchar(100) NULL,
                                                                     bus_type varchar(20) NULL
 );
 truncate table public.address_label_nft_project_type_volume_grade;
@@ -39,23 +39,23 @@ select
     now() as updated_at,
     'v'  as "group",
     case
-    when volume_usd >= 100
-    and volume_usd < 1000 then 'L1'
-    when volume_usd >= 1000
-    and volume_usd < 10000 then 'L2'
-    when volume_usd >= 10000
-    and volume_usd < 50000 then 'L3'
-    when volume_usd >= 50000
-    and volume_usd < 100000 then 'L4'
-    when volume_usd >= 100000
-    and volume_usd < 500000 then 'L5'
-    when volume_usd >= 500000 then 'L6' end   as level,
+        when volume_usd >= 100
+            and volume_usd < 1000 then 'L1'
+        when volume_usd >= 1000
+            and volume_usd < 10000 then 'L2'
+        when volume_usd >= 10000
+            and volume_usd < 50000 then 'L3'
+        when volume_usd >= 50000
+            and volume_usd < 100000 then 'L4'
+        when volume_usd >= 100000
+            and volume_usd < 500000 then 'L5'
+        when volume_usd >= 500000 then 'L6' end   as level,
     'grade' as category,
     t.type as trade_type,
     t.project_name as project,
     t.token_name as asset,
     'volume' as bus_type
-    from
+from
     (
         -- project-token-type
         select
@@ -68,9 +68,9 @@ select
             recent_time_code
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-            on a1.token=a2.token and a1.platform_group=a2.project on a2.recent_code=a1.recent_time_code
-                   and a1.type=a2.type and a2.data_subject = 'volume_grade'
-        and a1.token in (select token_id from dim_project_token_type_rank dpttr)
+                                                          on a1.token=a2.token and a1.platform_group=a2.project and  a2.recent_code=a1.recent_time_code
+                                                              and a1.type=a2.type and a2.data_subject = 'volume_grade'
+                                                              and a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,
             a2.label_type,
@@ -78,7 +78,7 @@ select
             a2.project_name ,
             a2.token_name,
             recent_time_code
-    -- project-token(ALL)-type
+            -- project-token(ALL)-type
         union all
         select
             a1.address,
@@ -90,8 +90,8 @@ select
             recent_time_code
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-        on a2.token='ALL' and a1.platform_group=a2.project  on a2.recent_code=a1.recent_time_code
-               and a1.type=a2.type and a2.data_subject = 'volume_grade'
+                                                          on a2.token='ALL' and a1.platform_group=a2.project  and  a2.recent_code=a1.recent_time_code
+                                                              and a1.type=a2.type and a2.data_subject = 'volume_grade'
         where a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,
@@ -100,7 +100,7 @@ select
             a2.project_name ,
             a2.token_name,
             recent_time_code
-        -- project(ALL)-token(ALL)-type
+            -- project(ALL)-token(ALL)-type
         union all
         select
             a1.address,
@@ -112,8 +112,8 @@ select
             recent_time_code
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-                                          on a2.token='ALL' on a2.recent_code=a1.recent_time_code
-                                             and a2.project='ALL' and a1.type=a2.type and a2.data_subject = 'volume_grade'
+                                                          on a2.token='ALL' and  a2.recent_code=a1.recent_time_code
+                                                              and a2.project='ALL' and a1.type=a2.type and a2.data_subject = 'volume_grade'
         where a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,
@@ -134,8 +134,8 @@ select
             recent_time_code
         from
             platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
-                                  on a2.token=a1.token on a2.recent_code=a1.recent_time_code
-                                 and a2.project='ALL' and a1.type=a2.type and a2.data_subject = 'volume_grade'
+                                                          on a2.token=a1.token and a2.recent_code=a1.recent_time_code
+                                                              and a2.project='ALL' and a1.type=a2.type and a2.data_subject = 'volume_grade'
         where a1.token in (select token_id from dim_project_token_type_rank dpttr)
         group by
             a1.address,

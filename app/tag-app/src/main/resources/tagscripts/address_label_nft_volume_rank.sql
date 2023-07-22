@@ -55,7 +55,8 @@ from
             dptt.type as type,
             '' as project_name,
             dptt.token_name as token_name,
-            zb_rate
+            zb_rate,
+            recent_time_code
         from
             (
                 select
@@ -77,7 +78,7 @@ from
                             a2.count_sum,
                             a2.count_sum_total,
                             cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate,
-                            a1.recent_time_code
+                            recent_time_code
                         from
                             (
                                 select
@@ -87,7 +88,7 @@ from
                                     a1.transfer_volume,
                                     a1.count_sum,
                                     a10.count_sum_total,
-                                    recent_time_code
+                                    a1.recent_time_code
                                 from
                                     (
                                         select
@@ -133,7 +134,7 @@ from
                                                         where
                                                                 transfer_volume >= 1
                                                           and address not in (select address from exclude_address)
-                                                            and token in (select token_id from dim_project_token_type_rank dpttr)) s1
+                                                          and token in (select token_id from dim_project_token_type_rank dpttr)) s1
                                                         inner join dim_project_token_type s2
                                                                    on
                                                                                s1.token = s2.token
@@ -145,7 +146,7 @@ from
                                                                            and s2.label_type not like '%WEB3%'
                                                                             and  s1.recent_time_code = s2.recent_code
                                                 where
-                                                        transfer_volume >= 1
+                                                    transfer_volume >= 1
                                                 group by
                                                     s1.address,
                                                     s1.type,
@@ -183,8 +184,8 @@ from
                                                 where
                                                         transfer_volume >= 1
                                                   and address not in (select address from exclude_address)
-                                                    and token in (select token_id from dim_project_token_type_rank dpttr)
-                                                 ) totala
+                                                  and token in (select token_id from dim_project_token_type_rank dpttr)
+                                            ) totala
                                                 inner join dim_project_token_type tb2
                                                            on
                                                                        totala.token = tb2.token
@@ -233,23 +234,23 @@ truncate table public.address_label_crowd_nft_high_demander;
 insert into public.address_label_crowd_nft_high_demander(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
 select
     distinct a1.address ,
-    'crowd_nft_high_demander' as label_type,
-    'crowd_nft_high_demander' as label_name,
-    0  as data,
-    'CROWD'  as wired_type,
-    now() as updated_at,
-    'g'  as "group",
-    'crowd_nft_high_demander'    as level,
-    'other' as category,
-    'ALL' as trade_type,
-    'ALL' as project,
-    'ALL' as asset,
-    'CROWD' as bus_type
+             'crowd_nft_high_demander' as label_type,
+             'crowd_nft_high_demander' as label_name,
+             0  as data,
+             'CROWD'  as wired_type,
+             now() as updated_at,
+             'g'  as "group",
+             'crowd_nft_high_demander'    as level,
+             'other' as category,
+             'ALL' as trade_type,
+             'ALL' as project,
+             'ALL' as asset,
+             'CROWD' as bus_type
 from address_label_nft_volume_rank a1
 where (label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_RARE_NFT_TRADER'
     or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_EPIC_NFT_TRADER'
     or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_UNCOMMON_NFT_TRADER'
     or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_LEGENDARY_NFT_TRADER')
   and
-         address not in (select address from exclude_address);
+        address not in (select address from exclude_address);
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_volume_rank' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

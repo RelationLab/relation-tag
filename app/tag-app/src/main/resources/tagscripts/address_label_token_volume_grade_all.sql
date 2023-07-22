@@ -17,7 +17,21 @@ CREATE TABLE public.address_label_token_volume_grade_all (
 truncate table public.address_label_token_volume_grade_all;
 vacuum address_label_token_volume_grade_all;
 
-insert into public.address_label_token_volume_grade_all(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
+insert
+into
+    public.address_label_token_volume_grade_all(address,
+                                                label_type,
+                                                label_name,
+                                                data,
+                                                wired_type,
+                                                updated_at,
+                                                "group",
+                                                level,
+                                                category,
+                                                trade_type,
+                                                project,
+                                                asset,
+                                                bus_type)
 select
     a1.address,
     a2.label_type,
@@ -38,10 +52,10 @@ select
                                     and volume_usd < 1000000000 then 'Million'
                                 when volume_usd >= 1000000000 then 'Billion'
         end as label_name,
-    volume_usd  as data,
-    'DEFI'  as wired_type,
+    volume_usd as data,
+    'DEFI' as wired_type,
     now() as updated_at,
-    'v'  as "group",
+    'v' as "group",
     case
         when volume_usd >= 100
             and volume_usd < 1000 then 'L1'
@@ -57,46 +71,64 @@ select
             and volume_usd < 1000000 then 'L6'
         when volume_usd >= 1000000
             and volume_usd < 1000000000 then 'Million'
-        when volume_usd >= 1000000000 then 'Billion' end  as level,
-    'grade'  as category,
+        when volume_usd >= 1000000000 then 'Billion'
+        end as level,
+    'grade' as category,
     'ALL' trade_type,
     '' as project,
     'ALL' as asset,
     'volume' as bus_type
 from
     (
-        select address,
-               'ALL' as token ,
-               sum(volume_usd)  volume_usd,
-               recent_time_code from (
-                                                    select
-                                                        address,
-                                                        'ALL' as token ,
-                                                        round(volume_usd,8) volume_usd,
-                                                        recent_time_code
-                                                    from
-                                                        total_volume_usd tbvu where volume_usd>=100
-                                                    union all
-                                                    select
-                                                        address,
-                                                        'ALL' as token ,
-                                                        sum(round(total_transfer_volume_usd,8)) as volume_usd,
-                                                        recent_time_code
-                                                    from
-                                                        dex_tx_volume_count_summary_univ3 th
-                                                    where
-                                                            th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
-                                                      and th.type='ALL' and th.total_transfer_volume_usd >=100  group by address
-                                                ) tout group by address,
-                                                                recent_time_code
+        select
+            address,
+            'ALL' as token ,
+            sum(volume_usd) volume_usd,
+            recent_time_code
+        from
+            (
+                select
+                    address,
+                    'ALL' as token ,
+                    round(volume_usd, 8) volume_usd,
+                    recent_time_code
+                from
+                    total_volume_usd tbvu
+                where
+                        volume_usd >= 100
+                union all
+                select
+                    address,
+                    'ALL' as token ,
+                    sum(round(total_transfer_volume_usd, 8)) as volume_usd,
+                    recent_time_code
+                from
+                    dex_tx_volume_count_summary_univ3 th
+                where
+                        th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
+                  and th.type = 'ALL'
+                  and th.total_transfer_volume_usd >= 100
+                group by
+                    address,
+                    recent_time_code
+            ) tout
+        group by
+            address,
+            recent_time_code
     )
         a1
         inner join
     dim_rule_content a2
     on
-            a1.token = a2.token and  a1.recent_time_code = a2.recent_code
+                a1.token = a2.token
+            and a1.recent_time_code = a2.recent_code
 where
         a1.volume_usd >= 100
   and a2.data_subject = 'volume_grade'
-  and a2.token_type = 'token' and address not in (select address from exclude_address);
+  and a2.token_type = 'token'
+  and address not in (
+    select
+        address
+    from
+        exclude_address);
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_volume_grade_all' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

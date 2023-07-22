@@ -18,7 +18,7 @@ truncate table public.address_label_web3_type_count_grade;
 vacuum address_label_web3_type_count_grade;
 
 insert into public.address_label_web3_type_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
-    select
+select
     address,
     label_type,
     label_type || '_' || case
@@ -67,7 +67,7 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
     'ALL' as project,
     t.token_name as asset,
     'activity' as bus_type
-    from
+from
     (
         -- project-type
         select
@@ -107,7 +107,7 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
                                        a2.project = 'ALL'
                                    and a1.type = a2.type
                                    and a2.data_subject = 'count'
-                               and a1.recent_time_code = a2.recent_code
+                                   and a1.recent_time_code = a2.recent_code
         group by
             a1.address,
             a2.label_type,
@@ -153,7 +153,7 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
                                        a1.project = a2.project
                                    and a2.type = 'ALL'
                                    and a2.data_subject = 'count'
-                                   nd a1.recent_time_code = a2.recent_code
+                                   and a1.recent_time_code = a2.recent_code
         group by
             a1.address,
             a2.label_type,
@@ -161,7 +161,7 @@ insert into public.address_label_web3_type_count_grade(address,label_type,label_
             a2.token_name,
             recent_time_code
     ) t
-    where
+where
         total_transfer_count >= 1 and address not in (select address from exclude_address);
 
 drop table if exists address_label_crowd_web3_active_users;
@@ -181,24 +181,44 @@ CREATE TABLE public.address_label_crowd_web3_active_users (
                                                               bus_type varchar(20) NULL
 );
 truncate table public.address_label_crowd_web3_active_users;
-insert into public.address_label_crowd_web3_active_users(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
- select
-     distinct a1.address ,
-           'crowd_web3_active_users' as label_type,
-           'crowd_web3_active_users' as label_name,
-           0  as data,
-           'CROWD'  as wired_type,
-           now() as updated_at,
-           'g'  as "group",
-    'crowd_web3_active_users' level,
-    'other' as category,
-    'ALL' trade_type,
-    'ALL' as project,
-    'ALL' as asset,
-    'CROWD' as bus_type
-       from  address_label_web3_type_count_grade a1
-       where (label_name = 'WEB3_ALL_ALL_ACTIVITY_High'
-           or label_name = 'WEB3_ALL_ALL_ACTIVITY_Medium'
-           or label_name = 'WEB3_ALL_ALL_ACTIVITY_Low')
-         and address not in (select address from exclude_address);
+insert
+into
+    public.address_label_crowd_web3_active_users(address,
+                                                 label_type,
+                                                 label_name,
+                                                 data,
+                                                 wired_type,
+                                                 updated_at,
+                                                 "group",
+                                                 level,
+                                                 category,
+                                                 trade_type,
+                                                 project,
+                                                 asset,
+                                                 bus_type)
+select
+    distinct a1.address ,
+             'crowd_web3_active_users' as label_type,
+             'crowd_web3_active_users' as label_name,
+             0 as data,
+             'CROWD' as wired_type,
+             now() as updated_at,
+             'g' as "group",
+             'crowd_web3_active_users' level,
+             'other' as category,
+             'ALL' trade_type,
+             'ALL' as project,
+             'ALL' as asset,
+             'CROWD' as bus_type
+from
+    address_label_web3_type_count_grade a1
+where
+    (label_name = 'WEB3_ALL_ALL_ACTIVITY_High'
+        or label_name = 'WEB3_ALL_ALL_ACTIVITY_Medium'
+        or label_name = 'WEB3_ALL_ALL_ACTIVITY_Low')
+  and address not in (
+    select
+        address
+    from
+        exclude_address);
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_web3_type_count_grade' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
