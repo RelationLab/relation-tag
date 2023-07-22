@@ -37,7 +37,7 @@ into dex_tx_volume_count_summary(address,
                                  total_transfer_volume_usd,
                                  total_transfer_count,
                                  first_updated_block_height,
-                                 balance_usd)
+                                 recent_time_code)
 select th.address,
        'ALL'                                        as token,
        th.type                                      as type,
@@ -136,7 +136,7 @@ select dtvcr.address                         as address
      , sum(dtvcr.total_transfer_volume_usd)  as total_transfer_volume_usd
      , sum(dtvcr.total_transfer_count)       as total_transfer_count
      , min(dtvcr.first_updated_block_height) as first_updated_block_height
-     , dtvcr.recent_time_code                as balance_usd
+     , dtvcr.recent_time_code                as recent_time_code
 from dex_tx_volume_count_summary dtvcr
 group by dtvcr.address,
          dtvcr."token",
