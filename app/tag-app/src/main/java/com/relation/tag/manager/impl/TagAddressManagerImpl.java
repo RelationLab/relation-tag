@@ -147,7 +147,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
      * @param likeKey
      */
     public void check(String tableName, long sleepTime, String batchDate, int resultNum, boolean likeKey) {
-//        log.info("check tableName ===={} batchDate={} resultNum={} start.......", tableName, batchDate, resultNum);
+        log.info("check tableName ===={} batchDate={} resultNum={} start.......", tableName, batchDate, resultNum);
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
