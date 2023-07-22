@@ -147,7 +147,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
      * @param likeKey
      */
     public void check(String tableName, long sleepTime, String batchDate, int resultNum, boolean likeKey) {
-        log.info("check tableName ===={} batchDate={} resultNum={} start.......", tableName, batchDate, resultNum);
+//        log.info("check tableName ===={} batchDate={} resultNum={} start.......", tableName, batchDate, resultNum);
         if (StringUtils.isEmpty(tableName)) {
             return;
         }
@@ -155,7 +155,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             try {
                 Integer tagInteger = checkResultData(tableName, batchDate, likeKey);
                 if (tagInteger != null && tagInteger.intValue() >= resultNum) {
-                    log.info("check table ===={} end.......tagList.size===={}", tableName, tagInteger);
+//                    log.info("check table ===={} end.......tagList.size===={}", tableName, tagInteger);
                     break;
                 }
             } catch (Exception ex) {
@@ -440,6 +440,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private void exceRecentTimeScripts(String batchDate, String filePath, String fileName, String lastTableName, int resultNum, boolean likeKey) {
         List<String> list = iAddressLabelService.selectRecentTimeList();
+        log.info("exceRecentTimeScripts start......list={}",list);
         if (CollectionUtils.isEmpty(list)) {
             return;
         }
