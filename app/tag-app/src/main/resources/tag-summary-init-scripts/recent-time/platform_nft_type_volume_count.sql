@@ -1,6 +1,7 @@
 ----------------增加blur的DEPOSIT和WITHDRAW
-insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
+insert into platform_nft_type_volume_count(recent_time_code,address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
 select
+    recent_time.recent_time_code,
     pdwtr."operator" as address,
     'Blur.io: Marketplace' as platform_group,
     '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
@@ -29,10 +30,12 @@ group by
     pdwtr."operator" ,
     pdwtr.quote_token ,
     pdwtr."token" ,
-    pdwtr."type";
+    pdwtr."type",
+    recent_time.recent_time_code;
 
-insert into platform_nft_type_volume_count(address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
+insert into platform_nft_type_volume_count(recent_time_code,address, platform_group, platform, quote_token, token, type, volume_usd, transfer_count)
 select
+    recent_time_code,
     address,
     'Blur.io: Marketplace' as platform_group,
     '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
@@ -48,7 +51,8 @@ from (
              "token" as quote_token ,
              "token" ,
              sum(volume_usd) as volume_usd ,
-             sum(transfer_count) as transfer_count
+             sum(transfer_count) as transfer_count,
+             recent_time_code
          from
              (
                  select
@@ -56,7 +60,8 @@ from (
                      pltr.lend_token as "token" ,
                      pltr."type" as "type" ,
                      sum(1) as volume_usd ,
-                     1 as transfer_count
+                     1 as transfer_count,
+                     recent_time.recent_time_code
                  from
                      platform_lend_tx_record pltr inner join (
                          select
@@ -74,10 +79,12 @@ from (
                      pltr.borrower ,
                      pltr.lend_token ,
                      pltr."type",
-                     hash ) pltrout
+                     hash,
+                     recent_time.recent_time_code ) pltrout
          group by
              pltrout.address ,
-             pltrout.token
+             pltrout.token,
+             recent_time_code
              ----------------增加blur的lend的to
          union all
          select
@@ -85,7 +92,8 @@ from (
              pltr.lend_token  as quote_token ,
              pltr.lend_token as "token" ,
              sum(1) as volume_usd ,
-             0 as transfer_count
+             0 as transfer_count,
+             recent_time.recent_time_code
          from
              platform_lend_tx_record pltr
                  inner join (
@@ -102,17 +110,20 @@ from (
                  (pltr.block_number >= recent_time.block_height)
          group by
              pltr.lender ,
-             pltr.lend_token) lendt
+             pltr.lend_token,
+             recent_time.recent_time_code) lendt
 group by
     lendt.address ,
-    lendt.token;
+    lendt.token ,
+    recent_time_code;
 
 
 
 
 insert
 into
-    platform_nft_type_volume_count(address,
+    platform_nft_type_volume_count(recent_time_code,
+                                   address,
                                    platform_group,
                                    platform,
                                    quote_token,
@@ -121,6 +132,7 @@ into
                                    volume_usd,
                                    transfer_count)
 select
+    recent_time_code
     address,
     'Blur.io: Marketplace' as platform_group,
     '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
@@ -133,6 +145,7 @@ from
     (
         ----------------增加blur的bid的buyer(buyer不一定是from)
         select
+            recent_time_code,
             address,
             "token" as quote_token ,
             "token" ,
@@ -148,7 +161,8 @@ from
                     case
                         when type = 'ASK' then 1
                         else 0
-                        end as transfer_count
+                        end as transfer_count,
+                    recent_time.recent_time_code
                 from
                     platform_bid_tx_record pbtr
                         inner join (
@@ -167,13 +181,16 @@ from
                     pbtr.buyer ,
                     pbtr.nft_token ,
                     pbtr."type",
-                    hash ) pbtrout
+                    hash,
+                    recent_time.recent_time_code) pbtrout
         group by
             pbtrout.address ,
-            pbtrout.token
+            pbtrout.token,
+            recent_time_code
         union all
         ----------------增加blur的bid的seller(seller不一定是from)
         select
+            recent_time_code
             address,
             "token" as quote_token ,
             "token" ,
@@ -189,7 +206,8 @@ from
                     case
                         when type = 'BID' then 1
                         else 0
-                        end as transfer_count
+                        end as transfer_count,
+                    recent_time.recent_time_code
                 from
                     platform_bid_tx_record pbtr
                         inner join (
@@ -208,10 +226,12 @@ from
                     pbtr.seller ,
                     pbtr.nft_token ,
                     pbtr."type",
-                    hash ) pbtrout
+                    hash,
+                    recent_time.recent_time_code) pbtrout
         group by
             pbtrout.address ,
-            pbtrout.token) bidt
+            pbtrout.token,
+            recent_time_code) bidt
 group by
     bidt.address ,
     bidt.token;
