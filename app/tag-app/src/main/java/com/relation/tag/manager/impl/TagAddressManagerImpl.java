@@ -84,7 +84,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
         try {
             Integer tagInteger = checkResultData(tableName, batchDate, likeKey);
-            log.info("tableName==={},tagList.size===={}", tableName, tagInteger);
+//            log.info("tableName==={},tagList.size===={}", tableName, tagInteger);
             return tagInteger != null && tagInteger.intValue() >= result;
         } catch (Exception ex) {
             return false;
