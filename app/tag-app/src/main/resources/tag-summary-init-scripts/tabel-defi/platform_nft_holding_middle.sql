@@ -15,7 +15,7 @@ CREATE TABLE public.platform_nft_holding_middle
     created_at                timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at                timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     platform_group            varchar(256) NULL
-) distributed by (address, token, quote_token, platform);
+) distributed by (address, token, quote_token, platform,recent_time_code);
 truncate table platform_nft_holding_middle;
 vacuum platform_nft_holding_middle;
 insert into tag_result(table_name, batch_date)

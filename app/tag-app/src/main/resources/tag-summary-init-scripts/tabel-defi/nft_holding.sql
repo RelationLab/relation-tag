@@ -18,7 +18,7 @@ CREATE TABLE public.nft_holding
     recent_time_code           varchar(30) NULL,
     created_at                 timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at                 timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) distributed by (address, token);
+) distributed by (address, token,recent_time_code);
 truncate table nft_holding;
 vacuum nft_holding;
 insert into tag_result(table_name, batch_date)

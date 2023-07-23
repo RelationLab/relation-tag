@@ -12,7 +12,7 @@ CREATE TABLE public.platform_nft_type_volume_count (
                                                        updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                                        removed bool NULL DEFAULT false,
                                                        recent_time_code varchar(30)  null
-)distributed by (address, token, quote_token, platform);
+)distributed by (address, token, quote_token, platform,recent_time_code);
 truncate table platform_nft_type_volume_count;
 vacuum platform_nft_type_volume_count;
 

@@ -14,7 +14,7 @@ CREATE TABLE public.dex_tx_volume_count_summary
     project                    varchar(100) NULL,
     recent_time_code varchar(30) NULL
 
-) DISTRIBUTED BY (address,token);
+) DISTRIBUTED BY (address,token,project,recent_time_code);
 truncate table dex_tx_volume_count_summary;
 vacuum dex_tx_volume_count_summary;
 insert into tag_result(table_name, batch_date)
