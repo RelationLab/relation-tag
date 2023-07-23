@@ -745,11 +745,13 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                               strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform.platform_name || ' ' || nft_sync_address.platform || ' ' || level_def.level_name ||
-                ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type.nft_trade_type_name end)                          "content",
+                mp_nft_platform.platform_name || ' ' || nft_sync_address.platform || ' ' ||
+                (case when nft_trade_type.asset_type='token' and  level_def.special_flag is null then  nft_trade_type.nft_trade_type_name||' ' else '' end )
+                    ||(case when nft_trade_type.asset_type='token' and  level_def.special_flag='1' then
+                                replace(level_def.level_name, ' ', ' '||nft_trade_type.nft_trade_type_name||' ') else   level_def.level_name end)||' '||
+                (case when nft_trade_type.asset_type='token' then ''
+                      when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                      else nft_trade_type.nft_trade_type_name end)                          "content",
                 'SQL'                                                                      rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 mp_nft_platform.platform_name || '_' || replace(nft_sync_address.platform, ' ', '') || '_' ||
@@ -776,7 +778,7 @@ from nft_sync_address
     and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
     and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type <> 'ERC1155'
-  and nft_trade_type.type = '1';
+  and nft_trade_type.type = '1' ;
 insert
 into public.combination (asset,
                          project,
@@ -885,10 +887,12 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                                   strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
-                level_def.level_name || ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type.nft_trade_type_name end)                                              "content",
+                (case when nft_trade_type.asset_type='token' and  level_def.special_flag is null then  nft_trade_type.nft_trade_type_name||' ' else '' end )
+                    ||(case when nft_trade_type.asset_type='token' and  level_def.special_flag='1' then
+                                replace(level_def.level_name, ' ', ' '||nft_trade_type.nft_trade_type_name||' ') else   level_def.level_name end)||' '||
+                (case when nft_trade_type.asset_type='token' then ''
+                      when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                      else nft_trade_type.nft_trade_type_name end)                                              "content",
                 'SQL'                                                                                          rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || 'ALL_' || nft_trade_type.nft_trade_type ||
@@ -906,7 +910,7 @@ from nft_trade_type
                      where type = 'nft_count') level_def on
     (1 = 1)
          inner join recent_time on (1 = 1)
-where nft_trade_type.type = '1';
+where nft_trade_type.type = '1' ;
 insert
 into public.combination (asset,
                          project,
@@ -1013,9 +1017,12 @@ select distinct 'RelationTeam'                                    "owner",
                 'TOTAL_PART'                                      strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'MP ' ||
-                nft_sync_address.platform || ' ' || level_def.level_name || ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                nft_sync_address.platform || ' ' ||
+                (case when nft_trade_type.asset_type='token' and  level_def.special_flag is null then  nft_trade_type.nft_trade_type_name||' ' else '' end )
+                    ||(case when nft_trade_type.asset_type='token' and  level_def.special_flag='1' then
+                                replace(level_def.level_name, ' ', ' '||nft_trade_type.nft_trade_type_name||' ') else   level_def.level_name end)||' '||
+                (case when nft_trade_type.asset_type='token' then ''
+                      when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                             rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -1154,9 +1161,12 @@ select distinct 'RelationTeam'                                    "owner",
                 'TOTAL_PART'                                      strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform.platform_name || ' NFT ' || level_def.level_name || ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                mp_nft_platform.platform_name || ' NFT ' ||
+                (case when nft_trade_type.asset_type='token' and  level_def.special_flag is null then  nft_trade_type.nft_trade_type_name||' ' else '' end )
+                    ||(case when nft_trade_type.asset_type='token' and  level_def.special_flag='1' then
+                                replace(level_def.level_name, ' ', ' '||nft_trade_type.nft_trade_type_name||' ') else   level_def.level_name end)||' '||
+                (case when nft_trade_type.asset_type='token' then ''
+                      when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                             rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -1295,9 +1305,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                   strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform.platform_name || ' ' || nft_sync_address.platform || ' ' || level_def.level_name ||
-                ' ' || (case
-                            when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                mp_nft_platform.platform_name || ' ' || nft_sync_address.platform || ' ' ||
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                             else nft_trade_type.nft_trade_type_name end)                       "content",
                 'SQL'                                                                          rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -1325,7 +1336,7 @@ from nft_sync_address
     and nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
     and (nft_action_platform.token is null  or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type <> 'ERC1155'
-  and nft_trade_type.type = '1';
+  and nft_trade_type.type = '1' ;
 insert
 into public.combination (asset,
                          project,
@@ -1441,9 +1452,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                                                         strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'MP ' ||
-                nft_sync_address.platform || ' ' || level_def.level_name || ' ' || (case
-                                                                                        when nft_trade_type.nft_trade_type = 'ALL'
-                                                                                            then 'Trader'
+                nft_sync_address.platform || ' ' ||
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                                                                                         else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                                                                                                rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -1583,9 +1595,10 @@ select distinct 'RelationTeam'                                    "owner",
                 'TOTAL_PART'                                      strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform.platform_name || ' NFT ' || level_def.level_name || ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                mp_nft_platform.platform_name || ' NFT ' ||
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                             rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -1713,9 +1726,9 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                                       strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
-                level_def.level_name || ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type.nft_trade_type_name end)                                                  "content",
                 'SQL'                                                                                              rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -1848,10 +1861,11 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                   strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform.platform_name || ' ' || nft_sync_address.platform || ' ' || level_def.level_name ||
+                mp_nft_platform.platform_name || ' ' || nft_sync_address.platform || ' ' ||
+                (case when nft_trade_type.asset_type='token' then  nft_trade_type.nft_trade_type_name||' ' else '' end)||
+                          level_def.level_name ||
                 ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                (case when nft_trade_type.asset_type='token' or nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type.nft_trade_type_name end)                              "content",
                 'SQL'                                                                          rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -1995,9 +2009,11 @@ select distinct 'RelationTeam'                                    "owner",
                 'TOTAL_PART'                                      strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'MP ' ||
-                nft_sync_address.platform || ' ' || level_def.level_name || ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                nft_sync_address.platform || ' ' ||
+                (case when nft_trade_type.asset_type='token' then  nft_trade_type.nft_trade_type_name||' ' else '' end)||
+                level_def.level_name ||
+                ' ' ||
+                (case when nft_trade_type.asset_type='token' or nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                             rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -2136,9 +2152,11 @@ select distinct 'RelationTeam'                                    "owner",
                 'TOTAL_PART'                                      strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform.platform_name || ' NFT ' || level_def.level_name || ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                mp_nft_platform.platform_name || ' NFT ' ||
+                (case when nft_trade_type.asset_type='token' then  nft_trade_type.nft_trade_type_name||' ' else '' end)||
+                level_def.level_name ||
+                ' ' ||
+                (case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                             rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -2266,9 +2284,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                                       strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
-                level_def.level_name || ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                (case when nft_trade_type.asset_type='token' then  nft_trade_type.nft_trade_type_name||' ' else '' end)||
+                level_def.level_name ||
+                ' ' ||
+                (case when nft_trade_type.asset_type='token' or nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type.nft_trade_type_name end)                                                  "content",
                 'SQL'                                                                                              rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -2400,9 +2419,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                  strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform.platform_name || ' ' || nft_sync_address.platform || ' ' || level_def.level_name ||
-                ' ' || (case
-                            when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                mp_nft_platform.platform_name || ' ' || nft_sync_address.platform || ' ' ||
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                             else nft_trade_type.nft_trade_type_name end)                      "content",
                 'SQL'                                                                         rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -2546,10 +2566,11 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                                                         strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'MP ' ||
-                nft_sync_address.platform || ' ' || level_def.level_name || ' ' || (case
-                                                                                        when nft_trade_type.nft_trade_type = 'ALL'
-                                                                                            then 'Trader'
-                                                                                        else nft_trade_type.nft_trade_type_name end) "content",
+                nft_sync_address.platform || ' ' ||
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                            else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                                                                                                rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || replace(nft_sync_address.platform, ' ', '') || '_' || nft_trade_type.nft_trade_type ||
@@ -2687,10 +2708,11 @@ select distinct 'RelationTeam'                                    "owner",
                 'TOTAL_PART'                                      strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform.platform_name || ' NFT ' || level_def.level_name || ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type.nft_trade_type_name end) "content",
+                mp_nft_platform.platform_name || ' NFT ' ||
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                            else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                             rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 mp_nft_platform.platform_name || '_ALL_' || nft_trade_type.nft_trade_type ||
@@ -2818,10 +2840,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                                      strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
-                level_def.level_name || ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type.nft_trade_type_name end)                                                 "content",
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                            else nft_trade_type.nft_trade_type_name end)                                                 "content",
                 'SQL'                                                                                             rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || 'ALL_' || nft_trade_type.nft_trade_type ||
@@ -2952,9 +2974,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                 strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform.platform_name || ' ' || nft_sync_address.platform || ' ' || level_def.level_name ||
-                ' ' || (case
-                            when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                mp_nft_platform.platform_name || ' ' || nft_sync_address.platform || ' '||
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                             else nft_trade_type.nft_trade_type_name end)                     "content",
                 'SQL'                                                                        rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -3098,10 +3121,11 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                                                         strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'MP ' ||
-                nft_sync_address.platform || ' ' || level_def.level_name || ' ' || (case
-                                                                                        when nft_trade_type.nft_trade_type = 'ALL'
-                                                                                            then 'Trader'
-                                                                                        else nft_trade_type.nft_trade_type_name end) "content",
+                nft_sync_address.platform || ' ' ||
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                            else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                                                                                                rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || replace(nft_sync_address.platform, ' ', '') || '_' || nft_trade_type.nft_trade_type ||
@@ -3240,10 +3264,11 @@ select distinct 'RelationTeam'                                    "owner",
                 'TOTAL_PART'                                      strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform.platform_name || ' NFT ' || level_def.level_name || ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type.nft_trade_type_name end) "content",
+                mp_nft_platform.platform_name || ' NFT ' ||
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                            else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                             rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 mp_nft_platform.platform_name || '_ALL_' || nft_trade_type.nft_trade_type ||
@@ -3369,10 +3394,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                                     strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
-                level_def.level_name || ' ' ||
-                (case
-                     when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type.nft_trade_type_name end)                                                "content",
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                            else nft_trade_type.nft_trade_type_name end)                                                "content",
                 'SQL'                                                                                            rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || 'ALL_' || nft_trade_type.nft_trade_type ||
@@ -5620,7 +5645,13 @@ select distinct 'RelationTeam'                         "owner",
                 'TOTAL_PART'                           strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || nft_sync_address.platform ||
-                ' ' || level_def.level_name            "content",
+                ' ' ||
+                (case when nft_trade_type.asset_type='token' and  level_def.special_flag is null then  nft_trade_type.nft_trade_type_name||' ' else '' end )
+                    ||(case when nft_trade_type.asset_type='token' and  level_def.special_flag='1' then
+                                replace(level_def.level_name, ' ', ' '||nft_trade_type.nft_trade_type_name||' ') else   level_def.level_name end)||' '||
+                (case when nft_trade_type.asset_type='token' then ''
+                      when nft_trade_type.nft_trade_type = 'ALL' then ''
+                      else nft_trade_type.nft_trade_type_name end)   "content",
                 'SQL'                                  rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || replace(nft_sync_address.platform, ' ', '') || '_' || nft_trade_type.nft_trade_type ||
@@ -5643,7 +5674,7 @@ from nft_sync_address
     (nft_trade_type.nft_trade_type=nft_action_platform.nft_trade_type
         and (nft_action_platform.token is null or nft_action_platform.token=nft_sync_address.address))
 where nft_sync_address.type <> 'ERC1155'
-  and nft_trade_type.type = '0';
+  and nft_trade_type.type = '0'  ;
 insert
 into public.combination (asset,
                          project,
@@ -5749,9 +5780,12 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                                strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'NFT ' ||
-                level_def.level_name || ' ' || (case
-                                                    when nft_trade_type.nft_trade_type = 'ALL' then ''
-                                                    else nft_trade_type.nft_trade_type_name end)            "content",
+                (case when nft_trade_type.asset_type='token' and  level_def.special_flag is null then  nft_trade_type.nft_trade_type_name||' ' else '' end )
+                    ||(case when nft_trade_type.asset_type='token' and  level_def.special_flag='1' then
+                                replace(level_def.level_name, ' ', ' '||nft_trade_type.nft_trade_type_name||' ') else   level_def.level_name end)||' '||
+                (case when nft_trade_type.asset_type='token' then ''
+                        when nft_trade_type.nft_trade_type = 'ALL' then ''
+                        else nft_trade_type.nft_trade_type_name end)            "content",
                 'SQL'                                                                                       rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || '_' || nft_trade_type.nft_trade_type || '_NFT_ACTIVITY'                           rule_group,
@@ -6157,9 +6191,11 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                            strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || nft_sync_address.platform ||
-                ' ' || level_def.level_name || ' ' || (case
-                                                           when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
-                                                           else nft_trade_type.nft_trade_type_name end) "content",
+                ' ' ||
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                            else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                                                                   rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || replace(nft_sync_address.platform, ' ', '') || '_' || nft_trade_type.nft_trade_type ||
@@ -6288,10 +6324,13 @@ select distinct 'RelationTeam'                                                  
                 'PUBLIC'                                                                                        visible_type,
                 'TOTAL_PART'                                                                                    strategy,
                 recent_time.recent_time_content ||
-                (case when recent_time.recent_time_content <> '' then ' ' else '' end) || level_def.level_name ||
-                ' NFT ' || (case
-                                when nft_trade_type.nft_trade_type = 'ALL' then ' Trader'
-                                else nft_trade_type.nft_trade_type_name end)                                    "content",
+                (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
+
+                'NFT ' ||
+                level_def.level_name||' ' ||
+                (case when nft_trade_type.asset_type='token' then nft_trade_type.nft_trade_type||' ' else '' end)||
+                (case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                      else nft_trade_type.nft_trade_type_name end)                                    "content",
                 'SQL'                                                                                           rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || '_' || nft_trade_type.nft_trade_type ||
@@ -6309,7 +6348,7 @@ from nft_trade_type
                      where type = 'nft_volume_elite') level_def on
     (1 = 1)
          inner join recent_time on (1 = 1)
-where nft_trade_type.type = '0';
+where nft_trade_type.type = '0' ;
 insert
 into public.combination (asset,
                          project,
@@ -6417,7 +6456,11 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                            strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || nft_sync_address.platform ||
-                ' ' || level_def.level_name || ' ' || (case
+                ' ' ||
+                (case when nft_trade_type.asset_type='token' then  nft_trade_type.nft_trade_type_name||' ' else '' end)||
+                level_def.level_name ||
+                ' ' ||
+                (case when nft_trade_type.asset_type='token' then ''
                                                            when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                                                            else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                                                                   rule_type,
@@ -6548,10 +6591,12 @@ select distinct 'RelationTeam'                                                  
                 'PUBLIC'                                                                                        visible_type,
                 'TOTAL_PART'                                                                                    strategy,
                 recent_time.recent_time_content ||
-                (case when recent_time.recent_time_content <> '' then ' ' else '' end) || level_def.level_name ||
-                ' NFT ' || (case
-                                when nft_trade_type.nft_trade_type = 'ALL' then ''
-                                else nft_trade_type.nft_trade_type_name end)                                    "content",
+                (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
+                'NFT ' ||
+                (case when nft_trade_type.asset_type='token' then nft_trade_type.nft_trade_type||' ' else '' end)||
+                level_def.level_name ||' '||
+                (case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                      else nft_trade_type.nft_trade_type_name end)                                    "content",
                 'SQL'                                                                                           rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || '_' || nft_trade_type.nft_trade_type ||
@@ -6675,9 +6720,11 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                            strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || nft_sync_address.platform ||
-                ' ' || level_def.level_name || ' ' || (case
-                                                           when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
-                                                           else nft_trade_type.nft_trade_type_name end) "content",
+                ' ' ||
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                            else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                                                                   rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || replace(nft_sync_address.platform, ' ', '') || '_' || nft_trade_type.nft_trade_type ||
@@ -6805,9 +6852,11 @@ select distinct 'RelationTeam'                                                  
                 'PUBLIC'                                                                                       visible_type,
                 'TOTAL_PART'                                                                                   strategy,
                 recent_time.recent_time_content ||
-                (case when recent_time.recent_time_content <> '' then ' ' else '' end) || level_def.level_name ||
-                ' NFT ' || (case
-                                when nft_trade_type.nft_trade_type = 'ALL' then ' Trader'
+                (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
+                'NFT ' ||
+                level_def.level_name||' ' ||
+                (case when nft_trade_type.asset_type='token' then nft_trade_type.nft_trade_type||' ' else '' end)||
+                (case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                                 else nft_trade_type.nft_trade_type_name end)                                   "content",
                 'SQL'                                                                                          rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -6934,8 +6983,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                            strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || nft_sync_address.platform ||
-                ' ' || level_def.level_name || ' ' || (case
-                                                           when nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
+                ' ' ||
+                (case when nft_trade_type.asset_type='token'  then  level_def.level_name||' '||nft_trade_type.nft_trade_type_name||' '
+                      else level_def.level_name ||' ' end )
+                    ||(case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                                                            else nft_trade_type.nft_trade_type_name end) "content",
                 'SQL'                                                                                   rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
@@ -7064,9 +7115,11 @@ select distinct 'RelationTeam'                                                  
                 'PUBLIC'                                                                                      visible_type,
                 'TOTAL_PART'                                                                                  strategy,
                 recent_time.recent_time_content ||
-                (case when recent_time.recent_time_content <> '' then ' ' else '' end) || level_def.level_name ||
-                ' NFT ' || (case
-                                when nft_trade_type.nft_trade_type = 'ALL' then ' Trader'
+                (case when recent_time.recent_time_content <> '' then ' ' else '' end) ||
+                'NFT ' ||
+                level_def.level_name||' ' ||
+                (case when nft_trade_type.asset_type='token' then nft_trade_type.nft_trade_type||' ' else '' end)||
+                (case when nft_trade_type.asset_type='token' or  nft_trade_type.nft_trade_type = 'ALL' then 'Trader'
                                 else nft_trade_type.nft_trade_type_name end)                                  "content",
                 'SQL'                                                                                         rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||

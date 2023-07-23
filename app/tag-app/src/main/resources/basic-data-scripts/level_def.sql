@@ -4,7 +4,8 @@ create table level_def
 
     level varchar(80) NULL,
     type varchar(80) NULL,
-    level_name varchar(80) NULL
+    level_name varchar(80) NULL,
+    special_flag varchar(1) NULL
 ) ;
 
 
@@ -69,9 +70,9 @@ insert into level_def(level,level_name,type) values('L3','Activity Lv3','nft_cou
 insert into level_def(level,level_name,type) values('L4','Activity Lv4','nft_count');
 insert into level_def(level,level_name,type) values('L5','Activity Lv5','nft_count');
 insert into level_def(level,level_name,type) values('L6','Activity Lv6','nft_count');
-insert into level_def(level,level_name,type) values('High','Highest Activity','nft_count');
-insert into level_def(level,level_name,type) values('Medium','High Activity','nft_count');
-insert into level_def(level,level_name,type) values('Low','Medium Activity','nft_count');
+insert into level_def(level,level_name,type,special_flag) values('High','Highest Activity','nft_count','1');
+insert into level_def(level,level_name,type,special_flag) values('Medium','High Activity','nft_count','1');
+insert into level_def(level,level_name,type,special_flag) values('Low','Medium Activity','nft_count','1');
 
 
 insert into level_def(level,level_name,type) values('ELITE_NFT_TRADER','Elite','nft_volume_elite');
