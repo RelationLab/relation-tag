@@ -245,7 +245,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
      */
     @Override
     public void tagMerge(String batchDate) throws Exception {
-//        execSql(null, "address_label_gp.sql", batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH, Maps.newHashMap("tableSuffix",configEnvironment));
+        execSql(null, "address_label_gp.sql", batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH, Maps.newHashMap("tableSuffix",configEnvironment));
     }
 
     /*************************************************************执行SQL部分**********************************************************/
@@ -444,7 +444,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private void exceRecentTimeScripts(String batchDate, String filePath, String fileName, String lastTableName, int resultNum, boolean likeKey) {
         List<String> list = iAddressLabelService.selectRecentTimeList();
-//        log.info("exceRecentTimeScripts start......list={},fileName={},lastTableName={},resultNum={},likeKey={}",list,fileName,lastTableName,resultNum,likeKey);
         if (CollectionUtils.isEmpty(list)) {
             return;
         }
