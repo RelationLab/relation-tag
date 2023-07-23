@@ -246,6 +246,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     @Override
     public void tagMerge(String batchDate) throws Exception {
         execSql(null, "address_label_gp.sql", batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH, Maps.newHashMap("tableSuffix",configEnvironment));
+        execSql("address_label_gp_"+configEnvironment, "address_labels_json_gin.sql", batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH, Maps.newHashMap("tableSuffix",configEnvironment));
     }
 
     /*************************************************************执行SQL部分**********************************************************/

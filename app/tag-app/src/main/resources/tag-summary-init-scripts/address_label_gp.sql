@@ -227,46 +227,7 @@ select mod(to_number(address,'9999999999'), 50000),address,label_type,label_name
 select mod(to_number(address,'9999999999'), 50000),address,label_type,label_name,'OTHER' as wired_type,0 as  data,updated_at, owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_third_party_${tableSuffix} union all
 select mod(to_number(address,'9999999999'), 50000),address,label_type,label_name,'OTHER' as wired_type,0 as  data,updated_at,owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_ugc_${tableSuffix};
 
-DROP TABLE IF EXISTS address_labels_json_gin_${tableSuffix} CASCADE;
-CREATE TABLE address_labels_json_gin_${tableSuffix}
-(
-    id      BIGSERIAL,
-    address TEXT  NOT NULL,
-    data    TEXT NOT NULL
-) WITH (appendoptimized = true, orientation = column) DISTRIBUTED BY (address);
-CREATE INDEX idx_address_labels_json_gin_${tableSuffix}_id ON address_labels_json_gin_${tableSuffix}(id);
-truncate table address_labels_json_gin_${tableSuffix};
-vacuum address_labels_json_gin_${tableSuffix};
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_gp_${tableSuffix}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
-INSERT INTO address_labels_json_gin_${tableSuffix}(address, data)
-SELECT address_label_gp_${tableSuffix}.address,
-       JSONB_BUILD_OBJECT(
-               'address', address_label_gp_${tableSuffix}.address,
-               'address_type', CASE WHEN COUNT(contract_address) > 0 THEN 'c' ELSE 'p' END,
-               'labels', JSONB_AGG(
-                       JSONB_BUILD_OBJECT(
-                               'type', label_type,
-                               'name', label_name,
-                               'wired_type', wired_type,
-                               'data', data :: TEXT,
-                               'group', "group",
-                               'level', level,
-                               'category', category,
-                               'trade_type', trade_type,
-                               'project', project,
-                               'asset', asset
-                           )
-                           ORDER BY label_type DESC
-                   ),
-               'updated_at', CURRENT_TIMESTAMP
-           )::TEXT
-FROM address_label_gp_${tableSuffix}
-         LEFT JOIN contract ON (address_label_gp_${tableSuffix}.address = contract.contract_address)
-GROUP BY (address_label_gp_${tableSuffix}.address);
-
-insert into tag_result(table_name,batch_date)  SELECT 'address_labels_json_gin_${tableSuffix}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
-delete from  tag_result where  table_name='tagging';
-delete from tag_result where batch_date<to_char(current_date ,'YYYY-MM-DD');
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO readonly;
 
 
