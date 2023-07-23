@@ -76,7 +76,7 @@ select dtvcr.address,
        sum(total_transfer_count)         total_transfer_count,
        min(first_updated_block_height)   first_updated_block_height,
        recent_time_code
-from dex_tx_volume_count_record_filterate dtvcr
+from dex_tx_volume_count_record_filter dtvcr
          inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
                     on
                         (dtvcr.block_height >= recent_time.block_height)
@@ -106,7 +106,7 @@ select dtvcr.address,
        sum(total_transfer_count)         total_transfer_count,
        min(first_updated_block_height)   first_updated_block_height,
        recent_time_code
-from dex_tx_volume_count_record_filterate dtvcr
+from dex_tx_volume_count_record_filter dtvcr
          inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
                     on
                         (dtvcr.block_height >= recent_time.block_height)

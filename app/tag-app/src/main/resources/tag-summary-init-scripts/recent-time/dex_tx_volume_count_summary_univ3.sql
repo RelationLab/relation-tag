@@ -23,7 +23,7 @@ select
     sum(balance) as balance_usd,
     recent_time_code
 from
-    token_holding_uni_filterate th
+    token_holding_uni_filter th
         inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
                    on
                        (th.block_height >= recent_time.block_height)
