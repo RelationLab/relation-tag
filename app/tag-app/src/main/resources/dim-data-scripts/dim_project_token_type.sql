@@ -528,7 +528,7 @@ select distinct platform_detail.platform  as                            project,
                 lpt.pool                  as                            token,
                 'lp'                      as                            type,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HEAVY_LP_STAKER' as                            label_type,
+                ')' || '_BALANCE_HEAVY_LP_STAKER' as                            label_type,
                 'T'                       as                            operate_type,
                 lpt.factory_type || '_' || lpt.symbol_wired || '_stake' seq_flag,
                 'HEAVY_LP_STAKER'                                       data_subject,
@@ -578,16 +578,16 @@ into public."label" ("owner",
                      sync_es_status)
 select distinct 'RelationTeam'                                                   "owner",
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HEAVY_LP_STAKER' as                                     "type",
+                ')' || '_BALANCE_HEAVY_LP_STAKER' as                                     "type",
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HEAVY_LP_STAKER' as                                     "name",
+                ')' || '_BALANCE_HEAVY_LP_STAKER' as                                     "name",
                 'SYSTEM'                                                         "source",
                 'PUBLIC'                                                         visible_type,
                 'TOTAL_PART'                                                     strategy,
                 lpt.factory_content || ' ' || symbol_wired || ' Heavy LP Staker' "content",
                 'SQL'                                                            rule_type,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HEAVY_LP_STAKER'                                        rule_group,
+                ')' || '_BALANCE_HEAVY_LP_STAKER'                                        rule_group,
                 'RESULT'                                                         value_type,
                 999999                                                           run_order,
                 now()                                                            created_at,
@@ -642,7 +642,7 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 'HEAVY_LP_STAKER'                                                              hold_time,
                 now()                                                                          created_at,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HEAVY_LP_STAKER'                                                      label_name,
+                ')' || '_BALANCE_HEAVY_LP_STAKER'                                                      label_name,
                 lpt.factory_content || ' ' || symbol_wired || ' Heavy LP Staker'               "content",
                 'token'                                                                        asset_type,
                 'TOP'                                                                          label_category
