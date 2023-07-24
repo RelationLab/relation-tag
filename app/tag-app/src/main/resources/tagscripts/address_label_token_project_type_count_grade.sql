@@ -86,6 +86,7 @@ from
                                    and a1.type = a2.type
                                    and a2.data_subject = 'count'
                                    and a1.token!='ALL'
+                                    and a1.recent_time_code = a2.recent_code
         WHERE  a2.label_type not like '%NFT%'
           and a1.token in (select distinct token from dim_project_token_type)
         group by
@@ -112,6 +113,7 @@ from
             and a2.project = 'ALL'
             and a1.type = a2.type
             and a2.data_subject = 'count'
+            and a1.recent_time_code = a2.recent_code
         where       a1.token in (select distinct token from dim_project_token_type)
           and a2.label_type not like '%NFT%'
         group by
@@ -138,6 +140,7 @@ from
             and a1.project = a2.project
             and a1.type = a2.type
             and a2.data_subject = 'count'
+            and a1.recent_time_code = a2.recent_code
         where  a1.token in (select distinct token from dim_project_token_type) and a2.label_type not like '%NFT%'
         group by
             a1.address,
@@ -163,6 +166,7 @@ from
             and a1.type = a2.type
             and a1.token!='ALL'
             and a2.data_subject = 'count'
+            and a1.recent_time_code = a2.recent_code
         where a1.token in (select distinct token from dim_project_token_type) and a2.label_type not like '%NFT%'
         group by
             a1.address,

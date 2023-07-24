@@ -55,7 +55,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
             dptt.type as type,
             dptt.project_name as project_name,
             dptt.token_name as token_name,
-            zb_rate
+            zb_rate,
+            recent_time_code
         from
             (
                 select
@@ -67,7 +68,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                     t1.total_transfer_volume_usd,
                     t1.count_sum,
                     t1.count_sum_total,
-                    t1.zb_rate
+                    t1.zb_rate,
+                    recent_time_code
                 from
                     (
                         select
@@ -79,7 +81,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                             a2.total_transfer_volume_usd,
                             a2.count_sum,
                             a2.count_sum_total,
-                            cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
+                            cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate,
+                            recent_time_code
                         from
                             (
                                 select
@@ -90,7 +93,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                     a1.type,
                                     a1.total_transfer_volume_usd,
                                     a1.count_sum,
-                                    a10.count_sum_total
+                                    a10.count_sum_total,
+                                    a1.recent_time_code
                                 from
                                     (
                                         select
@@ -100,10 +104,9 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                             a1.seq_flag,
                                             a1.type,
                                             a1.total_transfer_volume_usd,
-                                            row_number() over(partition by seq_flag
-					order by
-						total_transfer_volume_usd desc,
-						address asc) as count_sum
+                                            row_number() over(partition by seq_flag,recent_time_code
+					                        order by total_transfer_volume_usd desc,address asc) as count_sum,
+                                            recent_time_code
                                         from
                                             (
                                                 select
@@ -111,7 +114,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                     s2.seq_flag,
                                                     s1.token,
                                                     s1.type,
-                                                    sum(s1.total_transfer_volume_usd) as total_transfer_volume_usd
+                                                    sum(s1.total_transfer_volume_usd) as total_transfer_volume_usd,
+                                                    recent_time_code
                                                 from
                                                     (
                                                         -- project-token-type
@@ -120,7 +124,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             token,
                                                             total_transfer_volume_usd,
                                                             type,
-                                                            project
+                                                            project,
+                                                            recent_time_code
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
@@ -133,7 +138,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             'ALL' as token,
                                                             total_transfer_volume_usd,
                                                             type,
-                                                            'ALL' as project
+                                                            'ALL' as project,
+                                                            recent_time_code
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
@@ -146,7 +152,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             token,
                                                             total_transfer_volume_usd,
                                                             'ALL' as type,
-                                                            'ALL' as project
+                                                            'ALL' as project,
+                                                            recent_time_code
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
@@ -159,7 +166,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             'ALL' as token,
                                                             total_transfer_volume_usd,
                                                             type,
-                                                            project
+                                                            project,
+                                                            recent_time_code
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
@@ -172,7 +180,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             token,
                                                             total_transfer_volume_usd,
                                                             type,
-                                                            'ALL' as project
+                                                            'ALL' as project,
+                                                            recent_time_code
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
@@ -185,19 +194,22 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                                            and s1.project = s2.project
                                                                            and s1.type = s2.type
                                                                            and s2.data_subject = 'volume_rank'
+                                                                           and s1.recent_time_code = s2.recent_code
                                                 where
                                                         total_transfer_volume_usd >= 100
                                                 group by
                                                     s1.address,
                                                     s1.token,
                                                     s1.type,
-                                                    s2.seq_flag) as a1) as a1
+                                                    s2.seq_flag,
+                                                    recent_time_code) as a1) as a1
                                         inner join (
                                         select
                                             count(distinct address) as count_sum_total,
                                             tb2.token,
                                             seq_flag,
-                                            tb2.type
+                                            tb2.type,
+                                            recent_time_code
                                         from
                                             (
                                                 select
@@ -205,7 +217,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                     token,
                                                     type,
                                                     project,
-                                                    sum(total_transfer_volume_usd) total_transfer_volume_usd
+                                                    sum(total_transfer_volume_usd) total_transfer_volume_usd,
+                                                    recent_time_code
                                                 from
                                                     (
                                                         select
@@ -213,7 +226,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             token,
                                                             type,
                                                             project,
-                                                            total_transfer_volume_usd
+                                                            total_transfer_volume_usd,
+                                                            recent_time_code
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
@@ -226,7 +240,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             'ALL' as token,
                                                             type,
                                                             'ALL' as project,
-                                                            total_transfer_volume_usd
+                                                            total_transfer_volume_usd,
+                                                            recent_time_code
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
@@ -239,7 +254,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             'ALL' as token,
                                                             type,
                                                             project,
-                                                            total_transfer_volume_usd
+                                                            total_transfer_volume_usd,
+                                                            recent_time_code
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
@@ -252,7 +268,8 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             token,
                                                             type,
                                                             'ALL' as project,
-                                                            total_transfer_volume_usd
+                                                            total_transfer_volume_usd,
+                                                            recent_time_code
                                                         from
                                                             dex_tx_volume_count_summary
                                                         where
@@ -263,27 +280,31 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                     address,
                                                     token,
                                                     type,
-                                                    project) totala
+                                                    project,
+                                                    recent_time_code) totala
                                                 inner join dim_project_token_type tb2 on
                                                         totala.token = tb2.token
                                                     and totala.project = tb2.project
                                                     and totala.type = tb2.type
                                                     and tb2.data_subject = 'volume_rank'
+                                                    and totala.recent_time_code = tb2.recent_code
                                         where
                                                 total_transfer_volume_usd >= 100
                                         group by
                                             tb2.token,
                                             tb2.seq_flag,
-                                            tb2.type ) as a10
+                                            tb2.type,
+                                            recent_time_code ) as a10
                                                    on
                                                                a10.token = a1.token
                                                            and a10.seq_flag = a1.seq_flag
-                                                           and a10.type = a1.type) as a2) as t1
+                                                           and a10.type = a1.type and a1.recent_time_code=a10.recent_time_code) as a2) as t1
             ) tb1 inner join dim_project_token_type dptt on (dptt.token = tb1.token
                   and dptt."type" = tb1.type
                   and dptt.seq_flag = tb1.seq_flag
                   and dptt.data_subject = 'volume_rank'
-                  and label_type not like '%NFT%')
+                  and label_type not like '%NFT%'
+                and tb1.recent_time_code = dptt.recent_code)
         where
                 tb1.total_transfer_volume_usd >= 100
           and zb_rate <= 0.1) t ;
