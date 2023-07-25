@@ -1,0 +1,1 @@
+select * from erc20_tx_record
