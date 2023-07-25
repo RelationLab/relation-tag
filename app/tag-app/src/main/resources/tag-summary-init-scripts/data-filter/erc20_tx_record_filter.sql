@@ -7,7 +7,7 @@ CREATE TABLE public.erc20_tx_record_filter
     block_number          bigint NULL,
     total_transfer_volume numeric(125, 30) NULL,
     hash                  varchar(100) NULL
-) distributed by (address,"token");
+) distributed by (from_address,to_address,"token");
 truncate table erc20_tx_record_filter;
 vacuum
 erc20_tx_record_filter;

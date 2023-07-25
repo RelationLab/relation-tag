@@ -16,7 +16,7 @@ CREATE TABLE public.token_holding_uni_filter (
                                               liquidity numeric(125, 30) NULL,
                                               "type" varchar(30) NULL,
                                               triggered_flag varchar(1) NULL
-);
+) DISTRIBUTED BY (address,"token");
 truncate table token_holding_uni_filter;
 vacuum token_holding_uni_filter;
 
