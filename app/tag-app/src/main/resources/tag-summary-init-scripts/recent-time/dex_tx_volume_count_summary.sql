@@ -51,7 +51,6 @@ from token_holding_uni_filterate th
          inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
                     on
                         (th.block_height >= recent_time.block_height)
-where triggered_flag = '1'
 group by th.address,
          th.type,
          recent_time.recent_time_code;
@@ -110,7 +109,6 @@ from dex_tx_volume_count_record_filter dtvcr
          inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
                     on
                         (dtvcr.block_height >= recent_time.block_height)
-where triggered_flag = '1'
 group by dtvcr.address,
          dtvcr.type,
          project,
