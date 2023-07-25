@@ -9,7 +9,7 @@ create table nft_transfer_holding
     created_at            timestamp default CURRENT_TIMESTAMP,
     updated_at            timestamp default CURRENT_TIMESTAMP,
     recent_time_code           varchar(30) NULL
-);
+)distributed by (address,"token",recent_time_code);
 truncate table nft_transfer_holding;
 vacuum nft_transfer_holding;
 
