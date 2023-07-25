@@ -19,7 +19,8 @@ CREATE TABLE public.combination (
                                     label_name text NULL,
                                     "content" varchar(100) NULL,
                                     asset_type varchar(50) NULL,
-                                    label_category varchar(50) NULL
+                                    label_category varchar(50) NULL,
+                                    recent_time_code varchar(30) NULL,
 );
 CREATE INDEX combination_idx_label_name ON public.combination USING btree (label_name);
 update nft_sync_address set platform='CryptoPunks' where  address='0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb';

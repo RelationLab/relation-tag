@@ -104,7 +104,8 @@ into
                         label_name,
                         "content",
                         asset_type,
-                        label_category)
+                        label_category,
+    recent_time_code)
 select distinct
     CASE WHEN  web3_platform.platform_name = 'ALL' THEN 'ALL_WEB3' ELSE web3_platform.platform_name END asset,
     ''  project,
@@ -117,7 +118,8 @@ select distinct
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_GRADE_'|| level_def.level label_name,
     web3_platform.platform_name_alis||' NFT ' ||level_def.level_name||' Collector' "content",
     'web3' asset_type,
-    'GRADE' label_category
+    'GRADE' label_category,
+    'ALL' recent_time_code
 from web3_action_platform
          inner join web3_platform on
     (web3_platform.platform = web3_action_platform.platform)
@@ -222,7 +224,8 @@ into
                         label_name,
                         "content",
                         asset_type,
-                        label_category)
+                        label_category,
+    recent_time_code)
 select distinct
     CASE WHEN  web3_platform.platform_name = 'ALL' THEN 'ALL_WEB3' ELSE web3_platform.platform_name END asset,
     ''  project,
@@ -235,7 +238,8 @@ select distinct
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK_'|| level_def.level label_name,
     web3_platform.platform_name_alis||' ' ||level_def.level_name||' NFT ' ||'Collector' "content",
     'web3' asset_type,
-    'RANK' label_category
+    'RANK' label_category,
+    'ALL' recent_time_code
 from web3_action_platform
          inner join web3_platform on
     (web3_platform.platform = web3_action_platform.platform)
@@ -339,7 +343,8 @@ into
                         label_name,
                         "content",
                         asset_type,
-                        label_category)
+                        label_category,
+   recent_time_code)
 select distinct
     CASE WHEN  web3_platform.platform_name = 'ALL' THEN 'ALL_WEB3' ELSE web3_platform.platform_name END asset,
     ''  project,
@@ -352,7 +357,8 @@ select distinct
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_TOP_'|| level_def.level label_name,
     web3_platform.platform_name_alis ||' '||level_def.level_name||' NFT'||' Collector' "content",
     'web3' asset_type,
-    'TOP' label_category
+    'TOP' label_category,
+    'ALL' recent_time_code
 from web3_action_platform
          inner join web3_platform on
     (web3_platform.platform = web3_action_platform.platform)
@@ -457,7 +463,8 @@ into
                         label_name,
                         "content",
                         asset_type,
-                        label_category)
+                        label_category,
+                        recent_time_code)
 select distinct
     CASE WHEN  web3_platform.platform_name = 'ALL' THEN 'ALL_WEB3' ELSE web3_platform.platform_name END asset,
     ''  project,
@@ -470,7 +477,8 @@ select distinct
     recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY_'|| level_def.level label_name,
     recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||web3_platform.platform_name_alis||'  ' ||level_def.level_name "content",
     'web3' asset_type,
-    'GRADE' label_category
+    'GRADE' label_category,
+    recent_time_code
 from web3_action_platform
          inner join web3_platform on
     (web3_platform.platform = web3_action_platform.platform)

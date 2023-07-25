@@ -140,7 +140,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+     recent_time_code)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
@@ -153,7 +154,8 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 ')' || '_BALANCE_GRADE_' || level_def.level                                    label_name,
                 lpt.factory_content || ' ' || symbol_wired || ' ' || level_def.level_name      "content",
                 'token'                                                                        asset_type,
-                'GRADE'                                                                        label_category
+                'GRADE'                                                                        label_category,
+                'ALL' recent_time_code
 from (select wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
@@ -302,7 +304,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+   recent_time_code)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
@@ -315,7 +318,8 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 ')' || '_BALANCE_RANK_' || level_def.level                                     label_name,
                 lpt.factory_content || ' ' || symbol_wired || ' ' || level_def.level_name      "content",
                 'token'                                                                        asset_type,
-                'RANK'                                                                         label_category
+                'RANK'                                                                         label_category,
+                'ALL' recent_time_code
 from (select wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
@@ -463,7 +467,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+    recent_time_code)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
@@ -476,7 +481,8 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 ')' || '_BALANCE_TOP_' || level_def.level                                      label_name,
                 lpt.factory_content || ' ' || symbol_wired || ' ' || level_def.level_name      "content",
                 'token'                                                                        asset_type,
-                'TOP'                                                                          label_category
+                'TOP'                                                                          label_category,
+                'ALL' recent_time_code
 from (select wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
@@ -636,7 +642,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+                         recent_time_code)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
@@ -652,7 +659,8 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || lpt.factory_content || ' ' ||
                 symbol_wired || ' ' || level_def.level_name                                    "content",
                 'token'                                                                        asset_type,
-                'GRADE'                                                                        label_category
+                'GRADE'                                                                        label_category,
+                recent_time_code
 from (select wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
@@ -815,7 +823,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+                         recent_time_code)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
@@ -834,7 +843,8 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                                                 then level_def.level || ' '
                                             else '' end) || level_def.level_name               "content",
                 'token'                                                                        asset_type,
-                'GRADE'                                                                        label_category
+                'GRADE'                                                                        label_category,
+                recent_time_code
 from (select wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
@@ -997,7 +1007,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+    recent_time_code)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
@@ -1016,7 +1027,8 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                                                 then level_def.level || ' '
                                             else '' end) || level_def.level_name               "content",
                 'token'                                                                        asset_type,
-                'RANK'                                                                         label_category
+                'RANK'                                                                         label_category,
+                'ALL' recent_time_code
 from (select wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
@@ -1122,7 +1134,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+  recent_time_code)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
@@ -1135,7 +1148,8 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 level_def.level                                      label_name,
                 t.symbol || ' ' || level_def.level_name              "content",
                 'token'                                              asset_type,
-                'GRADE'                                              label_category
+                'GRADE'                                              label_category,
+                'ALL' recent_time_code
 from top_token_1000 t
          inner join (select *
                      from level_def
@@ -1205,7 +1219,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+    recent_time_code)
 select distinct 'ALL_TOKEN'                                                       asset,
                 ''                                                                project,
                 ''                                                                trade_type,
@@ -1217,7 +1232,8 @@ select distinct 'ALL_TOKEN'                                                     
                 'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_GRADE_' || level_def.level label_name,
                 'Token ' || level_def.level_name                                  "content",
                 'token'                                                           asset_type,
-                'GRADE'                                                           label_category
+                'GRADE'                                                           label_category,
+                'ALL' recent_time_code
 from level_def
 where type = 'defi_balance_grade';
 
@@ -1295,7 +1311,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+    recent_time_code)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
@@ -1308,7 +1325,8 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 level_def.level                                      label_name,
                 t.symbol || ' ' || level_def.level_name              "content",
                 'token'                                              asset_type,
-                'RANK'                                               label_category
+                'RANK'                                               label_category,
+                'ALL' recent_time_code
 from top_token_1000 t
          inner join (select *
                      from level_def
@@ -1378,7 +1396,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+    recent_time_code)
 select distinct 'ALL_TOKEN'                                                      asset,
                 ''                                                               project,
                 ''                                                               trade_type,
@@ -1390,7 +1409,8 @@ select distinct 'ALL_TOKEN'                                                     
                 'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_RANK_' || level_def.level label_name,
                 'Token ' || level_def.level_name                                 "content",
                 'token'                                                          asset_type,
-                'RANK'                                                           label_category
+                'RANK'                                                           label_category,
+                'ALL' recent_time_code
 from level_def
 where type = 'defi_balance_rank';
 
@@ -1468,7 +1488,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+   recent_time_code)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
@@ -1481,7 +1502,8 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 level_def.level                                      label_name,
                 t.symbol || ' ' || level_def.level_name              "content",
                 'token'                                              asset_type,
-                'TOP'                                                label_category
+                'TOP'                                                label_category,
+                'ALL' recent_time_code
 from top_token_1000 t
          inner join (select *
                      from level_def
@@ -1551,7 +1573,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+    recent_time_code)
 select distinct 'ALL_TOKEN'                                                     asset,
                 ''                                                              project,
                 ''                                                              trade_type,
@@ -1563,7 +1586,8 @@ select distinct 'ALL_TOKEN'                                                     
                 'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_TOP_' || level_def.level label_name,
                 'Token ' || level_def.level_name                                "content",
                 'token'                                                         asset_type,
-                'TOP'                                                           label_category
+                'TOP'                                                           label_category,
+                'ALL' recent_time_code
 from level_def
 where type = 'defi_balance_top';
 
@@ -1653,7 +1677,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+                         recent_time_code)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
@@ -1669,7 +1694,8 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || t.symbol || ' ' ||
                 level_def.level_name                                 "content",
                 'token'                                              asset_type,
-                'GRADE'                                              label_category
+                'GRADE'                                              label_category,
+                recent_time_code
 from top_token_1000 t
          inner join (select *
                      from level_def
@@ -1751,7 +1777,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+                         recent_time_code)
 select distinct 'ALL_TOKEN'                                                  asset,
                 ''                                                           project,
                 ''                                                           trade_type,
@@ -1766,7 +1793,8 @@ select distinct 'ALL_TOKEN'                                                  ass
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'Token ' ||
                 level_def.level_name                                         "content",
                 'token'                                                      asset_type,
-                'GRADE'                                                      label_category
+                'GRADE'                                                      label_category,
+                recent_time_code
 from level_def
          inner join recent_time on (1 = 1)
 where type = 'defi_count';
@@ -1846,7 +1874,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+    recent_time_code)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
@@ -1859,7 +1888,8 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 level_def.level                                      label_name,
                 t.symbol || ' ' || level_def.level_name              "content",
                 'token'                                              asset_type,
-                'GRADE'                                              label_category
+                'GRADE'                                              label_category,
+                'ALL' recent_time_code
 from top_token_1000 t
          inner join (select *
                      from level_def
@@ -1943,7 +1973,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+    recent_time_code)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
@@ -1956,7 +1987,8 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 level_def.level                                      label_name,
                 t.symbol || ' ' || level_def.level_name              "content",
                 'token'                                              asset_type,
-                'SPECIAL'                                            label_category
+                'SPECIAL'                                            label_category,
+                'ALL' recent_time_code
 from top_token_1000 t
          inner join (select *
                      from level_def
@@ -2051,7 +2083,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+                         recent_time_code)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
@@ -2070,7 +2103,8 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                                                                                                            else '' end) ||
                 ' ' || level_def.level_name                          "content",
                 'token'                                              asset_type,
-                'GRADE'                                              label_category
+                'GRADE'                                              label_category,
+                recent_time_code
 from top_token_1000 t
          inner join (select *
                      from level_def
@@ -2154,7 +2188,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+                         recent_time_code)
 select distinct 'ALL_TOKEN'                                                      asset,
                 ''                                                               project,
                 ''                                                               trade_type,
@@ -2172,7 +2207,8 @@ select distinct 'ALL_TOKEN'                                                     
                                                                                                            else '' end) ||
                 level_def.level_name                                             "content",
                 'token'                                                          asset_type,
-                'GRADE'                                                          label_category
+                'GRADE'                                                          label_category,
+                recent_time_code
 from level_def
          inner join recent_time on (1 = 1)
 where type = 'defi_volume_grade';
@@ -2260,7 +2296,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+                         recent_time_code)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
@@ -2276,7 +2313,8 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || t.symbol || ' ' ||
                 level_def.level_name                                 "content",
                 'token'                                              asset_type,
-                'RANK'                                               label_category
+                'RANK'                                               label_category,
+                recent_time_code
 from top_token_1000 t
          inner join (select *
                      from level_def
@@ -2358,7 +2396,8 @@ into public.combination (asset,
                          label_name,
                          "content",
                          asset_type,
-                         label_category)
+                         label_category,
+    recent_time_code)
 select distinct 'ALL_TOKEN'                                                     asset,
                 ''                                                              project,
                 ''                                                              trade_type,
@@ -2373,7 +2412,8 @@ select distinct 'ALL_TOKEN'                                                     
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'Token ' ||
                 level_def.level_name || ' Trader'                               "content",
                 'token'                                                         asset_type,
-                'RANK'                                                          label_category
+                'RANK'                                                          label_category,
+                'ALL' recent_time_code
 from level_def
          inner join recent_time on (1 = 1)
 where type = 'defi_volume_rank';
@@ -2392,7 +2432,8 @@ into combination (asset,
                   label_name,
                   "content",
                   asset_type,
-                  label_category)
+                  label_category,
+    recent_time_code)
 values ('',
         '',
         '',
@@ -2406,7 +2447,8 @@ values ('',
         'crowd_token_whale',
         '',
         '',
-        '');
+        '',
+        'ALL');
 insert
 into combination (asset,
                   project,
@@ -2421,7 +2463,8 @@ into combination (asset,
                   label_name,
                   "content",
                   asset_type,
-                  label_category)
+                  label_category,
+     recent_time_code)
 values ('',
         '',
         '',
@@ -2435,7 +2478,8 @@ values ('',
         'crowd_nft_whale',
         '',
         '',
-        '');
+        '',
+        'ALL');
 
 
 insert
@@ -2452,7 +2496,8 @@ into combination (asset,
                   label_name,
                   "content",
                   asset_type,
-                  label_category)
+                  label_category,
+     recent_time_code)
 values ('',
         '',
         '',
@@ -2466,7 +2511,8 @@ values ('',
         'crowd_active_users',
         '',
         '',
-        '');
+        '',
+        'ALL');
 insert
 into combination (asset,
                   project,
@@ -2481,7 +2527,8 @@ into combination (asset,
                   label_name,
                   "content",
                   asset_type,
-                  label_category)
+                  label_category,
+    recent_time_code)
 values ('',
         '',
         '',
@@ -2495,7 +2542,8 @@ values ('',
         'crowd_defi_active_users',
         '',
         '',
-        '');
+        '',
+        'ALL');
 
 insert
 into combination (asset,
@@ -2511,7 +2559,8 @@ into combination (asset,
                   label_name,
                   "content",
                   asset_type,
-                  label_category)
+                  label_category,
+    recent_time_code)
 values ('',
         '',
         '',
@@ -2525,7 +2574,8 @@ values ('',
         'crowd_nft_active_users',
         '',
         '',
-        '');
+        '',
+        'ALL');
 insert
 into combination (asset,
                   project,
@@ -2540,7 +2590,8 @@ into combination (asset,
                   label_name,
                   "content",
                   asset_type,
-                  label_category)
+                  label_category,
+    recent_time_code)
 values ('',
         '',
         '',
@@ -2554,7 +2605,8 @@ values ('',
         'crowd_web3_active_users',
         '',
         '',
-        '');
+        '',
+        'ALL');
 
 
 insert
@@ -2571,7 +2623,8 @@ into combination (asset,
                   label_name,
                   "content",
                   asset_type,
-                  label_category)
+                  label_category,
+    recent_time_code)
 values ('',
         '',
         '',
@@ -2585,7 +2638,8 @@ values ('',
         'crowd_long_term_holder',
         '',
         '',
-        '');
+        '',
+        'ALL');
 insert
 into combination (asset,
                   project,
@@ -2600,7 +2654,8 @@ into combination (asset,
                   label_name,
                   "content",
                   asset_type,
-                  label_category)
+                  label_category,
+    recent_time_code)
 values ('',
         '',
         '',
@@ -2614,7 +2669,8 @@ values ('',
         'crowd_defi_high_demander',
         '',
         '',
-        '');
+        '',
+        'ALL');
 
 
 insert
@@ -2631,7 +2687,8 @@ into combination (asset,
                   label_name,
                   "content",
                   asset_type,
-                  label_category)
+                  label_category,
+    recent_time_code)
 values ('',
         '',
         '',
@@ -2645,7 +2702,8 @@ values ('',
         'crowd_nft_high_demander',
         '',
         '',
-        '');
+        '',
+        'ALL');
 insert
 into combination (asset,
                   project,
@@ -2660,7 +2718,8 @@ into combination (asset,
                   label_name,
                   "content",
                   asset_type,
-                  label_category)
+                  label_category,
+    recent_time_code)
 values ('',
         '',
         '',
@@ -2674,7 +2733,8 @@ values ('',
         'crowd_elite',
         '',
         '',
-        '');
+        '',
+        'ALL');
 insert into dim_rank_token
 select distinct token, token_type
 from dim_rule_content;
