@@ -10,11 +10,11 @@ select
     to_address address,
     token,
     max(block_number) as block_height,
-    sum(amount) as total_transfer_volume,
+    sum(total_transfer_volume) as total_transfer_volume,
     0 as total_transfer_count,
     recent_time_code
 from
-    erc20_tx_record
+    erc20_tx_record_filter
         inner join (
         select
             *
@@ -22,7 +22,7 @@ from
             recent_time
         where
                 recent_time.recent_time_code = '${recent_time_code}' ) recent_time on
-        (erc20_tx_record.block_number >= recent_time.block_height)
+        (erc20_tx_record_filter.block_number >= recent_time.block_height)
 group by
     to_address,
     token,

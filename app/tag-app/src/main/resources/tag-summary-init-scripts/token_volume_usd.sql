@@ -10,43 +10,28 @@ CREATE TABLE public.token_volume_usd
     recent_time_code varchar(30) NULL
 ) distributed by (address);
 truncate table token_volume_usd;
-vacuum
-token_volume_usd;
-
+vacuum token_volume_usd;
 
 insert
 into token_volume_usd(address,
                       token,
                       volume_usd,
                       recent_time_code)
-select th.address,
+select address,
        token,
-       round(total_transfer_volume * round(cast(wle.price as numeric), 18), 8) as volume_usd,
+       total_transfer_volume,
        recent_time_code
-from (select address,
-             token,
-             total_transfer_volume,
-             recent_time_code
-      from token_holding_vol_count
-      where total_transfer_volume > 0
-        and token in (select token_id
-                      from dim_rank_token)) th
-         inner join (select *
-                     from white_list_erc20
-                     where address in (select token_id
-                                       from dim_rank_token)) wle on
-            th.token = wle.address
-        and ignored = false;
-
-insert
+from token_holding_vol_count
+where total_transfer_volume > 0
+    insert
 into token_volume_usd(address,
                       token,
                       volume_usd,
                       recent_time_code)
-select eh.address                                                                     as address,
-       'eth'                                                                          as token,
+select eh.address                                                                 as address,
+       'eth'                                                                      as token,
        round(eh.total_transfer_volume * round(cast(wle.price as numeric), 18), 8) as volume_usd,
-       recent_time_code as recent_time_code
+       recent_time_code                                                           as recent_time_code
 from (select address,
              total_transfer_volume,
              recent_time_code

@@ -381,7 +381,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         String recentTimePath = filePath.concat(File.separator).concat(RECENT_TIME_PATH);
         dataFilter(batchDate, dataFilterPath);
         /***************nft_holding***********/
-        execSql("token_holding_uni_filter", "nft_holding.sql", batchDate, tableDefiPath, null);
+        execSql("erc20_tx_record_filter", "nft_holding.sql", batchDate, tableDefiPath, null);
         execSql("nft_holding", "nft_holding_middle.sql", batchDate, tableDefiPath, null);
         exceRecentTimeScripts(batchDate, recentTimePath, "nft_holding_middle.sql", "nft_holding_middle", 1,false);
         exceRecentTimeScripts(batchDate, recentTimePath, "nft_holding_record.sql", "nft_holding_middle", 10,true);
@@ -461,5 +461,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
     private void dataFilter(String batchDate, String filePath) {
         execSql("white_list_erc20", "dex_tx_volume_count_record_filter.sql", batchDate, filePath, null);
         execSql("dex_tx_volume_count_record_filter", "token_holding_uni_filter.sql", batchDate, filePath, null);
+        execSql("token_holding_uni_filter", "erc20_tx_record_filter.sql", batchDate, filePath, null);
     }
 }
