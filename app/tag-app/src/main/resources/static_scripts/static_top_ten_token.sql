@@ -179,6 +179,7 @@ FROM
                             nft_volume_count tbvu
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                          where token in(select token_id from dim_project_token_type_rank)
+                           and token<>'0x0000000000a39bb272e79075ade125fd351887ac'
                            and   transfer_volume >=1  and tbvu.address not in (select address from exclude_address)
                            and recent_time_code='ALL'
                         GROUP BY
