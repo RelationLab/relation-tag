@@ -12,7 +12,7 @@ CREATE TABLE public.token_holding_vol_count
     recent_time_code      varchar(30) NULL,
     created_at            timestamp NULL,
     updated_at            timestamp NULL
-) distributed by (address);
+) distributed by (address,"token",recent_time_code);
 
 truncate table token_holding_vol_count;
 vacuum token_holding_vol_count;

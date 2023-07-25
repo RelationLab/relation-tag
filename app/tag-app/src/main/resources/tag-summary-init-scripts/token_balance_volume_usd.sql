@@ -9,7 +9,7 @@ create table public.token_balance_volume_usd
     created_at timestamp default CURRENT_TIMESTAMP,
     updated_at timestamp default now(),
     removed boolean default false
-);
+)distributed by (address,"token");
 truncate table token_balance_volume_usd;
 vacuum token_balance_volume_usd;
 

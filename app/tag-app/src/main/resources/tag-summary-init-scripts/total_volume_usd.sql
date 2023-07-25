@@ -9,7 +9,7 @@ CREATE TABLE public.total_volume_usd (
                                          updated_at timestamp(6) NULL,
                                          recent_time_code varchar(30) NULL
 )
-    distributed by (address);
+    distributed by (address,recent_time_code);
 truncate table total_volume_usd;
 vacuum total_volume_usd;
 
