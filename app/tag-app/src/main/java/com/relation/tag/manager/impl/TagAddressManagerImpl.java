@@ -421,22 +421,23 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("dex_tx_volume_count_summary", "dex_tx_volume_count_summary_univ3.sql", batchDate, tableDefiPath, 10,true,null);
         exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary_univ3.sql", "dex_tx_volume_count_summary_univ3", 1,false);
 
-        /***************eth_holding_vol_count***********/
-        execSql("dex_tx_volume_count_summary_univ3", "eth_tx_record_from_to.sql", batchDate, tableDefiPath, 10,true,null);
-        exceRecentTimeScripts(batchDate, recentTimePath, "eth_tx_record_from_to.sql", "eth_tx_record_from_to", 1,false);
-        execSql("eth_tx_record_from_to", "eth_holding_vol_count.sql", batchDate, filePath, 10,true,null);
-
 
         /***************erc20_tx_record_from***********/
-        execSql("eth_holding_vol_count", "erc20_tx_record_from.sql", batchDate, tableDefiPath, 1,false,null);
+        execSql("dex_tx_volume_count_summary_univ3", "erc20_tx_record_from.sql", batchDate, tableDefiPath, 1,false,null);
         exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_from.sql", "erc20_tx_record_from", 1,false);
         /***************erc20_tx_record_to***********/
         execSql("erc20_tx_record_from", "erc20_tx_record_to.sql", batchDate, tableDefiPath, 10,true,null);
         exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_to.sql", "erc20_tx_record_to", 1,false);
         execSql("erc20_tx_record_to", "token_holding_vol_count.sql", batchDate, filePath, 10,true,null);
 
+        /***************eth_holding_vol_count***********/
+        execSql("token_holding_vol_count", "eth_tx_record_from_to.sql", batchDate, tableDefiPath, 10,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "eth_tx_record_from_to.sql", "eth_tx_record_from_to", 1,false);
+        execSql("eth_tx_record_from_to", "eth_holding_vol_count.sql", batchDate, filePath, 10,true,null);
 
-        execSql("token_holding_vol_count", "dex_tx_volume_count_summary_stake.sql", batchDate, filePath, 1,false,null);
+
+
+        execSql("eth_holding_vol_count", "dex_tx_volume_count_summary_stake.sql", batchDate, filePath, 1,false,null);
         execSql("dex_tx_volume_count_summary_stake", "token_balance_volume_usd.sql", batchDate, filePath, 1,false,null);
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate, filePath, 1,false,null);
         execSql("total_balance_volume_usd", "token_volume_usd.sql", batchDate, filePath, 1,false,null);
