@@ -16,7 +16,7 @@ CREATE TABLE public.nft_buy_sell_holding (
                                              recent_time_code          varchar(30) NULL,
                                              created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                              updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP
-)distributed by (address,"token");
+)distributed by (address,"token",recent_time_code);
 truncate table nft_buy_sell_holding;
 vacuum nft_buy_sell_holding;
 
