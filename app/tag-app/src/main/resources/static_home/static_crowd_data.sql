@@ -45,6 +45,6 @@ from
             address) out_t
 group by
     label_name;
-insert into tag_result${tableSuffix}(table_name,batch_date)  SELECT 'static_crowd_data${tableSuffix}' as table_name,'${tagBatch}'  as batch_date;
+insert into tag_result${tableSuffix}(table_name,batch_date)  SELECT 'static_crowd_data${tableSuffix}' as table_name,'${batchDate}'  as batch_date;
 
 

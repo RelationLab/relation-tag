@@ -7464,4 +7464,4 @@ insert into dim_project_token_type_rank(token_id, project)
 select distinct token, project
 from dim_project_token_type;
 insert into tag_result(table_name, batch_date)
-SELECT 'dim_project_token_type' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
+SELECT 'dim_project_token_type' as table_name, '${batchDate}' as batch_date;

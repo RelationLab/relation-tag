@@ -277,4 +277,4 @@ FROM
                 s1.rn <= 10) s2
         INNER JOIN dim_project_token_type drc ON
         (drc.token = s2.token);
-insert into tag_result${tableSuffix}(table_name,batch_date)  SELECT 'static_top_ten_token${tableSuffix}' as table_name,'${tagBatch}'  as batch_date;
+insert into tag_result${tableSuffix}(table_name,batch_date)  SELECT 'static_top_ten_token${tableSuffix}' as table_name,'${batchDate}'  as batch_date;

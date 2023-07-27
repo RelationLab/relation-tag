@@ -384,7 +384,7 @@ update static_total_data${tableSuffix} set json_text= (
     from
         static_category_json${tableSuffix})
 where  code = 'static_total';
-INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_total_data${tableSuffix}') as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_total_data${tableSuffix}') as table_name,'${batchDate}'  as batch_date;
 
 
 

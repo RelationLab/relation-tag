@@ -253,4 +253,4 @@ where (label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_RARE_NFT_TRADER'
     or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_LEGENDARY_NFT_TRADER')
   and
         address not in (select address from exclude_address);
-insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_volume_rank' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_volume_rank' as table_name,'${batchDate}'  as batch_date;

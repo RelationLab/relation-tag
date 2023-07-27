@@ -23,5 +23,5 @@ select address,token,balance_usd,volume_usd from  (select distinct th.address, t
    from token_holding th  inner join white_list_erc20 wle  on th.token = wle.address and ignored = false where  th.token in (select token_id from dim_rank_token)) budout
  where budOut.balance_usd>=100;
 
-insert into tag_result(table_name,batch_date)  SELECT 'token_balance_volume_usd' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'token_balance_volume_usd' as table_name,'${batchDate}'  as batch_date;
 

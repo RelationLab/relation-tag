@@ -45,4 +45,4 @@ insert into dex_action_platform(platform,trade_type) values('0x4d05e3d48a938db4b
 insert into dex_action_platform(platform,trade_type) values('0xae7ab96520de3a18e5e111b5eaab095312d7fe84','withdraw');
 insert into dex_action_platform(platform,trade_type) values('0xbafa44efe7901e04e39dad13167d089c559c1138','withdraw');
 insert into dex_action_platform(platform,trade_type) values('0x4d05e3d48a938db4b7a9a59a802d5b45011bde58','withdraw');
-insert into tag_result(table_name,batch_date)  SELECT 'basic_data_dex_action_platform' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'basic_data_dex_action_platform' as table_name,'${batchDate}'  as batch_date;

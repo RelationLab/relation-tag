@@ -492,4 +492,4 @@ from web3_action_platform
     where
             type = 'web3_count') level_def on
     (1 = 1) inner join recent_time on(1=1);
-insert into tag_result(table_name,batch_date)  SELECT 'dim_project_type' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'dim_project_type' as table_name,'${batchDate}'  as batch_date;

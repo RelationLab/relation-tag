@@ -17,6 +17,7 @@ import com.relation.tag.service.IUgcLabelDataAnalysisService;
 import com.relation.tag.util.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.utils.DateUtils;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.io.File;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -171,7 +169,7 @@ public class StaticManagerImpl implements StaticManager {
             return exceSql;
         }
         if (StringUtils.isNotEmpty(batchDate)) {
-            exceSql = exceSql.replace("${tagBatch}", batchDate);
+            exceSql = exceSql.replace("${batchDate}", batchDate);
         }
         if (!StringUtils.isBlank(paramsMap.get("tableSuffix"))) {
             exceSql = exceSql.replace("${tableSuffix}", paramsMap.get("tableSuffix"));
@@ -352,15 +350,19 @@ public class StaticManagerImpl implements StaticManager {
         Map<String, String> paramsMap = buildParamsMap(entity, tableSuffix, configEnvironment);
         String dir = STATIC_SCRIPTS_PATH;
         dropTable(paramsMap);
-        execSql(null, "address_init.sql", paramsMap, 1, null, dir, 0);
-        execSql("address_init".concat(tableSuffix), "static_top_ten_token.sql", paramsMap, 1, null, dir, 0);
-        execSql("address_init".concat(tableSuffix), "static_crowd_data.sql", paramsMap, 1, null, dir, 0);
-        execSql("address_init".concat(tableSuffix), "static_wired_type_address.sql", paramsMap, 1, null, dir, 0);
-        execSql("static_top_ten_token".concat(tableSuffix), "static_top_ten_platform.sql", paramsMap, 1, null, dir, 0);
-        execSql("static_top_ten_platform".concat(tableSuffix), "static_top_ten_action.sql", paramsMap, 1, null, dir, 0);
-        execSql("static_top_ten_action".concat(tableSuffix), "static_asset_level_data.sql", paramsMap, 1, null, dir, 0);
-        execSql("static_asset_level_data".concat(tableSuffix), "static_total_data.sql", paramsMap, 1, null, dir, 0);
-        execSql("static_total_data".concat(tableSuffix), "static_ugc_label_data_analysis.sql", paramsMap, 1, null, dir, 0);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR,calendar.get(Calendar.HOUR) + 8);
+        String batchDate = DateUtils.formatDate(calendar.getTime(), "YYYY-MM-dd");
+        execSql(null, "address_init.sql", paramsMap, 1, batchDate, dir, 0);
+        execSql("address_init".concat(tableSuffix), "static_top_ten_token.sql", paramsMap, 1, batchDate, dir, 0);
+        execSql("address_init".concat(tableSuffix), "static_crowd_data.sql", paramsMap, 1, batchDate, dir, 0);
+        execSql("address_init".concat(tableSuffix), "static_wired_type_address.sql", paramsMap, 1, batchDate, dir, 0);
+        execSql("static_top_ten_token".concat(tableSuffix), "static_top_ten_platform.sql", paramsMap, 1, batchDate, dir, 0);
+        execSql("static_top_ten_platform".concat(tableSuffix), "static_top_ten_action.sql", paramsMap, 1, batchDate, dir, 0);
+        execSql("static_top_ten_action".concat(tableSuffix), "static_asset_level_data.sql", paramsMap, 1, batchDate, dir, 0);
+        execSql("static_asset_level_data".concat(tableSuffix), "static_total_data.sql", paramsMap, 1, batchDate, dir, 0);
+        execSql("static_total_data".concat(tableSuffix), "static_ugc_label_data_analysis.sql", paramsMap, 1, batchDate, dir, 0);
     }
 
     @Override

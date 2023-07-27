@@ -29,5 +29,5 @@ select 'platform_deposit_withdraw_tx_record' as syn_type, max(block_number)-2000
 insert into dms_syn_block(syn_type,block_height)
 select 'platform_lend_tx_record' as syn_type, max(block_number)-2000    from platform_lend_tx_record_cdc;
 
-insert into tag_result(table_name,batch_date)  SELECT 'dms_syn_block' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'dms_syn_block' as table_name,'${batchDate}'  as batch_date;
 

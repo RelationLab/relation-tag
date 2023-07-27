@@ -59,4 +59,4 @@ from
     ) s1
 where
         s1.rn <= 100;
-insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_time_first_lp' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_time_first_lp' as table_name,'${batchDate}'  as batch_date;

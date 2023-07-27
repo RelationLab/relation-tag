@@ -2739,7 +2739,7 @@ insert into dim_rank_token
 select distinct token, token_type
 from dim_rule_content;
 insert into tag_result(table_name, batch_date)
-SELECT 'dim_rule_content' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
+SELECT 'dim_rule_content' as table_name, '${batchDate}' as batch_date;
 
 
 

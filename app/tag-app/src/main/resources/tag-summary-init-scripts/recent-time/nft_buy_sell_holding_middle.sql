@@ -68,6 +68,6 @@ into
             to_address,
             token);
 insert into tag_result(table_name,batch_date)
-SELECT 'nft_buy_sell_holding_middle_${recentTimeCode}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+SELECT 'nft_buy_sell_holding_middle_${recentTimeCode}' as table_name,'${batchDate}'  as batch_date;
 
 

@@ -113,4 +113,4 @@ where
   and tb1.zb_rate <= 0.1
   and tb2.data_subject = 'balance_rank'
   and tb2.token_type = 'token';
-insert into tag_result(table_name,batch_date)  SELECT 'address_label_eth_balance_rank' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_eth_balance_rank' as table_name,'${batchDate}'  as batch_date;

@@ -16,4 +16,4 @@ CREATE TABLE public.platform_nft_type_volume_count (
 truncate table platform_nft_type_volume_count;
 vacuum platform_nft_type_volume_count;
 
-insert into tag_result(table_name,batch_date)  SELECT 'tabel_defi_platform_nft_type_volume_count' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'tabel_defi_platform_nft_type_volume_count' as table_name,'${batchDate}'  as batch_date;

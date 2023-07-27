@@ -24,4 +24,4 @@ from
             address) out_t
 group by
     wired_type;
-insert into tag_result${tableSuffix}(table_name,batch_date)  SELECT 'static_wired_type_address${tableSuffix}' as table_name,'${tagBatch}'  as batch_date;
+insert into tag_result${tableSuffix}(table_name,batch_date)  SELECT 'static_wired_type_address${tableSuffix}' as table_name,'${batchDate}'  as batch_date;

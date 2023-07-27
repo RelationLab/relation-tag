@@ -364,6 +364,6 @@ update static_total_data${tableSuffix} set action_range= (
                 token_type ) tout)
 where  code = 'static_total';
 
-insert into tag_result${tableSuffix}(table_name,batch_date)  SELECT 'static_total_data${tableSuffix}' as table_name,'${tagBatch}'  as batch_date;
+insert into tag_result${tableSuffix}(table_name,batch_date)  SELECT 'static_total_data${tableSuffix}' as table_name,'${batchDate}'  as batch_date;
 
 

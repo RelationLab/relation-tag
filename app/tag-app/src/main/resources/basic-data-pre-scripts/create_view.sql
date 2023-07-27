@@ -62,6 +62,6 @@
     CREATE VIEW platform_lend_tx_record AS select * from platform_lend_tx_record_cdc
     where block_number<=(select min(block_height) from dms_syn_block);
 
-    insert into tag_result(table_name,batch_date)  SELECT 'create_view' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+    insert into tag_result(table_name,batch_date)  SELECT 'create_view' as table_name,'${batchDate}'  as batch_date;
 
 

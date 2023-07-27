@@ -143,4 +143,4 @@ from
                     and s1.recent_time_code = dptt.recent_code)
         where
                 s1.rn <= 100) t ;
-insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_transfer_volume_top' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_transfer_volume_top' as table_name,'${batchDate}'  as batch_date;

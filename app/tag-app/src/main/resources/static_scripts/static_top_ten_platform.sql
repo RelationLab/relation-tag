@@ -280,4 +280,4 @@ from (
                          rowtable ) s1
          where
                  s1.rn <= 100) s2 inner join dim_project_type drc on(drc.project=s2.token);
-INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_top_ten_platform${tableSuffix}') as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_top_ten_platform${tableSuffix}') as table_name,'${batchDate}'  as batch_date;

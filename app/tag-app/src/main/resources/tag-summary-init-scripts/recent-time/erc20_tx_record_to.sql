@@ -20,5 +20,5 @@ group by
     to_address,
     token;
 
-insert into tag_result(table_name,batch_date)  SELECT 'erc20_tx_record_to_${recentTimeCode}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'erc20_tx_record_to_${recentTimeCode}' as table_name,'${batchDate}'  as batch_date;
 

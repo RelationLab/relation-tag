@@ -172,4 +172,4 @@ group by bidt.address,
 
 insert into tag_result(table_name, batch_date)
 SELECT 'platform_nft_type_volume_count_${recentTimeCode}' as table_name,
-       to_char(current_date, 'YYYY-MM-DD')                  as batch_date;
+       '${batchDate}'                  as batch_date;

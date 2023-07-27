@@ -223,4 +223,4 @@ from
         where
                 tb1.total_transfer_volume >= 1
           and zb_rate <= 0.1) t ;
-insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_transfer_volume_rank' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_transfer_volume_rank' as table_name,'${batchDate}'  as batch_date;

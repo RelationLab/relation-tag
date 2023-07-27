@@ -38,4 +38,4 @@ CREATE TABLE public."label" (
                                 label_order int4 NULL DEFAULT 999,
                                 sync_es_status varchar(20) NOT NULL DEFAULT 'WAITING'::character varying
 );
-insert into tag_result(table_name,batch_date)  SELECT 'data_table_label' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'data_table_label' as table_name,'${batchDate}'  as batch_date;

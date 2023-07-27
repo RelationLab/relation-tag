@@ -63,4 +63,4 @@ set
 where
         quote_token = '0x0000000000a39bb272e79075ade125fd351887ac';
 
-insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_holding' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_holding' as table_name,'${batchDate}'  as batch_date;

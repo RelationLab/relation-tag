@@ -53,4 +53,4 @@ insert into platform_nft_holding_middle (address,
      where nft_sync_address.type <> 'ERC1155' and platform_nft_tx_record.block_number >= ${recentTimeBlockHeight}
      group by to_address, platform_address, quote_token, token);
 insert into tag_result(table_name, batch_date)
-SELECT 'platform_nft_holding_middle_${recentTimeCode}' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
+SELECT 'platform_nft_holding_middle_${recentTimeCode}' as table_name, '${batchDate}' as batch_date;

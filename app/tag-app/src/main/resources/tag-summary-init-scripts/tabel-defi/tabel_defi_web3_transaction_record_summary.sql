@@ -14,5 +14,5 @@ CREATE TABLE  public.web3_transaction_record_summary
 truncate table web3_transaction_record_summary;
 vacuum web3_transaction_record_summary;
 update web3_transaction_record_cdc set address = lower(address),token=lower(token) where type='write';
-insert into tag_result(table_name,batch_date)  SELECT 'tabel_defi_web3_transaction_record_summary' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'tabel_defi_web3_transaction_record_summary' as table_name,'${batchDate}'  as batch_date;
 

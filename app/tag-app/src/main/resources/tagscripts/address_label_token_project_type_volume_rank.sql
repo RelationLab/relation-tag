@@ -308,4 +308,4 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
         where
                 tb1.total_transfer_volume_usd >= 100
           and zb_rate <= 0.1) t ;
-insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_project_type_volume_rank' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_project_type_volume_rank' as table_name,'${batchDate}'  as batch_date;

@@ -47,4 +47,4 @@ into
             address,
             token,
             recent_time_code);
-insert into tag_result(table_name,batch_date)  SELECT 'nft_buy_sell_holding' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'nft_buy_sell_holding' as table_name,'${batchDate}'  as batch_date;

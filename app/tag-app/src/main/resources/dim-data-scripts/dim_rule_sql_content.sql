@@ -3833,4 +3833,4 @@ insert into exclude_token(token) values ('0x6dd4e4aad29a40edd6a409b9c1625186c985
 insert into exclude_token(token) values ('0x818fc6c2ec5986bc6e2cbf00939d90556ab12ce5');
 insert into exclude_token(token) values ('0x2b591e99afe9f32eaa6214f7b7629768c40eeb39');
 
-insert into tag_result(table_name,batch_date)  SELECT 'dim_rule_sql_content' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'dim_rule_sql_content' as table_name,'${batchDate}'  as batch_date;

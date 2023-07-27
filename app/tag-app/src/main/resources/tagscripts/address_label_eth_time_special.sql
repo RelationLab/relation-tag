@@ -100,4 +100,4 @@ from (
          where label_name like '%_NFT_TIME_SPECIAL_LONG_TERM_HOLDER'
      ) a1
 where   address not in (select address from exclude_address);
-insert into tag_result(table_name,batch_date)  SELECT 'address_label_eth_time_special' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_eth_time_special' as table_name,'${batchDate}'  as batch_date;

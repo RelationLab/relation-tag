@@ -28,5 +28,5 @@ select floor(EXTRACT(epoch FROM NOW())*1000) as analysis_date,
            )
   AS analysis_result, '${configEnvironment}' as config_environment
 FROM static_total_data${tableSuffix} where code='static_total' ;
-insert into tag_result(table_name,batch_date)  SELECT 'static_home_data_analysis${tableSuffix}' as table_name,'${tagBatch}'  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'static_home_data_analysis${tableSuffix}' as table_name,'${batchDate}'  as batch_date;
 

@@ -66,4 +66,4 @@ group by
     token,
     dtvcr.type,
     project;
-insert into tag_result(table_name,batch_date)  SELECT 'total_dex_tx_volume_count_summary_stake' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'total_dex_tx_volume_count_summary_stake' as table_name,'${batchDate}'  as batch_date;

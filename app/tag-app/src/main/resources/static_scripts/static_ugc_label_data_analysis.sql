@@ -29,4 +29,4 @@ update ugc_label_data_analysis set status='DONE',
                                                                                                              AS analysis_result
                                                       FROM static_total_data${tableSuffix} where code='static_total' )
 where id=${id} and  config_environment = '${configEnvironment}';
-INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_ugc_label_data_analysis${tableSuffix}') as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_ugc_label_data_analysis${tableSuffix}') as table_name,'${batchDate}'  as batch_date;

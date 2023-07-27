@@ -34,4 +34,4 @@ insert into platform_nft_volume_usd(recent_time_code,address, platform_group, pl
      where pnh.token in (select nft_sync_address.address from nft_sync_address) or
          pnh.token='0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb');
 
-insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_volume_usd' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_volume_usd' as table_name,'${batchDate}'  as batch_date;

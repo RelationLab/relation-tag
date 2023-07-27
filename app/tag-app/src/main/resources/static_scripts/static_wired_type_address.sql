@@ -23,4 +23,4 @@ from
             algout.address) out_t
 group by
     wired_type;
-INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_wired_type_address${tableSuffix}') as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_wired_type_address${tableSuffix}') as table_name,'${batchDate}'  as batch_date;

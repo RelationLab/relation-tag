@@ -11,4 +11,4 @@ CREATE TABLE public.eth_tx_record_from_to (
 ) distributed by (address,recent_time_code);
 truncate table eth_tx_record_from_to;
 vacuum eth_tx_record_from_to;
-insert into tag_result(table_name,batch_date)  SELECT 'tabel_defi_eth_tx_record_from_to' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'tabel_defi_eth_tx_record_from_to' as table_name,'${batchDate}'  as batch_date;

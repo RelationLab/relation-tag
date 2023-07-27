@@ -246,4 +246,4 @@ from
     static_type_json${tableSuffix} sald
 group by
     dimension_type;
-INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_asset_level_data${tableSuffix}') as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_asset_level_data${tableSuffix}') as table_name,'${batchDate}'  as batch_date;

@@ -133,4 +133,4 @@ from
     ) t
 where
         sum_count >= 1 and address not in (select address from exclude_address);
-insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_count_grade' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_count_grade' as table_name,'${batchDate}'  as batch_date;

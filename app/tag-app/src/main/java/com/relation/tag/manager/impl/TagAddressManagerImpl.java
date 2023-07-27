@@ -319,6 +319,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
             if (StringUtils.isNotEmpty(tableSuffix)) {
                 exceSql = exceSql.replace("${tableSuffix}", tableSuffix);
             }
+            if (StringUtils.isNotEmpty(batchDate)) {
+                exceSql = exceSql.replace("${batchDate}", batchDate);
+            }
             iAddressLabelService.exceSql(exceSql, sqlName);
         } catch (Exception e) {
             log.error(e.getMessage(), e);

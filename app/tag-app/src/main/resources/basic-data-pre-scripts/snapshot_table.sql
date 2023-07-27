@@ -49,5 +49,5 @@ insert into white_list_lp(
 "id", "chain_id", "name", "symbol", "address", "factory", "pool_id", "type", "token0", "token1", "tokens", "decimals", "price", "tvl", "total_supply", "remark", "created_at", "updated_at", "removed", "symbol_wired", "fee", "factory_type", "factory_content", "symbols"
 from white_list_lp_cdc;
 
-insert into tag_result(table_name,batch_date)  SELECT 'snapshot_table' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'snapshot_table' as table_name,'${batchDate}'  as batch_date;
 

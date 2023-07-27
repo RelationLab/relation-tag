@@ -80,7 +80,7 @@ insert into public.address_label_token_balance_grade(address,label_type,label_na
     where
         a1.balance_usd >= 100
   and a2.data_subject = 'balance_grade' and address not in (select address from exclude_address);
-insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_balance_grade' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_token_balance_grade' as table_name,'${batchDate}'  as batch_date;
 
 
 

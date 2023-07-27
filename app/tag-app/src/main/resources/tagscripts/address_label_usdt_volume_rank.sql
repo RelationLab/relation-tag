@@ -160,4 +160,4 @@ where
         tb2.data_subject = 'volume_rank'
   and tb2.token_type = 'token'
   and zb_rate <= 0.1;
-insert into tag_result(table_name,batch_date)  SELECT 'address_label_usdt_volume_rank' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_usdt_volume_rank' as table_name,'${batchDate}'  as batch_date;

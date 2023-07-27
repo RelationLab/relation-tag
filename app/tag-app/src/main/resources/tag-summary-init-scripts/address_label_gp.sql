@@ -227,7 +227,7 @@ select mod(to_number(address,'9999999999'), 50000),address,label_type,label_name
 select mod(to_number(address,'9999999999'), 50000),address,label_type,label_name,'OTHER' as wired_type,0 as  data,updated_at, owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_third_party_${tableSuffix} union all
 select mod(to_number(address,'9999999999'), 50000),address,label_type,label_name,'OTHER' as wired_type,0 as  data,updated_at,owner, source ,'' "group",'' level,'other' category,'' trade_type,'' project,'' asset,'' bus_type  from address_label_ugc_${tableSuffix};
 
-insert into tag_result(table_name,batch_date)  SELECT 'address_label_gp_${tableSuffix}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'address_label_gp_${tableSuffix}' as table_name,'${batchDate}'  as batch_date;
 
 
 
