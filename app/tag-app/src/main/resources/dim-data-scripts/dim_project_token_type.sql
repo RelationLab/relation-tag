@@ -72,8 +72,8 @@ from (select wlp.name,
              wlp.total_supply,
              wslp.factory              AS stakePool,
              wslp.factory_type         as stakeRouter
-      from white_list_lp wlp
-               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+      from white_list_lp_temp wlp
+               left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
@@ -133,8 +133,8 @@ from (select wlp.name,
              wlp.total_supply,
              wslp.factory              AS stakePool,
              wslp.factory_type         as stakeRouter
-      from white_list_lp wlp
-               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+      from white_list_lp_temp wlp
+               left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
   and wlp."type" = 'LP') lpt
@@ -186,8 +186,8 @@ from (select wlp.name,
              wlp.total_supply,
              wslp.factory              AS stakePool,
              wslp.factory_type         as stakeRouter
-      from white_list_lp wlp
-               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+      from white_list_lp_temp wlp
+               left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
   and wlp."type" = 'LP') lpt
@@ -234,8 +234,8 @@ from (select wlp.name,
              wlp.total_supply,
              wslp.factory              AS stakePool,
              wslp.factory_type         as stakeRouter
-      from white_list_lp wlp
-               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+      from white_list_lp_temp wlp
+               left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
@@ -295,8 +295,8 @@ from (select wlp.name,
              wlp.total_supply,
              wslp.factory              AS stakePool,
              wslp.factory_type         as stakeRouter
-      from white_list_lp wlp
-               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+      from white_list_lp_temp wlp
+               left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
@@ -348,8 +348,8 @@ from (select wlp.name,
              wlp.total_supply,
              wslp.factory              AS stakePool,
              wslp.factory_type         as stakeRouter
-      from white_list_lp wlp
-               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+      from white_list_lp_temp wlp
+               left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
@@ -396,8 +396,8 @@ from (select wlp.name,
              wlp.total_supply,
              wslp.factory              AS stakePool,
              wslp.factory_type         as stakeRouter
-      from white_list_lp wlp
-               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+      from white_list_lp_temp wlp
+               left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
@@ -457,8 +457,8 @@ from (select wlp.name,
              wlp.total_supply,
              wslp.factory              AS stakePool,
              wslp.factory_type         as stakeRouter
-      from white_list_lp wlp
-               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+      from white_list_lp_temp wlp
+               left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
@@ -510,8 +510,8 @@ from (select wlp.name,
              wlp.total_supply,
              wslp.factory              AS stakePool,
              wslp.factory_type         as stakeRouter
-      from white_list_lp wlp
-               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+      from white_list_lp_temp wlp
+               left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
@@ -559,8 +559,8 @@ from (select wlp.name,
              wlp.total_supply,
              wslp.factory              AS stakePool,
              wslp.factory_type         as stakeRouter
-      from white_list_lp wlp
-               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+      from white_list_lp_temp wlp
+               left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
@@ -620,8 +620,8 @@ from (select wlp.name,
              wlp.total_supply,
              wslp.factory              AS stakePool,
              wslp.factory_type         as stakeRouter
-      from white_list_lp wlp
-               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+      from white_list_lp_temp wlp
+               left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type='Sushiswap') lpt
@@ -673,8 +673,8 @@ from (select wlp.name,
              wlp.total_supply,
              wslp.factory              AS stakePool,
              wslp.factory_type         as stakeRouter
-      from white_list_lp wlp
-               left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+      from white_list_lp_temp wlp
+               left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
@@ -3633,8 +3633,8 @@ from token_platform
                      union all
                      select wlp.address,
                             wlp.symbol_wired as symbol
-                     from white_list_lp wlp
-                              left join white_list_lp wslp on
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp on
                                  wlp.address = wslp.address
                              and wlp.type = 'LP'
                              and wslp.type = 'SLP'
@@ -3710,8 +3710,8 @@ from token_platform
                      union all
                      select wlp.address,
                             wlp.symbol_wired as symbol
-                     from white_list_lp wlp
-                              left join white_list_lp wslp on
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp on
                                  wlp.address = wslp.address
                              and wlp.type = 'LP'
                              and wslp.type = 'SLP'
@@ -3780,8 +3780,8 @@ from token_platform
                      union all
                      select wlp.address,
                             wlp.symbol_wired as symbol
-                     from white_list_lp wlp
-                              left join white_list_lp wslp on
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp on
                                  wlp.address = wslp.address
                              and wlp.type = 'LP'
                              and wslp.type = 'SLP'

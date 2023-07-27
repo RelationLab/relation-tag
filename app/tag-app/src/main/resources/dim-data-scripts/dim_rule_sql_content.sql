@@ -50,7 +50,7 @@ values ('address_label_eth_count_grade','truncate
 				''eth'' as token,
 					total_transfer_all_count
 				from
-					eth_holding th1
+					eth_holding_temp th1
 			) a1
 				inner join
 			dim_rule_content_temp a2
@@ -157,7 +157,7 @@ values ('address_label_token_count_grade','	truncate
 				token,
 				total_transfer_all_count
 			from
-				token_holding th1
+				token_holding_temp th1
 			union all
 			select
 				address,
@@ -165,9 +165,9 @@ values ('address_label_token_count_grade','	truncate
 				sum(total_transfer_all_count) as total_transfer_all_count
 			from
 				(
-				select address,total_transfer_all_count from  eth_holding th
+				select address,total_transfer_all_count from  eth_holding_temp th
 				union all
-				select address,total_transfer_all_count from  token_holding th
+				select address,total_transfer_all_count from  token_holding_temp th
 				) th2
 			group by
 				address
@@ -209,7 +209,7 @@ values ('address_label_token_time_grade','truncate
 			from (select address,
 					token,
 					counter
-			from token_holding_time tbvutk) a1
+			from token_holding_time_temp tbvutk) a1
 				inner join
 			dim_rule_content_temp a2
 			on
@@ -428,7 +428,7 @@ values ('address_label_token_time_special','truncate
 			from (select address,
 					token,
 					counter
-			from token_holding_time tbvutk) a1
+			from token_holding_time_temp tbvutk) a1
 				inner join
 			dim_rule_content_temp a2
 			on
@@ -2318,7 +2318,7 @@ values ('address_label_nft_time_grade','
 	from (select token,
 				address,
 				floor((floor(extract(epoch from now())) - nht.latest_tx_time) / (24 * 3600)) as counter
-		from nft_holding_time nht
+		from nft_holding_time_temp nht
 		where nht.latest_tx_time is not null
 			and balance > 0
 		) a1
@@ -2573,7 +2573,7 @@ values ('address_label_nft_time_rank','	truncate
 	from (select token,
 				address,
 				floor((floor(extract(epoch from now())) - nht.latest_tx_time) / (24 * 3600)) as counter
-		from nft_holding_time nht
+		from nft_holding_time_temp nht
 		where nht.latest_tx_time is not null
 			and balance > 0)  a1
 			inner join
@@ -2615,7 +2615,7 @@ values ('address_label_nft_time_top','	truncate
 						,balance
 						,first_tx_time
 					from
-						nft_holding_time
+						nft_holding_time_temp
 				) a1
 					inner join dim_project_token_type_temp a2
 							on
@@ -3471,7 +3471,7 @@ values ('address_label_eth_time_grade','truncate
 		from (select address,
 				''eth'' as token,
 				floor((floor(extract(epoch from now())) - latest_tx_time) / (24 * 3600)) as counter
-		from eth_holding_time tbvutk) a1
+		from eth_holding_time_temp tbvutk) a1
 			inner join
 		dim_rule_content_temp a2
 		on
@@ -3499,7 +3499,7 @@ values ('address_label_eth_time_special','truncate
 		from (select address,
 				''eth'' as  token,
 				floor((floor(extract(epoch from now())) - latest_tx_time) / (24 * 3600)) as  counter
-		from eth_holding_time tbvutk) a1
+		from eth_holding_time_temp tbvutk) a1
 			inner join
 		dim_rule_content_temp a2
 		on

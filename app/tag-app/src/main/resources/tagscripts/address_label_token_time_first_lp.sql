@@ -49,7 +49,7 @@ from
                 select
                     *
                 from
-                    token_holding_time
+                    token_holding_time_temp
                 where
                         address not in (select address from exclude_address)) a1
                 inner join dim_project_token_type_temp a2

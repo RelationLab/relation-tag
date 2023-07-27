@@ -28,7 +28,7 @@
 
 DROP TABLE IF EXISTS public.white_list_erc20_temp;
 CREATE TABLE public.white_list_erc20_temp as
-select * from white_list_price_cdc;
+select * from white_list_price_temp_cdc;
 delete from white_list_erc20_temp where type='SLP';
 DROP TABLE IF EXISTS public.white_list_erc20_tag_temp;
 CREATE TABLE public.white_list_erc20_tag_temp as

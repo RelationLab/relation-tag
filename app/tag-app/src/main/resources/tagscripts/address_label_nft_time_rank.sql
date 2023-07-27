@@ -46,7 +46,7 @@ select
             address,
             floor((floor(extract(epoch from now())) - floor(extract(epoch from nht.latest_tx_time))) / (24 * 3600)) as counter
         from
-            nft_holding_time nht
+            nft_holding_time_temp nht
         where
             nht.latest_tx_time is not null
           and balance > 0     and token in (select token_id from dim_project_token_type_rank_temp dpttr)

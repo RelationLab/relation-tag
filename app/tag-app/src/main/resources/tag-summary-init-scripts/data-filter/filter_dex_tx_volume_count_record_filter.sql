@@ -51,8 +51,8 @@ from
             union all
             select
                    wlp.address               as address
-            from white_list_lp wlp
-                     left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+            from white_list_lp_temp wlp
+                     left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
             where wlp.tvl > 1000000
               and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
                 and wlp."type" = 'LP'

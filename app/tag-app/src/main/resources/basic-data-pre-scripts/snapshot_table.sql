@@ -1,21 +1,21 @@
 DROP TABLE if EXISTS public.nft_buy_sell_holding;
-DROP TABLE if EXISTS public.token_holding;
-DROP TABLE if EXISTS public.eth_holding;
-DROP TABLE if EXISTS public.nft_holding_time;
-DROP TABLE if EXISTS public.eth_holding_time;
-DROP TABLE if EXISTS public.token_holding_time;
-DROP TABLE if EXISTS public.white_list_lp;
-DROP TABLE if EXISTS public.white_list_price;
+DROP TABLE if EXISTS public.token_holding_temp;
+DROP TABLE if EXISTS public.eth_holding_temp;
+DROP TABLE if EXISTS public.nft_holding_time_temp;
+DROP TABLE if EXISTS public.eth_holding_time_temp;
+DROP TABLE if EXISTS public.token_holding_time_temp;
+DROP TABLE if EXISTS public.white_list_lp_temp;
+DROP TABLE if EXISTS public.white_list_price_temp;
 DROP TABLE if EXISTS public.top_token_1000_temp;
 
 create table top_token_1000_temp as select * from top_token_1000_temp_cdc;
-create table token_holding as select * from token_holding_cdc;
-create table eth_holding as select * from eth_holding_cdc;
+create table token_holding_temp as select * from token_holding_cdc;
+create table eth_holding_temp as select * from eth_holding_cdc;
 
-create table nft_holding_time as select * from nft_holding_time_cdc;
-create table eth_holding_time as select * from eth_holding_time_cdc;
-create table token_holding_time as select * from token_holding_time_cdc;
-CREATE TABLE "public"."white_list_lp" (
+create table nft_holding_time_temp as select * from nft_holding_time_cdc;
+create table eth_holding_time_temp as select * from eth_holding_time_cdc;
+create table token_holding_time_temp as select * from token_holding_time_cdc;
+CREATE TABLE "public"."white_list_lp_temp" (
   "id" int8 NOT NULL,
   "chain_id" int4,
   "name" varchar(100) COLLATE "pg_catalog"."default",
@@ -41,9 +41,9 @@ CREATE TABLE "public"."white_list_lp" (
   "factory_content" varchar(255) COLLATE "pg_catalog"."default",
   "symbols" varchar[] COLLATE "pg_catalog"."default"
 );
-create table  white_list_price as select * from white_list_price_cdc;
+create table  white_list_price_temp as select * from white_list_price_cdc;
 
-insert into white_list_lp(
+insert into white_list_lp_temp(
 "id", "chain_id", "name", "symbol", "address", "factory", "pool_id", "type", "token0", "token1", "tokens", "decimals", "price", "tvl", "total_supply", "remark", "created_at", "updated_at", "removed", "symbol_wired", "fee", "factory_type", "factory_content", "symbols"
 ) select
 "id", "chain_id", "name", "symbol", "address", "factory", "pool_id", "type", "token0", "token1", "tokens", "decimals", "price", "tvl", "total_supply", "remark", "created_at", "updated_at", "removed", "symbol_wired", "fee", "factory_type", "factory_content", "symbols"

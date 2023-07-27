@@ -62,7 +62,7 @@ insert into public.address_label_token_time_grade(address,label_type,label_name,
             token,
             counter
         from
-            token_holding_time tbvutk) a1
+            token_holding_time_temp tbvutk) a1
         inner join
     dim_rule_content_temp a2
     on
