@@ -127,7 +127,7 @@ select
                                    and  a1.recent_time_code = a2.recent_code
         where
                 total_transfer_count >= 1
-          and a1.token in (select token_id from dim_project_token_type_rank dpttr)
+          and a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
         group by
             a1.address,
             a2.label_type,

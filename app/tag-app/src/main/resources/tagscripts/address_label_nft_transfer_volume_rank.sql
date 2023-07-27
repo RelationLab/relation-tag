@@ -128,7 +128,7 @@ from
                                                         where
                                                                 total_transfer_volume >= 1
                                                           and  address not in (select address from exclude_address)
-                                                          and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                          and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                                                         union all
                                                         -- project(null)+nft（ALL）+type
                                                         select
@@ -141,7 +141,7 @@ from
                                                         where
                                                                 total_transfer_volume >= 1
                                                           and  address not in (select address from exclude_address)
-                                                        and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                        and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                                                     ) s1
                                                         inner join dim_project_token_type s2
                                                                    on
@@ -177,7 +177,7 @@ from
                                                 where
                                                         total_transfer_volume >= 1
                                                   and  address not in (select address from exclude_address)
-                                                  and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                  and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                                                 union all
                                                 -- project(null)+nft（ALL）+type
                                                 select
@@ -189,7 +189,7 @@ from
                                                 where
                                                         total_transfer_volume >= 1
                                                   and  address not in (select address from exclude_address)
-                                                and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                                                 ) totala
                                                 inner join
                                             dim_project_token_type tb2

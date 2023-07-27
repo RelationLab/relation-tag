@@ -166,7 +166,7 @@ select sum(activity_num),address from(
      union all
      select
          sum(total_transfer_all_count) as activity_num,address from  nft_holding
-     where  token in(select token_id from dim_project_token_type_rank) and recent_time_code='ALL'
+     where  token in(select token_id from dim_project_token_type_rank_temp) and recent_time_code='ALL'
       group by address)
      out_t group by address;
 

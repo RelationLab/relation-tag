@@ -20,15 +20,15 @@ vacuum
 dim_project_token_type_temp;
 
 
-drop table if exists dim_project_token_type_rank;
-create table dim_project_token_type_rank
+drop table if exists dim_project_token_type_rank_temp;
+create table dim_project_token_type_rank_temp
 (
     token_id varchar(512),
     project  varchar(100)
 );
-truncate table dim_project_token_type_rank;
+truncate table dim_project_token_type_rank_temp;
 vacuum
-dim_project_token_type_rank;
+dim_project_token_type_rank_temp;
 
 ---------------------------------dim_dex_lp.sql---------------------------------------------
 -----FIRST_MOVER_LP  Uniswap_v2_UNI/WETH_0xd3d2_HOLDING_TIME_FIRST_MOVER_LP
@@ -1437,7 +1437,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_CryptoPunks_Buy_MP_NFT_VOLUME_ELITE
 -- ALL_CryptoPunks_Sale_MP_NFT_VOLUME_ELITE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -1586,7 +1586,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- Blur_ALL_Buy_MP_NFT_VOLUME_ELITE
 -- Blur_ALL_Sale_MP_NFT_VOLUME_ELITE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -7460,7 +7460,7 @@ from nft_trade_type
 where nft_trade_type.type = '0';
 
 
-insert into dim_project_token_type_rank(token_id, project)
+insert into dim_project_token_type_rank_temp(token_id, project)
 select distinct token, project
 from dim_project_token_type;
 insert into tag_result(table_name, batch_date)

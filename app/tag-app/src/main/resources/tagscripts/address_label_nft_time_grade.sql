@@ -65,7 +65,7 @@ select
             nft_holding_time nht
         where
             nht.latest_tx_time is not null
-          and balance > 0  and token in (select token_id from dim_project_token_type_rank dpttr)
+          and balance > 0  and token in (select token_id from dim_project_token_type_rank_temp dpttr)
     ) a1
         inner join
     dim_project_token_type_temp a2

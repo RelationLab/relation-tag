@@ -95,7 +95,7 @@ from
                                     select
                                         token_id
                                     from
-                                        dim_project_token_type_rank dpttr)
+                                        dim_project_token_type_rank_temp dpttr)
                                 union all
                                 -- project(null)+nft（ALL）+type
                                 select
@@ -116,7 +116,7 @@ from
                                     select
                                         token_id
                                     from
-                                        dim_project_token_type_rank dpttr)
+                                        dim_project_token_type_rank_temp dpttr)
                             ) totala
                                 inner join dim_project_token_type_temp a2
                                            on

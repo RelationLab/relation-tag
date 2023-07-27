@@ -83,7 +83,7 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             on a1.token=a2.token and a1.platform_group=a2.project
                    and a1.type=a2.type and a2.data_subject = 'count'
         and a1.recent_time_code =a2.recent_code
-        where a1.token in (select token_id from dim_project_token_type_rank dpttr)
+        where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
         group by
             a1.address,
             a2.label_type,
@@ -106,7 +106,7 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
         on a2.token='ALL' and a1.platform_group=a2.project
                and a1.type=a2.type and a2.data_subject = 'count'
             and a1.recent_time_code =a2.recent_code
-        where a1.token in (select token_id from dim_project_token_type_rank dpttr)
+        where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
         group by
             a1.address,
             a2.label_type,
@@ -136,7 +136,7 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             and a2.label_type like '%NFT%'
             and a2.label_type not like '%WEB3%'
         and a1.recent_time_code =a2.recent_code
-        where a1.token in (select token_id from dim_project_token_type_rank dpttr)
+        where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
         group by
             a1.address,
             a2.label_type,
@@ -166,7 +166,7 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             and a2.label_type like '%NFT%'
             and a2.label_type not like '%WEB3%'
             and a1.recent_time_code =a2.recent_code
-        where a1.token in (select token_id from dim_project_token_type_rank dpttr)
+        where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
         group by
             a1.address,
             a2.label_type,

@@ -77,7 +77,7 @@ select
                                    and  a1.recent_time_code = a2.recent_code
 		and
                                 a2.data_subject = 'volume_grade'
-        where  a1.token in (select token_id from dim_project_token_type_rank dpttr)
+        where  a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
         group by
             a1.address,
             a2.label_type,
@@ -107,7 +107,7 @@ select
             and a2.label_type like '%NFT%'
             and a2.label_type not like '%WEB3%'
             and  a1.recent_time_code = a2.recent_code
-        where a1.token in (select token_id from dim_project_token_type_rank dpttr)
+        where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
         group by
             a1.address,
             a2.label_type,
