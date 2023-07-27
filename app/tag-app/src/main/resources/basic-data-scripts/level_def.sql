@@ -146,7 +146,7 @@ insert into level_def(level,level_name,type) values('High','Highest Activity','w
 insert into level_def(level,level_name,type) values('Medium','High Activity','web3_count');
 insert into level_def(level,level_name,type) values('Low','Medium Activity','web3_count');
 
-insert into tag_result(table_name,batch_date)  SELECT 'level_def' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'basic_data_level_def' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
 
 

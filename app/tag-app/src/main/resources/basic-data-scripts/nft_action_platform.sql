@@ -51,4 +51,4 @@ from
     nft_sync_address
 where
         nft_sync_address.type <> 'ERC1155';
-insert into tag_result(table_name,batch_date)  SELECT 'nft_action_platform' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'basic_data_nft_action_platform' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

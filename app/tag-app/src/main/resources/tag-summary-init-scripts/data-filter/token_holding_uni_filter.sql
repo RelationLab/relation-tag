@@ -67,5 +67,5 @@ from (
                      top_token_1000 ON (white_list_erc20.address = top_token_1000.address)) w on
              (w.address = token_holding_uni.price_token)
          group by token_holding_uni.address,token_holding_uni.token,token_holding_uni.nft_token_id,token_holding_uni.price_token ) tb1 ;
-insert into tag_result(table_name,batch_date)  SELECT 'token_holding_uni_filter' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'filter_token_holding_uni_filter' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 

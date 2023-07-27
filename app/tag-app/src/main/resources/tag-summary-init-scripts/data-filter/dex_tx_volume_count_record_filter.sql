@@ -68,4 +68,4 @@ group by
     dtvcr.type,
     project,
     transaction_hash;
-insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_volume_count_record_filter' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'filter_dex_tx_volume_count_record_filter' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

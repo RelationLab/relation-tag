@@ -54,4 +54,4 @@ where address !=''
 
 group by address, token, recent_time_code;
 insert into tag_result(table_name, batch_date)
-SELECT 'token_holding_vol_count' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
+SELECT 'vol_count_token_holding_vol_count' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;

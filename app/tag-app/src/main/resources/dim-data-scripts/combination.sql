@@ -24,4 +24,4 @@ CREATE TABLE public.combination (
 );
 CREATE INDEX combination_idx_label_name ON public.combination USING btree (label_name);
 update nft_sync_address set platform='CryptoPunks' where  address='0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb';
-insert into tag_result(table_name,batch_date)  SELECT 'combination' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'data_table_combination' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

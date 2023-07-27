@@ -43,4 +43,4 @@ from (select token, project
       from token_holding_uni) outt
 group by token, project;
 insert into tag_result(table_name, batch_date)
-SELECT 'token_platform' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
+SELECT 'data_token_platform' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;

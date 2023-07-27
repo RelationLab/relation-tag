@@ -33,4 +33,4 @@ set
 where
     rt.days = bt.days
   and rt.days is not null;
-insert into tag_result(table_name,batch_date)  SELECT 'recent_time' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'basic_data_recent_time' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

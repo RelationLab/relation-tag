@@ -16,4 +16,4 @@ insert into web3_action(trade_type,trade_type_name,trade_type_alis) values('rene
 insert into web3_action(trade_type,trade_type_name,trade_type_alis) values('Airdrop Recipient','AirdropRecipient','Airdrop Recipient');
 insert into web3_action(trade_type,trade_type_name,trade_type_alis) values('donator','Donator','Donator');
 insert into web3_action(trade_type,trade_type_name,trade_type_alis) values('mint','Mint','Minter');
-insert into tag_result(table_name,batch_date)  SELECT 'web3_action' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'basic_data_web3_action' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

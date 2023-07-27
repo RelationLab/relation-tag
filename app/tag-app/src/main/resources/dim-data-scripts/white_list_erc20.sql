@@ -36,4 +36,4 @@ select * from white_list_erc20;
 
 update dim_project_token_type set project='0x1111111254fb6c44bac0bed2854e76f90643097d' where project='0x1111111254fb6c44bAC0beD2854e76F90643097d';
 update dim_project_token_type_rank set project='0x1111111254fb6c44bac0bed2854e76f90643097d' where project='0x1111111254fb6c44bAC0beD2854e76F90643097d';
-insert into tag_result(table_name,batch_date)  SELECT 'white_list_erc20' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'dim_white_list_erc20' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

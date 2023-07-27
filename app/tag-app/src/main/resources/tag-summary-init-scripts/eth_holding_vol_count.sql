@@ -28,7 +28,7 @@ select address,
 from eth_tx_record_from_to etr
 group by address,recent_time_code;
 insert into tag_result(table_name, batch_date)
-SELECT 'eth_holding_vol_count' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
+SELECT 'vol_count_eth_holding_vol_count' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
 
 
 
