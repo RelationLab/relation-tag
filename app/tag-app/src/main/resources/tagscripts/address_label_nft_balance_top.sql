@@ -77,7 +77,7 @@ select
 					              and token in (select token_id from dim_project_token_type_rank dpttr)
                                   and recent_time_code ='ALL'
                 ) totala
-			inner join dim_project_token_type a2
+			inner join dim_project_token_type_temp a2
     on
 				totala.token = a2.token
 				and a2.data_subject = 'balance_top'
@@ -92,7 +92,7 @@ select
 				address,
 				seq_flag) a1
 
-    ) s1 inner join dim_project_token_type dptt on (
+    ) s1 inner join dim_project_token_type_temp dptt on (
         dptt.seq_flag = s1.seq_flag
                   and dptt.data_subject = 'balance_top'
                   and dptt.label_type like '%NFT%'

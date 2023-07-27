@@ -98,7 +98,7 @@ from
                         rowtable ) s1
         where
                 s1.rn <= 100) s2
-        inner join dim_project_token_type drc on
+        inner join dim_project_token_type_temp drc on
         (drc.project = s2.token
             and (drc.project_name <> 'Uniswap_v2'
                 and drc.project_name <> 'Uniswap_v3')) ;
@@ -145,7 +145,7 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 100) s2
-        INNER JOIN dim_project_token_type drc ON
+        INNER JOIN dim_project_token_type_temp drc ON
         (drc.project = s2.token);
 
 insert into static_top_ten_platform${tableSuffix}(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','defi','activity');
@@ -195,7 +195,7 @@ from (
                              project)
                          rowtable ) s1
          where
-                 s1.rn <= 100) s2  inner join dim_project_token_type drc on
+                 s1.rn <= 100) s2  inner join dim_project_token_type_temp drc on
     (drc.project = s2.token
         and (drc.project_name <> 'Uniswap_v2'
             and drc.project_name <> 'Uniswap_v3')) ;
@@ -241,7 +241,7 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 100) s2
-        INNER JOIN dim_project_token_type drc ON
+        INNER JOIN dim_project_token_type_temp drc ON
         (drc.project = s2.token);
 
 ----web3 activity

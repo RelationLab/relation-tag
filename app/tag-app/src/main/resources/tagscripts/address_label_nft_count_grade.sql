@@ -81,7 +81,7 @@ from
             recent_time_code
         from
             nft_volume_count a1
-                inner join dim_project_token_type a2
+                inner join dim_project_token_type_temp a2
                            on
                                        a1.token = a2.token
                                    and a2.project = ''
@@ -112,7 +112,7 @@ from
             recent_time_code
         from
             nft_volume_count a1
-            inner join dim_project_token_type a2
+            inner join dim_project_token_type_temp a2
         on
             a2.token = 'ALL'
             and a2.project = ''

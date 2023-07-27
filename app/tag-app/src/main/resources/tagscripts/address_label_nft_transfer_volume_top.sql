@@ -118,7 +118,7 @@ from
                                     from
                                         dim_project_token_type_rank dpttr)
                             ) totala
-                                inner join dim_project_token_type a2
+                                inner join dim_project_token_type_temp a2
                                            on
                                                        totala.token = a2.token
                                                    and a2.type = 'Transfer'
@@ -132,7 +132,7 @@ from
                             address,
                             recent_time_code,
                             seq_flag) a1) s1
-                inner join dim_project_token_type dptt on
+                inner join dim_project_token_type_temp dptt on
                 (dptt.seq_flag = s1.seq_flag
                     and dptt.type = 'Transfer'
                     and (dptt.project = ''

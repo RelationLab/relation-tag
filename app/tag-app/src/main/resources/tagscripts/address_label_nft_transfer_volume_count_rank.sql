@@ -121,7 +121,7 @@ from
                                                           and address not in (select address from exclude_address)
                                                           and token in (select token_id from dim_project_token_type_rank dpttr)
                                                     ) s1
-                                                        inner join dim_project_token_type s2
+                                                        inner join dim_project_token_type_temp s2
                                                                    on
                                                                                s1.token = s2.token
                                                                            and s2.type = 'Transfer'

@@ -65,7 +65,7 @@ insert into public.address_label_univ3_balance_provider(address,label_type,label
                 group by
                     address,
                     token) a1
-                inner join dim_project_token_type a2
+                inner join dim_project_token_type_temp a2
                            on
                                        a1.token = a2.token
                                    and a2.data_subject = 'HEAVY_LP'

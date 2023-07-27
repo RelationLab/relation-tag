@@ -79,7 +79,7 @@ from
             sum(total_transfer_count) as total_transfer_count
         from
             dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
+                inner join dim_project_token_type_temp a2
                            on
                                        a1.token = a2.token
                                    and a1.project = a2.project
@@ -88,7 +88,7 @@ from
                                    and a1.token!='ALL'
                                     and a1.recent_time_code = a2.recent_code
         WHERE  a2.label_type not like '%NFT%'
-          and a1.token in (select distinct token from dim_project_token_type)
+          and a1.token in (select distinct token from dim_project_token_type_temp)
         group by
             a1.address,
             a2.label_type,
@@ -106,7 +106,7 @@ from
             sum(total_transfer_count) as total_transfer_count
         from
             dex_tx_count_summary a1
-            inner join dim_project_token_type a2
+            inner join dim_project_token_type_temp a2
         on
             a2.token = 'ALL'
             and a1.token = a2.token
@@ -114,7 +114,7 @@ from
             and a1.type = a2.type
             and a2.data_subject = 'count'
             and a1.recent_time_code = a2.recent_code
-        where       a1.token in (select distinct token from dim_project_token_type)
+        where       a1.token in (select distinct token from dim_project_token_type_temp)
           and a2.label_type not like '%NFT%'
         group by
             a1.address,
@@ -133,7 +133,7 @@ from
             sum(total_transfer_count) as total_transfer_count
         from
             dex_tx_count_summary a1
-            inner join dim_project_token_type a2
+            inner join dim_project_token_type_temp a2
         on
             a2.token = 'ALL'
             and a1.token = a2.token
@@ -141,7 +141,7 @@ from
             and a1.type = a2.type
             and a2.data_subject = 'count'
             and a1.recent_time_code = a2.recent_code
-        where  a1.token in (select distinct token from dim_project_token_type) and a2.label_type not like '%NFT%'
+        where  a1.token in (select distinct token from dim_project_token_type_temp) and a2.label_type not like '%NFT%'
         group by
             a1.address,
             a2.label_type,
@@ -159,7 +159,7 @@ from
             sum(total_transfer_count) as total_transfer_count
         from
             dex_tx_volume_count_summary a1
-            inner join dim_project_token_type a2
+            inner join dim_project_token_type_temp a2
         on
             a1.token = a2.token
             and a2.project = 'ALL'
@@ -167,7 +167,7 @@ from
             and a1.token!='ALL'
             and a2.data_subject = 'count'
             and a1.recent_time_code = a2.recent_code
-        where a1.token in (select distinct token from dim_project_token_type) and a2.label_type not like '%NFT%'
+        where a1.token in (select distinct token from dim_project_token_type_temp) and a2.label_type not like '%NFT%'
         group by
             a1.address,
             a2.label_type,

@@ -68,7 +68,7 @@ select
           and balance > 0  and token in (select token_id from dim_project_token_type_rank dpttr)
     ) a1
         inner join
-    dim_project_token_type a2
+    dim_project_token_type_temp a2
     on
             a1.token = a2.token
     where

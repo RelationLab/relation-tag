@@ -129,7 +129,7 @@ select
                                                                 transfer_volume>0
                                                           and address not in (select address from exclude_address)
                                                             and token in (select token_id from dim_project_token_type_rank dpttr)) s1
-                                                        inner join dim_project_token_type s2 on
+                                                        inner join dim_project_token_type_temp s2 on
                                                                 s1.token = s2.token
                                                             and s1.type = s2.type
                                                             and s2.project = ''
@@ -177,7 +177,7 @@ select
                                                   and address not in (select address from exclude_address)
                                                     and token in (select token_id from dim_project_token_type_rank dpttr)
                                                 ) totala
-                                                inner join dim_project_token_type tb2 on
+                                                inner join dim_project_token_type_temp tb2 on
                                                         totala.token = tb2.token
                                                     and totala.type = tb2.type
                                                     and tb2.project = ''
@@ -192,7 +192,7 @@ select
                                             tb2.type,
                                             recent_time_code) as a10 on
                                                 a10.seq_flag = a1.seq_flag and a10.recent_time_code = a1.recent_time_code
-                                            and a10.type = a1.type) as a2) as t1 ) tb1 inner join dim_project_token_type dptt
+                                            and a10.type = a1.type) as a2) as t1 ) tb1 inner join dim_project_token_type_temp dptt
     on(dptt.seq_flag = tb1.seq_flag
     and dptt.type = tb1.type
     and dptt.project = ''

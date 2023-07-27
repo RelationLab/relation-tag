@@ -1,5 +1,5 @@
-drop table if exists dim_project_token_type;
-create table dim_project_token_type
+drop table if exists dim_project_token_type_temp;
+create table dim_project_token_type_temp
 (
     project         varchar(100),
     token           varchar(100),
@@ -15,9 +15,9 @@ create table dim_project_token_type
     token_name      varchar(100),
     recent_code     varchar(30)
 );
-truncate table dim_project_token_type;
+truncate table dim_project_token_type_temp;
 vacuum
-dim_project_token_type;
+dim_project_token_type_temp;
 
 
 drop table if exists dim_project_token_type_rank;
@@ -33,7 +33,7 @@ dim_project_token_type_rank;
 ---------------------------------dim_dex_lp.sql---------------------------------------------
 -----FIRST_MOVER_LP  Uniswap_v2_UNI/WETH_0xd3d2_HOLDING_TIME_FIRST_MOVER_LP
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -195,7 +195,7 @@ from (select wlp.name,
 
 -----HEAVY_LP  Uniswap_v2_UNI/WETH_0xd3d2_BALANCE_HEAVY_LP
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -357,7 +357,7 @@ from (select wlp.name,
 
 -----FIRST_MOVER_STAKING Sushiswap_SYN/WETH_0x4a86_BALANCE_FIRST_MOVER_STAKING
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -520,7 +520,7 @@ from (select wlp.name,
 
 -----HEAVY_LP_STAKER Sushiswap_SYN/WETH_0x4a86_BALANCE_HEAVY_LP_STAKER
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -688,7 +688,7 @@ from (select wlp.name,
 -- Blur_CryptoPunks_Sale_MP_NFT_ACTIVITY
 -- Blur_CryptoPunks_Buy_MP_NFT_ACTIVITY
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -851,7 +851,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_ALL_Buy_MP_NFT_ACTIVITY
 -- ALL_ALL_Sale_MP_NFT_ACTIVITY
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -981,7 +981,7 @@ where nft_trade_type.type = '1';
 -- ALL_CryptoPunks_Buy_MP_NFT_ACTIVITY
 -- ALL_CryptoPunks_Sale_MP_NFT_ACTIVITY
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -1132,7 +1132,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- Blur_ALL_Buy_MP_NFT_ACTIVITY
 -- Blur_ALL_Sale_MP_NFT_ACTIVITY
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -1280,7 +1280,7 @@ where nft_trade_type.type = '1';
 -- Blur_CryptoPunks_Buy_MP_NFT_VOLUME_ELITE
 -- Blur_CryptoPunks_Sale_MP_NFT_VOLUME_ELITE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,

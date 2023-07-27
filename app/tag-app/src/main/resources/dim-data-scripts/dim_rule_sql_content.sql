@@ -1154,7 +1154,7 @@ values ('address_label_token_project_type_count_grade','truncate
 					a2.label_type,
 					sum(total_transfer_count) as total_transfer_count
 				from
-					dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+					dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 															on a1.token=a2.token and a1.project=a2.project and a1.type=a2.type and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1167,7 +1167,7 @@ values ('address_label_token_project_type_count_grade','truncate
 					a2.label_type,
 					sum(total_transfer_count) as total_transfer_count
 				from
-					dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+					dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 															on a2.token=''ALL'' and a2.project=''ALL'' and a2.type=''ALL'' and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1180,7 +1180,7 @@ values ('address_label_token_project_type_count_grade','truncate
 					a2.label_type,
 					sum(total_transfer_count) as total_transfer_count
 				from
-					dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+					dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 															on a2.token=''ALL'' and a2.project=''ALL'' and a1.type=a2.type and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1193,7 +1193,7 @@ values ('address_label_token_project_type_count_grade','truncate
 					a2.label_type,
 					sum(total_transfer_count) as total_transfer_count
 				from
-					dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+					dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 															on a2.token=''ALL'' and a1.project=a2.project and a2.type=''ALL'' and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1206,7 +1206,7 @@ values ('address_label_token_project_type_count_grade','truncate
 					a2.label_type,
 					sum(total_transfer_count) as total_transfer_count
 				from
-					dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+					dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 															on a1.token=a2.token and a2.project=''ALL'' and a2.type=''ALL'' and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1219,7 +1219,7 @@ values ('address_label_token_project_type_count_grade','truncate
 					a2.label_type,
 					sum(total_transfer_count) as total_transfer_count
 				from
-					dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+					dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 															on a2.token=''ALL'' and a1.project=a2.project and a1.type=a2.type and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1232,7 +1232,7 @@ values ('address_label_token_project_type_count_grade','truncate
 					a2.label_type,
 					sum(total_transfer_count) as total_transfer_count
 				from
-					dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+					dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 															on a1.token=a2.token and a2.project=''ALL'' and a1.type=a2.type and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1246,7 +1246,7 @@ values ('address_label_token_project_type_count_grade','truncate
 					a2.label_type,
 					sum(total_transfer_count) as total_transfer_count
 				from
-					dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+					dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 															on a1.token=a2.token and a1.project=a2.project and a2.type=''ALL'' and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1297,7 +1297,7 @@ values ('address_label_token_project_type_volume_grade','truncate
 				a2.label_type,
 				sum(total_transfer_volume_usd) as total_transfer_volume_usd
 			from
-				dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+				dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 														on a1.token=a2.token and a1.project=a2.project and a1.type=a2.type and a2.data_subject = ''volume_grade'' and a2.label_type NOT like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by
 				a1.address,
@@ -1310,7 +1310,7 @@ values ('address_label_token_project_type_volume_grade','truncate
 				a2.label_type,
 				sum(total_transfer_volume_usd) as total_transfer_volume_usd
 			from
-				dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+				dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 			on a2.token=''ALL'' and a2.project=''ALL'' and a2.type=''ALL'' and a2.data_subject = ''volume_grade'' and a2.label_type NOT like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by
 				a1.address,
@@ -1323,7 +1323,7 @@ values ('address_label_token_project_type_volume_grade','truncate
 				a2.label_type,
 				sum(total_transfer_volume_usd) as total_transfer_volume_usd
 			from
-				dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+				dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 			on a2.token=''ALL'' and a2.project=''ALL'' and a1.type=a2.type and a2.data_subject = ''volume_grade'' and a2.label_type NOT like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by
 				a1.address,
@@ -1336,7 +1336,7 @@ values ('address_label_token_project_type_volume_grade','truncate
 				a2.label_type,
 				sum(total_transfer_volume_usd) as total_transfer_volume_usd
 			from
-				dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+				dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 			on a2.token=''ALL'' and a1.project=a2.project and a2.type=''ALL'' and a2.data_subject = ''volume_grade'' and a2.label_type NOT like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by
 				a1.address,
@@ -1349,7 +1349,7 @@ values ('address_label_token_project_type_volume_grade','truncate
 				a2.label_type,
 				sum(total_transfer_volume_usd) as total_transfer_volume_usd
 			from
-				dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+				dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 			on a1.token=a2.token and a2.project=''ALL'' and a2.type=''ALL'' and a2.data_subject = ''volume_grade'' and a2.label_type NOT like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by
 				a1.address,
@@ -1362,7 +1362,7 @@ values ('address_label_token_project_type_volume_grade','truncate
 				a2.label_type,
 				sum(total_transfer_volume_usd) as total_transfer_volume_usd
 			from
-				dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+				dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 			on a2.token=''ALL'' and a1.project=a2.project and a1.type=a2.type and a2.data_subject = ''volume_grade'' and a2.label_type NOT like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by
 				a1.address,
@@ -1375,7 +1375,7 @@ values ('address_label_token_project_type_volume_grade','truncate
 				a2.label_type,
 				sum(total_transfer_volume_usd) as total_transfer_volume_usd
 			from
-				dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+				dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 			on a1.token=a2.token and a2.project=''ALL'' and a1.type=a2.type and a2.data_subject = ''volume_grade'' and a2.label_type NOT like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by
 				a1.address,
@@ -1389,7 +1389,7 @@ values ('address_label_token_project_type_volume_grade','truncate
 				a2.label_type,
 				sum(total_transfer_volume_usd) as total_transfer_volume_usd
 			from
-				dex_tx_volume_count_summary  a1 inner join dim_project_token_type a2
+				dex_tx_volume_count_summary  a1 inner join dim_project_token_type_temp a2
 			on a1.token=a2.token and a1.project=a2.project and a2.type=''ALL'' and a2.data_subject = ''volume_grade'' and a2.label_type NOT like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by
 				a1.address,
@@ -1556,7 +1556,7 @@ values ('address_label_token_project_type_volume_rank','	truncate
 												,out_transfer_count
 												,balance_usd from dex_tx_volume_count_summary)
 											s1
-											INNER JOIN dim_project_token_type s2
+											INNER JOIN dim_project_token_type_temp s2
 														ON
 																	s1.token = s2.token
 																AND s1.project = s2.project
@@ -1613,7 +1613,7 @@ values ('address_label_token_project_type_volume_rank','	truncate
 						on a10.token = a1.token and a10.project=a1.project and a10.type=a1.type) as a2) as t1
 		) tb1
 			inner join
-		dim_project_token_type tb2
+		dim_project_token_type_temp tb2
 		on
 					tb1.token = tb2.token
 				and tb1.project = tb2.project
@@ -1665,7 +1665,7 @@ values ('address_label_nft_project_type_count_grade','truncate
 					sum(
 							transfer_count) as sum_count
 				from
-					platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+					platform_nft_type_volume_count  a1 inner join dim_project_token_type_temp a2
 																on a1.token=a2.token and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1679,7 +1679,7 @@ values ('address_label_nft_project_type_count_grade','truncate
 					sum(
 							transfer_count) as sum_count
 				from
-					platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+					platform_nft_type_volume_count  a1 inner join dim_project_token_type_temp a2
 																on a2.token=''ALL'' and a1.platform_group=a2.project and a2.type=''ALL'' and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1693,7 +1693,7 @@ values ('address_label_nft_project_type_count_grade','truncate
 					sum(
 							transfer_count) as sum_count
 				from
-					platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+					platform_nft_type_volume_count  a1 inner join dim_project_token_type_temp a2
 																on a2.token=''ALL'' and a1.platform_group=a2.project and a1.type=a2.type and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1707,7 +1707,7 @@ values ('address_label_nft_project_type_count_grade','truncate
 					sum(
 							transfer_count) as sum_count
 				from
-					platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+					platform_nft_type_volume_count  a1 inner join dim_project_token_type_temp a2
 																on a1.token=a2.token and a1.platform_group=a2.project and a2.type=''ALL'' and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1755,7 +1755,7 @@ values ('address_label_nft_project_type_volume_grade','	truncate
 				sum(
 						volume_usd) as volume_usd
 			from
-				platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+				platform_nft_type_volume_count  a1 inner join dim_project_token_type_temp a2
 															on a1.token=a2.token and a1.platform_group=a2.project and a2.data_subject = ''volume_grade''
 			group by
 				a1.address,
@@ -1769,7 +1769,7 @@ values ('address_label_nft_project_type_volume_grade','	truncate
 				sum(
 				volume_usd) as volume_usd
 			from
-				platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+				platform_nft_type_volume_count  a1 inner join dim_project_token_type_temp a2
 			on a2.token=''ALL'' and a1.platform_group=a2.project and a2.data_subject = ''volume_grade''
 			group by
 				a1.address,
@@ -1782,7 +1782,7 @@ values ('address_label_nft_project_type_volume_grade','	truncate
 				a2.label_type,
 				sum(volume_usd) as volume_usd
 			from
-				platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+				platform_nft_type_volume_count  a1 inner join dim_project_token_type_temp a2
 			on a2.token=''ALL'' and a1.platform_group=a2.project and a2.type=''ALL'' and a2.data_subject = ''volume_grade''
 			group by
 				a1.address,
@@ -1796,7 +1796,7 @@ values ('address_label_nft_project_type_volume_grade','	truncate
 				sum(
 				volume_usd) as volume_usd
 			from
-				platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+				platform_nft_type_volume_count  a1 inner join dim_project_token_type_temp a2
 			on a1.token=a2.token and a1.platform_group=a2.project and a2.type=''ALL'' and a2.data_subject = ''volume_grade''
 			group by
 				a1.address,
@@ -1901,7 +1901,7 @@ values ('address_label_nft_project_type_volume_count_rank','
 													,volume_usd,transfer_count from platform_nft_type_volume_count
 										)
 											s1
-											INNER JOIN dim_project_token_type s2
+											INNER JOIN dim_project_token_type_temp s2
 														ON
 																	s1.token = s2.token
 																AND s1.platform_group = s2.project
@@ -1941,7 +1941,7 @@ values ('address_label_nft_project_type_volume_count_rank','
 						on a10.platform_group=a1.project and a10.token=a1.token and a10.type=a1.type) as a2) as t1
 		) tb1
 			inner join
-		dim_project_token_type tb2
+		dim_project_token_type_temp tb2
 		on
 					tb1.token = tb2.token
 				and tb1.project = tb2.project
@@ -2048,7 +2048,7 @@ values ('address_label_nft_project_type_volume_rank','
 													,volume_usd from platform_nft_type_volume_count
 										)
 											s1
-											INNER JOIN dim_project_token_type s2
+											INNER JOIN dim_project_token_type_temp s2
 														ON
 																	s1.token = s2.token
 																AND s1.platform_group = s2.project
@@ -2088,7 +2088,7 @@ values ('address_label_nft_project_type_volume_rank','
 									on a10.platform_group=a1.project and a10.token=a1.token and a10.type=a1.type) as a2) as t1
 		) tb1
 			inner join
-		dim_project_token_type tb2
+		dim_project_token_type_temp tb2
 		on
 					tb1.token = tb2.token
 				and tb1.project = tb2.project
@@ -2163,7 +2163,7 @@ values ('address_label_nft_project_type_volume_top','truncate
 							,volume_usd
 						from
 							platform_nft_type_volume_count ) a1
-						inner join dim_project_token_type a2
+						inner join dim_project_token_type_temp a2
 								on
 											a1.token = a2.token
 										and a2.data_subject = ''volume_top''
@@ -2205,7 +2205,7 @@ values ('address_label_nft_balance_grade','	truncate
 					a2.label_type,
 					sum(balance) as balance
 			from nft_holding a1
-					inner join dim_project_token_type a2
+					inner join dim_project_token_type_temp a2
 								on a1.token = a2.token and (a2.project ='''' or a2.project =''ALL'') and (a2.type ='''' OR a2.type =''ALL'') and
 									a2.data_subject = ''balance_grade'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by a1.address,
@@ -2217,7 +2217,7 @@ values ('address_label_nft_balance_grade','	truncate
 				a2.label_type,
 				sum(balance) as balance
 			from nft_holding a1
-				inner join dim_project_token_type a2
+				inner join dim_project_token_type_temp a2
 			on a2.token = ''ALL'' and (a2.project ='''' or a2.project =''ALL'') and (a2.type ='''' OR a2.type =''ALL'') and
 				a2.data_subject = ''balance_grade'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by a1.address,
@@ -2265,7 +2265,7 @@ values ('address_label_nft_count_grade','	truncate
 					a2.label_type,
 					sum(transfer_count) as sum_count
 			from nft_volume_count a1
-					inner join dim_project_token_type a2
+					inner join dim_project_token_type_temp a2
 								on a1.token = a2.token and (a2.project ='''' or a2.project =''ALL'') and a1.type = a2.type and a2.type!=''Transfer'' and
 									a2.data_subject = ''count'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by a1.address,
@@ -2278,7 +2278,7 @@ values ('address_label_nft_count_grade','	truncate
 				sum(
 				transfer_count) as sum_count
 			from nft_volume_count a1
-				inner join dim_project_token_type a2
+				inner join dim_project_token_type_temp a2
 			on a2.token = ''ALL'' and (a2.project ='''' or a2.project =''ALL'') and a1.type = a2.type and a2.type!=''Transfer'' and
 				a2.data_subject = ''count''  and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by a1.address,
@@ -2323,7 +2323,7 @@ values ('address_label_nft_time_grade','
 			and balance > 0
 		) a1
 			inner join
-		dim_project_token_type a2
+		dim_project_token_type_temp a2
 		on
 				a1.token = a2.token
 	where a2.data_subject = ''time_grade''  and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''  and counter > 0
@@ -2365,7 +2365,7 @@ values ('address_label_nft_volume_grade','	truncate
 					sum(
 							transfer_volume) as volume_usd
 			from nft_volume_count a1
-					inner join dim_project_token_type a2
+					inner join dim_project_token_type_temp a2
 								on a1.token = a2.token and (a2.project ='''' or a2.project =''ALL'') and a1.type = a2.type and a2.type!=''transfer'' and
 									a2.data_subject = ''volume_grade''
 			group by a1.address,
@@ -2379,7 +2379,7 @@ values ('address_label_nft_volume_grade','	truncate
 				sum(
 				transfer_volume) as volume_usd
 			from nft_volume_count a1
-				inner join dim_project_token_type a2
+				inner join dim_project_token_type_temp a2
 			on a2.token = ''ALL'' and (a2.project ='''' or a2.project =''ALL'') and a1.type = a2.type and a2.type!=''transfer'' and
 				a2.data_subject = ''volume_grade'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
 			group by a1.address,
@@ -2473,7 +2473,7 @@ values ('address_label_nft_balance_rank','	truncate
 												,updated_block_height  from nft_holding
 										)
 											s1
-											INNER JOIN dim_project_token_type s2
+											INNER JOIN dim_project_token_type_temp s2
 														ON
 																	s1.token = s2.token
 																AND  (s2.project ='''' or s2.project =''ALL'')
@@ -2497,7 +2497,7 @@ values ('address_label_nft_balance_rank','	truncate
 						on a10.token = a1.token) as a2) as t1
 		) tb1
 			inner join
-		dim_project_token_type tb2
+		dim_project_token_type_temp tb2
 		on
 				tb1.token = tb2.token
 	where tb1.balance >= 1  AND   (tb2.project ='''' or tb2.project =''ALL'')
@@ -2541,7 +2541,7 @@ values ('address_label_nft_balance_top','	truncate table address_label_nft_balan
 						balance
 					from
 						nft_holding ) a1
-					inner join dim_project_token_type a2
+					inner join dim_project_token_type_temp a2
 							on
 										a1.token = a2.token
 									and a2.data_subject = ''balance_top'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
@@ -2577,7 +2577,7 @@ values ('address_label_nft_time_rank','	truncate
 		where nht.latest_tx_time is not null
 			and balance > 0)  a1
 			inner join
-		dim_project_token_type a2
+		dim_project_token_type_temp a2
 		on
 				a1.token = a2.token
 	where a2.data_subject = ''time_special'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%'' and counter >=1
@@ -2617,7 +2617,7 @@ values ('address_label_nft_time_top','	truncate
 					from
 						nft_holding_time
 				) a1
-					inner join dim_project_token_type a2
+					inner join dim_project_token_type_temp a2
 							on
 										a1.token = a2.token
 									and a2.data_subject = ''time_rank''   and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
@@ -2724,7 +2724,7 @@ values ('address_label_nft_volume_count_rank','	truncate
 														transfer_count
 													from
 														nft_volume_count ) s1
-													inner join dim_project_token_type s2 on
+													inner join dim_project_token_type_temp s2 on
 															s1.token = s2.token
 														and s2.type = s2.type
 														and  s2.data_subject = ''volume_elite''
@@ -2755,7 +2755,7 @@ values ('address_label_nft_volume_count_rank','	truncate
 											from
 												nft_volume_count ) nvc group by token ,type) as a10 on
 											a10.token=  a1.token and a10.type=  a1.type) as a2) as t1 ) tb1
-			inner join dim_project_token_type tb2 on
+			inner join dim_project_token_type_temp tb2 on
 					tb1.token = tb2.token
 				and tb2.type = tb2.type  and (tb2.project ='''' or tb2.project =''ALL'')
 	where
@@ -2840,7 +2840,7 @@ values ('address_label_nft_volume_rank','	truncate
 
 										)
 											s1
-											INNER JOIN dim_project_token_type s2
+											INNER JOIN dim_project_token_type_temp s2
 														ON
 																	s1.token = s2.token
 																AND s2.type = s2.type
@@ -2866,7 +2866,7 @@ values ('address_label_nft_volume_rank','	truncate
 						on a10.token=a1.token and a10.type=a1.type) as a2) as t1
 		) tb1
 			inner join
-		dim_project_token_type tb2
+		dim_project_token_type_temp tb2
 		on
 					tb1.token = tb2.token
 				AND tb2.type = tb2.type and (tb2.project ='''' or tb2.project =''ALL'')
@@ -2947,7 +2947,7 @@ values ('address_label_nft_volume_top','
 					from
 						nft_volume_count
 				) a1
-					inner join dim_project_token_type a2
+					inner join dim_project_token_type_temp a2
 							on
 										a1.token = a2.token
 									and a2.data_subject = ''volume_top'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
@@ -2997,7 +2997,7 @@ values ('address_label_nft_transfer_count_grade','	truncate
                 a2.label_type,
                 sum(total_transfer_count) as sum_count
          from nft_transfer_holding a1
-                  inner join dim_project_token_type a2
+                  inner join dim_project_token_type_temp a2
                              on a1.token = a2.token   and
                                 a2.type = ''Transfer'' and
                                 a2.data_subject = ''count'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
@@ -3012,7 +3012,7 @@ values ('address_label_nft_transfer_count_grade','	truncate
              a2.label_type,
              sum(total_transfer_count) as sum_count
          from nft_transfer_holding a1
-             inner join dim_project_token_type a2
+             inner join dim_project_token_type_temp a2
          on a2.token = ''ALL''   and
              a2.type = ''Transfer'' and
              a2.data_subject = ''count'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''

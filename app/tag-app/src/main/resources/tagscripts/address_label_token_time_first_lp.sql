@@ -52,7 +52,7 @@ from
                     token_holding_time
                 where
                         address not in (select address from exclude_address)) a1
-                inner join dim_project_token_type a2
+                inner join dim_project_token_type_temp a2
                            on
                                        a1.token = a2.token
                                    and a2.data_subject = 'FIRST_MOVER_LP'

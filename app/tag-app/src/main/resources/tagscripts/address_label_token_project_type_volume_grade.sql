@@ -75,7 +75,7 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
             sum(total_transfer_volume_usd) as total_transfer_volume_usd
         from
             dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
+                inner join dim_project_token_type_temp a2
                            on
                                        a1.token = a2.token
                                    and a1.project = a2.project
@@ -84,7 +84,7 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
                                    and a2.label_type not like '%NFT%'
                                    and a2.label_type not like '%WEB3%'
                                    and a1.recent_time_code = a2.recent_code
-        where a1.token in (select distinct token from dim_project_token_type)
+        where a1.token in (select distinct token from dim_project_token_type_temp)
         group by
             a1.address,
             a2.label_type,
@@ -102,7 +102,7 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
             sum(round(total_transfer_volume_usd,8)) as total_transfer_volume_usd
         from
             dex_tx_volume_count_summary a1
-                inner join dim_project_token_type a2
+                inner join dim_project_token_type_temp a2
                            on
                                        a1.token = a2.token
                                    and a2.project = 'ALL'
@@ -111,7 +111,7 @@ insert into public.address_label_token_project_type_volume_grade(address,label_t
                                    and a2.label_type not like '%NFT%'
                                    and a2.label_type not like '%WEB3%'
                                    and a1.recent_time_code = a2.recent_code
-        where a1.token in (select distinct token from dim_project_token_type)
+        where a1.token in (select distinct token from dim_project_token_type_temp)
         group by
             a1.address,
             a2.label_type,

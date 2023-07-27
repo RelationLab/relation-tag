@@ -80,7 +80,7 @@ select
             recent_time_code
         from
             nft_transfer_holding a1
-            inner join dim_project_token_type a2
+            inner join dim_project_token_type_temp a2
                            on
                                        a1.token = a2.token
                                    and
@@ -113,7 +113,7 @@ select
             recent_time_code
         from
             nft_transfer_holding a1
-                inner join dim_project_token_type a2
+                inner join dim_project_token_type_temp a2
                            on
                                        a2.token = 'ALL'
                                    and

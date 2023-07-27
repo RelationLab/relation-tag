@@ -94,7 +94,7 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 10) s2
-        INNER JOIN dim_project_token_type drc ON
+        INNER JOIN dim_project_token_type_temp drc ON
         (drc.token = s2.token);
 
 insert into static_top_ten_token${tableSuffix}(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','defi','volume');
@@ -187,7 +187,7 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 10) s2
-        INNER JOIN dim_project_token_type drc ON
+        INNER JOIN dim_project_token_type_temp drc ON
         (drc.token = s2.token);
 
 
@@ -281,6 +281,6 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 10) s2
-        INNER JOIN dim_project_token_type drc ON
+        INNER JOIN dim_project_token_type_temp drc ON
         (drc.token = s2.token);
 INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_top_ten_token${tableSuffix}') as table_name,'${batchDate}'  as batch_date;

@@ -46,7 +46,7 @@ from (
                         rowtable ) s1
         where
                 s1.rn <= 100) s2
-        inner join dim_project_token_type drc on
+        inner join dim_project_token_type_temp drc on
         (drc.type = s2.token) ;
 
 ----nft vol
@@ -90,7 +90,7 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 100) s2
-        INNER JOIN dim_project_token_type drc ON
+        INNER JOIN dim_project_token_type_temp drc ON
         (drc.type = s2.token);
 
 
@@ -202,7 +202,7 @@ from (
                          rowtable ) s1
          where
                  s1.rn <= 100) s2
-         inner join dim_project_token_type drc on
+         inner join dim_project_token_type_temp drc on
     (drc.type = s2.token) ;
 
 ----nft activity
@@ -246,6 +246,6 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 100) s2
-        INNER JOIN dim_project_token_type drc ON
+        INNER JOIN dim_project_token_type_temp drc ON
         (drc.type = s2.token);
 INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_top_ten_action${tableSuffix}') as table_name,'${batchDate}'  as batch_date;
