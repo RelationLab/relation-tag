@@ -102,7 +102,7 @@ insert into public.address_label_token_balance_rank_all(address,label_type,label
 
     ) tb1
         inner join
-    dim_rule_content tb2
+    dim_rule_content_temp tb2
     on
             tb1.token = tb2.token
     where

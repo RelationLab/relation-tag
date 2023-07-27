@@ -50,7 +50,7 @@ insert into public.address_label_token_time_special(address,label_type,label_nam
         where
                 balance>0 and address not in (select address from exclude_address)) a1
         inner join
-    dim_rule_content a2
+    dim_rule_content_temp a2
     on
             a1.token = a2.token
     where

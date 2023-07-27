@@ -116,7 +116,7 @@ from
                                     a10.token = a1.token) as a2) as t1
     ) tb1
         inner join
-    dim_rule_content tb2
+    dim_rule_content_temp tb2
     on
                 tb1.token = tb2.token
             and tb2.label_type  like 'Uniswap_v3%'

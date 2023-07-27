@@ -44,10 +44,10 @@ from
     dex_tx_volume_count_record  dtvcr
         inner join (
         select
-            white_list_erc20.*
+            white_list_erc20_temp.*
         from
-            white_list_erc20   INNER JOIN (
-            select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true
+            white_list_erc20_temp   INNER JOIN (
+            select address from top_token_1000_temp tt2  where tt2.holders>=100 and removed<>true
             union all
             select
                    wlp.address               as address
@@ -56,7 +56,7 @@ from
             where wlp.tvl > 1000000
               and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
                 and wlp."type" = 'LP'
-            ) top_token_1000 ON (white_list_erc20.address = top_token_1000.address) ) w
+            ) top_token_1000_temp ON (white_list_erc20_temp.address = top_token_1000_temp.address) ) w
             on w.address = dtvcr."token"
             and  (token,project) not in(('0x5e8422345238f34275888049021821e8e08caa1f','0xbafa44efe7901e04e39dad13167d089c559c1138'),
                                         ('0xae7ab96520de3a18e5e111b5eaab095312d7fe84','0xae7ab96520de3a18e5e111b5eaab095312d7fe84'),

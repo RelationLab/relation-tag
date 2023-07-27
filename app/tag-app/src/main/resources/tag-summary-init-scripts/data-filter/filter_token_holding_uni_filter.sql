@@ -60,11 +60,11 @@ from (
               ,max(token_holding_uni.triggered_flag) as triggered_flag from token_holding_uni
                                                                        inner join (
              select
-                 white_list_erc20.*
+                 white_list_erc20_temp.*
              from
-                 white_list_erc20
-                     INNER JOIN (select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true)
-                     top_token_1000 ON (white_list_erc20.address = top_token_1000.address)) w on
+                 white_list_erc20_temp
+                     INNER JOIN (select address from top_token_1000_temp tt2  where tt2.holders>=100 and removed<>true)
+                     top_token_1000_temp ON (white_list_erc20_temp.address = top_token_1000_temp.address)) w on
              (w.address = token_holding_uni.price_token)
          group by token_holding_uni.address,token_holding_uni.token,token_holding_uni.nft_token_id,token_holding_uni.price_token ) tb1 ;
 insert into tag_result(table_name,batch_date)  SELECT 'filter_token_holding_uni_filter' as table_name,'${batchDate}'  as batch_date;

@@ -31,9 +31,9 @@ from
     dex_tx_volume_count_record  dtvcr
         inner join (
         select
-            white_list_erc20.*
+            white_list_erc20_temp.*
         from
-            white_list_erc20   INNER JOIN (
+            white_list_erc20_temp   INNER JOIN (
                 select wlp.name,
                        wlp.symbol_wired,
                        wlp.address as address,
@@ -59,7 +59,7 @@ from
                   and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
                     and wlp."type" = 'LP'
             ) lpt
-            ON (white_list_erc20.address = lpt.address) ) w on w.address = dtvcr."token"
+            ON (white_list_erc20_temp.address = lpt.address) ) w on w.address = dtvcr."token"
     where dtvcr.type='stakelp'
 group by
     dtvcr.address,

@@ -18,7 +18,7 @@ select  '${recentTimeCode}' recent_time_code,
        sum(pdwtr.quote_value * w.price)                                                             as volume_usd,
        count(1)                                                                                     as transfer_count
 from platform_deposit_withdraw_tx_record pdwtr
-         inner join white_list_erc20 w on
+         inner join white_list_erc20_temp w on
     (pdwtr.quote_token = w.address)
          inner join (select address
                      from nft_sync_address nsa

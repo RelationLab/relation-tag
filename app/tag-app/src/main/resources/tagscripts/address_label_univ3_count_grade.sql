@@ -76,7 +76,7 @@ from
             recent_time_code
         from
             dex_tx_volume_count_summary_univ3 th
-                inner join dim_rule_content drc
+                inner join dim_rule_content_temp drc
      on( th.token = drc.token and drc.data_subject = 'count'
              and  th.recent_time_code = drc.recent_code)
         where
@@ -84,7 +84,7 @@ from
 
     ) a1
         inner join
-    dim_rule_content a2
+    dim_rule_content_temp a2
     on
                 a1.token = a2.token and  a1.recent_time_code = a2.recent_code
             and a2.label_type  like 'Uniswap_v3%'

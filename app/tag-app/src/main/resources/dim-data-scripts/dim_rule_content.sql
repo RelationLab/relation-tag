@@ -1,5 +1,5 @@
-drop table if exists dim_rule_content;
-create table dim_rule_content
+drop table if exists dim_rule_content_temp;
+create table dim_rule_content_temp
 (
     rule_code    varchar(50),
     token        varchar(300),
@@ -11,8 +11,8 @@ create table dim_rule_content
     token_type   varchar(100),
     recent_code  varchar(30)
 );
-truncate table dim_rule_content;
-vacuum dim_rule_content;
+truncate table dim_rule_content_temp;
+vacuum dim_rule_content_temp;
 drop table if exists dim_rank_token;
 create table dim_rank_token
 (
@@ -25,7 +25,7 @@ dim_rank_token;
 ----------------------------dim_lp.sql-----------------------------------------------
 -----balance_grade  Uniswap_v3_UNI/WETH_0x1d42_BALANCE_GRADE
 insert
-into dim_rule_content ("token",
+into dim_rule_content_temp ("token",
                        label_type,
                        operate_type,
                        data_subject,
@@ -189,7 +189,7 @@ from (select wlp.name,
 
 -----balance_rank  Uniswap_v3_UNI/WETH_0x1d42_BALANCE_RANK
 insert
-into dim_rule_content ("token",
+into dim_rule_content_temp ("token",
                        label_type,
                        operate_type,
                        data_subject,
@@ -352,7 +352,7 @@ from (select wlp.name,
 
 -----balance_top  Uniswap_v3_UNI/WETH_0x1d42_BALANCE_TOP
 insert
-into dim_rule_content ("token",
+into dim_rule_content_temp ("token",
                        label_type,
                        operate_type,
                        data_subject,
@@ -516,7 +516,7 @@ from (select wlp.name,
 
 -----count  Uniswap_v3_UNI/WETH_0x1d42_ACTIVITY
 insert
-into dim_rule_content ("token",
+into dim_rule_content_temp ("token",
                        label_type,
                        operate_type,
                        data_subject,
@@ -694,7 +694,7 @@ from (select wlp.name,
 
 -----volume_grade  Uniswap_v3_UNI/WETH_0x1d42_VOLUME_GRADE
 insert
-into dim_rule_content ("token",
+into dim_rule_content_temp ("token",
                        label_type,
                        operate_type,
                        data_subject,
@@ -878,7 +878,7 @@ from (select wlp.name,
 
 -----volume_rank  Uniswap_v3_UNI/WETH_0x1d42_VOLUME_RANK
 insert
-into dim_rule_content ("token",
+into dim_rule_content_temp ("token",
                        label_type,
                        operate_type,
                        data_subject,
@@ -1063,7 +1063,7 @@ from (select wlp.name,
 ----------------------------------------dim_token.sql------------------------------------------
 --------------balance_grade  ALL_DAI(0x6b1754)_ALL_BALANCE_GRADE
 insert
-into dim_rule_content(rule_code,
+into dim_rule_content_temp(rule_code,
                       token,
                       label_type,
                       operate_type,
@@ -1079,7 +1079,7 @@ select distinct 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' |
                 now()                                                                                  as create_time,
                 t.symbol                                                                               as token_name,
                 'token'                                                                                as token_type
-from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t;
+from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t;
 
 insert
 into public."label_temp" ("owner",
@@ -1115,7 +1115,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                                                    wired_type,
                 999                                                                                       label_order,
                 'WAITING'                                                                                 sync_es_status
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_balance_grade') level_def on
@@ -1150,7 +1150,7 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 'token'                                              asset_type,
                 'GRADE'                                              label_category,
                 'ALL' recent_time_code
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_balance_grade') level_def on
@@ -1160,7 +1160,7 @@ where holders >= 100
 
 --------balance_grade ALL_ALL_ALL_BALANCE_GRADE
 insert
-into dim_rule_content ("token",
+into dim_rule_content_temp ("token",
                        label_type,
                        operate_type,
                        data_subject,
@@ -1240,7 +1240,7 @@ where type = 'defi_balance_grade';
 
 --------------balance_rank  ALL_DAI(0x6b1754)_ALL_BALANCE_RANK
 insert
-into dim_rule_content(rule_code,
+into dim_rule_content_temp(rule_code,
                       token,
                       label_type,
                       operate_type,
@@ -1256,7 +1256,7 @@ select distinct 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' |
                 now()                                                                                 as create_time,
                 t.symbol                                                                              as token_name,
                 'token'                                                                               as token_type
-from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t;
+from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t;
 
 insert
 into public."label_temp" ("owner",
@@ -1292,7 +1292,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                                                   wired_type,
                 999                                                                                      label_order,
                 'WAITING'                                                                                sync_es_status
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_balance_rank') level_def on
@@ -1327,7 +1327,7 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 'token'                                              asset_type,
                 'RANK'                                               label_category,
                 'ALL' recent_time_code
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_balance_rank') level_def on
@@ -1338,7 +1338,7 @@ where holders >= 100
 
 --------balance_rank ALL_ALL_ALL_BALANCE_RANK
 insert
-into dim_rule_content ("token",
+into dim_rule_content_temp ("token",
                        label_type,
                        operate_type,
                        data_subject,
@@ -1417,7 +1417,7 @@ where type = 'defi_balance_rank';
 
 --------------balance_top  ALL_DAI(0x6b1754)_ALL_BALANCE_TOP
 insert
-into dim_rule_content(rule_code,
+into dim_rule_content_temp(rule_code,
                       token,
                       label_type,
                       operate_type,
@@ -1433,7 +1433,7 @@ select distinct 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' |
                 now()                                                                                as create_time,
                 t.symbol                                                                             as token_name,
                 'token'                                                                              as token_type
-from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t;
+from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t;
 
 insert
 into public."label_temp" ("owner",
@@ -1469,7 +1469,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                                                  wired_type,
                 999                                                                                     label_order,
                 'WAITING'                                                                               sync_es_status
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_balance_top') level_def on
@@ -1504,7 +1504,7 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 'token'                                              asset_type,
                 'TOP'                                                label_category,
                 'ALL' recent_time_code
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_balance_top') level_def on
@@ -1515,7 +1515,7 @@ where holders >= 100
 
 --------balance_top ALL_ALL_ALL_BALANCE_TOP
 insert
-into dim_rule_content ("token",
+into dim_rule_content_temp ("token",
                        label_type,
                        operate_type,
                        data_subject,
@@ -1594,7 +1594,7 @@ where type = 'defi_balance_top';
 
 --------------count  ALL_DAI(0x6b1754)_ALL_ACTIVITY
 insert
-into dim_rule_content(rule_code,
+into dim_rule_content_temp(rule_code,
                       token,
                       label_type,
                       operate_type,
@@ -1613,7 +1613,7 @@ select distinct 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' |
                 t.symbol                                                                          as token_name,
                 'token'                                                                           as token_type,
                 recent_time.recent_time_code
-from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t
+from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t
          inner join recent_time on (1 = 1);
 
 insert
@@ -1657,7 +1657,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                                                                   wired_type,
                 999                                                                                                      label_order,
                 'WAITING'                                                                                                sync_es_status
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_count') level_def on
@@ -1696,7 +1696,7 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 'token'                                              asset_type,
                 'GRADE'                                              label_category,
                 recent_time_code
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_count') level_def on
@@ -1707,7 +1707,7 @@ where holders >= 100
 
 --------count ALL_ALL_ALL_ACTIVITY
 insert
-into dim_rule_content ("token",
+into dim_rule_content_temp ("token",
                        label_type,
                        operate_type,
                        data_subject,
@@ -1801,7 +1801,7 @@ where type = 'defi_count';
 
 --------------time_grade DOP(0x6bb612)_HOLDING_TIME_GRADE
 insert
-into dim_rule_content(rule_code,
+into dim_rule_content_temp(rule_code,
                       token,
                       label_type,
                       operate_type,
@@ -1817,7 +1817,7 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_HOLDIN
                 now()                                                                         as create_time,
                 t.symbol                                                                      as token_name,
                 'token'                                                                       as token_type
-from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t;
+from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t;
 
 insert
 into public."label_temp" ("owner",
@@ -1855,7 +1855,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                                                               wired_type,
                 999                                                                                                  label_order,
                 'WAITING'                                                                                            sync_es_status
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_time_grade') level_def on
@@ -1890,7 +1890,7 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 'token'                                              asset_type,
                 'GRADE'                                              label_category,
                 'ALL' recent_time_code
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_time_grade') level_def on
@@ -1900,7 +1900,7 @@ where holders >= 100
 
 --------------time_special  DAI(0x6b1754)_HOLDING_TIME_SPECIAL
 insert
-into dim_rule_content(rule_code,
+into dim_rule_content_temp(rule_code,
                       token,
                       label_type,
                       operate_type,
@@ -1916,7 +1916,7 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_HOLDIN
                 now()                                                                           as create_time,
                 t.symbol                                                                        as token_name,
                 'token'                                                                         as token_type
-from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t;
+from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t;
 
 insert
 into public."label_temp" ("owner",
@@ -1954,7 +1954,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                                                                 wired_type,
                 999                                                                                                    label_order,
                 'WAITING'                                                                                              sync_es_status
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_time_special') level_def on
@@ -1989,7 +1989,7 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 'token'                                              asset_type,
                 'SPECIAL'                                            label_category,
                 'ALL' recent_time_code
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_time_special') level_def on
@@ -1999,7 +1999,7 @@ where holders >= 100
 
 --------------volume_grade  ALL_DAI(0x6b1754)_ALL_VOLUME_GRADE
 insert
-into dim_rule_content(rule_code,
+into dim_rule_content_temp(rule_code,
                       token,
                       label_type,
                       operate_type,
@@ -2018,7 +2018,7 @@ select distinct 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' |
                 t.symbol                                                                              as token_name,
                 'token'                                                                               as token_type,
                 recent_time.recent_time_code
-from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t
+from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t
          inner join recent_time on (1 = 1);
 
 insert
@@ -2063,7 +2063,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                                                   wired_type,
                 999                                                                                      label_order,
                 'WAITING'                                                                                sync_es_status
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_volume_grade') level_def on
@@ -2105,7 +2105,7 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 'token'                                              asset_type,
                 'GRADE'                                              label_category,
                 recent_time_code
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'defi_volume_grade') level_def on
@@ -2116,7 +2116,7 @@ where holders >= 100
 
 --------volume_grade ALL_ALL_ALL_VOLUME_GRADE
 insert
-into dim_rule_content ("token",
+into dim_rule_content_temp ("token",
                        label_type,
                        operate_type,
                        data_subject,
@@ -2215,7 +2215,7 @@ where type = 'defi_volume_grade';
 
 --------------volume_rank  ALL_DAI(0x6b1754)_ALL_VOLUME_RANK
 insert
-into dim_rule_content(rule_code,
+into dim_rule_content_temp(rule_code,
                       token,
                       label_type,
                       operate_type,
@@ -2234,7 +2234,7 @@ select distinct 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' |
                 t.symbol                                                                             as token_name,
                 'token'                                                                              as token_type,
                 recent_time.recent_time_code
-from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t
+from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t
          inner join recent_time on (1 = 1);
 
 insert
@@ -2276,7 +2276,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                                                  wired_type,
                 999                                                                                     label_order,
                 'WAITING'                                                                               sync_es_status
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'token_volume_rank') level_def on
@@ -2315,7 +2315,7 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 'token'                                              asset_type,
                 'RANK'                                               label_category,
                 recent_time_code
-from top_token_1000 t
+from top_token_1000_temp t
          inner join (select *
                      from level_def
                      where type = 'token_volume_rank') level_def on
@@ -2327,7 +2327,7 @@ where holders >= 100
 
 --------volume_rank ALL_ALL_ALL_VOLUME_RANK
 insert
-into dim_rule_content ("token",
+into dim_rule_content_temp ("token",
                        label_type,
                        operate_type,
                        data_subject,
@@ -2737,7 +2737,7 @@ values ('',
         'ALL');
 insert into dim_rank_token
 select distinct token, token_type
-from dim_rule_content;
+from dim_rule_content_temp;
 insert into tag_result(table_name, batch_date)
 SELECT 'dim_rule_content' as table_name, '${batchDate}' as batch_date;
 

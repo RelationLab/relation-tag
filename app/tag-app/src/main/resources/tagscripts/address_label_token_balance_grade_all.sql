@@ -75,7 +75,7 @@ insert into public.address_label_token_balance_grade_all(address,label_type,labe
             address
     ) a1
         inner join
-    dim_rule_content a2
+    dim_rule_content_temp a2
     on
             a1.token = a2.token
     where

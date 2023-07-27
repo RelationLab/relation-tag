@@ -152,7 +152,7 @@ from
                             on
                                     a10.recent_time_code = a1.recent_time_code) as a2) as t1) tb1
         inner join
-    dim_rule_content tb2
+    dim_rule_content_temp tb2
     on
                 tb1.token = tb2.token
             and tb1.recent_time_code = tb2.recent_code

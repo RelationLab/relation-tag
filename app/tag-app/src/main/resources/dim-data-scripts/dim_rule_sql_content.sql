@@ -1,13 +1,13 @@
-drop table if exists dim_rule_sql_content;
-CREATE TABLE public.dim_rule_sql_content (
+drop table if exists dim_rule_sql_content_temp;
+CREATE TABLE public.dim_rule_sql_content_temp (
                                              rule_name varchar(100) NULL,
                                              rule_sql text NULL,
                                              rule_order int8 NULL
 );
-truncate table dim_rule_sql_content;
-vacuum dim_rule_sql_content;
+truncate table dim_rule_sql_content_temp;
+vacuum dim_rule_sql_content_temp;
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_eth_count_grade','truncate
 			table public.address_label_eth_count_grade;
 
@@ -53,7 +53,7 @@ values ('address_label_eth_count_grade','truncate
 					eth_holding th1
 			) a1
 				inner join
-			dim_rule_content a2
+			dim_rule_content_temp a2
 			on
 					a1.token = a2.token
 			where
@@ -62,7 +62,7 @@ values ('address_label_eth_count_grade','truncate
 		;',1);
 
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_grade','
 	truncate
 		table public.address_label_token_balance_grade;
@@ -106,14 +106,14 @@ values ('address_label_token_balance_grade','
 				token_balance_volume_usd tbvutk
 		) a1
 			inner join
-		dim_rule_content a2
+		dim_rule_content_temp a2
 		on
 				a1.token = a2.token
 	where
         a1.balance_usd >= 100
   and a2.data_subject = ''balance_grade'';',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_count_grade','	truncate
 		table public.address_label_token_count_grade;
 
@@ -173,14 +173,14 @@ values ('address_label_token_count_grade','	truncate
 				address
 		) a1
 			inner join
-		dim_rule_content a2
+		dim_rule_content_temp a2
 		on
 				a1.token = a2.token
 	where
         a1.total_transfer_all_count >= 1
   and a2.data_subject = ''count'';',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_time_grade','truncate
 			table public.address_label_token_time_grade;
 
@@ -211,13 +211,13 @@ values ('address_label_token_time_grade','truncate
 					counter
 			from token_holding_time tbvutk) a1
 				inner join
-			dim_rule_content a2
+			dim_rule_content_temp a2
 			on
 				a1.token = a2.token
 			where  a2.data_subject = ''time_grade'' and counter >= 1 and counter<=365
 		;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_volume_grade','
 	truncate
 		table public.address_label_token_volume_grade;
@@ -264,14 +264,14 @@ values ('address_label_token_volume_grade','
 		)
 			a1
 			inner join
-		dim_rule_content a2
+		dim_rule_content_temp a2
 		on
 				a1.token = a2.token
 	where
         a1.volume_usd >= 100
   and a2.data_subject = ''volume_grade'';',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_eth_balance_rank','
 	truncate
 		table public.address_label_eth_balance_rank;
@@ -331,14 +331,14 @@ values ('address_label_eth_balance_rank','
 						on 1 = 1) as a2) as t1
 		) tb1
 			inner join
-		dim_rule_content tb2
+		dim_rule_content_temp tb2
 		on
 				tb1.token = tb2.token
 	where tb1.balance_usd >= 100
   and tb1.zb_rate <= 0.1
   and tb2.data_subject = ''balance_rank'' and tb2.token_type=''token'';',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_eth_volume_rank','
 	truncate
 		table public.address_label_eth_volume_rank;
@@ -400,14 +400,14 @@ values ('address_label_eth_volume_rank','
 							from token_balance_volume_usd  where token = ''eth'') as a10
 						on 1 = 1) as a2) as t1) tb1
 			inner join
-		dim_rule_content tb2
+		dim_rule_content_temp tb2
 		on
 				tb1.token = tb2.token
 	where tb1.volume_usd >= 100
   and tb2.data_subject = ''volume_rank'' and tb2.token_type=''token''  and  zb_rate <= 0.1;',1);
 
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_time_special','truncate
 			table public.address_label_token_time_special;
 		insert into public.address_label_token_time_special (address,
@@ -430,13 +430,13 @@ values ('address_label_token_time_special','truncate
 					counter
 			from token_holding_time tbvutk) a1
 				inner join
-			dim_rule_content a2
+			dim_rule_content_temp a2
 			on
 					a1.token = a2.token
 			where a2.data_subject = ''time_special'' and counter >= 1
 		;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_rank','
 	truncate
 		table public.address_label_token_balance_rank;
@@ -499,14 +499,14 @@ values ('address_label_token_balance_rank','
 						on a10.token = a1.token) as a2) as t1
 		) tb1
 			inner join
-		dim_rule_content tb2
+		dim_rule_content_temp tb2
 		on
 				tb1.token = tb2.token
 	where tb1.balance_usd >= 100
   and tb1.zb_rate <= 0.1
   and tb2.data_subject = ''balance_rank'';',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_top','	truncate table address_label_token_balance_top;
 	insert into public.address_label_token_balance_top (address,
 														label_type,
@@ -537,7 +537,7 @@ values ('address_label_token_balance_top','	truncate table address_label_token_b
 					from
 						token_balance_volume_usd
 				) a1
-					inner join dim_rule_content a2
+					inner join dim_rule_content_temp a2
 							on
 										a1.token = a2.token
 									and a2.data_subject = ''balance_top''
@@ -545,7 +545,7 @@ values ('address_label_token_balance_top','	truncate table address_label_token_b
 	where
         s1.rn <= 100;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_volume_rank','
 	truncate
 		table public.address_label_token_volume_rank;
@@ -613,13 +613,13 @@ values ('address_label_token_volume_rank','
 						on a10.token = a1.token) as a2) as t1
 		) tb1
 			inner join
-		dim_rule_content tb2
+		dim_rule_content_temp tb2
 		on
 				tb1.token = tb2.token
 	where tb1.volume_usd >= 100
 	and tb2.data_subject = ''volume_rank''  and  zb_rate <= 0.1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_usdt_balance_rank','
 	truncate
 		table public.address_label_usdt_balance_rank;
@@ -679,14 +679,14 @@ values ('address_label_usdt_balance_rank','
 						on 1 = 1) as a2) as t1
 		) tb1
 			inner join
-		dim_rule_content tb2
+		dim_rule_content_temp tb2
 		on
 				tb1.token = tb2.token
 	where tb1.balance_usd >= 100
   and tb1.zb_rate <= 0.1
   and tb2.data_subject = ''balance_rank'' and tb2.token_type=''token'';',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_usdt_volume_rank','
 	truncate
 		table public.address_label_usdt_volume_rank;
@@ -749,13 +749,13 @@ values ('address_label_usdt_volume_rank','
 							from token_balance_volume_usd where token = ''0xdac17f958d2ee523a2206206994597c13d831ec7'' ) as a10
 						on 1 = 1) as a2) as t1) tb1
 			inner join
-		dim_rule_content tb2
+		dim_rule_content_temp tb2
 		on
 				tb1.token = tb2.token
 	where tb1.volume_usd >= 100
   and tb2.data_subject = ''volume_rank'' and tb2.token_type=''token'' and  zb_rate <= 0.1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_web3_type_balance_grade','truncate
 			table public.address_label_web3_type_balance_grade;
 
@@ -836,7 +836,7 @@ values ('address_label_web3_type_balance_grade','truncate
 					a2.label_type
 			) t where balance>=1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_web3_type_count_grade','truncate
 			table public.address_label_web3_type_count_grade;
 
@@ -927,7 +927,7 @@ values ('address_label_web3_type_count_grade','truncate
 					a2.label_type
 			) t where total_transfer_count>=1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_web3_type_balance_rank','
 	truncate
 		table public.address_label_web3_type_balance_rank;
@@ -1057,7 +1057,7 @@ values ('address_label_web3_type_balance_rank','
 	where tb1.balance >= 1
   and tb2.data_subject = ''balance_rank'' and  zb_rate <= 0.1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_web3_type_balance_top','	truncate table address_label_web3_type_balance_top;
 	insert into public.address_label_web3_type_balance_top (address,
 															label_type,
@@ -1109,7 +1109,7 @@ values ('address_label_web3_type_balance_top','	truncate table address_label_web
 	where
         s1.rn <= 100;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_project_type_count_grade','truncate
 			table public.address_label_token_project_type_count_grade;
 
@@ -1254,7 +1254,7 @@ values ('address_label_token_project_type_count_grade','truncate
 					a2.label_type
 			) t where total_transfer_count >= 1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_project_type_volume_grade','truncate
 		table public.address_label_token_project_type_volume_grade;
 
@@ -1397,7 +1397,7 @@ values ('address_label_token_project_type_volume_grade','truncate
 				a2.label_type
 		) t where total_transfer_volume_usd >= 100;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_project_type_volume_rank','	truncate
 		table public.address_label_token_project_type_volume_rank;
 
@@ -1621,7 +1621,7 @@ values ('address_label_token_project_type_volume_rank','	truncate
 	where tb1.total_transfer_volume_usd >= 100
   and tb2.data_subject = ''volume_rank'' and  zb_rate <= 0.1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_count_grade','truncate
 			table public.address_label_nft_project_type_count_grade;
 
@@ -1716,7 +1716,7 @@ values ('address_label_nft_project_type_count_grade','truncate
 			) t where sum_count >= 1;
 		',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_grade','	truncate
 		table public.address_label_nft_project_type_volume_grade;
 
@@ -1804,7 +1804,7 @@ values ('address_label_nft_project_type_volume_grade','	truncate
 				a2.label_type
 		) t where volume_usd >= 1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_count_rank','
 	truncate
 		table public.address_label_nft_project_type_volume_count_rank;
@@ -1949,7 +1949,7 @@ values ('address_label_nft_project_type_volume_count_rank','
 	where tb1.volume_usd >= 100   and zb_rate <= 0.001 and zb_rate_transfer_count<=0.001
 	and  tb2.data_subject = ''volume_elite'';',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_rank','
 	truncate
 		table public.address_label_nft_project_type_volume_rank;
@@ -2096,7 +2096,7 @@ values ('address_label_nft_project_type_volume_rank','
 	where tb1.volume_usd >= 100
 	and tb2.data_subject = ''volume_rank'' and  zb_rate <= 0.1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_project_type_volume_top','truncate
 			table public.address_label_nft_project_type_volume_top;
 
@@ -2172,7 +2172,7 @@ values ('address_label_nft_project_type_volume_top','truncate
 		where
 				s1.rn <= 100;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_balance_grade','	truncate
 		table public.address_label_nft_balance_grade;
 
@@ -2225,7 +2225,7 @@ values ('address_label_nft_balance_grade','	truncate
 				a2.label_type
 		) t where balance>=1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_count_grade','	truncate
 		table public.address_label_nft_count_grade;
 
@@ -2285,7 +2285,7 @@ values ('address_label_nft_count_grade','	truncate
 				a2.seq_flag,
 				a2.label_type) t where sum_count >= 1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_time_grade','	
 	truncate
 		table public.address_label_nft_time_grade;
@@ -2329,7 +2329,7 @@ values ('address_label_nft_time_grade','
 	where a2.data_subject = ''time_grade''  and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''  and counter > 0
 	and counter <= 365 and (a2.type ='''' or a2.type =''ALL'') and (a2.project ='''' or a2.project =''ALL'');',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_volume_grade','	truncate
 		table public.address_label_nft_volume_grade;
 
@@ -2386,7 +2386,7 @@ values ('address_label_nft_volume_grade','	truncate
 				a2.seq_flag,
 				a2.label_type) t where volume_usd >= 1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_balance_rank','	truncate
 		table public.address_label_nft_balance_rank;
 
@@ -2504,7 +2504,7 @@ values ('address_label_nft_balance_rank','	truncate
   AND (tb2.type='''' OR tb2.type=''ALL'')
   and tb2.data_subject = ''balance_rank'' and tb2.label_type like ''%NFT%'' AND  tb2.label_type NOT  LIKE ''%WEB3%'' and  zb_rate <= 0.1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_balance_top','	truncate table address_label_nft_balance_top;
 	insert into public.address_label_nft_balance_top (address,
 													label_type,
@@ -2550,7 +2550,7 @@ values ('address_label_nft_balance_top','	truncate table address_label_nft_balan
 	where
         s1.rn <= 100;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_time_rank','	truncate
 		table public.address_label_nft_time_rank;
 	insert
@@ -2583,7 +2583,7 @@ values ('address_label_nft_time_rank','	truncate
 	where a2.data_subject = ''time_special'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%'' and counter >=1
   and counter <= 365  AND (a2.type='''' or a2.type=''ALL'') and (a2.project ='''' or a2.project =''ALL'');',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_time_top','	truncate
 		table public.address_label_nft_time_top;
 	insert
@@ -2626,7 +2626,7 @@ values ('address_label_nft_time_top','	truncate
 	where
         s1.rn <= 100;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_volume_count_rank','	truncate
 		table public.address_label_nft_volume_count_rank;
 	insert
@@ -2765,7 +2765,7 @@ values ('address_label_nft_volume_count_rank','	truncate
   and tb2.data_subject = ''volume_elite'' and tb2.label_type like ''%NFT%'' AND  tb2.label_type NOT  LIKE ''%WEB3%'';',1);
 
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_volume_rank','	truncate
 		table public.address_label_nft_volume_rank;
 
@@ -2872,7 +2872,7 @@ values ('address_label_nft_volume_rank','	truncate
 				AND tb2.type = tb2.type and (tb2.project ='''' or tb2.project =''ALL'')
 	where tb1.transfer_volume >= 1 and tb2.data_subject = ''volume_rank'' and tb2.label_type like ''%NFT%'' AND  tb2.label_type NOT  LIKE ''%WEB3%'' and  zb_rate <= 0.1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_volume_top','
 	truncate
 		table public.address_label_nft_volume_top;
@@ -2956,7 +2956,7 @@ values ('address_label_nft_volume_top','
 	where
         s1.rn <= 100;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_transfer_count_grade','	truncate
 		table public.address_label_nft_transfer_count_grade;
 
@@ -3022,7 +3022,7 @@ values ('address_label_nft_transfer_count_grade','	truncate
              a2.label_type) t where sum_count >= 1;',1);
 
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_transfer_volume_grade','	truncate
 		table public.address_label_nft_transfer_volume_grade;
 
@@ -3080,7 +3080,7 @@ values ('address_label_nft_transfer_volume_grade','	truncate
              a2.seq_flag,
              a2.label_type) t where volume_usd >= 1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_transfer_volume_count_rank','
 	truncate
 		table public.address_label_nft_transfer_volume_count_rank;
@@ -3180,7 +3180,7 @@ values ('address_label_nft_transfer_volume_count_rank','
   and tb2.data_subject = ''volume_elite'' and tb2.label_type like ''%NFT%'' AND  tb2.label_type NOT  LIKE ''%WEB3%'';',1);
 
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_transfer_volume_rank','
 	truncate
 		table public.address_label_nft_transfer_volume_rank;
@@ -3277,7 +3277,7 @@ values ('address_label_nft_transfer_volume_rank','
   and tb2.type = ''Transfer''  and (tb2.project ='''' or tb2.project =''ALL'')
   and tb2.data_subject = ''volume_rank''   and tb2.label_type like ''%NFT%'' AND  tb2.label_type NOT  LIKE ''%WEB3%'' and  zb_rate <= 0.1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_nft_transfer_volume_top','	truncate table address_label_nft_transfer_volume_top;
 	insert into public.address_label_nft_transfer_volume_top (address,
 															label_type,
@@ -3319,7 +3319,7 @@ values ('address_label_nft_transfer_volume_top','	truncate table address_label_n
         s1.rn <= 100;',1);
 
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_provider','	truncate table address_label_token_balance_provider;
 	insert into public.address_label_token_balance_provider (address,
 														label_type,
@@ -3349,7 +3349,7 @@ values ('address_label_token_balance_provider','	truncate table address_label_to
 	where
         s1.rn <= 200;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_staked','	truncate table address_label_token_balance_staked;
 	insert into public.address_label_token_balance_staked (address,
 														label_type,
@@ -3380,7 +3380,7 @@ values ('address_label_token_balance_staked','	truncate table address_label_toke
 	where
         s1.rn <= 200;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_time_first_lp','truncate table address_label_token_time_first_lp;
 		insert into public.address_label_token_time_first_lp (address,
 															label_type,
@@ -3411,7 +3411,7 @@ values ('address_label_token_time_first_lp','truncate table address_label_token_
 		where
 				s1.rn <= 100;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_time_first_stake','truncate table address_label_token_time_first_stake;
 		insert into public.address_label_token_time_first_stake (address,
 															label_type,
@@ -3442,7 +3442,7 @@ values ('address_label_token_time_first_stake','truncate table address_label_tok
 		where
 				s1.rn <= 100;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_eth_time_grade','truncate
 		table public.address_label_eth_time_grade;
 
@@ -3473,12 +3473,12 @@ values ('address_label_eth_time_grade','truncate
 				floor((floor(extract(epoch from now())) - latest_tx_time) / (24 * 3600)) as counter
 		from eth_holding_time tbvutk) a1
 			inner join
-		dim_rule_content a2
+		dim_rule_content_temp a2
 		on
 				a1.token = a2.token
 		where  a2.data_subject = ''time_grade'' and counter >= 1 and counter<=365;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_eth_time_special','truncate
 		table public.address_label_eth_time_special;
 		insert into public.address_label_eth_time_special (address,
@@ -3501,12 +3501,12 @@ values ('address_label_eth_time_special','truncate
 				floor((floor(extract(epoch from now())) - latest_tx_time) / (24 * 3600)) as  counter
 		from eth_holding_time tbvutk) a1
 			inner join
-		dim_rule_content a2
+		dim_rule_content_temp a2
 		on
 				a1.token = a2.token
 		where a2.data_subject = ''time_special'' and counter >= 1;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_grade_all','
 	
 	truncate
@@ -3553,7 +3553,7 @@ values ('address_label_token_balance_grade_all','
 				address
 		) a1
 			inner join
-		dim_rule_content a2
+		dim_rule_content_temp a2
 		on
 				a1.token = a2.token
 	where
@@ -3562,7 +3562,7 @@ values ('address_label_token_balance_grade_all','
 	;',1);
 
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_volume_grade_all','	
 	truncate
 		table public.address_label_token_volume_grade_all;
@@ -3609,7 +3609,7 @@ values ('address_label_token_volume_grade_all','
 		)
 			a1
 			inner join
-		dim_rule_content a2
+		dim_rule_content_temp a2
 		on
 				a1.token = a2.token
 	where
@@ -3617,7 +3617,7 @@ values ('address_label_token_volume_grade_all','
 	and a2.data_subject = ''volume_grade'' and a2.token_type=''token''
 	;',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_rank_all','
 	truncate
 		table public.address_label_token_balance_rank_all;
@@ -3676,7 +3676,7 @@ values ('address_label_token_balance_rank_all','
 
 		) tb1
 			inner join
-		dim_rule_content tb2
+		dim_rule_content_temp tb2
 		on
 				tb1.token = tb2.token
 	where tb1.balance_usd >= 100
@@ -3684,7 +3684,7 @@ values ('address_label_token_balance_rank_all','
   and tb2.data_subject = ''balance_rank'' and tb2.token_type=''token'';',1);
 
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_top_all','	truncate table address_label_token_balance_top_all;
 	insert into public.address_label_token_balance_top_all (address,
 														label_type,
@@ -3714,7 +3714,7 @@ values ('address_label_token_balance_top_all','	truncate table address_label_tok
 						volume_usd
 					from
 						total_balance_volume_usd ) a1
-					inner join dim_rule_content a2
+					inner join dim_rule_content_temp a2
 							on
 										a1.token = a2.token
 									and a2.data_subject = ''balance_top'' and a2.token_type=''token''
@@ -3723,7 +3723,7 @@ values ('address_label_token_balance_top_all','	truncate table address_label_tok
         s1.rn <= 100;',1);
 
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_token_volume_rank_all','
 	truncate
 		table public.address_label_token_volume_rank_all;
@@ -3783,33 +3783,33 @@ values ('address_label_token_volume_rank_all','
 								from total_balance_volume_usd ) tbvu group by token) as a10
 						on a10.token = a1.token) as a2) as t1) tb1
 			inner join
-		dim_rule_content tb2
+		dim_rule_content_temp tb2
 		on
 				tb1.token = tb2.token
 	where tb1.volume_usd >= 100
   and tb2.data_subject = ''volume_rank'' and tb2.token_type=''token''   and  zb_rate <= 0.1;',1);
 
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_univ3_balance_grade','address_label_univ3_balance_grade',1);
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_univ3_count_grade','address_label_univ3_count_grade',1);
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_univ3_volume_grade','address_label_univ3_volume_grade',1);
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_univ3_balance_rank','address_label_univ3_balance_rank',1);
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_univ3_balance_top','address_label_univ3_balance_top',1);
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_univ3_volume_rank','address_label_univ3_volume_rank',1);
 
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 values ('address_label_univ3_balance_provider','address_label_univ3_balance_provider',1);
--- insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+-- insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 -- values ('address_label_crowd_active_users','address_label_crowd_active_users',1);
--- insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+-- insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 -- values ('address_label_crowd_elite','address_label_crowd_elite',1);
--- insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+-- insert into dim_rule_sql_content_temp (rule_name, rule_sql, rule_order)
 -- values ('address_label_crowd_nft_active_users','address_label_crowd_nft_active_users',1);
 
 

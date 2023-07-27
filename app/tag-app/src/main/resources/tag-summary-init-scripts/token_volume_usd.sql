@@ -32,7 +32,7 @@ from (select address,
         and token in (select token_id
                       from dim_rank_token)) th
          inner join (select *
-                     from white_list_erc20
+                     from white_list_erc20_temp
                      where address in (select token_id
                                        from dim_rank_token)) wle on
             th.token = wle.address
@@ -53,7 +53,7 @@ from (select address,
       from eth_holding_vol_count
       where total_transfer_volume > 0) eh
          inner join (select price
-                     from white_list_erc20
+                     from white_list_erc20_temp
                      where symbol = 'WETH'
                      group by price) wle on
         1 = 1;

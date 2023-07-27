@@ -83,7 +83,7 @@ from (select t1.address,
                                            total_transfer_volume_usd as volume_usd,
                                            recent_time_code
                                     from dex_tx_volume_count_summary_univ3 dtvcs
-                                             inner join dim_rule_content drc
+                                             inner join dim_rule_content_temp drc
                                                         on (dtvcs.token = drc.token
                                                             and drc.data_subject = 'volume_rank'
                                                             and dtvcs.recent_time_code = drc.recent_code)
@@ -105,7 +105,7 @@ from (select t1.address,
                                      address,
                                      recent_time_code
                               from dex_tx_volume_count_summary_univ3 dtvcs
-                                       inner join dim_rule_content drc
+                                       inner join dim_rule_content_temp drc
                                                   on (dtvcs.token = drc.token
                                                       and dtvcs.recent_time_code = drc.recent_code
                                                       and drc.data_subject = 'volume_rank')
@@ -121,7 +121,7 @@ from (select t1.address,
                                    a10.token = a1.token
                                and a10.recent_time_code = a1.recent_time_code) as a2) as t1) tb1
          inner join
-     dim_rule_content tb2
+     dim_rule_content_temp tb2
      on
                  tb1.token = tb2.token
              and tb2.label_type like 'Uniswap_v3%'

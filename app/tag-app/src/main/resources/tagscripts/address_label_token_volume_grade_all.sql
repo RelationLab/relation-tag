@@ -118,7 +118,7 @@ from
     )
         a1
         inner join
-    dim_rule_content a2
+    dim_rule_content_temp a2
     on
                 a1.token = a2.token
             and a1.recent_time_code = a2.recent_code

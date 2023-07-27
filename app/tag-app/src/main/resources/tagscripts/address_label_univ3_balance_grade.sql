@@ -79,7 +79,7 @@ from
           and type = 'lp'
     ) a1
         inner join
-    dim_rule_content a2
+    dim_rule_content_temp a2
     on
                 a1.token = a2.token and a2.data_subject = 'balance_grade'
             and a2.label_type  like 'Uniswap_v3%'

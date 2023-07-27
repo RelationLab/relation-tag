@@ -42,7 +42,7 @@ select
                                     1,
                                     8)|| ')' as dict_describe
 from
-    top_token_1000 tt ;
+    top_token_1000_temp tt ;
 
 INSERT INTO label_factor_seting_temp (dict_code,dict_name,dict_type)
 select (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')' as dict_code,

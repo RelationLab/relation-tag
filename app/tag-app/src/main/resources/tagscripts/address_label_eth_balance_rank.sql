@@ -105,7 +105,7 @@ from
                                     1 = 1) as a2) as t1
     ) tb1
         inner join
-    dim_rule_content tb2
+    dim_rule_content_temp tb2
     on
             tb1.token = tb2.token
 where
