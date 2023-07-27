@@ -43,7 +43,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public."label" ("owner",
+    public."label_temp" ("owner",
                     "type",
                     "name",
                     "source",
@@ -163,7 +163,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public."label" ("owner",
+    public."label_temp" ("owner",
                     "type",
                     "name",
                     "source",
@@ -282,7 +282,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public."label" ("owner",
+    public."label_temp" ("owner",
                     "type",
                     "name",
                     "source",
@@ -403,7 +403,7 @@ from
         inner join recent_time on(1=1) ;
 insert
 into
-    public."label" ("owner",
+    public."label_temp" ("owner",
                     "type",
                     "name",
                     "source",

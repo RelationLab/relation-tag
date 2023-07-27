@@ -64,7 +64,7 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -228,7 +228,7 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -391,7 +391,7 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -560,7 +560,7 @@ from (select wlp.name,
          inner join recent_time on (1 = 1)
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -738,7 +738,7 @@ from (select wlp.name,
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join recent_time on (1 = 1);
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -922,7 +922,7 @@ from (select wlp.name,
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join recent_time on (1 = 1);
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -1082,7 +1082,7 @@ select distinct 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' |
 from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t;
 
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -1173,7 +1173,7 @@ select distinct 'ALL'                                         "token",
                 'ALL'                                         token_name,
                 'token' as                                    token_type;
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -1259,7 +1259,7 @@ select distinct 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' |
 from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t;
 
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -1350,7 +1350,7 @@ select distinct 'ALL'                                        "token",
                 'ALL'                                        token_name,
                 'token' as                                   token_type;
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -1436,7 +1436,7 @@ select distinct 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' |
 from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t;
 
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -1527,7 +1527,7 @@ select distinct 'ALL'                                       "token",
                 'ALL'                                       token_name,
                 'token' as                                  token_type;
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -1617,7 +1617,7 @@ from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t
          inner join recent_time on (1 = 1);
 
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -1725,7 +1725,7 @@ select distinct 'ALL'                                    "token",
 from recent_time;
 
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -1820,7 +1820,7 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_HOLDIN
 from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t;
 
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -1919,7 +1919,7 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_HOLDIN
 from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t;
 
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -2022,7 +2022,7 @@ from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t
          inner join recent_time on (1 = 1);
 
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -2133,7 +2133,7 @@ select distinct 'ALL'                                        "token",
                 recent_time.recent_time_code
 from recent_time;
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -2238,7 +2238,7 @@ from (select * from top_token_1000 where holders >= 100 and removed <> 'true') t
          inner join recent_time on (1 = 1);
 
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",
@@ -2344,7 +2344,7 @@ select distinct 'ALL'                                       "token",
                 recent_time.recent_time_code
 from recent_time;
 insert
-into public."label" ("owner",
+into public."label_temp" ("owner",
                      "type",
                      "name",
                      "source",

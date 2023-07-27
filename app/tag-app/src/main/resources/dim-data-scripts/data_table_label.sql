@@ -1,10 +1,10 @@
--- public."label" definition
+-- public."label_temp" definition
 
 -- Drop table
 
--- DROP TABLE public."label";
-DROP TABLE if EXISTS  label;
-CREATE TABLE public."label" (
+-- DROP TABLE public."label_temp";
+DROP TABLE if EXISTS  label_temp;
+CREATE TABLE public."label_temp" (
                                 "owner" varchar(512) NOT NULL DEFAULT '-1'::character varying,
                                 "type" varchar(512) NOT NULL,
                                 "name" varchar(1024) NOT NULL,
