@@ -46,7 +46,17 @@ from
         select
             white_list_erc20.*
         from
-            white_list_erc20   INNER JOIN (select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true)
+            white_list_erc20   INNER JOIN (
+            select address from top_token_1000 tt2  where tt2.holders>=100 and removed<>true
+            union all
+            select
+                   wlp.address               as address
+            from white_list_lp wlp
+                     left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+            where wlp.tvl > 1000000
+              and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+                and wlp."type" = 'LP'
+            )
                 top_token_1000 ON (white_list_erc20.address = top_token_1000.address) ) w on
                 w.address = dtvcr."token"
             and  (token,project) not in(('0x5e8422345238f34275888049021821e8e08caa1f','0xbafa44efe7901e04e39dad13167d089c559c1138'),
