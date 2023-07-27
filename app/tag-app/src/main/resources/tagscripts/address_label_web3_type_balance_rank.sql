@@ -157,7 +157,7 @@ from
                                                         where  balance >= 1 and address not in (select address from exclude_address)
                                                           and (type='NFT Recipient')
                                                     ) s1
-                                                        inner join dim_project_type s2
+                                                        inner join dim_project_type_temp s2
                                                                    on
                                                                                s1.project = s2.project
                                                                            and s1.type = s2.type
@@ -227,7 +227,7 @@ from
                                             and a10.project = a1.project) as a2) as t1
             ) tb1
                 inner join
-            dim_project_type tb2
+            dim_project_type_temp tb2
             on
                         tb1.project = tb2.project
                     and tb1.type = tb2.type

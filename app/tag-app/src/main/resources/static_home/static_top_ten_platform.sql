@@ -38,14 +38,14 @@ from (
                              project
                          from
                              web3_transaction_record_summary tbvu where
-                             project in(select project from dim_project_type)
+                             project in(select project from dim_project_type_temp)
                                                                     and recent_time_code='ALL'
                              and tbvu.type='NFT Recipient'  and tbvu.address not in (select address from exclude_address) and  balance >=1
                          group by
                              project)
                          rowtable ) s1
          where
-                 s1.rn <= 10) s2 inner join dim_project_type drc on(drc.project=s2.token);
+                 s1.rn <= 10) s2 inner join dim_project_type_temp drc on(drc.project=s2.token);
 
 
 insert into static_top_ten_platform${tableSuffix}(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','defi','volume');
@@ -271,12 +271,12 @@ from (
                              project
                          from
                              web3_transaction_record_summary tbvu where
-                                 project in(select project from dim_project_type)
+                                 project in(select project from dim_project_type_temp)
                                                                     and recent_time_code='ALL'
                                 and  tbvu.address not in (select address from exclude_address)
                          group by
                              project)
                          rowtable ) s1
          where
-                 s1.rn <= 10) s2 inner join dim_project_type drc on(drc.project=s2.token);
+                 s1.rn <= 10) s2 inner join dim_project_type_temp drc on(drc.project=s2.token);
 insert into tag_result${tableSuffix}(table_name,batch_date)  SELECT 'static_top_ten_platform${tableSuffix}' as table_name,'${batchDate}'  as batch_date;

@@ -789,7 +789,7 @@ values ('address_label_web3_type_balance_grade','truncate
 					a2.label_type,
 					sum(balance) as balance
 				from
-					web3_transaction_record_summary  a1 inner join dim_project_type a2
+					web3_transaction_record_summary  a1 inner join dim_project_type_temp a2
 																on  a1.project=a2.project and a1.type=a2.type and a2.data_subject = ''balance_grade''
 				group by
 					a1.address,
@@ -802,7 +802,7 @@ values ('address_label_web3_type_balance_grade','truncate
 					a2.label_type,
 					sum(balance) as balance
 				from
-					web3_transaction_record_summary  a1 inner join dim_project_type a2
+					web3_transaction_record_summary  a1 inner join dim_project_type_temp a2
 																on a2.project=''ALL'' and a1.type=a2.type and a2.data_subject = ''balance_grade''
 				group by
 					a1.address,
@@ -815,7 +815,7 @@ values ('address_label_web3_type_balance_grade','truncate
 					a2.label_type,
 					sum(balance) as balance
 				from
-					web3_transaction_record_summary  a1 inner join dim_project_type a2
+					web3_transaction_record_summary  a1 inner join dim_project_type_temp a2
 																on a2.project=''ALL'' and a2.type=''ALL'' and a2.data_subject = ''balance_grade''
 				group by
 					a1.address,
@@ -828,7 +828,7 @@ values ('address_label_web3_type_balance_grade','truncate
 					a2.label_type,
 					sum(balance) as balance
 				from
-					web3_transaction_record_summary  a1 inner join dim_project_type a2
+					web3_transaction_record_summary  a1 inner join dim_project_type_temp a2
 																on  a1.project=a2.project and a2.type=''ALL'' and a2.data_subject = ''balance_grade''
 				group by
 					a1.address,
@@ -880,7 +880,7 @@ values ('address_label_web3_type_count_grade','truncate
 					a2.label_type,
 					sum(total_transfer_count) as total_transfer_count
 				from
-					web3_transaction_record_summary  a1 inner join dim_project_type a2
+					web3_transaction_record_summary  a1 inner join dim_project_type_temp a2
 															on  a1.project=a2.project and a1.type=a2.type and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -893,7 +893,7 @@ values ('address_label_web3_type_count_grade','truncate
 					a2.label_type,
 					sum(total_transfer_count) as total_transfer_count
 				from
-					web3_transaction_record_summary  a1 inner join dim_project_type a2
+					web3_transaction_record_summary  a1 inner join dim_project_type_temp a2
 															on a2.project=''ALL'' and a1.type=a2.type and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -906,7 +906,7 @@ values ('address_label_web3_type_count_grade','truncate
 					a2.label_type,
 					sum(total_transfer_count) as total_transfer_count
 				from
-					web3_transaction_record_summary  a1 inner join dim_project_type a2
+					web3_transaction_record_summary  a1 inner join dim_project_type_temp a2
 															on a2.project=''ALL'' and a2.type=''ALL'' and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -919,7 +919,7 @@ values ('address_label_web3_type_count_grade','truncate
 					a2.label_type,
 					sum(total_transfer_count) as total_transfer_count
 				from
-					web3_transaction_record_summary  a1 inner join dim_project_type a2
+					web3_transaction_record_summary  a1 inner join dim_project_type_temp a2
 															on  a1.project=a2.project and a2.type=''ALL'' and a2.data_subject = ''count''
 				group by
 					a1.address,
@@ -1017,7 +1017,7 @@ values ('address_label_web3_type_balance_rank','
 												,balance from web3_transaction_record_summary
 										)
 											s1
-											INNER JOIN dim_project_type s2
+											INNER JOIN dim_project_type_temp s2
 														ON
 																	s1.project = s2.project
 																AND s1.type = s2.type
@@ -1050,7 +1050,7 @@ values ('address_label_web3_type_balance_rank','
 						on a10.type=a1.type and a10.project=a1.project) as a2) as t1
 		) tb1
 			inner join
-		dim_project_type tb2
+		dim_project_type_temp tb2
 		on
 					tb1.project = tb2.project
 				and tb1.type = tb2.type
@@ -1100,7 +1100,7 @@ values ('address_label_web3_type_balance_top','	truncate table address_label_web
 							,project
 							,balance from web3_transaction_record_summary
 				) a1
-					inner join dim_project_type a2
+					inner join dim_project_type_temp a2
 							on
 										a1.project = a2.project
 									and a1.type = a2.type

@@ -129,7 +129,7 @@ from (
                              type,project)
                          rowtable ) s1
          where
-                 s1.rn <= 1000) s2 inner join dim_project_type drc on(drc.type=s2.token and drc.project=s2.project);
+                 s1.rn <= 1000) s2 inner join dim_project_type_temp drc on(drc.type=s2.token and drc.project=s2.project);
 --
 -- select distinct s2.token as token,
 --                 s2.rn as rownumber,
@@ -162,7 +162,7 @@ from (
 --                              type)
 --                          rowtable ) s1
 --          where
---                  s1.rn <= 1000) s2 inner join dim_project_type drc on(drc.type=s2.token);
+--                  s1.rn <= 1000) s2 inner join dim_project_type_temp drc on(drc.type=s2.token);
 
 
 

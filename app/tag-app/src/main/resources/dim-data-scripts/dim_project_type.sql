@@ -1,5 +1,5 @@
-drop table if exists dim_project_type;
-create table dim_project_type
+drop table if exists dim_project_type_temp;
+create table dim_project_type_temp
 (
     project  varchar(100)
     ,type   varchar(100)
@@ -13,13 +13,13 @@ create table dim_project_type
     ,token_name   varchar(100)
     ,recent_code varchar(30)
 );
-truncate table dim_project_type;
-vacuum dim_project_type;
+truncate table dim_project_type_temp;
+vacuum dim_project_type_temp;
 
 -----balance_grade  WEB3_RabbitHole_NFTRecipient_BALANCE_GRADE
 insert
 into
-    dim_project_type (project,
+    dim_project_type_temp (project,
                       "type",
                       label_type,
                       operate_type,
@@ -139,7 +139,7 @@ WHERE web3_action_platform.dim_type='1';
 -----balance_rank  WEB3_RabbitHole_NFTRecipient_BALANCE_RANK
 insert
 into
-    dim_project_type (project,
+    dim_project_type_temp (project,
                       "type",
                       label_type,
                       operate_type,
@@ -258,7 +258,7 @@ WHERE web3_action_platform.dim_type='1';
 -----balance_top  WEB3_RabbitHole_NFTRecipient_BALANCE_TOP
 insert
 into
-    dim_project_type (project,
+    dim_project_type_temp (project,
                       "type",
                       label_type,
                       operate_type,
@@ -377,7 +377,7 @@ WHERE web3_action_platform.dim_type='1';
 -----count  WEB3_RabbitHole_NFTRecipient_ACTIVITY
 insert
 into
-    dim_project_type (project,
+    dim_project_type_temp (project,
                       "type",
                       label_type,
                       operate_type,

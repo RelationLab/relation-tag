@@ -115,7 +115,7 @@ from
                             type,
                             project)
                         a1
-                        inner join dim_project_type a2
+                        inner join dim_project_type_temp a2
                                    on
                                                a1.project = a2.project
                                            and a1.type = a2.type

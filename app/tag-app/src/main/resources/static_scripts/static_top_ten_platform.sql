@@ -40,14 +40,14 @@ from (
                              web3_transaction_record_summary tbvu
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                          where
-                                 project in(select project from dim_project_type) and  balance >=1
+                                 project in(select project from dim_project_type_temp) and  balance >=1
                            and recent_time_code='ALL'
                            and  tbvu.address not in (select address from exclude_address) and tbvu.type='NFT Recipient'
                          group by
                              project)
                          rowtable ) s1
          where
-                 s1.rn <= 100) s2 inner join dim_project_type drc on(drc.project=s2.token);
+                 s1.rn <= 100) s2 inner join dim_project_type_temp drc on(drc.project=s2.token);
 
 
 insert into static_top_ten_platform${tableSuffix}(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','defi','volume');
@@ -272,12 +272,12 @@ from (
                              web3_transaction_record_summary tbvu
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                          where
-                                 project in(select project from dim_project_type) and recent_time_code='ALL'
+                                 project in(select project from dim_project_type_temp) and recent_time_code='ALL'
                            and  tbvu.address not in (select address from exclude_address)
                          and total_transfer_count >0
                          group by
                              project)
                          rowtable ) s1
          where
-                 s1.rn <= 100) s2 inner join dim_project_type drc on(drc.project=s2.token);
+                 s1.rn <= 100) s2 inner join dim_project_type_temp drc on(drc.project=s2.token);
 INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_top_ten_platform${tableSuffix}') as table_name,'${batchDate}'  as batch_date;

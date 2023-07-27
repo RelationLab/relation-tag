@@ -64,7 +64,7 @@ from
             sum(balance) as balance
         from
             web3_transaction_record_summary a1
-                inner join dim_project_type a2
+                inner join dim_project_type_temp a2
                            on
                                        a1.project = a2.project
                                    and a1.type = a2.type
@@ -85,7 +85,7 @@ from
             sum(balance) as balance
         from
             web3_transaction_record_summary a1
-                inner join dim_project_type a2
+                inner join dim_project_type_temp a2
                            on
                                        a2.project = 'ALL'
                                    and a1.type = a2.type
@@ -106,7 +106,7 @@ from
             sum(balance) as balance
         from
             web3_transaction_record_summary a1
-                inner join dim_project_type a2
+                inner join dim_project_type_temp a2
                            on
                                        a2.project = 'ALL'
                                    and a2.type = 'ALL'
@@ -127,7 +127,7 @@ from
             sum(balance) as balance
         from
             web3_transaction_record_summary a1
-                inner join dim_project_type a2
+                inner join dim_project_type_temp a2
                            on
                                        a1.project = a2.project
                                    and a2.type = 'ALL'
