@@ -129,8 +129,8 @@ from (
 where
         address not in (select address from exclude_address);
 
-DROP TABLE if EXISTS  address_label_gp_${tableSuffix};
-create table address_label_gp_${tableSuffix}
+DROP TABLE if EXISTS  address_label_gp_temp_${tableSuffix};
+create table address_label_gp_temp_${tableSuffix}
 (
     "owner" varchar(256) NULL,
     address varchar(512) NULL,
@@ -151,10 +151,10 @@ create table address_label_gp_${tableSuffix}
 ) distributed by (address);
 
 
-truncate table address_label_gp_${tableSuffix};
-vacuum address_label_gp_${tableSuffix};
+truncate table address_label_gp_temp_${tableSuffix};
+vacuum address_label_gp_temp_${tableSuffix};
 
-insert into public.address_label_gp_${tableSuffix}(id,address,label_type,label_name,wired_type,data,updated_at,owner,source,"group",level,category,trade_type,project,asset,bus_type)
+insert into public.address_label_gp_temp_${tableSuffix}(id,address,label_type,label_name,wired_type,data,updated_at,owner,source,"group",level,category,trade_type,project,asset,bus_type)
 select mod(to_number(address,'9999999999'), 50000),address,label_type,label_name,wired_type,round(data,6) as data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset,bus_type from address_label_eth_count_grade  union all
 select mod(to_number(address,'9999999999'), 50000),address,label_type,label_name,wired_type,round(data,6) as data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset,bus_type from address_label_token_project_type_count_grade  union all
 select mod(to_number(address,'9999999999'), 50000),address,label_type,label_name,wired_type,round(data,6) as data,updated_at,'-1' as owner,'SYSTEM' as source ,"group",level,category,trade_type,project,asset,bus_type from address_label_token_project_type_volume_grade  union all
