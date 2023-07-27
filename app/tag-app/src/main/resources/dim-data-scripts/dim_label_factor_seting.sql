@@ -1,8 +1,8 @@
--- public.label_factor_seting definition
+-- public.label_factor_seting_temp definition
 
 -- Drop table
-drop table if exists label_factor_seting;
-CREATE TABLE public.label_factor_seting
+drop table if exists label_factor_seting_temp;
+CREATE TABLE public.label_factor_seting_temp
 (
     dict_code           varchar(100) NULL,
     dict_name           varchar(100) NULL,
@@ -17,13 +17,13 @@ CREATE TABLE public.label_factor_seting
 );
 
 
-INSERT INTO public.label_factor_seting (dict_code,dict_name,dict_type)
+INSERT INTO public.label_factor_seting_temp (dict_code,dict_name,dict_type)
 select platform as dict_code,platform as dict_name,'asset_NFT' as dict_type
 from  nft_sync_address nsa   group by platform;
 
 insert
 into
-    public.label_factor_seting
+    public.label_factor_seting_temp
 (dict_code,
  dict_name,
  parent_id,
@@ -44,7 +44,7 @@ select
 from
     top_token_1000 tt ;
 
-INSERT INTO label_factor_seting (dict_code,dict_name,dict_type)
+INSERT INTO label_factor_seting_temp (dict_code,dict_name,dict_type)
 select (lpt.symbol1||'/'||lpt.symbol2)||  '(' || SUBSTRING(lpt.pool, 1, 8)|| ')' as dict_code,
        lpt.factory_content as dict_name,'asset_LP' as dict_type
 from  (select wlp.name,
