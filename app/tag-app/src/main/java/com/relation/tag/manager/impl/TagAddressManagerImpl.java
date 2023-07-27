@@ -398,56 +398,56 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate, filePath, 1,false,null, false);
 
         /***************erc20_tx_record_from***********/
-        execSql("dim", "erc20_tx_record_from.sql", batchDate, tableDefiPath, 6,true,null, false);
+        execSql("dim", "tabel_defi_erc20_tx_record_from.sql", batchDate, tableDefiPath, 6,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_from.sql", "tabel_defi_erc20_tx_record_from", 1,false);
         /***************erc20_tx_record_to***********/
-        execSql("dim", "erc20_tx_record_to.sql", batchDate, tableDefiPath, 6,true,null, false);
+        execSql("dim", "tabel_defi_erc20_tx_record_to.sql", batchDate, tableDefiPath, 6,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_to.sql", "tabel_defi_erc20_tx_record_to", 1,false);
         execSql("erc20_tx_record", "vol_count_token_holding_vol_count.sql", batchDate, filePath, 18,true,null, false);
         /***************eth_holding_vol_count***********/
-        execSql("dim", "eth_tx_record_from_to.sql", batchDate, tableDefiPath, 6,true,null, false);
+        execSql("dim", "tabel_defi_eth_tx_record_from_to.sql", batchDate, tableDefiPath, 6,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "eth_tx_record_from_to.sql", "tabel_defi_eth_tx_record_from_to", 1,false);
         execSql("eth_tx_record_from_to", "vol_count_eth_holding_vol_count.sql", batchDate, filePath, 9,true,null, false);
         execSql("vol_count", "token_volume_usd.sql", batchDate, filePath, 2,true,null, false);
         execSql("token_volume_usd", "total_volume_usd.sql", batchDate, filePath, 1,false,null, false);
 
         /***************nft_holding***********/
-        execSql("dim", "nft_holding.sql", batchDate, tableDefiPath, 6,true,null, false);
-        execSql("tabel_defi_nft_holding", "nft_holding_middle.sql", batchDate, tableDefiPath, 1,false,null, false);
+        execSql("dim", "tabel_defi_nft_holding.sql", batchDate, tableDefiPath, 6,true,null, false);
+        execSql("tabel_defi_nft_holding", "tabel_defi_nft_holding_middle.sql", batchDate, tableDefiPath, 1,false,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "nft_holding_middle.sql", "tabel_defi_nft_holding_middle", 1,false);
         exceRecentTimeScripts(batchDate, recentTimePath, "nft_holding_record.sql", "nft_holding_middle", 9,true);
         execSql("nft_holding_record", "nft_holding_summary.sql", batchDate, filePath, 9,true,null, false);
         /***************nft_buy_sell_holding***********/
-        execSql("nft_holding_summary", "nft_buy_sell_holding_middle.sql", batchDate, tableDefiPath, 1,false,null, false);
+        execSql("nft_holding_summary", "tabel_defi_nft_buy_sell_holding_middle.sql", batchDate, tableDefiPath, 1,false,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "nft_buy_sell_holding_middle.sql", "tabel_defi_nft_buy_sell_holding_middle", 1,false);
         execSql("nft_buy_sell_holding_middle", "nft_buy_sell_holding.sql", batchDate, filePath, 9,true,null, false);
         execSql("nft_buy_sell_holding", "nft_transfer_holding.sql", batchDate, filePath, 1,false,null, false);
         /***************platform_nft_holding***********/
-        execSql("nft_transfer_holding", "platform_nft_holding_middle.sql", batchDate, tableDefiPath, 1,false,null, false);
+        execSql("nft_transfer_holding", "tabel_defi_platform_nft_holding_middle.sql", batchDate, tableDefiPath, 1,false,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "platform_nft_holding_middle.sql", "tabel_defi_platform_nft_holding_middle", 1,false);
         execSql("platform_nft_holding_middle", "platform_nft_holding.sql", batchDate, filePath, 9,true,null, false);
         execSql("platform_nft_holding", "platform_nft_volume_usd.sql", batchDate, filePath, 1,false,null, false);
         /********************platform_nft_type_volume_count*******************/
-        execSql("platform_nft_volume_usd", "platform_nft_type_volume_count.sql", batchDate, tableDefiPath, 1,false,null, false);
+        execSql("platform_nft_volume_usd", "tabel_defi_platform_nft_type_volume_count.sql", batchDate, tableDefiPath, 1,false,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "platform_nft_type_volume_count.sql", "tabel_defi_platform_nft_type_volume_count", 1,false);
         execSql("platform_nft_type_volume_count", "platform_nft_type_volume_count_summary.sql", batchDate, filePath, 9,true,null, false);
         execSql("platform_nft_type_volume_count_summary", "total_nft_volume_count.sql", batchDate, filePath, 1,false,null, false);
 
         /***************web3_transaction_record_summary***********/
-        execSql("filter", "web3_transaction_record_summary.sql", batchDate, tableDefiPath, 2,true,null, false);
+        execSql("filter", "tabel_defi_web3_transaction_record_summary.sql", batchDate, tableDefiPath, 2,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "web3_transaction_record_summary.sql", "tabel_defi_web3_transaction_record_summary", 1,false);
 
         /***************dex_tx_count_summary***********/
-        execSql("web3_transaction_record_summary", "dex_tx_count_summary.sql", batchDate, tableDefiPath, 9,true,null, false);
+        execSql("web3_transaction_record_summary", "tabel_defi_dex_tx_count_summary.sql", batchDate, tableDefiPath, 9,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_count_summary.sql", "tabel_defi_dex_tx_count_summary", 1,false);
         execSql("dex_tx_count_summary", "total_dex_tx_count_summary.sql", batchDate, filePath, 9,true,null, false);
 
         /***************dex_tx_volume_count_summary***********/
-        execSql("filter", "dex_tx_volume_count_summary_univ3.sql", batchDate, tableDefiPath, 2,true,null, false);
+        execSql("filter", "tabel_defi_dex_tx_volume_count_summary_univ3.sql", batchDate, tableDefiPath, 2,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary_univ3.sql", "tabel_defi_dex_tx_volume_count_summary_univ3", 1,false);
 
         /***************dex_tx_volume_count_summary***********/
-        execSql("dex_tx_volume_count_summary_univ3", "dex_tx_volume_count_summary.sql", batchDate, tableDefiPath, 9,true,null, false);
+        execSql("dex_tx_volume_count_summary_univ3", "tabel_defi_dex_tx_volume_count_summary.sql", batchDate, tableDefiPath, 9,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary.sql", "tabel_defi_dex_tx_volume_count_summary", 1,false);
         execSql("dex_tx_volume_count_summary", "total_dex_tx_volume_count_summary.sql", batchDate, filePath, 9,true,null, false);
 
