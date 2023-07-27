@@ -62,11 +62,11 @@ into
 select distinct
     'RelationTeam' "owner",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_GRADE'  as "type",
-    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_GRADE_' || level_def.level as "name",
+    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_GRADE_' || level_def_temp.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    web3_platform.platform_name_alis||' NFT ' ||level_def.level_name||' Collector' "content",
+    web3_platform.platform_name_alis||' NFT ' ||level_def_temp.level_name||' Collector' "content",
     'SQL' rule_type,
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_GRADE' rule_group,
     'RESULT' value_type,
@@ -86,9 +86,9 @@ from
         select
             *
         from
-            level_def
+            level_def_temp
         where
-                type = 'web3_balance_grade') level_def on
+                type = 'web3_balance_grade') level_def_temp on
         (1 = 1)
 WHERE web3_action_platform.dim_type='1';
 insert
@@ -110,13 +110,13 @@ select distinct
     CASE WHEN  web3_platform.platform_name = 'ALL' THEN 'ALL_WEB3' ELSE web3_platform.platform_name END asset,
     ''  project,
     web3_action.trade_type trade_type,
-    level_def.level  balance,
+    level_def_temp.level  balance,
     '' volume,
     '' activity,
     '' hold_time,
     now() created_at,
-    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_GRADE_'|| level_def.level label_name,
-    web3_platform.platform_name_alis||' NFT ' ||level_def.level_name||' Collector' "content",
+    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_GRADE_'|| level_def_temp.level label_name,
+    web3_platform.platform_name_alis||' NFT ' ||level_def_temp.level_name||' Collector' "content",
     'web3' asset_type,
     'GRADE' label_category,
     'ALL' recent_time_code
@@ -129,9 +129,9 @@ from web3_action_platform
     select
         *
     from
-        level_def
+        level_def_temp
     where
-            type = 'web3_balance_grade') level_def on
+            type = 'web3_balance_grade') level_def_temp on
     (1 = 1)
 WHERE web3_action_platform.dim_type='1';
 
@@ -182,11 +182,11 @@ into
 select distinct
     'RelationTeam' "owner",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK'  as "type",
-    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK_' || level_def.level as "name",
+    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK_' || level_def_temp.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    web3_platform.platform_name_alis||' '||level_def.level_name||' NFT ' ||'Collector' "content",
+    web3_platform.platform_name_alis||' '||level_def_temp.level_name||' NFT ' ||'Collector' "content",
     'SQL' rule_type,
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK' rule_group,
     'RESULT' value_type,
@@ -206,9 +206,9 @@ from
         select
             *
         from
-            level_def
+            level_def_temp
         where
-                type = 'web3_balance_rank') level_def on
+                type = 'web3_balance_rank') level_def_temp on
         (1 = 1)
 WHERE web3_action_platform.dim_type='1';
 insert
@@ -230,13 +230,13 @@ select distinct
     CASE WHEN  web3_platform.platform_name = 'ALL' THEN 'ALL_WEB3' ELSE web3_platform.platform_name END asset,
     ''  project,
     web3_action.trade_type trade_type,
-    level_def.level  balance,
+    level_def_temp.level  balance,
     '' volume,
     '' activity,
     '' hold_time,
     now() created_at,
-    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK_'|| level_def.level label_name,
-    web3_platform.platform_name_alis||' ' ||level_def.level_name||' NFT ' ||'Collector' "content",
+    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_RANK_'|| level_def_temp.level label_name,
+    web3_platform.platform_name_alis||' ' ||level_def_temp.level_name||' NFT ' ||'Collector' "content",
     'web3' asset_type,
     'RANK' label_category,
     'ALL' recent_time_code
@@ -249,9 +249,9 @@ from web3_action_platform
     select
         *
     from
-        level_def
+        level_def_temp
     where
-            type = 'web3_balance_rank') level_def on
+            type = 'web3_balance_rank') level_def_temp on
     (1 = 1)
 WHERE web3_action_platform.dim_type='1';
 
@@ -301,11 +301,11 @@ into
 select distinct
     'RelationTeam' "owner",
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_TOP'  as "type",
-    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_TOP_' || level_def.level as "name",
+    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_TOP_' || level_def_temp.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    web3_platform.platform_name_alis || ' ' || level_def.level_name || ' NFT'||' Collector' "content",
+    web3_platform.platform_name_alis || ' ' || level_def_temp.level_name || ' NFT'||' Collector' "content",
     'SQL' rule_type,
     'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_TOP' rule_group,
     'RESULT' value_type,
@@ -325,9 +325,9 @@ from
         select
             *
         from
-            level_def
+            level_def_temp
         where
-                type = 'web3_balance_top') level_def on
+                type = 'web3_balance_top') level_def_temp on
         (1 = 1)
 WHERE web3_action_platform.dim_type='1';
 insert
@@ -349,13 +349,13 @@ select distinct
     CASE WHEN  web3_platform.platform_name = 'ALL' THEN 'ALL_WEB3' ELSE web3_platform.platform_name END asset,
     ''  project,
     web3_action.trade_type trade_type,
-    level_def.level  balance,
+    level_def_temp.level  balance,
     '' volume,
     '' activity,
     '' hold_time,
     now() created_at,
-    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_TOP_'|| level_def.level label_name,
-    web3_platform.platform_name_alis ||' '||level_def.level_name||' NFT'||' Collector' "content",
+    'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_BALANCE_TOP_'|| level_def_temp.level label_name,
+    web3_platform.platform_name_alis ||' '||level_def_temp.level_name||' NFT'||' Collector' "content",
     'web3' asset_type,
     'TOP' label_category,
     'ALL' recent_time_code
@@ -368,9 +368,9 @@ from web3_action_platform
     select
         *
     from
-        level_def
+        level_def_temp
     where
-            type = 'web3_balance_top') level_def on
+            type = 'web3_balance_top') level_def_temp on
     (1 = 1)
 WHERE web3_action_platform.dim_type='1';
 
@@ -422,11 +422,11 @@ into
 select distinct
     'RelationTeam' "owner",
     recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY'  as "type",
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY_' || level_def.level as "name",
+    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY_' || level_def_temp.level as "name",
     'SYSTEM' "source",
     'PUBLIC' visible_type,
     'TOTAL_PART' strategy,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) || web3_platform.platform_name_alis||'  ' ||level_def.level_name "content",
+    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) || web3_platform.platform_name_alis||'  ' ||level_def_temp.level_name "content",
     'SQL' rule_type,
     recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY' rule_group,
     'RESULT' value_type,
@@ -446,9 +446,9 @@ from
         select
             *
         from
-            level_def
+            level_def_temp
         where
-                type = 'web3_count') level_def on
+                type = 'web3_count') level_def_temp on
         (1 = 1) inner join recent_time on(1=1);
 insert
 into
@@ -471,11 +471,11 @@ select distinct
     web3_action.trade_type trade_type,
     '' balance,
     '' volume,
-    level_def.level  activity,
+    level_def_temp.level  activity,
     '' hold_time,
     now() created_at,
-    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY_'|| level_def.level label_name,
-    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||web3_platform.platform_name_alis||'  ' ||level_def.level_name "content",
+    recent_time.recent_time_name||(case when recent_time.recent_time_name<>'' then '_' else '' end) ||'WEB3_' ||web3_platform.platform_name || '_' || web3_action.trade_type_name || '_ACTIVITY_'|| level_def_temp.level label_name,
+    recent_time.recent_time_content||(case when recent_time.recent_time_content<>'' then ' ' else '' end) ||web3_platform.platform_name_alis||'  ' ||level_def_temp.level_name "content",
     'web3' asset_type,
     'GRADE' label_category,
     recent_time_code
@@ -488,8 +488,8 @@ from web3_action_platform
     select
         *
     from
-        level_def
+        level_def_temp
     where
-            type = 'web3_count') level_def on
+            type = 'web3_count') level_def_temp on
     (1 = 1) inner join recent_time on(1=1);
 insert into tag_result(table_name,batch_date)  SELECT 'dim_project_type' as table_name,'${batchDate}'  as batch_date;

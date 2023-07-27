@@ -17,8 +17,8 @@ into
                   platform_name)
 select
     platform_nft_tx_record.token,
-    mp_nft_platform.platform,
-    mp_nft_platform.platform_name_alis
+    mp_nft_platform_temp.platform,
+    mp_nft_platform_temp.platform_name_alis
 from
     (
         select
@@ -45,12 +45,12 @@ from
         from
             platform_bid_tx_record
     ) platform_nft_tx_record
-        inner join mp_nft_platform on
-        (platform_nft_tx_record.platform_address = mp_nft_platform.platform)
+        inner join mp_nft_platform_temp on
+        (platform_nft_tx_record.platform_address = mp_nft_platform_temp.platform)
 group by
     platform_nft_tx_record.token,
-    mp_nft_platform.platform,
-    mp_nft_platform.platform_name_alis;
+    mp_nft_platform_temp.platform,
+    mp_nft_platform_temp.platform_name_alis;
 
 delete from nft_sync_address where address='0x0000000000a39bb272e79075ade125fd351887ac' and (platform='Blur' or platform='Blur Pool Token') and "type"='ERC721';
 insert into nft_sync_address (id,	address ,platform ,"type")

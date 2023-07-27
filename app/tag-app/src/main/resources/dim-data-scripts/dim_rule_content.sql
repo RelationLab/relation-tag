@@ -84,11 +84,11 @@ select distinct 'RelationTeam'                                                  
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
                 ')' || '_BALANCE_GRADE'                     as                            "type",
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_GRADE_' || level_def.level as                            "name",
+                ')' || '_BALANCE_GRADE_' || level_def_temp.level as                            "name",
                 'SYSTEM'                                                                  "source",
                 'PUBLIC'                                                                  visible_type,
                 'TOTAL_PART'                                                              strategy,
-                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def.level_name "content",
+                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def_temp.level_name "content",
                 'SQL'                                                                     rule_type,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
                 ')' || '_BALANCE_GRADE'                                                   rule_group,
@@ -125,8 +125,8 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join (select *
-                     from level_def
-                     where type = 'defi_balance_grade') level_def on
+                     from level_def_temp
+                     where type = 'defi_balance_grade') level_def_temp on
     (1 = 1);
 insert
 into public.combination_temp (asset,
@@ -145,14 +145,14 @@ into public.combination_temp (asset,
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
-                level_def.level                                                                balance,
+                level_def_temp.level                                                                balance,
                 ''                                                                             volume,
                 ''                                                                             activity,
                 ''                                                                             hold_time,
                 now()                                                                          created_at,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_GRADE_' || level_def.level                                    label_name,
-                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def.level_name      "content",
+                ')' || '_BALANCE_GRADE_' || level_def_temp.level                                    label_name,
+                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def_temp.level_name      "content",
                 'token'                                                                        asset_type,
                 'GRADE'                                                                        label_category,
                 'ALL' recent_time_code
@@ -182,8 +182,8 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join (select *
-                     from level_def
-                     where type = 'defi_balance_grade') level_def on
+                     from level_def_temp
+                     where type = 'defi_balance_grade') level_def_temp on
     (1 = 1);
 
 
@@ -248,11 +248,11 @@ select distinct 'RelationTeam'                                                  
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
                 ')' || '_BALANCE_RANK'                     as                             "type",
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_RANK_' || level_def.level as                             "name",
+                ')' || '_BALANCE_RANK_' || level_def_temp.level as                             "name",
                 'SYSTEM'                                                                  "source",
                 'PUBLIC'                                                                  visible_type,
                 'TOTAL_PART'                                                              strategy,
-                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def.level_name "content",
+                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def_temp.level_name "content",
                 'SQL'                                                                     rule_type,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
                 ')' || '_BALANCE_RANK'                                                    rule_group,
@@ -289,8 +289,8 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join (select *
-                     from level_def
-                     where type = 'defi_balance_rank') level_def on
+                     from level_def_temp
+                     where type = 'defi_balance_rank') level_def_temp on
     (1 = 1);
 insert
 into public.combination_temp (asset,
@@ -309,14 +309,14 @@ into public.combination_temp (asset,
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
-                level_def.level                                                                balance,
+                level_def_temp.level                                                                balance,
                 ''                                                                             volume,
                 ''                                                                             activity,
                 ''                                                                             hold_time,
                 now()                                                                          created_at,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_RANK_' || level_def.level                                     label_name,
-                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def.level_name      "content",
+                ')' || '_BALANCE_RANK_' || level_def_temp.level                                     label_name,
+                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def_temp.level_name      "content",
                 'token'                                                                        asset_type,
                 'RANK'                                                                         label_category,
                 'ALL' recent_time_code
@@ -346,8 +346,8 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join (select *
-                     from level_def
-                     where type = 'defi_balance_rank') level_def on
+                     from level_def_temp
+                     where type = 'defi_balance_rank') level_def_temp on
     (1 = 1);
 
 -----balance_top  Uniswap_v3_UNI/WETH_0x1d42_BALANCE_TOP
@@ -411,11 +411,11 @@ select distinct 'RelationTeam'                                                  
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
                 ')' || '_BALANCE_TOP'                     as                              "type",
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_TOP_' || level_def.level as                              "name",
+                ')' || '_BALANCE_TOP_' || level_def_temp.level as                              "name",
                 'SYSTEM'                                                                  "source",
                 'PUBLIC'                                                                  visible_type,
                 'TOTAL_PART'                                                              strategy,
-                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def.level_name "content",
+                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def_temp.level_name "content",
                 'SQL'                                                                     rule_type,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
                 ')' || '_BALANCE_TOP'                                                     rule_group,
@@ -452,8 +452,8 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join (select *
-                     from level_def
-                     where type = 'defi_balance_top') level_def on
+                     from level_def_temp
+                     where type = 'defi_balance_top') level_def_temp on
     (1 = 1);
 insert
 into public.combination_temp (asset,
@@ -472,14 +472,14 @@ into public.combination_temp (asset,
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
-                level_def.level                                                                balance,
+                level_def_temp.level                                                                balance,
                 ''                                                                             volume,
                 ''                                                                             activity,
                 ''                                                                             hold_time,
                 now()                                                                          created_at,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_TOP_' || level_def.level                                      label_name,
-                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def.level_name      "content",
+                ')' || '_BALANCE_TOP_' || level_def_temp.level                                      label_name,
+                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def_temp.level_name      "content",
                 'token'                                                                        asset_type,
                 'TOP'                                                                          label_category,
                 'ALL' recent_time_code
@@ -509,8 +509,8 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join (select *
-                     from level_def
-                     where type = 'defi_balance_top') level_def on
+                     from level_def_temp
+                     where type = 'defi_balance_top') level_def_temp on
     (1 = 1);
 
 
@@ -582,13 +582,13 @@ select distinct 'RelationTeam'                              "owner",
                 ')' || '_ACTIVITY'                     as   "type",
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_ACTIVITY_' || level_def.level as   "name",
+                ')' || '_ACTIVITY_' || level_def_temp.level as   "name",
                 'SYSTEM'                                    "source",
                 'PUBLIC'                                    visible_type,
                 'TOTAL_PART'                                strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || lpt.factory_content || ' ' ||
-                symbol_wired || ' ' || level_def.level_name "content",
+                symbol_wired || ' ' || level_def_temp.level_name "content",
                 'SQL'                                       rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
@@ -627,8 +627,8 @@ from (select wlp.name,
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join recent_time on (1 = 1)
          inner join (select *
-                     from level_def
-                     where type = 'defi_count') level_def on
+                     from level_def_temp
+                     where type = 'defi_count') level_def_temp on
     (1 = 1);
 insert
 into public.combination_temp (asset,
@@ -649,15 +649,15 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 ''                                                                             trade_type,
                 ''                                                                             balance,
                 ''                                                                             volume,
-                level_def.level                                                                activity,
+                level_def_temp.level                                                                activity,
                 ''                                                                             hold_time,
                 now()                                                                          created_at,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_ACTIVITY_' || level_def.level                                         label_name,
+                ')' || '_ACTIVITY_' || level_def_temp.level                                         label_name,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || lpt.factory_content || ' ' ||
-                symbol_wired || ' ' || level_def.level_name                                    "content",
+                symbol_wired || ' ' || level_def_temp.level_name                                    "content",
                 'token'                                                                        asset_type,
                 'GRADE'                                                                        label_category,
                 recent_time_code
@@ -688,8 +688,8 @@ from (select wlp.name,
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join recent_time on (1 = 1)
          inner join (select *
-                     from level_def
-                     where type = 'defi_count') level_def on
+                     from level_def_temp
+                     where type = 'defi_count') level_def_temp on
     (1 = 1);
 
 -----volume_grade  Uniswap_v3_UNI/WETH_0x1d42_VOLUME_GRADE
@@ -760,16 +760,16 @@ select distinct 'RelationTeam'                                                  
                 ')' || '_VOLUME_GRADE'                     as                    "type",
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_VOLUME_GRADE_' || level_def.level as                    "name",
+                ')' || '_VOLUME_GRADE_' || level_def_temp.level as                    "name",
                 'SYSTEM'                                                         "source",
                 'PUBLIC'                                                         visible_type,
                 'TOTAL_PART'                                                     strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || lpt.factory_content || ' ' ||
                 symbol_wired || ' ' || (case
-                                            when level_def.level = 'Million' or level_def.level = 'Billion'
-                                                then level_def.level || ' '
-                                            else '' end) || level_def.level_name "content",
+                                            when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
+                                                then level_def_temp.level || ' '
+                                            else '' end) || level_def_temp.level_name "content",
                 'SQL'                                                            rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
@@ -807,8 +807,8 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join (select *
-                     from level_def
-                     where type = 'defi_volume_grade') level_def on
+                     from level_def_temp
+                     where type = 'defi_volume_grade') level_def_temp on
     (1 = 1)
          inner join recent_time on (1 = 1);
 insert
@@ -829,19 +829,19 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
                 ''                                                                             balance,
-                level_def.level                                                                volume,
+                level_def_temp.level                                                                volume,
                 ''                                                                             activity,
                 ''                                                                             hold_time,
                 now()                                                                          created_at,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_VOLUME_GRADE_' || level_def.level                                     label_name,
+                ')' || '_VOLUME_GRADE_' || level_def_temp.level                                     label_name,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || lpt.factory_content || ' ' ||
                 symbol_wired || ' ' || (case
-                                            when level_def.level = 'Million' or level_def.level = 'Billion'
-                                                then level_def.level || ' '
-                                            else '' end) || level_def.level_name               "content",
+                                            when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
+                                                then level_def_temp.level || ' '
+                                            else '' end) || level_def_temp.level_name               "content",
                 'token'                                                                        asset_type,
                 'GRADE'                                                                        label_category,
                 recent_time_code
@@ -871,8 +871,8 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join (select *
-                     from level_def
-                     where type = 'defi_volume_grade') level_def on
+                     from level_def_temp
+                     where type = 'defi_volume_grade') level_def_temp on
     (1 = 1)
          inner join recent_time on (1 = 1);
 
@@ -944,16 +944,16 @@ select distinct 'RelationTeam'                                                  
                 ')' || '_VOLUME_RANK'                     as                     "type",
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_VOLUME_RANK_' || level_def.level as                     "name",
+                ')' || '_VOLUME_RANK_' || level_def_temp.level as                     "name",
                 'SYSTEM'                                                         "source",
                 'PUBLIC'                                                         visible_type,
                 'TOTAL_PART'                                                     strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || lpt.factory_content || ' ' ||
                 symbol_wired || ' ' || (case
-                                            when level_def.level = 'Million' or level_def.level = 'Billion'
-                                                then level_def.level || ' '
-                                            else '' end) || level_def.level_name "content",
+                                            when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
+                                                then level_def_temp.level || ' '
+                                            else '' end) || level_def_temp.level_name "content",
                 'SQL'                                                            rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
@@ -991,8 +991,8 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join (select *
-                     from level_def
-                     where type = 'token_volume_rank') level_def on
+                     from level_def_temp
+                     where type = 'token_volume_rank') level_def_temp on
     (1 = 1)
          inner join recent_time on (1 = 1);
 insert
@@ -1013,19 +1013,19 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
                 ''                                                                             balance,
-                level_def.level                                                                volume,
+                level_def_temp.level                                                                volume,
                 ''                                                                             activity,
                 ''                                                                             hold_time,
                 now()                                                                          created_at,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_VOLUME_RANK_' || level_def.level                                      label_name,
+                ')' || '_VOLUME_RANK_' || level_def_temp.level                                      label_name,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || lpt.factory_content || ' ' ||
                 symbol_wired || ' ' || (case
-                                            when level_def.level = 'Million' or level_def.level = 'Billion'
-                                                then level_def.level || ' '
-                                            else '' end) || level_def.level_name               "content",
+                                            when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
+                                                then level_def_temp.level || ' '
+                                            else '' end) || level_def_temp.level_name               "content",
                 'token'                                                                        asset_type,
                 'RANK'                                                                         label_category,
                 'ALL' recent_time_code
@@ -1055,8 +1055,8 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name)
          inner join (select *
-                     from level_def
-                     where type = 'token_volume_rank') level_def on
+                     from level_def_temp
+                     where type = 'token_volume_rank') level_def_temp on
     (1 = 1)
          inner join recent_time on (1 = 1);
 
@@ -1101,11 +1101,11 @@ into public."label_temp" ("owner",
 select distinct 'RelationTeam'                                                                            "owner",
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_GRADE' as "type",
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_GRADE_' ||
-                level_def.level                                                                        as "name",
+                level_def_temp.level                                                                        as "name",
                 'SYSTEM'                                                                                  "source",
                 'PUBLIC'                                                                                  visible_type,
                 'TOTAL_PART'                                                                              strategy,
-                t.symbol || ' ' || level_def.level_name                                                   "content",
+                t.symbol || ' ' || level_def_temp.level_name                                                   "content",
                 'SQL'                                                                                     rule_type,
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_GRADE'    rule_group,
                 'RESULT'                                                                                  value_type,
@@ -1117,8 +1117,8 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                                 sync_es_status
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_balance_grade') level_def on
+                     from level_def_temp
+                     where type = 'defi_balance_grade') level_def_temp on
     (1 = 1)
 where holders >= 100
   and removed <> 'true';
@@ -1139,21 +1139,21 @@ into public.combination_temp (asset,
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
-                level_def.level                                      balance,
+                level_def_temp.level                                      balance,
                 ''                                                   volume,
                 ''                                                   activity,
                 ''                                                   hold_time,
                 now()                                                created_at,
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_GRADE_' ||
-                level_def.level                                      label_name,
-                t.symbol || ' ' || level_def.level_name              "content",
+                level_def_temp.level                                      label_name,
+                t.symbol || ' ' || level_def_temp.level_name              "content",
                 'token'                                              asset_type,
                 'GRADE'                                              label_category,
                 'ALL' recent_time_code
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_balance_grade') level_def on
+                     from level_def_temp
+                     where type = 'defi_balance_grade') level_def_temp on
     (1 = 1)
 where holders >= 100
   and removed <> 'true';
@@ -1191,11 +1191,11 @@ into public."label_temp" ("owner",
                      sync_es_status)
 select distinct 'RelationTeam'                                                       "owner",
                 'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_GRADE'                     as "type",
-                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_GRADE_' || level_def.level as "name",
+                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_GRADE_' || level_def_temp.level as "name",
                 'SYSTEM'                                                             "source",
                 'PUBLIC'                                                             visible_type,
                 'TOTAL_PART'                                                         strategy,
-                'Token ' || level_def.level_name                                     "content",
+                'Token ' || level_def_temp.level_name                                     "content",
                 'SQL'                                                                rule_type,
                 'ALL' || '_BALANCE_GRADE'                                            rule_group,
                 'RESULT'                                                             value_type,
@@ -1205,7 +1205,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                               wired_type,
                 999                                                                  label_order,
                 'WAITING'                                                            sync_es_status
-from level_def
+from level_def_temp
 where type = 'defi_balance_grade';
 insert
 into public.combination_temp (asset,
@@ -1224,17 +1224,17 @@ into public.combination_temp (asset,
 select distinct 'ALL_TOKEN'                                                       asset,
                 ''                                                                project,
                 ''                                                                trade_type,
-                level_def.level                                                   balance,
+                level_def_temp.level                                                   balance,
                 ''                                                                volume,
                 ''                                                                activity,
                 ''                                                                hold_time,
                 now()                                                             created_at,
-                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_GRADE_' || level_def.level label_name,
-                'Token ' || level_def.level_name                                  "content",
+                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_GRADE_' || level_def_temp.level label_name,
+                'Token ' || level_def_temp.level_name                                  "content",
                 'token'                                                           asset_type,
                 'GRADE'                                                           label_category,
                 'ALL' recent_time_code
-from level_def
+from level_def_temp
 where type = 'defi_balance_grade';
 
 
@@ -1278,11 +1278,11 @@ into public."label_temp" ("owner",
 select distinct 'RelationTeam'                                                                           "owner",
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_RANK' as "type",
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_RANK_' ||
-                level_def.level                                                                       as "name",
+                level_def_temp.level                                                                       as "name",
                 'SYSTEM'                                                                                 "source",
                 'PUBLIC'                                                                                 visible_type,
                 'TOTAL_PART'                                                                             strategy,
-                t.symbol || ' ' || level_def.level_name                                                  "content",
+                t.symbol || ' ' || level_def_temp.level_name                                                  "content",
                 'SQL'                                                                                    rule_type,
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_RANK'    rule_group,
                 'RESULT'                                                                                 value_type,
@@ -1294,8 +1294,8 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                                sync_es_status
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_balance_rank') level_def on
+                     from level_def_temp
+                     where type = 'defi_balance_rank') level_def_temp on
     (1 = 1)
 where holders >= 100
   and removed <> 'true';
@@ -1316,21 +1316,21 @@ into public.combination_temp (asset,
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
-                level_def.level                                      balance,
+                level_def_temp.level                                      balance,
                 ''                                                   volume,
                 ''                                                   activity,
                 ''                                                   hold_time,
                 now()                                                created_at,
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_RANK_' ||
-                level_def.level                                      label_name,
-                t.symbol || ' ' || level_def.level_name              "content",
+                level_def_temp.level                                      label_name,
+                t.symbol || ' ' || level_def_temp.level_name              "content",
                 'token'                                              asset_type,
                 'RANK'                                               label_category,
                 'ALL' recent_time_code
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_balance_rank') level_def on
+                     from level_def_temp
+                     where type = 'defi_balance_rank') level_def_temp on
     (1 = 1)
 where holders >= 100
   and removed <> 'true';
@@ -1368,11 +1368,11 @@ into public."label_temp" ("owner",
                      sync_es_status)
 select distinct 'RelationTeam'                                                      "owner",
                 'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_RANK'                     as "type",
-                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_RANK_' || level_def.level as "name",
+                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_RANK_' || level_def_temp.level as "name",
                 'SYSTEM'                                                            "source",
                 'PUBLIC'                                                            visible_type,
                 'TOTAL_PART'                                                        strategy,
-                'Token ' || level_def.level_name                                    "content",
+                'Token ' || level_def_temp.level_name                                    "content",
                 'SQL'                                                               rule_type,
                 'ALL' || '_BALANCE_RANK'                                            rule_group,
                 'RESULT'                                                            value_type,
@@ -1382,7 +1382,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                              wired_type,
                 999                                                                 label_order,
                 'WAITING'                                                           sync_es_status
-from level_def
+from level_def_temp
 where type = 'defi_balance_rank';
 insert
 into public.combination_temp (asset,
@@ -1401,17 +1401,17 @@ into public.combination_temp (asset,
 select distinct 'ALL_TOKEN'                                                      asset,
                 ''                                                               project,
                 ''                                                               trade_type,
-                level_def.level                                                  balance,
+                level_def_temp.level                                                  balance,
                 ''                                                               volume,
                 ''                                                               activity,
                 ''                                                               hold_time,
                 now()                                                            created_at,
-                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_RANK_' || level_def.level label_name,
-                'Token ' || level_def.level_name                                 "content",
+                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_RANK_' || level_def_temp.level label_name,
+                'Token ' || level_def_temp.level_name                                 "content",
                 'token'                                                          asset_type,
                 'RANK'                                                           label_category,
                 'ALL' recent_time_code
-from level_def
+from level_def_temp
 where type = 'defi_balance_rank';
 
 
@@ -1455,11 +1455,11 @@ into public."label_temp" ("owner",
 select distinct 'RelationTeam'                                                                          "owner",
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_TOP' as "type",
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_TOP_' ||
-                level_def.level                                                                      as "name",
+                level_def_temp.level                                                                      as "name",
                 'SYSTEM'                                                                                "source",
                 'PUBLIC'                                                                                visible_type,
                 'TOTAL_PART'                                                                            strategy,
-                t.symbol || ' ' || level_def.level_name                                                 "content",
+                t.symbol || ' ' || level_def_temp.level_name                                                 "content",
                 'SQL'                                                                                   rule_type,
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_TOP'    rule_group,
                 'RESULT'                                                                                value_type,
@@ -1471,8 +1471,8 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                               sync_es_status
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_balance_top') level_def on
+                     from level_def_temp
+                     where type = 'defi_balance_top') level_def_temp on
     (1 = 1)
 where holders >= 100
   and removed <> 'true';
@@ -1493,21 +1493,21 @@ into public.combination_temp (asset,
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
-                level_def.level                                      balance,
+                level_def_temp.level                                      balance,
                 ''                                                   volume,
                 ''                                                   activity,
                 ''                                                   hold_time,
                 now()                                                created_at,
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_TOP_' ||
-                level_def.level                                      label_name,
-                t.symbol || ' ' || level_def.level_name              "content",
+                level_def_temp.level                                      label_name,
+                t.symbol || ' ' || level_def_temp.level_name              "content",
                 'token'                                              asset_type,
                 'TOP'                                                label_category,
                 'ALL' recent_time_code
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_balance_top') level_def on
+                     from level_def_temp
+                     where type = 'defi_balance_top') level_def_temp on
     (1 = 1)
 where holders >= 100
   and removed <> 'true';
@@ -1545,11 +1545,11 @@ into public."label_temp" ("owner",
                      sync_es_status)
 select distinct 'RelationTeam'                                                     "owner",
                 'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_TOP'                     as "type",
-                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_TOP_' || level_def.level as "name",
+                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_TOP_' || level_def_temp.level as "name",
                 'SYSTEM'                                                           "source",
                 'PUBLIC'                                                           visible_type,
                 'TOTAL_PART'                                                       strategy,
-                'Token ' || level_def.level_name                                   "content",
+                'Token ' || level_def_temp.level_name                                   "content",
                 'SQL'                                                              rule_type,
                 'ALL' || '_BALANCE_TOP'                                            rule_group,
                 'RESULT'                                                           value_type,
@@ -1559,7 +1559,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                             wired_type,
                 999                                                                label_order,
                 'WAITING'                                                          sync_es_status
-from level_def
+from level_def_temp
 where type = 'defi_balance_top';
 insert
 into public.combination_temp (asset,
@@ -1578,17 +1578,17 @@ into public.combination_temp (asset,
 select distinct 'ALL_TOKEN'                                                     asset,
                 ''                                                              project,
                 ''                                                              trade_type,
-                level_def.level                                                 balance,
+                level_def_temp.level                                                 balance,
                 ''                                                              volume,
                 ''                                                              activity,
                 ''                                                              hold_time,
                 now()                                                           created_at,
-                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_TOP_' || level_def.level label_name,
-                'Token ' || level_def.level_name                                "content",
+                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_TOP_' || level_def_temp.level label_name,
+                'Token ' || level_def_temp.level_name                                "content",
                 'token'                                                         asset_type,
                 'TOP'                                                           label_category,
                 'ALL' recent_time_code
-from level_def
+from level_def_temp
 where type = 'defi_balance_top';
 
 
@@ -1639,13 +1639,13 @@ select distinct 'RelationTeam'                                                  
                 '_ALL_ACTIVITY'                                                                                       as "type",
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_ACTIVITY_' ||
-                level_def.level                                                                                       as "name",
+                level_def_temp.level                                                                                       as "name",
                 'SYSTEM'                                                                                                 "source",
                 'PUBLIC'                                                                                                 visible_type,
                 'TOTAL_PART'                                                                                             strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || t.symbol || ' ' ||
-                level_def.level_name                                                                                     "content",
+                level_def_temp.level_name                                                                                     "content",
                 'SQL'                                                                                                    rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' ||
@@ -1659,8 +1659,8 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                                                sync_es_status
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_count') level_def on
+                     from level_def_temp
+                     where type = 'defi_count') level_def_temp on
     (1 = 1)
          inner join recent_time on (1 = 1)
 where holders >= 100
@@ -1684,22 +1684,22 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   trade_type,
                 ''                                                   balance,
                 ''                                                   volume,
-                level_def.level                                      activity,
+                level_def_temp.level                                      activity,
                 ''                                                   hold_time,
                 now()                                                created_at,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_ACTIVITY_' ||
-                level_def.level                                      label_name,
+                level_def_temp.level                                      label_name,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || t.symbol || ' ' ||
-                level_def.level_name                                 "content",
+                level_def_temp.level_name                                 "content",
                 'token'                                              asset_type,
                 'GRADE'                                              label_category,
                 recent_time_code
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_count') level_def on
+                     from level_def_temp
+                     where type = 'defi_count') level_def_temp on
     (1 = 1)
          inner join recent_time on (1 = 1)
 where holders >= 100
@@ -1745,13 +1745,13 @@ select distinct 'RelationTeam'                                                  
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || 'ALL_' || 'ALL' || '_ACTIVITY'                     as "type",
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || 'ALL' || '_ACTIVITY_' || level_def.level as "name",
+                'ALL_' || 'ALL_' || 'ALL' || '_ACTIVITY_' || level_def_temp.level as "name",
                 'SYSTEM'                                                        "source",
                 'PUBLIC'                                                        visible_type,
                 'TOTAL_PART'                                                    strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'Token ' ||
-                level_def.level_name                                            "content",
+                level_def_temp.level_name                                            "content",
                 'SQL'                                                           rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL' || '_ACTIVITY'                                            rule_group,
@@ -1762,7 +1762,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                          wired_type,
                 999                                                             label_order,
                 'WAITING'                                                       sync_es_status
-from level_def
+from level_def_temp
          inner join recent_time on (1 = 1)
 where type = 'defi_count';
 insert
@@ -1784,18 +1784,18 @@ select distinct 'ALL_TOKEN'                                                  ass
                 ''                                                           trade_type,
                 ''                                                           balance,
                 ''                                                           volume,
-                level_def.level                                              activity,
+                level_def_temp.level                                              activity,
                 ''                                                           hold_time,
                 now()                                                        created_at,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || 'ALL' || '_ACTIVITY_' || level_def.level label_name,
+                'ALL_' || 'ALL_' || 'ALL' || '_ACTIVITY_' || level_def_temp.level label_name,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'Token ' ||
-                level_def.level_name                                         "content",
+                level_def_temp.level_name                                         "content",
                 'token'                                                      asset_type,
                 'GRADE'                                                      label_category,
                 recent_time_code
-from level_def
+from level_def_temp
          inner join recent_time on (1 = 1)
 where type = 'defi_count';
 
@@ -1840,11 +1840,11 @@ select distinct 'RelationTeam'                                                  
                 t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' ||
                 '_HOLDING_TIME_GRADE'                                                                             as "type",
                 t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_HOLDING_TIME_GRADE_' ||
-                level_def.level                                                                                   as "name",
+                level_def_temp.level                                                                                   as "name",
                 'SYSTEM'                                                                                             "source",
                 'PUBLIC'                                                                                             visible_type,
                 'TOTAL_PART'                                                                                         strategy,
-                t.symbol || ' ' || level_def.level_name                                                              "content",
+                t.symbol || ' ' || level_def_temp.level_name                                                              "content",
                 'SQL'                                                                                                rule_type,
                 t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' ||
                 '_HOLDING_TIME_GRADE'                                                                                rule_group,
@@ -1857,8 +1857,8 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                                            sync_es_status
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_time_grade') level_def on
+                     from level_def_temp
+                     where type = 'defi_time_grade') level_def_temp on
     (1 = 1)
 where holders >= 100
   and removed <> 'true';
@@ -1882,18 +1882,18 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   balance,
                 ''                                                   volume,
                 ''                                                   activity,
-                level_def.level                                      hold_time,
+                level_def_temp.level                                      hold_time,
                 now()                                                created_at,
                 t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_HOLDING_TIME_GRADE_' ||
-                level_def.level                                      label_name,
-                t.symbol || ' ' || level_def.level_name              "content",
+                level_def_temp.level                                      label_name,
+                t.symbol || ' ' || level_def_temp.level_name              "content",
                 'token'                                              asset_type,
                 'GRADE'                                              label_category,
                 'ALL' recent_time_code
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_time_grade') level_def on
+                     from level_def_temp
+                     where type = 'defi_time_grade') level_def_temp on
     (1 = 1)
 where holders >= 100
   and removed <> 'true';
@@ -1939,11 +1939,11 @@ select distinct 'RelationTeam'                                                  
                 t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' ||
                 '_HOLDING_TIME_SPECIAL'                                                                             as "type",
                 t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_HOLDING_TIME_SPECIAL_' ||
-                level_def.level                                                                                     as "name",
+                level_def_temp.level                                                                                     as "name",
                 'SYSTEM'                                                                                               "source",
                 'PUBLIC'                                                                                               visible_type,
                 'TOTAL_PART'                                                                                           strategy,
-                t.symbol || ' ' || level_def.level_name                                                                "content",
+                t.symbol || ' ' || level_def_temp.level_name                                                                "content",
                 'SQL'                                                                                                  rule_type,
                 t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' ||
                 '_HOLDING_TIME_SPECIAL'                                                                                rule_group,
@@ -1956,8 +1956,8 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                                              sync_es_status
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_time_special') level_def on
+                     from level_def_temp
+                     where type = 'defi_time_special') level_def_temp on
     (1 = 1)
 where holders >= 100
   and removed <> 'true';
@@ -1981,18 +1981,18 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   balance,
                 ''                                                   volume,
                 ''                                                   activity,
-                level_def.level                                      hold_time,
+                level_def_temp.level                                      hold_time,
                 now()                                                created_at,
                 t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_HOLDING_TIME_SPECIAL_' ||
-                level_def.level                                      label_name,
-                t.symbol || ' ' || level_def.level_name              "content",
+                level_def_temp.level                                      label_name,
+                t.symbol || ' ' || level_def_temp.level_name              "content",
                 'token'                                              asset_type,
                 'SPECIAL'                                            label_category,
                 'ALL' recent_time_code
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_time_special') level_def on
+                     from level_def_temp
+                     where type = 'defi_time_special') level_def_temp on
     (1 = 1)
 where holders >= 100
   and removed <> 'true';
@@ -2043,16 +2043,16 @@ select distinct 'RelationTeam'                                                  
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_VOLUME_GRADE' as "type",
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_VOLUME_GRADE_' ||
-                level_def.level                                                                       as "name",
+                level_def_temp.level                                                                       as "name",
                 'SYSTEM'                                                                                 "source",
                 'PUBLIC'                                                                                 visible_type,
                 'TOTAL_PART'                                                                             strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || t.symbol || (case
-                                                                                                           when level_def.level = 'Million' or level_def.level = 'Billion'
-                                                                                                               then ' ' || level_def.level
+                                                                                                           when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
+                                                                                                               then ' ' || level_def_temp.level
                                                                                                            else '' end) ||
-                ' ' || level_def.level_name                                                              "content",
+                ' ' || level_def_temp.level_name                                                              "content",
                 'SQL'                                                                                    rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_VOLUME_GRADE'    rule_group,
@@ -2065,8 +2065,8 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                                sync_es_status
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_volume_grade') level_def on
+                     from level_def_temp
+                     where type = 'defi_volume_grade') level_def_temp on
     (1 = 1)
          inner join recent_time on (1 = 1)
 where holders >= 100
@@ -2089,26 +2089,26 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
                 ''                                                   balance,
-                level_def.level                                      volume,
+                level_def_temp.level                                      volume,
                 ''                                                   activity,
                 ''                                                   hold_time,
                 now()                                                created_at,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_VOLUME_GRADE_' ||
-                level_def.level                                      label_name,
+                level_def_temp.level                                      label_name,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || t.symbol || (case
-                                                                                                           when level_def.level = 'Million' or level_def.level = 'Billion'
-                                                                                                               then ' ' || level_def.level
+                                                                                                           when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
+                                                                                                               then ' ' || level_def_temp.level
                                                                                                            else '' end) ||
-                ' ' || level_def.level_name                          "content",
+                ' ' || level_def_temp.level_name                          "content",
                 'token'                                              asset_type,
                 'GRADE'                                              label_category,
                 recent_time_code
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'defi_volume_grade') level_def on
+                     from level_def_temp
+                     where type = 'defi_volume_grade') level_def_temp on
     (1 = 1)
          inner join recent_time on (1 = 1)
 where holders >= 100
@@ -2153,16 +2153,16 @@ select distinct 'RelationTeam'                                                  
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_GRADE'                     as "type",
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_GRADE_' || level_def.level as "name",
+                'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_GRADE_' || level_def_temp.level as "name",
                 'SYSTEM'                                                            "source",
                 'PUBLIC'                                                            visible_type,
                 'TOTAL_PART'                                                        strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'Token ' || (case
-                                                                                                           when level_def.level = 'Million' or level_def.level = 'Billion'
-                                                                                                               then level_def.level || ' '
+                                                                                                           when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
+                                                                                                               then level_def_temp.level || ' '
                                                                                                            else '' end) ||
-                level_def.level_name                                                "content",
+                level_def_temp.level_name                                                "content",
                 'SQL'                                                               rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL' || '_VOLUME_GRADE'                                            rule_group,
@@ -2173,7 +2173,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                              wired_type,
                 999                                                                 label_order,
                 'WAITING'                                                           sync_es_status
-from level_def
+from level_def_temp
          inner join recent_time on (1 = 1)
 where type = 'defi_volume_grade';
 insert
@@ -2194,22 +2194,22 @@ select distinct 'ALL_TOKEN'                                                     
                 ''                                                               project,
                 ''                                                               trade_type,
                 ''                                                               balance,
-                level_def.level                                                  volume,
+                level_def_temp.level                                                  volume,
                 ''                                                               activity,
                 ''                                                               hold_time,
                 now()                                                            created_at,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_GRADE_' || level_def.level label_name,
+                'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_GRADE_' || level_def_temp.level label_name,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'Token ' || (case
-                                                                                                           when level_def.level = 'Million' or level_def.level = 'Billion'
-                                                                                                               then level_def.level || ' '
+                                                                                                           when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
+                                                                                                               then level_def_temp.level || ' '
                                                                                                            else '' end) ||
-                level_def.level_name                                             "content",
+                level_def_temp.level_name                                             "content",
                 'token'                                                          asset_type,
                 'GRADE'                                                          label_category,
                 recent_time_code
-from level_def
+from level_def_temp
          inner join recent_time on (1 = 1)
 where type = 'defi_volume_grade';
 
@@ -2259,13 +2259,13 @@ select distinct 'RelationTeam'                                                  
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_VOLUME_RANK' as "type",
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_VOLUME_RANK_' ||
-                level_def.level                                                                      as "name",
+                level_def_temp.level                                                                      as "name",
                 'SYSTEM'                                                                                "source",
                 'PUBLIC'                                                                                visible_type,
                 'TOTAL_PART'                                                                            strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || t.symbol || ' ' ||
-                level_def.level_name                                                                    "content",
+                level_def_temp.level_name                                                                    "content",
                 'SQL'                                                                                   rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_VOLUME_RANK'    rule_group,
@@ -2278,8 +2278,8 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                               sync_es_status
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'token_volume_rank') level_def on
+                     from level_def_temp
+                     where type = 'token_volume_rank') level_def_temp on
     (1 = 1)
          inner join recent_time on (1 = 1)
 where holders >= 100
@@ -2302,23 +2302,23 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' asset,
                 ''                                                   project,
                 ''                                                   trade_type,
                 ''                                                   balance,
-                level_def.level                                      volume,
+                level_def_temp.level                                      volume,
                 ''                                                   activity,
                 ''                                                   hold_time,
                 now()                                                created_at,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_VOLUME_RANK_' ||
-                level_def.level                                      label_name,
+                level_def_temp.level                                      label_name,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || t.symbol || ' ' ||
-                level_def.level_name                                 "content",
+                level_def_temp.level_name                                 "content",
                 'token'                                              asset_type,
                 'RANK'                                               label_category,
                 recent_time_code
 from top_token_1000_temp t
          inner join (select *
-                     from level_def
-                     where type = 'token_volume_rank') level_def on
+                     from level_def_temp
+                     where type = 'token_volume_rank') level_def_temp on
     (1 = 1)
          inner join recent_time on (1 = 1)
 where holders >= 100
@@ -2364,13 +2364,13 @@ select distinct 'RelationTeam'                                                  
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_RANK'                     as "type",
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_RANK_' || level_def.level as "name",
+                'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_RANK_' || level_def_temp.level as "name",
                 'SYSTEM'                                                           "source",
                 'PUBLIC'                                                           visible_type,
                 'TOTAL_PART'                                                       strategy,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'Token ' ||
-                level_def.level_name || ' Trader'                                  "content",
+                level_def_temp.level_name || ' Trader'                                  "content",
                 'SQL'                                                              rule_type,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
                 'ALL' || '_VOLUME_RANK'                                            rule_group,
@@ -2381,7 +2381,7 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                             wired_type,
                 999                                                                label_order,
                 'WAITING'                                                          sync_es_status
-from level_def
+from level_def_temp
          inner join recent_time on (1 = 1)
 where type = 'defi_volume_rank';
 insert
@@ -2402,19 +2402,19 @@ select distinct 'ALL_TOKEN'                                                     
                 ''                                                              project,
                 ''                                                              trade_type,
                 ''                                                              balance,
-                level_def.level                                                 volume,
+                level_def_temp.level                                                 volume,
                 ''                                                              activity,
                 ''                                                              hold_time,
                 now()                                                           created_at,
                 recent_time.recent_time_name || (case when recent_time.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_RANK_' || level_def.level label_name,
+                'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_RANK_' || level_def_temp.level label_name,
                 recent_time.recent_time_content ||
                 (case when recent_time.recent_time_content <> '' then ' ' else '' end) || 'Token ' ||
-                level_def.level_name || ' Trader'                               "content",
+                level_def_temp.level_name || ' Trader'                               "content",
                 'token'                                                         asset_type,
                 'RANK'                                                          label_category,
                 'ALL' recent_time_code
-from level_def
+from level_def_temp
          inner join recent_time on (1 = 1)
 where type = 'defi_volume_rank';
 
