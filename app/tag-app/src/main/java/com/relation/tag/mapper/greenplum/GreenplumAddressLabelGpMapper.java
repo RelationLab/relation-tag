@@ -1,10 +1,7 @@
 package com.relation.tag.mapper.greenplum;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.relation.tag.entity.AddressLabelGp;
-import com.relation.tag.entity.HomeDataAnalysis;
-import com.relation.tag.entity.SuggestAddressBatch;
-import com.relation.tag.entity.UgcLabelDataAnalysis;
+import com.relation.tag.entity.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.boot.extension.mapper.PostgresPageMapper;
 
@@ -35,5 +32,5 @@ public interface GreenplumAddressLabelGpMapper extends BaseMapper<AddressLabelGp
 
     void setSuggestAddressBatchStatus(List<SuggestAddressBatch> list);
 
-    List<String> selectRecentTimeList();
+    List<RecentTime> selectRecentTimeList();
 }

@@ -16,4 +16,4 @@ CREATE TABLE public.dex_tx_volume_count_summary_univ3 (
 ) DISTRIBUTED BY (address,"token",recent_time_code);
 truncate table dex_tx_volume_count_summary_univ3;
 vacuum dex_tx_volume_count_summary_univ3;
-insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_volume_count_summary_univ3' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'tabel_defi_dex_tx_volume_count_summary_univ3' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

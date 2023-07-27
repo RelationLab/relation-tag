@@ -14,21 +14,13 @@ select
     type ,
     project,
     sum(balance) as balance,
-    recent_time_code
+    '${recentTimeCode}' recent_time_code
 from
     web3_transaction_record
-        inner join (
-        select
-            *
-        from
-            recent_time
-        where
-                recent_time.recent_time_code = '${recent_time_code}') recent_time on
-        (web3_transaction_record.block_height >= recent_time.block_height)
+    where web3_transaction_record.block_height >= ${recentTimeBlockHeight}
 group by
     address,
     type ,
-    project,
-    recent_time_code;
-insert into tag_result(table_name,batch_date)  SELECT 'web3_transaction_record_summary_${recent_time_code}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+    project;
+insert into tag_result(table_name,batch_date)  SELECT 'web3_transaction_record_summary_${recentTimeCode}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 

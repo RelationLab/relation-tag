@@ -54,6 +54,6 @@ group by
 
 delete from nft_sync_address where address='0x0000000000a39bb272e79075ade125fd351887ac' and (platform='Blur' or platform='Blur Pool Token') and "type"='ERC721';
 insert into nft_sync_address (id,	address ,platform ,"type")
-select -1,'0x0000000000a39bb272e79075ade125fd351887ac' as address ,'Blur Pool Token' as platform ,'ERC721' as "type";
+select -1,'0x0000000000a39bb272e79075ade125fd351887ac' as address ,'Blur' as platform ,'ERC721' as "type";
 
 insert into tag_result(table_name,batch_date)  SELECT 'nft_platform' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

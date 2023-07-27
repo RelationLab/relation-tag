@@ -13,24 +13,19 @@ insert into nft_buy_sell_holding_middle (address,
             sum(count),
             sum(value),
             max(block_number),
-            recent_time_code
+            '${recentTimeCode}' recent_time_code
      from (select from_address,
                   token,
                   0,
                   0,
                   1 as count,
                   sum(1) as value,
-                  max(block_number) as block_number,
-       recent_time_code
-           from platform_nft_tx_record inner join (select *
-               from recent_time
-               where recent_time.recent_time_code = '${recent_time_code}') recent_time on
-               (platform_nft_tx_record.block_number >= recent_time.block_height)
-           group by from_address, token,hash,
-               recent_time_code
+                  max(block_number) as block_number
+           from platform_nft_tx_record
+           where platform_nft_tx_record.block_number >= ${recentTimeBlockHeight}
+           group by from_address, token,hash
           ) platform_nft_tx_record
-     group by from_address, token,
-              recent_time_code);
+     group by from_address, token);
 
 insert
 into
@@ -51,7 +46,7 @@ into
             0,
             0,
             max(block_number),
-            recent_time_code
+            '${recentTimeCode}' recent_time_code
         from
             (
                 select
@@ -61,28 +56,18 @@ into
 			sum(1) as value,
 			0,
 			0,
-			max(block_number) as block_number,
-			recent_time_code
+			max(block_number) as block_number 
                 from
-                    platform_nft_tx_record inner join (
-                    select
-                    *
-                    from
-                    recent_time
-                    where
-                    recent_time.recent_time_code = '${recent_time_code}') recent_time on
-                    (platform_nft_tx_record.block_number >= recent_time.block_height)
+                    platform_nft_tx_record where platform_nft_tx_record.block_number >= ${recentTimeBlockHeight}
                 group by
                     to_address,
                     token,
-                    hash,
-                    recent_time_code) platform_nft_tx_record
+                    hash) platform_nft_tx_record
 
         group by
             to_address,
-            token,
-            recent_time_code);
+            token);
 insert into tag_result(table_name,batch_date)
-SELECT 'nft_buy_sell_holding_middle_${recent_time_code}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+SELECT 'nft_buy_sell_holding_middle_${recentTimeCode}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
 

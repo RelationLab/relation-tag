@@ -8,7 +8,7 @@ insert into platform_nft_type_volume_count(recent_time_code,
                                            type,
                                            volume_usd,
                                            transfer_count)
-select recent_time.recent_time_code,
+select  '${recentTimeCode}' recent_time_code,
        pdwtr."operator"                                                                             as address,
        'Blur.io: Marketplace'                                                                       as platform_group,
        '0x00000000006c3852cbef3e08e8df289169ede581'                                                 as platform,
@@ -24,15 +24,11 @@ from platform_deposit_withdraw_tx_record pdwtr
                      from nft_sync_address nsa
                      where type = 'ERC721') nft_sync_address on
     (pdwtr."token" = nft_sync_address.address)
-         inner join (select *
-                     from recent_time
-                     where recent_time.recent_time_code = '${recent_time_code}') recent_time on
-    (pdwtr.block_number >= recent_time.block_height)
+where pdwtr.block_number >= ${recentTimeBlockHeight} 
 group by pdwtr."operator",
          pdwtr.quote_token,
          pdwtr."token",
-         pdwtr."type",
-         recent_time.recent_time_code;
+         pdwtr."type";
 
 insert into platform_nft_type_volume_count(recent_time_code,
                                            address,
@@ -43,7 +39,7 @@ insert into platform_nft_type_volume_count(recent_time_code,
                                            type,
                                            volume_usd,
                                            transfer_count)
-select recent_time_code,
+select  '${recentTimeCode}' recent_time_code,
        address,
        'Blur.io: Marketplace'                       as platform_group,
        '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
@@ -58,54 +54,41 @@ from (
                 "token"             as quote_token,
                 "token",
                 sum(volume_usd)     as volume_usd,
-                sum(transfer_count) as transfer_count,
-                recent_time_code
+                sum(transfer_count) as transfer_count
          from (select pltr.borrower   as address,
                       pltr.lend_token as "token",
                       pltr."type"     as "type",
                       sum(1)          as volume_usd,
-                      1               as transfer_count,
-                      recent_time.recent_time_code
+                      1               as transfer_count
                from platform_lend_tx_record pltr
                         inner join (select address
                                     from nft_sync_address nsa
                                     where type = 'ERC721') nft_sync_address on
                    (pltr.lend_token = nft_sync_address.address)
-                        inner join (select *
-                                    from recent_time
-                                    where recent_time.recent_time_code = '${recent_time_code}') recent_time on
-                   (pltr.block_number >= recent_time.block_height)
+               where pltr.block_number >= ${recentTimeBlockHeight}
                group by pltr.borrower,
                         pltr.lend_token,
                         pltr."type",
-                        hash,
-                        recent_time.recent_time_code) pltrout
+                        hash) pltrout
          group by pltrout.address,
-                  pltrout.token,
-                  recent_time_code
+                  pltrout.token
                   ----------------增加blur的lend的to
          union all
          select pltr.lender     as address,
                 pltr.lend_token as quote_token,
                 pltr.lend_token as "token",
                 sum(1)          as volume_usd,
-                0               as transfer_count,
-                recent_time.recent_time_code
+                0               as transfer_count
          from platform_lend_tx_record pltr
                   inner join (select address
                               from nft_sync_address nsa
                               where type = 'ERC721') nft_sync_address on
              (pltr.lend_token = nft_sync_address.address)
-                  inner join (select *
-                              from recent_time
-                              where recent_time.recent_time_code = '${recent_time_code}') recent_time on
-             (pltr.block_number >= recent_time.block_height)
+         where pltr.block_number >= ${recentTimeBlockHeight}
          group by pltr.lender,
-                  pltr.lend_token,
-                  recent_time.recent_time_code) lendt
+                  pltr.lend_token) lendt
 group by lendt.address,
-         lendt.token,
-         recent_time_code;
+         lendt.token;
 
 
 
@@ -119,7 +102,7 @@ into platform_nft_type_volume_count(recent_time_code,
                                     type,
                                     volume_usd,
                                     transfer_count)
-select recent_time_code,
+select  '${recentTimeCode}' recent_time_code,
                                                        address,
        'Blur.io: Marketplace'                       as platform_group,
        '0x00000000006c3852cbef3e08e8df289169ede581' as platform,
@@ -130,7 +113,7 @@ select recent_time_code,
        sum(transfer_count)                          as transfer_count
 from (
          ----------------增加blur的bid的buyer(buyer不一定是from)
-         select recent_time_code,
+         select
                 address,
                 "token"             as quote_token,
                 "token",
@@ -143,28 +126,22 @@ from (
                       case
                           when type = 'ASK' then 1
                           else 0
-                          end        as transfer_count,
-                      recent_time.recent_time_code
+                          end        as transfer_count
                from platform_bid_tx_record pbtr
                         inner join (select address
                                     from nft_sync_address nsa
                                     where type = 'ERC721') nft_sync_address on
                    (pbtr.nft_token = nft_sync_address.address)
-                        inner join (select *
-                                    from recent_time
-                                    where recent_time.recent_time_code = '${recent_time_code}') recent_time on
-                   (pbtr.block_number >= recent_time.block_height)
+               where pbtr.block_number >= ${recentTimeBlockHeight}
                group by pbtr.buyer,
                         pbtr.nft_token,
                         pbtr."type",
-                        hash,
-                        recent_time.recent_time_code) pbtrout
+                        hash) pbtrout
          group by pbtrout.address,
-                  pbtrout.token,
-                  recent_time_code
+                  pbtrout.token
          union all
          ----------------增加blur的bid的seller(seller不一定是from)
-         select recent_time_code,
+         select
                                        address,
                 "token"             as quote_token,
                 "token",
@@ -177,29 +154,22 @@ from (
                       case
                           when type = 'BID' then 1
                           else 0
-                          end        as transfer_count,
-                      recent_time.recent_time_code
+                          end        as transfer_count
                from platform_bid_tx_record pbtr
                         inner join (select address
                                     from nft_sync_address nsa
                                     where type = 'ERC721') nft_sync_address on
                    (pbtr.nft_token = nft_sync_address.address)
-                        inner join (select *
-                                    from recent_time
-                                    where recent_time.recent_time_code = '${recent_time_code}') recent_time on
-                   (pbtr.block_number >= recent_time.block_height)
+               where pbtr.block_number >= ${recentTimeBlockHeight}
                group by pbtr.seller,
                         pbtr.nft_token,
                         pbtr."type",
-                        hash,
-                        recent_time.recent_time_code) pbtrout
+                        hash) pbtrout
          group by pbtrout.address,
-                  pbtrout.token,
-                  recent_time_code) bidt
+                  pbtrout.token) bidt
 group by bidt.address,
-         bidt.token,
-         recent_time_code;
+         bidt.token;
 
 insert into tag_result(table_name, batch_date)
-SELECT 'platform_nft_type_volume_count_${recent_time_code}' as table_name,
+SELECT 'platform_nft_type_volume_count_${recentTimeCode}' as table_name,
        to_char(current_date, 'YYYY-MM-DD')                  as batch_date;

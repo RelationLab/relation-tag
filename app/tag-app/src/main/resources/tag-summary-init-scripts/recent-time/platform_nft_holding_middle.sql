@@ -19,16 +19,11 @@ insert into platform_nft_holding_middle (address,
             0,
             sum(value),
             sum(count),
-            recent_time_code
+            '${recentTimeCode}' recent_time_code
      from platform_nft_tx_record
               INNER JOIN nft_sync_address ON(nft_sync_address.address=platform_nft_tx_record.token)
-              inner join (select *
-                          from recent_time
-                          where recent_time.recent_time_code = '${recent_time_code}') recent_time on
-         (platform_nft_tx_record.block_number >= recent_time.block_height)
-     where nft_sync_address.type <> 'ERC1155'
-     group by from_address, platform_address, quote_token, token,
-              recent_time_code);
+     where nft_sync_address.type <> 'ERC1155' and platform_nft_tx_record.block_number >= ${recentTimeBlockHeight}
+     group by from_address, platform_address, quote_token, token);
 
 
 insert into platform_nft_holding_middle (address,
@@ -52,15 +47,10 @@ insert into platform_nft_holding_middle (address,
             sum(count),
             sum(value),
             sum(count),
-            recent_time_code
+            '${recentTimeCode}' recent_time_code
      from platform_nft_tx_record
           INNER JOIN nft_sync_address ON(nft_sync_address.address=platform_nft_tx_record.token)
-         inner join (select *
-                                            from recent_time
-                                            where recent_time.recent_time_code = '${recent_time_code}') recent_time on
-         (platform_nft_tx_record.block_number >= recent_time.block_height)
-     where nft_sync_address.type <> 'ERC1155'
-     group by to_address, platform_address, quote_token, token,
-              recent_time_code);
+     where nft_sync_address.type <> 'ERC1155' and platform_nft_tx_record.block_number >= ${recentTimeBlockHeight}
+     group by to_address, platform_address, quote_token, token);
 insert into tag_result(table_name, batch_date)
-SELECT 'platform_nft_holding_middle_${recent_time_code}' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
+SELECT 'platform_nft_holding_middle_${recentTimeCode}' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;

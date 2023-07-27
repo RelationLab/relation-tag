@@ -1,10 +1,7 @@
 package com.relation.tag.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.relation.tag.entity.AddressLabelGp;
-import com.relation.tag.entity.HomeDataAnalysis;
-import com.relation.tag.entity.SuggestAddressBatch;
-import com.relation.tag.entity.UgcLabelDataAnalysis;
+import com.relation.tag.entity.*;
 
 import java.util.List;
 
@@ -31,5 +28,5 @@ public interface IAddressLabelGpService extends IService<AddressLabelGp> {
 
     void setSuggestAddressBatchStatus(List<SuggestAddressBatch> list);
 
-    List<String> selectRecentTimeList();
+    List<RecentTime> selectRecentTimeList();
 }

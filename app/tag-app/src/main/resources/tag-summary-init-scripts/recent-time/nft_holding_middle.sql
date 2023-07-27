@@ -19,16 +19,12 @@ select from_address,
        count(1),
        count(1),
        max(block_number),
-       recent_time_code
+       '${recentTimeCode}' recent_time_code
 from erc721_tx_record
-         inner join (select *
-                     from recent_time
-                     where recent_time.recent_time_code = '${recent_time_code}') recent_time on
-    (erc721_tx_record.block_number >= recent_time.block_height)
-where to_address != '0x0000000000000000000000000000000000000000'
+where erc721_tx_record.block_number>= ${recentTimeBlockHeight} and to_address != '0x0000000000000000000000000000000000000000'
           and to_address != '0x000000000000000000000000000000000000dead'
           and from_address != '0x0000000000000000000000000000000000000000'
-group by from_address, token, recent_time_code;
+group by from_address, token;
 
 ------burn
 insert into nft_holding_middle(address, token, balance, total_transfer_volume, total_transfer_count,
@@ -51,16 +47,12 @@ insert into nft_holding_middle(address, token, balance, total_transfer_volume, t
             count(1),
             count(1),
             max(block_number),
-            recent_time_code
+            '${recentTimeCode}' recent_time_code
      from erc721_tx_record
-              inner join (select *
-                          from recent_time
-                          where recent_time.recent_time_code = '${recent_time_code}') recent_time on
-         (erc721_tx_record.block_number >= recent_time.block_height)
-     where (to_address = '0x0000000000000000000000000000000000000000'
+     where erc721_tx_record.block_number>= ${recentTimeBlockHeight} and (to_address = '0x0000000000000000000000000000000000000000'
          or to_address = '0x000000000000000000000000000000000000dead')
        and from_address != '0x0000000000000000000000000000000000000000'
-     group by from_address, token, recent_time_code);
+     group by from_address, token);
 
 -----------------to
 insert into nft_holding_middle(address, token, balance, total_transfer_volume, total_transfer_count,
@@ -83,16 +75,12 @@ insert into nft_holding_middle(address, token, balance, total_transfer_volume, t
             count(1),
             count(1),
             max(block_number),
-            recent_time_code
+            '${recentTimeCode}' recent_time_code
      from erc721_tx_record
-              inner join (select *
-                          from recent_time
-                          where recent_time.recent_time_code = '${recent_time_code}') recent_time on
-         (erc721_tx_record.block_number >= recent_time.block_height)
-     where from_address != '0x0000000000000000000000000000000000000000'
+     where erc721_tx_record.block_number>= ${recentTimeBlockHeight} and from_address != '0x0000000000000000000000000000000000000000'
                and to_address != '0x0000000000000000000000000000000000000000'
                and to_address != '0x000000000000000000000000000000000000dead'
-     group by to_address, token, recent_time_code);
+     group by to_address, token);
 
 -------------------mint
 insert into nft_holding_middle(address, token, balance, total_transfer_volume, total_transfer_count,
@@ -115,15 +103,11 @@ insert into nft_holding_middle(address, token, balance, total_transfer_volume, t
             count(1),
             count(1),
             max(block_number),
-            recent_time_code
-     from erc721_tx_record
-              inner join (select *
-                          from recent_time
-                          where recent_time.recent_time_code = '${recent_time_code}') recent_time on
-         (erc721_tx_record.block_number >= recent_time.block_height)
-     where from_address = '0x0000000000000000000000000000000000000000'
+            '${recentTimeCode}' recent_time_code
+     from erc721_tx_record where erc721_tx_record.block_number>= ${recentTimeBlockHeight}
+             and from_address = '0x0000000000000000000000000000000000000000'
        and to_address != '0x0000000000000000000000000000000000000000'
                and to_address != '0x000000000000000000000000000000000000dead'
-     group by to_address, token, recent_time_code);
+     group by to_address, token);
 insert into tag_result(table_name, batch_date)
-SELECT 'nft_holding_middle_${recent_time_code}' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
+SELECT 'nft_holding_middle_${recentTimeCode}' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;

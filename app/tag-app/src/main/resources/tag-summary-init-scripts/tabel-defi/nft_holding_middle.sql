@@ -22,4 +22,4 @@ CREATE TABLE public.nft_holding_middle
 truncate table nft_holding_middle;
 vacuum nft_holding_middle;
 insert into tag_result(table_name, batch_date)
-SELECT 'nft_holding_middle' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
+SELECT 'tabel_defi_nft_holding_middle' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;

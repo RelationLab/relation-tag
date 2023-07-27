@@ -108,7 +108,7 @@
         </foreach>) and status = 'TODO'
     </update>
 
-    <select id="selectRecentTimeList" resultType="java.lang.String">
-        select recent_time_code from recent_time
+    <select id="selectRecentTimeList" resultType="com.relation.tag.entity.RecentTime">
+        select * from recent_time
     </select>
 </mapper>

@@ -10,7 +10,7 @@ select
     max(atb.block_height) as block_height,
     sum(total_transfer_volume) total_transfer_volume,
     sum(total_transfer_count) total_transfer_count,
-    recent_time.recent_time_code as recent_time_code
+    '${recentTimeCode}' recent_time_code
 from
     (
         select
@@ -19,9 +19,7 @@ from
             sum(amount) total_transfer_volume,
             sum(1) total_transfer_count
         from
-            eth_tx_record etr
-        where
-            tx_type!='ETH_INTERNAL'
+            eth_tx_record etr where block_number >=  ${recentTimeBlockHeight}
         group by
             from_address
         union all
@@ -31,16 +29,13 @@ from
             sum(amount) as total_transfer_volume,
             0 as total_transfer_count
         from
-            eth_tx_record etr
-        where
-            tx_type!='ETH_INTERNAL'
+            eth_tx_record etr where block_number >= ${recentTimeBlockHeight}
         group by
             to_address) atb
-        inner join (select * from  recent_time where recent_time.recent_time_code='${recent_time_code}' ) recent_time on
-        (atb.block_height >= recent_time.block_height)
 where address !=''
 group by
-    address,
-    recent_time.recent_time_code;
-insert into tag_result(table_name,batch_date)  SELECT 'eth_tx_record_from_to_${recent_time_code}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+    address
+
+
+insert into tag_result(table_name,batch_date)  SELECT 'eth_tx_record_from_to_${recentTimeCode}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 

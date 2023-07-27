@@ -18,6 +18,7 @@ truncate table public.address_label_nft_project_type_volume_rank;
 vacuum address_label_nft_project_type_volume_rank;
 
 insert into public.address_label_nft_project_type_volume_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
+
 select
     address ,
     label_type,
@@ -102,7 +103,7 @@ from
                                             a1.volume_usd,
                                             row_number() over(partition by seq_flag,a1.project,a1.type,recent_time_code
 					                        order by volume_usd desc,address asc) as count_sum,
-                                            recent_time_code
+                                                recent_time_code
                                         from
                                             (
                                                 select
@@ -125,9 +126,9 @@ from
                                                             recent_time_code
                                                         from
                                                             platform_nft_type_volume_count
-                                                        where
-                                                                volume_usd >= 100 and address not in (select address from exclude_address)
-                                                          and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                        where (volume_usd >= 100 and type not in('Lend','Bid')) or (volume_usd > 0 and type  in('Lend','Bid'))
+                                                            and address not in (select address from exclude_address)
+                                                            and token in (select token_id from dim_project_token_type_rank dpttr)
                                                         union all
                                                         -- project-token(ALL)-type
                                                         select
@@ -140,9 +141,9 @@ from
                                                             recent_time_code
                                                         from
                                                             platform_nft_type_volume_count
-                                                        where
-                                                                volume_usd >0 and address not in (select address from exclude_address)
-                                                          and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                        where (volume_usd >= 100 and type not in('Lend','Bid')) or (volume_usd > 0 and type  in('Lend','Bid'))
+                                                            and address not in (select address from exclude_address)
+                                                            and token in (select token_id from dim_project_token_type_rank dpttr)
                                                         union all
                                                         -- project(ALL)-token(ALL)-type
                                                         select
@@ -155,10 +156,10 @@ from
                                                             recent_time_code
                                                         from
                                                             platform_nft_type_volume_count
-                                                        where
-                                                                volume_usd >0 and address not in (select address from exclude_address)
-                                                          and token in (select token_id from dim_project_token_type_rank dpttr)
-                                                          -- project(ALL)-token(ALL)-type
+                                                        where (volume_usd >= 100 and type not in('Lend','Bid')) or (volume_usd > 0 and type  in('Lend','Bid'))
+                                                            and address not in (select address from exclude_address)
+                                                            and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                           -- project(ALL)-token(ALL)-type
                                                         union all
                                                         select
                                                             address,
@@ -170,9 +171,9 @@ from
                                                             recent_time_code
                                                         from
                                                             platform_nft_type_volume_count
-                                                        where
-                                                                volume_usd >0 and address not in (select address from exclude_address)
-                                                          and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                        where (volume_usd >= 100 and type not in('Lend','Bid')) or (volume_usd > 0 and type  in('Lend','Bid'))
+                                                            and address not in (select address from exclude_address)
+                                                            and token in (select token_id from dim_project_token_type_rank dpttr)
                                                     )
                                                         s1
                                                         inner join dim_project_token_type s2
@@ -182,8 +183,6 @@ from
                                                                            and s1.type = s2.type
                                                                            and s2.data_subject = 'volume_rank'
                                                                            and s1.recent_time_code = s2.recent_code
-                                                where
-                                                        volume_usd >= 100
                                                 group by
                                                     s1.address,
                                                     s1.type,
@@ -219,9 +218,9 @@ from
                                                             recent_time_code
                                                         from
                                                             platform_nft_type_volume_count
-                                                        where
-                                                                volume_usd >= 100 and address not in (select address from exclude_address)
-                                                          and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                        where (volume_usd >= 100 and type not in('Lend','Bid')) or (volume_usd > 0 and type  in('Lend','Bid'))
+                                                            and address not in (select address from exclude_address)
+                                                            and token in (select token_id from dim_project_token_type_rank dpttr)
                                                         union all
                                                         -- project-token(ALL)-type
                                                         select
@@ -233,9 +232,38 @@ from
                                                             recent_time_code
                                                         from
                                                             platform_nft_type_volume_count
-                                                        where
-                                                                volume_usd >0 and address not in (select address from exclude_address)
-                                                          and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                        where (volume_usd >= 100 and type not in('Lend','Bid')) or (volume_usd > 0 and type  in('Lend','Bid'))
+                                                            and address not in (select address from exclude_address)
+                                                            and token in (select token_id from dim_project_token_type_rank dpttr)
+
+                                                        union all
+                                                        -- project(ALL)-token(ALL)-type
+                                                        select
+                                                            address,
+                                                            platform,
+                                                            'ALL' as token,
+                                                            type,
+                                                            volume_usd,
+                                                            recent_time_code
+                                                        from
+                                                            platform_nft_type_volume_count
+                                                        where (volume_usd >= 100 and type not in('Lend','Bid')) or (volume_usd > 0 and type  in('Lend','Bid'))
+                                                            and address not in (select address from exclude_address)
+                                                            and token in (select token_id from dim_project_token_type_rank dpttr)
+                                                           -- project(ALL)-token(ALL)-type
+                                                        union all
+                                                        select
+                                                            address,
+                                                            platform,
+                                                            token,
+                                                            type,
+                                                            volume_usd,
+                                                            recent_time_code
+                                                        from
+                                                            platform_nft_type_volume_count
+                                                        where (volume_usd >= 100 and type not in('Lend','Bid')) or (volume_usd > 0 and type  in('Lend','Bid'))
+                                                            and address not in (select address from exclude_address)
+                                                            and token in (select token_id from dim_project_token_type_rank dpttr)
                                                     ) totala
                                                         inner join dim_project_token_type tb2
                                                                    on
@@ -249,8 +277,6 @@ from
                                                     seq_flag,
                                                     tb2.type,
                                                     recent_time_code) pntvc
-                                        where
-                                                volume_usd >= 100
                                         group by
                                             platform_group,
                                             seq_flag,
@@ -266,7 +292,5 @@ from
                     and dptt.seq_flag = tb1.seq_flag
                     and dptt.data_subject = 'volume_rank' and tb1.recent_time_code = dptt.recent_code
                 )
-        where
-                tb1.volume_usd >= 100
-          and zb_rate <= 0.1 and label_type not like '%_DEX_%' ) t;
+        where zb_rate <= 0.1 and label_type not like '%_DEX_%' ) t;
 insert into tag_result(table_name,batch_date)  SELECT 'address_label_nft_project_type_volume_rank' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

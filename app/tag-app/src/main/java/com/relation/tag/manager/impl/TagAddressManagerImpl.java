@@ -2,6 +2,7 @@ package com.relation.tag.manager.impl;
 
 import com.relation.tag.entity.DimRuleSqlContent;
 import com.relation.tag.entity.FileEntity;
+import com.relation.tag.entity.RecentTime;
 import com.relation.tag.manager.TagAddressManager;
 import com.relation.tag.service.IAddressLabelGpService;
 import com.relation.tag.service.IDimRuleSqlContentService;
@@ -292,9 +293,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
         try {
             String recentTimeCode = null;
             String tableSuffix = null;
+            String recentTimeBlockHeight = null;
             if (conditionMap != null && !conditionMap.isEmpty()) {
                 recentTimeCode = conditionMap.getOrDefault("recentTimeCode", null);
                 tableSuffix = conditionMap.getOrDefault("tableSuffix", null);
+                recentTimeBlockHeight = conditionMap.getOrDefault("recentTimeBlockHeight", null);
             }
             tableName = StringUtils.isNotBlank(recentTimeCode)?tableName.concat("_").concat(recentTimeCode):tableName;
             if (checkResult(tableName, batchDate, 1, false)) {
@@ -302,7 +305,10 @@ public class TagAddressManagerImpl implements TagAddressManager {
             }
             String exceSql = FileUtils.readFile(dir.concat(File.separator).concat(sqlName));
             if (StringUtils.isNotEmpty(recentTimeCode)) {
-                exceSql = exceSql.replace("${recent_time_code}", recentTimeCode);
+                exceSql = exceSql.replace("${recentTimeCode}", recentTimeCode);
+            }
+            if (StringUtils.isNotEmpty(recentTimeBlockHeight)) {
+                exceSql = exceSql.replace("${recentTimeBlockHeight}", recentTimeBlockHeight);
             }
             if (StringUtils.isNotEmpty(tableSuffix)) {
                 exceSql = exceSql.replace("${tableSuffix}", tableSuffix);
@@ -382,60 +388,60 @@ public class TagAddressManagerImpl implements TagAddressManager {
         dataFilter(batchDate, dataFilterPath);
         /***************nft_holding***********/
         execSql("token_holding_uni_filter", "nft_holding.sql", batchDate, tableDefiPath, null);
-        execSql("nft_holding", "nft_holding_middle.sql", batchDate, tableDefiPath, null);
-        exceRecentTimeScripts(batchDate, recentTimePath, "nft_holding_middle.sql", "nft_holding_middle", 1,false);
-        exceRecentTimeScripts(batchDate, recentTimePath, "nft_holding_record.sql", "nft_holding_middle", 10,true);
+        execSql("tabel_defi_nft_holding", "nft_holding_middle.sql", batchDate, tableDefiPath, null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "nft_holding_middle.sql", "tabel_defi_nft_holding_middle", 1,false);
+        exceRecentTimeScripts(batchDate, recentTimePath, "nft_holding_record.sql", "nft_holding_middle", 9,true);
         execSql("nft_holding_record", "nft_holding_summary.sql", batchDate, filePath, 9,true,null);
 
         /***************nft_buy_sell_holding***********/
         execSql("nft_holding_summary", "nft_buy_sell_holding_middle.sql", batchDate, tableDefiPath, 1,false,null);
-        exceRecentTimeScripts(batchDate, recentTimePath, "nft_buy_sell_holding_middle.sql", "nft_buy_sell_holding_middle", 1,false);
-        execSql("nft_buy_sell_holding_middle", "nft_buy_sell_holding.sql", batchDate, filePath, 10,true,null);
-        execSql("nft_buy_sell_holding", "nft_transfer_holding.sql", batchDate, filePath, 11,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "nft_buy_sell_holding_middle.sql", "tabel_defi_nft_buy_sell_holding_middle", 1,false);
+        execSql("nft_buy_sell_holding_middle", "nft_buy_sell_holding.sql", batchDate, filePath, 9,true,null);
+        execSql("nft_buy_sell_holding", "nft_transfer_holding.sql", batchDate, filePath, 10,true,null);
 
         /***************platform_nft_holding***********/
         execSql("nft_transfer_holding", "platform_nft_holding_middle.sql", batchDate, tableDefiPath, 1,false,null);
-        exceRecentTimeScripts(batchDate, recentTimePath, "platform_nft_holding_middle.sql", "platform_nft_holding_middle", 1,false);
-        execSql("platform_nft_holding_middle", "platform_nft_holding.sql", batchDate, filePath, 10,true,null);
-        execSql("platform_nft_holding", "platform_nft_volume_usd.sql", batchDate, filePath, 11,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "platform_nft_holding_middle.sql", "tabel_defi_platform_nft_holding_middle", 1,false);
+        execSql("platform_nft_holding_middle", "platform_nft_holding.sql", batchDate, filePath, 9,true,null);
+        execSql("platform_nft_holding", "platform_nft_volume_usd.sql", batchDate, filePath, 10,true,null);
 
         /********************platform_nft_type_volume_count*******************/
         execSql("platform_nft_volume_usd", "platform_nft_type_volume_count.sql", batchDate, tableDefiPath, 1,false,null);
-        exceRecentTimeScripts(batchDate, recentTimePath, "platform_nft_type_volume_count.sql", "platform_nft_type_volume_count", 1,false);
-        execSql("platform_nft_type_volume_count", "platform_nft_type_volume_count_summary.sql", batchDate, filePath, 10,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "platform_nft_type_volume_count.sql", "tabel_defi_platform_nft_type_volume_count", 1,false);
+        execSql("platform_nft_type_volume_count", "platform_nft_type_volume_count_summary.sql", batchDate, filePath, 9,true,null);
         execSql("platform_nft_type_volume_count_summary", "nft_volume_count.sql", batchDate, filePath, 1,false,null);
 
         /***************web3_transaction_record_summary***********/
         execSql("nft_volume_count", "web3_transaction_record_summary.sql", batchDate, tableDefiPath, 1,false,null);
-        exceRecentTimeScripts(batchDate, recentTimePath, "web3_transaction_record_summary.sql", "web3_transaction_record_summary", 1,false);
+        exceRecentTimeScripts(batchDate, recentTimePath, "web3_transaction_record_summary.sql", "tabel_defi_web3_transaction_record_summary", 1,false);
 
         /***************dex_tx_count_summary***********/
-        execSql("web3_transaction_record_summary", "dex_tx_count_summary.sql", batchDate, tableDefiPath, 10,true,null);
-        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_count_summary.sql", "dex_tx_count_summary", 1,false);
+        execSql("web3_transaction_record_summary", "dex_tx_count_summary.sql", batchDate, tableDefiPath, 9,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_count_summary.sql", "tabel_defi_dex_tx_count_summary", 1,false);
+        execSql("dex_tx_count_summary", "dex_tx_count_summary.sql", batchDate, filePath, 9,true,null);
 
         /***************dex_tx_volume_count_summary***********/
-        execSql("dex_tx_count_summary", "dex_tx_volume_count_summary.sql", batchDate, tableDefiPath, 10,true,null);
-        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary.sql", "dex_tx_volume_count_summary", 1,false);
+        execSql("dex_tx_count_summary", "dex_tx_volume_count_summary.sql", batchDate, tableDefiPath, 1,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary.sql", "tabel_defi_dex_tx_volume_count_summary", 1,false);
+        execSql("dex_tx_volume_count_summary", "dex_tx_volume_count_summary.sql", batchDate, filePath, 9,true,null);
 
         /***************dex_tx_volume_count_summary***********/
-        execSql("dex_tx_volume_count_summary", "dex_tx_volume_count_summary_univ3.sql", batchDate, tableDefiPath, 10,true,null);
-        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary_univ3.sql", "dex_tx_volume_count_summary_univ3", 1,false);
+        execSql("dex_tx_volume_count_summary", "dex_tx_volume_count_summary_univ3.sql", batchDate, tableDefiPath, 1,false,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary_univ3.sql", "tabel_defi_dex_tx_volume_count_summary_univ3", 1,false);
 
 
         /***************erc20_tx_record_from***********/
-        execSql("dex_tx_volume_count_summary_univ3", "erc20_tx_record_from.sql", batchDate, tableDefiPath, 1,false,null);
-        exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_from.sql", "erc20_tx_record_from", 1,false);
+        execSql("dex_tx_volume_count_summary_univ3", "erc20_tx_record_from.sql", batchDate, tableDefiPath, 9,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_from.sql", "tabel_defi_erc20_tx_record_from", 1,false);
         /***************erc20_tx_record_to***********/
-        execSql("erc20_tx_record_from", "erc20_tx_record_to.sql", batchDate, tableDefiPath, 10,true,null);
-        exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_to.sql", "erc20_tx_record_to", 1,false);
-        execSql("erc20_tx_record_to", "token_holding_vol_count.sql", batchDate, filePath, 10,true,null);
+        execSql("erc20_tx_record_from", "erc20_tx_record_to.sql", batchDate, tableDefiPath, 9,true,null);
+        exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_to.sql", "tabel_defi_erc20_tx_record_to", 1,false);
+        execSql("erc20_tx_record_to", "token_holding_vol_count.sql", batchDate, filePath, 9,true,null);
 
         /***************eth_holding_vol_count***********/
         execSql("token_holding_vol_count", "eth_tx_record_from_to.sql", batchDate, tableDefiPath, 1,true,null);
-        exceRecentTimeScripts(batchDate, recentTimePath, "eth_tx_record_from_to.sql", "eth_tx_record_from_to", 1,false);
-        execSql("eth_tx_record_from_to", "eth_holding_vol_count.sql", batchDate, filePath, 10,true,null);
-
-
+        exceRecentTimeScripts(batchDate, recentTimePath, "eth_tx_record_from_to.sql", "tabel_defi_eth_tx_record_from_to", 1,false);
+        execSql("eth_tx_record_from_to", "eth_holding_vol_count.sql", batchDate, filePath, 9,true,null);
 
         execSql("eth_holding_vol_count", "dex_tx_volume_count_summary_stake.sql", batchDate, filePath, 1,false,null);
         execSql("dex_tx_volume_count_summary_stake", "token_balance_volume_usd.sql", batchDate, filePath, 1,false,null);
@@ -445,12 +451,14 @@ public class TagAddressManagerImpl implements TagAddressManager {
     }
 
     private void exceRecentTimeScripts(String batchDate, String filePath, String fileName, String lastTableName, int resultNum, boolean likeKey) {
-        List<String> list = iAddressLabelService.selectRecentTimeList();
+        List<RecentTime> list = iAddressLabelService.selectRecentTimeList();
         if (CollectionUtils.isEmpty(list)) {
             return;
         }
         list.forEach(item -> {
-            execSql(lastTableName, fileName, batchDate, filePath, resultNum,  likeKey,Maps.newHashMap("recentTimeCode",item));
+            Map<String,String> map = Maps.newHashMap("recentTimeCode",item.getRecentTimeCode());
+            map.put("recentTimeBlockHeight",item.getBlockHeight().toString());
+            execSql(lastTableName, fileName, batchDate, filePath, resultNum,  likeKey,map);
         });
     }
 

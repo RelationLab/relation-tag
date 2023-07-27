@@ -17,15 +17,12 @@ select th.address,
        sum(total_transfer_volume)                   as total_transfer_volume_usd,
        sum(total_transfer_count)                    as total_transfer_count,
        min(first_updated_block_height)              as first_updated_block_height,
-       recent_time.recent_time_code                 as recent_time_code
-from token_holding_uni_filterate th
-         inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
-                    on
-                        (th.block_height >= recent_time.block_height)
+       '${recentTimeCode}'                 as recent_time_code
+from token_holding_uni_filter th
+    where th.block_height >= ${recentTimeBlockHeight}
 group by th.address,
          th.price_token,
-         th.type,
-         recent_time.recent_time_code;
+         th.type;
 
 ---汇总UNIv3的token=ALL数据
 insert
@@ -46,14 +43,11 @@ select th.address,
        sum(total_transfer_volume)                   as total_transfer_volume_usd,
        sum(total_transfer_count)                    as total_transfer_count,
        min(first_updated_block_height)              as first_updated_block_height,
-       recent_time.recent_time_code                 as recent_time_code
-from token_holding_uni_filterate th
-         inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
-                    on
-                        (th.block_height >= recent_time.block_height)
+       '${recentTimeCode}'                as recent_time_code
+from token_holding_uni_filter th
+    where th.block_height >= ${recentTimeBlockHeight}
 group by th.address,
-         th.type,
-         recent_time.recent_time_code;
+         th.type;
 
 ---先把dex_tx_volume_count_record的USD计算出来
 insert
@@ -74,16 +68,13 @@ select dtvcr.address,
        sum(total_transfer_volume_usd) as total_transfer_volume_usd,
        sum(total_transfer_count)         total_transfer_count,
        min(first_updated_block_height)   first_updated_block_height,
-       recent_time_code
+       '${recentTimeCode}' recent_time_code
 from dex_tx_volume_count_record_filter dtvcr
-         inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
-                    on
-                        (dtvcr.block_height >= recent_time.block_height)
+    where dtvcr.block_height >= ${recentTimeBlockHeight}
 group by dtvcr.address,
          token,
          dtvcr.type,
-         project,
-         recent_time_code;
+         project;
 
 ---计算token为ALL的 也是从dex_tx_volume_count_record的USD计算出来
 insert
@@ -104,15 +95,13 @@ select dtvcr.address,
        sum(total_transfer_volume_usd) as total_transfer_volume_usd,
        sum(total_transfer_count)         total_transfer_count,
        min(first_updated_block_height)   first_updated_block_height,
-       recent_time_code
+       '${recentTimeCode}' recent_time_code
 from dex_tx_volume_count_record_filter dtvcr
-         inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
-                    on
-                        (dtvcr.block_height >= recent_time.block_height)
+    where dtvcr.block_height >= ${recentTimeBlockHeight}
 group by dtvcr.address,
          dtvcr.type,
-         project,
-         recent_time_code;
+         project;
+
 
 
 ---再计算dex_tx_volume_count_summary的ALL(有些同一笔交易txHash同时LP和SWAP)
@@ -142,6 +131,6 @@ group by dtvcr.address,
          dtvcr.project,
          recent_time_code;
 insert into tag_result(table_name, batch_date)
-SELECT 'dex_tx_volume_count_summary_${recent_time_code}' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
+SELECT 'dex_tx_volume_count_summary_${recentTimeCode}' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
 
 

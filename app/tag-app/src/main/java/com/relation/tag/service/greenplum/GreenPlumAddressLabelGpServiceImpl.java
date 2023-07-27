@@ -1,10 +1,7 @@
 package com.relation.tag.service.greenplum;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.relation.tag.entity.AddressLabelGp;
-import com.relation.tag.entity.HomeDataAnalysis;
-import com.relation.tag.entity.SuggestAddressBatch;
-import com.relation.tag.entity.UgcLabelDataAnalysis;
+import com.relation.tag.entity.*;
 import com.relation.tag.mapper.greenplum.GreenplumAddressLabelGpMapper;
 import com.relation.tag.service.IAddressLabelGpService;
 import lombok.extern.slf4j.Slf4j;
@@ -83,9 +80,7 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
     }
 
     @Override
-    public List<String> selectRecentTimeList() {
+    public List<RecentTime> selectRecentTimeList() {
         return baseMapper.selectRecentTimeList();
     }
-
-
 }

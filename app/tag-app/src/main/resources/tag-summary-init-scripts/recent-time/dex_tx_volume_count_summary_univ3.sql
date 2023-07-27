@@ -21,16 +21,12 @@ select
     sum(total_transfer_count) as total_transfer_count,
     min(first_updated_block_height) as first_updated_block_height,
     sum(balance) as balance_usd,
-    recent_time_code
+    '${recentTimeCode}' recent_time_code
 from
     token_holding_uni_filter th
-        inner join (select * from recent_time where recent_time.recent_time_code = '${recent_time_code}') recent_time
-                   on
-                       (th.block_height >= recent_time.block_height)
-        where  triggered_flag='1'
+        where  th.block_height >= ${recentTimeBlockHeight}  and triggered_flag='1'
 group by
     th.address,
     th.token,
-    th.type,
-    recent_time.recent_time_code;
-insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_volume_count_summary_univ3_${recent_time_code}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+    th.type;
+insert into tag_result(table_name,batch_date)  SELECT 'dex_tx_volume_count_summary_univ3_${recentTimeCode}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;

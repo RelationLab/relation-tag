@@ -12,22 +12,13 @@ select
     max(block_number) as block_height,
     sum(amount) as total_transfer_volume,
     0 as total_transfer_count,
-    recent_time_code
+    '${recentTimeCode}' recent_time_code
 from
     erc20_tx_record
-        inner join (
-        select
-            *
-        from
-            recent_time
-        where
-                recent_time.recent_time_code = '1m' ) recent_time on
-        (erc20_tx_record.block_number >= recent_time.block_height)
-where to_address=sender
+where     erc20_tx_record.block_number >= ${recentTimeBlockHeight}
 group by
     to_address,
-    token,
-    recent_time_code;
+    token;
 
-insert into tag_result(table_name,batch_date)  SELECT 'erc20_tx_record_to_${recent_time_code}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'erc20_tx_record_to_${recentTimeCode}' as table_name,to_char(current_date ,'YYYY-MM-DD')  as batch_date;
 
