@@ -434,7 +434,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("platform_nft_type_volume_count_summary", "total_nft_volume_count.sql", batchDate, filePath, 1,false,null, false);
 
         /***************web3_transaction_record_summary***********/
-        execSql("dim", "web3_transaction_record_summary.sql", batchDate, tableDefiPath, 6,true,null, false);
+        execSql("filter", "web3_transaction_record_summary.sql", batchDate, tableDefiPath, 2,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "web3_transaction_record_summary.sql", "tabel_defi_web3_transaction_record_summary", 1,false);
 
         /***************dex_tx_count_summary***********/
