@@ -1,5 +1,5 @@
-drop table if exists nft_holding;
-CREATE TABLE public.nft_holding
+drop table if exists nft_holding_temp;
+CREATE TABLE public.nft_holding_temp
 (
     address                    varchar(512) NOT NULL,
     "token"                    varchar(512) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE public.nft_holding
     created_at                 timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at                 timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) distributed by (address, token,recent_time_code);
-truncate table nft_holding;
-vacuum nft_holding;
+truncate table nft_holding_temp;
+vacuum nft_holding_temp;
 insert into tag_result(table_name, batch_date)
 SELECT 'tabel_defi_nft_holding' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;

@@ -1,5 +1,5 @@
 insert
-into nft_holding(address,
+into nft_holding_temp(address,
                  token,
                  balance,
                  total_transfer_volume,

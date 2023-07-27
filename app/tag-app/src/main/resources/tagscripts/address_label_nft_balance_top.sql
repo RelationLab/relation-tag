@@ -64,7 +64,7 @@ select
 					token,
 					balance
 				from
-                    nft_holding where  address not in (select address from exclude_address)
+                    nft_holding_temp where  address not in (select address from exclude_address)
                     and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                                   and recent_time_code ='ALL'
                 union all
@@ -73,7 +73,7 @@ select
 					'ALL' as token,
 					balance
 				from
-                    nft_holding where  address not in (select address from exclude_address)
+                    nft_holding_temp where  address not in (select address from exclude_address)
 					              and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                                   and recent_time_code ='ALL'
                 ) totala

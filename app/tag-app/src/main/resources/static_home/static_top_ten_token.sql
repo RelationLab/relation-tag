@@ -87,7 +87,7 @@ FROM
                             sum(balance) AS balance,
                             token
                         FROM
-                            nft_holding tbvu where token in(select token_id from dim_project_token_type_rank_temp)
+                            nft_holding_temp tbvu where token in(select token_id from dim_project_token_type_rank_temp)
                             and   balance >=1 and recent_time_code='ALL'
                                                and tbvu.address not in (select address from exclude_address)
                         GROUP BY

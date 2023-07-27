@@ -181,7 +181,7 @@ select sum(activity_num) as activity_num,address from(
  group by aljg.address
  union all
  select
-     sum(total_transfer_all_count) as activity_num,aljg.address from  nft_holding aljg
+     sum(total_transfer_all_count) as activity_num,aljg.address from  nft_holding_temp aljg
     inner join address_init${tableSuffix} ais  on(aljg.address=ais.address)
   where  token in(select token_id from dim_project_token_type_rank_temp) and recent_time_code='ALL'
   group by aljg.address)

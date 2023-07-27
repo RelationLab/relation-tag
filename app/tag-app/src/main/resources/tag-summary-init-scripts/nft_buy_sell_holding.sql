@@ -1,11 +1,11 @@
--- public.nft_buy_sell_holding definition
+-- public.nft_buy_sell_holding_temp definition
 
 -- Drop table
 
--- DROP TABLE public.nft_buy_sell_holding;
-drop table if exists nft_buy_sell_holding;
+-- DROP TABLE public.nft_buy_sell_holding_temp;
+drop table if exists nft_buy_sell_holding_temp;
 
-CREATE TABLE public.nft_buy_sell_holding (
+CREATE TABLE public.nft_buy_sell_holding_temp (
                                              address varchar(512) NOT NULL,
                                              "token" varchar(512) NOT NULL,
                                              total_transfer_buy_volume int8 NOT NULL,
@@ -17,13 +17,13 @@ CREATE TABLE public.nft_buy_sell_holding (
                                              created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                              updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP
 )distributed by (address,"token",recent_time_code);
-truncate table nft_buy_sell_holding;
-vacuum nft_buy_sell_holding;
+truncate table nft_buy_sell_holding_temp;
+vacuum nft_buy_sell_holding_temp;
 
 
 insert
 into
-    nft_buy_sell_holding (address,
+    nft_buy_sell_holding_temp (address,
                           token,
                           total_transfer_buy_volume,
                           total_transfer_buy_count,

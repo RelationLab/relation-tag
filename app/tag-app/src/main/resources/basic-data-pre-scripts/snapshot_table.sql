@@ -1,4 +1,4 @@
-DROP TABLE if EXISTS public.nft_buy_sell_holding;
+DROP TABLE if EXISTS public.nft_buy_sell_holding_temp;
 DROP TABLE if EXISTS public.token_holding_temp;
 DROP TABLE if EXISTS public.eth_holding_temp;
 DROP TABLE if EXISTS public.nft_holding_time_temp;

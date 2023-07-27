@@ -1,8 +1,8 @@
--- public.nft_buy_sell_holding definition
+-- public.nft_buy_sell_holding_middle definition
 
 -- Drop table
 
--- DROP TABLE public.nft_buy_sell_holding;
+-- DROP TABLE public.nft_buy_sell_holding_middle;
 drop table if exists nft_buy_sell_holding_middle;
 
 CREATE TABLE public.nft_buy_sell_holding_middle (

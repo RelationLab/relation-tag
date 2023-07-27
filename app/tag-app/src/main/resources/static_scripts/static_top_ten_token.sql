@@ -85,7 +85,7 @@ FROM
                             sum(balance) AS balance,
                             token
                         FROM
-                            nft_holding tbvu
+                            nft_holding_temp tbvu
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                          where token in(select token_id from dim_project_token_type_rank) and   balance >=1
                            and tbvu.address not in (select address from exclude_address) and recent_time_code='ALL'

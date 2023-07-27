@@ -2204,7 +2204,7 @@ values ('address_label_nft_balance_grade','	truncate
 					a2.seq_flag,
 					a2.label_type,
 					sum(balance) as balance
-			from nft_holding a1
+			from nft_holding_temp a1
 					inner join dim_project_token_type_temp a2
 								on a1.token = a2.token and (a2.project ='''' or a2.project =''ALL'') and (a2.type ='''' OR a2.type =''ALL'') and
 									a2.data_subject = ''balance_grade'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
@@ -2216,7 +2216,7 @@ values ('address_label_nft_balance_grade','	truncate
 				a2.seq_flag,
 				a2.label_type,
 				sum(balance) as balance
-			from nft_holding a1
+			from nft_holding_temp a1
 				inner join dim_project_token_type_temp a2
 			on a2.token = ''ALL'' and (a2.project ='''' or a2.project =''ALL'') and (a2.type ='''' OR a2.type =''ALL'') and
 				a2.data_subject = ''balance_grade'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
@@ -2455,7 +2455,7 @@ values ('address_label_nft_balance_rank','	truncate
 												,total_transfer_burn_count
 												,total_transfer_all_volume
 												,total_transfer_all_count
-												,updated_block_height from nft_holding
+												,updated_block_height from nft_holding_temp
 											union all
 											select address
 												,''ALL'' as token
@@ -2470,7 +2470,7 @@ values ('address_label_nft_balance_rank','	truncate
 												,total_transfer_burn_count
 												,total_transfer_all_volume
 												,total_transfer_all_count
-												,updated_block_height  from nft_holding
+												,updated_block_height  from nft_holding_temp
 										)
 											s1
 											INNER JOIN dim_project_token_type_temp s2
@@ -2489,11 +2489,11 @@ values ('address_label_nft_balance_rank','	truncate
 						(select count(distinct address) as count_sum_total,token
 							from (select  address
 									,token
-								from nft_holding
+								from nft_holding_temp
 								union all
 								select address
 									,''ALL'' as token
-								from nft_holding) nh group by token) as a10
+								from nft_holding_temp) nh group by token) as a10
 						on a10.token = a1.token) as a2) as t1
 		) tb1
 			inner join
@@ -2533,14 +2533,14 @@ values ('address_label_nft_balance_top','	truncate table address_label_nft_balan
 						token,
 						balance
 					from
-						nft_holding
+						nft_holding_temp
 					union all
 					select
 						address,
 						''ALL'' as token,
 						balance
 					from
-						nft_holding ) a1
+						nft_holding_temp ) a1
 					inner join dim_project_token_type_temp a2
 							on
 										a1.token = a2.token

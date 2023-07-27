@@ -13,19 +13,19 @@ truncate table nft_volume_count;
 vacuum nft_volume_count;
 
 insert into nft_volume_count(address, token, type, transfer_volume, transfer_count,recent_time_code)
-    select address, token , 'Mint', total_transfer_mint_volume, total_transfer_mint_count,recent_time_code from nft_holding;
+    select address, token , 'Mint', total_transfer_mint_volume, total_transfer_mint_count,recent_time_code from nft_holding_temp;
 
 insert into nft_volume_count(address, token, type, transfer_volume, transfer_count,recent_time_code)
-    select address, token , 'Burn', total_transfer_burn_volume, total_transfer_burn_count,recent_time_code from nft_holding;
+    select address, token , 'Burn', total_transfer_burn_volume, total_transfer_burn_count,recent_time_code from nft_holding_temp;
 
 insert into nft_volume_count(address, token, type, transfer_volume, transfer_count,recent_time_code)
-    select address, token , 'Buy', total_transfer_buy_volume, total_transfer_buy_count,recent_time_code from nft_buy_sell_holding;
+    select address, token , 'Buy', total_transfer_buy_volume, total_transfer_buy_count,recent_time_code from nft_buy_sell_holding_temp;
 
 insert into nft_volume_count(address, token, type, transfer_volume, transfer_count,recent_time_code)
-    select address, token , 'Sale', total_transfer_sell_volume, total_transfer_sell_count,recent_time_code from nft_buy_sell_holding;
+    select address, token , 'Sale', total_transfer_sell_volume, total_transfer_sell_count,recent_time_code from nft_buy_sell_holding_temp;
 
 insert into nft_volume_count(address, token, type, transfer_volume, transfer_count,recent_time_code)
-    select address, token , 'ALL', total_transfer_all_volume,total_transfer_all_count as total_transfer_count,recent_time_code from nft_holding;
+    select address, token , 'ALL', total_transfer_all_volume,total_transfer_all_count as total_transfer_count,recent_time_code from nft_holding_temp;
 
 insert into nft_volume_count(address, token, type, transfer_volume, transfer_count,recent_time_code)
     select address, token , 'Transfer', total_transfer_volume, total_transfer_count,recent_time_code from nft_transfer_holding;
