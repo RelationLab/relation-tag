@@ -1727,10 +1727,10 @@ where nft_trade_type.type = '1';
 
 --------volume_elite project(ALL)+token(ALL)
 -- ALL_ALL_ALL_MP_NFT_VOLUME_ELITE
--- ALL_ALL_Buy_MP_NFT_VOLUME_ELITE
+-- ALL_ALL_Buy_MP_NFT_VOLUME_ELITE 
 -- ALL_ALL_Sale_MP_NFT_VOLUME_ELITE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -1860,7 +1860,7 @@ where nft_trade_type.type = '1';
 -- Blur_CryptoPunks_Sale_MP_NFT_VOLUME_GRADE
 -- Blur_CryptoPunks_Buy_MP_NFT_VOLUME_GRADE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -2018,7 +2018,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_CryptoPunks_Buy_MP_NFT_VOLUME_GRADE
 -- ALL_CryptoPunks_Sale_MP_NFT_VOLUME_GRADE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -2165,7 +2165,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- Blur_ALL_Buy_MP_NFT_VOLUME_GRADE
 -- Blur_ALL_Sale_MP_NFT_VOLUME_GRADE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -2309,7 +2309,7 @@ where nft_trade_type.type = '1';
 -- ALL_ALL_Buy_MP_NFT_VOLUME_GRADE
 -- ALL_ALL_Sale_MP_NFT_VOLUME_GRADE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -2438,7 +2438,7 @@ where nft_trade_type.type = '1';
 -- Blur_CryptoPunks_Sale_MP_NFT_VOLUME_RANK
 -- Blur_CryptoPunks_Buy_MP_NFT_VOLUME_RANK
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -2595,7 +2595,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_CryptoPunks_Buy_MP_NFT_VOLUME_RANK
 -- ALL_CryptoPunks_Sale_MP_NFT_VOLUME_RANK
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -2743,7 +2743,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- Blur_ALL_Buy_MP_NFT_VOLUME_RANK
 -- Blur_ALL_Sale_MP_NFT_VOLUME_RANK
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -2888,7 +2888,7 @@ where nft_trade_type.type = '1';
 -- ALL_ALL_Buy_MP_NFT_VOLUME_RANK
 -- ALL_ALL_Sale_MP_NFT_VOLUME_RANK
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -3017,7 +3017,7 @@ where nft_trade_type.type = '1';
 -- Blur_CryptoPunks_Sale_MP_NFT_VOLUME_TOP
 -- Blur_CryptoPunks_Buy_MP_NFT_VOLUME_TOP
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -3174,7 +3174,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_CryptoPunks_Buy_MP_NFT_VOLUME_TOP
 -- ALL_CryptoPunks_Sale_MP_NFT_VOLUME_TOP
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -3323,7 +3323,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- Blur_ALL_Buy_MP_NFT_VOLUME_TOP
 -- Blur_ALL_Sale_MP_NFT_VOLUME_TOP
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -3468,7 +3468,7 @@ where nft_trade_type.type = '1';
 -- ALL_ALL_Buy_MP_NFT_VOLUME_TOP
 -- ALL_ALL_Sale_MP_NFT_VOLUME_TOP
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -3595,7 +3595,7 @@ where nft_trade_type.type = '1';
 ---------------------------------dim_dex_token.sql---------------------
 ---------------count 0x_USDC(0xa0b869)_ALL_ACTIVITY_DEX--------------------------
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -3808,7 +3808,7 @@ from token_platform
 
 ---------------count ALL_USDC(0xa0b869)_ALL_ACTIVITY_DEX--------------------------
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -3935,7 +3935,7 @@ from (select *
 
 ---------------count 1inch_ALL_ALL_ACTIVITY_DEX
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -4053,7 +4053,7 @@ from platform
 where platform.token_all_flag = '1';
 ---------------count ALL_ALL_ALL_ACTIVITY_DEX
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -4164,7 +4164,7 @@ from trade_type
 
 ---------------volume_grade 0x_USDC(0xa0b869)_ALL_VOLUME_DEX_GRADE--------------------------
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -4194,10 +4194,29 @@ select distinct token_platform.platform as                                      
 from token_platform
          inner join platform on
     (token_platform.platform = platform.platform)
-         inner join (select *
+         inner join (select address,
+                            symbol
                      from top_token_1000_temp
                      where holders >= 100
-                       and removed <> 'true') top_token_1000_temp on
+                       and removed <> 'true'
+                     union all
+                     select wlp.address,
+                            wlp.symbol_wired as symbol
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp on
+                                 wlp.address = wslp.address
+                             and wlp.type = 'LP'
+                             and wslp.type = 'SLP'
+                     where wlp.tvl > 1000000
+                       and string_to_array(wlp.symbol_wired, '/') && array['ETH',
+                        'WETH',
+                        'UNI',
+                        'AAVE',
+                        '1INCH',
+                        'MANA',
+                        'AXS',
+                        'SAND']
+                    and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform.address = top_token_1000_temp.address)
          INNER JOIN trade_type ON (1 = 1)
          inner join recent_time on (1 = 1)
@@ -4327,7 +4346,7 @@ from token_platform
 
 ---------------volume_grade ALL_USDC(0xa0b869)_ALL_VOLUME_DEX_GRADE--------------------------
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -4471,7 +4490,7 @@ from (select *
 
 ---------------volume_grade 1inch_ALL_ALL_VOLUME_DEX_GRADE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -4599,7 +4618,7 @@ where platform.token_all_flag = '1';
 
 ---------------volume_grade ALL_ALL_ALL_VOLUME_DEX_GRADE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -4729,7 +4748,7 @@ from trade_type
 
 ---------------volume_rank 0x_USDC(0xa0b869)_ALL_VOLUME_DEX_RANK--------------------------
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -4759,10 +4778,29 @@ select distinct token_platform.platform as                                      
 from token_platform
          inner join platform on
     (token_platform.platform = platform.platform)
-         inner join (select *
+         inner join (select address,
+                            symbol
                      from top_token_1000_temp
                      where holders >= 100
-                       and removed <> 'true') top_token_1000_temp on
+                       and removed <> 'true'
+                     union all
+                     select wlp.address,
+                            wlp.symbol_wired as symbol
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp on
+                                 wlp.address = wslp.address
+                             and wlp.type = 'LP'
+                             and wslp.type = 'SLP'
+                     where wlp.tvl > 1000000
+                       and string_to_array(wlp.symbol_wired, '/') && array['ETH',
+                        'WETH',
+                        'UNI',
+                        'AAVE',
+                        '1INCH',
+                        'MANA',
+                        'AXS',
+                        'SAND']
+                    and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform.address = top_token_1000_temp.address)
          INNER JOIN trade_type ON (1 = 1)
          inner join recent_time on (1 = 1)
@@ -4888,7 +4926,7 @@ from token_platform
 
 ---------------volume_rank ALL_USDC(0xa0b869)_ALL_VOLUME_DEX_RANK
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -5019,7 +5057,7 @@ from (select *
 
 ---------------volume_rank 1inch_ALL_ALL_VOLUME_DEX_RANK
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -5141,7 +5179,7 @@ from platform
 where platform.token_all_flag = '1';
 ---------------volume_rank ALL_ALL_ALL_VOLUME_DEX_RANK
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -5258,7 +5296,7 @@ from trade_type
 --------------------NFT---------有211 但维度表有合并的204个而已------------------
 --------balance_grade CryptoPunks_NFT_BALANCE_GRADE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -5355,7 +5393,7 @@ where nft_sync_address.type <> 'ERC1155';
 
 --------balance_grade ALL_NFT_BALANCE_GRADE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -5441,7 +5479,7 @@ where type = 'nft_balance_grade';
 
 --------balance_rank CryptoPunks_NFT_BALANCE_RANK
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -5537,7 +5575,7 @@ where nft_sync_address.type <> 'ERC1155';
 
 --------balance_rank ALL_NFT_BALANCE_RANK
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -5622,7 +5660,7 @@ where type = 'nft_balance_rank';
 
 --------balance_top CryptoPunks_NFT_BALANCE_TOP
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -5719,7 +5757,7 @@ where nft_sync_address.type <> 'ERC1155';
 
 --------balance_top ALL_NFT_BALANCE_TOP
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -5809,7 +5847,7 @@ where type = 'nft_balance_top';
 -- ALL_CryptoPunks_Burn_NFT_ACTIVITY
 -- ALL_CryptoPunks_Buy_NFT_ACTIVITY
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -5960,7 +5998,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_ALL_Burn_NFT_ACTIVITY
 -- ALL_ALL_Buy_NFT_ACTIVITY
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -6085,7 +6123,7 @@ where nft_trade_type.type = '0';
 
 --------time_grade CryptoPunks_NFT_TIME_GRADE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -6180,7 +6218,7 @@ where nft_sync_address.type <> 'ERC1155';
 
 --------time_rank CryptoPunks_NFT_TIME_SMART_NFT_EARLY_ADOPTER
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -6275,7 +6313,7 @@ where nft_sync_address.type <> 'ERC1155';
 
 --------time_special CryptoPunks_NFT_TIME_SPECIAL
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -6377,7 +6415,7 @@ where nft_sync_address.type <> 'ERC1155';
 -- ALL_CryptoPunks_Burn_NFT_VOLUME_ELITE
 -- ALL_CryptoPunks_Buy_NFT_VOLUME_ELITE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -6525,7 +6563,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_ALL_Burn_NFT_VOLUME_ELITE
 -- ALL_ALL_Buy_NFT_VOLUME_ELITE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -6650,7 +6688,7 @@ where nft_trade_type.type = '0';
 -- ALL_CryptoPunks_Burn_NFT_VOLUME_GRADE
 -- ALL_CryptoPunks_Buy_NFT_VOLUME_GRADE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -6799,7 +6837,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_ALL_Burn_NFT_VOLUME_GRADE
 -- ALL_ALL_Buy_NFT_VOLUME_GRADE
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -6924,7 +6962,7 @@ where nft_trade_type.type = '0';
 -- ALL_CryptoPunks_Burn_NFT_VOLUME_RANK
 -- ALL_CryptoPunks_Buy_NFT_VOLUME_RANK
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -7069,7 +7107,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_ALL_Burn_NFT_VOLUME_RANK
 -- ALL_ALL_Buy_NFT_VOLUME_RANK
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -7194,7 +7232,7 @@ where nft_trade_type.type = '0';
 -- ALL_CryptoPunks_Burn_NFT_VOLUME_TOP
 -- ALL_CryptoPunks_Buy_NFT_VOLUME_TOP
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -7341,7 +7379,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_ALL_Burn_NFT_VOLUME_TOP
 -- ALL_ALL_Buy_NFT_VOLUME_TOP
 insert
-into dim_project_token_type (project,
+into dim_project_token_type_temp (project,
                              "token",
                              "type",
                              label_type,
@@ -7462,6 +7500,6 @@ where nft_trade_type.type = '0';
 
 insert into dim_project_token_type_rank_temp(token_id, project)
 select distinct token, project
-from dim_project_token_type;
+from dim_project_token_type_temp;
 insert into tag_result(table_name, batch_date)
-SELECT 'dim_project_token_type' as table_name, '${batchDate}' as batch_date;
+SELECT 'dim_project_token_type_temp' as table_name, '${batchDate}' as batch_date;
