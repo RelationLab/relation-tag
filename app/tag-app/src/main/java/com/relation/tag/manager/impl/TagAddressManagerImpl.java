@@ -401,7 +401,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("dim", "erc20_tx_record_from.sql", batchDate, tableDefiPath, 6,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_from.sql", "tabel_defi_erc20_tx_record_from", 1,false);
         /***************erc20_tx_record_to***********/
-        execSql("dex_tx_volume_count_summary_univ3", "erc20_tx_record_to.sql", batchDate, tableDefiPath, 9,true,null, false);
+        execSql("dim", "erc20_tx_record_to.sql", batchDate, tableDefiPath, 6,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_to.sql", "tabel_defi_erc20_tx_record_to", 1,false);
         execSql("erc20_tx_record", "vol_count_token_holding_vol_count.sql", batchDate, filePath, 18,true,null, false);
         /***************eth_holding_vol_count***********/
@@ -438,8 +438,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
         exceRecentTimeScripts(batchDate, recentTimePath, "web3_transaction_record_summary.sql", "tabel_defi_web3_transaction_record_summary", 1,false);
 
         /***************dex_tx_count_summary***********/
-        execSql("web3_transaction_record_summary", "total_dex_tx_count_summary.sql", batchDate, tableDefiPath, 9,true,null, false);
-        exceRecentTimeScripts(batchDate, recentTimePath, "total_dex_tx_count_summary.sql", "tabel_defi_dex_tx_count_summary", 1,false);
+        execSql("web3_transaction_record_summary", "dex_tx_count_summary.sql", batchDate, tableDefiPath, 9,true,null, false);
+        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_count_summary.sql", "tabel_defi_dex_tx_count_summary", 1,false);
         execSql("dex_tx_count_summary", "total_dex_tx_count_summary.sql", batchDate, filePath, 9,true,null, false);
 
         /***************dex_tx_volume_count_summary***********/
@@ -447,8 +447,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
         exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary_univ3.sql", "tabel_defi_dex_tx_volume_count_summary_univ3", 1,false);
 
         /***************dex_tx_volume_count_summary***********/
-        execSql("dex_tx_volume_count_summary_univ3", "total_dex_tx_volume_count_summary.sql", batchDate, tableDefiPath, 9,true,null, false);
-        exceRecentTimeScripts(batchDate, recentTimePath, "total_dex_tx_volume_count_summary.sql", "tabel_defi_dex_tx_volume_count_summary", 1,false);
+        execSql("dex_tx_volume_count_summary_univ3", "dex_tx_volume_count_summary.sql", batchDate, tableDefiPath, 9,true,null, false);
+        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary.sql", "tabel_defi_dex_tx_volume_count_summary", 1,false);
         execSql("dex_tx_volume_count_summary", "total_dex_tx_volume_count_summary.sql", batchDate, filePath, 9,true,null, false);
 
         }
