@@ -140,7 +140,7 @@ from (select wlp.name,
   and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -302,7 +302,7 @@ from (select wlp.name,
         and wlp."type" = 'LP') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -464,7 +464,7 @@ from (select wlp.name,
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -627,7 +627,7 @@ from (select wlp.name,
         and wlp."type" = 'LP' and wlp.factory_type='Sushiswap') lpt
          inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -794,7 +794,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -934,7 +934,7 @@ from nft_trade_type
          inner join recent_time on (1 = 1)
 where nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1078,7 +1078,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1230,7 +1230,7 @@ from mp_nft_platform
 where nft_trade_type.type = '1';
 
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1382,7 +1382,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1531,7 +1531,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1680,7 +1680,7 @@ from mp_nft_platform
 where nft_trade_type.type = '1';
 
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1811,7 +1811,7 @@ from nft_trade_type
          inner join recent_time on (1 = 1)
 where nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1962,7 +1962,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -2111,7 +2111,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -2259,7 +2259,7 @@ from mp_nft_platform
 where nft_trade_type.type = '1';
 
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -2390,7 +2390,7 @@ from nft_trade_type
          inner join recent_time on (1 = 1)
 where nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -2540,7 +2540,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -2689,7 +2689,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -2837,7 +2837,7 @@ from mp_nft_platform
 where nft_trade_type.type = '1';
 
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -2969,7 +2969,7 @@ from nft_trade_type
          inner join recent_time on (1 = 1)
 where nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -3119,7 +3119,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -3268,7 +3268,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -3417,7 +3417,7 @@ from mp_nft_platform
 where nft_trade_type.type = '1';
 
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -3547,7 +3547,7 @@ from nft_trade_type
          inner join recent_time on (1 = 1)
 where nft_trade_type.type = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -3736,7 +3736,7 @@ from token_platform
                      where type = 'defi_count') level_def on
     (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -3891,7 +3891,7 @@ from (select *
     (1 = 1)
          inner join recent_time on (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -4012,7 +4012,7 @@ from platform
          inner join recent_time on (1 = 1)
 where platform.token_all_flag = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -4124,7 +4124,7 @@ from trade_type
     (1 = 1)
          inner join recent_time on (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -4271,7 +4271,7 @@ from token_platform
                     on (token_platform.platform = dex_action_platform.platform and
                         trade_type.trade_type = dex_action_platform.trade_type);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -4419,7 +4419,7 @@ from (select *
     (1 = 1)
          inner join recent_time on (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -4554,7 +4554,7 @@ from platform
          inner join recent_time on (1 = 1)
 where platform.token_all_flag = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -4681,7 +4681,7 @@ from trade_type
     (1 = 1)
          inner join recent_time on (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -4834,7 +4834,7 @@ from token_platform
                         trade_type.trade_type = dex_action_platform.trade_type);
 
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -4973,7 +4973,7 @@ from (select *
     (1 = 1)
          inner join recent_time on (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -5099,7 +5099,7 @@ from platform
          inner join recent_time on (1 = 1)
 where platform.token_all_flag = '1';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -5214,7 +5214,7 @@ from trade_type
     (1 = 1)
          inner join recent_time on (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -5319,7 +5319,7 @@ from public.nft_sync_address
     (1 = 1)
 where nft_sync_address.type <> 'ERC1155';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -5409,7 +5409,7 @@ select distinct 'RelationTeam'                                       "owner",
 from level_def
 where type = 'nft_balance_grade';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -5502,7 +5502,7 @@ from public.nft_sync_address
     (1 = 1)
 where nft_sync_address.type <> 'ERC1155';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -5591,7 +5591,7 @@ select distinct 'RelationTeam'                                      "owner",
 from level_def
 where type = 'nft_balance_rank';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -5683,7 +5683,7 @@ from public.nft_sync_address
     (1 = 1)
 where nft_sync_address.type <> 'ERC1155';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -5773,7 +5773,7 @@ select distinct 'RelationTeam'                                     "owner",
 from level_def
 where type = 'nft_balance_top';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -5906,7 +5906,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '0';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -6042,7 +6042,7 @@ from nft_trade_type
          inner join recent_time on (1 = 1)
 where nft_trade_type.type = '0';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -6145,7 +6145,7 @@ from nft_sync_address
     (1 = 1)
 where nft_sync_address.type <> 'ERC1155';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -6240,7 +6240,7 @@ from nft_sync_address
     (1 = 1)
 where nft_sync_address.type <> 'ERC1155';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -6337,7 +6337,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155';
 
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -6470,7 +6470,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '0';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -6602,7 +6602,7 @@ from nft_trade_type
          inner join recent_time on (1 = 1)
 where nft_trade_type.type = '0';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -6744,7 +6744,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '0';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -6876,7 +6876,7 @@ from nft_trade_type
          inner join recent_time on (1 = 1)
 where nft_trade_type.type = '0';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -7015,7 +7015,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '0';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -7146,7 +7146,7 @@ from nft_trade_type
          inner join recent_time on (1 = 1)
 where nft_trade_type.type = '0';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -7287,7 +7287,7 @@ from nft_sync_address
 where nft_sync_address.type <> 'ERC1155'
   and nft_trade_type.type = '0';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -7418,7 +7418,7 @@ from nft_trade_type
          inner join recent_time on (1 = 1)
 where nft_trade_type.type = '0';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,

@@ -93,7 +93,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public.combination (asset,
+    public.combination_temp (asset,
                         project,
                         trade_type,
                         balance,
@@ -213,7 +213,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public.combination (asset,
+    public.combination_temp (asset,
                         project,
                         trade_type,
                         balance,
@@ -332,7 +332,7 @@ from
 WHERE web3_action_platform.dim_type='1';
 insert
 into
-    public.combination (asset,
+    public.combination_temp (asset,
                         project,
                         trade_type,
                         balance,
@@ -452,7 +452,7 @@ from
         (1 = 1) inner join recent_time on(1=1);
 insert
 into
-    public.combination (asset,
+    public.combination_temp (asset,
                         project,
                         trade_type,
                         balance,

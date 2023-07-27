@@ -1,11 +1,11 @@
--- public.combination definition
+-- public.combination_temp definition
 
 -- Drop table
 
--- DROP TABLE public.combination;
-drop table if exists combination;
+-- DROP TABLE public.combination_temp;
+drop table if exists combination_temp;
 
-CREATE TABLE public.combination (
+CREATE TABLE public.combination_temp (
                                     asset varchar(100) NULL,
                                     project varchar(100) NULL,
                                     trade_type varchar(100) NULL,
@@ -22,6 +22,6 @@ CREATE TABLE public.combination (
                                     label_category varchar(50) NULL,
                                     recent_time_code varchar(30) NULL
 );
-CREATE INDEX combination_idx_label_name ON public.combination USING btree (label_name);
+CREATE INDEX combination_temp_idx_label_name ON public.combination_temp USING btree (label_name);
 update nft_sync_address set platform='CryptoPunks' where  address='0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb';
 insert into tag_result(table_name,batch_date)  SELECT 'data_table_combination' as table_name,'${batchDate}'  as batch_date;

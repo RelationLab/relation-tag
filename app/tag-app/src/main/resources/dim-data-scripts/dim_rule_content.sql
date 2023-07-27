@@ -129,7 +129,7 @@ from (select wlp.name,
                      where type = 'defi_balance_grade') level_def on
     (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -293,7 +293,7 @@ from (select wlp.name,
                      where type = 'defi_balance_rank') level_def on
     (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -456,7 +456,7 @@ from (select wlp.name,
                      where type = 'defi_balance_top') level_def on
     (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -631,7 +631,7 @@ from (select wlp.name,
                      where type = 'defi_count') level_def on
     (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -812,7 +812,7 @@ from (select wlp.name,
     (1 = 1)
          inner join recent_time on (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -996,7 +996,7 @@ from (select wlp.name,
     (1 = 1)
          inner join recent_time on (1 = 1);
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1123,7 +1123,7 @@ from top_token_1000 t
 where holders >= 100
   and removed <> 'true';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1208,7 +1208,7 @@ select distinct 'RelationTeam'                                                  
 from level_def
 where type = 'defi_balance_grade';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1300,7 +1300,7 @@ from top_token_1000 t
 where holders >= 100
   and removed <> 'true';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1385,7 +1385,7 @@ select distinct 'RelationTeam'                                                  
 from level_def
 where type = 'defi_balance_rank';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1477,7 +1477,7 @@ from top_token_1000 t
 where holders >= 100
   and removed <> 'true';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1562,7 +1562,7 @@ select distinct 'RelationTeam'                                                  
 from level_def
 where type = 'defi_balance_top';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1666,7 +1666,7 @@ from top_token_1000 t
 where holders >= 100
   and removed <> 'true';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1766,7 +1766,7 @@ from level_def
          inner join recent_time on (1 = 1)
 where type = 'defi_count';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1863,7 +1863,7 @@ from top_token_1000 t
 where holders >= 100
   and removed <> 'true';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -1962,7 +1962,7 @@ from top_token_1000 t
 where holders >= 100
   and removed <> 'true';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -2072,7 +2072,7 @@ from top_token_1000 t
 where holders >= 100
   and removed <> 'true';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -2177,7 +2177,7 @@ from level_def
          inner join recent_time on (1 = 1)
 where type = 'defi_volume_grade';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -2285,7 +2285,7 @@ from top_token_1000 t
 where holders >= 100
   and removed <> 'true';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -2385,7 +2385,7 @@ from level_def
          inner join recent_time on (1 = 1)
 where type = 'defi_volume_rank';
 insert
-into public.combination (asset,
+into public.combination_temp (asset,
                          project,
                          trade_type,
                          balance,
@@ -2419,7 +2419,7 @@ from level_def
 where type = 'defi_volume_rank';
 
 insert
-into combination (asset,
+into combination_temp (asset,
                   project,
                   trade_type,
                   balance,
@@ -2450,7 +2450,7 @@ values ('',
         '',
         'ALL');
 insert
-into combination (asset,
+into combination_temp (asset,
                   project,
                   trade_type,
                   balance,
@@ -2483,7 +2483,7 @@ values ('',
 
 
 insert
-into combination (asset,
+into combination_temp (asset,
                   project,
                   trade_type,
                   balance,
@@ -2514,7 +2514,7 @@ values ('',
         '',
         'ALL');
 insert
-into combination (asset,
+into combination_temp (asset,
                   project,
                   trade_type,
                   balance,
@@ -2546,7 +2546,7 @@ values ('',
         'ALL');
 
 insert
-into combination (asset,
+into combination_temp (asset,
                   project,
                   trade_type,
                   balance,
@@ -2577,7 +2577,7 @@ values ('',
         '',
         'ALL');
 insert
-into combination (asset,
+into combination_temp (asset,
                   project,
                   trade_type,
                   balance,
@@ -2610,7 +2610,7 @@ values ('',
 
 
 insert
-into combination (asset,
+into combination_temp (asset,
                   project,
                   trade_type,
                   balance,
@@ -2641,7 +2641,7 @@ values ('',
         '',
         'ALL');
 insert
-into combination (asset,
+into combination_temp (asset,
                   project,
                   trade_type,
                   balance,
@@ -2674,7 +2674,7 @@ values ('',
 
 
 insert
-into combination (asset,
+into combination_temp (asset,
                   project,
                   trade_type,
                   balance,
@@ -2705,7 +2705,7 @@ values ('',
         '',
         'ALL');
 insert
-into combination (asset,
+into combination_temp (asset,
                   project,
                   trade_type,
                   balance,
