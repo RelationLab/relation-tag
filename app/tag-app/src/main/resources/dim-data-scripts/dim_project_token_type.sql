@@ -166,7 +166,7 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 lpt.factory_content || ' ' || symbol_wired || ' First Mover LP'                "content",
                 'token'                                                                        asset_type,
                 'TOP'                                                                          label_category,
-                'ALL' recent_time_code
+                'ALL'                                                                          recent_time_code
 from (select wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
@@ -328,7 +328,7 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 lpt.factory_content || ' ' || symbol_wired || ' Heavy LP'                      "content",
                 'token'                                                                        asset_type,
                 'TOP'                                                                          label_category,
-                'ALL' recent_time_code
+                'ALL'                                                                          recent_time_code
 from (select wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
@@ -490,7 +490,7 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 lpt.factory_content || ' ' || symbol_wired || ' First Mover Staking'           "content",
                 'token'                                                                        asset_type,
                 'TOP'                                                                          label_category,
-                'ALL' recent_time_code
+                'ALL'                                                                          recent_time_code
 from (select wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
@@ -639,7 +639,7 @@ into public.combination (asset,
                          "content",
                          asset_type,
                          label_category,
-    recent_time_code)
+                         recent_time_code)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_content                                                            project,
                 ''                                                                             trade_type,
@@ -653,7 +653,7 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 lpt.factory_content || ' ' || symbol_wired || ' Heavy LP Staker'               "content",
                 'token'                                                                        asset_type,
                 'TOP'                                                                          label_category,
-                'ALL' recent_time_code
+                'ALL'                                                                          recent_time_code
 from (select wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
@@ -3625,11 +3625,29 @@ select distinct token_platform.platform as                                      
 from token_platform
          inner join platform on
     (token_platform.platform = platform.platform)
-         inner join (select *
+         inner join (select address,
+                            symbol
                      from top_token_1000
                      where holders >= 100
-                       and removed <> 'true') top_token_1000 on
-    (token_platform.address = top_token_1000.address)
+                       and removed <> 'true'
+                     union all
+                     select wlp.address,
+                            wlp.symbol_wired as symbol
+                     from white_list_lp wlp
+                              left join white_list_lp wslp on
+                                 wlp.address = wslp.address
+                             and wlp.type = 'LP'
+                             and wslp.type = 'SLP'
+                     where wlp.tvl > 1000000
+                       and string_to_array(wlp.symbol_wired, '/') && array['ETH',
+                        'WETH',
+                        'UNI',
+                        'AAVE',
+                        '1INCH',
+                        'MANA',
+                        'AXS',
+                        'SAND']
+                    and wlp."type" = 'LP') top_token_1000 on (token_platform.address = top_token_1000.address)
          INNER JOIN trade_type ON (1 = 1)
          inner join recent_time on (1 = 1)
          inner join dex_action_platform
@@ -3684,10 +3702,29 @@ select distinct 'RelationTeam'       "owner",
 from token_platform
          inner join platform on
     (token_platform.platform = platform.platform)
-         inner join (select *
+         inner join (select address,
+                            symbol
                      from top_token_1000
                      where holders >= 100
-                       and removed <> 'true') top_token_1000 on
+                       and removed <> 'true'
+                     union all
+                     select wlp.address,
+                            wlp.symbol_wired as symbol
+                     from white_list_lp wlp
+                              left join white_list_lp wslp on
+                                 wlp.address = wslp.address
+                             and wlp.type = 'LP'
+                             and wslp.type = 'SLP'
+                     where wlp.tvl > 1000000
+                       and string_to_array(wlp.symbol_wired, '/') && array['ETH',
+                        'WETH',
+                        'UNI',
+                        'AAVE',
+                        '1INCH',
+                        'MANA',
+                        'AXS',
+                        'SAND']
+                    and wlp."type" = 'LP') top_token_1000 on
     (token_platform.address = top_token_1000.address)
          inner join trade_type on (1 = 1)
          inner join recent_time on (1 = 1)
@@ -3735,10 +3772,29 @@ select distinct top_token_1000.symbol || '(' || SUBSTRING(top_token_1000.address
 from token_platform
          inner join platform on
     (token_platform.platform = platform.platform)
-         inner join (select *
+         inner join (select address,
+                            symbol
                      from top_token_1000
                      where holders >= 100
-                       and removed <> 'true') top_token_1000 on
+                       and removed <> 'true'
+                     union all
+                     select wlp.address,
+                            wlp.symbol_wired as symbol
+                     from white_list_lp wlp
+                              left join white_list_lp wslp on
+                                 wlp.address = wslp.address
+                             and wlp.type = 'LP'
+                             and wslp.type = 'SLP'
+                     where wlp.tvl > 1000000
+                       and string_to_array(wlp.symbol_wired, '/') && array['ETH',
+                        'WETH',
+                        'UNI',
+                        'AAVE',
+                        '1INCH',
+                        'MANA',
+                        'AXS',
+                        'SAND']
+                    and wlp."type" = 'LP') top_token_1000 on
     (token_platform.address = top_token_1000.address)
          inner join trade_type on (1 = 1)
          inner join recent_time on (1 = 1)
@@ -5275,7 +5331,7 @@ into public.combination (asset,
                          "content",
                          asset_type,
                          label_category,
-    recent_time_code)
+                         recent_time_code)
 select distinct nft_sync_address.platform                                                               asset,
                 ''                                                                                      project,
                 ''                                                                                      trade_type,
@@ -5288,7 +5344,7 @@ select distinct nft_sync_address.platform                                       
                 replace(nft_sync_address.platform, ' ', '') || ' ' || level_def.level_name              "content",
                 'nft'                                                                                   asset_type,
                 'GRADE'                                                                                 label_category,
-                'ALL' recent_time_code
+                'ALL'                                                                                   recent_time_code
 from public.nft_sync_address
          inner join (select *
                      from level_def
@@ -5365,7 +5421,7 @@ into public.combination (asset,
                          "content",
                          asset_type,
                          label_category,
-  recent_time_code)
+                         recent_time_code)
 select distinct 'ALL_NFT'                                         asset,
                 ''                                                project,
                 ''                                                trade_type,
@@ -5378,7 +5434,7 @@ select distinct 'ALL_NFT'                                         asset,
                 'NFT ' || level_def.level_name                    "content",
                 'nft'                                             asset_type,
                 'GRADE'                                           label_category,
-                'ALL' recent_time_code
+                'ALL'                                             recent_time_code
 from level_def
 where type = 'nft_balance_grade';
 
@@ -5458,7 +5514,7 @@ into public.combination (asset,
                          "content",
                          asset_type,
                          label_category,
-    recent_time_code)
+                         recent_time_code)
 select distinct nft_sync_address.platform                                                              asset,
                 ''                                                                                     project,
                 ''                                                                                     trade_type,
@@ -5471,7 +5527,7 @@ select distinct nft_sync_address.platform                                       
                 nft_sync_address.platform || ' ' || level_def.level_name                               "content",
                 'nft'                                                                                  asset_type,
                 'RANK'                                                                                 label_category,
-                'ALL' recent_time_code
+                'ALL'                                                                                  recent_time_code
 from public.nft_sync_address
          inner join (select *
                      from level_def
@@ -5547,7 +5603,7 @@ into public.combination (asset,
                          "content",
                          asset_type,
                          label_category,
-    recent_time_code)
+                         recent_time_code)
 select distinct 'ALL_NFT'                                        asset,
                 ''                                               project,
                 ''                                               trade_type,
@@ -5560,7 +5616,7 @@ select distinct 'ALL_NFT'                                        asset,
                 'NFT ' || level_def.level_name                   "content",
                 'nft'                                            asset_type,
                 'RANK'                                           label_category,
-                'ALL' recent_time_code
+                'ALL'                                            recent_time_code
 from level_def
 where type = 'nft_balance_rank';
 
@@ -5639,7 +5695,7 @@ into public.combination (asset,
                          "content",
                          asset_type,
                          label_category,
-     recent_time_code)
+                         recent_time_code)
 select distinct nft_sync_address.platform                                                             asset,
                 ''                                                                                    project,
                 ''                                                                                    trade_type,
@@ -5652,7 +5708,7 @@ select distinct nft_sync_address.platform                                       
                 nft_sync_address.platform || ' ' || level_def.level_name                              "content",
                 'nft'                                                                                 asset_type,
                 'TOP'                                                                                 label_category,
-                'ALL' recent_time_code
+                'ALL'                                                                                 recent_time_code
 from public.nft_sync_address
          inner join (select *
                      from level_def
@@ -5729,7 +5785,7 @@ into public.combination (asset,
                          "content",
                          asset_type,
                          label_category,
-    recent_time_code)
+                         recent_time_code)
 select distinct 'ALL_NFT'                                       asset,
                 ''                                              project,
                 ''                                              trade_type,
@@ -5742,7 +5798,7 @@ select distinct 'ALL_NFT'                                       asset,
                 'NFT ' || level_def.level_name                  "content",
                 'nft'                                           asset_type,
                 'TOP'                                           label_category,
-                'ALL' recent_time_code
+                'ALL'                                           recent_time_code
 from level_def
 where type = 'nft_balance_top';
 
@@ -6101,7 +6157,7 @@ into public.combination (asset,
                          "content",
                          asset_type,
                          label_category,
-    recent_time_code)
+                         recent_time_code)
 select distinct nft_sync_address.platform                                                            asset,
                 ''                                                                                   project,
                 ''                                                                                   trade_type,
@@ -6114,7 +6170,7 @@ select distinct nft_sync_address.platform                                       
                 nft_sync_address.platform || ' ' || level_def.level_name                             "content",
                 'nft'                                                                                asset_type,
                 'GRADE'                                                                              label_category,
-                'ALL' recent_time_code
+                'ALL'                                                                                recent_time_code
 from nft_sync_address
          inner join (select *
                      from level_def
@@ -6196,7 +6252,7 @@ into public.combination (asset,
                          "content",
                          asset_type,
                          label_category,
-    recent_time_code)
+                         recent_time_code)
 select distinct nft_sync_address.platform                                                          asset,
                 ''                                                                                 project,
                 ''                                                                                 trade_type,
@@ -6209,7 +6265,7 @@ select distinct nft_sync_address.platform                                       
                 nft_sync_address.platform || ' ' || level_def.level_name                           "content",
                 'nft'                                                                              asset_type,
                 'RANK'                                                                             label_category,
-                'ALL' recent_time_code
+                'ALL'                                                                              recent_time_code
 from nft_sync_address
          inner join (select *
                      from level_def
@@ -6293,7 +6349,7 @@ into public.combination (asset,
                          "content",
                          asset_type,
                          label_category,
-    recent_time_code)
+                         recent_time_code)
 select distinct nft_sync_address.platform                                                              asset,
                 ''                                                                                     project,
                 ''                                                                                     trade_type,
@@ -6306,7 +6362,7 @@ select distinct nft_sync_address.platform                                       
                 nft_sync_address.platform || ' ' || level_def.level_name                               "content",
                 'nft'                                                                                  asset_type,
                 'SPECIAL'                                                                              label_category,
-                'ALL' recent_time_code
+                'ALL'                                                                                  recent_time_code
 from nft_sync_address
          inner join (select *
                      from level_def
@@ -6971,7 +7027,7 @@ into public.combination (asset,
                          "content",
                          asset_type,
                          label_category,
-    recent_time_code)
+                         recent_time_code)
 select distinct nft_sync_address.platform                                                               asset,
                 ''                                                                                      project,
                 case
@@ -6992,7 +7048,7 @@ select distinct nft_sync_address.platform                                       
                                                            else nft_trade_type.nft_trade_type_name end) "content",
                 'nft'                                                                                   asset_type,
                 'RANK'                                                                                  label_category,
-                'ALL' recent_time_code
+                'ALL'                                                                                   recent_time_code
 from nft_sync_address
          inner join nft_trade_type on (1 = 1)
          inner join (select *

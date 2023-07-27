@@ -56,9 +56,8 @@ from
             where wlp.tvl > 1000000
               and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
                 and wlp."type" = 'LP'
-            )
-                top_token_1000 ON (white_list_erc20.address = top_token_1000.address) ) w on
-                w.address = dtvcr."token"
+            ) top_token_1000 ON (white_list_erc20.address = top_token_1000.address) ) w
+            on w.address = dtvcr."token"
             and  (token,project) not in(('0x5e8422345238f34275888049021821e8e08caa1f','0xbafa44efe7901e04e39dad13167d089c559c1138'),
                                         ('0xae7ab96520de3a18e5e111b5eaab095312d7fe84','0xae7ab96520de3a18e5e111b5eaab095312d7fe84'),
                                         ('0xae78736cd615f374d3085123a210448e74fc6393','0x4d05e3d48a938db4b7a9a59a802d5b45011bde58'),
