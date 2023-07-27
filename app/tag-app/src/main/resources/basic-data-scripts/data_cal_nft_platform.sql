@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS public.nft_platform;
-CREATE TABLE public.nft_platform (
+DROP TABLE IF EXISTS public.nft_platform_temp;
+CREATE TABLE public.nft_platform_temp(
                                      address varchar NOT NULL,
                                      platform varchar NOT NULL,
                                      platform_name varchar NULL,
@@ -7,12 +7,12 @@ CREATE TABLE public.nft_platform (
                                      updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                      "removed" bool DEFAULT false
 );
-truncate table nft_platform;
-vacuum nft_platform;
+truncate table nft_platform_temp;
+vacuum nft_platform_temp;
 
 insert
 into
-    nft_platform (address,
+    nft_platform_temp(address,
                   platform,
                   platform_name)
 select

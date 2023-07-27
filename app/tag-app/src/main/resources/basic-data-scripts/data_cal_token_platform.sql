@@ -21,8 +21,8 @@ where (project = '0xae7ab96520de3a18e5e111b5eaab095312d7fe84'
     or token = '0x5e8422345238f34275888049021821e8e08caa1f')
   and type = 'withdraw';
 
-DROP TABLE IF EXISTS public.token_platform;
-CREATE TABLE public.token_platform
+DROP TABLE IF EXISTS public.token_platform_temp;
+CREATE TABLE public.token_platform_temp
 (
     address       varchar NOT NULL,
     platform      varchar NOT NULL,
@@ -30,9 +30,9 @@ CREATE TABLE public.token_platform
     created_at    timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at    timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) DISTRIBUTED BY (address,platform);
-truncate table token_platform;
-vacuum token_platform;
-insert into token_platform (address, platform)
+truncate table token_platform_temp;
+vacuum token_platform_temp;
+insert into token_platform_temp (address, platform)
 select token, project
 from (select token, project
       from dex_tx_volume_count_record
