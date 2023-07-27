@@ -351,39 +351,39 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     private void basicData(String batchDate, String filePath) {
         /******************级别部分*****************/
-        execSql("create_view", "level_def.sql", batchDate, filePath, null, false);
+        execSql("create_view", "basic_data_level_def.sql", batchDate, filePath, null, false);
 
         /******************DEX部分*****************/
-        execSql("create_view", "platform.sql", batchDate, filePath, null, false);
-        execSql("create_view", "platform_detail.sql", batchDate, filePath, null, false);
-        execSql("create_view", "trade_type.sql", batchDate, filePath, null, false);
-        execSql("create_view", "dex_action_platform.sql", batchDate, filePath, null, false);
+        execSql("create_view", "basic_data_platform.sql", batchDate, filePath, null, false);
+        execSql("create_view", "basic_data_platform_detail.sql", batchDate, filePath, null, false);
+        execSql("create_view", "basic_data_trade_type.sql", batchDate, filePath, null, false);
+        execSql("create_view", "basic_data_dex_action_platform.sql", batchDate, filePath, null, false);
 
         /******************WEB3部分*****************/
-        execSql("create_view", "web3_platform.sql", batchDate, filePath, null, false);
-        execSql("create_view", "web3_action.sql", batchDate, filePath, null, false);
-        execSql("create_view", "web3_action_platform.sql", batchDate, filePath, null, false);
+        execSql("create_view", "basic_data_web3_platform.sql", batchDate, filePath, null, false);
+        execSql("create_view", "basic_data_web3_action.sql", batchDate, filePath, null, false);
+        execSql("create_view", "basic_data_web3_action_platform.sql", batchDate, filePath, null, false);
 
         /******************NFT部分*****************/
-        execSql("create_view", "mp_nft_platform.sql", batchDate, filePath, null, false);
-        execSql("create_view", "nft_trade_type.sql", batchDate, filePath, null, false);
-        execSql("create_view", "nft_action_platform.sql", batchDate, filePath, null, false);
+        execSql("create_view", "basic_data_mp_nft_platform.sql", batchDate, filePath, null, false);
+        execSql("create_view", "basic_data_nft_trade_type.sql", batchDate, filePath, null, false);
+        execSql("create_view", "basic_data_nft_action_platform.sql", batchDate, filePath, null, false);
 
         /************计算token的dex和nft的MP部分*************/
-        execSql("basic_data", "token_platform.sql", batchDate, filePath,11,true, null,false );
-        execSql("basic_data", "nft_platform.sql", batchDate, filePath,11,true, null, false);
+        execSql("basic_data", "data_cal_token_platform.sql", batchDate, filePath,11,true, null,false );
+        execSql("basic_data", "data_cal_nft_platform.sql", batchDate, filePath,11,true, null, false);
     }
 
     private void dimData(String batchDate, String filePath) {
-        execSql("data", "combination.sql", batchDate, filePath, 2,true,null, false);
-        execSql("data", "label.sql", batchDate, filePath, 2,true,null, false);
+        execSql("data_cal", "data_table_combination.sql", batchDate, filePath, 2,true,null, false);
+        execSql("data_cal", "data_table_label.sql", batchDate, filePath, 2,true,null, false);
 
         execSql("data_table", "dim_rule_sql_content.sql", batchDate, filePath,2,true, null, false);
-        execSql("data_table", "label_factor_seting.sql", batchDate, filePath, 2,true,null, false);
+        execSql("data_table", "dim_label_factor_seting.sql", batchDate, filePath, 2,true,null, false);
         execSql("data_table", "dim_project_token_type.sql", batchDate, filePath,2,true, null, false);
         execSql("data_table", "dim_project_type.sql", batchDate, filePath, 2,true,null,false );
         execSql("data_table", "dim_rule_content.sql", batchDate, filePath, 2,true,null,false );
-        execSql("data_table", "white_list_erc20.sql", batchDate, filePath, 2,true,null, false);
+        execSql("data_table", "dim_white_list_erc20.sql", batchDate, filePath, 2,true,null, false);
     }
 
 
@@ -406,12 +406,12 @@ public class TagAddressManagerImpl implements TagAddressManager {
         /***************erc20_tx_record_to***********/
         execSql("dex_tx_volume_count_summary_univ3", "erc20_tx_record_to.sql", batchDate, tableDefiPath, 9,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_to.sql", "tabel_defi_erc20_tx_record_to", 1,false);
-        execSql("erc20_tx_record", "token_holding_vol_count.sql", batchDate, filePath, 18,true,null, false);
+        execSql("erc20_tx_record", "vol_count_token_holding_vol_count.sql", batchDate, filePath, 18,true,null, false);
 
         /***************eth_holding_vol_count***********/
         execSql("dim", "eth_tx_record_from_to.sql", batchDate, tableDefiPath, 6,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "eth_tx_record_from_to.sql", "tabel_defi_eth_tx_record_from_to", 1,false);
-        execSql("eth_tx_record_from_to", "eth_holding_vol_count.sql", batchDate, filePath, 9,true,null, false);
+        execSql("eth_tx_record_from_to", "vol_count_eth_holding_vol_count.sql", batchDate, filePath, 9,true,null, false);
 
         execSql("vol_count", "token_volume_usd.sql", batchDate, filePath, 2,true,null, false);
         execSql("token_volume_usd", "total_volume_usd.sql", batchDate, filePath, 1,false,null, false);
@@ -474,7 +474,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
      * @param filePath
      */
     private void dataFilter(String batchDate, String filePath) {
-        execSql("dim", "dex_tx_volume_count_record_filter.sql", batchDate, filePath,6,true, null, false);
-        execSql("dim", "token_holding_uni_filter.sql", batchDate, filePath, 6,true,null, false);
+        execSql("dim", "filter_dex_tx_volume_count_record_filter.sql", batchDate, filePath,6,true, null, false);
+        execSql("dim", "filter_token_holding_uni_filter.sql", batchDate, filePath, 6,true,null, false);
     }
 }
