@@ -29,7 +29,7 @@ CREATE TABLE public.token_platform
     platform_name varchar NULL,
     created_at    timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at    timestamp NULL DEFAULT CURRENT_TIMESTAMP
-)) DISTRIBUTED BY (address,platform);
+) DISTRIBUTED BY (address,platform);
 truncate table token_platform;
 vacuum
 token_platform;
