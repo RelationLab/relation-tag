@@ -61,8 +61,6 @@ DROP TABLE IF EXISTS dim_rank_token;
 ALTER TABLE dim_rank_token_temp            RENAME TO dim_rank_token;
 DROP TABLE IF EXISTS dim_rule_content;
 ALTER TABLE dim_rule_content_temp                       RENAME TO dim_rule_content;
-DROP TABLE IF EXISTS dim_rule_sql_content;
-ALTER TABLE dim_rule_sql_content_temp                   RENAME TO dim_rule_sql_content;
 DROP TABLE IF EXISTS white_list_erc20;
 ALTER TABLE white_list_erc20_temp                       RENAME TO white_list_erc20;
 DROP TABLE IF EXISTS white_list_erc20_tag;
