@@ -51,6 +51,6 @@ logging:
 config:
   environment: ${CONFIG_ENVIRONMENT:stag}
   tag:
-    flag: no-tag
-#    flag: tag
+#    flag: no-tag
+    flag: tag
 
