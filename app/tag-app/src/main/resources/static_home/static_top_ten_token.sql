@@ -39,7 +39,7 @@ from (
                                                                   token
                                                               from
                                                                   token_balance_volume_usd_temp tbvu where
-                                                                token in(select token_id from dim_rank_token)
+                                                                token in(select token_id from dim_rank_token_temp)
                                                                 and not exists
                                                                     (select 1 from token_balance_volume_usd_temp tbvu2
                                                                               where tbvu2.token='0x839e71613f9aa06e5701cf6de63e303616b0dde3'
@@ -126,7 +126,7 @@ from (
                              token
                          from
                              token_volume_usd_temp tbvu where
-                                 token in(select token_id from dim_rank_token)
+                                 token in(select token_id from dim_rank_token_temp)
                                                              and not exists
                                  (select 1 from token_volume_usd_temp tbvu2
                                   where tbvu2.token='0x839e71613f9aa06e5701cf6de63e303616b0dde3'
@@ -218,7 +218,7 @@ from (
                              token
                          from
                              token_holding_vol_count_temp tbvu where
-                                 token in(select token_id from dim_rank_token)
+                                 token in(select token_id from dim_rank_token_temp)
                                                             and recent_time_code='ALL'
                                                              and not exists
                                  (select 1 from token_balance_volume_usd_temp tbvu2

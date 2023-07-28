@@ -84,7 +84,7 @@ insert into public.address_label_usdt_balance_rank(address,label_type,label_name
                                                 where
                                                         token = '0xdac17f958d2ee523a2206206994597c13d831ec7' and address not in (select address from exclude_address)
                                             ) s1
-                                                inner join dim_rank_token s2
+                                                inner join dim_rank_token_temp s2
                                                            on
                                                                    s1.token = s2.token_id
                                         where

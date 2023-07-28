@@ -157,7 +157,7 @@ select sum(activity_num),address from(
      union all
      select
          sum(total_transfer_count) as activity_num,address from  token_holding_vol_count_temp
-     where  token in(select token_id from dim_rank_token)  and recent_time_code='ALL'
+     where  token in(select token_id from dim_rank_token_temp)  and recent_time_code='ALL'
      group by address
      union all
      select

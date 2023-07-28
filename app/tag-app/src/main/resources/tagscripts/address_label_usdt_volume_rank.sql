@@ -123,7 +123,7 @@ from
                                                         address
                                                     from
                                                         exclude_address)) s1
-                                                inner join dim_rank_token s2
+                                                inner join dim_rank_token_temp s2
                                                            on
                                                                    s1.token = s2.token_id
                                         where

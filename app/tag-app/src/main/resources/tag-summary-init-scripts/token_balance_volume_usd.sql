@@ -20,7 +20,7 @@ select  address,token,balance_usd,volume_usd from (select distinct eh.address as
 
 insert into token_balance_volume_usd_temp(address, token, balance_usd, volume_usd)
 select address,token,balance_usd,volume_usd from  (select distinct th.address, token, th.balance * price as balance_usd, total_transfer_all_volume* price as volume_usd
-   from token_holding_temp th  inner join white_list_erc20_temp wle  on th.token = wle.address and ignored = false where  th.token in (select token_id from dim_rank_token)) budout
+   from token_holding_temp th  inner join white_list_erc20_temp wle  on th.token = wle.address and ignored = false where  th.token in (select token_id from dim_rank_token_temp)) budout
  where budOut.balance_usd>=100;
 
 insert into tag_result(table_name,batch_date)  SELECT 'token_balance_volume_usd' as table_name,'${batchDate}'  as batch_date;

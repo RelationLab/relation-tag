@@ -103,7 +103,7 @@ insert into public.address_label_eth_volume_rank(address,label_type,label_name,d
                                                 where
                                                         token = 'eth'and address not in (select address from exclude_address)
                                                   and volume_usd >= 100) s1
-                                                inner join dim_rank_token s2
+                                                inner join dim_rank_token_temp s2
                                                            on
                                                                    s1.token = s2.token_id
                                         where

@@ -171,7 +171,7 @@ select sum(activity_num) as activity_num,address from(
  select
      sum(total_transfer_count) as activity_num,aljg.address from  token_holding_vol_count_temp aljg
            inner join address_init${tableSuffix} ais  on(aljg.address=ais.address)
-        where token in(select token_id from dim_rank_token)  and recent_time_code='ALL'
+        where token in(select token_id from dim_rank_token_temp)  and recent_time_code='ALL'
     group by aljg.address
  union all
  select

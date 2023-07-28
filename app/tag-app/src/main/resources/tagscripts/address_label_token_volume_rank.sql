@@ -104,7 +104,7 @@ from
                                                 where
                                                         token <> 'eth' and address not in (select address from exclude_address)
                                                   and token <> '0xdac17f958d2ee523a2206206994597c13d831ec7') s1
-                                                inner join dim_rank_token s2
+                                                inner join dim_rank_token_temp s2
                                                            on
                                                                    s1.token = s2.token_id
                                         where

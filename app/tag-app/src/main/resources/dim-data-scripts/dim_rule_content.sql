@@ -13,15 +13,15 @@ create table dim_rule_content_temp
 );
 truncate table dim_rule_content_temp;
 vacuum dim_rule_content_temp;
-drop table if exists dim_rank_token;
-create table dim_rank_token
+drop table if exists dim_rank_token_temp;
+create table dim_rank_token_temp
 (
     token_id   varchar(512),
     asset_type varchar(10)
 );
-truncate table dim_rank_token;
+truncate table dim_rank_token_temp;
 vacuum
-dim_rank_token;
+dim_rank_token_temp;
 ----------------------------dim_lp.sql-----------------------------------------------
 -----balance_grade  Uniswap_v3_UNI/WETH_0x1d42_BALANCE_GRADE
 insert
@@ -2735,7 +2735,7 @@ values ('',
         '',
         '',
         'ALL');
-insert into dim_rank_token
+insert into dim_rank_token_temp
 select distinct token, token_type
 from dim_rule_content_temp;
 insert into tag_result(table_name, batch_date)

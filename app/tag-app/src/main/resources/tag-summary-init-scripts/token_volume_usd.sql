@@ -30,11 +30,11 @@ from (select address,
       from token_holding_vol_count_temp
       where total_transfer_volume > 0
         and token in (select token_id
-                      from dim_rank_token)) th
+                      from dim_rank_token_temp)) th
          inner join (select *
                      from white_list_erc20_temp
                      where address in (select token_id
-                                       from dim_rank_token)) wle on
+                                       from dim_rank_token_temp)) wle on
             th.token = wle.address
         and ignored = false;
 

@@ -321,7 +321,7 @@ values ('address_label_eth_balance_rank','
 										from token_balance_volume_usd_temp
 										where token = ''eth''
 									) s1
-										inner join dim_rank_token s2
+										inner join dim_rank_token_temp s2
 													on s1.token = s2.token_id
 								where balance_usd >= 100
 								group by s1.token, s1.address) as a1) as a1
@@ -391,7 +391,7 @@ values ('address_label_eth_volume_rank','
 								from (select token, address, volume_usd
 										from token_balance_volume_usd_temp
 										where token =  ''eth'') s1
-										inner join dim_rank_token s2
+										inner join dim_rank_token_temp s2
 													on s1.token = s2.token_id
 								where volume_usd >= 100
 								group by s1.token, s1.address) as a1) as a1
@@ -486,7 +486,7 @@ values ('address_label_token_balance_rank','
 										from token_balance_volume_usd_temp
 										where token <> ''eth''
 										and token <> ''0xdac17f958d2ee523a2206206994597c13d831ec7'') s1
-										inner join dim_rank_token s2
+										inner join dim_rank_token_temp s2
 													on s1.token = s2.token_id
 								where balance_usd >= 100
 								group by s1.token, s1.address) as a1) as a1
@@ -600,7 +600,7 @@ values ('address_label_token_volume_rank','
 										from token_balance_volume_usd_temp
 										where token <> ''eth''
 										and token <> ''0xdac17f958d2ee523a2206206994597c13d831ec7'') s1
-										inner join dim_rank_token s2
+										inner join dim_rank_token_temp s2
 													on s1.token = s2.token_id
 								where volume_usd >= 100
 								group by s1.token, s1.address) as a1) as a1
@@ -669,7 +669,7 @@ values ('address_label_usdt_balance_rank','
 										from token_balance_volume_usd_temp
 										where token = ''0xdac17f958d2ee523a2206206994597c13d831ec7''
 									) s1
-										inner join dim_rank_token s2
+										inner join dim_rank_token_temp s2
 													on s1.token = s2.token_id
 								where balance_usd >= 100
 								group by s1.token, s1.address) as a1) as a1
@@ -740,7 +740,7 @@ values ('address_label_usdt_volume_rank','
 								from (select token, address, volume_usd
 										from token_balance_volume_usd_temp
 										where token = ''0xdac17f958d2ee523a2206206994597c13d831ec7'') s1
-										inner join dim_rank_token s2
+										inner join dim_rank_token_temp s2
 													on s1.token = s2.token_id
 								where volume_usd >= 100
 								group by s1.token, s1.address) as a1) as a1

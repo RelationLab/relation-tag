@@ -90,7 +90,7 @@ from (select t1.address,
                                     where dtvcs.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                       and dtvcs.total_transfer_volume_usd >= 100
                                       and address not in (select address from exclude_address)) s1
-                                       inner join dim_rank_token s2
+                                       inner join dim_rank_token_temp s2
                                                   on
                                                           s1.token = s2.token_id
                               where volume_usd >= 100
