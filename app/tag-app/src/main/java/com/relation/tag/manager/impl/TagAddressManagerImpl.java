@@ -356,6 +356,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
     private void basicData(String batchDate, String filePath) {
         /******************级别部分*****************/
         execSql("create_view", "basic_data_level_def.sql", batchDate, filePath, null, false);
+        execSql("create_view", "basic_data_recent_time.sql", batchDate, filePath, null, false);
 
         /******************DEX部分*****************/
         execSql("create_view", "basic_data_platform.sql", batchDate, filePath, null, false);
@@ -374,8 +375,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("create_view", "basic_data_nft_action_platform.sql", batchDate, filePath, null, false);
 
         /************计算token的dex和nft的MP部分*************/
-        execSql("basic_data", "data_cal_token_platform.sql", batchDate, filePath,11,true, null,false );
-        execSql("basic_data", "data_cal_nft_platform.sql", batchDate, filePath,11,true, null, false);
+        execSql("basic_data", "data_cal_token_platform.sql", batchDate, filePath,12,true, null,false );
+        execSql("basic_data", "data_cal_nft_platform.sql", batchDate, filePath,12,true, null, false);
     }
 
     private void dimData(String batchDate, String filePath) {
