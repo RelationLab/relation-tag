@@ -34,6 +34,7 @@ spring:
       max-wait: 3000000
       time-between-eviction-runs-millis: 6000000
       min-evictable-idle-time-millis: 30000000
+      max-evictable-idle-time-millis: 31000000
       validation-query: select version()
       test-while-idle: true
       test-on-borrow: false
