@@ -32,7 +32,7 @@ public class TagApplication {
         calendar.setTime(new Date());
         calendar.set(Calendar.HOUR,calendar.get(Calendar.HOUR) + 8);
         String batchDate = DateUtils.formatDate(calendar.getTime(), "YYYY-MM-dd");
-        String checkTable = "address_labels_json_gin_".concat(configEnvironment);
+        String checkTable = "rename_table_".concat(configEnvironment);
         if (tagAddressManager.checkResult(checkTable, batchDate, 1, false)){
             log.info("checkResult tag end...........");
             return;

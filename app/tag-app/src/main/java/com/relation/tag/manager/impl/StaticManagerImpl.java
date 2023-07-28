@@ -250,7 +250,7 @@ public class StaticManagerImpl implements StaticManager {
         log.info("synHomePageData start........");
         String tableSuffix = buildTableSuffix(null, configEnvironment);
         /***********获取打标签的批次号**********/
-        String tagBatch = iAddressLabelService.selectTagResult("address_labels_json_gin".concat(tableSuffix));
+        String tagBatch = iAddressLabelService.selectTagResult("rename_table".concat(tableSuffix));
         /***********检查该批次号是否计算完首页数据，未计算完退出**********/
         if (!checkResult("static_home_data_analysis".concat(tableSuffix), 1, null, tagBatch)) {
             return;
@@ -369,7 +369,7 @@ public class StaticManagerImpl implements StaticManager {
     public void staticHomePageData() {
         log.info("staticHomePageData start........");
         String tableSuffix = buildTableSuffix(null, configEnvironment);
-        String tagBatch = iAddressLabelService.selectTagResult("address_labels_json_gin".concat(tableSuffix));
+        String tagBatch = iAddressLabelService.selectTagResult("rename_table".concat(tableSuffix));
         if (StringUtils.isBlank(tagBatch)){
             return;
         }
