@@ -43,7 +43,7 @@ into dim_project_token_type_temp (project,
                              project_name,
                              token_name)
 
-select distinct platform_detail.platform              as             project,
+select distinct platform_detail_temp.platform              as             project,
                 lpt.pool                              as             token,
                 'lp'                                  as             type,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
@@ -77,7 +77,7 @@ from (select wlp.name,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
-         inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 insert
 into public."label_temp" ("owner",
                      "type",
@@ -138,7 +138,7 @@ from (select wlp.name,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
   and wlp."type" = 'LP') lpt
-         inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 insert
 into public.combination_temp (asset,
                          project,
@@ -191,7 +191,7 @@ from (select wlp.name,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
   and wlp."type" = 'LP') lpt
-         inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 
 -----HEAVY_LP  Uniswap_v2_UNI/WETH_0xd3d2_BALANCE_HEAVY_LP
 insert
@@ -205,7 +205,7 @@ into dim_project_token_type_temp (project,
                              project_name,
                              token_name)
 
-select distinct platform_detail.platform   as                        project,
+select distinct platform_detail_temp.platform   as                        project,
                 lpt.pool                   as                        token,
                 'lp'                       as                        type,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
@@ -239,7 +239,7 @@ from (select wlp.name,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
-         inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 insert
 into public."label_temp" ("owner",
                      "type",
@@ -300,7 +300,7 @@ from (select wlp.name,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
-         inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 insert
 into public.combination_temp (asset,
                          project,
@@ -353,7 +353,7 @@ from (select wlp.name,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
-         inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 
 -----FIRST_MOVER_STAKING Sushiswap_SYN/WETH_0x4a86_BALANCE_FIRST_MOVER_STAKING
 insert
@@ -367,7 +367,7 @@ into dim_project_token_type_temp (project,
                              project_name,
                              token_name)
 
-select distinct platform_detail.platform                   as           project,
+select distinct platform_detail_temp.platform                   as           project,
                 lpt.pool                                   as           token,
                 'lp'                                       as           type,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
@@ -401,7 +401,7 @@ from (select wlp.name,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
-         inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 insert
 into public."label_temp" ("owner",
                      "type",
@@ -462,7 +462,7 @@ from (select wlp.name,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
-         inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 insert
 into public.combination_temp (asset,
                          project,
@@ -515,7 +515,7 @@ from (select wlp.name,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
-         inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 
 
 -----HEAVY_LP_STAKER Sushiswap_SYN/WETH_0x4a86_BALANCE_HEAVY_LP_STAKER
@@ -530,7 +530,7 @@ into dim_project_token_type_temp (project,
                              project_name,
                              token_name)
 
-select distinct platform_detail.platform          as                    project,
+select distinct platform_detail_temp.platform          as                    project,
                 lpt.pool                          as                    token,
                 'lp'                              as                    type,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
@@ -564,7 +564,7 @@ from (select wlp.name,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
-         inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 insert
 into public."label_temp" ("owner",
                      "type",
@@ -625,7 +625,7 @@ from (select wlp.name,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type='Sushiswap') lpt
-         inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 insert
 into public.combination_temp (asset,
                          project,
@@ -678,7 +678,7 @@ from (select wlp.name,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
-         inner join platform_detail on (lpt.factory_type = platform_detail.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 
 
 
@@ -7502,4 +7502,4 @@ insert into dim_project_token_type_rank_temp(token_id, project)
 select distinct token, project
 from dim_project_token_type_temp;
 insert into tag_result(table_name, batch_date)
-SELECT 'dim_project_token_type_temp' as table_name, '${batchDate}' as batch_date;
+SELECT 'dim_project_token_type' as table_name, '${batchDate}' as batch_date;
