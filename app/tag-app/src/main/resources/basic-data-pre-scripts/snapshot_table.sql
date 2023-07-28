@@ -8,7 +8,7 @@ DROP TABLE if EXISTS public.white_list_lp_temp;
 DROP TABLE if EXISTS public.white_list_price_temp;
 DROP TABLE if EXISTS public.top_token_1000_temp;
 
-create table top_token_1000_temp as select * from top_token_1000_temp_cdc;
+create table top_token_1000_temp as select * from top_token_1000_cdc;
 create table token_holding_temp as select * from token_holding_cdc;
 create table eth_holding_temp as select * from eth_holding_cdc;
 
