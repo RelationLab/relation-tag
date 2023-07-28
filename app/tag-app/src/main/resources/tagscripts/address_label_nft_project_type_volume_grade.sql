@@ -22,34 +22,46 @@ select
     address,
     label_type,
     label_type||'_'||case
-                         when volume_usd >= 100
-                             and volume_usd < 1000 then 'L1'
-                         when volume_usd >= 1000
-                             and volume_usd < 10000 then 'L2'
-                         when volume_usd >= 10000
-                             and volume_usd < 50000 then 'L3'
-                         when volume_usd >= 50000
-                             and volume_usd < 100000 then 'L4'
-                         when volume_usd >= 100000
-                             and volume_usd < 500000 then 'L5'
-                         when volume_usd >= 500000 then 'L6'
+                         when ((type='Lend' or type='Bid') and volume_usd >= 1
+                             and volume_usd < 3) or (volume_usd >= 100
+                             and volume_usd < 1000) then 'L1'
+                         when ((type='Lend' or type='Bid') and volume_usd >= 3
+                             and volume_usd < 7) or (volume_usd >= 1000
+                             and volume_usd < 10000) then 'L2'
+                         when ((type='Lend' or type='Bid') and volume_usd >= 7
+                             and volume_usd < 21) or (volume_usd >= 10000
+                             and volume_usd < 50000) then 'L3'
+                         when ((type='Lend' or type='Bid') and volume_usd >= 21
+                             and volume_usd < 101) or (volume_usd >= 50000
+                             and volume_usd < 100000) then 'L4'
+                         when ((type='Lend' or type='Bid') and volume_usd >= 101
+                             and volume_usd < 201) or (volume_usd >= 100000
+                             and volume_usd < 500000) then 'L5'
+                         when ((type='Lend' or type='Bid') and volume_usd >= 201)
+                                  or volume_usd >= 500000 then 'L6'
         end as label_name,
     volume_usd  as data,
     'NFT'  as wired_type,
     now() as updated_at,
     'v'  as "group",
     case
-        when volume_usd >= 100
-            and volume_usd < 1000 then 'L1'
-        when volume_usd >= 1000
-            and volume_usd < 10000 then 'L2'
-        when volume_usd >= 10000
-            and volume_usd < 50000 then 'L3'
-        when volume_usd >= 50000
-            and volume_usd < 100000 then 'L4'
-        when volume_usd >= 100000
-            and volume_usd < 500000 then 'L5'
-        when volume_usd >= 500000 then 'L6' end   as level,
+        when ((type='Lend' or type='Bid') and volume_usd >= 1
+            and volume_usd < 3) or (volume_usd >= 100
+            and volume_usd < 1000) then 'L1'
+        when ((type='Lend' or type='Bid') and volume_usd >= 3
+            and volume_usd < 7) or (volume_usd >= 1000
+            and volume_usd < 10000) then 'L2'
+        when ((type='Lend' or type='Bid') and volume_usd >= 7
+            and volume_usd < 21) or (volume_usd >= 10000
+            and volume_usd < 50000) then 'L3'
+        when ((type='Lend' or type='Bid') and volume_usd >= 21
+            and volume_usd < 101) or (volume_usd >= 50000
+            and volume_usd < 100000) then 'L4'
+        when ((type='Lend' or type='Bid') and volume_usd >= 101
+            and volume_usd < 201) or (volume_usd >= 100000
+            and volume_usd < 500000) then 'L5'
+        when ((type='Lend' or type='Bid') and volume_usd >= 201)
+            or volume_usd >= 500000 then 'L6' end   as level,
     'grade' as category,
     t.type as trade_type,
     t.project_name as project,
