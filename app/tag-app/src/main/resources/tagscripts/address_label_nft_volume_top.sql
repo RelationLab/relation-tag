@@ -132,7 +132,7 @@ from
                                   and address not in (select address from exclude_address)
                                     and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                             ) tatola
-                                inner join dim_project_token_type a2
+                                inner join dim_project_token_type_temp a2
                                            on
                                                        tatola.token = a2.token
                                                    and tatola.type = a2.type
@@ -146,7 +146,7 @@ from
                             seq_flag,
                             a2.type,
                             recent_time_code) a1
-            ) s1 inner join dim_project_token_type dptt on(dptt.seq_flag = s1.seq_flag
+            ) s1 inner join dim_project_token_type_temp dptt on(dptt.seq_flag = s1.seq_flag
                 and dptt.type = s1.type
                 and dptt.data_subject = 'volume_top'
                 and dptt.label_type like '%NFT%'

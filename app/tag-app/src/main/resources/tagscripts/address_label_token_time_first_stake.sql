@@ -52,7 +52,7 @@ from
                 where
                         type = 'stakelp'
                   and balance_usd>0 and address not in (select address from exclude_address)) a1
-                inner join dim_project_token_type a2
+                inner join dim_project_token_type_temp a2
                            on
                                        a1.token = a2.token
                                    and a1.project = a2.project

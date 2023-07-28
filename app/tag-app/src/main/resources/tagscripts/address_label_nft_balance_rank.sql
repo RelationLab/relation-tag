@@ -128,7 +128,7 @@ select
                               and recent_time_code ='ALL'
                             )
     s1
-						inner join dim_project_token_type s2
+						inner join dim_project_token_type_temp s2
     on
 							s1.token = s2.token
 							and s2.project = ''
@@ -172,7 +172,7 @@ select
 						  and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                           and recent_time_code ='ALL'
                         ) totala
-					inner join dim_project_token_type tb2
+					inner join dim_project_token_type_temp tb2
     on
 						totala.token = tb2.token
 						and tb2.project = ''
@@ -185,7 +185,7 @@ select
 						seq_flag) as a10
     on
 					a10.seq_flag = a1.seq_flag) as a2) as t1
-    ) tb1 inner join dim_project_token_type dptt on(dptt.seq_flag = tb1.seq_flag
+    ) tb1 inner join dim_project_token_type_temp dptt on(dptt.seq_flag = tb1.seq_flag
                   and dptt.project = ''
                   and (dptt.type = ''
                     or dptt.type = 'ALL')

@@ -27,6 +27,7 @@ insert into nft_action_platform_temp(platform,nft_trade_type) values('0x39da4174
 insert into nft_action_platform_temp(platform,nft_trade_type) values('0x39da41747a83aee658334415666f3ef92dd0d541','Buy');
 insert into nft_action_platform_temp(platform,nft_trade_type) values('0x39da41747a83aee658334415666f3ef92dd0d541','Sale');
 
+insert into nft_action_platform_temp(platform,nft_trade_type,token) values('0x39da41747a83aee658334415666f3ef92dd0d541','ALL','0x0000000000a39bb272e79075ade125fd351887ac');
 insert into nft_action_platform_temp(platform,nft_trade_type,token) values('0x39da41747a83aee658334415666f3ef92dd0d541','Deposit','0x0000000000a39bb272e79075ade125fd351887ac');
 insert into nft_action_platform_temp(platform,nft_trade_type,token) values('0x39da41747a83aee658334415666f3ef92dd0d541','Withdraw','0x0000000000a39bb272e79075ade125fd351887ac');
 

@@ -120,7 +120,7 @@ from
                                     and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                             )
                                 tatola
-                                inner join dim_project_token_type a2
+                                inner join dim_project_token_type_temp a2
                                            on
                                                        tatola.token = a2.token
                                                    and a2.data_subject = 'volume_top'
@@ -133,7 +133,7 @@ from
                             platform_group,
                             tatola.type,
                             recent_time_code) a1
-            ) s1 inner join dim_project_token_type dptt on (
+            ) s1 inner join dim_project_token_type_temp dptt on (
                         dptt.seq_flag = s1.seq_flag
                     and dptt.project = s1.platform_group
                     and dptt.recent_code = s1.recent_time_code

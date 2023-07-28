@@ -174,7 +174,7 @@ from
                                                             and  address not in (select address from exclude_address)
                                                             and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                                                     ) s1
-                                                        inner join dim_project_token_type s2
+                                                        inner join dim_project_token_type_temp s2
                                                                    on
                                                                                s1.token = s2.token
                                                                            and s1.platform_group = s2.project
@@ -263,7 +263,7 @@ from
                                                             and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                                                     ) totala
                                                         inner join
-                                                    dim_project_token_type tb2
+                                                    dim_project_token_type_temp tb2
                                                     on
                                                                 totala.token = tb2.token
                                                             and totala.platform_group = tb2.project
@@ -284,7 +284,7 @@ from
                                                 a10.platform_group = a1.project
                                             and a10.seq_flag = a1.seq_flag
                                             and a10.type = a1.type and a1.recent_time_code = a10.recent_time_code) as a2) as t1
-            ) tb1 inner join dim_project_token_type dptt on(dptt.project = tb1.project
+            ) tb1 inner join dim_project_token_type_temp dptt on(dptt.project = tb1.project
                 and dptt."type" = tb1.type
                 and dptt.seq_flag = tb1.seq_flag
                 and dptt.data_subject = 'volume_elite' and tb1.recent_time_code = dptt.recent_code)
