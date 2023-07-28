@@ -65,7 +65,7 @@ from (
                                     from nft_sync_address nsa
                                     where type = 'ERC721') nft_sync_address on
                    (pltr.lend_token = nft_sync_address.address)
-               where pltr.block_number >= 0
+               where pltr.block_number >=${recentTimeBlockHeight}
                group by pltr.borrower,
                         pltr.lend_token,
                         pltr."type",
@@ -84,7 +84,7 @@ from (
                               from nft_sync_address nsa
                               where type = 'ERC721') nft_sync_address on
              (pltr.lend_token = nft_sync_address.address)
-         where pltr.block_number >= 0
+         where pltr.block_number >=${recentTimeBlockHeight}
          group by pltr.lender,
                   pltr.lend_token
          union all
@@ -103,7 +103,7 @@ from (
                                     from nft_sync_address nsa
                                     where type = 'ERC721') nft_sync_address on
                    (pltr.pledge_token = nft_sync_address.address)
-               where pltr.block_number >=0
+               where pltr.block_number >=${recentTimeBlockHeight}
                group by pltr.borrower,
                         pltr.pledge_token,
                         pltr."type",
@@ -122,7 +122,7 @@ from (
                               from nft_sync_address nsa
                               where type = 'ERC721') nft_sync_address on
              (pltr.pledge_token = nft_sync_address.address)
-         where pltr.block_number >= 0
+         where pltr.block_number >=${recentTimeBlockHeight}
          group by pltr.lender,
                   pltr.pledge_token) lendt
 group by lendt.address,
