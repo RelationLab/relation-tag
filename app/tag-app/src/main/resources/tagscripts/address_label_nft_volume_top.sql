@@ -139,6 +139,7 @@ from
                                                    and a2.data_subject = 'volume_top'
                                                    and a2.label_type like '%NFT%'
                                                    and a2.label_type not like '%WEB3%'
+                                                   and a2.recent_code = tatola.recent_time_code
                                                    and a2.type != 'Transfer'
                                                    and a2.project = ''
                         group by
