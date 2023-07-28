@@ -22,27 +22,27 @@ spring:
       transaction-query-timeout: 6000
       remove-abandoned-timeout: 1800
       filters: stat,config
-#    greenplum:
-    url: jdbc:postgresql://${GREENPLUM_DB_HOST:localhost}:${GREENPLUM_DB_PORT:5432}/${GREENPLUM_DB_NAME:eth}
-    username: ${GREENPLUM_DB_USERNAME:gpadmin}
-    password: ${GREENPLUM_DB_PASSWORD:hojil@123!}
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: org.postgresql.Driver
-    druid:
-      initial-size: 5
-      min-idle: 5
-      max-active: 200
-      max-wait: 3000000
-      time-between-eviction-runs-millis: 6000000
-      min-evictable-idle-time-millis: 30000000
-      validation-query: select version()
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      pool-prepared-statements: true
-      max-open-prepared-statements: 20
-      max-pool-prepared-statement-per-connection-size: 20
-      filters: stat,config
+    greenplum:
+      url: jdbc:postgresql://${GREENPLUM_DB_HOST:localhost}:${GREENPLUM_DB_PORT:5432}/${GREENPLUM_DB_NAME:eth}
+      username: ${GREENPLUM_DB_USERNAME:gpadmin}
+      password: ${GREENPLUM_DB_PASSWORD:hojil@123!}
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: org.postgresql.Driver
+      druid:
+        initial-size: 5
+        min-idle: 5
+        max-active: 200
+        max-wait: 3000000
+        time-between-eviction-runs-millis: 6000000
+        min-evictable-idle-time-millis: 30000000
+        validation-query: select version()
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        pool-prepared-statements: true
+        max-open-prepared-statements: 20
+        max-pool-prepared-statement-per-connection-size: 20
+        filters: stat,config
 
 # 日志配置
 logging:
