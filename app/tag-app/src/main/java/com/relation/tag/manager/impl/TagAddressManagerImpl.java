@@ -308,6 +308,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             }
             tableName = StringUtils.isNotBlank(recentTimeCode)?tableName.concat("_").concat(recentTimeCode):tableName;
             if (checkResult(tableName, batchDate, 1, false)) {
+                log.info("checkResult tableName======={}",tableName);
                 return;
             }
             String exceSql = FileUtils.readFile(dir.concat(File.separator).concat(sqlName));
