@@ -36,3 +36,4 @@ FROM address_label_gp_temp_${tableSuffix}
 GROUP BY (address_label_gp_temp_${tableSuffix}.address);
 
 insert into tag_result(table_name,batch_date)  SELECT 'address_labels_json_gin_${tableSuffix}' as table_name,'${batchDate}'  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'tagging' as table_name,'${batchDate}'  as batch_date;

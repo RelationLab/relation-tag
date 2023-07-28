@@ -103,7 +103,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         /****
          * 如果正在打标签，等待.....
          */
-        checkTagging(batchDate);
+        checkTagBegin(batchDate);
         if (!checkResult("address_label", batchDate, 62, true)) {
             buildTagBasicData(batchDate);
             check("dim_rule_content", 60 * 1000, batchDate, 1, false);
@@ -128,10 +128,10 @@ public class TagAddressManagerImpl implements TagAddressManager {
      * @param batchDate
      * @throws InterruptedException
      */
-    private void checkTagging(String batchDate) throws InterruptedException {
+    private void checkTagBegin(String batchDate) throws InterruptedException {
         while (true) {
-            boolean taggingFlag = checkResult("tagging", batchDate, 1, false);
-            if (!taggingFlag) {
+            boolean tagBegin = checkResult("tag-begin", batchDate, 1, false);
+            if (!tagBegin) {
                 break;
             }
             Thread.sleep(10 * 60 * 1000);
