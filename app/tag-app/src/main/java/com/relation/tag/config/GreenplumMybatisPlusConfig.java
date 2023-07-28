@@ -28,7 +28,7 @@ public class GreenplumMybatisPlusConfig {
     private String mappers = "classpath*:mappers/greenplum/**/*Mapper.xml";
 
     @Bean(name = "greenplumDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource")
+    @ConfigurationProperties(prefix = "spring.datasource.greenplum")
     public DataSource dataSource() {
         return new DruidDataSource();
     }
