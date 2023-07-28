@@ -109,6 +109,6 @@
     </update>
 
     <select id="selectRecentTimeList" resultType="com.relation.tag.entity.RecentTime">
-        select * from recent_time
+        select * from recent_time_temp
     </select>
 </mapper>
