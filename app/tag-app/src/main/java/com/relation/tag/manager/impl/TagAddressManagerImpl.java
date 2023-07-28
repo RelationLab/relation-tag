@@ -226,7 +226,11 @@ public class TagAddressManagerImpl implements TagAddressManager {
             if (checkResult(table, batchDate, 1, false)) {
                 return;
             }
-            iAddressLabelService.exceSql(ruleSql.getFileContent(), ruleSql.getFileName());
+            String exceSql = ruleSql.getFileContent();
+            if (StringUtils.isNotEmpty(batchDate)) {
+                exceSql = exceSql.replace("${batchDate}", batchDate);
+            }
+            iAddressLabelService.exceSql(exceSql, ruleSql.getFileName());
         } catch (Exception ex) {
             try {
                 Thread.sleep(1 * 60 * 1000);
