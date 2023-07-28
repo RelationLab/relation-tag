@@ -1,6 +1,6 @@
 ---汇总UNIv3的LP数据
 insert
-into dex_tx_volume_count_summary(address,
+into dex_tx_volume_count_summary_temp(address,
                                  token,
                                  type,
                                  project,
@@ -26,7 +26,7 @@ group by th.address,
 
 ---汇总UNIv3的token=ALL数据
 insert
-into dex_tx_volume_count_summary(address,
+into dex_tx_volume_count_summary_temp(address,
                                  token,
                                  type,
                                  project,
@@ -51,7 +51,7 @@ group by th.address,
 
 ---先把dex_tx_volume_count_record的USD计算出来
 insert
-into dex_tx_volume_count_summary(address,
+into dex_tx_volume_count_summary_temp(address,
                                  token,
                                  type,
                                  project,
@@ -78,7 +78,7 @@ group by dtvcr.address,
 
 ---计算token为ALL的 也是从dex_tx_volume_count_record的USD计算出来
 insert
-into dex_tx_volume_count_summary(address,
+into dex_tx_volume_count_summary_temp(address,
                                  token,
                                  type,
                                  project,

@@ -14,5 +14,5 @@ truncate table total_volume_usd;
 vacuum total_volume_usd;
 
 insert into total_volume_usd(address, volume_usd,recent_time_code)
-    (select address, sum(round(volume_usd,8)) , recent_time_code from token_volume_usd where address is not null group by address,recent_time_code);
+    (select address, sum(round(volume_usd,8)) , recent_time_code from token_volume_usd_temp where address is not null group by address,recent_time_code);
 insert into tag_result(table_name,batch_date)  SELECT 'total_volume_usd' as table_name,'${batchDate}'  as batch_date;

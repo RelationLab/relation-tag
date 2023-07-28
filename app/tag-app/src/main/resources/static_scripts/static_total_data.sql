@@ -66,7 +66,7 @@ create table total_balance_usd_init${tableSuffix}
 );
 truncate table total_balance_usd_init${tableSuffix};
 insert into total_balance_usd_init${tableSuffix}(address,balance_usd) select aljg.address,balance_usd
-from total_balance_volume_usd aljg                  inner join address_init${tableSuffix} ais  on(aljg.address=ais.address)
+from total_balance_volume_usd_temp aljg                  inner join address_init${tableSuffix} ais  on(aljg.address=ais.address)
  where balance_usd>=100;
 
 
@@ -163,13 +163,13 @@ truncate table address_activity_init${tableSuffix};
 insert into address_activity_init${tableSuffix}(activity_num,address)
 select sum(activity_num) as activity_num,address from(
   select
-     sum(total_transfer_count) as activity_num,aljg.address from  eth_holding_vol_count aljg
+     sum(total_transfer_count) as activity_num,aljg.address from  eth_holding_vol_count_temp aljg
           inner join address_init${tableSuffix} ais  on(aljg.address=ais.address)
   where recent_time_code='ALL'
   group by aljg.address
   union all
  select
-     sum(total_transfer_count) as activity_num,aljg.address from  token_holding_vol_count aljg
+     sum(total_transfer_count) as activity_num,aljg.address from  token_holding_vol_count_temp aljg
            inner join address_init${tableSuffix} ais  on(aljg.address=ais.address)
         where token in(select token_id from dim_rank_token)  and recent_time_code='ALL'
     group by aljg.address

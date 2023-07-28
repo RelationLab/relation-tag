@@ -70,7 +70,7 @@ insert into public.address_label_token_balance_grade(address,label_type,label_na
             token,
             round(balance_usd,8) balance_usd
         from
-            token_balance_volume_usd tbvutk
+            token_balance_volume_usd_temp tbvutk
     ) a1
         inner join
     dim_rule_content_temp a2

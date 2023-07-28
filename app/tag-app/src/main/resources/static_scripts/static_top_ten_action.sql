@@ -36,7 +36,7 @@ from (
                             sum(total_transfer_volume_usd) as volume_usd,
                             type as token
                         from
-                            dex_tx_volume_count_summary  tbvu
+                            dex_tx_volume_count_summary_temp  tbvu
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                         where total_transfer_volume_usd>0
                           and  tbvu.address not in (select address from exclude_address)
@@ -81,7 +81,7 @@ FROM
                             sum(transfer_volume) AS transfer_volume,
                             type as token
                         FROM
-                            nft_volume_count tbvu
+                            nft_volume_count_temp tbvu
                           inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                         where transfer_volume>0  and recent_time_code='ALL'
                           and  tbvu.address not in (select address from exclude_address)
@@ -192,7 +192,7 @@ from (
                              sum(total_transfer_count) as total_transfer_count,
                              type as token
                          from
-                             dex_tx_volume_count_summary  tbvu
+                             dex_tx_volume_count_summary_temp  tbvu
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                          where total_transfer_count>0
                            and  tbvu.address not in (select address from exclude_address)
@@ -237,7 +237,7 @@ FROM
                             sum(transfer_count) AS transfer_count,
                             type as token
                         FROM
-                            nft_volume_count tbvu
+                            nft_volume_count_temp tbvu
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                         where transfer_count>0  and recent_time_code='ALL'
                           and  tbvu.address not in (select address from exclude_address)

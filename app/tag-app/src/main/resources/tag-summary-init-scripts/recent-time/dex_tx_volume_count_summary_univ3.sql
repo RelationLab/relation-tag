@@ -1,7 +1,7 @@
 ---汇总UNIv3的LP数据
 insert
 into
-    dex_tx_volume_count_summary_univ3(address,
+    dex_tx_volume_count_summary_univ3_temp(address,
                                       token,
                                       type,
                                       project,

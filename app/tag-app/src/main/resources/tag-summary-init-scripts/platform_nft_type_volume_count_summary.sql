@@ -1,6 +1,6 @@
 insert
 into
-    platform_nft_type_volume_count(address,
+    platform_nft_type_volume_count_temp(address,
                                    platform_group,
                                    platform,
                                    quote_token,
@@ -21,7 +21,7 @@ select
     pnvu.recent_time_code
 from
     platform_nft_volume_usd pnvu
-        inner join platform_nft_holding pnh on
+        inner join platform_nft_holding_temp pnh on
                 pnvu .address = pnh.address
             and pnvu."token" = pnh."token"
             and pnvu.quote_token = pnh.quote_token
@@ -32,7 +32,7 @@ from
 
 insert
 into
-    platform_nft_type_volume_count(address,
+    platform_nft_type_volume_count_temp(address,
                                    platform_group,
                                    platform,
                                    quote_token,
@@ -53,7 +53,7 @@ select
     pnvu.recent_time_code
 from
     platform_nft_volume_usd pnvu
-        inner join platform_nft_holding pnh on
+        inner join platform_nft_holding_temp pnh on
                 pnvu .address = pnh.address
             and pnvu."token" = pnh."token"
             and pnvu.quote_token = pnh.quote_token
@@ -63,7 +63,7 @@ from
 
 insert
 into
-    platform_nft_type_volume_count(address,
+    platform_nft_type_volume_count_temp(address,
                                    platform_group,
                                    platform,
                                    quote_token,
@@ -83,7 +83,7 @@ select
     sum(pntvc.transfer_count) as transfer_count,
     pntvc.recent_time_code
 from
-    platform_nft_type_volume_count pntvc
+    platform_nft_type_volume_count_temp pntvc
         inner join (
         select
             address

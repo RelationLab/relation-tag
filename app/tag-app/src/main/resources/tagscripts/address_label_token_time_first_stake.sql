@@ -48,7 +48,7 @@ from
                 select
                     *
                 from
-                    dex_tx_volume_count_summary_stake
+                    dex_tx_volume_count_summary_stake_temp
                 where
                         type = 'stakelp'
                   and balance_usd>0 and address not in (select address from exclude_address)) a1

@@ -1,6 +1,6 @@
 INSERT
 INTO
-    dex_tx_count_summary(address,
+    dex_tx_count_summary_temp(address,
                          token,
                          TYPE,
                          project,
@@ -37,7 +37,7 @@ group by
 
 INSERT
 INTO
-    dex_tx_count_summary(address,
+    dex_tx_count_summary_temp(address,
                          token,
                          TYPE,
                          project,

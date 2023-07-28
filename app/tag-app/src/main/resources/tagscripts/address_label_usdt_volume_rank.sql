@@ -115,7 +115,7 @@ from
                                                     volume_usd,
                                                     recent_time_code
                                                 from
-                                                    token_volume_usd
+                                                    token_volume_usd_temp
                                                 where
                                                         token = '0xdac17f958d2ee523a2206206994597c13d831ec7'
                                                   and address not in (
@@ -138,7 +138,7 @@ from
                                     count(distinct address) as count_sum_total,
                                     recent_time_code
                                 from
-                                    token_volume_usd
+                                    token_volume_usd_temp
                                 where
                                         token = '0xdac17f958d2ee523a2206206994597c13d831ec7'
                                   and address not in (

@@ -67,7 +67,7 @@ select
             sum(total_transfer_volume) as volume,
             recent_time_code
         from
-            nft_transfer_holding a1
+            nft_transfer_holding_temp a1
                 inner join dim_project_token_type a2
                            on
                                        a1.token = a2.token
@@ -97,7 +97,7 @@ select
             sum(total_transfer_volume) as volume,
             recent_time_code
         from
-            nft_transfer_holding a1
+            nft_transfer_holding_temp a1
                 inner join dim_project_token_type a2
                            on
                                        a2.token = 'ALL'

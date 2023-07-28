@@ -102,7 +102,7 @@ from
                                                             total_transfer_count,
                                                             recent_time_code
                                                         from
-                                                            nft_transfer_holding
+                                                            nft_transfer_holding_temp
                                                         where
                                                                 total_transfer_volume >= 1 and address not in (select address from exclude_address)
                                                           and token in (select token_id from dim_project_token_type_rank_temp dpttr)
@@ -115,7 +115,7 @@ from
                                                             total_transfer_count,
                                                             recent_time_code
                                                         from
-                                                            nft_transfer_holding
+                                                            nft_transfer_holding_temp
                                                         where
                                                                 total_transfer_volume >= 1
                                                           and address not in (select address from exclude_address)
@@ -154,7 +154,7 @@ from
                                                     token,
                                                     recent_time_code
                                                 from
-                                                    nft_transfer_holding
+                                                    nft_transfer_holding_temp
                                                 where
                                                         total_transfer_volume >= 1 and address not in (select address from exclude_address)
                                                   and token in (select token_id from dim_project_token_type_rank_temp dpttr)
@@ -165,7 +165,7 @@ from
                                                     'ALL' as token,
                                                     recent_time_code
                                                 from
-                                                    nft_transfer_holding
+                                                    nft_transfer_holding_temp
                                                 where
                                                         total_transfer_volume >= 1
                                                   and address not in (select address from exclude_address)

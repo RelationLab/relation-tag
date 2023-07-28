@@ -87,7 +87,7 @@ from
                                         else project
                                         end as project
                                 from
-                                    dex_tx_volume_count_summary   dtvcs
+                                    dex_tx_volume_count_summary_temp   dtvcs
                                         inner join address_init${tableSuffix} ais  on(dtvcs.address=ais.address)
                                 where  total_transfer_volume_usd >=100
                                   and  dtvcs.address not in (select address from exclude_address)
@@ -187,7 +187,7 @@ from (
                                          end as project,
                                      total_transfer_count
                                  from
-                                     dex_tx_volume_count_summary) tbvu
+                                     dex_tx_volume_count_summary_temp) tbvu
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                                  where  tbvu.address not in (select address from exclude_address)
                                     and total_transfer_count>0     and recent_time_code='ALL'
@@ -232,7 +232,7 @@ FROM
                             sum(transfer_count) AS transfer_count,
                             platform_group as token
                         FROM
-                            platform_nft_type_volume_count tbvu
+                            platform_nft_type_volume_count_temp tbvu
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                         where   tbvu.address not in (select address from exclude_address)
                           and recent_time_code='ALL' and transfer_count >0

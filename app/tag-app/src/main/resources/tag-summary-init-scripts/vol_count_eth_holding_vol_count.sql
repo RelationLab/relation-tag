@@ -1,6 +1,6 @@
-drop table if exists eth_holding_vol_count;
--- ALTER TABLE public.eth_holding_vol_count RENAME TO eth_holding_vol_count_tmp;
-CREATE TABLE public.eth_holding_vol_count
+drop table if exists eth_holding_vol_count_temp;
+-- ALTER TABLE public.eth_holding_vol_count_temp RENAME TO eth_holding_vol_count_temp_tmp;
+CREATE TABLE public.eth_holding_vol_count_temp
 (
     address               varchar(256) NULL,
     balance               numeric(125, 30) NULL,
@@ -11,11 +11,11 @@ CREATE TABLE public.eth_holding_vol_count
     created_at            timestamp NULL,
     updated_at            timestamp NULL
 ) distributed by (address);
-truncate table eth_holding_vol_count;
-vacuum eth_holding_vol_count;
+truncate table eth_holding_vol_count_temp;
+vacuum eth_holding_vol_count_temp;
 
 insert
-into eth_holding_vol_count(address,
+into eth_holding_vol_count_temp(address,
                            block_height,
                            total_transfer_volume,
                            total_transfer_count,

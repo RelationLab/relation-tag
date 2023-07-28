@@ -1,5 +1,5 @@
 ----------------增加blur的DEPOSIT和WITHDRAW
-insert into platform_nft_type_volume_count(recent_time_code,
+insert into platform_nft_type_volume_count_temp(recent_time_code,
                                            address,
                                            platform_group,
                                            platform,
@@ -30,7 +30,7 @@ group by pdwtr."operator",
          pdwtr."token",
          pdwtr."type";
 
-insert into platform_nft_type_volume_count(recent_time_code,
+insert into platform_nft_type_volume_count_temp(recent_time_code,
                                            address,
                                            platform_group,
                                            platform,
@@ -93,7 +93,7 @@ group by lendt.address,
 
 
 insert
-into platform_nft_type_volume_count(recent_time_code,
+into platform_nft_type_volume_count_temp(recent_time_code,
                                     address,
                                     platform_group,
                                     platform,

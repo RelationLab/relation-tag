@@ -83,7 +83,7 @@ from
                                     total_transfer_volume,
                                     recent_time_code
                                 from
-                                    nft_transfer_holding
+                                    nft_transfer_holding_temp
                                 where
                                         total_transfer_volume >= 1
                                   and address not in (
@@ -104,7 +104,7 @@ from
                                     total_transfer_volume,
                                     recent_time_code
                                 from
-                                    nft_transfer_holding
+                                    nft_transfer_holding_temp
                                 where
                                         total_transfer_volume >= 1
                                   and address not in (

@@ -103,7 +103,7 @@ from
                     sum(round(total_transfer_volume_usd, 8)) as volume_usd,
                     recent_time_code
                 from
-                    dex_tx_volume_count_summary_univ3 th
+                    dex_tx_volume_count_summary_univ3_temp th
                 where
                         th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                   and th.type = 'ALL'

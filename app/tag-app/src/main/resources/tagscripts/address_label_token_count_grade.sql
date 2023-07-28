@@ -76,7 +76,7 @@ from
             total_transfer_count,
             recent_time_code
         from
-            token_holding_vol_count th1
+            token_holding_vol_count_temp th1
         where total_transfer_count >=1
         union all
         select
@@ -91,21 +91,21 @@ from
                     total_transfer_count,
                     recent_time_code
                 from
-                    eth_holding_vol_count th where total_transfer_count >=1
+                    eth_holding_vol_count_temp th where total_transfer_count >=1
                 union all
                 select
                     address,
                     total_transfer_count,
                     recent_time_code
                 from
-                    token_holding_vol_count th where  total_transfer_count >=1 and th.token in (select token_id from dim_rank_token)
+                    token_holding_vol_count_temp th where  total_transfer_count >=1 and th.token in (select token_id from dim_rank_token)
                 union all
                 select
                     address,
                     total_transfer_count as total_transfer_count,
                     recent_time_code
                 from
-                    dex_tx_volume_count_summary_univ3 th
+                    dex_tx_volume_count_summary_univ3_temp th
                 where
                         th.project = '0xc36442b4a4522e871399cd717abdd847ab11fe88' and th.type='ALL'
                         and total_transfer_count >=1 and th.token in (select token_id from dim_rank_token)

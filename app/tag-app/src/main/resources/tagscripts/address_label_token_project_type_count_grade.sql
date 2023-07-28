@@ -78,7 +78,7 @@ from
             a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
-            dex_tx_volume_count_summary a1
+            dex_tx_volume_count_summary_temp a1
                 inner join dim_project_token_type_temp a2
                            on
                                        a1.token = a2.token
@@ -105,7 +105,7 @@ from
             a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
-            dex_tx_count_summary a1
+            dex_tx_count_summary_temp a1
             inner join dim_project_token_type_temp a2
         on
             a2.token = 'ALL'
@@ -132,7 +132,7 @@ from
             a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
-            dex_tx_count_summary a1
+            dex_tx_count_summary_temp a1
             inner join dim_project_token_type_temp a2
         on
             a2.token = 'ALL'
@@ -158,7 +158,7 @@ from
             a2.token_name,
             sum(total_transfer_count) as total_transfer_count
         from
-            dex_tx_volume_count_summary a1
+            dex_tx_volume_count_summary_temp a1
             inner join dim_project_token_type_temp a2
         on
             a1.token = a2.token

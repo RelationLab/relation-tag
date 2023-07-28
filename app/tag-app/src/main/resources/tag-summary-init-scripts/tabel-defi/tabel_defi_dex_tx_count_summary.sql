@@ -1,5 +1,5 @@
-drop table if exists dex_tx_count_summary;
-CREATE TABLE public.dex_tx_count_summary
+drop table if exists dex_tx_count_summary_temp;
+CREATE TABLE public.dex_tx_count_summary_temp
 (
     address              varchar(256) NOT NULL,
     "token"              varchar(256) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE public.dex_tx_count_summary
     project              varchar(100) NULL,
     recent_time_code varchar(30) NULL
 ) DISTRIBUTED BY (address,"token",project,recent_time_code );
-truncate table dex_tx_count_summary;
-vacuum dex_tx_count_summary;
+truncate table dex_tx_count_summary_temp;
+vacuum dex_tx_count_summary_temp;
 insert into tag_result(table_name, batch_date)
 SELECT 'tabel_defi_dex_tx_count_summary' as table_name, '${batchDate}' as batch_date;

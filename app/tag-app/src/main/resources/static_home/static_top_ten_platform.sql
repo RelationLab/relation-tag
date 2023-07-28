@@ -85,7 +85,7 @@ from
                                         else project
                                         end as project
                                 from
-                                    dex_tx_volume_count_summary  where total_transfer_volume_usd >=100
+                                    dex_tx_volume_count_summary_temp  where total_transfer_volume_usd >=100
                                     and address not in (select address from exclude_address)
                                                                    and recent_time_code='ALL'
                                 ) tbvu
@@ -183,7 +183,7 @@ from
                                         end as project,
                                     total_transfer_count
                                 from
-                                    dex_tx_volume_count_summary where  recent_time_code='ALL')
+                                    dex_tx_volume_count_summary_temp where  recent_time_code='ALL')
                                 tbvu
                         where
                                 tbvu.address not in (
@@ -234,7 +234,7 @@ FROM
                             sum(transfer_count) AS transfer_count,
                             platform_group as token
                         FROM
-                            platform_nft_type_volume_count tbvu
+                            platform_nft_type_volume_count_temp tbvu
                         where   tbvu.address not in (select address from exclude_address)
                         and transfer_count>0 and recent_time_code='ALL'
                         GROUP BY

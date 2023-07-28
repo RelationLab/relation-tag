@@ -1,7 +1,7 @@
 --
--- ALTER TABLE public.token_holding_vol_count RENAME TO token_holding_vol_count_tmp;
-drop table if exists token_holding_vol_count;
-CREATE TABLE public.token_holding_vol_count
+-- ALTER TABLE public.token_holding_vol_count_temp RENAME TO token_holding_vol_count_temp_tmp;
+drop table if exists token_holding_vol_count_temp;
+CREATE TABLE public.token_holding_vol_count_temp
 (
     address               varchar(256) NULL,
     "token"               varchar(256) NULL,
@@ -14,10 +14,10 @@ CREATE TABLE public.token_holding_vol_count
     updated_at            timestamp NULL
 ) distributed by (address,"token",recent_time_code);
 
-truncate table token_holding_vol_count;
-vacuum token_holding_vol_count;
+truncate table token_holding_vol_count_temp;
+vacuum token_holding_vol_count_temp;
 
-insert into token_holding_vol_count(address,
+insert into token_holding_vol_count_temp(address,
                                     block_height,
                                     token,
                                     total_transfer_volume,

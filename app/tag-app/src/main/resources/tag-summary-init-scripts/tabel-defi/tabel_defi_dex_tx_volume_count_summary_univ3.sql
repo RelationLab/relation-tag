@@ -1,5 +1,5 @@
-drop table if exists dex_tx_volume_count_summary_univ3;
-CREATE TABLE public.dex_tx_volume_count_summary_univ3 (
+drop table if exists dex_tx_volume_count_summary_univ3_temp;
+CREATE TABLE public.dex_tx_volume_count_summary_univ3_temp (
                                                           address varchar(256) NOT NULL,
                                                           "token" varchar(256) NOT NULL,
                                                           block_height int8 NOT NULL,
@@ -14,6 +14,6 @@ CREATE TABLE public.dex_tx_volume_count_summary_univ3 (
                                                           balance_usd numeric(125, 30) DEFAULT 0,
                                                           recent_time_code varchar(30) NULL
 ) DISTRIBUTED BY (address,"token",recent_time_code);
-truncate table dex_tx_volume_count_summary_univ3;
-vacuum dex_tx_volume_count_summary_univ3;
+truncate table dex_tx_volume_count_summary_univ3_temp;
+vacuum dex_tx_volume_count_summary_univ3_temp;
 insert into tag_result(table_name,batch_date)  SELECT 'tabel_defi_dex_tx_volume_count_summary_univ3' as table_name,'${batchDate}'  as batch_date;

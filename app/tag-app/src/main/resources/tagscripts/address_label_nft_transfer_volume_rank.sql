@@ -124,7 +124,7 @@ from
                                                             total_transfer_volume,
                                                             recent_time_code
                                                         from
-                                                            nft_transfer_holding
+                                                            nft_transfer_holding_temp
                                                         where
                                                                 total_transfer_volume >= 1
                                                           and  address not in (select address from exclude_address)
@@ -137,7 +137,7 @@ from
                                                             total_transfer_volume,
                                                             recent_time_code
                                                         from
-                                                            nft_transfer_holding
+                                                            nft_transfer_holding_temp
                                                         where
                                                                 total_transfer_volume >= 1
                                                           and  address not in (select address from exclude_address)
@@ -173,7 +173,7 @@ from
                                                     token,
                                                     recent_time_code
                                                 from
-                                                    nft_transfer_holding
+                                                    nft_transfer_holding_temp
                                                 where
                                                         total_transfer_volume >= 1
                                                   and  address not in (select address from exclude_address)
@@ -185,7 +185,7 @@ from
                                                     'ALL' as token,
                                                     recent_time_code
                                                 from
-                                                    nft_transfer_holding
+                                                    nft_transfer_holding_temp
                                                 where
                                                         total_transfer_volume >= 1
                                                   and  address not in (select address from exclude_address)

@@ -1,5 +1,5 @@
-DROP TABLE if EXISTS public.nft_transfer_holding;
-create table nft_transfer_holding
+DROP TABLE if EXISTS public.nft_transfer_holding_temp;
+create table nft_transfer_holding_temp
 (
     id                    bigserial,
     address               varchar(512) not null,
@@ -10,10 +10,10 @@ create table nft_transfer_holding
     updated_at            timestamp default CURRENT_TIMESTAMP,
     recent_time_code           varchar(30) NULL
 )distributed by (address,"token",recent_time_code);
-truncate table nft_transfer_holding;
-vacuum nft_transfer_holding;
+truncate table nft_transfer_holding_temp;
+vacuum nft_transfer_holding_temp;
 
-insert into nft_transfer_holding (address, token, total_transfer_volume, total_transfer_count,recent_time_code)
+insert into nft_transfer_holding_temp (address, token, total_transfer_volume, total_transfer_count,recent_time_code)
     (select nh.address,
             nh.token,
             nh.total_transfer_all_volume - nh.total_transfer_mint_volume - nh.total_transfer_burn_volume - COALESCE(nbsh.total_transfer_buy_volume,0) - COALESCE(nbsh.total_transfer_sell_volume,0),

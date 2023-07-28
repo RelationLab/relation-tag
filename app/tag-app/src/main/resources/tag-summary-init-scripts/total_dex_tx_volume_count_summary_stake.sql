@@ -1,5 +1,5 @@
-drop table if exists dex_tx_volume_count_summary_stake;
-CREATE TABLE public.dex_tx_volume_count_summary_stake (
+drop table if exists dex_tx_volume_count_summary_stake_temp;
+CREATE TABLE public.dex_tx_volume_count_summary_stake_temp (
                                                     address varchar(256) NOT NULL,
                                                     "token" varchar(256) NOT NULL,
                                                     created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -9,12 +9,12 @@ CREATE TABLE public.dex_tx_volume_count_summary_stake (
                                                     project varchar(100) NULL,
                                                     balance_usd numeric(125, 30) DEFAULT 0
 ) DISTRIBUTED BY (address);
-truncate table dex_tx_volume_count_summary_stake;
-vacuum dex_tx_volume_count_summary_stake;
+truncate table dex_tx_volume_count_summary_stake_temp;
+vacuum dex_tx_volume_count_summary_stake_temp;
 
 insert
 into
-    dex_tx_volume_count_summary_stake(address,
+    dex_tx_volume_count_summary_stake_temp(address,
                                 token,
                                 type,
                                 project,

@@ -1,6 +1,6 @@
--- DROP TABLE public.token_volume_usd;
-DROP TABLE IF EXISTS public.token_volume_usd;
-CREATE TABLE public.token_volume_usd
+-- DROP TABLE public.token_volume_usd_temp;
+DROP TABLE IF EXISTS public.token_volume_usd_temp;
+CREATE TABLE public.token_volume_usd_temp
 (
     address          varchar(512) NULL,
     "token"          varchar(512) NULL,
@@ -9,13 +9,13 @@ CREATE TABLE public.token_volume_usd
     updated_at       timestamp NULL,
     recent_time_code varchar(30) NULL
 ) distributed by (address,"token",recent_time_code);
-truncate table token_volume_usd;
+truncate table token_volume_usd_temp;
 vacuum
-token_volume_usd;
+token_volume_usd_temp;
 
 
 insert
-into token_volume_usd(address,
+into token_volume_usd_temp(address,
                       token,
                       volume_usd,
                       recent_time_code)
@@ -27,7 +27,7 @@ from (select address,
              token,
              total_transfer_volume,
              recent_time_code
-      from token_holding_vol_count
+      from token_holding_vol_count_temp
       where total_transfer_volume > 0
         and token in (select token_id
                       from dim_rank_token)) th
@@ -39,7 +39,7 @@ from (select address,
         and ignored = false;
 
 insert
-into token_volume_usd(address,
+into token_volume_usd_temp(address,
                       token,
                       volume_usd,
                       recent_time_code)
@@ -50,7 +50,7 @@ select eh.address                                                               
 from (select address,
              total_transfer_volume,
              recent_time_code
-      from eth_holding_vol_count
+      from eth_holding_vol_count_temp
       where total_transfer_volume > 0) eh
          inner join (select price
                      from white_list_erc20_temp

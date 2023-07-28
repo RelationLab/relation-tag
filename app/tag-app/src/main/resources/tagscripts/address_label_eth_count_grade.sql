@@ -76,7 +76,7 @@ insert into public.address_label_eth_count_grade(address,label_type,label_name,d
             total_transfer_count,
             recent_time_code
         from
-            eth_holding_vol_count th1
+            eth_holding_vol_count_temp th1
     ) a1
         inner join
     dim_rule_content_temp a2

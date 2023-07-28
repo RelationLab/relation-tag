@@ -99,7 +99,7 @@ insert into public.address_label_eth_volume_rank(address,label_type,label_name,d
                                                     volume_usd,
                                                     recent_time_code
                                                 from
-                                                    token_volume_usd
+                                                    token_volume_usd_temp
                                                 where
                                                         token = 'eth'and address not in (select address from exclude_address)
                                                   and volume_usd >= 100) s1
@@ -118,7 +118,7 @@ insert into public.address_label_eth_volume_rank(address,label_type,label_name,d
                                     count(distinct address) as count_sum_total,
                                     recent_time_code
                                 from
-                                    token_volume_usd
+                                    token_volume_usd_temp
                                 where
                                         token = 'eth'and address not in (select address from exclude_address)
                                   and volume_usd >= 100 group by recent_time_code ) as a10

@@ -79,7 +79,7 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             sum(transfer_count) as sum_count,
             recent_time_code
         from
-            platform_nft_type_volume_count  a1 inner join dim_project_token_type_temp a2
+            platform_nft_type_volume_count_temp  a1 inner join dim_project_token_type_temp a2
             on a1.token=a2.token and a1.platform_group=a2.project
                    and a1.type=a2.type and a2.data_subject = 'count'
         and a1.recent_time_code =a2.recent_code
@@ -102,7 +102,7 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             sum(transfer_count) as sum_count,
             recent_time_code
         from
-            platform_nft_type_volume_count  a1 inner join dim_project_token_type_temp a2
+            platform_nft_type_volume_count_temp  a1 inner join dim_project_token_type_temp a2
         on a2.token='ALL' and a1.platform_group=a2.project
                and a1.type=a2.type and a2.data_subject = 'count'
             and a1.recent_time_code =a2.recent_code
@@ -125,7 +125,7 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             sum(transfer_count) as sum_count,
             recent_time_code
         from
-            platform_nft_type_volume_count a1
+            platform_nft_type_volume_count_temp a1
                 inner join dim_project_token_type_temp a2
                            on
                                        a2.token = 'ALL'
@@ -155,7 +155,7 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             sum(transfer_count) as sum_count,
             recent_time_code
         from
-            platform_nft_type_volume_count a1
+            platform_nft_type_volume_count_temp a1
             inner join dim_project_token_type_temp a2
         on
             a1.token=a2.token

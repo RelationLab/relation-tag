@@ -1,6 +1,6 @@
----再计算dex_tx_volume_count_summary的ALL(有些同一笔交易txHash同时LP和SWAP)
+---再计算dex_tx_volume_count_summary_temp的ALL(有些同一笔交易txHash同时LP和SWAP)
 insert
-into dex_tx_volume_count_summary (address,
+into dex_tx_volume_count_summary_temp (address,
                                   token,
                                   type,
                                   project,
@@ -19,7 +19,7 @@ select dtvcr.address                         as address
      , sum(dtvcr.total_transfer_count)       as total_transfer_count
      , min(dtvcr.first_updated_block_height) as first_updated_block_height
      , dtvcr.recent_time_code                as recent_time_code
-from dex_tx_volume_count_summary dtvcr
+from dex_tx_volume_count_summary_temp dtvcr
 group by dtvcr.address,
          dtvcr."token",
          dtvcr.project,

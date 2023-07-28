@@ -1,6 +1,6 @@
 INSERT
 INTO
-    dex_tx_count_summary(address,
+    dex_tx_count_summary_temp(address,
                          token,
                          TYPE,
                          project,
@@ -14,7 +14,7 @@ SELECT
     sum(total_transfer_count) AS total_transfer_count,
     recent_time_code
 FROM
-    dex_tx_count_summary
+    dex_tx_count_summary_temp
 GROUP BY
     address,
     project,

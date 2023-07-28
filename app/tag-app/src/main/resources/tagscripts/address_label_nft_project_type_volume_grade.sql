@@ -67,7 +67,7 @@ from
             sum( round(volume_usd,8)) as volume_usd,
             recent_time_code
         from
-            platform_nft_type_volume_count  a1 inner join dim_project_token_type_temp a2
+            platform_nft_type_volume_count_temp  a1 inner join dim_project_token_type_temp a2
                                                           on a1.token=a2.token and a1.platform_group=a2.project and  a2.recent_code=a1.recent_time_code
                                                               and a1.type=a2.type and a2.data_subject = 'volume_grade'
                                                               and a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
@@ -90,7 +90,7 @@ from
             sum( round(volume_usd,8)) as volume_usd,
             recent_time_code
         from
-            platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+            platform_nft_type_volume_count_temp  a1 inner join dim_project_token_type a2
                                                           on a2.token='ALL' and a1.platform_group=a2.project  and  a2.recent_code=a1.recent_time_code
                                                               and a1.type=a2.type and a2.data_subject = 'volume_grade'
         where (volume_usd >= 100 and a1.type not in('Lend','Bid')) or (volume_usd > 0 and a1.type  in('Lend','Bid'))
@@ -113,7 +113,7 @@ from
             sum( round(volume_usd,8)) as volume_usd,
             recent_time_code
         from
-            platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+            platform_nft_type_volume_count_temp  a1 inner join dim_project_token_type a2
                                                           on a2.token='ALL' and  a2.recent_code=a1.recent_time_code
                                                               and a2.project='ALL' and a1.type=a2.type and a2.data_subject = 'volume_grade'
         where (volume_usd >= 100 and a1.type not in('Lend','Bid')) or (volume_usd > 0 and a1.type  in('Lend','Bid'))
@@ -136,7 +136,7 @@ from
             sum( round(volume_usd,8)) as volume_usd,
             recent_time_code
         from
-            platform_nft_type_volume_count  a1 inner join dim_project_token_type a2
+            platform_nft_type_volume_count_temp  a1 inner join dim_project_token_type a2
                                                           on a2.token=a1.token and a2.recent_code=a1.recent_time_code
                                                               and a2.project='ALL' and a1.type=a2.type and a2.data_subject = 'volume_grade'
         where (volume_usd >= 100 and a1.type not in('Lend','Bid')) or (volume_usd > 0 and a1.type  in('Lend','Bid'))

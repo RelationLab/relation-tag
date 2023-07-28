@@ -57,7 +57,7 @@ insert into public.address_label_token_balance_top(address,label_type,label_name
                             balance_usd,
                             volume_usd
                         from
-                            token_balance_volume_usd
+                            token_balance_volume_usd_temp
                         where
                                 balance_usd>100 and address not in (select address from exclude_address)
                     ) totala

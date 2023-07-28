@@ -75,7 +75,7 @@ from
             total_transfer_count as total_transfer_count,
             recent_time_code
         from
-            dex_tx_volume_count_summary_univ3 th
+            dex_tx_volume_count_summary_univ3_temp th
                 inner join dim_rule_content_temp drc
      on( th.token = drc.token and drc.data_subject = 'count'
              and  th.recent_time_code = drc.recent_code)

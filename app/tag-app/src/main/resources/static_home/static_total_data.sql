@@ -82,7 +82,7 @@ set
 	order by
 			balance_usd asc) as rn
                            from
-                               total_balance_volume_usd where balance_usd>=100
+                               total_balance_volume_usd_temp where balance_usd>=100
                        ) out_t
                    where
                            rn >=(
@@ -92,13 +92,13 @@ set
                                    else count(1)/ 2 + 1
                                    end
                            from
-                               total_balance_volume_usd where balance_usd>=100
+                               total_balance_volume_usd_temp where balance_usd>=100
                        )
                      and rn <=(
                        select
                                    count(1)/ 2 + 1
                        from
-                           total_balance_volume_usd where balance_usd>=100
+                           total_balance_volume_usd_temp where balance_usd>=100
                    ))
 where
         code = 'static_total';
@@ -151,12 +151,12 @@ truncate table address_activity_init${tableSuffix};
 insert into address_activity_init${tableSuffix}(activity_num,address)
 select sum(activity_num),address from(
      select
-         sum(total_transfer_count) as activity_num,aljg.address from  eth_holding_vol_count aljg
+         sum(total_transfer_count) as activity_num,aljg.address from  eth_holding_vol_count_temp aljg
          where recent_time_code='ALL'
      group by aljg.address
      union all
      select
-         sum(total_transfer_count) as activity_num,address from  token_holding_vol_count
+         sum(total_transfer_count) as activity_num,address from  token_holding_vol_count_temp
      where  token in(select token_id from dim_rank_token)  and recent_time_code='ALL'
      group by address
      union all

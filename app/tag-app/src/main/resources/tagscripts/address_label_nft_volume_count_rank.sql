@@ -110,7 +110,7 @@ select
                                                             transfer_count,
                                                             recent_time_code
                                                         from
-                                                            nft_volume_count
+                                                            nft_volume_count_temp
                                                         where
                                                                 transfer_volume>0 and address not in (select address from exclude_address)
                                                           and token in (select token_id from dim_project_token_type_rank_temp dpttr)
@@ -124,7 +124,7 @@ select
                                                             transfer_count,
                                                             recent_time_code
                                                         from
-                                                            nft_volume_count
+                                                            nft_volume_count_temp
                                                         where
                                                                 transfer_volume>0
                                                           and address not in (select address from exclude_address)
@@ -159,7 +159,7 @@ select
                                                     type,
                                                     recent_time_code
                                                 from
-                                                    nft_volume_count
+                                                    nft_volume_count_temp
                                                 where
                                                         transfer_volume>0 and address not in (select address from exclude_address)
                                                   and token in (select token_id from dim_project_token_type_rank_temp dpttr)
@@ -171,7 +171,7 @@ select
                                                     type,
                                                     recent_time_code
                                                 from
-                                                    nft_volume_count
+                                                    nft_volume_count_temp
                                                 where
                                                         transfer_volume>0
                                                   and address not in (select address from exclude_address)

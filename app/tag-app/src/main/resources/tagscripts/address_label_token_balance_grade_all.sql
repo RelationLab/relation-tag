@@ -70,7 +70,7 @@ insert into public.address_label_token_balance_grade_all(address,label_type,labe
             'ALL' as token ,
             sum(round(balance_usd,8)) as balance_usd
         from
-            total_balance_volume_usd tbvu where balance_usd >= 100
+            total_balance_volume_usd_temp tbvu where balance_usd >= 100
         group by
             address
     ) a1

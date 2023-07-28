@@ -127,7 +127,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             project,
                                                             recent_time_code
                                                         from
-                                                            dex_tx_volume_count_summary
+                                                            dex_tx_volume_count_summary_temp
                                                         where
                                                                 total_transfer_volume_usd  > 0 and address not in (select address from exclude_address)
                                                                 and token in (select distinct token from dim_project_token_type)
@@ -141,7 +141,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             'ALL' as project,
                                                             recent_time_code
                                                         from
-                                                            dex_tx_volume_count_summary
+                                                            dex_tx_volume_count_summary_temp
                                                         where
                                                                 total_transfer_volume_usd > 0 and address not in (select address from exclude_address)
                                                           and token in (select distinct token from dim_project_token_type)
@@ -155,7 +155,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             'ALL' as project,
                                                             recent_time_code
                                                         from
-                                                            dex_tx_volume_count_summary
+                                                            dex_tx_volume_count_summary_temp
                                                         where
                                                                 total_transfer_volume_usd  > 0 and address not in (select address from exclude_address)
                                                           and token in (select distinct token from dim_project_token_type)
@@ -169,7 +169,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             project,
                                                             recent_time_code
                                                         from
-                                                            dex_tx_volume_count_summary
+                                                            dex_tx_volume_count_summary_temp
                                                         where
                                                                 total_transfer_volume_usd > 0 and address not in (select address from exclude_address)
                                                           and token in (select distinct token from dim_project_token_type)
@@ -183,7 +183,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             'ALL' as project,
                                                             recent_time_code
                                                         from
-                                                            dex_tx_volume_count_summary
+                                                            dex_tx_volume_count_summary_temp
                                                         where
                                                                 total_transfer_volume_usd  > 0 and address not in (select address from exclude_address)
                                                           and token in (select distinct token from dim_project_token_type)
@@ -229,7 +229,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             total_transfer_volume_usd,
                                                             recent_time_code
                                                         from
-                                                            dex_tx_volume_count_summary
+                                                            dex_tx_volume_count_summary_temp
                                                         where
                                                                 total_transfer_volume_usd  > 0  and address not in (select address from exclude_address)
                                                           and token in (select distinct token from dim_project_token_type)
@@ -243,7 +243,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             total_transfer_volume_usd,
                                                             recent_time_code
                                                         from
-                                                            dex_tx_volume_count_summary
+                                                            dex_tx_volume_count_summary_temp
                                                         where
                                                                 total_transfer_volume_usd > 0  and address not in (select address from exclude_address)
                                                           and token in (select distinct token from dim_project_token_type)
@@ -257,7 +257,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             total_transfer_volume_usd,
                                                             recent_time_code
                                                         from
-                                                            dex_tx_volume_count_summary
+                                                            dex_tx_volume_count_summary_temp
                                                         where
                                                                 total_transfer_volume_usd > 0 and address not in (select address from exclude_address)
                                                           and token in (select distinct token from dim_project_token_type)
@@ -271,7 +271,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             total_transfer_volume_usd,
                                                             recent_time_code
                                                         from
-                                                            dex_tx_volume_count_summary
+                                                            dex_tx_volume_count_summary_temp
                                                         where
                                                                 total_transfer_volume_usd  > 0 and address not in (select address from exclude_address)
                                                           and token in (select distinct token from dim_project_token_type)

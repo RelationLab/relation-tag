@@ -71,7 +71,7 @@ insert into public.address_label_token_volume_grade(address,label_type,label_nam
             round(volume_usd,8) volume_usd,
             recent_time_code
         from
-            token_volume_usd tbvutk
+            token_volume_usd_temp tbvutk
     )
         a1
         inner join

@@ -81,7 +81,7 @@ from
                                                     address,
                                                     balance_usd
                                                 from
-                                                    token_balance_volume_usd
+                                                    token_balance_volume_usd_temp
                                                 where
                                                         token = 'eth' and address not in (select address from exclude_address)) s1
                                                 inner join dim_rank_token s2
@@ -97,7 +97,7 @@ from
                                 select
                                     count(distinct address) as count_sum_total
                                 from
-                                    token_balance_volume_usd
+                                    token_balance_volume_usd_temp
                                 where
                                         token = 'eth' and address not in (select address from exclude_address)
                                   and balance_usd >= 100) as a10

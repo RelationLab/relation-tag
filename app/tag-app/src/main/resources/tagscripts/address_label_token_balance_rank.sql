@@ -81,7 +81,7 @@ insert into public.address_label_token_balance_rank(address,label_type,label_nam
                                                     address,
                                                     balance_usd
                                                 from
-                                                    token_balance_volume_usd
+                                                    token_balance_volume_usd_temp
                                                 where
                                                         token <> 'eth'
                                                   and token <> '0xdac17f958d2ee523a2206206994597c13d831ec7'  and address not in (select address from exclude_address)) s1
@@ -104,7 +104,7 @@ insert into public.address_label_token_balance_rank(address,label_type,label_nam
                                             token,
                                             address
                                         from
-                                            token_balance_volume_usd
+                                            token_balance_volume_usd_temp
                                         where
                                                 token <> 'eth' and address not in (select address from exclude_address)
                                           and token <> '0xdac17f958d2ee523a2206206994597c13d831ec7'
