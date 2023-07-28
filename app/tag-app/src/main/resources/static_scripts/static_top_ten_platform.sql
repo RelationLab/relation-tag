@@ -40,14 +40,14 @@ from (
                              web3_transaction_record_summary tbvu
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                          where
-                                 project in(select project from dim_project_type_temp) and  balance >=1
+                                 project in(select project from dim_project_type) and  balance >=1
                            and recent_time_code='ALL'
                            and  tbvu.address not in (select address from exclude_address) and tbvu.type='NFT Recipient'
                          group by
                              project)
                          rowtable ) s1
          where
-                 s1.rn <= 100) s2 inner join dim_project_type_temp drc on(drc.project=s2.token);
+                 s1.rn <= 100) s2 inner join dim_project_type drc on(drc.project=s2.token);
 
 
 insert into static_top_ten_platform${tableSuffix}(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','defi','volume');
@@ -87,7 +87,7 @@ from
                                         else project
                                         end as project
                                 from
-                                    dex_tx_volume_count_summary_temp   dtvcs
+                                    dex_tx_volume_count_summary   dtvcs
                                         inner join address_init${tableSuffix} ais  on(dtvcs.address=ais.address)
                                 where  total_transfer_volume_usd >=100
                                   and  dtvcs.address not in (select address from exclude_address)
@@ -98,7 +98,7 @@ from
                         rowtable ) s1
         where
                 s1.rn <= 100) s2
-        inner join dim_project_token_type_temp drc on
+        inner join dim_project_token_type drc on
         (drc.project = s2.token
             and (drc.project_name <> 'Uniswap_v2'
                 and drc.project_name <> 'Uniswap_v3')) ;
@@ -145,7 +145,7 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 100) s2
-        INNER JOIN dim_project_token_type_temp drc ON
+        INNER JOIN dim_project_token_type drc ON
         (drc.project = s2.token);
 
 insert into static_top_ten_platform${tableSuffix}(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','defi','activity');
@@ -187,7 +187,7 @@ from (
                                          end as project,
                                      total_transfer_count
                                  from
-                                     dex_tx_volume_count_summary_temp) tbvu
+                                     dex_tx_volume_count_summary) tbvu
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                                  where  tbvu.address not in (select address from exclude_address)
                                     and total_transfer_count>0     and recent_time_code='ALL'
@@ -195,7 +195,7 @@ from (
                              project)
                          rowtable ) s1
          where
-                 s1.rn <= 100) s2  inner join dim_project_token_type_temp drc on
+                 s1.rn <= 100) s2  inner join dim_project_token_type drc on
     (drc.project = s2.token
         and (drc.project_name <> 'Uniswap_v2'
             and drc.project_name <> 'Uniswap_v3')) ;
@@ -232,7 +232,7 @@ FROM
                             sum(transfer_count) AS transfer_count,
                             platform_group as token
                         FROM
-                            platform_nft_type_volume_count_temp tbvu
+                            platform_nft_type_volume_count tbvu
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                         where   tbvu.address not in (select address from exclude_address)
                           and recent_time_code='ALL' and transfer_count >0
@@ -241,7 +241,7 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 100) s2
-        INNER JOIN dim_project_token_type_temp drc ON
+        INNER JOIN dim_project_token_type drc ON
         (drc.project = s2.token);
 
 ----web3 activity
@@ -272,12 +272,12 @@ from (
                              web3_transaction_record_summary tbvu
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                          where
-                                 project in(select project from dim_project_type_temp) and recent_time_code='ALL'
+                                 project in(select project from dim_project_type) and recent_time_code='ALL'
                            and  tbvu.address not in (select address from exclude_address)
                          and total_transfer_count >0
                          group by
                              project)
                          rowtable ) s1
          where
-                 s1.rn <= 100) s2 inner join dim_project_type_temp drc on(drc.project=s2.token);
+                 s1.rn <= 100) s2 inner join dim_project_type drc on(drc.project=s2.token);
 INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_top_ten_platform${tableSuffix}') as table_name,'${batchDate}'  as batch_date;

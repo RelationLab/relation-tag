@@ -36,7 +36,7 @@ from (
                             sum(total_transfer_volume_usd) as volume_usd,
                             type as token
                         from
-                            dex_tx_volume_count_summary_temp  tbvu where total_transfer_volume_usd>0
+                            dex_tx_volume_count_summary  tbvu where total_transfer_volume_usd>0
                             and  tbvu.address not in (select address from exclude_address)
                                                                 and recent_time_code='ALL'
                         group by
@@ -44,7 +44,7 @@ from (
                         rowtable ) s1
         where
                 s1.rn <= 100) s2
-        inner join dim_project_token_type_temp_temp drc on
+        inner join dim_project_token_type drc on
         (drc.type = s2.token) ;
 
 ----nft vol
@@ -79,14 +79,14 @@ FROM
                             sum(transfer_volume) AS transfer_volume,
                             type as token
                         FROM
-                            nft_volume_count_temp tbvu where transfer_volume>0 and recent_time_code='ALL'
+                            nft_volume_count tbvu where transfer_volume>0 and recent_time_code='ALL'
                         and  tbvu.address not in (select address from exclude_address)
                         GROUP BY
                             type)
                         rowtable ) s1
         WHERE
                 s1.rn <= 100) s2
-        INNER JOIN dim_project_token_type_temp_temp drc ON
+        INNER JOIN dim_project_token_type drc ON
         (drc.type = s2.token);
 
 
@@ -125,7 +125,7 @@ from (
                              type,project)
                          rowtable ) s1
          where
-                 s1.rn <= 1000) s2 inner join dim_project_type_temp drc on(drc.type=s2.token and drc.project=s2.project);
+                 s1.rn <= 1000) s2 inner join dim_project_type drc on(drc.type=s2.token and drc.project=s2.project);
 
 
 -----platform activity
@@ -154,7 +154,7 @@ from (
                              sum(total_transfer_count) as total_transfer_count,
                              type as token
                          from
-                             dex_tx_volume_count_summary_temp  tbvu  where total_transfer_count>0
+                             dex_tx_volume_count_summary  tbvu  where total_transfer_count>0
                             and  tbvu.address not in (select address from exclude_address)
                                                                   and recent_time_code='ALL'
                          group by
@@ -162,7 +162,7 @@ from (
                          rowtable ) s1
          where
                  s1.rn <= 100) s2
-         inner join dim_project_token_type_temp drc on
+         inner join dim_project_token_type drc on
     (drc.type = s2.token) ;
 
 ----nft activity
@@ -197,13 +197,13 @@ FROM
                             sum(transfer_count) AS transfer_count,
                             type as token
                         FROM
-                            nft_volume_count_temp tbvu  where transfer_count>0 and recent_time_code='ALL'
+                            nft_volume_count tbvu  where transfer_count>0 and recent_time_code='ALL'
                          and  tbvu.address not in (select address from exclude_address)
                         GROUP BY
                             type)
                         rowtable ) s1
         WHERE
                 s1.rn <= 100) s2
-        INNER JOIN dim_project_token_type_temp drc ON
+        INNER JOIN dim_project_token_type drc ON
         (drc.type = s2.token);
 insert into tag_result${tableSuffix}(table_name,batch_date)  SELECT 'static_top_ten_action${tableSuffix}' as table_name,'${batchDate}'  as batch_date;

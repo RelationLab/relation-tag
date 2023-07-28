@@ -36,7 +36,7 @@ from (
                             sum(total_transfer_volume_usd) as volume_usd,
                             type as token
                         from
-                            dex_tx_volume_count_summary_temp  tbvu
+                            dex_tx_volume_count_summary  tbvu
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                         where total_transfer_volume_usd>0
                           and  tbvu.address not in (select address from exclude_address)
@@ -46,7 +46,7 @@ from (
                         rowtable ) s1
         where
                 s1.rn <= 100) s2
-        inner join dim_project_token_type_temp drc on
+        inner join dim_project_token_type drc on
         (drc.type = s2.token) ;
 
 ----nft vol
@@ -81,7 +81,7 @@ FROM
                             sum(transfer_volume) AS transfer_volume,
                             type as token
                         FROM
-                            nft_volume_count_temp tbvu
+                            nft_volume_count tbvu
                           inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                         where transfer_volume>0  and recent_time_code='ALL'
                           and  tbvu.address not in (select address from exclude_address)
@@ -90,7 +90,7 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 100) s2
-        INNER JOIN dim_project_token_type_temp drc ON
+        INNER JOIN dim_project_token_type drc ON
         (drc.type = s2.token);
 
 
@@ -129,7 +129,7 @@ from (
                              type,project)
                          rowtable ) s1
          where
-                 s1.rn <= 1000) s2 inner join dim_project_type_temp drc on(drc.type=s2.token and drc.project=s2.project);
+                 s1.rn <= 1000) s2 inner join dim_project_type drc on(drc.type=s2.token and drc.project=s2.project);
 --
 -- select distinct s2.token as token,
 --                 s2.rn as rownumber,
@@ -162,7 +162,7 @@ from (
 --                              type)
 --                          rowtable ) s1
 --          where
---                  s1.rn <= 1000) s2 inner join dim_project_type_temp drc on(drc.type=s2.token);
+--                  s1.rn <= 1000) s2 inner join dim_project_type drc on(drc.type=s2.token);
 
 
 
@@ -192,7 +192,7 @@ from (
                              sum(total_transfer_count) as total_transfer_count,
                              type as token
                          from
-                             dex_tx_volume_count_summary_temp  tbvu
+                             dex_tx_volume_count_summary  tbvu
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                          where total_transfer_count>0
                            and  tbvu.address not in (select address from exclude_address)
@@ -202,7 +202,7 @@ from (
                          rowtable ) s1
          where
                  s1.rn <= 100) s2
-         inner join dim_project_token_type_temp drc on
+         inner join dim_project_token_type drc on
     (drc.type = s2.token) ;
 
 ----nft activity
@@ -237,7 +237,7 @@ FROM
                             sum(transfer_count) AS transfer_count,
                             type as token
                         FROM
-                            nft_volume_count_temp tbvu
+                            nft_volume_count tbvu
                                 inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                         where transfer_count>0  and recent_time_code='ALL'
                           and  tbvu.address not in (select address from exclude_address)
@@ -246,6 +246,6 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 100) s2
-        INNER JOIN dim_project_token_type_temp drc ON
+        INNER JOIN dim_project_token_type drc ON
         (drc.type = s2.token);
 INSERT INTO tag_result${tableSuffix}(table_name,batch_date) select ('static_top_ten_action${tableSuffix}') as table_name,'${batchDate}'  as batch_date;

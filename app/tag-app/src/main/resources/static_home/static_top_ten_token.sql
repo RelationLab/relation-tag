@@ -38,10 +38,10 @@ from (
                                                                   sum(balance_usd) as balance_usd,
                                                                   token
                                                               from
-                                                                  token_balance_volume_usd_temp tbvu where
-                                                                token in(select token_id from dim_rank_token_temp)
+                                                                  token_balance_volume_usd tbvu where
+                                                                token in(select token_id from dim_rank_token)
                                                                 and not exists
-                                                                    (select 1 from token_balance_volume_usd_temp tbvu2
+                                                                    (select 1 from token_balance_volume_usd tbvu2
                                                                               where tbvu2.token='0x839e71613f9aa06e5701cf6de63e303616b0dde3'
                                                                                 and address='0xf6e06de459057d3efa8f0ebd3656e06f66ea02da'
                                                                                 and tbvu.token=tbvu2.token
@@ -87,7 +87,7 @@ FROM
                             sum(balance) AS balance,
                             token
                         FROM
-                            nft_holding_temp tbvu where token in(select token_id from dim_project_token_type_rank_temp)
+                            nft_holding tbvu where token in(select token_id from dim_project_token_type_rank)
                             and   balance >=1 and recent_time_code='ALL'
                                                and tbvu.address not in (select address from exclude_address)
                         GROUP BY
@@ -95,7 +95,7 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 10) s2
-        INNER JOIN dim_project_token_type_temp drc ON
+        INNER JOIN dim_project_token_type drc ON
         (drc.token = s2.token);
 
 insert into static_top_ten_token${tableSuffix}(token,rownumber,token_name,token_type,bus_type) values ('ALL',0,'ALL','defi','volume');
@@ -125,10 +125,10 @@ from (
                              sum(volume_usd) as volume_usd,
                              token
                          from
-                             token_volume_usd_temp tbvu where
-                                 token in(select token_id from dim_rank_token_temp)
+                             token_volume_usd tbvu where
+                                 token in(select token_id from dim_rank_token)
                                                              and not exists
-                                 (select 1 from token_volume_usd_temp tbvu2
+                                 (select 1 from token_volume_usd tbvu2
                                   where tbvu2.token='0x839e71613f9aa06e5701cf6de63e303616b0dde3'
                                     and address='0xf6e06de459057d3efa8f0ebd3656e06f66ea02da'
                                     and tbvu.token=tbvu2.token
@@ -176,7 +176,7 @@ FROM
                             sum(transfer_volume) AS transfer_volume,
                             token
                         FROM
-                            nft_volume_count_temp tbvu where token in(select token_id from dim_project_token_type_rank_temp)
+                            nft_volume_count tbvu where token in(select token_id from dim_project_token_type_rank)
                                                     and token<>'0x0000000000a39bb272e79075ade125fd351887ac'
                             and   transfer_volume >=1 and tbvu.address not in (select address from exclude_address)
                                                     and recent_time_code='ALL'
@@ -185,7 +185,7 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 10) s2
-        INNER JOIN dim_project_token_type_temp drc ON
+        INNER JOIN dim_project_token_type drc ON
         (drc.token = s2.token);
 
 
@@ -217,11 +217,11 @@ from (
                              sum(total_transfer_count) as total_transfer_count,
                              token
                          from
-                             token_holding_vol_count_temp tbvu where
-                                 token in(select token_id from dim_rank_token_temp)
+                             token_holding_vol_count tbvu where
+                                 token in(select token_id from dim_rank_token)
                                                             and recent_time_code='ALL'
                                                              and not exists
-                                 (select 1 from token_balance_volume_usd_temp tbvu2
+                                 (select 1 from token_balance_volume_usd tbvu2
                                   where tbvu2.token='0x839e71613f9aa06e5701cf6de63e303616b0dde3'
                                     and address='0xf6e06de459057d3efa8f0ebd3656e06f66ea02da'
                                     and tbvu.token=tbvu2.token
@@ -267,7 +267,7 @@ FROM
                             sum(transfer_count) AS transfer_count,
                             token
                         FROM
-                            nft_volume_count_temp tbvu where token in(select token_id from dim_project_token_type_rank_temp)
+                            nft_volume_count tbvu where token in(select token_id from dim_project_token_type_rank)
                                                     and tbvu.address not in (select address from exclude_address)
                                                     and transfer_count >0  and recent_time_code='ALL'
                         GROUP BY
@@ -275,6 +275,6 @@ FROM
                         rowtable ) s1
         WHERE
                 s1.rn <= 10) s2
-        INNER JOIN dim_project_token_type_temp drc ON
+        INNER JOIN dim_project_token_type drc ON
         (drc.token = s2.token);
 insert into tag_result${tableSuffix}(table_name,batch_date)  SELECT 'static_top_ten_token${tableSuffix}' as table_name,'${batchDate}'  as batch_date;
