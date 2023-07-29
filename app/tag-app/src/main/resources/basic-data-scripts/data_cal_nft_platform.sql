@@ -52,7 +52,7 @@ group by
     mp_nft_platform_temp.platform,
     mp_nft_platform_temp.platform_name_alis;
 
-delete from nft_sync_address where address='0x0000000000a39bb272e79075ade125fd351887ac' and (platform='Blur' or platform='Blur Pool Token') and "type"='ERC721';
+delete from nft_sync_address where address='0x0000000000a39bb272e79075ade125fd351887ac' and (platform='Blur' or platform='Blur Pool') and "type"='ERC721';
 insert into nft_sync_address (id,	address ,platform ,"type",name_for_label)
 select -1,'0x0000000000a39bb272e79075ade125fd351887ac' as address ,'Blur Pool' as platform ,'ERC721' as "type",'Blur' as name_for_label;
 
