@@ -3595,7 +3595,7 @@ where nft_trade_type_temp.type = '1';
 ---------------------------------dim_dex_token.sql---------------------
 ---------------count 0x_USDC(0xa0b869)_ALL_ACTIVITY_DEX--------------------------
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp(project,
                                   "token",
                                   "type",
                                   label_type,
@@ -3612,7 +3612,7 @@ select distinct token_platform_temp.platform as                                 
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
                 SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name ||
-                '_ACTIVITY_DEX'         as                                                     label_type,
+                '_ACTIVITY'|| (case when asset_type='token' then '_DEX' else '' end)         as  label_type,
                 'T'                     as                                                     operate_type,
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
@@ -3626,13 +3626,15 @@ from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
          inner join (select address,
-                            symbol
+                            symbol,
+                            'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
                      select wlp.address,
-                            wlp.symbol_wired as symbol
+                            wlp.symbol_wired as symbol,
+                            'lp' as asset_type
                      from white_list_lp_temp wlp
                               left join white_list_lp_temp wslp on
                                  wlp.address = wslp.address
@@ -3647,8 +3649,8 @@ from token_platform_temp
                         'MANA',
                         'AXS',
                         'SAND']
-                    and wlp."type" = 'LP') top_token_1000_temp on (token_platform_temp.address = top_token_1000_temp.address)
-         INNER JOIN trade_type ON (1 = 1)
+                    and wlp."type" = 'LP') top_token_1000_temp on (token_platform_temp.address = top_token_1000_temp.address )
+         INNER JOIN trade_type ON (top_token_1000_temp.asset_type='token' or (top_token_1000_temp.asset_type='lp' and trade_type.trade_type='stakelp'))
          inner join recent_time_temp on (1 = 1)
          inner join dex_action_platform_temp
                     on (token_platform_temp.platform = dex_action_platform_temp.platform and
@@ -3674,10 +3676,11 @@ select distinct 'RelationTeam'       "owner",
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
                 SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name ||
-                '_ACTIVITY_DEX' as   "type",
+                '_ACTIVITY'|| (case when asset_type='token' then '_DEX' else '' end) as   "type",
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
-                SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' ||
+                SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name || '_ACTIVITY'
+                || (case when asset_type='token' then '_DEX_' else '_' end)||
                 level_def_temp.level as   "name",
                 'SYSTEM'             "source",
                 'PUBLIC'             visible_type,
@@ -3691,7 +3694,7 @@ select distinct 'RelationTeam'       "owner",
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
                 SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name ||
-                '_ACTIVITY_DEX'      rule_group,
+                '_ACTIVITY'|| (case when asset_type='token' then '_DEX' else '' end)      rule_group,
                 'RESULT'             value_type,
                 999999               run_order,
                 now()                created_at,
@@ -3703,13 +3706,15 @@ from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
          inner join (select address,
-                            symbol
+                            symbol,
+                            'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
                      select wlp.address,
-                            wlp.symbol_wired as symbol
+                            wlp.symbol_wired as symbol,
+                            'lp' as asset_type
                      from white_list_lp_temp wlp
                               left join white_list_lp_temp wslp on
                                  wlp.address = wslp.address
@@ -3759,8 +3764,8 @@ select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_te
                 now()                                                                          created_at,
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
-                SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name || '_ACTIVITY_DEX_' ||
-                level_def_temp.level                                                                label_name,
+                SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name || '_ACTIVITY'
+                || (case when asset_type='token' then '_DEX_' else '_' end)||level_def_temp.level  label_name,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || platform_temp.platform_name ||
                 ' ' || top_token_1000_temp.symbol || ' ' ||
@@ -3773,13 +3778,15 @@ from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
          inner join (select address,
-                            symbol
+                            symbol,
+                            'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
                      select wlp.address,
-                            wlp.symbol_wired as symbol
+                            wlp.symbol_wired as symbol,
+                            'lp' as asset_type
                      from white_list_lp_temp wlp
                               left join white_list_lp_temp wslp on
                                  wlp.address = wslp.address
@@ -4181,7 +4188,7 @@ select distinct token_platform_temp.platform as                                 
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
                 SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name ||
-                '_VOLUME_DEX_GRADE'     as                                                     label_type,
+                '_VOLUME'|| (case when asset_type='token' then '_DEX' else '' end)||'_GRADE'     as  label_type,
                 'T'                     as                                                     operate_type,
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
@@ -4195,13 +4202,15 @@ from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
          inner join (select address,
-                            symbol
+                            symbol,
+                            'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
                      select wlp.address,
-                            wlp.symbol_wired as symbol
+                            wlp.symbol_wired as symbol,
+                            'lp' as asset_type
                      from white_list_lp_temp wlp
                               left join white_list_lp_temp wslp on
                                  wlp.address = wslp.address
@@ -4216,9 +4225,9 @@ from token_platform_temp
                         'MANA',
                         'AXS',
                         'SAND']
-                    and wlp."type" = 'LP') top_token_1000_temp on
+                    and wlp."type" = 'LP')  top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
-         INNER JOIN trade_type ON (1 = 1)
+         INNER JOIN trade_type ON (top_token_1000_temp.asset_type='token' or (top_token_1000_temp.asset_type='lp' and trade_type.trade_type='stakelp'))
          inner join recent_time_temp on (1 = 1)
          inner join dex_action_platform_temp
                     on (token_platform_temp.platform = dex_action_platform_temp.platform and
@@ -4244,10 +4253,10 @@ select distinct 'RelationTeam'         "owner",
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
                 SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name ||
-                '_VOLUME_DEX_GRADE' as "type",
+                '_VOLUME'|| (case when asset_type='token' then '_DEX' else '' end)||'_GRADE' as "type",
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
-                SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name || '_VOLUME_DEX_GRADE_' ||
+                SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name || '_VOLUME'|| (case when asset_type='token' then '_DEX' else '' end)||'_GRADE_' ||
                 level_def_temp.level     as "name",
                 'SYSTEM'               "source",
                 'PUBLIC'               visible_type,
@@ -4264,7 +4273,7 @@ select distinct 'RelationTeam'         "owner",
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
                 SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name ||
-                '_VOLUME_DEX_GRADE'    rule_group,
+                '_VOLUME'|| (case when asset_type='token' then '_DEX' else '' end)||'_GRADE'    rule_group,
                 'RESULT'               value_type,
                 999999                 run_order,
                 now()                  created_at,
@@ -4275,10 +4284,31 @@ select distinct 'RelationTeam'         "owner",
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select *
+         inner join (select address,
+                            symbol,
+                            'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
-                       and removed <> 'true') top_token_1000_temp on
+                       and removed <> 'true'
+                     union all
+                     select wlp.address,
+                            wlp.symbol_wired as symbol,
+                            'lp' as asset_type
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp on
+                                 wlp.address = wslp.address
+                             and wlp.type = 'LP'
+                             and wslp.type = 'SLP'
+                     where wlp.tvl > 1000000
+                       and string_to_array(wlp.symbol_wired, '/') && array['ETH',
+                        'WETH',
+                        'UNI',
+                        'AAVE',
+                        '1INCH',
+                        'MANA',
+                        'AXS',
+                        'SAND']
+                    and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
          INNER JOIN trade_type ON (1 = 1)
          inner join recent_time_temp on (1 = 1)
@@ -4329,10 +4359,31 @@ select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_te
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select *
+         inner join (select address,
+                            symbol,
+                            'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
-                       and removed <> 'true') top_token_1000_temp on
+                       and removed <> 'true'
+                     union all
+                     select wlp.address,
+                            wlp.symbol_wired as symbol,
+                            'lp' as asset_type
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp on
+                                 wlp.address = wslp.address
+                             and wlp.type = 'LP'
+                             and wslp.type = 'SLP'
+                     where wlp.tvl > 1000000
+                       and string_to_array(wlp.symbol_wired, '/') && array['ETH',
+                        'WETH',
+                        'UNI',
+                        'AAVE',
+                        '1INCH',
+                        'MANA',
+                        'AXS',
+                        'SAND']
+                    and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
          INNER JOIN trade_type ON (1 = 1)
          inner join recent_time_temp on (1 = 1)
@@ -4765,7 +4816,7 @@ select distinct token_platform_temp.platform as                                 
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
                 SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name ||
-                '_VOLUME_DEX_RANK'      as                                                     label_type,
+                '_VOLUME'|| (case when asset_type='token' then '_DEX' else '' end)||'_RANK'      as                                                     label_type,
                 'T'                     as                                                     operate_type,
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
@@ -4779,13 +4830,15 @@ from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
          inner join (select address,
-                            symbol
+                            symbol,
+                            'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
                      select wlp.address,
-                            wlp.symbol_wired as symbol
+                            wlp.symbol_wired as symbol,
+                            'lp' as asset_type
                      from white_list_lp_temp wlp
                               left join white_list_lp_temp wslp on
                                  wlp.address = wslp.address
@@ -4802,7 +4855,7 @@ from token_platform_temp
                         'SAND']
                     and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
-         INNER JOIN trade_type ON (1 = 1)
+         INNER JOIN trade_type ON (top_token_1000_temp.asset_type='token' or (top_token_1000_temp.asset_type='lp' and trade_type.trade_type='stakelp'))
          inner join recent_time_temp on (1 = 1)
          inner join dex_action_platform_temp
                     on (token_platform_temp.platform = dex_action_platform_temp.platform and
@@ -4828,10 +4881,10 @@ select distinct 'RelationTeam'        "owner",
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
                 SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name ||
-                '_VOLUME_DEX_RANK' as "type",
+                '_VOLUME'|| (case when asset_type='token' then '_DEX' else '' end)||'_RANK' as "type",
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
-                SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' ||
+                SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name || '_VOLUME'|| (case when asset_type='token' then '_DEX' else '' end)||'_RANK_' ||
                 level_def_temp.level    as "name",
                 'SYSTEM'              "source",
                 'PUBLIC'              visible_type,
@@ -4845,7 +4898,7 @@ select distinct 'RelationTeam'        "owner",
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
                 SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name ||
-                '_VOLUME_DEX_RANK'    rule_group,
+                '_VOLUME'|| (case when asset_type='token' then '_DEX' else '' end)||'_RANK'    rule_group,
                 'RESULT'              value_type,
                 999999                run_order,
                 now()                 created_at,
@@ -4856,10 +4909,31 @@ select distinct 'RelationTeam'        "owner",
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select *
+         inner join (select address,
+                            symbol,
+                            'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
-                       and removed <> 'true') top_token_1000_temp on
+                       and removed <> 'true'
+                     union all
+                     select wlp.address,
+                            wlp.symbol_wired as symbol,
+                            'lp' as asset_type
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp on
+                                 wlp.address = wslp.address
+                             and wlp.type = 'LP'
+                             and wslp.type = 'SLP'
+                     where wlp.tvl > 1000000
+                       and string_to_array(wlp.symbol_wired, '/') && array['ETH',
+                        'WETH',
+                        'UNI',
+                        'AAVE',
+                        '1INCH',
+                        'MANA',
+                        'AXS',
+                        'SAND']
+                    and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
          INNER JOIN trade_type ON (1 = 1)
          inner join (select *
@@ -4895,8 +4969,8 @@ select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_te
                 now()                                                                          created_at,
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
-                SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name || '_VOLUME_DEX_RANK_' ||
-                level_def_temp.level                                                                label_name,
+                SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name
+                    || '_VOLUME'|| (case when asset_type='token' then '_DEX' else '' end)||'_RANK_' ||level_def_temp.level label_name,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || platform_temp.platform_name ||
                 ' ' || top_token_1000_temp.symbol || ' ' || level_def_temp.level_name || ' ' ||
@@ -4908,10 +4982,31 @@ select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_te
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select *
+         inner join (select address,
+                            symbol,
+                            'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
-                       and removed <> 'true') top_token_1000_temp on
+                       and removed <> 'true'
+                     union all
+                     select wlp.address,
+                            wlp.symbol_wired as symbol,
+                            'lp' as asset_type
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp on
+                                 wlp.address = wslp.address
+                             and wlp.type = 'LP'
+                             and wslp.type = 'SLP'
+                     where wlp.tvl > 1000000
+                       and string_to_array(wlp.symbol_wired, '/') && array['ETH',
+                        'WETH',
+                        'UNI',
+                        'AAVE',
+                        '1INCH',
+                        'MANA',
+                        'AXS',
+                        'SAND']
+                    and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
          INNER JOIN trade_type ON (1 = 1)
          inner join (select *
