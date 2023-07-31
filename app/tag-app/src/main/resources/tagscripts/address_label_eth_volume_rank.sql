@@ -21,7 +21,7 @@ vacuum
 address_label_eth_volume_rank;
 
 insert into public.address_label_eth_volume_rank(address, label_type, label_name, data, wired_type, updated_at, "group",
-                                                 level, category, trade_type, project, asset, bus_type)
+                                                 level, category, trade_type, project, asset, bus_type, recent_time_code )
 select tb1.address,
        tb2.label_type,
        tb2.label_type || '_' || case
@@ -49,7 +49,8 @@ select tb1.address,
        'ALL'                                             trade_type,
        ''                                             as project,
        tb2.token_name                                 as asset,
-       'volume'                                       as bus_type
+       'volume'                                       as bus_type,
+       recent_time_code
 from (select t1.address,
              t1.token,
              t1.volume_usd,

@@ -32,7 +32,7 @@ into
                                                  trade_type,
                                                  project,
                                                  asset,
-                                                 bus_type)
+                                                 bus_type, recent_time_code )
 select
     address,
     label_type,
@@ -46,7 +46,8 @@ select
     t.type as trade_type,
     '' as project,
     t.token_name as asset,
-    'volume' as bus_type
+    'volume' as bus_type,
+    recent_time_code
 from
     (
         select

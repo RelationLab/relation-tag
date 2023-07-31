@@ -18,7 +18,7 @@ CREATE TABLE public.address_label_nft_project_type_count_grade (
 truncate table public.address_label_nft_project_type_count_grade;
 vacuum address_label_nft_project_type_count_grade;
 
-insert into public.address_label_nft_project_type_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
+insert into public.address_label_nft_project_type_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type, recent_time_code )
  select
     address,
     label_type,
@@ -67,7 +67,8 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
     t.type as trade_type,
     t.project_name as project,
     t.token_name as asset,
-    'activity' as bus_type
+    'activity' as bus_type,
+    recent_time_code
     from
     (
         -- project-token-type

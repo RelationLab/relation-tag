@@ -18,7 +18,7 @@ CREATE TABLE public.address_label_token_project_type_count_grade (
 truncate table public.address_label_token_project_type_count_grade;
 vacuum address_label_token_project_type_count_grade;
 
-insert into public.address_label_token_project_type_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
+insert into public.address_label_token_project_type_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type, recent_time_code )
 select
     address,
     label_type,
@@ -67,7 +67,8 @@ select
     t.type as trade_type,
     t.project_name as project,
     t.token_name as asset,
-    'activity' as bus_type
+    'activity' as bus_type,
+    recent_time_code
 from
     (
         -- project-token-type(含ALL)
@@ -77,7 +78,8 @@ from
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(total_transfer_count) as total_transfer_count
+            sum(total_transfer_count) as total_transfer_count,
+            recent_time_code
         from
             dex_tx_volume_count_summary_temp a1
                 inner join dim_project_token_type_temp a2
@@ -95,7 +97,8 @@ from
             a2.label_type,
             a2.type,
             a2.project_name ,
-            a2.token_name
+            a2.token_name,
+            recent_time_code
             -- project(ALL)-token(ALL)-type(含ALL)
         union all
         select
@@ -104,7 +107,8 @@ from
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(total_transfer_count) as total_transfer_count
+            sum(total_transfer_count) as total_transfer_count,
+            recent_time_code
         from
             dex_tx_count_summary_temp a1
             inner join dim_project_token_type_temp a2
@@ -122,7 +126,8 @@ from
             a2.label_type,
             a2.type,
             a2.project_name ,
-            a2.token_name
+            a2.token_name,
+            recent_time_code
             -- project-token(ALL)-type(含ALL)
         union all
         select
@@ -131,7 +136,8 @@ from
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(total_transfer_count) as total_transfer_count
+            sum(total_transfer_count) as total_transfer_count,
+            recent_time_code
         from
             dex_tx_count_summary_temp a1
             inner join dim_project_token_type_temp a2
@@ -148,7 +154,8 @@ from
             a2.label_type,
             a2.type,
             a2.project_name ,
-            a2.token_name
+            a2.token_name,
+            recent_time_code
             -- project(ALL)-token-type(含ALL)
         union all
         select
@@ -157,7 +164,8 @@ from
             a2.type,
             a2.project_name ,
             a2.token_name,
-            sum(total_transfer_count) as total_transfer_count
+            sum(total_transfer_count) as total_transfer_count,
+            recent_time_code
         from
             dex_tx_volume_count_summary_temp a1
             inner join dim_project_token_type_temp a2
@@ -174,7 +182,8 @@ from
             a2.label_type,
             a2.type,
             a2.project_name ,
-            a2.token_name
+            a2.token_name,
+            recent_time_code
     ) t
 where
         total_transfer_count >= 1 and address not in (select address from exclude_address);

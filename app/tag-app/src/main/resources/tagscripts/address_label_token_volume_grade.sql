@@ -18,7 +18,7 @@ CREATE TABLE public.address_label_token_volume_grade (
 truncate table public.address_label_token_volume_grade;
 vacuum address_label_token_volume_grade;
 
-insert into public.address_label_token_volume_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
+insert into public.address_label_token_volume_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type, recent_time_code )
     select
     a1.address,
     a2.label_type,
@@ -63,7 +63,8 @@ insert into public.address_label_token_volume_grade(address,label_type,label_nam
     'ALL' trade_type,
     '' as project,
     a2.token_name as asset,
-    'volume' as bus_type
+    'volume' as bus_type,
+    recent_time_code
     from
     (
         select

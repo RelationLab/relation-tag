@@ -18,7 +18,7 @@ CREATE TABLE public.address_label_nft_project_type_volume_count_rank (
 truncate table public.address_label_nft_project_type_volume_count_rank;
 vacuum address_label_nft_project_type_volume_count_rank;
 
-insert into public.address_label_nft_project_type_volume_count_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
+insert into public.address_label_nft_project_type_volume_count_rank(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type, recent_time_code )
 
 
 select
@@ -34,7 +34,8 @@ select
     t.type as trade_type,
     t.project_name as project,
     t.token_name as asset,
-    'volume' as bus_type
+    'volume' as bus_type,
+    recent_time_code
 from
     (
         select
