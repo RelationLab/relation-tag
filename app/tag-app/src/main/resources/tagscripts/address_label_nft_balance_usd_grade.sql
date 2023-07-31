@@ -24,35 +24,35 @@ select address
        label_type
         ,
        label_type||'_'|| case
-                             when balance_usd >= 100
-                                 and balance_usd < 1000 then 'L1'
-                             when balance_usd >= 1000
-                                 and balance_usd < 10000 then 'L2'
-                             when balance_usd >= 10000
-                                 and balance_usd < 50000 then 'L3'
-                             when balance_usd >= 50000
-                                 and balance_usd < 100000 then 'L4'
-                             when balance_usd >= 100000
-                                 and balance_usd < 500000 then 'L5'
-                             when balance_usd >= 500000
-                                  then 'L6'
+                             when balance >= 100
+                                 and balance < 1000 then 'L1'
+                             when balance >= 1000
+                                 and balance < 10000 then 'L2'
+                             when balance >= 10000
+                                 and balance < 50000 then 'L3'
+                             when balance >= 50000
+                                 and balance < 100000 then 'L4'
+                             when balance >= 100000
+                                 and balance < 500000 then 'L5'
+                             when balance >= 500000
+                                 then 'L6'
            end  as label_name,
        balance  as data,
        'NFT'  as wired_type,
        now()   as updated_at,
        'b'  as "group",
        case
-           when balance_usd >= 100
-               and balance_usd < 1000 then 'L1'
-           when balance_usd >= 1000
-               and balance_usd < 10000 then 'L2'
-           when balance_usd >= 10000
-               and balance_usd < 50000 then 'L3'
-           when balance_usd >= 50000
-               and balance_usd < 100000 then 'L4'
-           when balance_usd >= 100000
-               and balance_usd < 500000 then 'L5'
-           when balance_usd >= 500000
+           when balance >= 100
+               and balance < 1000 then 'L1'
+           when balance >= 1000
+               and balance < 10000 then 'L2'
+           when balance >= 10000
+               and balance < 50000 then 'L3'
+           when balance >= 50000
+               and balance < 100000 then 'L4'
+           when balance >= 100000
+               and balance < 500000 then 'L5'
+           when balance >= 500000
                then 'L6' end as level,
        'grade' as category,
        t.type as trade_type,
