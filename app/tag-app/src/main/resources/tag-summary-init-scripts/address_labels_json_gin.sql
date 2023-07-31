@@ -5,7 +5,7 @@ CREATE TABLE address_labels_json_gin_temp_${tableSuffix}
     address TEXT  NOT NULL,
     data    TEXT NOT NULL
 ) WITH (appendoptimized = true, orientation = column) DISTRIBUTED BY (address);
-CREATE INDEX idx_address_labels_json_gin_temp_${tableSuffix}_id_${batchDate} ON address_labels_json_gin_temp_${tableSuffix}(id);
+CREATE INDEX idx_address_labels_json_gin_temp_${tableSuffix}_id_${batchDateReplace} ON address_labels_json_gin_temp_${tableSuffix}(id);
 truncate table address_labels_json_gin_temp_${tableSuffix};
 vacuum address_labels_json_gin_temp_${tableSuffix};
 
