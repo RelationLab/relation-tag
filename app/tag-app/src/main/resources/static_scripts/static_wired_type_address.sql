@@ -18,6 +18,7 @@ from
         from
     address_label_gp_${configEnvironment} algout
         inner join address_init${tableSuffix} ais  on(algout.address=ais.address)
+        where (recent_time_code ='ALL' OR recent_time_code IS NULL)
         group by
             wired_type,
             algout.address) out_t

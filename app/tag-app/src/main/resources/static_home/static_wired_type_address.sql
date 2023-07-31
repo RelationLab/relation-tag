@@ -18,7 +18,7 @@ from
             wired_type,
             address
         from
-            address_label_gp${tableSuffix} where 1=1
+            address_label_gp${tableSuffix} where (recent_time_code ='ALL' OR recent_time_code IS NULL)
         group by
             wired_type,
             address) out_t

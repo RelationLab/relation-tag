@@ -45,7 +45,7 @@ from
             trade_type
         from
             address_label_gp${tableSuffix}
-        where
+        where (recent_time_code ='ALL' OR recent_time_code IS NULL) AND
             (trade_type = 'ALL' and project = '' and wired_type='DEFI')
            or (trade_type = '' and  project = '' and wired_type='NFT' and bus_type = 'balance' )
            or (trade_type = 'ALL' and project='' and wired_type='NFT' and (bus_type = 'volume' or bus_type = 'activity'))  ) alg
@@ -100,7 +100,9 @@ from
                 else project
                 end as project
         from
-            address_label_gp${tableSuffix} WHERE category = 'grade' and ((
+            address_label_gp${tableSuffix} WHERE
+            (recent_time_code ='ALL' OR recent_time_code IS NULL) AND
+            category = 'grade' and ((
                         (project is not null or project <> '') and ((trade_type='ALL' and asset='ALL') or project='Frax' or project='RocketPool' or project='Lido' )
                         and  (bus_type = 'activity' or bus_type = 'volume') and wired_type <> 'WEB3')
                         or ((bus_type = 'balance' or bus_type = 'activity' ) and wired_type = 'WEB3' and ((asset in('ALL','ProjectGalaxy','RabbitHole','ENS','Mirror') AND trade_type='NFT Recipient' )  OR trade_type='ALL')))) alg
@@ -145,7 +147,8 @@ from
                 else project
                 end as project
         from
-            address_label_gp${tableSuffix} where category='grade' and
+            address_label_gp${tableSuffix} where (recent_time_code ='ALL' OR recent_time_code IS NULL) AND
+             category='grade' and
             ((project = 'ALL' and wired_type <> 'NFT') or (project = '' and wired_type = 'NFT')) and
             (asset = 'ALL' or (asset = 'ETH(eth)' and trade_type = 'stake') or (asset <> 'ALL' and wired_type = 'WEB3'))
                                and (bus_type='activity'  or (bus_type = 'volume' and wired_type <> 'WEB3')))  alg

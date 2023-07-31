@@ -30,7 +30,7 @@ from
             algout.address
         from
             address_label_gp_${configEnvironment} algout         inner join address_init${tableSuffix} ais  on(algout.address=ais.address)
-        where label_name in('crowd_active_users',
+        where (recent_time_code ='ALL' OR recent_time_code IS NULL) AND  label_name in('crowd_active_users',
                                                  'crowd_elite',
                                                  'crowd_nft_active_users',
                                                  'crowd_long_term_holder',

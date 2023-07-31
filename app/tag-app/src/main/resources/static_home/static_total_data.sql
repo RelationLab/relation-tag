@@ -43,7 +43,7 @@ from
         select
             distinct address
         from
-            address_label_gp${tableSuffix} algin ) alg
+            address_label_gp${tableSuffix} algin where (recent_time_code ='ALL' OR recent_time_code IS NULL)) alg
         left join contract aljg on (alg.address = aljg.contract_address);
 
 update  static_total_data${tableSuffix}
@@ -61,7 +61,7 @@ set
                                            from
                                                address_label_gp${tableSuffix}
                                            where
-                                                   1 = 1
+                                               (recent_time_code ='ALL' OR recent_time_code IS NULL) AND
                                                limit 10000) t
                                        limit 4) a
     )
