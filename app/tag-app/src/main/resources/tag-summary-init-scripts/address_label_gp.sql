@@ -12,7 +12,8 @@ CREATE TABLE public.address_label_crowd_nft_active_users (
                                                              trade_type varchar(80) NULL,
                                                              project varchar(80) NULL,
                                                              asset varchar(80) NULL,
-                                                             bus_type varchar(20) NULL
+                                                             bus_type varchar(20) NULL,
+                                                             recent_time_code varchar(30) NULL
 );
 truncate table public.address_label_crowd_nft_active_users;
 vacuum address_label_crowd_nft_active_users;
@@ -53,7 +54,8 @@ CREATE TABLE public.address_label_crowd_active_users (
                                                          trade_type varchar(100) NULL,
                                                          project varchar(100) NULL,
                                                          asset varchar(100) NULL,
-                                                         bus_type varchar(20) NULL
+                                                         bus_type varchar(20) NULL,
+                                                         recent_time_code varchar(30) NULL
 );
 truncate table public.address_label_crowd_active_users;
 vacuum address_label_crowd_active_users;
@@ -99,7 +101,8 @@ CREATE TABLE public.address_label_crowd_elite (
                                                   trade_type varchar(80) NULL,
                                                   project varchar(80) NULL,
                                                   asset varchar(80) NULL,
-                                                  bus_type varchar(20) NULL
+                                                  bus_type varchar(20) NULL,
+                                                  recent_time_code varchar(30) NULL
 );
 truncate table public.address_label_crowd_elite;
 vacuum address_label_crowd_elite;

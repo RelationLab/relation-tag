@@ -12,7 +12,8 @@ CREATE TABLE public.address_label_eth_time_special (
                                                        trade_type varchar(80) NULL,
                                                        project varchar(80) NULL,
                                                        asset varchar(80) NULL,
-                                                       bus_type varchar(20) NULL
+                                                       bus_type varchar(20) NULL,
+                                                       recent_time_code varchar(30) NULL
 );
 truncate table public.address_label_eth_time_special;
 vacuum address_label_eth_time_special;
@@ -71,7 +72,8 @@ CREATE TABLE public.address_label_crowd_long_term_holder(
                                                             trade_type varchar(80) NULL,
                                                             project varchar(80) NULL,
                                                             asset varchar(80) NULL,
-                                                            bus_type varchar(20) NULL
+                                                            bus_type varchar(20) NULL,
+                                                            recent_time_code varchar(30) NULL
 );
 truncate table public.address_label_crowd_long_term_holder;
 insert into public.address_label_crowd_long_term_holder(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)

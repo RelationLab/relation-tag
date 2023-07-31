@@ -12,7 +12,8 @@ CREATE TABLE public.address_label_nft_balance_rank (
     trade_type varchar(100) NULL,
     project varchar(100) NULL,
     asset varchar(100) NULL,
-                                                       bus_type varchar(20) NULL
+                                                       bus_type varchar(20) NULL,
+                                                       recent_time_code varchar(30) NULL
 );
 truncate  table public.address_label_nft_balance_rank;
 vacuum address_label_nft_balance_rank;
@@ -210,7 +211,8 @@ CREATE TABLE public.address_label_crowd_nft_whale (
     trade_type varchar(100) NULL,
     project varchar(100) NULL,
     asset varchar(100) NULL,
-                                                      bus_type varchar(20) NULL
+                                                      bus_type varchar(20) NULL,
+                                                      recent_time_code varchar(30) NULL
 );
 truncate table public.address_label_crowd_nft_whale;
 insert into public.address_label_crowd_nft_whale(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)

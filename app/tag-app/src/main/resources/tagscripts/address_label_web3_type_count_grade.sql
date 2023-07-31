@@ -12,7 +12,8 @@ CREATE TABLE public.address_label_web3_type_count_grade (
                                                             trade_type varchar(30) NULL,
                                                             project varchar(100) NULL,
                                                             asset varchar(100) NULL,
-                                                            bus_type varchar(20) NULL
+                                                            bus_type varchar(20) NULL,
+                                                            recent_time_code varchar(30) NULL
 );
 truncate table public.address_label_web3_type_count_grade;
 vacuum address_label_web3_type_count_grade;
@@ -178,7 +179,8 @@ CREATE TABLE public.address_label_crowd_web3_active_users (
                                                               trade_type varchar(100) NULL,
                                                               project varchar(100) NULL,
                                                               asset varchar(100) NULL,
-                                                              bus_type varchar(20) NULL
+                                                              bus_type varchar(20) NULL,
+                                                              recent_time_code varchar(30) NULL
 );
 truncate table public.address_label_crowd_web3_active_users;
 insert

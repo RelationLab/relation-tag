@@ -12,7 +12,8 @@ CREATE TABLE public.address_label_web3_type_balance_top (
                                                             trade_type varchar(100) NULL,
                                                             project varchar(100) NULL,
                                                             asset varchar(100) NULL,
-                                                            bus_type varchar(20) NULL
+                                                            bus_type varchar(20) NULL,
+                                                            recent_time_code varchar(30) NULL
 );
 truncate table address_label_web3_type_balance_top;
 vacuum address_label_web3_type_balance_top;

@@ -12,7 +12,8 @@ CREATE TABLE public.address_label_token_balance_grade_all (
                                                               trade_type varchar(80) NULL,
                                                               project varchar(80) NULL,
                                                               asset varchar(80) NULL,
-                                                              bus_type varchar(20) NULL
+                                                              bus_type varchar(20) NULL,
+                                                              recent_time_code varchar(30) NULL
 );
 truncate table public.address_label_token_balance_grade_all;
 vacuum address_label_token_balance_grade_all;
@@ -97,7 +98,8 @@ CREATE TABLE public.address_label_crowd_token_whale (
     trade_type varchar(100) NULL,
     project varchar(100) NULL,
     asset varchar(100) NULL,
-                                                        bus_type varchar(20) NULL
+                                                        bus_type varchar(20) NULL,
+                                                        recent_time_code varchar(30) NULL
 );
 truncate table public.address_label_crowd_token_whale;
 insert into public.address_label_crowd_token_whale(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type)
