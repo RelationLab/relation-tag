@@ -3805,6 +3805,14 @@ values ('address_label_univ3_volume_rank','address_label_univ3_volume_rank',1);
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_univ3_balance_provider','address_label_univ3_balance_provider',1);
+
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_nft_balance_usd_grade','address_label_nft_balance_usd_grade',1);
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_nft_balance_usd_rank','address_label_nft_balance_usd_rank',1);
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_nft_balance_usd_top','address_label_nft_balance_usd_top',1);
+
 -- insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 -- values ('address_label_crowd_active_users','address_label_crowd_active_users',1);
 -- insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)

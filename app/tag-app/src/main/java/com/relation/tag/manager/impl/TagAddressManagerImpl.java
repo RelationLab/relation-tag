@@ -108,7 +108,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             buildTagBasicData(batchDate);
             check("dim_rule_content", 60 * 1000, batchDate, 1, false);
             tagSummaryInit(batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH);
-            check("total", 1 * 60 * 1000, batchDate, 6, true);
+            check("total", 1 * 60 * 1000, batchDate, 7, true);
             List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
             List<FileEntity> fileList = Lists.newArrayList();
             for (DimRuleSqlContent item : ruleSqlList) {
@@ -118,7 +118,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             }
             tagByRuleSqlList(fileList, batchDate);
         }
-        check("address_label", 60 * 1000, batchDate, 59, true);
+        check("address_label", 60 * 1000, batchDate, 62, true);
         tagMerge(batchDate);
     }
 
@@ -406,6 +406,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("dim", "total_dex_tx_volume_count_summary_stake.sql", batchDate, filePath, 6,true,null, false);
         execSql("dim", "token_balance_volume_usd.sql", batchDate, filePath, 6,true,null, false);
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate, filePath, 1,false,null, false);
+        execSql("dim", "nft_balance_usd.sql", batchDate, filePath, 6,true,null, false);
 
         /***************erc20_tx_record_from***********/
         execSql("dim", "tabel_defi_erc20_tx_record_from.sql", batchDate, tableDefiPath, 6,true,null, false);
