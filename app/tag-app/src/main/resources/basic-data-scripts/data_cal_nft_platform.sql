@@ -10,6 +10,14 @@ CREATE TABLE public.nft_platform_temp(
 truncate table nft_platform_temp;
 vacuum nft_platform_temp;
 
+delete from nft_sync_address where address='0x0000000000a39bb272e79075ade125fd351887ac' and (platform='Blur Pool') and ("type"='ERC721' or "type"='ERC721-token');
+delete from nft_sync_address where address='eth' and (platform='Eth') and "type"='ERC721-token';
+
+insert into nft_sync_address (id,	address ,platform ,"type",name_for_label)
+select -1,'0x0000000000a39bb272e79075ade125fd351887ac' as address ,'Blur Pool' as platform ,'ERC721-token' as "type",'Blur' as name_for_label;
+insert into nft_sync_address (id,	address ,platform ,"type",name_for_label)
+select -2,'eth' as address ,'Eth' as platform ,'ERC721-token' as "type",'Eth' as name_for_label;
+
 insert
 into
     nft_platform_temp(address,
@@ -34,6 +42,12 @@ from
             platform_deposit_withdraw_tx_record
         union all
         select
+            quote_token as token,
+            '0x39da41747a83aee658334415666f3ef92dd0d541' as platform_address
+        from
+            platform_deposit_withdraw_tx_record
+        union all
+        select
             lend_token as token,
             '0x39da41747a83aee658334415666f3ef92dd0d541' as platform_address
         from
@@ -51,13 +65,5 @@ group by
     platform_nft_tx_record.token,
     mp_nft_platform_temp.platform,
     mp_nft_platform_temp.platform_name_alis;
-
-delete from nft_sync_address where address='0x0000000000a39bb272e79075ade125fd351887ac' and (platform='Blur Pool') and ("type"='ERC721' or "type"='ERC721-token');
-delete from nft_sync_address where address='0x0000000000a39bb272e79075ade125fd351887ac' and (platform='Eth') and "type"='ERC721-token';
-
-insert into nft_sync_address (id,	address ,platform ,"type",name_for_label)
-select -1,'0x0000000000a39bb272e79075ade125fd351887ac' as address ,'Blur Pool' as platform ,'ERC721-token' as "type",'Blur' as name_for_label;
-insert into nft_sync_address (id,	address ,platform ,"type",name_for_label)
-select -2,'eth' as address ,'Eth' as platform ,'ERC721-token' as "type",'Eth' as name_for_label;
 
 insert into tag_result(table_name,batch_date)  SELECT 'data_cal_nft_platform' as table_name,'${batchDate}'  as batch_date;

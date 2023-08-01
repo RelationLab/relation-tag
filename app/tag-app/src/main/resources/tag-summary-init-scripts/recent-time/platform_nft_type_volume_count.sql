@@ -31,6 +31,38 @@ group by pdwtr."operator",
          pdwtr."type";
 
 insert into platform_nft_type_volume_count_temp(recent_time_code,
+                                                address,
+                                                platform_group,
+                                                platform,
+                                                quote_token,
+                                                token,
+                                                type,
+                                                volume_usd,
+                                                transfer_count)
+select  '${recentTimeCode}' recent_time_code,
+        pdwtr."operator"                                                                             as address,
+        'Blur.io: Marketplace'                                                                       as platform_group,
+        '0x00000000006c3852cbef3e08e8df289169ede581'                                                 as platform,
+        pdwtr.quote_token                                                                            as quote_token,
+        pdwtr.quote_token                                                                               as "token",
+        substring(pdwtr."type", 1, 1) || lower(substring(pdwtr."type", 2, length(pdwtr."type") - 1)) as "type",
+        sum(pdwtr.quote_value * w.price)                                                             as volume_usd,
+        count(1)                                                                                     as transfer_count
+from platform_deposit_withdraw_tx_record pdwtr
+         inner join white_list_erc20_temp w on
+    (pdwtr.quote_token = w.address)
+         inner join (select address
+                     from nft_sync_address nsa
+                     where type = 'ERC721-token') nft_sync_address on
+    (pdwtr."token" = nft_sync_address.address)
+where pdwtr.block_number >= ${recentTimeBlockHeight}
+group by pdwtr."operator",
+         pdwtr.quote_token,
+         pdwtr."token",
+         pdwtr."type";
+
+
+insert into platform_nft_type_volume_count_temp(recent_time_code,
                                            address,
                                            platform_group,
                                            platform,
