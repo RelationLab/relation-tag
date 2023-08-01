@@ -6,6 +6,7 @@ version: "1.0"
 stages:
   - "clone"
   - "prepare"
+  - "devDeploy"
   - "stagDeploy"
   - "prodDeploy"
 
@@ -20,9 +21,9 @@ steps:
     git: "github"
     stage: "clone"
 
-  pulumiUp:
-    title: "Pulumi Up"
-    stage: prepare
+  pulumiOutputDev:
+    title: "Pulumi Output"
+    stage: "prepare"
     image: "pulumi/pulumi-nodejs:latest"
     working_directory: "${{clone}}"
     commands:
@@ -33,14 +34,12 @@ steps:
       - cf_export AWS_ECR_REPO_URL=$(pulumi stack output ecrRepositoryUrl)
       - cf_export WIRED_GP_CLUSTER_AWS_SECRET_ID=$(pulumi stack output wiredGpClusterSecretId)
       - cf_export WIRED_GP_CLUSTER_DOMIN=$(pulumi stack output wiredGpClusterDomain)
-      - cf_export WIRED_UGC_AWS_SECRET_ID_STAG=$(pulumi stack output wiredUgcSecretIdStag)
-      - cf_export WIRED_UGC_AWS_SECRET_ID_PROD=$(pulumi stack output wiredUgcSecretIdProd)
-      - cf_export WIRED_UGC_DATABASE_HOST_STAG=$(pulumi stack output wiredUgcDataBaseHostStag)
-      - cf_export WIRED_UGC_DATABASE_HOST_PROD=$(pulumi stack output wiredUgcDataBaseHostProd)
+      - cf_export WIRED_UGC_AWS_SECRET_ID_DEV=$(pulumi stack output wiredUgcSecretIdDev)
+      - cf_export WIRED_UGC_DATABASE_HOST_DEV=$(pulumi stack output wiredUgcDataBaseHostDev)
 
   prepareArtifacts:
     type: "parallel"
-    stage: prepare
+    stage: "prepare"
     steps:
       fetchSecrets:
         title: "Fetch GP AWS Secrets"
@@ -59,9 +58,65 @@ steps:
         dockerfile: "Dockerfile"
         tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
 
+  fetchSecretsDev:
+    title: "Fetch UGC AWS Secrets"
+    stage: "devDeploy"
+    type: aws-secrets-manager
+    arguments:
+      AWS_DEFAULT_REGION: "${{AWS_DEFAULT_REGION}}"
+      secrets:
+        - secret_arn: "${{WIRED_UGC_AWS_SECRET_ID_DEV}}"
+          key: "dbPassword"
+          store_in: WIRED_UGC_DATABASE_PASSWORD_DEV
+
+  devUninstall:
+    title: "Helm uninstall wired-tag for dev"
+    stage: "devDeploy"
+    image: "thorstenhans/helm3"
+    commands:
+      - kubectl config use-context wired-eks-prod
+      - helm uninstall -n dev wired-tag || exit_code=$?
+
+  devDeploy:
+    title: "Helm install wired-tag for dev"
+    stage: "devDeploy"
+    type: helm
+    working_directory: "${{clone}}"
+    arguments:
+      chart_name: helm
+      release_name: wired-tag
+      helm_version: 3.9.0
+      namespace: dev
+      kube_context: wired-eks-prod
+      custom_values:
+        - "image_repository=${{AWS_ECR_REPO_URL}}"
+        - "image_tag=${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+        - "config_env=dev"
+        - "greenplum_host=${{WIRED_GP_CLUSTER_DOMIN}}"
+        - "greenplum_password=${{WIRED_GP_CLUSTER_ADMIN_PASSWORD}}"
+        - "ugcDatabase_host=${{WIRED_UGC_DATABASE_HOST_DEV}}"
+        - "ugcDatabase_password=${{WIRED_UGC_DATABASE_PASSWORD_DEV}}"
+
+  askForStagPermission:
+    type: pending-approval
+    stage: "stagDeploy"
+    title: Deploy to stag?
+
+  pulumiOutputStag:
+    title: "Pulumi Output"
+    stage: "prepare"
+    image: "pulumi/pulumi-nodejs:latest"
+    working_directory: "${{clone}}"
+    commands:
+      - npm install
+      - pulumi login
+      - pulumi stack select prod
+      - cf_export WIRED_UGC_AWS_SECRET_ID_STAG=$(pulumi stack output wiredUgcSecretIdStag)
+      - cf_export WIRED_UGC_DATABASE_HOST_STAG=$(pulumi stack output wiredUgcDataBaseHostStag)
+
   fetchSecretsStag:
     title: "Fetch UGC AWS Secrets"
-    stage: stagDeploy
+    stage: "stagDeploy"
     type: aws-secrets-manager
     arguments:
       AWS_DEFAULT_REGION: "${{AWS_DEFAULT_REGION}}"
@@ -71,8 +126,8 @@ steps:
           store_in: WIRED_UGC_DATABASE_PASSWORD_STAG
 
   stagUninstall:
-    title: "Helm uninsall wired-tag"
-    stage: stagDeploy
+    title: "Helm uninstall wired-tag for stag"
+    stage: "stagDeploy"
     image: "thorstenhans/helm3"
     commands:
       - kubectl config use-context wired-eks-prod
@@ -80,7 +135,7 @@ steps:
 
   stagDeploy:
     title: "Helm install wired-tag"
-    stage: stagDeploy
+    stage: "stagDeploy"
     type: helm
     working_directory: "${{clone}}"
     arguments:
@@ -100,12 +155,24 @@ steps:
 
   askForProdPermission:
     type: pending-approval
-    stage: prodDeploy
+    stage: "prodDeploy"
     title: Deploy to produtcion?
+
+  pulumiOutputProd:
+    title: "Pulumi Output"
+    stage: "prepare"
+    image: "pulumi/pulumi-nodejs:latest"
+    working_directory: "${{clone}}"
+    commands:
+      - npm install
+      - pulumi login
+      - pulumi stack select prod
+      - cf_export WIRED_UGC_AWS_SECRET_ID_PROD=$(pulumi stack output wiredUgcSecretIdProd)
+      - cf_export WIRED_UGC_DATABASE_HOST_PROD=$(pulumi stack output wiredUgcDataBaseHostProd)
 
   fetchSecretsProd:
     title: "Fetch UGC AWS Secrets"
-    stage: prodDeploy
+    stage: "prodDeploy"
     type: aws-secrets-manager
     arguments:
       AWS_DEFAULT_REGION: "${{AWS_DEFAULT_REGION}}"
@@ -115,16 +182,16 @@ steps:
           store_in: WIRED_UGC_DATABASE_PASSWORD_PROD
 
   prodUninstall:
-    title: "Helm uninsall wired-tag"
+    title: "Helm uninstall wired-tag for prod"
+    stage: "prodDeploy"
     image: "thorstenhans/helm3"
-    stage: prodDeploy
     commands:
       - kubectl config use-context wired-eks-prod
       - helm uninstall -n prod wired-tag || exit_code=$?
 
   prodDeploy:
     title: "Helm install wired-tag"
-    stage: prodDeploy
+    stage: "prodDeploy"
     type: helm
     working_directory: "${{clone}}"
     arguments:
