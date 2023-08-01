@@ -7,7 +7,7 @@ insert into platform_nft_type_volume_count_temp(recent_time_code,
                                            token,
                                            type,
                                            volume_usd,
-                                           transfer_count)
+                                            transfer_count)
 select  '${recentTimeCode}' recent_time_code,
        pdwtr."operator"                                                                             as address,
        'Blur.io: Marketplace'                                                                       as platform_group,
@@ -70,6 +70,7 @@ insert into platform_nft_type_volume_count_temp(recent_time_code,
                                            token,
                                            type,
                                            volume_usd,
+                                            volume,
                                            transfer_count)
 select  '${recentTimeCode}' recent_time_code,
        address,
@@ -79,23 +80,28 @@ select  '${recentTimeCode}' recent_time_code,
        "token",
        'Lend'                                       as "type",
        sum(volume_usd)                              as volume_usd,
-       sum(transfer_count)                          as transfer_count
+        sum(volume)     as volume,
+        sum(transfer_count)                          as transfer_count
 from (
          select address,
                 "token"             as quote_token,
                 "token" as token,
                 sum(volume_usd)     as volume_usd,
+                sum(volume)     as volume,
                 sum(transfer_count) as transfer_count
          from (select pltr.borrower   as address,
                       pltr.pledge_token as "token",
                       pltr."type"     as "type",
-                      sum(1)          as volume_usd,
+                      sum(w.price*lend_value)          as volume_usd,
+                      sum(1)          as volume,
                       1               as transfer_count
                from platform_lend_tx_record pltr
                         inner join (select address
                                     from nft_sync_address nsa
                                     where type = 'ERC721') nft_sync_address on
                    (pltr.pledge_token = nft_sync_address.address)
+                        inner join white_list_erc20_temp w on
+                   (w.address='eth')
                where pltr.block_number >=${recentTimeBlockHeight}
                group by pltr.borrower,
                         pltr.pledge_token,
@@ -108,13 +114,16 @@ from (
          select pltr.lender     as address,
                 pltr.pledge_token as quote_token,
                 pltr.pledge_token as "token",
-                sum(1)          as volume_usd,
+                sum(w.price*lend_value)          as volume_usd,
+                sum(1)          as volume,
                 0               as transfer_count
          from platform_lend_tx_record pltr
                   inner join (select address
                               from nft_sync_address nsa
                               where type = 'ERC721') nft_sync_address on
              (pltr.pledge_token = nft_sync_address.address)
+              inner join white_list_erc20_temp w on
+             (w.address='eth')
          where pltr.block_number >=${recentTimeBlockHeight}
          group by pltr.lender,
                   pltr.pledge_token) lendt
@@ -132,6 +141,7 @@ into platform_nft_type_volume_count_temp(recent_time_code,
                                     token,
                                     type,
                                     volume_usd,
+                                     volume,
                                     transfer_count)
 select  '${recentTimeCode}' recent_time_code,
                                                        address,
@@ -140,7 +150,8 @@ select  '${recentTimeCode}' recent_time_code,
        "token"                                      as quote_token,
        "token",
        'Bid'                                           "type",
-       sum(volume_usd)                              as volume_usd,
+        sum(volume_usd)                              as volume_usd,
+        sum(volume)     as volume,
        sum(transfer_count)                          as transfer_count
 from (
          ----------------增加blur的bid的buyer(buyer不一定是from)
@@ -148,14 +159,16 @@ from (
                 address,
                 "token"             as quote_token,
                 "token",
-                sum(volume_usd)     as volume_usd,
+                sum(volume_usd)                              as volume_usd,
+                sum(volume)     as volume,
                 sum(transfer_count) as transfer_count
          from (select pbtr.buyer     as address,
                       pbtr.nft_token as "token",
                       'Bid'          as "type",
-                      sum(1)         as volume_usd,
+                      sum(w.price*amount)          as volume_usd,
+                      sum(1)          as volume,
                       case
-                          when type = 'ASK' then 1
+                          when pbtr.type = 'ASK' then 1
                           else 0
                           end        as transfer_count
                from platform_bid_tx_record pbtr
@@ -163,6 +176,8 @@ from (
                                     from nft_sync_address nsa
                                     where type = 'ERC721') nft_sync_address on
                    (pbtr.nft_token = nft_sync_address.address)
+                        inner join white_list_erc20_temp w on
+                   (w.address='eth')
                where pbtr.block_number >= ${recentTimeBlockHeight}
                group by pbtr.buyer,
                         pbtr.nft_token,
@@ -176,14 +191,16 @@ from (
                                        address,
                 "token"             as quote_token,
                 "token",
-                sum(volume_usd)     as volume_usd,
+               sum(volume_usd)                              as volume_usd,
+               sum(volume)     as volume,
                 sum(transfer_count) as transfer_count
          from (select pbtr.seller    as address,
                       pbtr.nft_token as "token",
                       'Bid'          as "type",
-                      sum(1)         as volume_usd,
+                      sum(w.price*amount)          as volume_usd,
+                      sum(1)          as volume,
                       case
-                          when type = 'BID' then 1
+                          when pbtr.type = 'BID' then 1
                           else 0
                           end        as transfer_count
                from platform_bid_tx_record pbtr
@@ -191,6 +208,8 @@ from (
                                     from nft_sync_address nsa
                                     where type = 'ERC721') nft_sync_address on
                    (pbtr.nft_token = nft_sync_address.address)
+                        inner join white_list_erc20_temp w on
+                   (w.address='eth')
                where pbtr.block_number >= ${recentTimeBlockHeight}
                group by pbtr.seller,
                         pbtr.nft_token,
