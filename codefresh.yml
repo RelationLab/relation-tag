@@ -22,7 +22,7 @@ steps:
     stage: "clone"
 
   pulumiOutputDev:
-    title: "Pulumi Output"
+    title: "Pulumi Output Dev"
     stage: "prepare"
     image: "pulumi/pulumi-nodejs:latest"
     working_directory: "${{clone}}"
@@ -103,8 +103,8 @@ steps:
     title: Deploy to stag?
 
   pulumiOutputStag:
-    title: "Pulumi Output"
-    stage: "prepare"
+    title: "Pulumi Output Stag"
+    stage: "stagDeploy"
     image: "pulumi/pulumi-nodejs:latest"
     working_directory: "${{clone}}"
     commands:
@@ -159,8 +159,8 @@ steps:
     title: Deploy to produtcion?
 
   pulumiOutputProd:
-    title: "Pulumi Output"
-    stage: "prepare"
+    title: "Pulumi Output prod"
+    stage: "prodDeploy"
     image: "pulumi/pulumi-nodejs:latest"
     working_directory: "${{clone}}"
     commands:
