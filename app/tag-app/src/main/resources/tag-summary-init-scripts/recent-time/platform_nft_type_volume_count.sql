@@ -22,7 +22,7 @@ from platform_deposit_withdraw_tx_record pdwtr
     (pdwtr.quote_token = w.address)
          inner join (select address
                      from nft_sync_address nsa
-                     where type = 'ERC721') nft_sync_address on
+                     where type = 'ERC721-token') nft_sync_address on
     (pdwtr."token" = nft_sync_address.address)
 where pdwtr.block_number >= ${recentTimeBlockHeight} 
 group by pdwtr."operator",
@@ -49,45 +49,6 @@ select  '${recentTimeCode}' recent_time_code,
        sum(volume_usd)                              as volume_usd,
        sum(transfer_count)                          as transfer_count
 from (
---          ----------------增加blur的lend的from
---          select address,
---                 "token"             as quote_token,
---                 "token",
---                 sum(volume_usd)     as volume_usd,
---                 sum(transfer_count) as transfer_count
---          from (select pltr.borrower   as address,
---                       pltr.lend_token as "token",
---                       pltr."type"     as "type",
---                       sum(1)          as volume_usd,
---                       1               as transfer_count
---                from platform_lend_tx_record pltr
---                         inner join (select address
---                                     from nft_sync_address nsa
---                                     where type = 'ERC721') nft_sync_address on
---                    (pltr.lend_token = nft_sync_address.address)
---                where pltr.block_number >=${recentTimeBlockHeight}
---                group by pltr.borrower,
---                         pltr.lend_token,
---                         pltr."type",
---                         hash) pltrout
---          group by pltrout.address,
---                   pltrout.token
---                   ----------------增加blur的lend的to
---          union all
---          select pltr.lender     as address,
---                 pltr.lend_token as quote_token,
---                 pltr.lend_token as "token",
---                 sum(1)          as volume_usd,
---                 0               as transfer_count
---          from platform_lend_tx_record pltr
---                   inner join (select address
---                               from nft_sync_address nsa
---                               where type = 'ERC721') nft_sync_address on
---              (pltr.lend_token = nft_sync_address.address)
---          where pltr.block_number >=${recentTimeBlockHeight}
---          group by pltr.lender,
---                   pltr.lend_token
---          union all
          select address,
                 "token"             as quote_token,
                 "token" as token,
