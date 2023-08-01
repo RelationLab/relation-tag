@@ -109,6 +109,7 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
                and a1.type=a2.type and a2.data_subject = 'count'
             and a1.recent_time_code =a2.recent_code
         where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
+          and a1.token not in('0x0000000000a39bb272e79075ade125fd351887ac','eth')
         group by
             a1.address,
             a2.label_type,
@@ -139,6 +140,7 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             and a2.label_type not like '%WEB3%'
         and a1.recent_time_code =a2.recent_code
         where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
+          and a1.token not in('0x0000000000a39bb272e79075ade125fd351887ac','eth')
         group by
             a1.address,
             a2.label_type,
