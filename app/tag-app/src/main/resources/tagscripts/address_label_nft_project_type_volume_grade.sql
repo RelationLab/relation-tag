@@ -23,46 +23,34 @@ select
     address,
     label_type,
     label_type||'_'||case
-                         when ((type='Lend' or type='Bid') and volume_usd >= 1
-                             and volume_usd < 3) or (volume_usd >= 100
-                             and volume_usd < 1000) then 'L1'
-                         when ((type='Lend' or type='Bid') and volume_usd >= 3
-                             and volume_usd < 7) or (volume_usd >= 1000
-                             and volume_usd < 10000) then 'L2'
-                         when ((type='Lend' or type='Bid') and volume_usd >= 7
-                             and volume_usd < 21) or (volume_usd >= 10000
-                             and volume_usd < 50000) then 'L3'
-                         when ((type='Lend' or type='Bid') and volume_usd >= 21
-                             and volume_usd < 101) or (volume_usd >= 50000
-                             and volume_usd < 100000) then 'L4'
-                         when ((type='Lend' or type='Bid') and volume_usd >= 101
-                             and volume_usd < 201) or (volume_usd >= 100000
-                             and volume_usd < 500000) then 'L5'
-                         when ((type='Lend' or type='Bid') and volume_usd >= 201)
-                                  or volume_usd >= 500000 then 'L6'
+                         when volume_usd >= 100
+                             and volume_usd < 1000 then 'L1'
+                         when volume_usd >= 1000
+                             and volume_usd < 10000 then 'L2'
+                         when volume_usd >= 10000
+                             and volume_usd < 50000 then 'L3'
+                         when volume_usd >= 50000
+                             and volume_usd < 100000 then 'L4'
+                         when volume_usd >= 100000
+                             and volume_usd < 500000 then 'L5'
+                         when  volume_usd >= 500000 then 'L6'
         end as label_name,
     volume_usd  as data,
     'NFT'  as wired_type,
     now() as updated_at,
     'v'  as "group",
     case
-        when ((type='Lend' or type='Bid') and volume_usd >= 1
-            and volume_usd < 3) or (volume_usd >= 100
-            and volume_usd < 1000) then 'L1'
-        when ((type='Lend' or type='Bid') and volume_usd >= 3
-            and volume_usd < 7) or (volume_usd >= 1000
-            and volume_usd < 10000) then 'L2'
-        when ((type='Lend' or type='Bid') and volume_usd >= 7
-            and volume_usd < 21) or (volume_usd >= 10000
-            and volume_usd < 50000) then 'L3'
-        when ((type='Lend' or type='Bid') and volume_usd >= 21
-            and volume_usd < 101) or (volume_usd >= 50000
-            and volume_usd < 100000) then 'L4'
-        when ((type='Lend' or type='Bid') and volume_usd >= 101
-            and volume_usd < 201) or (volume_usd >= 100000
-            and volume_usd < 500000) then 'L5'
-        when ((type='Lend' or type='Bid') and volume_usd >= 201)
-            or volume_usd >= 500000 then 'L6' end   as level,
+        when volume_usd >= 100
+            and volume_usd < 1000 then 'L1'
+        when volume_usd >= 1000
+            and volume_usd < 10000 then 'L2'
+        when volume_usd >= 10000
+            and volume_usd < 50000 then 'L3'
+        when volume_usd >= 50000
+            and volume_usd < 100000 then 'L4'
+        when volume_usd >= 100000
+            and volume_usd < 500000 then 'L5'
+        when  volume_usd >= 500000 then 'L6' end   as level,
     'grade' as category,
     t.type as trade_type,
     t.project_name as project,
@@ -85,7 +73,7 @@ from
                                                           on a1.token=a2.token and a1.platform_group=a2.project and  a2.recent_code=a1.recent_time_code
                                                               and a1.type=a2.type and a2.data_subject = 'volume_grade'
                                                               and a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
-        where (volume_usd >= 100 and a1.type not in('Lend','Bid')) or (volume_usd > 0 and a1.type  in('Lend','Bid'))
+        where volume_usd >= 100
         group by
             a1.address,
             a2.label_type,
@@ -107,7 +95,7 @@ from
             platform_nft_type_volume_count_temp  a1 inner join dim_project_token_type_temp a2
                                                           on a2.token='ALL' and a1.platform_group=a2.project  and  a2.recent_code=a1.recent_time_code
                                                               and a1.type=a2.type and a2.data_subject = 'volume_grade'
-        where (volume_usd >= 100 and a1.type not in('Lend','Bid')) or (volume_usd > 0 and a1.type  in('Lend','Bid'))
+        where volume_usd >= 100
             and a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
             and a1.token not in('0x0000000000a39bb272e79075ade125fd351887ac','eth')
         group by
@@ -131,7 +119,7 @@ from
             platform_nft_type_volume_count_temp  a1 inner join dim_project_token_type_temp a2
                                                           on a2.token='ALL' and  a2.recent_code=a1.recent_time_code
                                                               and a2.project='ALL' and a1.type=a2.type and a2.data_subject = 'volume_grade'
-        where (volume_usd >= 100 and a1.type not in('Lend','Bid')) or (volume_usd > 0 and a1.type  in('Lend','Bid'))
+        where volume_usd >= 100
             and a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
             and a1.token not in('0x0000000000a39bb272e79075ade125fd351887ac','eth')
         group by
@@ -155,7 +143,7 @@ from
             platform_nft_type_volume_count_temp  a1 inner join dim_project_token_type_temp a2
                                                           on a2.token=a1.token and a2.recent_code=a1.recent_time_code
                                                               and a2.project='ALL' and a1.type=a2.type and a2.data_subject = 'volume_grade'
-        where (volume_usd >= 100 and a1.type not in('Lend','Bid')) or (volume_usd > 0 and a1.type  in('Lend','Bid'))
+        where volume_usd >= 100
             and a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
         group by
             a1.address,

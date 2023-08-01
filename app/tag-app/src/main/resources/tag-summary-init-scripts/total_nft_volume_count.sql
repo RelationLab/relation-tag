@@ -31,7 +31,7 @@ insert into nft_volume_count_temp(address, token, type, transfer_volume, transfe
     select address, token , 'Transfer', total_transfer_volume, total_transfer_count,recent_time_code from nft_transfer_holding_temp;
 
 insert into nft_volume_count_temp(address, token, type, transfer_volume, transfer_count,recent_time_code)
-select address, token , type, volume_usd, transfer_count,recent_time_code from platform_nft_type_volume_count_temp
+select address, token , type, volume, transfer_count,recent_time_code from platform_nft_type_volume_count_temp
                                                          where type in('Lend','Bid','Deposit','Withdraw');
 
 
