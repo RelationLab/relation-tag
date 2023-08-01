@@ -61,7 +61,7 @@ set
                                            from
                                                address_label_gp${tableSuffix}
                                            where
-                                               (recent_time_code ='ALL' OR recent_time_code IS NULL) AND
+                                               (recent_time_code ='ALL' OR recent_time_code IS NULL)
                                                limit 10000) t
                                        limit 4) a
     )
