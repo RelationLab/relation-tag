@@ -6,14 +6,13 @@ CREATE TABLE public.address_label_nft_time_rank (
                                                     label_type varchar(512) NULL,
                                                     label_name varchar(1024) NULL,
                                                     updated_at timestamp(6) NULL,
-    "group" varchar(1) NULL,
-    "level" varchar(100) NULL,
-    category varchar(100) NULL,
-    trade_type varchar(100) NULL,
-    project varchar(100) NULL,
-    asset varchar(100) NULL,
+                                                    "group" varchar(1) NULL,
+                                                    "level" varchar(100) NULL,
+                                                    category varchar(100) NULL,
+                                                    trade_type varchar(100) NULL,
+                                                    project varchar(100) NULL,
+                                                    asset varchar(100) NULL,
                                                     bus_type varchar(20) NULL,
-                                                    recent_time_code varchar(30) NULL,
                                                     recent_time_code varchar(30) NULL
 );
 truncate table public.address_label_nft_time_rank;
@@ -33,15 +32,15 @@ select
     now() as updated_at,
     't'  as "group",
     case
-    when counter >= 155 then 'LONG_TERM_HOLDER'
-    when counter >= 1
-    and counter < 155 then 'SHORT_TERM_HOLDER' end  as level,
+        when counter >= 155 then 'LONG_TERM_HOLDER'
+        when counter >= 1
+            and counter < 155 then 'SHORT_TERM_HOLDER' end  as level,
     'rank' as category,
     a2.type as trade_type,
     '' as project,
     a2.token_name as asset,
     'time' as bus_type
-    from
+from
     (
         select
             token,
@@ -57,7 +56,7 @@ select
     dim_project_token_type_temp a2
     on
             a1.token = a2.token
-    where
+where
         a2.data_subject = 'time_special'
   and a2.label_type like '%NFT%'
   and a2.label_type not like '%WEB3%'

@@ -27,6 +27,7 @@ CREATE TABLE public.token_platform_temp
     address       varchar NOT NULL,
     platform      varchar NOT NULL,
     platform_name varchar NULL,
+    "removed" bool DEFAULT false,
     created_at    timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at    timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) DISTRIBUTED BY (address,platform);

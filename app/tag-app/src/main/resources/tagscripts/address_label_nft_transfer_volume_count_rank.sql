@@ -42,7 +42,8 @@ from
             dptt.type as type,
             dptt.project_name as project_name,
             dptt.token_name as token_name,
-            zb_rate
+            zb_rate,
+            recent_time_code
         from
             (
                 select
