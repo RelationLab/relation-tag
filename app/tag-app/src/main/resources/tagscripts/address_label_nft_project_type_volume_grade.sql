@@ -109,6 +109,7 @@ from
                                                               and a1.type=a2.type and a2.data_subject = 'volume_grade'
         where (volume_usd >= 100 and a1.type not in('Lend','Bid')) or (volume_usd > 0 and a1.type  in('Lend','Bid'))
             and a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
+            and pntvc.token not in('0x0000000000a39bb272e79075ade125fd351887ac')
         group by
             a1.address,
             a2.label_type,
@@ -132,6 +133,7 @@ from
                                                               and a2.project='ALL' and a1.type=a2.type and a2.data_subject = 'volume_grade'
         where (volume_usd >= 100 and a1.type not in('Lend','Bid')) or (volume_usd > 0 and a1.type  in('Lend','Bid'))
             and a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
+            and pntvc.token not in('0x0000000000a39bb272e79075ade125fd351887ac')
         group by
             a1.address,
             a2.label_type,
