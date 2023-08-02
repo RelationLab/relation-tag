@@ -8,7 +8,8 @@ into
                                    type,
                                    volume_usd,
                                    transfer_count,
-                                   recent_time_code)
+                                   recent_time_code,
+                                        nft_type)
 select
     pnvu.address,
     pnvu.platform_group,
@@ -18,7 +19,8 @@ select
     'Buy',
     pnvu.buy_volume_usd,
     pnh.total_transfer_to_count,
-    pnvu.recent_time_code
+    pnvu.recent_time_code,
+    'ERC721'
 from
     platform_nft_volume_usd pnvu
         inner join platform_nft_holding_temp pnh on
@@ -40,7 +42,8 @@ into
                                    type,
                                    volume_usd,
                                    transfer_count,
-                                   recent_time_code)
+                                   recent_time_code,
+                                    nft_type)
 select
     pnvu.address,
     pnvu.platform_group,
@@ -50,7 +53,8 @@ select
     'Sale',
     pnvu.sell_volume_usd,
     pnh.total_transfer_count,
-    pnvu.recent_time_code
+    pnvu.recent_time_code,
+    'ERC721'
 from
     platform_nft_volume_usd pnvu
         inner join platform_nft_holding_temp pnh on
@@ -71,7 +75,8 @@ into
                                    type,
                                    volume_usd,
                                    transfer_count,
-                                   recent_time_code)
+                                   recent_time_code,
+                                    nft_type)
 select
     pntvc.address,
     pntvc.platform_group,
@@ -81,16 +86,17 @@ select
     'ALL',
     sum(pntvc.volume_usd) as volume_usd,
     sum(pntvc.transfer_count) as transfer_count,
-    pntvc.recent_time_code
+    pntvc.recent_time_code,
+    nft_sync_address.nft_type
 from
     platform_nft_type_volume_count_temp pntvc
         inner join (
         select
-            address
+            address,type as nft_type
         from
             nft_sync_address nsa
         where
-                type = 'ERC721') nft_sync_address on
+                type <> 'ERC1155') nft_sync_address on
         (pntvc.token = nft_sync_address.address)
 group by
     pntvc.address,
@@ -98,7 +104,8 @@ group by
     pntvc.platform,
     pntvc.quote_token,
     pntvc.token,
-    pntvc.recent_time_code;
+    pntvc.recent_time_code,
+    nft_sync_address.nft_type;
 
 
 insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_type_volume_count_summary' as table_name,'${batchDate}'  as batch_date;

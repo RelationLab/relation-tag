@@ -12,7 +12,8 @@ CREATE TABLE public.platform_nft_type_volume_count_temp (
                                                        created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                                        updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                                        removed bool NULL DEFAULT false,
-                                                       recent_time_code varchar(30)  null
+                                                       recent_time_code varchar(30)  null,
+                                                       nft_type varchar(30)
 )with (appendonly='true', compresstype=zstd, compresslevel='5')
     distributed by (address, token, quote_token, platform,recent_time_code);
 truncate table platform_nft_type_volume_count_temp;
