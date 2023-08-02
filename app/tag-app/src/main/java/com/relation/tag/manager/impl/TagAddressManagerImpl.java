@@ -449,18 +449,20 @@ public class TagAddressManagerImpl implements TagAddressManager {
         exceRecentTimeScripts(batchDate, recentTimePath, "web3_transaction_record_summary.sql", "tabel_defi_web3_transaction_record_summary", 1,false);
 
         /***************dex_tx_count_summary***********/
-        execSql("web3_transaction_record_summary", "tabel_defi_dex_tx_count_summary.sql", batchDate, tableDefiPath, 9,true,null, false);
+        execSql("filter", "tabel_defi_dex_tx_count_summary.sql", batchDate, tableDefiPath, 2,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_count_summary.sql", "tabel_defi_dex_tx_count_summary", 1,false);
         execSql("dex_tx_count_summary", "total_dex_tx_count_summary.sql", batchDate, filePath, 9,true,null, false);
 
-        /***************dex_tx_volume_count_summary***********/
-        execSql("filter", "tabel_defi_dex_tx_volume_count_summary_univ3.sql", batchDate, tableDefiPath, 2,true,null, false);
-        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary_univ3.sql", "tabel_defi_dex_tx_volume_count_summary_univ3", 1,false);
 
         /***************dex_tx_volume_count_summary***********/
-        execSql("dex_tx_volume_count_summary_univ3", "tabel_defi_dex_tx_volume_count_summary.sql", batchDate, tableDefiPath, 9,true,null, false);
+        execSql("filter", "tabel_defi_dex_tx_volume_count_summary.sql", batchDate, tableDefiPath, 2,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary.sql", "tabel_defi_dex_tx_volume_count_summary", 1,false);
         execSql("dex_tx_volume_count_summary", "total_dex_tx_volume_count_summary.sql", batchDate, filePath, 9,true,null, false);
+
+
+        /***************dex_tx_volume_count_summary***********/
+        execSql("total_dex_tx_volume_count_summary", "tabel_defi_dex_tx_volume_count_summary_univ3.sql", batchDate, tableDefiPath, 1,false,null, false);
+        exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary_univ3.sql", "tabel_defi_dex_tx_volume_count_summary_univ3", 1,false);
 
         }
 
