@@ -10,7 +10,8 @@ create table dim_rule_content_temp
     token_name   varchar(100),
     token_type   varchar(100),
     recent_code  varchar(30)
-);
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (label_type);
 truncate table dim_rule_content_temp;
 vacuum dim_rule_content_temp;
 drop table if exists dim_rank_token_temp;

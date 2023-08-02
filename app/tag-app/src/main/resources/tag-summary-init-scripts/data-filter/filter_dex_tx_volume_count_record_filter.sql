@@ -12,7 +12,8 @@ CREATE TABLE public.dex_tx_volume_count_record_filter (
                                                     "type" varchar(10) NULL,
                                                     triggered_flag varchar(10) NULL,
                                                     project varchar(100) NULL
-) DISTRIBUTED BY (address,"token");
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+DISTRIBUTED BY (address,"token");
 truncate table dex_tx_volume_count_record_filter;
 vacuum dex_tx_volume_count_record_filter;
 

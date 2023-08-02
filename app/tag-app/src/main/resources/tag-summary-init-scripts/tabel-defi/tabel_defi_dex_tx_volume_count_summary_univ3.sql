@@ -13,7 +13,8 @@ CREATE TABLE public.dex_tx_volume_count_summary_univ3_temp (
                                                           project varchar(100) NULL,
                                                           balance_usd numeric(125, 30) DEFAULT 0,
                                                           recent_time_code varchar(30) NULL
-) DISTRIBUTED BY (address,"token",recent_time_code);
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+    DISTRIBUTED BY (address,"token",recent_time_code);
 truncate table dex_tx_volume_count_summary_univ3_temp;
 vacuum dex_tx_volume_count_summary_univ3_temp;
 insert into tag_result(table_name,batch_date)  SELECT 'tabel_defi_dex_tx_volume_count_summary_univ3' as table_name,'${batchDate}'  as batch_date;

@@ -17,7 +17,8 @@ CREATE TABLE public.platform_nft_holding_temp
     platform_group            varchar(256) NULL,
     weth_token_flag varchar(2),
     recent_time_code          varchar(30) NULL
-) distributed by (address, token, quote_token, platform);
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address, token, quote_token, platform);
 truncate table platform_nft_holding_temp;
 vacuum platform_nft_holding_temp;
 

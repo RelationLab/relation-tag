@@ -14,7 +14,8 @@ create table dim_project_token_type_temp
     project_name    varchar(100),
     token_name      varchar(100),
     recent_code     varchar(30)
-);
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (label_type);
 truncate table dim_project_token_type_temp;
 vacuum
 dim_project_token_type_temp;
@@ -6147,11 +6148,15 @@ select distinct 'RelationTeam'                                                  
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'NFT ' ||
                 (case
                      when nft_trade_type_temp.asset_type = 'token' and level_def_temp.special_flag is null
-                         then nft_trade_type_temp.nft_trade_type_name || ' '
+                         then
+                             (case when nft_trade_type_temp.nft_trade_type_name='Bid' or nft_trade_type_temp.nft_trade_type_name='Lend'
+                                       then 'Blur:' else '' end ) ||nft_trade_type_temp.nft_trade_type_name || ' '
                      else '' end)
                     || (case
                             when nft_trade_type_temp.asset_type = 'token' and level_def_temp.special_flag = '1' then
-                                replace(level_def_temp.level_name, ' ', ' ' || nft_trade_type_temp.nft_trade_type_name || ' ')
+                                replace(level_def_temp.level_name, ' ', ' ' ||
+                                                                        (case when nft_trade_type_temp.nft_trade_type_name='Bid' or nft_trade_type_temp.nft_trade_type_name='Lend'
+                                                                                  then 'Blur:' else '' end ) || nft_trade_type_temp.nft_trade_type_name || ' ')
                             else level_def_temp.level_name end) || ' ' ||
                 (case
                      when nft_trade_type_temp.asset_type = 'token' then ''
@@ -6712,10 +6717,12 @@ select distinct 'RelationTeam'                                                  
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
                 'NFT ' ||
                 level_def_temp.level_name || ' ' ||
-                (case when nft_trade_type_temp.asset_type = 'token' then nft_trade_type_temp.nft_trade_type || ' ' else '' end) ||
+                (case when nft_trade_type_temp.asset_type = 'token' then (case when nft_trade_type_temp.nft_trade_type_name='Bid' or nft_trade_type_temp.nft_trade_type_name='Lend'
+                                                                                   then 'Blur:' else '' end ) ||nft_trade_type_temp.nft_trade_type_name || ' ' else '' end) ||
                 (case
                      when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                                               "content",
+                     else (case when nft_trade_type_temp.nft_trade_type_name='Bid' or nft_trade_type_temp.nft_trade_type_name='Lend'
+                                    then 'Blur:' else '' end ) ||nft_trade_type_temp.nft_trade_type_name end)                                               "content",
                 'SQL'                                                                                           rule_type,
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || '_' || nft_trade_type_temp.nft_trade_type ||
@@ -6985,11 +6992,13 @@ select distinct 'RelationTeam'                                                  
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
                 'NFT ' ||
-                (case when nft_trade_type_temp.asset_type = 'token' then nft_trade_type_temp.nft_trade_type || ' ' else '' end) ||
+                (case when nft_trade_type_temp.asset_type = 'token' then (case when nft_trade_type_temp.nft_trade_type_name='Bid' or nft_trade_type_temp.nft_trade_type_name='Lend'
+                                                                                   then 'Blur:' else '' end ) ||nft_trade_type_temp.nft_trade_type_name || ' ' else '' end) ||
                 level_def_temp.level_name || ' ' ||
                 (case
                      when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                                               "content",
+                     else (case when nft_trade_type_temp.nft_trade_type_name='Bid' or nft_trade_type_temp.nft_trade_type_name='Lend'
+                                    then 'Blur:' else '' end ) ||nft_trade_type_temp.nft_trade_type_name end)                                               "content",
                 'SQL'                                                                                           rule_type,
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || '_' || nft_trade_type_temp.nft_trade_type ||
@@ -7256,10 +7265,12 @@ select distinct 'RelationTeam'                                                  
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
                 'NFT ' ||
                 level_def_temp.level_name || ' ' ||
-                (case when nft_trade_type_temp.asset_type = 'token' then nft_trade_type_temp.nft_trade_type || ' ' else '' end) ||
+                (case when nft_trade_type_temp.asset_type = 'token' then (case when nft_trade_type_temp.nft_trade_type_name='Bid' or nft_trade_type_temp.nft_trade_type_name='Lend'
+                                                                                   then 'Blur:' else '' end ) ||nft_trade_type_temp.nft_trade_type_name || ' ' else '' end) ||
                 (case
                      when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                                              "content",
+                     else (case when nft_trade_type_temp.nft_trade_type_name='Bid' or nft_trade_type_temp.nft_trade_type_name='Lend'
+                                    then 'Blur:' else '' end ) ||nft_trade_type_temp.nft_trade_type_name end)                                              "content",
                 'SQL'                                                                                          rule_type,
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || '_' || nft_trade_type_temp.nft_trade_type ||
@@ -7528,10 +7539,12 @@ select distinct 'RelationTeam'                                                  
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
                 'NFT ' ||
                 level_def_temp.level_name || ' ' ||
-                (case when nft_trade_type_temp.asset_type = 'token' then nft_trade_type_temp.nft_trade_type || ' ' else '' end) ||
+                (case when nft_trade_type_temp.asset_type = 'token' then (case when nft_trade_type_temp.nft_trade_type_name='Bid' or nft_trade_type_temp.nft_trade_type_name='Lend'
+                                                                                   then 'Blur:' else '' end ) ||nft_trade_type_temp.nft_trade_type_name || ' ' else '' end) ||
                 (case
                      when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                                             "content",
+                     else (case when nft_trade_type_temp.nft_trade_type_name='Bid' or nft_trade_type_temp.nft_trade_type_name='Lend'
+                                    then 'Blur:' else '' end ) ||nft_trade_type_temp.nft_trade_type_name end)                                             "content",
                 'SQL'                                                                                         rule_type,
                 recent_time_temp.recent_time_name || (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || '_' || nft_trade_type_temp.nft_trade_type ||

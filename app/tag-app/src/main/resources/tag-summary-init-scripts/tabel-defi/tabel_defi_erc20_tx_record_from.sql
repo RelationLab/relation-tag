@@ -7,7 +7,8 @@ CREATE TABLE public.erc20_tx_record_from(
                                                  total_transfer_count bigint NULL,
                                                  created_at timestamp NULL,
                                                  recent_time_code varchar(30) NULL
-) distributed by (address,"token",recent_time_code);
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address,"token",recent_time_code);
 truncate table erc20_tx_record_from;
 vacuum erc20_tx_record_from;
 insert into tag_result(table_name,batch_date)  SELECT 'tabel_defi_erc20_tx_record_from' as table_name,'${batchDate}'  as batch_date;

@@ -16,7 +16,8 @@ CREATE TABLE public.nft_buy_sell_holding_middle (
                                              created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                              updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                              recent_time_code varchar(30) NULL
-) distributed by (address,"token",recent_time_code);
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address,"token",recent_time_code);
 truncate table nft_buy_sell_holding_middle;
 vacuum nft_buy_sell_holding_middle;
 insert into tag_result(table_name,batch_date)  SELECT 'tabel_defi_nft_buy_sell_holding_middle' as table_name,'${batchDate}'  as batch_date;

@@ -8,7 +8,8 @@ CREATE TABLE public.token_volume_usd_temp
     created_at       timestamp NULL,
     updated_at       timestamp NULL,
     recent_time_code varchar(30) NULL
-) distributed by (address,"token",recent_time_code);
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address,"token",recent_time_code);
 truncate table token_volume_usd_temp;
 vacuum
 token_volume_usd_temp;

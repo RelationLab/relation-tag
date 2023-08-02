@@ -14,7 +14,8 @@ CREATE TABLE public.address_label_nft_project_type_volume_count_rank (
                                                                          asset varchar(100) NULL,
                                                                          bus_type varchar(20) NULL,
                                                                          recent_time_code varchar(30) NULL
-);
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address,label_name,recent_time_code);
 truncate table public.address_label_nft_project_type_volume_count_rank;
 vacuum address_label_nft_project_type_volume_count_rank;
 

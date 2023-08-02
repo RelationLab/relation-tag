@@ -10,7 +10,8 @@ CREATE TABLE public.eth_holding_vol_count_temp
     recent_time_code varchar(30) NULL,
     created_at            timestamp NULL,
     updated_at            timestamp NULL
-) distributed by (address);
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address,recent_time_code);
 truncate table eth_holding_vol_count_temp;
 vacuum eth_holding_vol_count_temp;
 

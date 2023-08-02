@@ -12,7 +12,8 @@ CREATE TABLE public.token_holding_vol_count_temp
     recent_time_code      varchar(30) NULL,
     created_at            timestamp NULL,
     updated_at            timestamp NULL
-) distributed by (address,"token",recent_time_code);
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address,"token",recent_time_code);
 
 truncate table token_holding_vol_count_temp;
 vacuum token_holding_vol_count_temp;

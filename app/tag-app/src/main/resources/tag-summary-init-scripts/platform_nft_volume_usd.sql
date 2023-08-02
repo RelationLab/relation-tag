@@ -14,7 +14,8 @@ create table platform_nft_volume_usd
     buy_volume_usd  numeric(128, 30),
     recent_time_code varchar(30)  null,
     sell_volume_usd numeric(128, 30)
-);
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address, token, quote_token, platform);
 truncate table platform_nft_volume_usd;
 vacuum platform_nft_volume_usd;
 

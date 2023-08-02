@@ -8,7 +8,8 @@ CREATE TABLE public.dex_tx_volume_count_summary_stake_temp (
                                                     "type" varchar(10) NULL,
                                                     project varchar(100) NULL,
                                                     balance_usd numeric(125, 30) DEFAULT 0
-) DISTRIBUTED BY (address);
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address);
 truncate table dex_tx_volume_count_summary_stake_temp;
 vacuum dex_tx_volume_count_summary_stake_temp;
 

@@ -15,7 +15,8 @@ CREATE TABLE public.address_label_token_count_grade (
                                                         asset varchar(100) NULL,
                                                         bus_type varchar(20) NULL,
                                                         recent_time_code varchar(30) NULL
-)distributed by (address);
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address,label_name,recent_time_code);
 truncate table public.address_label_token_count_grade;
 vacuum address_label_token_count_grade;
 

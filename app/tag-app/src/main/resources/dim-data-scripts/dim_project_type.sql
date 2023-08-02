@@ -12,7 +12,8 @@ create table dim_project_type_temp
     ,etl_update_time timestamp
     ,token_name   varchar(100)
     ,recent_code varchar(30)
-);
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (label_type);
 truncate table dim_project_type_temp;
 vacuum dim_project_type_temp;
 

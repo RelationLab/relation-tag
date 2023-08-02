@@ -14,7 +14,7 @@ CREATE TABLE public.label_factor_seting_temp
     removed             bool NULL DEFAULT false,
     dict_describe       varchar(150) NULL,
     total_dict_describe varchar(150) NULL
-);
+) with (appendonly='true', compresstype=zstd, compresslevel='5');
 
 
 INSERT INTO public.label_factor_seting_temp (dict_code,dict_name,dict_type)

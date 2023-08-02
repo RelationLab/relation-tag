@@ -40,7 +40,8 @@ CREATE TABLE "public"."white_list_lp_temp" (
   "factory_type" varchar(100) COLLATE "pg_catalog"."default",
   "factory_content" varchar(255) COLLATE "pg_catalog"."default",
   "symbols" varchar[] COLLATE "pg_catalog"."default"
-);
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address);
 create table  white_list_price_temp as select * from white_list_price_cdc;
 
 insert into white_list_lp_temp(

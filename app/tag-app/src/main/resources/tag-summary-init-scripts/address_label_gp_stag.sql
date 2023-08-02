@@ -14,7 +14,8 @@ CREATE TABLE public.address_label_crowd_nft_active_users (
                                                              asset varchar(80) NULL,
                                                              bus_type varchar(20) NULL,
                                                              recent_time_code varchar(30) NULL
-);
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    DISTRIBUTED BY (address);
 truncate table public.address_label_crowd_nft_active_users;
 vacuum address_label_crowd_nft_active_users;
 
@@ -56,7 +57,8 @@ CREATE TABLE public.address_label_crowd_active_users (
                                                          asset varchar(100) NULL,
                                                          bus_type varchar(20) NULL,
                                                          recent_time_code varchar(30) NULL
-);
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    DISTRIBUTED BY (address);
 truncate table public.address_label_crowd_active_users;
 vacuum address_label_crowd_active_users;
 
@@ -103,7 +105,8 @@ CREATE TABLE public.address_label_crowd_elite (
                                                   asset varchar(80) NULL,
                                                   bus_type varchar(20) NULL,
                                                   recent_time_code varchar(30) NULL
-);
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    DISTRIBUTED BY (address);
 truncate table public.address_label_crowd_elite;
 vacuum address_label_crowd_elite;
 
@@ -152,7 +155,8 @@ create table address_label_gp_temp_${tableSuffix}
     bus_type varchar(100) NULL,
     id int8,
     recent_time_code varchar(30) NULL
-) distributed by (address);
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+    DISTRIBUTED BY (address);
 
 
 truncate table address_label_gp_temp_${tableSuffix};

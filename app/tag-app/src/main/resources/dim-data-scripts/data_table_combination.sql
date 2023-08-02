@@ -21,6 +21,7 @@ CREATE TABLE public.combination_temp (
                                     asset_type varchar(50) NULL,
                                     label_category varchar(50) NULL,
                                     recent_time_code varchar(30) NULL
-);
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+distributed by (label_name);
 update nft_sync_address set platform='CryptoPunks' where  address='0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb';
 insert into tag_result(table_name,batch_date)  SELECT 'data_table_combination' as table_name,'${batchDate}'  as batch_date;

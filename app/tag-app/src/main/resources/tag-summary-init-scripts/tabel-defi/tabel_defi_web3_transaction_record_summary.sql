@@ -10,7 +10,8 @@ CREATE TABLE  public.web3_transaction_record_summary
     project character varying(100) COLLATE pg_catalog."default",
     balance numeric(125,30) NOT NULL DEFAULT 0,
     recent_time_code varchar(30) NULL
-)distributed by (address, project, recent_time_code);
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address, project, recent_time_code);
 truncate table web3_transaction_record_summary;
 vacuum web3_transaction_record_summary;
 update web3_transaction_record_cdc set address = lower(address),token=lower(token) where type='write';

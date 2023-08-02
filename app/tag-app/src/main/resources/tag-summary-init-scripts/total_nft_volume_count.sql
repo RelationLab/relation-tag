@@ -8,7 +8,8 @@ CREATE TABLE public.nft_volume_count_temp (
                                          created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                          updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                          recent_time_code varchar(30)
-);
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address,"token",type,recent_time_code);
 truncate table nft_volume_count_temp;
 vacuum nft_volume_count_temp;
 

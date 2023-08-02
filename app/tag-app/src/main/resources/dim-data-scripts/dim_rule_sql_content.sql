@@ -3,7 +3,8 @@ CREATE TABLE public.dim_rule_sql_content (
                                              rule_name varchar(100) NULL,
                                              rule_sql text NULL,
                                              rule_order int8 NULL
-);
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (rule_name);
 truncate table dim_rule_sql_content;
 vacuum dim_rule_sql_content;
 

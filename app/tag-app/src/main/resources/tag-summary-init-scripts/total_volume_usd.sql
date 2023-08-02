@@ -8,7 +8,7 @@ CREATE TABLE public.total_volume_usd (
                                          created_at timestamp(6) NULL,
                                          updated_at timestamp(6) NULL,
                                          recent_time_code varchar(30) NULL
-)
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
     distributed by (address,recent_time_code);
 truncate table total_volume_usd;
 vacuum total_volume_usd;

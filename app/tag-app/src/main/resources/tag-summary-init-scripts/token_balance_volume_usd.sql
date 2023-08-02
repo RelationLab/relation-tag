@@ -9,7 +9,8 @@ create table public.token_balance_volume_usd_temp
     created_at timestamp default CURRENT_TIMESTAMP,
     updated_at timestamp default now(),
     removed boolean default false
-)distributed by (address,"token");
+)with (appendonly='true', compresstype=zstd, compresslevel='5')
+    distributed by (address,"token");
 truncate table token_balance_volume_usd_temp;
 vacuum token_balance_volume_usd_temp;
 

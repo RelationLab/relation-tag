@@ -37,5 +37,6 @@ CREATE TABLE public."label_temp" (
                                 wired_type varchar(128) NULL,
                                 label_order int4 NULL DEFAULT 999,
                                 sync_es_status varchar(20) NOT NULL DEFAULT 'WAITING'::character varying
-);
+) with (appendonly='true', compresstype=zstd, compresslevel='5')
+distributed by ("name");
 insert into tag_result(table_name,batch_date)  SELECT 'data_table_label' as table_name,'${batchDate}'  as batch_date;
