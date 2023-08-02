@@ -6,12 +6,12 @@ CREATE TABLE public.address_label_nft_project_type_count_grade (
                                                                    label_type varchar(512) NULL,
                                                                    label_name varchar(1024) NULL,
                                                                    updated_at timestamp(6) NULL,
-    "group" varchar(1) NULL,
-    "level" varchar(100) NULL,
-    category varchar(100) NULL,
-    trade_type varchar(100) NULL,
-    project varchar(100) NULL,
-    asset varchar(100) NULL,
+                                                                   "group" varchar(1) NULL,
+                                                                   "level" varchar(100) NULL,
+                                                                   category varchar(100) NULL,
+                                                                   trade_type varchar(100) NULL,
+                                                                   project varchar(100) NULL,
+                                                                   asset varchar(100) NULL,
                                                                    bus_type varchar(20) NULL,
                                                                    recent_time_code varchar(30) NULL
 )with (appendonly='true', compresstype=zstd, compresslevel='5')
@@ -20,10 +20,33 @@ truncate table public.address_label_nft_project_type_count_grade;
 vacuum address_label_nft_project_type_count_grade;
 
 insert into public.address_label_nft_project_type_count_grade(address,label_type,label_name,data,wired_type,updated_at,"group",level,category,trade_type,project,asset,bus_type, recent_time_code )
- select
+select
     address,
     label_type,
     label_type||'_'||case
+                         when sum_count >= 1
+                             and sum_count < 10 then 'L1'
+                         when sum_count >= 10
+                             and sum_count < 40 then 'L2'
+                         when sum_count >= 40
+                             and sum_count < 80 then 'L3'
+                         when sum_count >= 80
+                             and sum_count < 120 then 'L4'
+                         when sum_count >= 120
+                             and sum_count < 160 then 'L5'
+                         when sum_count >= 160
+                             and sum_count < 200 then 'L6'
+                         when sum_count >= 200
+                             and sum_count < 400 then 'Low'
+                         when sum_count >= 400
+                             and sum_count < 619 then 'Medium'
+                         when sum_count >= 619 then 'High'
+        end as label_name,
+    sum_count  as data,
+    'NFT'  as wired_type,
+    now() as updated_at,
+    'c'  as "group",
+    case
         when sum_count >= 1
             and sum_count < 10 then 'L1'
         when sum_count >= 10
@@ -40,37 +63,14 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             and sum_count < 400 then 'Low'
         when sum_count >= 400
             and sum_count < 619 then 'Medium'
-        when sum_count >= 619 then 'High'
-        end as label_name,
-    sum_count  as data,
-    'NFT'  as wired_type,
-    now() as updated_at,
-    'c'  as "group",
-    case
-    when sum_count >= 1
-    and sum_count < 10 then 'L1'
-    when sum_count >= 10
-    and sum_count < 40 then 'L2'
-    when sum_count >= 40
-    and sum_count < 80 then 'L3'
-    when sum_count >= 80
-    and sum_count < 120 then 'L4'
-    when sum_count >= 120
-    and sum_count < 160 then 'L5'
-    when sum_count >= 160
-    and sum_count < 200 then 'L6'
-    when sum_count >= 200
-    and sum_count < 400 then 'Low'
-    when sum_count >= 400
-    and sum_count < 619 then 'Medium'
-    when sum_count >= 619 then 'High' end   as level,
+        when sum_count >= 619 then 'High' end   as level,
     'grade' as category,
     t.type as trade_type,
     t.project_name as project,
     t.token_name as asset,
     'activity' as bus_type,
     recent_time_code
-    from
+from
     (
         -- project-token-type
         select
@@ -83,10 +83,9 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             recent_time_code
         from
             platform_nft_type_volume_count_temp  a1 inner join dim_project_token_type_temp a2
-            on a1.token=a2.token and a1.platform_group=a2.project
-                   and a1.type=a2.type and a2.data_subject = 'count'
-        and a1.recent_time_code =a2.recent_code
-        where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
+                                                               on a1.token=a2.token and a1.platform_group=a2.project
+                                                                   and a1.type=a2.type and a2.data_subject = 'count'
+                                                                   and a1.recent_time_code =a2.recent_code
         group by
             a1.address,
             a2.label_type,
@@ -106,11 +105,10 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             recent_time_code
         from
             platform_nft_type_volume_count_temp  a1 inner join dim_project_token_type_temp a2
-        on a2.token='ALL' and a1.platform_group=a2.project
-               and a1.type=a2.type and a2.data_subject = 'count'
-            and a1.recent_time_code =a2.recent_code
-        where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
-          and a1.token not in('0x0000000000a39bb272e79075ade125fd351887ac','eth')
+                                                               on a2.token='ALL' and a1.platform_group=a2.project
+                                                                   and a1.type=a2.type and a2.data_subject = 'count'
+                                                                   and a1.recent_time_code =a2.recent_code
+        where a1.nft_type = 'ERC721' and a2.nft_type='ERC721'
         group by
             a1.address,
             a2.label_type,
@@ -118,7 +116,30 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             a2.project_name ,
             a2.token_name,
             recent_time_code
-        -- project(ALL)+token（ALL）+type
+            -- project-token(ALL)-type
+        union all
+        select
+            a1.address,
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
+            sum(transfer_count) as sum_count,
+            recent_time_code
+        from
+            platform_nft_type_volume_count_temp  a1 inner join dim_project_token_type_temp a2
+                                                               on a2.token='ALL' and a1.platform_group=a2.project
+                                                                   and a1.type=a2.type and a2.data_subject = 'count'
+                                                                   and a1.recent_time_code =a2.recent_code
+        where  a1.nft_type = 'ERC721-token' and a2.nft_type='ERC721-token'
+        group by
+            a1.address,
+            a2.label_type,
+            a2.type,
+            a2.project_name ,
+            a2.token_name,
+            recent_time_code
+            -- project(ALL)+token（ALL）+type
         union all
         select
             a1.address,
@@ -140,8 +161,7 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             and a2.label_type like '%NFT%'
             and a2.label_type not like '%WEB3%'
         and a1.recent_time_code =a2.recent_code
-        where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
-          and a1.token not in('0x0000000000a39bb272e79075ade125fd351887ac','eth')
+        where a1.nft_type = 'ERC721'
         group by
             a1.address,
             a2.label_type,
@@ -171,7 +191,6 @@ insert into public.address_label_nft_project_type_count_grade(address,label_type
             and a2.label_type like '%NFT%'
             and a2.label_type not like '%WEB3%'
             and a1.recent_time_code =a2.recent_code
-        where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
         group by
             a1.address,
             a2.label_type,

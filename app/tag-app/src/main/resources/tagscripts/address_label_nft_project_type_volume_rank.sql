@@ -111,87 +111,115 @@ from
                                             (
                                                 select
                                                     s1.address,
-                                                    s2.seq_flag,
                                                     s1.platform_group as project,
                                                     s1.type,
                                                     sum(volume_usd) as volume_usd,
-                                                    recent_time_code
+                                                    recent_time_code,
+                                                    seq_flag
                                                 from
                                                     (
                                                         -- project-token-type
                                                         select
-                                                            address,
-                                                            platform_group,
-                                                            platform,
-                                                            token,
-                                                            type,
+                                                            a1.address,
+                                                            a1.platform_group,
+                                                            a1.platform,
+                                                            a1.token,
+                                                            a1.type,
                                                             volume_usd,
-                                                            recent_time_code
+                                                            a1.recent_time_code,
+                                                            seq_flag
                                                         from
-                                                            platform_nft_type_volume_count_temp
+                                                            platform_nft_type_volume_count_temp  a1
+                                                                inner join dim_project_token_type_temp a2
+                                                               on a2.token=a1.token and a1.platform_group=a2.project
+                                                               and a1.type=a2.type and a2.data_subject = 'volume_rank'
+                                                               and a1.recent_time_code =a2.recent_code
                                                         where volume_usd >= 100
                                                             and address not in (select address from exclude_address)
-                                                            and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                                                         union all
                                                         -- project-token(ALL)-type
                                                         select
-                                                            address,
-                                                            platform_group,
-                                                            platform,
+                                                            a1.address,
+                                                            a1.platform_group,
+                                                            a1.platform,
                                                             'ALL' as token,
-                                                            type,
+                                                            a1.type,
                                                             volume_usd,
-                                                            recent_time_code
+                                                            a1.recent_time_code,
+                                                            seq_flag
                                                         from
-                                                            platform_nft_type_volume_count_temp
+                                                            platform_nft_type_volume_count_temp a1
+                                                                inner join dim_project_token_type_temp a2
+                                                            on a2.token='ALL' and a1.platform_group=a2.project
+                                                            and a1.type=a2.type and a2.data_subject = 'volume_rank'
+                                                            and a1.recent_time_code =a2.recent_code
                                                         where volume_usd >= 100
                                                             and address not in (select address from exclude_address)
-                                                            and token in (select token_id from dim_project_token_type_rank_temp dpttr)
-                                                            and token not in('0x0000000000a39bb272e79075ade125fd351887ac','eth')
+                                                            and a1.nft_type = 'ERC721' and a2.nft_type='ERC721'
+                                                        -- project-token(ALL)-type
+                                                        union all
+                                                        select
+                                                            a1.address,
+                                                            a1.platform_group,
+                                                            a1.platform,
+                                                            'ALL' as token,
+                                                            a1.type,
+                                                            volume_usd,
+                                                            a1.recent_time_code,
+                                                            seq_flag
+                                                        from
+                                                            platform_nft_type_volume_count_temp a1
+                                                            inner join dim_project_token_type_temp a2
+                                                            on a2.token='ALL' and a1.platform_group=a2.project
+                                                            and a1.type=a2.type and a2.data_subject = 'volume_rank'
+                                                            and a1.recent_time_code =a2.recent_code
+                                                        where volume_usd >= 100
+                                                          and address not in (select address from exclude_address)
+                                                          and a1.nft_type = 'ERC721-token' and a2.nft_type='ERC721-token'
                                                         union all
                                                         -- project(ALL)-token(ALL)-type
                                                         select
-                                                            address,
+                                                            a1.address,
                                                             'ALL' as platform_group,
-                                                            platform,
+                                                            a1.platform,
                                                             'ALL' as token,
-                                                            type,
+                                                            a1.type,
                                                             volume_usd,
-                                                            recent_time_code
+                                                            a1.recent_time_code,
+                                                            seq_flag
                                                         from
-                                                            platform_nft_type_volume_count_temp
+                                                            platform_nft_type_volume_count_temp a1
+                                                            inner join dim_project_token_type_temp a2
+                                                        on a2.token='ALL' and a2.project='ALL'
+                                                            and a1.type=a2.type and a2.data_subject = 'volume_rank'
+                                                            and a1.recent_time_code =a2.recent_code
                                                         where volume_usd >= 100
                                                             and address not in (select address from exclude_address)
-                                                            and token in (select token_id from dim_project_token_type_rank_temp dpttr)
-                                                           -- project(ALL)-token(ALL)-type
+                                                          and a1.nft_type = 'ERC721'
+                                                        -- project(ALL)-token-type
                                                         union all
                                                         select
-                                                            address,
+                                                            a1.address,
                                                             'ALL' as platform_group,
-                                                            platform,
-                                                            token,
-                                                            type,
+                                                            a1.platform,
+                                                            a1.token,
+                                                            a1.type,
                                                             volume_usd,
-                                                            recent_time_code
+                                                            a1.recent_time_code,
+                                                            seq_flag
                                                         from
-                                                            platform_nft_type_volume_count_temp
+                                                            platform_nft_type_volume_count_temp  a1
+                                                            inner join dim_project_token_type_temp a2
+                                                        on a2.token=a1.token and a2.project='ALL'
+                                                            and a1.type=a2.type and a2.data_subject = 'volume_rank'
+                                                            and a1.recent_time_code =a2.recent_code
                                                         where volume_usd >= 100
                                                             and address not in (select address from exclude_address)
-                                                            and token in (select token_id from dim_project_token_type_rank_temp dpttr)
-                                                    )
-                                                        s1
-                                                        inner join dim_project_token_type_temp s2
-                                                                   on
-                                                                               s1.token = s2.token
-                                                                           and s1.platform_group = s2.project
-                                                                           and s1.type = s2.type
-                                                                           and s2.data_subject = 'volume_rank'
-                                                                           and s1.recent_time_code = s2.recent_code
-                                                group by
+                                                    ) s1 group by
                                                     s1.address,
                                                     s1.type,
                                                     s1.platform_group,
-                                                    s2.seq_flag,
+                                                    seq_flag,
                                                     recent_time_code) as a1) as a1
                                         inner join
                                     (
@@ -206,80 +234,110 @@ from
                                                 select
                                                     address,
                                                     totala.platform_group,
-                                                    seq_flag,
-                                                    tb2.type,
+                                                    type,
                                                     sum(totala.volume_usd) as volume_usd,
-                                                    recent_time_code
+                                                    recent_time_code,
+                                                    seq_flag
                                                 from
                                                     (
                                                         -- project-token-type
                                                         select
-                                                            address,
-                                                            platform_group,
-                                                            token,
-                                                            type,
+                                                            a1.address,
+                                                            a1.platform_group,
+                                                            a1.token,
+                                                            a1.type,
                                                             volume_usd,
-                                                            recent_time_code
+                                                            a1.recent_time_code,
+                                                            seq_flag
                                                         from
-                                                            platform_nft_type_volume_count_temp
+                                                            platform_nft_type_volume_count_temp  a1
+                                                                inner join dim_project_token_type_temp a2
+                                                                           on a2.token=a1.token and a1.platform_group=a2.project
+                                                                               and a1.type=a2.type and a2.data_subject = 'volume_rank'
+                                                                               and a1.recent_time_code =a2.recent_code
                                                         where volume_usd >= 100
                                                             and address not in (select address from exclude_address)
-                                                            and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                                                         union all
                                                         -- project-token(ALL)-type
                                                         select
-                                                            address,
-                                                            platform_group,
+                                                            a1.address,
+                                                            a1.platform_group,
                                                             'ALL' as token,
-                                                            type,
+                                                            a1.type,
                                                             volume_usd,
-                                                            recent_time_code
+                                                            a1.recent_time_code,
+                                                            seq_flag
                                                         from
-                                                            platform_nft_type_volume_count_temp
+                                                            platform_nft_type_volume_count_temp  a1
+                                                                inner join dim_project_token_type_temp a2
+                                                               on a2.token='ALL' and a1.platform_group=a2.project
+                                                                   and a1.type=a2.type and a2.data_subject = 'volume_rank'
+                                                                   and a1.recent_time_code =a2.recent_code
                                                         where volume_usd >= 100
                                                             and address not in (select address from exclude_address)
-                                                            and token in (select token_id from dim_project_token_type_rank_temp dpttr)
-
+                                                          and a1.nft_type = 'ERC721' and a2.nft_type='ERC721'
+                                                        union all
+                                                        -- project-token(ALL)-type
+                                                        select
+                                                            a1.address,
+                                                            a1.platform_group,
+                                                            'ALL' as token,
+                                                            a1.type,
+                                                            volume_usd,
+                                                            a1.recent_time_code,
+                                                            seq_flag
+                                                        from
+                                                            platform_nft_type_volume_count_temp  a1
+                                                                inner join dim_project_token_type_temp a2
+                                                               on a2.token='ALL' and a1.platform_group=a2.project
+                                                                   and a1.type=a2.type and a2.data_subject = 'volume_rank'
+                                                                   and a1.recent_time_code =a2.recent_code
+                                                        where volume_usd >= 100
+                                                          and address not in (select address from exclude_address)
+                                                          and a1.nft_type = 'ERC721-token' and a2.nft_type='ERC721-token'
                                                         union all
                                                         -- project(ALL)-token(ALL)-type
                                                         select
-                                                            address,
-                                                            platform,
+                                                            a1.address,
+                                                            a1.platform,
                                                             'ALL' as token,
-                                                            type,
+                                                            a1.type,
                                                             volume_usd,
-                                                            recent_time_code
+                                                            a1.recent_time_code,
+                                                            seq_flag
                                                         from
-                                                            platform_nft_type_volume_count_temp
+                                                            platform_nft_type_volume_count_temp  a1
+                                                                inner join dim_project_token_type_temp a2
+                                                                           on a2.token='ALL' and a2.project='ALL'
+                                                                               and a1.type=a2.type and a2.data_subject = 'volume_rank'
+                                                                               and a1.recent_time_code =a2.recent_code
                                                         where volume_usd >= 100
                                                             and address not in (select address from exclude_address)
-                                                            and token in (select token_id from dim_project_token_type_rank_temp dpttr)
-                                                           -- project(ALL)-token(ALL)-type
+                                                          and a1.nft_type = 'ERC721'
+                                                          -- project(ALL)-token-type
                                                         union all
                                                         select
-                                                            address,
-                                                            platform,
-                                                            token,
-                                                            type,
+                                                            a1.address,
+                                                            a1.platform,
+                                                            a1.token,
+                                                            a1.type,
                                                             volume_usd,
-                                                            recent_time_code
+                                                            a1.recent_time_code,
+                                                            seq_flag
                                                         from
-                                                            platform_nft_type_volume_count_temp
+                                                            platform_nft_type_volume_count_temp  a1
+                                                                inner join dim_project_token_type_temp a2
+                                                                           on a2.token=a1.token and a2.project='ALL'
+                                                                               and a1.type=a2.type and a2.data_subject = 'volume_rank'
+                                                                               and a1.recent_time_code =a2.recent_code
                                                         where volume_usd >= 100
                                                             and address not in (select address from exclude_address)
-                                                            and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                                                     ) totala
-                                                        inner join dim_project_token_type_temp tb2
-                                                                   on
-                                                                               totala.token = tb2.token
-                                                                           and totala.platform_group = tb2.project
-                                                                           and totala.type = tb2.type
-                                                                           and tb2.data_subject = 'volume_rank'
                                                 group by
                                                     address,
                                                     platform_group,
                                                     seq_flag,
-                                                    tb2.type,
+                                                    type,
                                                     recent_time_code) pntvc
                                         group by
                                             platform_group,

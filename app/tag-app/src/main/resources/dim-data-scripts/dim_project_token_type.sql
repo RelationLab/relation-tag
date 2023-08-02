@@ -13,7 +13,8 @@ create table dim_project_token_type_temp
     etl_update_time timestamp,
     project_name    varchar(100),
     token_name      varchar(100),
-    recent_code     varchar(30)
+    recent_code     varchar(30),
+    nft_type varchar(30)
 ) with (appendonly='true', compresstype=zstd, compresslevel='5')
     distributed by (label_type);
 truncate table dim_project_token_type_temp;
@@ -1142,7 +1143,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name,
-                                  recent_code)
+                                  recent_code,
+                                  nft_type)
 select distinct (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
@@ -1155,12 +1157,13 @@ select distinct (select nft_platform_temp.platform_name
     'count' data_subject,
     mp_nft_platform_temp.platform_name project_name,
     'ALL' token_name,
-    recent_time_temp.recent_time_code
+    recent_time_temp.recent_time_code,
+    nft_type
 from mp_nft_platform_temp
     inner join nft_trade_type_temp
 on
     (1 = 1) inner join recent_time_temp on(1=1)
-    INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform= nft_action_platform_temp.platform
+    INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform= nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type=nft_action_platform_temp.nft_trade_type)
 where
     nft_trade_type_temp.type = '1';
@@ -1227,7 +1230,7 @@ from mp_nft_platform_temp
                      where type = 'nft_count') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
+         INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type)
 where nft_trade_type_temp.type = '1';
 
@@ -1273,7 +1276,7 @@ from mp_nft_platform_temp
                      where type = 'nft_count') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
+         INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type)
 where nft_trade_type_temp.type = '1';
 
@@ -1597,7 +1600,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name,
-                                  recent_code)
+                                  recent_code,
+                                  nft_type)
 select distinct (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
@@ -1610,12 +1614,13 @@ select distinct (select nft_platform_temp.platform_name
     'volume_elite' data_subject,
     mp_nft_platform_temp.platform_name project_name,
     'ALL' token_name,
-     recent_time_temp.recent_time_code
+     recent_time_temp.recent_time_code,
+    nft_type
 from mp_nft_platform_temp
     inner join nft_trade_type_temp
 on
     (1 = 1) inner join recent_time_temp on(1=1)
-    INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform= nft_action_platform_temp.platform
+    INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform= nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type=nft_action_platform_temp.nft_trade_type)
 where
     nft_trade_type_temp.type = '1';
@@ -1677,7 +1682,7 @@ from mp_nft_platform_temp
                      where type = 'nft_volume_elite') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
+         INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type)
 where nft_trade_type_temp.type = '1';
 
@@ -1723,7 +1728,7 @@ from mp_nft_platform_temp
                      where type = 'nft_volume_elite') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
+         INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type)
 where nft_trade_type_temp.type = '1';
 
@@ -2176,7 +2181,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name,
-                                  recent_code)
+                                  recent_code,
+                                  nft_type)
 select distinct (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
@@ -2189,12 +2195,13 @@ select distinct (select nft_platform_temp.platform_name
     'volume_grade' data_subject,
     mp_nft_platform_temp.platform_name project_name,
     'ALL' token_name,
-    recent_time_temp.recent_time_code
+    recent_time_temp.recent_time_code,
+    nft_type
 from mp_nft_platform_temp
     inner join nft_trade_type_temp
 on
     (1 = 1) inner join recent_time_temp on(1=1)
-    INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform= nft_action_platform_temp.platform
+    INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform= nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type=nft_action_platform_temp.nft_trade_type)
 where
     nft_trade_type_temp.type = '1';
@@ -2256,7 +2263,7 @@ from mp_nft_platform_temp
                      where type = 'nft_volume_grade') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
+         INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type)
 where nft_trade_type_temp.type = '1';
 
@@ -2302,7 +2309,7 @@ from mp_nft_platform_temp
                      where type = 'nft_volume_grade') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
+         INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type)
 where nft_trade_type_temp.type = '1';
 
@@ -2754,7 +2761,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name,
-                                  recent_code)
+                                  recent_code,
+                                  nft_type)
 select distinct (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
@@ -2767,12 +2775,13 @@ select distinct (select nft_platform_temp.platform_name
     'volume_rank' data_subject,
     mp_nft_platform_temp.platform_name project_name,
     'ALL' token_name,
-     recent_time_temp.recent_time_code
+     recent_time_temp.recent_time_code,
+    nft_type
 from mp_nft_platform_temp
     inner join nft_trade_type_temp
 on
     (1 = 1) inner join recent_time_temp on(1=1)
-    INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform= nft_action_platform_temp.platform
+    INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform= nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type=nft_action_platform_temp.nft_trade_type)
 where
     nft_trade_type_temp.type = '1';
@@ -2834,7 +2843,7 @@ from mp_nft_platform_temp
                      where type = 'nft_volume_rank') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
+         INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type)
 where nft_trade_type_temp.type = '1';
 
@@ -2880,7 +2889,7 @@ from mp_nft_platform_temp
                      where type = 'nft_volume_rank') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
+         INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type)
 where nft_trade_type_temp.type = '1';
 
@@ -3334,7 +3343,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name,
-                                  recent_code)
+                                  recent_code,
+                                  nft_type)
 select distinct (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
@@ -3347,12 +3357,13 @@ select distinct (select nft_platform_temp.platform_name
     'volume_top' data_subject,
     mp_nft_platform_temp.platform_name project_name,
     'ALL' token_name,
-     recent_time_temp.recent_time_code
+     recent_time_temp.recent_time_code,
+    nft_type
 from mp_nft_platform_temp
     inner join nft_trade_type_temp
 on
     (1 = 1) inner join recent_time_temp on(1=1)
-    INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform= nft_action_platform_temp.platform
+    INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform= nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type=nft_action_platform_temp.nft_trade_type)
 where
     nft_trade_type_temp.type = '1';
@@ -3414,7 +3425,7 @@ from mp_nft_platform_temp
                      where type = 'nft_volume_top') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
+         INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type)
 where nft_trade_type_temp.type = '1';
 
@@ -3460,7 +3471,7 @@ from mp_nft_platform_temp
                      where type = 'nft_volume_top') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN (select distinct platform,nft_trade_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
+         INNER JOIN (select distinct platform,nft_trade_type,nft_type from nft_action_platform_temp ) nft_action_platform_temp ON (mp_nft_platform_temp.platform = nft_action_platform_temp.platform
     and nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type)
 where nft_trade_type_temp.type = '1';
 
