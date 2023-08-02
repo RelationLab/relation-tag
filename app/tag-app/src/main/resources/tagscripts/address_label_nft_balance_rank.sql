@@ -107,26 +107,24 @@ select
 							(
 							-- project(null)+nft+type(null)
 							select
-								address,
-								token,
-								balance
+                                a1.address,
+                                a1.token,
+                                a1.balance
 							from
-                                nft_holding_temp
+                                nft_holding_temp a1 inner join dim_project_token_type_rank_temp a2 on(a1.token=a2.token_id)
 							where
 								balance >= 1 and address not in (select address from exclude_address)
-                                and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                                 and recent_time_code ='ALL'
                             union all
 							-- project(null)-token(ALL)-type(null)
 							select
-								address,
+                                a1.address,
 								'ALL' as token,
-								balance
+                                a1.balance
 							from
-                                nft_holding_temp
+                                nft_holding_temp  a1 inner join dim_project_token_type_rank_temp a2 on(a1.token=a2.token_id)
 							where
 								balance >= 1 and address not in (select address from exclude_address)
-							  and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                               and recent_time_code ='ALL'
                             )
     s1
@@ -152,26 +150,24 @@ select
 					from
 						(
 						select
-							address,
-							token,
-							balance
+                            a1.address,
+                            a1.token,
+                            a1.balance
 						from
-                            nft_holding_temp
+                            nft_holding_temp a1 inner join dim_project_token_type_rank_temp a2 on(a1.token=a2.token_id)
 						where
 							balance >= 1 and address not in (select address from exclude_address)
-                          and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                           and recent_time_code ='ALL'
                         union all
 						-- project(null)-token(ALL)-type(null)
 						select
-							address,
+                            a1.address,
 							'ALL' as token,
-							balance
+                            a1.balance
 						from
-                            nft_holding_temp
+                            nft_holding_temp a1 inner join dim_project_token_type_rank_temp a2 on(a1.token=a2.token_id)
 						where
 							balance >= 1 and address not in (select address from exclude_address)
-						  and token in (select token_id from dim_project_token_type_rank_temp dpttr)
                           and recent_time_code ='ALL'
                         ) totala
 					inner join dim_project_token_type_temp tb2
