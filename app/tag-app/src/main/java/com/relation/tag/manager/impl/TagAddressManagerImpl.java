@@ -416,7 +416,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         exceRecentTimeScripts(batchDate, recentTimePath, "erc20_tx_record_to.sql", "tabel_defi_erc20_tx_record_to", 1,false);
         execSql("erc20_tx_record", "vol_count_token_holding_vol_count.sql", batchDate, filePath, 18,true,null, false);
         /***************eth_holding_vol_count***********/
-        execSql("erc20_tx_record_to", "tabel_defi_eth_tx_record_from_to.sql", batchDate, tableDefiPath, 7,false,null, false);
+        execSql("erc20_tx_record_to", "tabel_defi_eth_tx_record_from_to.sql", batchDate, tableDefiPath, 7,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "eth_tx_record_from_to.sql", "tabel_defi_eth_tx_record_from_to", 1,false);
         execSql("eth_tx_record_from_to", "vol_count_eth_holding_vol_count.sql", batchDate, filePath, 9,true,null, false);
         execSql("vol_count", "token_volume_usd.sql", batchDate, filePath, 2,true,null, false);
