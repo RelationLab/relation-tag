@@ -231,6 +231,7 @@ public class StaticManagerImpl implements StaticManager {
         ugcLabelDataAnalysisService.saveOrUpdateBatch(list);
         ugcLabelDataAnalysisRecordService.saveBatch(listResultRecord);
         iAddressLabelService.updateBatch(list, configEnvironment);
+        log.info("updateAnalysisData.size======{}，updateAnalysisData==============={}",list.size(),list);
     }
 
     private void dropTable(Map paramsMap) {
