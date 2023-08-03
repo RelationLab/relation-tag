@@ -406,7 +406,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("dim", "total_dex_tx_volume_count_summary_stake.sql", batchDate, filePath, 6,true,null, false);
         execSql("dim", "token_balance_volume_usd.sql", batchDate, filePath, 6,true,null, false);
         execSql("token_balance_volume_usd", "total_balance_volume_usd.sql", batchDate, filePath, 1,false,null, false);
-        execSql("dim", "nft_balance_usd.sql", batchDate, filePath, 6,true,null, false);
+        execSql("dim", "total_nft_balance_usd.sql", batchDate, filePath, 6,true,null, false);
 
         /***************erc20_tx_record_from***********/
         execSql("dim", "tabel_defi_erc20_tx_record_from.sql", batchDate, tableDefiPath, 6,true,null, false);
