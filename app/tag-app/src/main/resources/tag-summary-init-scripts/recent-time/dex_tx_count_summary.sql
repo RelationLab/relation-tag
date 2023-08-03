@@ -23,8 +23,6 @@ from
         from
             dex_tx_volume_count_record_filter
         where dex_tx_volume_count_record_filter.block_height >= ${recentTimeBlockHeight}
-            and  triggered_flag = '1'
-            and total_transfer_count = 1
         group by
             dex_tx_volume_count_record_filter.address,
             dex_tx_volume_count_record_filter.TYPE,
@@ -59,8 +57,7 @@ from
             max(total_transfer_count) as total_transfer_count
         from
             token_holding_uni_filter th
-
-        where th.block_height >= ${recentTimeBlockHeight} and triggered_flag = '1'
+        where th.block_height >= ${recentTimeBlockHeight}
         group by
             th.address,
             th.type,
