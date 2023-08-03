@@ -28,7 +28,7 @@
         where id in
         (<foreach collection="list" item="item" separator=",">
         #{item.id}
-    </foreach>) and status = 'DONE'  and config_environment = #{configEnvironment}
+    </foreach>) and (status = 'DONE' OR status = 'FAIL')  and config_environment = #{configEnvironment}
     </update>
 
     <update id="updateDataAnalysisFail">
