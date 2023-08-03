@@ -436,8 +436,9 @@ public class StaticManagerImpl implements StaticManager {
     private String buildConditionDataByLabel(String labels, UgcLabelDataAnalysis entity) {
         String tatolStartSql = "select distinct address as address from (";
         String outSql = "select address from (";
+        String systemSql = "recent_time_code='ALL' AND ";
         String selectStartSql = " select address from address_label_gp_" + configEnvironment +
-                " where recent_time_code='ALL' AND label_name ='";
+                " where  "+systemSql +" label_name ='";
         String selectEndSql = "' ";
         String fuzzyKey = " UNION ";
         String precisionKey = " INTERSECT ";
@@ -453,7 +454,7 @@ public class StaticManagerImpl implements StaticManager {
             }
         }
         String addressLabelGpStr = outSql.concat(stringBuffer.toString()).concat(") total_in ");
-        String addressLabelUgcStr = addressLabelGpStr.replace("address_label_gp", "address_label_ugc");
+        String addressLabelUgcStr = addressLabelGpStr.replace("address_label_gp", "address_label_ugc").replace(systemSql,"");
         String tatolEndSql = ") total_out";
         String execSql = tatolStartSql.concat(addressLabelGpStr).concat(fuzzyKey)
                 .concat(addressLabelUgcStr).concat(tatolEndSql);
