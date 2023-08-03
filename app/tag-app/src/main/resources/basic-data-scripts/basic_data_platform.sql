@@ -4,7 +4,7 @@ create table platform_temp
 
     platform varchar(80) NULL,
     platform_name varchar(512) NULL,
-    token_all_flag varchar(1)
+    token_all_flag varchar(1) ----控制是否有ALL标签
 ) ;
 
 insert into platform_temp(platform,platform_name,token_all_flag) values('0xdef1c0ded9bec7f1a1670819833240f027b25eff','0x','1');
@@ -17,8 +17,10 @@ insert into platform_temp(platform,platform_name,token_all_flag) values('0xd9e1c
 insert into platform_temp(platform,platform_name,token_all_flag) values('0xc36442b4a4522e871399cd717abdd847ab11fe88','Uniswap','1');
 insert into platform_temp(platform,platform_name,token_all_flag) values('0x7a250d5630b4cf539739df2c5dacb4c659f2488d','Uniswap','1');
 
+insert into platform_temp(platform,platform_name,token_all_flag) values('aave','AAVE','1');
+insert into platform_temp(platform,platform_name,token_all_flag) values('commpound','Commpound','1');
 
-insert into platform_temp(platform,platform_name,token_all_flag) values('0xae7ab96520de3a18e5e111b5eaab095312d7fe84','Lido','0');
-insert into platform_temp(platform,platform_name,token_all_flag) values('0xbafa44efe7901e04e39dad13167d089c559c1138','Frax','0');
-insert into platform_temp(platform,platform_name,token_all_flag) values('0x4d05e3d48a938db4b7a9a59a802d5b45011bde58','RocketPool','0');
+insert into platform_temp(platform,platform_name,token_all_flag) values('0xae7ab96520de3a18e5e111b5eaab095312d7fe84','Lido','1');
+insert into platform_temp(platform,platform_name,token_all_flag) values('0xbafa44efe7901e04e39dad13167d089c559c1138','Frax','1');
+insert into platform_temp(platform,platform_name,token_all_flag) values('0x4d05e3d48a938db4b7a9a59a802d5b45011bde58','RocketPool','1');
 insert into tag_result(table_name,batch_date)  SELECT 'basic_data_platform' as table_name,'${batchDate}'  as batch_date;

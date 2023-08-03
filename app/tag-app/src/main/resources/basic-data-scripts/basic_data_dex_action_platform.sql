@@ -35,6 +35,10 @@ insert into dex_action_platform_temp(platform,trade_type) values('0xae7ab96520de
 insert into dex_action_platform_temp(platform,trade_type) values('0xbafa44efe7901e04e39dad13167d089c559c1138','ALL');
 insert into dex_action_platform_temp(platform,trade_type) values('0x4d05e3d48a938db4b7a9a59a802d5b45011bde58','ALL');
 
+insert into dex_action_platform_temp(platform,trade_type) values('aave','ALL');
+insert into dex_action_platform_temp(platform,trade_type) values('commpound','ALL');
+
+
 insert into dex_action_platform_temp(platform,trade_type) values('0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f','stakelp');
 insert into dex_action_platform_temp(platform,trade_type) values('0x1111111254fb6c44bac0bed2854e76f90643097d','stakelp');
 insert into dex_action_platform_temp(platform,trade_type) values('0xd061d61a4d941c39e5453435b6345dc261c2fce0','stakelp');
@@ -48,4 +52,17 @@ insert into dex_action_platform_temp(platform,trade_type) values('0x4d05e3d48a93
 insert into dex_action_platform_temp(platform,trade_type) values('0xae7ab96520de3a18e5e111b5eaab095312d7fe84','withdraw');
 insert into dex_action_platform_temp(platform,trade_type) values('0xbafa44efe7901e04e39dad13167d089c559c1138','withdraw');
 insert into dex_action_platform_temp(platform,trade_type) values('0x4d05e3d48a938db4b7a9a59a802d5b45011bde58','withdraw');
+
+
+
+insert into dex_action_platform_temp(platform,trade_type) values('aave','deposit');
+insert into dex_action_platform_temp(platform,trade_type) values('aave','redeem');
+insert into dex_action_platform_temp(platform,trade_type) values('aave','borrow');
+insert into dex_action_platform_temp(platform,trade_type) values('aave','repay');
+
+insert into dex_action_platform_temp(platform,trade_type) values('commpound','mint');
+insert into dex_action_platform_temp(platform,trade_type) values('commpound','redeem');
+insert into dex_action_platform_temp(platform,trade_type) values('commpound','borrow');
+insert into dex_action_platform_temp(platform,trade_type) values('commpound','repay');
+
 insert into tag_result(table_name,batch_date)  SELECT 'basic_data_dex_action_platform' as table_name,'${batchDate}'  as batch_date;
