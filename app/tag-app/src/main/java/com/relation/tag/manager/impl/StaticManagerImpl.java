@@ -437,7 +437,7 @@ public class StaticManagerImpl implements StaticManager {
         String tatolStartSql = "select distinct address as address from (";
         String outSql = "select address from (";
         String selectStartSql = " select address from address_label_gp_" + configEnvironment +
-                " where label_name ='";
+                " where recent_time_code='ALL' AND label_name ='";
         String selectEndSql = "' ";
         String fuzzyKey = " UNION ";
         String precisionKey = " INTERSECT ";

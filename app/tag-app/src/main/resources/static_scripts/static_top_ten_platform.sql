@@ -185,7 +185,8 @@ from (
                                              then '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'
                                          else project
                                          end as project,
-                                     total_transfer_count
+                                     total_transfer_count,
+                                     recent_time_code
                                  from
                                      dex_tx_volume_count_summary) tbvu
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
