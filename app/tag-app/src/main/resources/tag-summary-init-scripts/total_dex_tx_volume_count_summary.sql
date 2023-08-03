@@ -24,6 +24,33 @@ group by dtvcr.address,
          dtvcr."token",
          dtvcr.project,
          recent_time_code;
+
+insert
+into
+    dex_tx_volume_count_summary(address,
+                                token,
+                                type,
+                                project,
+                                block_height,
+                                total_transfer_volume_usd,
+                                total_transfer_count,
+                                first_updated_block_height
+)
+select
+    dtvcr.address,
+    'ALL' AS token,
+    dtvcr.type,
+    project,
+    max(block_height) block_height,
+    sum(total_transfer_volume_usd) as total_transfer_volume_usd,
+    sum(1) total_transfer_count,
+    min(first_updated_block_height) first_updated_block_height
+from
+    dex_tx_volume_count_summary dtvcr
+group by
+    dtvcr.address,
+    dtvcr.type,
+    project;
 insert into tag_result(table_name, batch_date)
 SELECT 'total_dex_tx_volume_count_summary' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
 
