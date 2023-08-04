@@ -326,8 +326,8 @@ public class TagAddressManagerImpl implements TagAddressManager {
             }
             if (StringUtils.isNotEmpty(batchDate)) {
                 exceSql = exceSql.replace("${batchDate}", batchDate);
-                exceSql = exceSql.replace("${batchDateReplace}", batchDate.replace("-",""));
             }
+            exceSql = exceSql.replace("${batchDateReplace}", System.currentTimeMillis()+"");
             iAddressLabelService.exceSql(exceSql, sqlName);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
