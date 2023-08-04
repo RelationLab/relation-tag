@@ -1149,7 +1149,7 @@ select distinct (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
                     limit 1)  project,
-    (case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end ) as  "token",
+    'ALL' as  "token",
     nft_trade_type_temp.nft_trade_type "type",
     recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_' ||nft_trade_type_temp.nft_trade_type||'_MP_NFT_ACTIVITY' label_type,
     'T' operate_type,
@@ -1606,7 +1606,7 @@ select distinct (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
                     limit 1)  project,
-    (case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end ) "token",
+    'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
     recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_'  ||nft_trade_type_temp.nft_trade_type||'_MP_NFT_VOLUME_ELITE' label_type,
     'T' operate_type,
@@ -2187,7 +2187,7 @@ select distinct (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
                     limit 1)  project,
-    (case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end ) "token",
+    'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
     recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_'  ||nft_trade_type_temp.nft_trade_type||'_MP_NFT_VOLUME_GRADE' label_type,
     'T' operate_type,
@@ -2767,7 +2767,7 @@ select distinct (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
                     limit 1)  project,
-    (case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end ) "token",
+   'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
     recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_'  ||nft_trade_type_temp.nft_trade_type||'_MP_NFT_VOLUME_RANK' label_type,
     'T' operate_type,
@@ -3349,7 +3349,7 @@ select distinct (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
                     limit 1)  project,
-    (case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end ) "token",
+   'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
     recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_'  ||nft_trade_type_temp.nft_trade_type||'_MP_NFT_VOLUME_TOP' label_type,
     'T' operate_type,
