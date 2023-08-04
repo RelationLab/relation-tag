@@ -192,6 +192,7 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             on(dex_tx_volume_count_summary_temp.token=dim_project_token_type_rank_temp.token_id)
                                                         where
                                                                 total_transfer_volume_usd  > 0  and address not in (select address from exclude_address)
+                                                                union  all
                                                         -- project(ALL)-token-type
                                                         select
                                                             address,
