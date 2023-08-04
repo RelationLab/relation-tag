@@ -134,49 +134,6 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                         where
                                                                 total_transfer_volume_usd  > 0 and address not in (select address from exclude_address)
                                                         union all
-                                                        -- project(ALL)-token(ALL)-type
-                                                        select
-                                                            address,
-                                                            'ALL' as token,
-                                                            total_transfer_volume_usd,
-                                                            type,
-                                                            'ALL' as project,
-                                                            recent_time_code
-                                                        from
-                                                            dex_tx_volume_count_summary_temp
-                                                                inner join  dim_project_token_type_rank_temp
-                                                                            on(dex_tx_volume_count_summary_temp.token=dim_project_token_type_rank_temp.token_id)
-                                                        where
-                                                                total_transfer_volume_usd > 0 and address not in (select address from exclude_address)
-                                                        union all
-                                                        -- project(ALL)-token-type(ALL)
-                                                        select
-                                                            address,
-                                                            token,
-                                                            total_transfer_volume_usd,
-                                                            'ALL' as type,
-                                                            'ALL' as project,
-                                                            recent_time_code
-                                                        from
-                                                            dex_tx_volume_count_summary_temp
-                                                        where
-                                                                total_transfer_volume_usd  > 0 and address not in (select address from exclude_address)
-                                                        union all
-                                                        -- project-token(ALL)-type
-                                                        select
-                                                            address,
-                                                            'ALL' as token,
-                                                            total_transfer_volume_usd,
-                                                            type,
-                                                            dex_tx_volume_count_summary_temp.project,
-                                                            recent_time_code
-                                                        from
-                                                            dex_tx_volume_count_summary_temp
-                                                                inner join  dim_project_token_type_rank_temp
-                                                                            on(dex_tx_volume_count_summary_temp.token=dim_project_token_type_rank_temp.token_id)
-                                                        where
-                                                                total_transfer_volume_usd > 0 and address not in (select address from exclude_address)
-                                                        union all
                                                         -- project(ALL)-token-type
                                                         select
                                                             address,
@@ -231,41 +188,10 @@ insert into public.address_label_token_project_type_volume_rank(address,label_ty
                                                             total_transfer_volume_usd,
                                                             recent_time_code
                                                         from
-                                                            dex_tx_volume_count_summary_temp
+                                                            dex_tx_volume_count_summary_temp  inner join  dim_project_token_type_rank_temp
+                                                            on(dex_tx_volume_count_summary_temp.token=dim_project_token_type_rank_temp.token_id)
                                                         where
                                                                 total_transfer_volume_usd  > 0  and address not in (select address from exclude_address)
-                                                        union all
-                                                        -- project(ALL)-token(ALL)-type
-                                                        select
-                                                            address,
-                                                            'ALL' as token,
-                                                            type,
-                                                            'ALL' as project,
-                                                            total_transfer_volume_usd,
-                                                            recent_time_code
-                                                        from
-                                                            dex_tx_volume_count_summary_temp
-                                                                inner join  dim_project_token_type_rank_temp
-                                                                            on(dex_tx_volume_count_summary_temp.token=dim_project_token_type_rank_temp.token_id)
-                                                        where
-                                                                total_transfer_volume_usd > 0  and address not in (select address from exclude_address)
-                                                        union all
-                                                        -- project-token(ALL)-type
-                                                        select
-                                                            address,
-                                                            'ALL' as token,
-                                                            type,
-                                                            dex_tx_volume_count_summary_temp.project,
-                                                            total_transfer_volume_usd,
-                                                            recent_time_code
-                                                        from
-                                                            dex_tx_volume_count_summary_temp
-                                                                inner join  dim_project_token_type_rank_temp
-                                                                    on(dex_tx_volume_count_summary_temp.token=dim_project_token_type_rank_temp.token_id)
-                                                        where
-                                                                total_transfer_volume_usd > 0 and address not in (select address from exclude_address)
-
-                                                        union all
                                                         -- project(ALL)-token-type
                                                         select
                                                             address,
