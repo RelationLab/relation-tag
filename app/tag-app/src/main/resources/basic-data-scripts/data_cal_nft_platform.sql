@@ -16,7 +16,7 @@ delete from nft_sync_address where address='eth' and (platform='Eth' or platform
 insert into nft_sync_address (id,	address ,platform ,"type",name_for_label)
 select -1,'0x0000000000a39bb272e79075ade125fd351887ac' as address ,'Blur Pool' as platform ,'ERC721-token' as "type",'Blur' as name_for_label;
 insert into nft_sync_address (id,	address ,platform ,"type",name_for_label)
-select -2,'eth' as address ,'ETH' as platform ,'ERC721-token' as "type",'Eth' as name_for_label;
+select -2,'eth' as address ,'ETH' as platform ,'ERC721-token' as "type",'ETH' as name_for_label;
 
 insert
 into
