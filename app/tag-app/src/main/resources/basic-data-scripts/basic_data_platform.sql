@@ -18,7 +18,7 @@ insert into platform_temp(platform,platform_name,token_all_flag) values('0xc3644
 insert into platform_temp(platform,platform_name,token_all_flag) values('0x7a250d5630b4cf539739df2c5dacb4c659f2488d','Uniswap','1');
 
 insert into platform_temp(platform,platform_name,token_all_flag) values('aave','AAVE','1');
-insert into platform_temp(platform,platform_name,token_all_flag) values('commpound','Commpound','1');
+insert into platform_temp(platform,platform_name,token_all_flag) values('commpound','Compound','1');
 
 insert into platform_temp(platform,platform_name,token_all_flag) values('0xae7ab96520de3a18e5e111b5eaab095312d7fe84','Lido','1');
 insert into platform_temp(platform,platform_name,token_all_flag) values('0xbafa44efe7901e04e39dad13167d089c559c1138','Frax','1');
