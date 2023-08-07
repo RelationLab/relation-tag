@@ -408,7 +408,6 @@ public class StaticManagerImpl implements StaticManager {
         Map<String, String> map = Maps.newHashMap();
         map.put("configEnvironment", configEnvironment);
         map.put("tableSuffix", tableSuffix);
-        log.info("entity====={}",entity);
         if (entity == null) {
             return map;
         }
@@ -437,7 +436,7 @@ public class StaticManagerImpl implements StaticManager {
     private String buildConditionDataByLabel(String labels, UgcLabelDataAnalysis entity) {
         String tatolStartSql = "select distinct address as address from (";
         String outSql = "select address from (";
-        String systemSql = "recent_time_code='ALL' AND ";
+        String systemSql = "(recent_time_code='ALL' or recent_time_code is null ) AND ";
         String selectStartSql = " select address from address_label_gp_" + configEnvironment +
                 " where  "+systemSql +" label_name ='";
         String selectEndSql = "' ";
