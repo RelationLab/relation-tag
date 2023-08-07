@@ -827,7 +827,7 @@ select distinct nft_sync_address.platform                                       
                 (case
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end)                       "content",
-                'nft'                                                                   asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end )  asset_type,
                 'GRADE'                                                                 label_category,
                 recent_time_code
 from nft_sync_address
@@ -1112,7 +1112,7 @@ select distinct nft_sync_address.platform                         asset,
                 (case
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'nft'                                             asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end )  asset_type,
                 'GRADE'                                           label_category,
                 recent_time_code
 from nft_sync_address
@@ -1248,7 +1248,8 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_NFT'                                         asset,
+select distinct
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL_NFT' else 'ALL_TOKEN' end ) asset,
                 mp_nft_platform_temp.platform_name                     project,
                 nft_trade_type_temp.nft_trade_type                     trade_type,
                 ''                                                balance,
@@ -1265,7 +1266,7 @@ select distinct 'ALL_NFT'                                         asset,
                 (case
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'nft'                                             asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end )  asset_type,
                 'GRADE'                                           label_category,
                 recent_time_code
 from mp_nft_platform_temp
@@ -1417,7 +1418,7 @@ select distinct nft_sync_address.platform                                       
                 ' ' || (case
                             when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                             else nft_trade_type_temp.nft_trade_type_name end)                    "content",
-                'nft'                                                                       asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end ) asset_type,
                 'ELITE'                                                                     label_category,
                 recent_time_code
 from nft_sync_address
@@ -1569,8 +1570,8 @@ select distinct nft_sync_address.platform                                       
                                                                                              when nft_trade_type_temp.nft_trade_type = 'ALL'
                                                                                                  then 'Trader'
                                                                                              else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'nft'                                                                                                                asset_type,
-                'ELITE'                                                                                                              label_category,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end )  asset_type,
+                'ELITE'            label_category,
                 recent_time_code
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
@@ -1717,7 +1718,7 @@ select distinct 'ALL_NFT'                                         asset,
                 (case
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'nft'                                             asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end )  asset_type,
                 'ELITE'                                           label_category,
                 recent_time_code
 from mp_nft_platform_temp
@@ -2000,7 +2001,7 @@ select distinct nft_sync_address.platform                                       
                 (case
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end)                           "content",
-                'nft'                                                                       asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end ) asset_type,
                 'GRADE'                                                                     label_category,
                 recent_time_code
 from nft_sync_address
@@ -2150,7 +2151,7 @@ select distinct nft_sync_address.platform                         asset,
                 (case
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'nft'                                             asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end ) asset_type,
                 'GRADE'                                           label_category,
                 recent_time_code
 from nft_sync_address
@@ -2281,7 +2282,7 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_NFT'                                         asset,
+select distinct (case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL_NFT' else 'ALL_TOKEN' end ) asset,
                 mp_nft_platform_temp.platform_name                     project,
                 nft_trade_type_temp.nft_trade_type                     trade_type,
                 ''                                                balance,
@@ -2298,7 +2299,7 @@ select distinct 'ALL_NFT'                                         asset,
                 (case
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'nft'                                             asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end )  asset_type,
                 'GRADE'                                           label_category,
                 recent_time_code
 from mp_nft_platform_temp
@@ -2579,7 +2580,7 @@ select distinct nft_sync_address.platform                                       
                 ' ' || (case
                             when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                             else nft_trade_type_temp.nft_trade_type_name end)                   "content",
-                'nft'                                                                      asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end )  asset_type,
                 'RANK'                                                                     label_category,
                 recent_time_code
 from nft_sync_address
@@ -2731,7 +2732,7 @@ select distinct nft_sync_address.platform                                       
                                                                                              when nft_trade_type_temp.nft_trade_type = 'ALL'
                                                                                                  then 'Trader'
                                                                                              else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'nft'                                                                                                                asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end ) asset_type,
                 'RANK'                                                                                                               label_category,
                 recent_time_code
 from nft_sync_address
@@ -2861,7 +2862,7 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_NFT'                                         asset,
+select distinct (case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL_NFT' else 'ALL_TOKEN' end ) asset,
                 mp_nft_platform_temp.platform_name                     project,
                 nft_trade_type_temp.nft_trade_type                     trade_type,
                 ''                                                balance,
@@ -2878,7 +2879,7 @@ select distinct 'ALL_NFT'                                         asset,
                 (case
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'nft'                                             asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end )  asset_type,
                 'RANK'                                            label_category,
                 recent_time_code
 from mp_nft_platform_temp
@@ -3160,7 +3161,7 @@ select distinct nft_sync_address.platform                                       
                 ' ' || (case
                             when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                             else nft_trade_type_temp.nft_trade_type_name end)                  "content",
-                'nft'                                                                     asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end )  asset_type,
                 'TOP'                                                                     label_category,
                 recent_time_code
 from nft_sync_address
@@ -3312,7 +3313,7 @@ select distinct nft_sync_address.platform                                       
                                                                                              when nft_trade_type_temp.nft_trade_type = 'ALL'
                                                                                                  then 'Trader'
                                                                                              else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'nft'                                                                                                                asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end  asset_type,
                 'TOP'                                                                                                                label_category,
                 recent_time_code
 from nft_sync_address
@@ -3443,7 +3444,7 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_NFT'                                         asset,
+select distinct (case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL_NFT' else 'ALL_TOKEN' end ) asset,
                 mp_nft_platform_temp.platform_name                     project,
                 nft_trade_type_temp.nft_trade_type                     trade_type,
                 ''                                                balance,
@@ -3460,7 +3461,7 @@ select distinct 'ALL_NFT'                                         asset,
                 (case
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'nft'                                             asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end )  asset_type,
                 'TOP'                                             label_category,
                 recent_time_code
 from mp_nft_platform_temp
@@ -7616,7 +7617,6 @@ from nft_trade_type_temp
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
 where nft_trade_type_temp.type = '0';
-
 
 insert into dim_project_token_type_rank_temp(token_id, project)
 select distinct token, project
