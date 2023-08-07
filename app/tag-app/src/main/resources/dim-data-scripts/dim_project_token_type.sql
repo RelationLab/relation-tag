@@ -3313,7 +3313,7 @@ select distinct nft_sync_address.platform                                       
                                                                                              when nft_trade_type_temp.nft_trade_type = 'ALL'
                                                                                                  then 'Trader'
                                                                                              else nft_trade_type_temp.nft_trade_type_name end) "content",
-                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end  asset_type,
+                (case when nft_action_platform_temp.nft_type='ERC721' THEN 'nft' else 'token' end)  asset_type,
                 'TOP'                                                                                                                label_category,
                 recent_time_code
 from nft_sync_address
