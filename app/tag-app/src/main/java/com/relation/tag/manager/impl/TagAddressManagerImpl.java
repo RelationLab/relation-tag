@@ -54,6 +54,9 @@ public class TagAddressManagerImpl implements TagAddressManager {
     public static String RECENT_TIME_PATH = "recent-time";
     /*************数据过滤脚本文件路径*************/
     public static String DATA_FILTER_PATH = "data-filter";
+    /*************数据宽表脚本文件路径*************/
+    public static String WIDE_TABLE_PATH = "wide-table";
+
 
     /***********************************打标签流程代码*******************************************/
     /**
@@ -85,7 +88,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         }
         try {
             Integer tagInteger = checkResultData(tableName, batchDate, likeKey);
-//            log.info("tableName==={},tagList.size===={}", tableName, tagInteger);
             return tagInteger != null && tagInteger.intValue() >= result;
         } catch (Exception ex) {
             return false;
@@ -109,17 +111,22 @@ public class TagAddressManagerImpl implements TagAddressManager {
             check("dim_rule_content", 60 * 1000, batchDate, 1, false);
             tagSummaryInit(batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH);
             check("total", 1 * 60 * 1000, batchDate, 7, true);
-            List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
-            List<FileEntity> fileList = Lists.newArrayList();
-            for (DimRuleSqlContent item : ruleSqlList) {
-                String fileName = item.getRuleName().concat(".sql");
-                fileList.add(FileEntity.builder().fileName(fileName)
-                        .fileContent(FileUtils.readFile(filePath.concat(File.separator).concat(fileName))).build());
-            }
-            tagByRuleSqlList(fileList, batchDate);
+            exceTagSql(batchDate,filePath);
+            exceWideTableSql(batchDate,WIDE_TABLE_PATH);
         }
         check("address_label", 60 * 1000, batchDate, 62, true);
         tagMerge(batchDate);
+    }
+
+    private void exceTagSql(String batchDate, String filePath) throws Exception {
+        List<DimRuleSqlContent> ruleSqlList = dimRuleSqlContentService.list();
+        List<FileEntity> fileList = Lists.newArrayList();
+        for (DimRuleSqlContent item : ruleSqlList) {
+            String fileName = item.getRuleName().concat(".sql");
+            fileList.add(FileEntity.builder().fileName(fileName)
+                    .fileContent(FileUtils.readFile(filePath.concat(File.separator).concat(fileName))).build());
+        }
+        tagByRuleSqlList(fileList, batchDate);
     }
 
     /**
@@ -465,6 +472,17 @@ public class TagAddressManagerImpl implements TagAddressManager {
         exceRecentTimeScripts(batchDate, recentTimePath, "dex_tx_volume_count_summary_univ3.sql", "tabel_defi_dex_tx_volume_count_summary_univ3", 1,false);
 
         }
+
+
+    private void exceWideTableSql(String batchDate, String filePath) {
+        execSql(null, "table_defi_wide_table_ddl.sql", batchDate, filePath,1,true, null, false);
+        execSql("table_defi_wide_table_ddl", "dws_eth_index_n.sql", batchDate, filePath, 1,false,null, false);
+        execSql("table_defi_wide_table_ddl", "dws_nft_index_n.sql", batchDate, filePath,1,false, null, false);
+        execSql("table_defi_wide_table_ddl", "dws_web3_index_n.sql", batchDate, filePath, 1,false,null,false );
+        if (StringUtils.equals(configEnvironment,"stag")){
+            execSql("dws_", "wired_address_dataset_"+configEnvironment+".sql", batchDate, filePath, 3,true,null,false );
+        }
+    }
 
     private void exceRecentTimeScripts(String batchDate, String filePath, String fileName, String lastTableName, int resultNum, boolean likeKey) {
         List<RecentTime> list = iAddressLabelService.selectRecentTimeList();
