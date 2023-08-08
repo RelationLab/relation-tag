@@ -648,10 +648,10 @@ into public.combination_temp (asset,
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_content                                                            project,
                 ''                                                                             trade_type,
-                ''                                                                             balance,
+                'HEAVY_LP_STAKER'                                                              balance,
                 ''                                                                             volume,
                 ''                                                                             activity,
-                'HEAVY_LP_STAKER'                                                              hold_time,
+                ''                                                                             hold_time,
                 now()                                                                          created_at,
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
                 ')' || '_BALANCE_HEAVY_LP_STAKER'                                              label_name,
@@ -4411,35 +4411,36 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                    "owner",
+select distinct 'RelationTeam'                                                                "owner",
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY'
-                    || '_' || platform_large_category.platform_large_code as      "type",
+                    || '_' || platform_large_category.platform_large_code                  as "type",
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY'
                     || '_' ||
-                platform_large_category.platform_large_code ||'_' || level_def_temp.level as "name", 'SYSTEM' "source",
-                'PUBLIC'                                                          visible_type,
-                'TOTAL_PART'                                                      strategy,
+                platform_large_category.platform_large_code || '_' || level_def_temp.level as "name",
+                'SYSTEM'                                                                      "source",
+                'PUBLIC'                                                                      visible_type,
+                'TOTAL_PART'                                                                  strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
                 platform_large_category.platform_large_name ||
                 (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) || ' ' ||
-                level_def_temp.level_name                                         "content",
-                'SQL'                                                             rule_type,
+                level_def_temp.level_name                                                     "content",
+                'SQL'                                                                         rule_type,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 'ALL' || '_' || 'ALL_' || trade_type.trade_type_name ||
-                '_ACTIVITY' || '_' || platform_large_category.platform_large_code rule_group,
-                'RESULT'                                                          value_type,
-                999999                                                            run_order,
-                now()                                                             created_at,
-                0                                                                 refresh_time,
-                'DEFI'                                                            wired_type,
-                999                                                               label_order,
-                'WAITING'                                                         sync_es_status
+                '_ACTIVITY' || '_' || platform_large_category.platform_large_code             rule_group,
+                'RESULT'                                                                      value_type,
+                999999                                                                        run_order,
+                now()                                                                         created_at,
+                0                                                                             refresh_time,
+                'DEFI'                                                                        wired_type,
+                999                                                                           label_order,
+                'WAITING'                                                                     sync_es_status
 from trade_type
          inner join (select *
                      from level_def_temp
@@ -4464,25 +4465,25 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_TOKEN'                                 asset,
-                platform_large_category.platform_large_code project,
-                trade_type.trade_type                       trade_type,
-                ''                                          balance,
-                ''                                          volume,
-                level_def_temp.level                        activity,
-                ''                                          hold_time,
-                now()                                       created_at,
+select distinct 'ALL_TOKEN'                                                                              asset,
+                platform_large_category.platform_large_code                                              project,
+                trade_type.trade_type                                                                    trade_type,
+                ''                                                                                       balance,
+                ''                                                                                       volume,
+                level_def_temp.level                                                                     activity,
+                ''                                                                                       hold_time,
+                now()                                                                                    created_at,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 'ALL' || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY'
-                    || '_' || platform_large_category.platform_large_code||'_' || level_def_temp.level label_name,
-            recent_time_temp.recent_time_content ||
-            (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-            platform_large_category.platform_large_name ||
-            (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) || ' ' ||
-            level_def_temp.level_name "content",
-                'token'                                     asset_type,
-                'GRADE'                                     label_category,
+                    || '_' || platform_large_category.platform_large_code || '_' || level_def_temp.level label_name,
+                recent_time_temp.recent_time_content ||
+                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
+                platform_large_category.platform_large_name ||
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) || ' ' ||
+                level_def_temp.level_name                                                                "content",
+                'token'                                                                                  asset_type,
+                'GRADE'                                                                                  label_category,
                 recent_time_code
 from trade_type
          inner join (select *
