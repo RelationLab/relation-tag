@@ -259,6 +259,10 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql(null, "address_label_gp_"+configEnvironment+".sql", batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH, Maps.newHashMap("tableSuffix",configEnvironment), false);
         execSql("address_label_gp_"+configEnvironment, "address_labels_json_gin_"+configEnvironment+".sql", batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH, Maps.newHashMap("tableSuffix",configEnvironment), false);
         execSql("address_labels_json_gin_"+configEnvironment, "rename_table_"+configEnvironment+".sql", batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH, Maps.newHashMap("tableSuffix",configEnvironment), false);
+        if (!StringUtils.equals(configEnvironment,"stag")){
+            return;
+        }
+        execSql("wired_address_dataset", "rename_wired_address_dataset_stag_"+configEnvironment+".sql", batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH,1,false, null, false);
     }
 
     /*************************************************************执行SQL部分**********************************************************/
@@ -481,9 +485,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("table_defi_wide_table_ddl", "dws_eth_index_n.sql", batchDate, filePath, 1,false,null, false);
         execSql("table_defi_wide_table_ddl", "dws_nft_index_n.sql", batchDate, filePath,1,false, null, false);
         execSql("table_defi_wide_table_ddl", "dws_web3_index_n.sql", batchDate, filePath, 1,false,null,false );
-        if (StringUtils.equals(configEnvironment,"stag")){
-            execSql("dws_", "wired_address_dataset_"+configEnvironment+".sql", batchDate, filePath, 3,true,null,false );
-        }
+        execSql("dws_", "wired_address_dataset.sql", batchDate, filePath, 3,true,null,false );
     }
 
     private void exceRecentTimeScripts(String batchDate, String filePath, String fileName, String lastTableName, int resultNum, boolean likeKey) {

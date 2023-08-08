@@ -1,5 +1,5 @@
-truncate table  wired_address_dataset;
-insert  into  wired_address_dataset
+truncate table  wired_address_dataset_temp;
+insert  into  wired_address_dataset_temp
 select 
      s1.b_type
 	,s1.statistical_type
@@ -37,7 +37,7 @@ on s1.token=s2.address
 ;
 
 
-insert  into  wired_address_dataset
+insert  into  wired_address_dataset_temp
 select 
      s1.b_type
 	,s1.statistical_type
@@ -73,7 +73,7 @@ select
   from dws_web3_index_n  s1 
 ;
   
-insert  into  wired_address_dataset
+insert  into  wired_address_dataset_temp
 select 
      s1.b_type
 	,s1.statistical_type
