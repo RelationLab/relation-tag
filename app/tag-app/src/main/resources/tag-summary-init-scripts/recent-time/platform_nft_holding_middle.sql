@@ -18,12 +18,12 @@ insert into platform_nft_holding_middle (address,
             0,
             0,
             sum(value),
-            sum(count),
+            sum(1),
             '${recentTimeCode}' recent_time_code
      from platform_nft_tx_record
               INNER JOIN nft_sync_address ON(nft_sync_address.address=platform_nft_tx_record.token)
      where nft_sync_address.type <> 'ERC1155' and platform_nft_tx_record.block_number >= ${recentTimeBlockHeight}
-     group by from_address, platform_address, quote_token, token);
+     group by from_address, platform_address, quote_token, token,hash);
 
 
 insert into platform_nft_holding_middle (address,
@@ -44,13 +44,13 @@ insert into platform_nft_holding_middle (address,
             0,
             0,
             sum(value),
-            sum(count),
+            sum(1),
             sum(value),
-            sum(count),
+            sum(1),
             '${recentTimeCode}' recent_time_code
      from platform_nft_tx_record
           INNER JOIN nft_sync_address ON(nft_sync_address.address=platform_nft_tx_record.token)
      where nft_sync_address.type <> 'ERC1155' and platform_nft_tx_record.block_number >= ${recentTimeBlockHeight}
      group by to_address, platform_address, quote_token, token);
-insert into tag_result(table_name, batch_date)
+insert into tag_result(table_name, batch_date,hash)
 SELECT 'platform_nft_holding_middle_${recentTimeCode}' as table_name, '${batchDate}' as batch_date;
