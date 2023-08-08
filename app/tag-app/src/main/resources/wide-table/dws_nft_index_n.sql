@@ -36,7 +36,7 @@ select
 	,  sum(case when recent_time_code='1y'  then total_transfer_all_count else null end)  as transaction_count_1y 
 	,  sum(case when recent_time_code='2y'  then total_transfer_all_count else null end)  as transaction_count_2y 	
 	 ,now() as etl_update_time
- from  nft_holding  s1 inner join  nft_sync_address s2
+ from  nft_holding_temp  s1 inner join  nft_sync_address s2
  on s1.token=s2.address
  --  left join  platform_nft_sync_address  s3
  where  s2.type<>'ERC1155'
@@ -85,7 +85,7 @@ select
 	,  sum(case when recent_time_code='1y'  then total_transfer_all_count else null end)  as transaction_count_1y 
 	,  sum(case when recent_time_code='2y'  then total_transfer_all_count else null end)  as transaction_count_2y 	
 	 ,now() as etl_update_time
- from  nft_holding  s1 inner join  nft_sync_address s2
+ from  nft_holding_temp  s1 inner join  nft_sync_address s2
  on s1.token=s2.address
  --  left join  platform_nft_sync_address  s3
  where  s2.type<>'ERC1155'
@@ -133,7 +133,7 @@ select
 	,  sum(case when recent_time_code='2y'  then transfer_count else null end)  as transaction_count_2y 	
 
 	,now() as etl_update_time
-from  nft_volume_count S1  
+from  nft_volume_count_temp S1  
  inner join  nft_sync_address s2
  on s1.token=s2.address
   where  s2.type<>'ERC1155'
@@ -181,7 +181,7 @@ select
 	,  sum(case when recent_time_code='2y'  then transfer_count else null end)  as transaction_count_2y 	
 
 	,now() as etl_update_time
-from  nft_volume_count S1  
+from  nft_volume_count_temp S1  
  inner join  nft_sync_address s2
  on s1.token=s2.address
   where  s2.type<>'ERC1155'
@@ -233,7 +233,7 @@ select
 
 	,now() as etl_update_time
 	
-  from  platform_nft_type_volume_count  s1  left join  mp_nft_platform s2 
+  from  platform_nft_type_volume_count_temp  s1  left join  mp_nft_platform s2 
   on s1.platform=s2.platform
   left join   nft_sync_address s3 
   on s1.token=s3.address
@@ -287,7 +287,7 @@ select
 	,sum(case when recent_time_code='1y'  then transfer_count else null end)  as transaction_count_1y 
 	,sum(case when recent_time_code='2y'  then transfer_count else null end)  as transaction_count_2y 	
 	,now() as etl_update_time
-  from  platform_nft_type_volume_count  s1  left join  mp_nft_platform s2 
+  from  platform_nft_type_volume_count_temp  s1  left join  mp_nft_platform s2 
   on s1.platform=s2.platform
   inner join   nft_sync_address s3 
   on s1.token=s3.address
@@ -335,7 +335,7 @@ select
 	,sum(case when recent_time_code='1y'  then transfer_count else null end)  as transaction_count_1y 
 	,sum(case when recent_time_code='2y'  then transfer_count else null end)  as transaction_count_2y 	
 	,now() as etl_update_time
-  from  platform_nft_type_volume_count  s1  left join  mp_nft_platform s2 
+  from  platform_nft_type_volume_count_temp  s1  left join  mp_nft_platform s2 
   on s1.platform=s2.platform
   inner join   nft_sync_address s3 
   on s1.token=s3.address
@@ -384,7 +384,7 @@ select
 	,sum(case when recent_time_code='1y'  then transfer_count else null end)  as transaction_count_1y 
 	,sum(case when recent_time_code='2y'  then transfer_count else null end)  as transaction_count_2y 	
 	,now() as etl_update_time
-  from  platform_nft_type_volume_count  s1  left join  mp_nft_platform s2 
+  from  platform_nft_type_volume_count_temp  s1  left join  mp_nft_platform s2 
   on s1.platform=s2.platform
   inner join   nft_sync_address s3 
   on s1.token=s3.address
@@ -431,7 +431,7 @@ select
 	,  null  as  transaction_count_1y 
 	,  null  as  transaction_count_2y 	
 	,now() as etl_update_time
-	from   nft_holding_time  s1 inner join  nft_sync_address s2
+	from   nft_holding_time_temp  s1 inner join  nft_sync_address s2
   on s1.token=s2.address
     where   s2.type<>'ERC1155'
 	group by s1.address ,s1.token 

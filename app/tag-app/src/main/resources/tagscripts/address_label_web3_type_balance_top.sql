@@ -71,7 +71,7 @@ from
                                     project,
                                     balance
                                 from
-                                    web3_transaction_record_summary
+                                    web3_transaction_record_summary_temp
                                 where
                                         balance >= 1 and address not in (select address from exclude_address)
                                   and (type='NFT Recipient' or type='write')
@@ -83,7 +83,7 @@ from
                                     'ALL' as project,
                                     balance
                                 from
-                                    web3_transaction_record_summary
+                                    web3_transaction_record_summary_temp
                                 where
                                         balance >= 1 and address not in (select address from exclude_address)
                                   and (type='NFT Recipient' or type='write')
@@ -95,7 +95,7 @@ from
                                     'ALL' as project,
                                     balance
                                 from
-                                    web3_transaction_record_summary
+                                    web3_transaction_record_summary_temp
                                 where
                                         balance >= 1 and address not in (select address from exclude_address)
                                   and (type='NFT Recipient')
@@ -107,7 +107,7 @@ from
                                     project,
                                     balance
                                 from
-                                    web3_transaction_record_summary
+                                    web3_transaction_record_summary_temp
                                 where
                                         balance >= 1 and address not in (select address from exclude_address)
                                   and (type='NFT Recipient')

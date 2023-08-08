@@ -116,7 +116,7 @@ from
                                                             project,
                                                             balance
                                                         from
-                                                            web3_transaction_record_summary
+                                                            web3_transaction_record_summary_temp
                                                         where balance >= 1 and address not in (select address from exclude_address)
                                                           and (type='NFT Recipient' or type='write')
                                                         union all
@@ -129,7 +129,7 @@ from
                                                             'ALL' as project,
                                                             balance
                                                         from
-                                                            web3_transaction_record_summary
+                                                            web3_transaction_record_summary_temp
                                                         where  balance >= 1 and address not in (select address from exclude_address)
                                                           and (type='NFT Recipient' or type='write')
                                                         union all
@@ -142,7 +142,7 @@ from
                                                             'ALL' as project,
                                                             balance
                                                         from
-                                                            web3_transaction_record_summary where
+                                                            web3_transaction_record_summary_temp where
                                                                 balance >= 1 and address not in (select address from exclude_address)
                                                                                               and (type='NFT Recipient')
                                                         union all
@@ -155,7 +155,7 @@ from
                                                             project,
                                                             balance
                                                         from
-                                                            web3_transaction_record_summary
+                                                            web3_transaction_record_summary_temp
                                                         where  balance >= 1 and address not in (select address from exclude_address)
                                                           and (type='NFT Recipient')
                                                     ) s1
@@ -184,7 +184,7 @@ from
                                                     type ,
                                                     project
                                                 from
-                                                    web3_transaction_record_summary
+                                                    web3_transaction_record_summary_temp
                                                 where
                                                         balance >= 1 and address not in (select address from exclude_address)
                                                   and (type='NFT Recipient' or type='write')
@@ -195,7 +195,7 @@ from
                                                     type,
                                                     'ALL' as project
                                                 from
-                                                    web3_transaction_record_summary
+                                                    web3_transaction_record_summary_temp
                                                 where
                                                         balance >= 1 and address not in (select address from exclude_address)
                                                   and (type='NFT Recipient' or type='write')
@@ -206,7 +206,7 @@ from
                                                     'ALL' as type,
                                                     'ALL' as project
                                                 from
-                                                    web3_transaction_record_summary
+                                                    web3_transaction_record_summary_temp
                                                 where
                                                         balance >= 1 and address not in (select address from exclude_address)
                                                   and (type='NFT Recipient')
@@ -217,7 +217,7 @@ from
                                                     'ALL' as type,
                                                     project
                                                 from
-                                                    web3_transaction_record_summary
+                                                    web3_transaction_record_summary_temp
                                                 where
                                                         balance >= 1 and address not in (select address from exclude_address)
                                                   and (type='NFT Recipient') ) w3trs

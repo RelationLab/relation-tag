@@ -43,7 +43,7 @@ select
 	,sum(case when recent_time_code='1y' then total_transfer_count else null end)  as transaction_count_1y 
 	,sum(case when recent_time_code='2y' then total_transfer_count else null end)  as transaction_count_2y 
     ,now() as etl_update_time
- from  dex_tx_count_summary
+ from  dex_tx_count_summary_temp
  group by   address
 	, project
 	, token
@@ -90,7 +90,7 @@ select
 	,sum(case when recent_time_code='1y' then total_transfer_count else null end)  as transaction_count_1y 
 	,sum(case when recent_time_code='2y' then total_transfer_count else null end)  as transaction_count_2y 
     ,now() as etl_update_time
- from  dex_tx_count_summary
+ from  dex_tx_count_summary_temp
  group by   address
 	, token
 	, type
@@ -131,7 +131,7 @@ select
 	,sum(case when recent_time_code='2y'  and token<>'ALL'  then total_transfer_count else null end)  as transaction_count_2y 
     
 	,now() as etl_update_time 
- from  dex_tx_volume_count_summary
+ from  dex_tx_volume_count_summary_temp
  group  by   address
 	,project
 	,token
@@ -177,7 +177,7 @@ select
 	,0  as transaction_count_2y 
     
 	,now() as etl_update_time 
- from  dex_tx_volume_count_summary
+ from  dex_tx_volume_count_summary_temp
  group  by   address
 	,type
 	,token
@@ -218,7 +218,7 @@ select
 	,sum(case when recent_time_code='1y'  then total_transfer_count else null end)  as transaction_count_1y 
 	,sum(case when recent_time_code='2y'  then total_transfer_count else null end)  as transaction_count_2y 
     ,now() as etl_update_time 
-	from  dex_tx_volume_count_summary_univ3
+	from  dex_tx_volume_count_summary_univ3_temp
 	group by  address
 	,project
 	,token
@@ -334,7 +334,7 @@ select
 	,null as transaction_count_2y 	
     ,now() as etl_update_time    
 
- from  eth_holding
+ from  eth_holding_temp
  group by address
  ;
  
@@ -376,7 +376,7 @@ insert into  dws_eth_index_n_tmp2
 	,null as transaction_count_2y 	
 	
     ,now() as etl_update_time    
-from  eth_holding_time
+from  eth_holding_time_temp
 group by address
 ;
 
@@ -418,7 +418,7 @@ select
 	
 	
     ,now() as etl_update_time    
-	from  eth_holding_vol_count
+	from  eth_holding_temp_vol_count_temp
 	group by  address;
 
 
@@ -455,7 +455,7 @@ select
 	,null as transaction_count_1y 
 	,null as transaction_count_2y 	
     ,now() as etl_update_time    
-	from  token_balance_volume_usd
+	from  token_balance_volume_usd_temp
 	group by address,token
 ;
 
@@ -494,7 +494,7 @@ select
 	,null as transaction_count_1y 
 	,null as transaction_count_2y 	
     ,now() as etl_update_time    
-	from  total_balance_volume_usd
+	from  total_balance_volume_usd_temp
 	group by address
 ;
 
@@ -542,7 +542,7 @@ select
 	,null as transaction_count_1y 
 	,null as transaction_count_2y 	
     ,now() as etl_update_time    
-from  token_volume_usd
+from  token_volume_usd_temp
 group by address,token
 ;
 -- 第六步
@@ -579,7 +579,7 @@ select
 	,null as transaction_count_1y 
 	,null as transaction_count_2y 	
     ,now() as etl_update_time    
- from  token_holding
+ from  token_holding_temp
  group by address,token
  ;
 
@@ -616,7 +616,7 @@ select
 	,null as transaction_count_1y 
 	,null as transaction_count_2y 	
     ,now() as etl_update_time    
-	from  token_holding_time
+	from  token_holding_time_temp
 	group by address,token
 	;
 	
@@ -654,7 +654,7 @@ select
 	,sum(case when recent_time_code='1y' then total_transfer_count else null end)  as transaction_count_1y 
 	,sum(case when recent_time_code='2y' then total_transfer_count else null end)  as transaction_count_2y 
     ,now() as etl_update_time
- from  token_holding_vol_count
+ from  token_holding_vol_count_temp
  group by address,token
  ;
 

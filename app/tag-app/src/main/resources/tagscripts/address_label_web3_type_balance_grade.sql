@@ -65,7 +65,7 @@ from
             a2.token_name,
             sum(balance) as balance
         from
-            web3_transaction_record_summary a1
+            web3_transaction_record_summary_temp a1
                 inner join dim_project_type_temp a2
                            on
                                        a1.project = a2.project
@@ -86,7 +86,7 @@ from
             a2.token_name,
             sum(balance) as balance
         from
-            web3_transaction_record_summary a1
+            web3_transaction_record_summary_temp a1
                 inner join dim_project_type_temp a2
                            on
                                        a2.project = 'ALL'
@@ -107,7 +107,7 @@ from
             a2.token_name,
             sum(balance) as balance
         from
-            web3_transaction_record_summary a1
+            web3_transaction_record_summary_temp a1
                 inner join dim_project_type_temp a2
                            on
                                        a2.project = 'ALL'
@@ -128,7 +128,7 @@ from
             a2.token_name,
             sum(balance) as balance
         from
-            web3_transaction_record_summary a1
+            web3_transaction_record_summary_temp a1
                 inner join dim_project_type_temp a2
                            on
                                        a1.project = a2.project

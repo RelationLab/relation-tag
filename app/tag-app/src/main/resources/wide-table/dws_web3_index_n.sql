@@ -32,7 +32,7 @@ select
 	,sum(case when s1.recent_time_code='1y' then s1.total_transfer_count else null end)  as transaction_count_1y 
 	,sum(case when s1.recent_time_code='2y' then s1.total_transfer_count else null end)  as transaction_count_2y 
     ,now() as etl_update_time
-from web3_transaction_record_summary s1  left join web3_platform s2 
+from web3_transaction_record_summary_temp s1  left join web3_platform s2 
 on s1.project=s2.platform 
 group by 
       s1.address      --地址
@@ -72,7 +72,7 @@ select
 	,sum(case when s1.recent_time_code='1y' then s1.total_transfer_count else null end)  as transaction_count_1y 
 	,sum(case when s1.recent_time_code='2y' then s1.total_transfer_count else null end)  as transaction_count_2y 
     ,now() as etl_update_time
-from web3_transaction_record_summary s1  left join web3_platform s2 
+from web3_transaction_record_summary_temp s1  left join web3_platform s2 
 on s1.project=s2.platform 
 group by 
       s1.address      --地址
@@ -111,7 +111,7 @@ select
 	,sum(case when s1.recent_time_code='1y' then s1.total_transfer_count else null end)  as transaction_count_1y 
 	,sum(case when s1.recent_time_code='2y' then s1.total_transfer_count else null end)  as transaction_count_2y 
     ,now() as etl_update_time
-from web3_transaction_record_summary s1  left join web3_platform s2 
+from web3_transaction_record_summary_temp s1  left join web3_platform s2 
 on s1.project=s2.platform 
 group by 
       s1.address      --地址
@@ -151,7 +151,7 @@ select
 	,sum(case when s1.recent_time_code='1y' then s1.total_transfer_count else null end)  as transaction_count_1y 
 	,sum(case when s1.recent_time_code='2y' then s1.total_transfer_count else null end)  as transaction_count_2y 
     ,now() as etl_update_time
-from web3_transaction_record_summary s1  left join web3_platform s2 
+from web3_transaction_record_summary_temp s1  left join web3_platform s2 
 on s1.project=s2.platform 
 group by 
       s1.address;      --地址
