@@ -8,3 +8,5 @@ create table platform_large_category
 insert into platform_large_category(platform_large_code,platform_large_name) values('DEX','Dex');
 insert into platform_large_category(platform_large_code,platform_large_name) values('ETH2.0','Eth2.0');
 insert into platform_large_category(platform_large_code,platform_large_name) values('LENDING','Lending');
+insert into tag_result(table_name,batch_date)  SELECT 'basic_data_platform_large_category' as table_name,'${batchDate}'  as batch_date;
+
