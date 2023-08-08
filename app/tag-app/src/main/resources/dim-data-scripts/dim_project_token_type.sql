@@ -3853,7 +3853,8 @@ select distinct 'ALL'                                         as                
                 'ALL'                                                                          project_name,
                 top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_temp.address, 1, 8) || ')' token_name,
                 recent_time_temp.recent_time_code
-from (select *
+from
+    (select *
       from top_token_1000_temp
       where holders >= 100
         and removed <> 'true') top_token_1000_temp
