@@ -104,7 +104,7 @@ DROP TABLE IF EXISTS platform_nft_type_volume_count;
 ALTER TABLE platform_nft_type_volume_count_temp         RENAME TO platform_nft_type_volume_count;
 DROP TABLE IF EXISTS nft_volume_count;
 ALTER TABLE nft_volume_count_temp                       RENAME TO nft_volume_count;
-DROP TABLE IF EXISTS web3_transaction_record_summary_temp;
+DROP TABLE IF EXISTS web3_transaction_record_summary;
 ALTER TABLE web3_transaction_record_summary_temp                       RENAME TO web3_transaction_record_summary;
 
 
