@@ -51,51 +51,49 @@ select
 
 ;
 
-	
-insert into dws_eth_index_n_tmp10
+-- insert into dws_eth_index_n_tmp10
+--
+-- --  添加 模块 project=ALL
+-- -- 包含了type=ALL的情况
+-- select
+-- -- 维度
+--      'DEFi' as  b_type   --  业务类型
+-- 	,'token' as statistical_type   -- 统计类型
+--     , address
+-- 	, 'ALL' AS project
+-- 	, token
+-- 	, type
+-- -- 指标
+-- 	,cast(null  as timestamp)  as first_tx_time                             --最早交易时间
+--     ,cast(null  as timestamp) as latest_tx_time                            -- 最后交易时间
+--     ,sum(case when recent_time_code='ALL' then total_transfer_count else null end)  as transaction_count
+-- 	,0 as transaction_volume
+-- 	,0 balance_count
+--    	,0 as balance_usd
+--
+-- 	,0 as transaction_volume_3d
+-- 	,0 as transaction_volume_7d
+-- 	,0 as transaction_volume_15d
+-- 	,0 as transaction_volume_1m
+-- 	,0 as transaction_volume_3m
+-- 	,0 as transaction_volume_6m
+-- 	,0 as transaction_volume_1y
+-- 	,0 as transaction_volume_2y
+--
+-- 	,sum(case when recent_time_code='3d' then total_transfer_count else null end)  as transaction_count_3d
+-- 	,sum(case when recent_time_code='7d' then total_transfer_count else null end)  as transaction_count_7d
+-- 	,sum(case when recent_time_code='15d' then total_transfer_count else null end)  as transaction_count_15d
+-- 	,sum(case when recent_time_code='1m' then total_transfer_count else null end)  as transaction_count_1m
+-- 	,sum(case when recent_time_code='3m' then total_transfer_count else null end)  as transaction_count_3m
+-- 	,sum(case when recent_time_code='6m' then total_transfer_count else null end)  as transaction_count_6m
+-- 	,sum(case when recent_time_code='1y' then total_transfer_count else null end)  as transaction_count_1y
+-- 	,sum(case when recent_time_code='2y' then total_transfer_count else null end)  as transaction_count_2y
+--     ,now() as etl_update_time
+--  from  dex_tx_count_summary_temp
+--  group by   address
+-- 	, token
+-- 	, type;
 
---  添加 模块 project=ALL
--- 包含了type=ALL的情况
-select
--- 维度
-     'DEFi' as  b_type   --  业务类型  
-	,'token' as statistical_type   -- 统计类型
-    , address
-	, 'ALL' AS project
-	, token
-	, type
--- 指标	
-	,cast(null  as timestamp)  as first_tx_time                             --最早交易时间
-    ,cast(null  as timestamp) as latest_tx_time                            -- 最后交易时间
-    ,sum(case when recent_time_code='ALL' then total_transfer_count else null end)  as transaction_count
-	,0 as transaction_volume
-	,0 balance_count
-   	,0 as balance_usd
-	
-	,0 as transaction_volume_3d 
-	,0 as transaction_volume_7d 
-	,0 as transaction_volume_15d
-	,0 as transaction_volume_1m 
-	,0 as transaction_volume_3m 
-	,0 as transaction_volume_6m 
-	,0 as transaction_volume_1y 
-	,0 as transaction_volume_2y 
-	
-	,sum(case when recent_time_code='3d' then total_transfer_count else null end)  as transaction_count_3d 
-	,sum(case when recent_time_code='7d' then total_transfer_count else null end)  as transaction_count_7d 
-	,sum(case when recent_time_code='15d' then total_transfer_count else null end)  as transaction_count_15d
-	,sum(case when recent_time_code='1m' then total_transfer_count else null end)  as transaction_count_1m 
-	,sum(case when recent_time_code='3m' then total_transfer_count else null end)  as transaction_count_3m 
-	,sum(case when recent_time_code='6m' then total_transfer_count else null end)  as transaction_count_6m 
-	,sum(case when recent_time_code='1y' then total_transfer_count else null end)  as transaction_count_1y 
-	,sum(case when recent_time_code='2y' then total_transfer_count else null end)  as transaction_count_2y 
-    ,now() as etl_update_time
- from  dex_tx_count_summary_temp
- group by   address
-	, token
-	, type
-
-;
 insert into dws_eth_index_n_tmp10
 select
      'DEFi' as  b_type
@@ -135,53 +133,50 @@ select
  group  by   address
 	,project
 	,token
-	,type
-	
-;
---- 添加模块 
--- 包含了type=ALL
+	,type;
 
-
-insert into dws_eth_index_n_tmp10
-select
-     'DEFi' as  b_type
-	,'token' as statistical_type
-    ,address
-	,'ALL' as  project
-	,token
-	,type
-	,cast(null  as timestamp) as first_tx_time                             --最早交易时间
-    ,cast(null  as timestamp) as latest_tx_time                            -- 最后交易时间
-	,sum(case when recent_time_code='ALL'  and token<>'ALL'  then total_transfer_count else null  end)  as transaction_count
-	,sum(case when  recent_time_code='ALL'  then total_transfer_volume_usd else  null end ) as transaction_volume
-	
-	,0 balance_count
-   	,0 as balance_usd
-    ,sum(case when recent_time_code='3d' then total_transfer_volume_usd else null end)  as transaction_volume_3d 
-	,sum(case when recent_time_code='7d' then total_transfer_volume_usd else null end)  as transaction_volume_7d 
-	,sum(case when recent_time_code='15d' then total_transfer_volume_usd else null end)  as transaction_volume_15d
-	,sum(case when recent_time_code='1m' then total_transfer_volume_usd else null end)  as transaction_volume_1m 
-	,sum(case when recent_time_code='3m' then total_transfer_volume_usd else null end)  as transaction_volume_3m 
-	,sum(case when recent_time_code='6m' then total_transfer_volume_usd else null end)  as transaction_volume_6m 
-	,sum(case when recent_time_code='1y' then total_transfer_volume_usd else null end)  as transaction_volume_1y 
-	,sum(case when recent_time_code='2y' then total_transfer_volume_usd else null end)  as transaction_volume_2y 
-	
-	
-    ,0  as transaction_count_3d 
-	,0  as transaction_count_7d 
-	,0  as transaction_count_15d
-	,0  as transaction_count_1m 
-	,0  as transaction_count_3m 
-	,0  as transaction_count_6m 
-	,0  as transaction_count_1y 
-	,0  as transaction_count_2y 
-    
-	,now() as etl_update_time 
- from  dex_tx_volume_count_summary_temp
- group  by   address
-	,type
-	,token
-;
+-- --- 添加模块
+-- -- 包含了type=ALL
+-- insert into dws_eth_index_n_tmp10
+-- select
+--      'DEFi' as  b_type
+-- 	,'token' as statistical_type
+--     ,address
+-- 	,'ALL' as  project
+-- 	,token
+-- 	,type
+-- 	,cast(null  as timestamp) as first_tx_time                             --最早交易时间
+--     ,cast(null  as timestamp) as latest_tx_time                            -- 最后交易时间
+-- 	,sum(case when recent_time_code='ALL'  and token<>'ALL'  then total_transfer_count else null  end)  as transaction_count
+-- 	,sum(case when  recent_time_code='ALL'  then total_transfer_volume_usd else  null end ) as transaction_volume
+--
+-- 	,0 balance_count
+--    	,0 as balance_usd
+--     ,sum(case when recent_time_code='3d' then total_transfer_volume_usd else null end)  as transaction_volume_3d
+-- 	,sum(case when recent_time_code='7d' then total_transfer_volume_usd else null end)  as transaction_volume_7d
+-- 	,sum(case when recent_time_code='15d' then total_transfer_volume_usd else null end)  as transaction_volume_15d
+-- 	,sum(case when recent_time_code='1m' then total_transfer_volume_usd else null end)  as transaction_volume_1m
+-- 	,sum(case when recent_time_code='3m' then total_transfer_volume_usd else null end)  as transaction_volume_3m
+-- 	,sum(case when recent_time_code='6m' then total_transfer_volume_usd else null end)  as transaction_volume_6m
+-- 	,sum(case when recent_time_code='1y' then total_transfer_volume_usd else null end)  as transaction_volume_1y
+-- 	,sum(case when recent_time_code='2y' then total_transfer_volume_usd else null end)  as transaction_volume_2y
+--
+--
+--     ,0  as transaction_count_3d
+-- 	,0  as transaction_count_7d
+-- 	,0  as transaction_count_15d
+-- 	,0  as transaction_count_1m
+-- 	,0  as transaction_count_3m
+-- 	,0  as transaction_count_6m
+-- 	,0  as transaction_count_1y
+-- 	,0  as transaction_count_2y
+--
+-- 	,now() as etl_update_time
+--  from  dex_tx_volume_count_summary_temp
+--  group  by   address
+-- 	,type
+-- 	,token
+-- ;
 
 
 insert into dws_eth_index_n_tmp10
@@ -222,8 +217,7 @@ select
 	group by  address
 	,project
 	,token
-	,type
-;
+	,type;
 
 
 

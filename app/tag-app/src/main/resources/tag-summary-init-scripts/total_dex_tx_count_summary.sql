@@ -32,7 +32,7 @@ INTO
 SELECT
     address,
     'ALL' AS token,
-    'ALL' as TYPE,
+    type,
     platform_large_code as project,
     sum(total_transfer_count) AS total_transfer_count,
     recent_time_code
@@ -44,6 +44,7 @@ GROUP BY
     address,
     project,
     recent_time_code,
-    platform_large_code;
+    platform_large_code,
+    type;
 
 insert into tag_result(table_name,batch_date)  SELECT 'total_dex_tx_count_summary' as table_name,'${batchDate}'  as batch_date;
