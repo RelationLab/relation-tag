@@ -3912,9 +3912,9 @@ select distinct 'RelationTeam'                      "owner",
                 'TOTAL_PART'                        strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_temp.platform_name ||
-                ' ' || top_token_1000_temp.symbol || ' ' ||
-                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) || ' ' ||
+                platform_temp.platform_name || ' ' ||
+                top_token_1000_temp.symbol || ' ' ||
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
                 level_def_temp.level_name           "content",
                 'SQL'                               rule_type,
                 recent_time_temp.recent_time_name ||
@@ -4129,10 +4129,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                  strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_large_category.platform_large_name ||
-                top_token_1000_temp.symbol ||
-                ' ' || (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) ||
-                ' ' || level_def_temp.level_name                                              "content",
+                platform_large_category.platform_large_name || ' ' ||
+                top_token_1000_temp.symbol || ' '
+                    || (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end)
+                    || level_def_temp.level_name                                              "content",
                 'SQL'                                                                         rule_type,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
@@ -4285,9 +4285,9 @@ select distinct 'RelationTeam'                                               "ow
                 'TOTAL_PART'                                                 strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_temp.platform_name ||
-                ' ' || (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) || ' ' ||
-                level_def_temp.level_name                                    "content",
+                platform_temp.platform_name || ' '
+                    || (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end)
+                    || level_def_temp.level_name                             "content",
                 'SQL'                                                        rule_type,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
@@ -4426,8 +4426,8 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                  strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_large_category.platform_large_name ||
-                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) || ' ' ||
+                platform_large_category.platform_large_name || ' ' ||
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
                 level_def_temp.level_name                                                     "content",
                 'SQL'                                                                         rule_type,
                 recent_time_temp.recent_time_name ||
@@ -4595,7 +4595,8 @@ select distinct 'RelationTeam'                                "owner",
                                   else '' end) || '_GRADE' as "type",
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
+                platform_temp.platform_name || '_' ||
+                top_token_1000_temp.symbol || '(' ||
                 SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name || '_VOLUME' ||
                 (case
                      when asset_type = 'token' then '_' || platform_large_category.platform_large_code
@@ -4606,12 +4607,13 @@ select distinct 'RelationTeam'                                "owner",
                 'TOTAL_PART'                                  strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_temp.platform_name ||
-                ' ' || top_token_1000_temp.symbol || ' ' || (case
-                                                                 when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
-                                                                     then level_def_temp.level || ' '
-                                                                 else '' end) ||
-                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) || ' ' ||
+                platform_temp.platform_name || ' ' ||
+                top_token_1000_temp.symbol || ' ' ||
+                (case
+                     when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
+                         then level_def_temp.level || ' '
+                     else '' end) ||
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
                 level_def_temp.level_name                     "content",
                 'SQL'                                         rule_type,
                 recent_time_temp.recent_time_name ||
@@ -4828,19 +4830,19 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                        strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_large_category.platform_large_name ||
-                top_token_1000_temp.symbol ||
-                ' ' || (case
-                            when trade_type.trade_type = 'ALL' and
-                                 (level_def_temp.level = 'Million' or level_def_temp.level = 'Billion')
-                                then level_def_temp.level || ' '
-                            else '' end) ||
-                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) ||
+                platform_large_category.platform_large_name || ' ' ||
+                top_token_1000_temp.symbol || ' ' ||
+                (case
+                     when trade_type.trade_type = 'ALL' and
+                          (level_def_temp.level = 'Million' or level_def_temp.level = 'Billion')
+                         then level_def_temp.level || ' '
+                     else '' end) ||
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
                 (case
                      when trade_type.trade_type <> 'ALL' and
                           (level_def_temp.level = 'Million' or level_def_temp.level = 'Billion')
-                         then ' ' || level_def_temp.level
-                     else '' end) || ' ' ||
+                         then level_def_temp.level || ' '
+                     else '' end) ||
                 level_def_temp.level_name                                                           "content",
                 'SQL'                                                                               rule_type,
                 recent_time_temp.recent_time_name ||
@@ -5005,8 +5007,8 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_temp.platform_name ||
-                ' ' || (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) || ' ' ||
+                platform_temp.platform_name || ' ' ||
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
                 (CASE
                      WHEN level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
                          THEN level_def_temp.level || ' '
@@ -5154,13 +5156,13 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                   strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_large_category.platform_large_name ||
+                platform_large_category.platform_large_name || ' ' ||
                 (CASE
                      WHEN trade_type.trade_type = 'ALL' and
                           (level_def_temp.level = 'Million' or level_def_temp.level = 'Billion')
                          THEN level_def_temp.level || ' '
                      else '' end) ||
-                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) || ' ' ||
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
                 (CASE
                      WHEN trade_type.trade_type <> 'ALL' and
                           (level_def_temp.level = 'Million' or level_def_temp.level = 'Billion')
@@ -5355,10 +5357,11 @@ select distinct 'RelationTeam'                               "owner",
                 'TOTAL_PART'                                 strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_temp.platform_name ||
-                ' ' || top_token_1000_temp.symbol || ' ' || level_def_temp.level_name || ' ' ||
-                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) ||
-                ' Trader'                                    "content",
+                platform_temp.platform_name || ' ' ||
+                top_token_1000_temp.symbol || ' ' ||
+                level_def_temp.level_name || ' ' ||
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name|| ' ' end) ||
+                'Trader'                                    "content",
                 'SQL'                                        rule_type,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
@@ -5577,11 +5580,11 @@ select distinct 'RelationTeam'            "owner",
                 'TOTAL_PART'              strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_large_category.platform_large_name ||
-                top_token_1000_temp.symbol ||
-                ' ' || (case when trade_type.trade_type = 'ALL' then level_def_temp.level || ' ' else '' end) ||
-                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) ||
-                (case when trade_type.trade_type <> 'ALL' then ' ' || level_def_temp.level else '' end) || ' ' ||
+                platform_large_category.platform_large_name || ' '||
+                top_token_1000_temp.symbol ||' ' ||
+                (case when trade_type.trade_type = 'ALL' then level_def_temp.level || ' ' else '' end) ||
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name|| ' ' end) ||
+                (case when trade_type.trade_type <> 'ALL' then '' || level_def_temp.level|| ' ' else '' end) ||
                 level_def_temp.level_name "content",
                 'SQL'                     rule_type,
                 recent_time_temp.recent_time_name ||
@@ -5739,10 +5742,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                               strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_temp.platform_name ||
-                ' ' || (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) || ' ' ||
-                level_def_temp.level_name ||
-                '  Trader'                                                                 "content",
+                platform_temp.platform_name ||' ' ||
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name|| ' ' end)  ||
+                level_def_temp.level_name|| ' ' ||
+                'Trader'                                                                 "content",
                 'SQL'                                                                      rule_type,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
@@ -5881,10 +5884,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                  strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_large_category.platform_large_name ||
+                platform_large_category.platform_large_name|| ' ' ||
                 level_def_temp.level_name || ' ' ||
-                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name end) ||
-                ' Trader'                                                                     "content",
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name|| ' ' end) ||
+                'Trader'                                                                     "content",
                 'SQL'                                                                         rule_type,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
