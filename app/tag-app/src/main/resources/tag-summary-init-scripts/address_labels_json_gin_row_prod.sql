@@ -9,9 +9,9 @@ truncate table address_labels_json_gin_row_temp_${tableSuffix};
 vacuum address_labels_json_gin_row_temp_${tableSuffix};
 
 INSERT INTO address_labels_json_gin_row_temp_${tableSuffix}(address, data,recent_time_code)
-SELECT address_label_gp_stag.address,
+SELECT address_label_gp_temp_${tableSuffix}.address,
        JSONB_BUILD_OBJECT(
-               'address', address_label_gp_stag.address,
+               'address', address_label_gp_temp_${tableSuffix}.address,
                'address_type', CASE WHEN COUNT(contract_address) > 0 THEN 'c' ELSE 'p' END,
                'labels', JSONB_AGG(
                        JSONB_BUILD_OBJECT(
@@ -30,7 +30,7 @@ SELECT address_label_gp_stag.address,
                    ),
                'updated_at', CURRENT_TIMESTAMP
            )::TEXT,
-        address_label_gp_stag.recent_time_code
+        address_label_gp_temp_${tableSuffix}.recent_time_code
 FROM address_label_gp_temp_${tableSuffix}
 LEFT JOIN contract ON (address_label_gp_temp_${tableSuffix}.address = contract.contract_address)
 GROUP BY (address_label_gp_temp_${tableSuffix}.address,address_label_gp_temp_${tableSuffix}.recent_time_code) ;
