@@ -107,101 +107,38 @@ from (select address,
                                            s1.token,
                                            s1.type,
                                            sum(s1.total_transfer_volume_usd) as total_transfer_volume_usd,
-                                           recent_time_code
-                                    from (
-                                             -- project-token-type
-                                             select address,
-                                                    token,
-                                                    total_transfer_volume_usd,
-                                                    type,
-                                                    dex_tx_volume_count_summary_temp.project,
-                                                    recent_time_code
-                                             from dex_tx_volume_count_summary_temp
-                                             where total_transfer_volume_usd > 0
-                                               and address not in (select address from exclude_address)
---                                              -- project(ALL)-token-type
---                                             union all
---                                             select
---                                                 address,
---                                                 token,
---                                                 total_transfer_volume_usd,
---                                                 type,
---                                                 'ALL' as project,
---                                                 recent_time_code
---                                             from
---                                                 dex_tx_volume_count_summary_temp
---                                             where
---                                                     total_transfer_volume_usd  > 0 and address not in (select address from exclude_address)
-                                         ) s1
+                                           s1.recent_time_code
+                                    from dex_tx_volume_count_summary_temp s1
                                              inner join dim_project_token_type_temp s2
-                                                        on
-                                                                    s1.token = s2.token
-                                                                and s1.project = s2.project
-                                                                and s1.type = s2.type
-                                                                and s2.data_subject = 'volume_rank'
-                                                                and s1.recent_time_code = s2.recent_code
+                                                        on (s1.token = s2.token and s1.project = s2.project and
+                                                            s1.type = s2.type and s2.data_subject = 'volume_rank' and
+                                                            s1.recent_time_code = s2.recent_code)
                                     where total_transfer_volume_usd >= 100
+                                      and s1.address not in (select address from exclude_address)
                                     group by s1.address,
                                              s1.token,
                                              s1.type,
                                              s2.seq_flag,
-                                             recent_time_code) as a1) as a1
+                                             s1.recent_time_code) as a1) as a1
                                  inner join (select count(distinct address) as count_sum_total,
                                                     tb2.token,
                                                     seq_flag,
                                                     tb2.type,
                                                     recent_time_code
-                                             from (select address,
-                                                          token,
-                                                          type,
-                                                          project,
-                                                          sum(total_transfer_volume_usd) total_transfer_volume_usd,
-                                                          recent_time_code
-                                                   from (select address,
-                                                                token,
-                                                                type,
-                                                                dex_tx_volume_count_summary_temp.project,
-                                                                total_transfer_volume_usd,
-                                                                recent_time_code
-                                                         from dex_tx_volume_count_summary_temp
-                                                                  inner join dim_project_token_type_rank_temp
-                                                                             on (dex_tx_volume_count_summary_temp.token =
-                                                                                 dim_project_token_type_rank_temp.token_id)
-                                                         where total_transfer_volume_usd > 0
-                                                           and address not in (select address from exclude_address)
---                                                            -- project(ALL)-token-type
---                                                          union all
---                                                          select address,
---                                                                 token,
---                                                                 type,
---                                                                 'ALL' as project,
---                                                                 total_transfer_volume_usd,
---                                                                 recent_time_code
---                                                          from dex_tx_volume_count_summary_temp
---                                                          where total_transfer_volume_usd > 0
---                                                            and address not in (select address from exclude_address)
-                                                        ) ta
-                                                   group by address,
-                                                            token,
-                                                            type,
-                                                            project,
-                                                            recent_time_code) totala
-                                                      inner join dim_project_token_type_temp tb2 on
-                                                         totala.token = tb2.token
-                                                     and totala.project = tb2.project
-                                                     and totala.type = tb2.type
-                                                     and tb2.data_subject = 'volume_rank'
-                                                     and totala.recent_time_code = tb2.recent_code
+                                             from dex_tx_volume_count_summary_temp totala
+                                                  inner join dim_project_token_type_temp tb2 on
+                                                 (totala.token = tb2.token and totala.project = tb2.project
+                                                     and totala.type = tb2.type and tb2.data_subject = 'volume_rank'
+                                                     and totala.recent_time_code = tb2.recent_code)
                                              where total_transfer_volume_usd >= 100
+                                               and totala.address not in (select address from exclude_address)
                                              group by tb2.token,
                                                       tb2.seq_flag,
                                                       tb2.type,
                                                       recent_time_code) as a10
-                                            on
-                                                        a10.token = a1.token
-                                                    and a10.seq_flag = a1.seq_flag
-                                                    and a10.type = a1.type and
-                                                        a1.recent_time_code = a10.recent_time_code) as a2) as t1) tb1
+                                            on (a10.token = a1.token and a10.seq_flag = a1.seq_flag and
+                                                a10.type = a1.type and
+                                                a1.recent_time_code = a10.recent_time_code)) as a2) as t1) tb1
                inner join dim_project_token_type_temp dptt on (dptt.token = tb1.token
           and dptt."type" = tb1.type
           and dptt.seq_flag = tb1.seq_flag
