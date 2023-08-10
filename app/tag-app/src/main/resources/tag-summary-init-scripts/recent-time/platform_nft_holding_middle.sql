@@ -14,11 +14,11 @@ insert into platform_nft_holding_middle (address,
             quote_token,
             token,
             sum(value),
-            sum(count),
+            1,
             0,
             0,
             sum(value),
-            sum(1),
+            1,
             '${recentTimeCode}' recent_time_code
      from platform_nft_tx_record
               INNER JOIN nft_sync_address ON(nft_sync_address.address=platform_nft_tx_record.token)
@@ -44,9 +44,9 @@ insert into platform_nft_holding_middle (address,
             0,
             0,
             sum(value),
-            sum(1),
+            1,
             sum(value),
-            sum(1),
+            1,
             '${recentTimeCode}' recent_time_code
      from platform_nft_tx_record
           INNER JOIN nft_sync_address ON(nft_sync_address.address=platform_nft_tx_record.token)
