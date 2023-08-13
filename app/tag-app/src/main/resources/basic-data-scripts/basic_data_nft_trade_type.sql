@@ -8,7 +8,8 @@ create table nft_trade_type_temp
     nft_trade_type_name varchar(80) NULL,
     asset_type varchar(10) NULL
 ) ;
-insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trade_type_alis,type) values('a0','ALL','ALL','ALL','1');
+
+insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trade_type_alis,type) values('a1','ALL','ALL','ALL','1');
 insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trade_type_alis,type) values('b1','Buy','Buyer','Buy','1');
 insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trade_type_alis,type) values('s1','Sale','Seller','Sale','1');
 insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trade_type_alis,type,asset_type) values('b2','Bid','Bid','Bid','1','token');
@@ -16,7 +17,7 @@ insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trad
 insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trade_type_alis,type,asset_type) values('w1','Withdraw','Withdraw','Withdraw','1','token');
 insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trade_type_alis,type,asset_type) values('l1','Lend','Lend','Lend','1','token');
 
-insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trade_type_alis,type) values('a0','ALL','ALL','ALL','0');
+insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trade_type_alis,type) values('a1','ALL','ALL','ALL','0');
 insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trade_type_alis,type) values('b1','Buy','Buyer','Buy','0');
 insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trade_type_alis,type) values('s1','Sale','Seller','Sale','0');
 insert into nft_trade_type_temp(code,nft_trade_type,nft_trade_type_name,nft_trade_type_alis,type) values('b3','Burn','Burner','Burn','0');

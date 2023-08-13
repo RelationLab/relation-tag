@@ -8,7 +8,6 @@ create table level_def_temp
     special_flag varchar(1) NULL
 ) ;
 
-
 --------------------------------------------------defi-----------------------------------------------
 insert into level_def_temp(code,level,level_name,type) values('g1','L1','Vol Lv1','defi_volume_grade');
 insert into level_def_temp(code,level,level_name,type) values('g2','L2','Vol Lv2','defi_volume_grade');

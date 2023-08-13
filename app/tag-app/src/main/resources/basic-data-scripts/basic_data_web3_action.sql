@@ -8,7 +8,7 @@ create table web3_action_temp
 ) ;
 
 ---------------WEB3_Mirror_Write_ACTIVITY_L1
-insert into web3_action_temp(code,trade_type,trade_type_name,trade_type_alis) values('a0','ALL','ALL','ALL');
+insert into web3_action_temp(code,trade_type,trade_type_name,trade_type_alis) values('a1','ALL','ALL','ALL');
 insert into web3_action_temp(code,trade_type,trade_type_name,trade_type_alis) values('w1','write','Write','Writer');
 insert into web3_action_temp(code,trade_type,trade_type_name,trade_type_alis) values('n1','NFT Recipient','NFTRecipient','NFT Recipient');
 insert into web3_action_temp(code,trade_type,trade_type_name,trade_type_alis) values('r1','registerer','Registerer','Registerer');

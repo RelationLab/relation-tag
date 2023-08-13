@@ -6,7 +6,8 @@ create table trade_type
     trade_type_alis varchar(80) NULL,
     trade_type_name varchar(80) NULL
 ) ;
-insert into trade_type(code,trade_type,trade_type_name,trade_type_alis) values('a0','ALL','ALL','ALL');
+
+insert into trade_type(code,trade_type,trade_type_name,trade_type_alis) values('a1','ALL','ALL','ALL');
 insert into trade_type(code,trade_type,trade_type_name,trade_type_alis) values('l1','lp','LP','LP');
 insert into trade_type(code,trade_type,trade_type_name,trade_type_alis) values('s1','swap','Swap','Swap');
 insert into trade_type(code,trade_type,trade_type_name,trade_type_alis) values('s2','stake','Stake','Stake');

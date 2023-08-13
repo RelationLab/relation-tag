@@ -17,7 +17,6 @@ CREATE TABLE public.combination_temp (
                                     updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
                                     removed bool NULL DEFAULT false,
                                     label_name text NULL,
-                                    "content" varchar(100) NULL,
                                     asset_type varchar(50) NULL,
                                     label_category varchar(50) NULL,
                                     recent_time_code varchar(30) NULL
