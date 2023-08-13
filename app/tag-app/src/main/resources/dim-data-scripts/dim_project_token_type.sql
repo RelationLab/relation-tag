@@ -48,17 +48,18 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name)
 
-select distinct platform_detail_temp.platform         as             project,
-                lpt.pool                              as             token,
-                'lp'                                  as             type,
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HOLDING_TIME_FIRST_MOVER_LP' as             label_type,
-                'T'                                   as             operate_type,
+select distinct platform_detail_temp.platform     as                 project,
+                lpt.pool                          as                 token,
+                'lp'                              as                 type,
+                --平台+资产+交易类型
+                '' || 'l' || lpt.id || '' || 'tf' as                 label_type,
+                'T'                               as                 operate_type,
                 lpt.factory_type || '_' || lpt.symbol_wired || '_lp' seq_flag,
                 'FIRST_MOVER_LP'                                     data_subject,
                 lpt.factory_type                                     project_name,
                 lpt.symbol_wired                                     token_name
-from (select wlp.name,
+from (select wlp.id,
+             wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
              wlp.factory,
@@ -101,17 +102,17 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                                  "owner",
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HOLDING_TIME_FIRST_MOVER_LP' as                        "type",
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HOLDING_TIME_FIRST_MOVER_LP' as                        "name",
+                --平台+资产+交易类型
+                '' || 'l' || lpt.id || '' || 'tf' as                            "type",
+                --平台+资产+交易类型
+                '' || 'l' || lpt.id || '' || 'tf' as                            "name",
                 'SYSTEM'                                                        "source",
                 'PUBLIC'                                                        visible_type,
                 'TOTAL_PART'                                                    strategy,
                 lpt.factory_content || ' ' || symbol_wired || ' First Mover LP' "content",
                 'SQL'                                                           rule_type,
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HOLDING_TIME_FIRST_MOVER_LP'                           rule_group,
+                --平台+资产+交易类型
+                '' || 'l' || lpt.id || '' || 'tf'                               rule_group,
                 'RESULT'                                                        value_type,
                 999999                                                          run_order,
                 now()                                                           created_at,
@@ -119,7 +120,8 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                          wired_type,
                 999                                                             label_order,
                 'WAITING'                                                       sync_es_status
-from (select wlp.name,
+from (select wlp.id,
+             wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
              wlp.factory,
@@ -166,13 +168,13 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 ''                                                                             activity,
                 'FIRST_MOVER_LP'                                                               hold_time,
                 now()                                                                          created_at,
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HOLDING_TIME_FIRST_MOVER_LP'                                          label_name,
-                lpt.factory_content || ' ' || symbol_wired || ' First Mover LP'                "content",
+                --平台+资产+交易类型
+                '' || 'l' || lpt.id || '' || 'tf'                                              label_name,
                 'token'                                                                        asset_type,
                 'TOP'                                                                          label_category,
                 'ALL'                                                                          recent_time_code
-from (select wlp.name,
+from (select wlp.id,
+             wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
              wlp.factory,
@@ -210,17 +212,19 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name)
 
-select distinct platform_detail_temp.platform as                     project,
-                lpt.pool                      as                     token,
-                'lp'                          as                     type,
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_HEAVY_LP'    as                     label_type,
-                'T'                           as                     operate_type,
-                lpt.factory_type || '_' || lpt.symbol_wired || '_lp' seq_flag,
-                'HEAVY_LP'                                           data_subject,
-                lpt.factory_type                                     project_name,
-                lpt.symbol_wired                                     token_name
-from (select wlp.name,
+select distinct platform_detail_temp.platform      as project,
+                lpt.pool                           as token,
+                'lp'                               as type,
+                --平台+资产+交易类型
+                '' || 'l' || lpt.id || '' || 'bhl' as label_type,
+                'T'                                as operate_type,
+                --平台+资产+交易类型
+                '' || 'l' || lpt.id || '' || 'bhl'    seq_flag,
+                'HEAVY_LP'                            data_subject,
+                lpt.factory_type                      project_name,
+                lpt.symbol_wired                      token_name
+from (select wlp.id,
+             wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
              wlp.factory,
@@ -263,17 +267,15 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                            "owner",
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_HEAVY_LP' as                             "type",
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_HEAVY_LP' as                             "name",
+                --平台+资产+交易类型
+                '' || 'l' || lpt.id || '' || 'bhl' as                     "type",
+                '' || 'l' || lpt.id || '' || 'bhl' as                     "name",
                 'SYSTEM'                                                  "source",
                 'PUBLIC'                                                  visible_type,
                 'TOTAL_PART'                                              strategy,
                 lpt.factory_content || ' ' || symbol_wired || ' Heavy LP' "content",
                 'SQL'                                                     rule_type,
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_HEAVY_LP'                                rule_group,
+                '' || 'l' || lpt.id || '' || 'bhl'                        rule_group,
                 'RESULT'                                                  value_type,
                 999999                                                    run_order,
                 now()                                                     created_at,
@@ -281,7 +283,8 @@ select distinct 'RelationTeam'                                            "owner
                 'DEFI'                                                    wired_type,
                 999                                                       label_order,
                 'WAITING'                                                 sync_es_status
-from (select wlp.name,
+from (select wlp.id,
+             wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
              wlp.factory,
@@ -328,13 +331,12 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 ''                                                                             activity,
                 ''                                                                             hold_time,
                 now()                                                                          created_at,
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_HEAVY_LP'                                                     label_name,
-                lpt.factory_content || ' ' || symbol_wired || ' Heavy LP'                      "content",
+                '' || 'l' || lpt.id || '' || 'bhl'                                             label_name,
                 'token'                                                                        asset_type,
                 'TOP'                                                                          label_category,
                 'ALL'                                                                          recent_time_code
-from (select wlp.name,
+from (select wlp.id,
+             wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
              wlp.factory,
@@ -372,17 +374,17 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name)
 
-select distinct platform_detail_temp.platform              as           project,
-                lpt.pool                                   as           token,
-                'lp'                                       as           type,
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HOLDING_TIME_FIRST_MOVER_STAKING' as           label_type,
-                'T'                                        as           operate_type,
-                lpt.factory_type || '_' || lpt.symbol_wired || '_stake' seq_flag,
-                'FIRST_MOVER_STAKING'                                   data_subject,
-                lpt.factory_type                                        project_name,
-                lpt.symbol_wired                                        token_name
-from (select wlp.name,
+select distinct platform_detail_temp.platform     as project,
+                lpt.pool                          as token,
+                'lp'                              as type,
+                '' || 'l' || lpt.id || '' || 'bf' as label_type,
+                'T'                               as operate_type,
+                '' || 'l' || lpt.id || '' || 'bf'    seq_flag,
+                'FIRST_MOVER_STAKING'                data_subject,
+                lpt.factory_type                     project_name,
+                lpt.symbol_wired                     token_name
+from (select wlp.id,
+             wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
              wlp.factory,
@@ -425,17 +427,14 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                                       "owner",
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HOLDING_TIME_FIRST_MOVER_STAKING' as                        "type",
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HOLDING_TIME_FIRST_MOVER_STAKING' as                        "name",
+                '' || 'l' || lpt.id || '' || 'bf' as                                 "type",
+                '' || 'l' || lpt.id || '' || 'bf' as                                 "name",
                 'SYSTEM'                                                             "source",
                 'PUBLIC'                                                             visible_type,
                 'TOTAL_PART'                                                         strategy,
                 lpt.factory_content || ' ' || symbol_wired || ' First Mover Staking' "content",
                 'SQL'                                                                rule_type,
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HOLDING_TIME_FIRST_MOVER_STAKING'                           rule_group,
+                '' || 'l' || lpt.id || '' || 'bf'                                    rule_group,
                 'RESULT'                                                             value_type,
                 999999                                                               run_order,
                 now()                                                                created_at,
@@ -443,7 +442,8 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                               wired_type,
                 999                                                                  label_order,
                 'WAITING'                                                            sync_es_status
-from (select wlp.name,
+from (select wlp.id,
+             wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
              wlp.factory,
@@ -490,13 +490,12 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 ''                                                                             activity,
                 'FIRST_MOVER_STAKING'                                                          hold_time,
                 now()                                                                          created_at,
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_HOLDING_TIME_FIRST_MOVER_STAKING'                                     label_name,
-                lpt.factory_content || ' ' || symbol_wired || ' First Mover Staking'           "content",
+                '' || 'l' || lpt.id || '' || 'bf'                                              label_name,
                 'token'                                                                        asset_type,
                 'TOP'                                                                          label_category,
                 'ALL'                                                                          recent_time_code
-from (select wlp.name,
+from (select wlp.id,
+             wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
              wlp.factory,
@@ -535,17 +534,17 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name)
 
-select distinct platform_detail_temp.platform     as                    project,
-                lpt.pool                          as                    token,
-                'lp'                              as                    type,
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_HEAVY_LP_STAKER' as                    label_type,
-                'T'                               as                    operate_type,
-                lpt.factory_type || '_' || lpt.symbol_wired || '_stake' seq_flag,
-                'HEAVY_LP_STAKER'                                       data_subject,
-                lpt.factory_type                                        project_name,
-                lpt.symbol_wired                                        token_name
-from (select wlp.name,
+select distinct platform_detail_temp.platform      as project,
+                lpt.pool                           as token,
+                'lp'                               as type,
+                '' || 'l' || lpt.id || '' || 'bhs' as label_type,
+                'T'                                as operate_type,
+                '' || 'l' || lpt.id || '' || 'bhs'    seq_flag,
+                'HEAVY_LP_STAKER'                     data_subject,
+                lpt.factory_type                      project_name,
+                lpt.symbol_wired                      token_name
+from (select wlp.id,
+             wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
              wlp.factory,
@@ -588,17 +587,14 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                                   "owner",
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_HEAVY_LP_STAKER' as                             "type",
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_HEAVY_LP_STAKER' as                             "name",
+                '' || 'l' || lpt.id || '' || 'bhs' as                            "type",
+                '' || 'l' || lpt.id || '' || 'bhs' as                            "name",
                 'SYSTEM'                                                         "source",
                 'PUBLIC'                                                         visible_type,
                 'TOTAL_PART'                                                     strategy,
                 lpt.factory_content || ' ' || symbol_wired || ' Heavy LP Staker' "content",
                 'SQL'                                                            rule_type,
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_HEAVY_LP_STAKER'                                rule_group,
+                '' || 'l' || lpt.id || '' || 'bhs'                               rule_group,
                 'RESULT'                                                         value_type,
                 999999                                                           run_order,
                 now()                                                            created_at,
@@ -606,7 +602,8 @@ select distinct 'RelationTeam'                                                  
                 'DEFI'                                                           wired_type,
                 999                                                              label_order,
                 'WAITING'                                                        sync_es_status
-from (select wlp.name,
+from (select wlp.id,
+             wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
              wlp.factory,
@@ -653,13 +650,12 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 ''                                                                             activity,
                 ''                                                                             hold_time,
                 now()                                                                          created_at,
-                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
-                ')' || '_BALANCE_HEAVY_LP_STAKER'                                              label_name,
-                lpt.factory_content || ' ' || symbol_wired || ' Heavy LP Staker'               "content",
+                '' || 'l' || lpt.id || '' || 'bhs'                                             label_name,
                 'token'                                                                        asset_type,
                 'TOP'                                                                          label_category,
                 'ALL'                                                                          recent_time_code
-from (select wlp.name,
+from (select wlp.id,
+             wlp.name,
              wlp.symbol_wired,
              wlp.address               as pool,
              wlp.factory,
@@ -703,21 +699,17 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct nft_platform_temp.platform_name                          project,
-                nft_platform_temp.address                                "token",
-                nft_trade_type_temp.nft_trade_type                       "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_ACTIVITY' label_type,
-                'T'                                                      operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type                       seq_flag,
-                'count'                                                  data_subject,
-                mp_nft_platform_temp.platform_name                       project_name,
-                nft_sync_address.platform                                token_name,
+select distinct nft_platform_temp.platform_name    project,
+                nft_platform_temp.address          "token",
+                nft_trade_type_temp.nft_trade_type "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'cg'   label_type,
+                'T'                                operate_type,
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'cg'   seq_flag,
+                'count'                            data_subject,
+                mp_nft_platform_temp.platform_name project_name,
+                nft_sync_address.platform          token_name,
                 recent_time_temp.recent_time_code
 from nft_sync_address
          inner join nft_platform_temp on
@@ -748,18 +740,14 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                       "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_ACTIVITY'                          as "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_ACTIVITY_' || level_def_temp.level as "name",
-                'SYSTEM'                                                                             "source",
-                'PUBLIC'                                                                             visible_type,
-                'TOTAL_PART'                                                                         strategy,
+select distinct 'RelationTeam'                                             "owner",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'cg'                        as "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'cg' || level_def_temp.code as "name",
+                'SYSTEM'                                                   "source",
+                'PUBLIC'                                                   visible_type,
+                'TOTAL_PART'                                               strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
                 mp_nft_platform_temp.platform_name || ' ' || nft_sync_address.platform || ' ' ||
@@ -775,19 +763,17 @@ select distinct 'RelationTeam'                                                  
                 (case
                      when nft_trade_type_temp.asset_type = 'token' then ''
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                               "content",
-                'SQL'                                                                                rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_ACTIVITY'                             rule_group,
-                'RESULT'                                                                             value_type,
-                999999                                                                               run_order,
-                now()                                                                                created_at,
-                0                                                                                    refresh_time,
-                'NFT'                                                                                wired_type,
-                999                                                                                  label_order,
-                'WAITING'                                                                            sync_es_status
+                     else nft_trade_type_temp.nft_trade_type_name end)     "content",
+                'SQL'                                                      rule_type,
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'cg'                           rule_group,
+                'RESULT'                                                   value_type,
+                999999                                                     run_order,
+                now()                                                      created_at,
+                0                                                          refresh_time,
+                'NFT'                                                      wired_type,
+                999                                                        label_order,
+                'WAITING'                                                  sync_es_status
 from nft_sync_address
          inner join nft_platform_temp on
     (nft_sync_address.address = nft_platform_temp.address)
@@ -826,18 +812,8 @@ select distinct nft_sync_address.platform                                       
                 level_def_temp.level                                                                 activity,
                 ''                                                                                   hold_time,
                 now()                                                                                created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_ACTIVITY_' || level_def_temp.level    label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform_temp.platform_name || ' ' || nft_sync_address.platform || ' ' ||
-                level_def_temp.level_name ||
-                ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                               "content",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'cg' || level_def_temp.code                              label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
                 'GRADE'                                                                              label_category,
                 recent_time_code
@@ -874,19 +850,18 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                        project,
-                'ALL'                                                                        "token",
-                nft_trade_type_temp.nft_trade_type                                           "type",
+select distinct 'ALL'                                                                            project,
+                'ALL'                                                                            "token",
+                nft_trade_type_temp.nft_trade_type                                               "type",
+                recent_time_temp.recent_time_name ||
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'cg' label_type,
+                'T'                                                                              operate_type,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_ACTIVITY' label_type,
-                'T'                                                                          operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type                       seq_flag,
-                'count'                                                                      data_subject,
-                'ALL'                                                                        project_name,
-                'ALL'                                                                        token_name,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'cg' seq_flag,
+                'count'                                                                          data_subject,
+                'ALL'                                                                            project_name,
+                'ALL'                                                                            token_name,
                 recent_time_temp.recent_time_code
 from nft_trade_type_temp
          inner join recent_time_temp on (1 = 1)
@@ -908,18 +883,13 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                         "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_ACTIVITY'   as                                "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_ACTIVITY_' ||
-                level_def_temp.level as                                "name",
-                'SYSTEM'                                               "source",
-                'PUBLIC'                                               visible_type,
-                'TOTAL_PART'                                           strategy,
+select distinct 'RelationTeam'                                                                      "owner",
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'cg' as "type",
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'cg' ||
+                level_def_temp.code                                                              as "name",
+                'SYSTEM'                                                                            "source",
+                'PUBLIC'                                                                            visible_type,
+                'TOTAL_PART'                                                                        strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
                 (case
@@ -934,19 +904,16 @@ select distinct 'RelationTeam'                                         "owner",
                 (case
                      when nft_trade_type_temp.asset_type = 'token' then ''
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'SQL'                                                  rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_ACTIVITY'                                     rule_group,
-                'RESULT'                                               value_type,
-                999999                                                 run_order,
-                now()                                                  created_at,
-                0                                                      refresh_time,
-                'NFT'                                                  wired_type,
-                999                                                    label_order,
-                'WAITING'                                              sync_es_status
+                     else nft_trade_type_temp.nft_trade_type_name end)                              "content",
+                'SQL'                                                                               rule_type,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'cg'    rule_group,
+                'RESULT'                                                                            value_type,
+                999999                                                                              run_order,
+                now()                                                                               created_at,
+                0                                                                                   refresh_time,
+                'NFT'                                                                               wired_type,
+                999                                                                                 label_order,
+                'WAITING'                                                                           sync_es_status
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -978,10 +945,8 @@ select distinct 'ALL_NFT'                                              asset,
                 level_def_temp.level                                   activity,
                 ''                                                     hold_time,
                 now()                                                  created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_ACTIVITY_' ||
-                level_def_temp.level                                   label_name,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'cg' ||
+                level_def_temp.code                                    label_name,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
                 level_def_temp.level_name || ' ' ||
@@ -1014,20 +979,17 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                                  project,
-                nft_sync_address.address                                                               "token",
-                nft_trade_type_temp.nft_trade_type                                                     "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_ACTIVITY'                                                                     label_type,
-                'T'                                                                                    operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type seq_flag,
-                'count'                                                                                data_subject,
-                'ALL'                                                                                  project_name,
-                nft_sync_address.platform                                                              token_name,
+select distinct 'ALL'                              project,
+                nft_sync_address.address           "token",
+                nft_trade_type_temp.nft_trade_type "type",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' || nft_trade_type_temp.code ||
+                'cg'                               label_type,
+                'T'                                operate_type,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'cg'   seq_flag,
+                'count'                            data_subject,
+                'ALL'                              project_name,
+                nft_sync_address.platform          token_name,
                 recent_time_temp.recent_time_code
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
@@ -1054,18 +1016,14 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                         "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_ACTIVITY'                          as         "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_ACTIVITY_' || level_def_temp.level as         "name",
-                'SYSTEM'                                               "source",
-                'PUBLIC'                                               visible_type,
-                'TOTAL_PART'                                           strategy,
+select distinct 'RelationTeam'                                             "owner",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'cg'                        as "type",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'cg' || level_def_temp.code as "name",
+                'SYSTEM'                                                   "source",
+                'PUBLIC'                                                   visible_type,
+                'TOTAL_PART'                                               strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP ' ||
                 nft_sync_address.platform || ' ' ||
@@ -1081,19 +1039,17 @@ select distinct 'RelationTeam'                                         "owner",
                 (case
                      when nft_trade_type_temp.asset_type = 'token' then ''
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'SQL'                                                  rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_ACTIVITY'                                     rule_group,
-                'RESULT'                                               value_type,
-                999999                                                 run_order,
-                now()                                                  created_at,
-                0                                                      refresh_time,
-                'NFT'                                                  wired_type,
-                999                                                    label_order,
-                'WAITING'                                              sync_es_status
+                     else nft_trade_type_temp.nft_trade_type_name end)     "content",
+                'SQL'                                                      rule_type,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'cg'                           rule_group,
+                'RESULT'                                                   value_type,
+                999999                                                     run_order,
+                now()                                                      created_at,
+                0                                                          refresh_time,
+                'NFT'                                                      wired_type,
+                999                                                        label_order,
+                'WAITING'                                                  sync_es_status
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
          inner join (select *
@@ -1130,16 +1086,8 @@ select distinct nft_sync_address.platform                                       
                 level_def_temp.level                                                                 activity,
                 ''                                                                                   hold_time,
                 now()                                                                                created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_ACTIVITY_' || level_def_temp.level                                          label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP ' ||
-                nft_sync_address.platform || ' ' || level_def_temp.level_name || ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                               "content",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'cg' || level_def_temp.code                              label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
                 'GRADE'                                                                              label_category,
                 recent_time_code
@@ -1179,9 +1127,9 @@ select distinct (select nft_platform_temp.platform_name
                     limit 1)  project,
     'ALL' as  "token",
     nft_trade_type_temp.nft_trade_type "type",
-    recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_' ||nft_trade_type_temp.nft_trade_type||'_MP_NFT_ACTIVITY' label_type,
+    recent_time_temp.code || mp_nft_platform_temp.id || 'a1'  || 'm' ||nft_trade_type_temp.code || 'cg'  label_type,
     'T' operate_type,
-    recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name ||'_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_'  ||nft_trade_type_temp.nft_trade_type seq_flag,
+     recent_time_temp.code || mp_nft_platform_temp.id || 'a1'  || 'm' ||nft_trade_type_temp.code || 'cg'  seq_flag,
     'count' data_subject,
     mp_nft_platform_temp.platform_name project_name,
     'ALL' token_name,
@@ -1214,18 +1162,10 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                         "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_ACTIVITY'   as                                "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_ACTIVITY_' ||
-                level_def_temp.level as                                "name",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code ||
+                'cg'                as                                 "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code || 'cg' ||
+                level_def_temp.code as                                 "name",
                 'SYSTEM'                                               "source",
                 'PUBLIC'                                               visible_type,
                 'TOTAL_PART'                                           strategy,
@@ -1247,12 +1187,8 @@ select distinct 'RelationTeam'                                         "owner",
                      when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                  rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_ACTIVITY'                                     rule_group,
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code ||
+                'cg'                                                   rule_group,
                 'RESULT'                                               value_type,
                 999999                                                 run_order,
                 now()                                                  created_at,
@@ -1296,18 +1232,8 @@ select distinct (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'AL
                 level_def_temp.level                                                                         activity,
                 ''                                                                                           hold_time,
                 now()                                                                                        created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_ACTIVITY_' ||
-                level_def_temp.level                                                                         label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform_temp.platform_name || ' NFT ' || level_def_temp.level_name || ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                                       "content",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code || 'cg' ||
+                level_def_temp.code                                                                          label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end)         asset_type,
                 'GRADE'                                                                                      label_category,
                 recent_time_code
@@ -1340,21 +1266,18 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct nft_platform_temp.platform_name                              project,
-                nft_platform_temp.address                                    "token",
-                nft_trade_type_temp.nft_trade_type                           "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_ELITE' label_type,
-                'T'                                                          operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type                           seq_flag,
-                'volume_elite'                                               data_subject,
-                mp_nft_platform_temp.platform_name                           project_name,
-                nft_sync_address.platform                                    token_name,
+select distinct nft_platform_temp.platform_name    project,
+                nft_platform_temp.address          "token",
+                nft_trade_type_temp.nft_trade_type "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 've'   label_type,
+                'T'                                operate_type,
+
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 've'   seq_flag,
+                'volume_elite'                     data_subject,
+                mp_nft_platform_temp.platform_name project_name,
+                nft_sync_address.platform          token_name,
                 recent_time_temp.recent_time_code
 from nft_sync_address
          inner join nft_platform_temp on
@@ -1385,18 +1308,16 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                           "owner",
+select distinct 'RelationTeam'                                                "owner",
+
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 've'                        as    "type",
                 recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_ELITE'                          as "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_ELITE_' || level_def_temp.level as "name",
-                'SYSTEM'                                                                                 "source",
-                'PUBLIC'                                                                                 visible_type,
-                'TOTAL_PART'                                                                             strategy,
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 've' || level_def_temp.code as    "name",
+                'SYSTEM'                                                      "source",
+                'PUBLIC'                                                      visible_type,
+                'TOTAL_PART'                                                  strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
                 mp_nft_platform_temp.platform_name || ' ' || nft_sync_address.platform || ' ' ||
@@ -1407,19 +1328,18 @@ select distinct 'RelationTeam'                                                  
                     || (case
                             when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL'
                                 then 'Trader'
-                            else nft_trade_type_temp.nft_trade_type_name end)                            "content",
-                'SQL'                                                                                    rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_ELITE'                             rule_group,
-                'RESULT'                                                                                 value_type,
-                999999                                                                                   run_order,
-                now()                                                                                    created_at,
-                0                                                                                        refresh_time,
-                'NFT'                                                                                    wired_type,
-                999                                                                                      label_order,
-                'WAITING'                                                                                sync_es_status
+                            else nft_trade_type_temp.nft_trade_type_name end) "content",
+                'SQL'                                                         rule_type,
+
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 've'                              rule_group,
+                'RESULT'                                                      value_type,
+                999999                                                        run_order,
+                now()                                                         created_at,
+                0                                                             refresh_time,
+                'NFT'                                                         wired_type,
+                999                                                           label_order,
+                'WAITING'                                                     sync_es_status
 from nft_sync_address
          inner join nft_platform_temp on
     (nft_sync_address.address = nft_platform_temp.address)
@@ -1450,27 +1370,19 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct nft_sync_address.platform                                                             asset,
-                mp_nft_platform_temp.platform_name                                                    project,
-                nft_trade_type_temp.nft_trade_type                                                    trade_type,
-                ''                                                                                    balance,
-                level_def_temp.level                                                                  volume,
-                ''                                                                                    activity,
-                ''                                                                                    hold_time,
-                now()                                                                                 created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_ELITE_' || level_def_temp.level label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform_temp.platform_name || ' ' || nft_sync_address.platform || ' ' ||
-                level_def_temp.level_name ||
-                ' ' || (case
-                            when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                            else nft_trade_type_temp.nft_trade_type_name end)                         "content",
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end)  asset_type,
-                'ELITE'                                                                               label_category,
+select distinct nft_sync_address.platform                                                            asset,
+                mp_nft_platform_temp.platform_name                                                   project,
+                nft_trade_type_temp.nft_trade_type                                                   trade_type,
+                ''                                                                                   balance,
+                level_def_temp.level                                                                 volume,
+                ''                                                                                   activity,
+                ''                                                                                   hold_time,
+                now()                                                                                created_at,
+
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 've' || level_def_temp.code                              label_name,
+                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
+                'ELITE'                                                                              label_category,
                 recent_time_code
 from nft_sync_address
          inner join nft_platform_temp on
@@ -1504,20 +1416,17 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                                  project,
-                nft_sync_address.address                                                               "token",
-                nft_trade_type_temp.nft_trade_type                                                     "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_ELITE'                                                                 label_type,
-                'T'                                                                                    operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type seq_flag,
-                'volume_elite'                                                                         data_subject,
-                'ALL'                                                                                  project_name,
-                nft_sync_address.platform                                                              token_name,
+select distinct 'ALL'                              project,
+                nft_sync_address.address           "token",
+                nft_trade_type_temp.nft_trade_type "type",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 've'   label_type,
+                'T'                                operate_type,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 've'   seq_flag,
+                'volume_elite'                     data_subject,
+                'ALL'                              project_name,
+                nft_sync_address.platform          token_name,
                 recent_time_temp.recent_time_code
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
@@ -1545,15 +1454,10 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                                "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_ELITE' as                                     "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_ELITE_' ||
-                level_def_temp.level   as                                     "name",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 've'                        as    "type",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 've' || level_def_temp.code as    "name",
                 'SYSTEM'                                                      "source",
                 'PUBLIC'                                                      visible_type,
                 'TOTAL_PART'                                                  strategy,
@@ -1569,10 +1473,8 @@ select distinct 'RelationTeam'                                                "o
                                 then 'Trader'
                             else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                         rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_ELITE'                                        rule_group,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 've'                              rule_group,
                 'RESULT'                                                      value_type,
                 999999                                                        run_order,
                 now()                                                         created_at,
@@ -1606,31 +1508,23 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct nft_sync_address.platform                                                                                                      asset,
-                'ALL'                                                                                                                          project,
+select distinct nft_sync_address.platform                       asset,
+                'ALL'                                           project,
                 case
                     when nft_trade_type_temp.nft_trade_type = 'ALL' THEN ''
-                    ELSE nft_trade_type_temp.nft_trade_type END                                                                                trade_type,
-                ''                                                                                                                             balance,
-                level_def_temp.level                                                                                                           volume,
-                ''                                                                                                                             activity,
-                ''                                                                                                                             hold_time,
-                now()                                                                                                                          created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_ELITE_' ||
-                level_def_temp.level                                                                                                           label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP ' ||
-                nft_sync_address.platform || ' ' || level_def_temp.level_name || ' ' || (case
-                                                                                             when nft_trade_type_temp.nft_trade_type = 'ALL'
-                                                                                                 then 'Trader'
-                                                                                             else nft_trade_type_temp.nft_trade_type_name end) "content",
-                (case
-                     when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft'
-                     else 'token' end)                                                                                                         asset_type,
-                'ELITE'                                                                                                                        label_category,
+                    ELSE nft_trade_type_temp.nft_trade_type END trade_type,
+                ''                                              balance,
+                level_def_temp.level                            volume,
+                ''                                              activity,
+                ''                                              hold_time,
+                now()                                           created_at,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code ||
+                've' level_def_temp.code  label_name, (case
+                                                           when nft_action_platform_temp.nft_type = 'ERC721'
+                                                               THEN 'nft'
+                                                           else 'token' end) asset_type,
+                'ELITE'                                         label_category,
                 recent_time_code
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
@@ -1668,9 +1562,9 @@ select distinct (select nft_platform_temp.platform_name
                     limit 1)  project,
     'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
-    recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_'  ||nft_trade_type_temp.nft_trade_type||'_MP_NFT_VOLUME_ELITE' label_type,
+    recent_time_temp.code || mp_nft_platform_temp.id || 'a1'  || 'm' ||nft_trade_type_temp.code || 've'  label_type,
     'T' operate_type,
-    recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_' ||nft_trade_type_temp.nft_trade_type seq_flag,
+    recent_time_temp.code || mp_nft_platform_temp.id || 'a1'  || 'm' ||nft_trade_type_temp.code || 've' seq_flag,
     'volume_elite' data_subject,
     mp_nft_platform_temp.platform_name project_name,
     'ALL' token_name,
@@ -1703,18 +1597,10 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                                "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_ELITE' as                                     "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_ELITE_' ||
-                level_def_temp.level   as                                     "name",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code ||
+                've'                as                                        "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code || 've' ||
+                level_def_temp.code as                                        "name",
                 'SYSTEM'                                                      "source",
                 'PUBLIC'                                                      visible_type,
                 'TOTAL_PART'                                                  strategy,
@@ -1730,12 +1616,8 @@ select distinct 'RelationTeam'                                                "o
                                 then 'Trader'
                             else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                         rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_ELITE'                                        rule_group,
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code ||
+                've'                                                          rule_group,
                 'RESULT'                                                      value_type,
                 999999                                                        run_order,
                 now()                                                         created_at,
@@ -1779,18 +1661,8 @@ select distinct 'ALL_NFT'                                                       
                 ''                                                                                   activity,
                 ''                                                                                   hold_time,
                 now()                                                                                created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_ELITE_' ||
-                level_def_temp.level                                                                 label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform_temp.platform_name || ' NFT ' || level_def_temp.level_name || ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                               "content",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code || 've' ||
+                level_def_temp.code                                                                  label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
                 'ELITE'                                                                              label_category,
                 recent_time_code
@@ -1826,13 +1698,9 @@ into dim_project_token_type_temp (project,
 select distinct 'ALL'                                                                            project,
                 'ALL'                                                                            "token",
                 nft_trade_type_temp.nft_trade_type                                               "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_ELITE' label_type,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 've' label_type,
                 'T'                                                                              operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type                           seq_flag,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 've' seq_flag,
                 'volume_elite'                                                                   data_subject,
                 'ALL'                                                                            project_name,
                 'ALL'                                                                            token_name,
@@ -1857,18 +1725,14 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                "owner",
+select distinct 'RelationTeam'                                                                      "owner",
                 recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_ELITE' as                                     "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_ELITE_' ||
-                level_def_temp.level   as                                     "name",
-                'SYSTEM'                                                      "source",
-                'PUBLIC'                                                      visible_type,
-                'TOTAL_PART'                                                  strategy,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 've' as "type",
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 've' ||
+                level_def_temp.code                                                              as "name",
+                'SYSTEM'                                                                            "source",
+                'PUBLIC'                                                                            visible_type,
+                'TOTAL_PART'                                                                        strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
                 (case
@@ -1878,19 +1742,16 @@ select distinct 'RelationTeam'                                                "o
                     || (case
                             when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL'
                                 then 'Trader'
-                            else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'SQL'                                                         rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_ELITE'                                        rule_group,
-                'RESULT'                                                      value_type,
-                999999                                                        run_order,
-                now()                                                         created_at,
-                0                                                             refresh_time,
-                'NFT'                                                         wired_type,
-                999                                                           label_order,
-                'WAITING'                                                     sync_es_status
+                            else nft_trade_type_temp.nft_trade_type_name end)                       "content",
+                'SQL'                                                                               rule_type,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 've'    rule_group,
+                'RESULT'                                                                            value_type,
+                999999                                                                              run_order,
+                now()                                                                               created_at,
+                0                                                                                   refresh_time,
+                'NFT'                                                                               wired_type,
+                999                                                                                 label_order,
+                'WAITING'                                                                           sync_es_status
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -1912,28 +1773,20 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_NFT'                                              asset,
-                'ALL'                                                  project,
+select distinct 'ALL_NFT'                                       asset,
+                'ALL'                                           project,
                 case
                     when nft_trade_type_temp.nft_trade_type = 'ALL' THEN ''
-                    ELSE nft_trade_type_temp.nft_trade_type END        trade_type,
-                ''                                                     balance,
-                level_def_temp.level                                   volume,
-                ''                                                     activity,
-                ''                                                     hold_time,
-                now()                                                  created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_ELITE_' ||
-                level_def_temp.level                                   label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
-                level_def_temp.level_name || ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'nft'                                                  asset_type,
-                'ELITE'                                                label_category,
+                    ELSE nft_trade_type_temp.nft_trade_type END trade_type,
+                ''                                              balance,
+                level_def_temp.level                            volume,
+                ''                                              activity,
+                ''                                              hold_time,
+                now()                                           created_at,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 've' ||
+                level_def_temp.code                             label_name,
+                'nft'                                           asset_type,
+                'ELITE'                                         label_category,
                 recent_time_code
 from nft_trade_type_temp
          inner join (select *
@@ -1959,21 +1812,17 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct nft_platform_temp.platform_name                              project,
-                nft_platform_temp.address                                    "token",
-                nft_trade_type_temp.nft_trade_type                           "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_GRADE' label_type,
-                'T'                                                          operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type                           seq_flag,
-                'volume_grade'                                               data_subject,
-                mp_nft_platform_temp.platform_name                           project_name,
-                nft_sync_address.platform                                    token_name,
+select distinct nft_platform_temp.platform_name    project,
+                nft_platform_temp.address          "token",
+                nft_trade_type_temp.nft_trade_type "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vg'   label_type,
+                'T'                                operate_type,
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vg'   seq_flag,
+                'volume_grade'                     data_subject,
+                mp_nft_platform_temp.platform_name project_name,
+                nft_sync_address.platform          token_name,
                 recent_time_temp.recent_time_code
 from nft_sync_address
          inner join nft_platform_temp on
@@ -2004,18 +1853,14 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                           "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_GRADE'                          as "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_GRADE_' || level_def_temp.level as "name",
-                'SYSTEM'                                                                                 "source",
-                'PUBLIC'                                                                                 visible_type,
-                'TOTAL_PART'                                                                             strategy,
+select distinct 'RelationTeam'                                             "owner",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vg'                        as "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vg' || level_def_temp.code as "name",
+                'SYSTEM'                                                   "source",
+                'PUBLIC'                                                   visible_type,
+                'TOTAL_PART'                                               strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
                 mp_nft_platform_temp.platform_name || ' ' || nft_sync_address.platform || ' ' ||
@@ -2027,19 +1872,17 @@ select distinct 'RelationTeam'                                                  
                 (case
                      when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL'
                          then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                                   "content",
-                'SQL'                                                                                    rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_GRADE'                             rule_group,
-                'RESULT'                                                                                 value_type,
-                999999                                                                                   run_order,
-                now()                                                                                    created_at,
-                0                                                                                        refresh_time,
-                'NFT'                                                                                    wired_type,
-                999                                                                                      label_order,
-                'WAITING'                                                                                sync_es_status
+                     else nft_trade_type_temp.nft_trade_type_name end)     "content",
+                'SQL'                                                      rule_type,
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vg'                           rule_group,
+                'RESULT'                                                   value_type,
+                999999                                                     run_order,
+                now()                                                      created_at,
+                0                                                          refresh_time,
+                'NFT'                                                      wired_type,
+                999                                                        label_order,
+                'WAITING'                                                  sync_es_status
 from nft_sync_address
          inner join nft_platform_temp on
     (nft_sync_address.address = nft_platform_temp.address)
@@ -2070,28 +1913,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct nft_sync_address.platform                                                             asset,
-                mp_nft_platform_temp.platform_name                                                    project,
-                nft_trade_type_temp.nft_trade_type                                                    trade_type,
-                ''                                                                                    balance,
-                level_def_temp.level                                                                  volume,
-                ''                                                                                    activity,
-                ''                                                                                    hold_time,
-                now()                                                                                 created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_GRADE_' || level_def_temp.level label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform_temp.platform_name || ' ' || nft_sync_address.platform || ' ' ||
-                level_def_temp.level_name ||
-                ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                                "content",
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end)  asset_type,
-                'GRADE'                                                                               label_category,
+select distinct nft_sync_address.platform                                                            asset,
+                mp_nft_platform_temp.platform_name                                                   project,
+                nft_trade_type_temp.nft_trade_type                                                   trade_type,
+                ''                                                                                   balance,
+                level_def_temp.level                                                                 volume,
+                ''                                                                                   activity,
+                ''                                                                                   hold_time,
+                now()                                                                                created_at,
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vg' || level_def_temp.code                              label_name,
+                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
+                'GRADE'                                                                              label_category,
                 recent_time_code
 from nft_sync_address
          inner join nft_platform_temp on
@@ -2125,20 +1958,17 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                                  project,
-                nft_sync_address.address                                                               "token",
-                nft_trade_type_temp.nft_trade_type                                                     "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_GRADE'                                                                 label_type,
-                'T'                                                                                    operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type seq_flag,
-                'volume_grade'                                                                         data_subject,
-                'ALL'                                                                                  project_name,
-                nft_sync_address.platform                                                              token_name,
+select distinct 'ALL'                              project,
+                nft_sync_address.address           "token",
+                nft_trade_type_temp.nft_trade_type "type",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vg'   label_type,
+                'T'                                operate_type,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vg'   seq_flag,
+                'volume_grade'                     data_subject,
+                'ALL'                              project_name,
+                nft_sync_address.platform          token_name,
                 recent_time_temp.recent_time_code
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
@@ -2165,18 +1995,14 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                         "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_GRADE'                          as     "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_GRADE_' || level_def_temp.level as     "name",
-                'SYSTEM'                                               "source",
-                'PUBLIC'                                               visible_type,
-                'TOTAL_PART'                                           strategy,
+select distinct 'RelationTeam'                                             "owner",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vg'                        as "type",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vg' || level_def_temp.code as "name",
+                'SYSTEM'                                                   "source",
+                'PUBLIC'                                                   visible_type,
+                'TOTAL_PART'                                               strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP ' ||
                 nft_sync_address.platform || ' ' ||
@@ -2188,19 +2014,17 @@ select distinct 'RelationTeam'                                         "owner",
                 (case
                      when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL'
                          then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'SQL'                                                  rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_GRADE'                                 rule_group,
-                'RESULT'                                               value_type,
-                999999                                                 run_order,
-                now()                                                  created_at,
-                0                                                      refresh_time,
-                'NFT'                                                  wired_type,
-                999                                                    label_order,
-                'WAITING'                                              sync_es_status
+                     else nft_trade_type_temp.nft_trade_type_name end)     "content",
+                'SQL'                                                      rule_type,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vg'                           rule_group,
+                'RESULT'                                                   value_type,
+                999999                                                     run_order,
+                now()                                                      created_at,
+                0                                                          refresh_time,
+                'NFT'                                                      wired_type,
+                999                                                        label_order,
+                'WAITING'                                                  sync_es_status
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
          inner join (select *
@@ -2237,16 +2061,8 @@ select distinct nft_sync_address.platform                                       
                 ''                                                                                   activity,
                 ''                                                                                   hold_time,
                 now()                                                                                created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_GRADE_' || level_def_temp.level                                      label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP ' ||
-                nft_sync_address.platform || ' ' || level_def_temp.level_name || ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                               "content",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vg' || level_def_temp.code                              label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
                 'GRADE'                                                                              label_category,
                 recent_time_code
@@ -2286,9 +2102,9 @@ select distinct (select nft_platform_temp.platform_name
                     limit 1)  project,
     'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
-    recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_'  ||nft_trade_type_temp.nft_trade_type||'_MP_NFT_VOLUME_GRADE' label_type,
+   recent_time_temp.code || mp_nft_platform_temp.id || 'a1'  || 'm' ||nft_trade_type_temp.code || 'vg'  label_type,
     'T' operate_type,
-    recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_'  ||nft_trade_type_temp.nft_trade_type seq_flag,
+    recent_time_temp.code || mp_nft_platform_temp.id || 'a1'  || 'm' ||nft_trade_type_temp.code || 'vg' seq_flag,
     'volume_grade' data_subject,
     mp_nft_platform_temp.platform_name project_name,
     'ALL' token_name,
@@ -2321,18 +2137,12 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                         "owner",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code ||
+                'vg'                as                                 "type",
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_GRADE' as                              "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_GRADE_' ||
-                level_def_temp.level   as                              "name",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code || 'vg' ||
+                level_def_temp.code as                                 "name",
                 'SYSTEM'                                               "source",
                 'PUBLIC'                                               visible_type,
                 'TOTAL_PART'                                           strategy,
@@ -2349,12 +2159,8 @@ select distinct 'RelationTeam'                                         "owner",
                          then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                  rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_GRADE'                                 rule_group,
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code ||
+                'vg'                                                   rule_group,
                 'RESULT'                                               value_type,
                 999999                                                 run_order,
                 now()                                                  created_at,
@@ -2398,18 +2204,8 @@ select distinct (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'AL
                 ''                                                                                           activity,
                 ''                                                                                           hold_time,
                 now()                                                                                        created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_GRADE_' ||
-                level_def_temp.level                                                                         label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform_temp.platform_name || ' NFT ' || level_def_temp.level_name || ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                                       "content",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code || 'vg' ||
+                level_def_temp.code                                                                          label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end)         asset_type,
                 'GRADE'                                                                                      label_category,
                 recent_time_code
@@ -2445,13 +2241,9 @@ into dim_project_token_type_temp (project,
 select distinct 'ALL'                                                                            project,
                 'ALL'                                                                            "token",
                 nft_trade_type_temp.nft_trade_type                                               "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_GRADE' label_type,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vg' label_type,
                 'T'                                                                              operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type                           seq_flag,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vg' seq_flag,
                 'volume_grade'                                                                   data_subject,
                 'ALL'                                                                            project_name,
                 'ALL'                                                                            token_name,
@@ -2476,18 +2268,13 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                         "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_GRADE' as                              "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_GRADE_' ||
-                level_def_temp.level   as                              "name",
-                'SYSTEM'                                               "source",
-                'PUBLIC'                                               visible_type,
-                'TOTAL_PART'                                           strategy,
+select distinct 'RelationTeam'                                                                      "owner",
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vg' as "type",
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vg' ||
+                level_def_temp.code                                                              as "name",
+                'SYSTEM'                                                                            "source",
+                'PUBLIC'                                                                            visible_type,
+                'TOTAL_PART'                                                                        strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
                 (case
@@ -2498,19 +2285,16 @@ select distinct 'RelationTeam'                                         "owner",
                 (case
                      when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL'
                          then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'SQL'                                                  rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_GRADE'                                 rule_group,
-                'RESULT'                                               value_type,
-                999999                                                 run_order,
-                now()                                                  created_at,
-                0                                                      refresh_time,
-                'NFT'                                                  wired_type,
-                999                                                    label_order,
-                'WAITING'                                              sync_es_status
+                     else nft_trade_type_temp.nft_trade_type_name end)                              "content",
+                'SQL'                                                                               rule_type,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vg'    rule_group,
+                'RESULT'                                                                            value_type,
+                999999                                                                              run_order,
+                now()                                                                               created_at,
+                0                                                                                   refresh_time,
+                'NFT'                                                                               wired_type,
+                999                                                                                 label_order,
+                'WAITING'                                                                           sync_es_status
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -2532,27 +2316,20 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_NFT'                                                                             asset,
-                'ALL'                                                                                 project,
+select distinct 'ALL_NFT'                                       asset,
+                'ALL'                                           project,
                 case
                     when nft_trade_type_temp.nft_trade_type = 'ALL' THEN ''
-                    ELSE nft_trade_type_temp.nft_trade_type END                                       trade_type,
-                ''                                                                                    balance,
-                level_def_temp.level                                                                  volume,
-                ''                                                                                    activity,
-                ''                                                                                    hold_time,
-                now()                                                                                 created_at,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) || 'ALL_' || 'ALL_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_GRADE_' || level_def_temp.level label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
-                level_def_temp.level_name || ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                                "content",
-                'nft'                                                                                 asset_type,
-                'GRADE'                                                                               label_category,
+                    ELSE nft_trade_type_temp.nft_trade_type END trade_type,
+                ''                                              balance,
+                level_def_temp.level                            volume,
+                ''                                              activity,
+                ''                                              hold_time,
+                now()                                           created_at,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vg' ||
+                level_def_temp.code                             label_name,
+                'nft'                                           asset_type,
+                'GRADE'                                         label_category,
                 recent_time_code
 from nft_trade_type_temp
          inner join (select *
@@ -2577,21 +2354,17 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct nft_platform_temp.platform_name                             project,
-                nft_platform_temp.address                                   "token",
-                nft_trade_type_temp.nft_trade_type                          "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_RANK' label_type,
-                'T'                                                         operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type                          seq_flag,
-                'volume_rank'                                               data_subject,
-                mp_nft_platform_temp.platform_name                          project_name,
-                nft_sync_address.platform                                   token_name,
+select distinct nft_platform_temp.platform_name    project,
+                nft_platform_temp.address          "token",
+                nft_trade_type_temp.nft_trade_type "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vr'   label_type,
+                'T'                                operate_type,
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vr'   seq_flag,
+                'volume_rank'                      data_subject,
+                mp_nft_platform_temp.platform_name project_name,
+                nft_sync_address.platform          token_name,
                 recent_time_temp.recent_time_code
 from nft_sync_address
          inner join nft_platform_temp on
@@ -2622,18 +2395,14 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                          "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_RANK'                          as "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_RANK_' || level_def_temp.level as "name",
-                'SYSTEM'                                                                                "source",
-                'PUBLIC'                                                                                visible_type,
-                'TOTAL_PART'                                                                            strategy,
+select distinct 'RelationTeam'                                                "owner",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vr'                        as    "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vr' || level_def_temp.code as    "name",
+                'SYSTEM'                                                      "source",
+                'PUBLIC'                                                      visible_type,
+                'TOTAL_PART'                                                  strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
                 mp_nft_platform_temp.platform_name || ' ' || nft_sync_address.platform || ' ' ||
@@ -2644,19 +2413,17 @@ select distinct 'RelationTeam'                                                  
                     || (case
                             when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL'
                                 then 'Trader'
-                            else nft_trade_type_temp.nft_trade_type_name end)                           "content",
-                'SQL'                                                                                   rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_RANK'                             rule_group,
-                'RESULT'                                                                                value_type,
-                999999                                                                                  run_order,
-                now()                                                                                   created_at,
-                0                                                                                       refresh_time,
-                'NFT'                                                                                   wired_type,
-                999                                                                                     label_order,
-                'WAITING'                                                                               sync_es_status
+                            else nft_trade_type_temp.nft_trade_type_name end) "content",
+                'SQL'                                                         rule_type,
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vr'                              rule_group,
+                'RESULT'                                                      value_type,
+                999999                                                        run_order,
+                now()                                                         created_at,
+                0                                                             refresh_time,
+                'NFT'                                                         wired_type,
+                999                                                           label_order,
+                'WAITING'                                                     sync_es_status
 from nft_sync_address
          inner join nft_platform_temp on
     (nft_sync_address.address = nft_platform_temp.address)
@@ -2695,17 +2462,8 @@ select distinct nft_sync_address.platform                                       
                 ''                                                                                   activity,
                 ''                                                                                   hold_time,
                 now()                                                                                created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_RANK_' || level_def_temp.level label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform_temp.platform_name || ' ' || nft_sync_address.platform || ' ' ||
-                level_def_temp.level_name ||
-                ' ' || (case
-                            when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                            else nft_trade_type_temp.nft_trade_type_name end)                        "content",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vr' || level_def_temp.code                              label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
                 'RANK'                                                                               label_category,
                 recent_time_code
@@ -2741,20 +2499,17 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                                  project,
-                nft_sync_address.address                                                               "token",
-                nft_trade_type_temp.nft_trade_type                                                     "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_RANK'                                                                  label_type,
-                'T'                                                                                    operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type seq_flag,
-                'volume_rank'                                                                          data_subject,
-                'ALL'                                                                                  project_name,
-                nft_sync_address.platform                                                              token_name,
+select distinct 'ALL'                              project,
+                nft_sync_address.address           "token",
+                nft_trade_type_temp.nft_trade_type "type",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vr'   label_type,
+                'T'                                operate_type,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vr'   seq_flag,
+                'volume_rank'                      data_subject,
+                'ALL'                              project_name,
+                nft_sync_address.platform          token_name,
                 recent_time_temp.recent_time_code
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
@@ -2782,15 +2537,11 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                                "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_RANK' as                                      "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_RANK_' ||
-                level_def_temp.level  as                                      "name",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vr' as                           "type",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vr' ||
+                level_def_temp.code              as                           "name",
                 'SYSTEM'                                                      "source",
                 'PUBLIC'                                                      visible_type,
                 'TOTAL_PART'                                                  strategy,
@@ -2806,10 +2557,8 @@ select distinct 'RelationTeam'                                                "o
                                 then 'Trader'
                             else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                         rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_RANK'                                         rule_group,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vr'                              rule_group,
                 'RESULT'                                                      value_type,
                 999999                                                        run_order,
                 now()                                                         created_at,
@@ -2843,31 +2592,23 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct nft_sync_address.platform                                                                                                      asset,
-                'ALL'                                                                                                                          project,
+select distinct nft_sync_address.platform                       asset,
+                'ALL'                                           project,
                 case
                     when nft_trade_type_temp.nft_trade_type = 'ALL' THEN ''
-                    ELSE nft_trade_type_temp.nft_trade_type END                                                                                trade_type,
-                ''                                                                                                                             balance,
-                level_def_temp.level                                                                                                           volume,
-                ''                                                                                                                             activity,
-                ''                                                                                                                             hold_time,
-                now()                                                                                                                          created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_RANK_' ||
-                level_def_temp.level                                                                                                           label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP ' ||
-                nft_sync_address.platform || ' ' || level_def_temp.level_name || ' ' || (case
-                                                                                             when nft_trade_type_temp.nft_trade_type = 'ALL'
-                                                                                                 then 'Trader'
-                                                                                             else nft_trade_type_temp.nft_trade_type_name end) "content",
+                    ELSE nft_trade_type_temp.nft_trade_type END trade_type,
+                ''                                              balance,
+                level_def_temp.level                            volume,
+                ''                                              activity,
+                ''                                              hold_time,
+                now()                                           created_at,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vr' ||
+                level_def_temp.code                             label_name,
                 (case
                      when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft'
-                     else 'token' end)                                                                                                         asset_type,
-                'RANK'                                                                                                                         label_category,
+                     else 'token' end)                          asset_type,
+                'RANK'                                          label_category,
                 recent_time_code
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
@@ -2904,9 +2645,9 @@ select distinct (select nft_platform_temp.platform_name
                     limit 1)  project,
    'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
-    recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_'  ||nft_trade_type_temp.nft_trade_type||'_MP_NFT_VOLUME_RANK' label_type,
+    recent_time_temp.code || mp_nft_platform_temp.id || 'a1'  || 'm' ||nft_trade_type_temp.code || 'vr'  label_type,
     'T' operate_type,
-    recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_'  ||nft_trade_type_temp.nft_trade_type seq_flag,
+    recent_time_temp.code || mp_nft_platform_temp.id || 'a1'  || 'm' ||nft_trade_type_temp.code || 'vr' seq_flag,
     'volume_rank' data_subject,
     mp_nft_platform_temp.platform_name project_name,
     'ALL' token_name,
@@ -2939,18 +2680,10 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                                "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_RANK' as                                      "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_RANK_' ||
-                level_def_temp.level  as                                      "name",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code ||
+                'vr'                as                                        "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code || 'vr' ||
+                level_def_temp.code as                                        "name",
                 'SYSTEM'                                                      "source",
                 'PUBLIC'                                                      visible_type,
                 'TOTAL_PART'                                                  strategy,
@@ -2966,12 +2699,8 @@ select distinct 'RelationTeam'                                                "o
                                 then 'Trader'
                             else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                         rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_RANK'                                         rule_group,
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code ||
+                'vr'                                                          rule_group,
                 'RESULT'                                                      value_type,
                 999999                                                        run_order,
                 now()                                                         created_at,
@@ -3015,18 +2744,8 @@ select distinct (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'AL
                 ''                                                                                           activity,
                 ''                                                                                           hold_time,
                 now()                                                                                        created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_RANK_' ||
-                level_def_temp.level                                                                         label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform_temp.platform_name || ' NFT ' || level_def_temp.level_name || ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                                       "content",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code || 'vr' ||
+                level_def_temp.code                                                                          label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end)         asset_type,
                 'RANK'                                                                                       label_category,
                 recent_time_code
@@ -3060,19 +2779,15 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                           project,
-                'ALL'                                                                           "token",
-                nft_trade_type_temp.nft_trade_type                                              "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_RANK' label_type,
-                'T'                                                                             operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type                          seq_flag,
-                'volume_rank'                                                                   data_subject,
-                'ALL'                                                                           project_name,
-                'ALL'                                                                           token_name,
+select distinct 'ALL'                                                                            project,
+                'ALL'                                                                            "token",
+                nft_trade_type_temp.nft_trade_type                                               "type",
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vr' label_type,
+                'T'                                                                              operate_type,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vr' seq_flag,
+                'volume_rank'                                                                    data_subject,
+                'ALL'                                                                            project_name,
+                'ALL'                                                                            token_name,
                 recent_time_temp.recent_time_code
 from nft_trade_type_temp
          inner join recent_time_temp on (1 = 1)
@@ -3094,18 +2809,13 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_RANK' as                                      "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_RANK_' ||
-                level_def_temp.level  as                                      "name",
-                'SYSTEM'                                                      "source",
-                'PUBLIC'                                                      visible_type,
-                'TOTAL_PART'                                                  strategy,
+select distinct 'RelationTeam'                                                                      "owner",
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vr' as "type",
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vr' ||
+                level_def_temp.code                                                              as "name",
+                'SYSTEM'                                                                            "source",
+                'PUBLIC'                                                                            visible_type,
+                'TOTAL_PART'                                                                        strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
                 (case
@@ -3115,19 +2825,16 @@ select distinct 'RelationTeam'                                                "o
                     || (case
                             when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL'
                                 then 'Trader'
-                            else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'SQL'                                                         rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_RANK'                                         rule_group,
-                'RESULT'                                                      value_type,
-                999999                                                        run_order,
-                now()                                                         created_at,
-                0                                                             refresh_time,
-                'NFT'                                                         wired_type,
-                999                                                           label_order,
-                'WAITING'                                                     sync_es_status
+                            else nft_trade_type_temp.nft_trade_type_name end)                       "content",
+                'SQL'                                                                               rule_type,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vr'    rule_group,
+                'RESULT'                                                                            value_type,
+                999999                                                                              run_order,
+                now()                                                                               created_at,
+                0                                                                                   refresh_time,
+                'NFT'                                                                               wired_type,
+                999                                                                                 label_order,
+                'WAITING'                                                                           sync_es_status
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -3149,28 +2856,20 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_NFT'                                              asset,
-                'ALL'                                                  project,
+select distinct 'ALL_NFT'                                       asset,
+                'ALL'                                           project,
                 case
                     when nft_trade_type_temp.nft_trade_type = 'ALL' THEN ''
-                    ELSE nft_trade_type_temp.nft_trade_type END        trade_type,
-                ''                                                     balance,
-                level_def_temp.level                                   volume,
-                ''                                                     activity,
-                ''                                                     hold_time,
-                now()                                                  created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_RANK_' ||
-                level_def_temp.level                                   label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
-                level_def_temp.level_name || ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end) "content",
-                'nft'                                                  asset_type,
-                'RANK'                                                 label_category,
+                    ELSE nft_trade_type_temp.nft_trade_type END trade_type,
+                ''                                              balance,
+                level_def_temp.level                            volume,
+                ''                                              activity,
+                ''                                              hold_time,
+                now()                                           created_at,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vr' ||
+                level_def_temp.code                             label_name,
+                'nft'                                           asset_type,
+                'RANK'                                          label_category,
                 recent_time_code
 from nft_trade_type_temp
          inner join (select *
@@ -3195,21 +2894,17 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct nft_platform_temp.platform_name                            project,
-                nft_platform_temp.address                                  "token",
-                nft_trade_type_temp.nft_trade_type                         "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_TOP' label_type,
-                'T'                                                        operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type                         seq_flag,
-                'volume_top'                                               data_subject,
-                mp_nft_platform_temp.platform_name                         project_name,
-                nft_sync_address.platform                                  token_name,
+select distinct nft_platform_temp.platform_name    project,
+                nft_platform_temp.address          "token",
+                nft_trade_type_temp.nft_trade_type "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vt'   label_type,
+                'T'                                operate_type,
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vt'   seq_flag,
+                'volume_top'                       data_subject,
+                mp_nft_platform_temp.platform_name project_name,
+                nft_sync_address.platform          token_name,
                 recent_time_temp.recent_time_code
 from nft_sync_address
          inner join nft_platform_temp on
@@ -3240,18 +2935,14 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                         "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_TOP'                          as "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_TOP_' || level_def_temp.level as "name",
-                'SYSTEM'                                                                               "source",
-                'PUBLIC'                                                                               visible_type,
-                'TOTAL_PART'                                                                           strategy,
+select distinct 'RelationTeam'                                                "owner",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vt'                        as    "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vt' || level_def_temp.code as    "name",
+                'SYSTEM'                                                      "source",
+                'PUBLIC'                                                      visible_type,
+                'TOTAL_PART'                                                  strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
                 mp_nft_platform_temp.platform_name || ' ' || nft_sync_address.platform || ' ' ||
@@ -3262,19 +2953,17 @@ select distinct 'RelationTeam'                                                  
                     || (case
                             when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL'
                                 then 'Trader'
-                            else nft_trade_type_temp.nft_trade_type_name end)                          "content",
-                'SQL'                                                                                  rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_TOP'                             rule_group,
-                'RESULT'                                                                               value_type,
-                999999                                                                                 run_order,
-                now()                                                                                  created_at,
-                0                                                                                      refresh_time,
-                'NFT'                                                                                  wired_type,
-                999                                                                                    label_order,
-                'WAITING'                                                                              sync_es_status
+                            else nft_trade_type_temp.nft_trade_type_name end) "content",
+                'SQL'                                                         rule_type,
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vt'                              rule_group,
+                'RESULT'                                                      value_type,
+                999999                                                        run_order,
+                now()                                                         created_at,
+                0                                                             refresh_time,
+                'NFT'                                                         wired_type,
+                999                                                           label_order,
+                'WAITING'                                                     sync_es_status
 from nft_sync_address
          inner join nft_platform_temp on
     (nft_sync_address.address = nft_platform_temp.address)
@@ -3313,17 +3002,8 @@ select distinct nft_sync_address.platform                                       
                 ''                                                                                   activity,
                 ''                                                                                   hold_time,
                 now()                                                                                created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' || nft_sync_address.name_for_label || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_TOP_' || level_def_temp.level  label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform_temp.platform_name || ' ' || nft_sync_address.platform || ' ' ||
-                level_def_temp.level_name ||
-                ' ' || (case
-                            when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                            else nft_trade_type_temp.nft_trade_type_name end)                        "content",
+                recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vt' || level_def_temp.code                              label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
                 'TOP'                                                                                label_category,
                 recent_time_code
@@ -3359,20 +3039,17 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                                  project,
-                nft_sync_address.address                                                               "token",
-                nft_trade_type_temp.nft_trade_type                                                     "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_TOP'                                                                   label_type,
-                'T'                                                                                    operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type seq_flag,
-                'volume_top'                                                                           data_subject,
-                'ALL'                                                                                  project_name,
-                nft_sync_address.platform                                                              token_name,
+select distinct 'ALL'                              project,
+                nft_sync_address.address           "token",
+                nft_trade_type_temp.nft_trade_type "type",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vt'   label_type,
+                'T'                                operate_type,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vt'   seq_flag,
+                'volume_top'                       data_subject,
+                'ALL'                              project_name,
+                nft_sync_address.platform          token_name,
                 recent_time_temp.recent_time_code
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
@@ -3400,15 +3077,11 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                                "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_TOP' as                                       "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_TOP_' ||
-                level_def_temp.level as                                       "name",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vt' as                           "type",
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vt' ||
+                level_def_temp.code              as                           "name",
                 'SYSTEM'                                                      "source",
                 'PUBLIC'                                                      visible_type,
                 'TOTAL_PART'                                                  strategy,
@@ -3424,10 +3097,8 @@ select distinct 'RelationTeam'                                                "o
                                 then 'Trader'
                             else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                         rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_TOP'                                          rule_group,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vt'                              rule_group,
                 'RESULT'                                                      value_type,
                 999999                                                        run_order,
                 now()                                                         created_at,
@@ -3461,31 +3132,23 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct nft_sync_address.platform                                                                                                      asset,
-                'ALL'                                                                                                                          project,
+select distinct nft_sync_address.platform                       asset,
+                'ALL'                                           project,
                 case
                     when nft_trade_type_temp.nft_trade_type = 'ALL' THEN ''
-                    ELSE nft_trade_type_temp.nft_trade_type END                                                                                trade_type,
-                ''                                                                                                                             balance,
-                'TOP'                                                                                                                          volume,
-                ''                                                                                                                             activity,
-                ''                                                                                                                             hold_time,
-                now()                                                                                                                          created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_TOP_' ||
-                level_def_temp.level                                                                                                           label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP ' ||
-                nft_sync_address.platform || ' ' || level_def_temp.level_name || ' ' || (case
-                                                                                             when nft_trade_type_temp.nft_trade_type = 'ALL'
-                                                                                                 then 'Trader'
-                                                                                             else nft_trade_type_temp.nft_trade_type_name end) "content",
+                    ELSE nft_trade_type_temp.nft_trade_type END trade_type,
+                ''                                              balance,
+                'TOP'                                           volume,
+                ''                                              activity,
+                ''                                              hold_time,
+                now()                                           created_at,
+                recent_time_temp.code || 'a1' || ('n' || nft_sync_address.id) || 'm' ||
+                nft_trade_type_temp.code || 'vt' ||
+                level_def_temp.code                             label_name,
                 (case
                      when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft'
-                     else 'token' end)                                                                                                         asset_type,
-                'TOP'                                                                                                                          label_category,
+                     else 'token' end)                          asset_type,
+                'TOP'                                           label_category,
                 recent_time_code
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
@@ -3523,9 +3186,9 @@ select distinct (select nft_platform_temp.platform_name
                     limit 1)  project,
    'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
-    recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name || '_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_'  ||nft_trade_type_temp.nft_trade_type||'_MP_NFT_VOLUME_TOP' label_type,
+    recent_time_temp.code || mp_nft_platform_temp.id || 'a1'  || 'm' ||nft_trade_type_temp.code || 'vt' label_type,
     'T' operate_type,
-    recent_time_temp.recent_time_name||(case when recent_time_temp.recent_time_name<>'' then '_' else '' end) ||mp_nft_platform_temp.platform_name ||'_'||(case when nft_action_platform_temp.nft_type='ERC721' THEN 'ALL' else 'AllToken' end )||'_'  ||nft_trade_type_temp.nft_trade_type seq_flag,
+     recent_time_temp.code || mp_nft_platform_temp.id || 'a1'  || 'm' ||nft_trade_type_temp.code || 'vt' seq_flag,
     'volume_top' data_subject,
     mp_nft_platform_temp.platform_name project_name,
     'ALL' token_name,
@@ -3558,18 +3221,10 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                                "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_TOP' as                                       "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_TOP_' ||
-                level_def_temp.level as                                       "name",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code ||
+                'vt'                as                                        "type",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code || 'vt' ||
+                level_def_temp.code as                                        "name",
                 'SYSTEM'                                                      "source",
                 'PUBLIC'                                                      visible_type,
                 'TOTAL_PART'                                                  strategy,
@@ -3585,12 +3240,8 @@ select distinct 'RelationTeam'                                                "o
                                 then 'Trader'
                             else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                         rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_TOP'                                          rule_group,
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code ||
+                'vt'                                                          rule_group,
                 'RESULT'                                                      value_type,
                 999999                                                        run_order,
                 now()                                                         created_at,
@@ -3634,18 +3285,8 @@ select distinct (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'AL
                 ''                                                                                           activity,
                 ''                                                                                           hold_time,
                 now()                                                                                        created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                mp_nft_platform_temp.platform_name || '_' ||
-                (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL' else 'AllToken' end) || '_' ||
-                nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_TOP_' ||
-                level_def_temp.level                                                                         label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                mp_nft_platform_temp.platform_name || ' NFT ' || level_def_temp.level_name || ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end)                                       "content",
+                recent_time_temp.code || mp_nft_platform_temp.id || 'a1' || 'm' || nft_trade_type_temp.code || 'vt' ||
+                level_def_temp.code                                                                          label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end)         asset_type,
                 'TOP'                                                                                        label_category,
                 recent_time_code
@@ -3679,19 +3320,15 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                          project,
-                'ALL'                                                                          "token",
-                nft_trade_type_temp.nft_trade_type                                             "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_TOP' label_type,
-                'T'                                                                            operate_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type                         seq_flag,
-                'volume_top'                                                                   data_subject,
-                'ALL'                                                                          project_name,
-                'ALL'                                                                          token_name,
+select distinct 'ALL'                                                                            project,
+                'ALL'                                                                            "token",
+                nft_trade_type_temp.nft_trade_type                                               "type",
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vt' label_type,
+                'T'                                                                              operate_type,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vt' seq_flag,
+                'volume_top'                                                                     data_subject,
+                'ALL'                                                                            project_name,
+                'ALL'                                                                            token_name,
                 recent_time_temp.recent_time_code
 from nft_trade_type_temp
          inner join recent_time_temp on (1 = 1)
@@ -3713,17 +3350,13 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                    "owner",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_TOP' as "type",
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_TOP_' ||
-                level_def_temp.level                                                           as "name",
-                'SYSTEM'                                                                          "source",
-                'PUBLIC'                                                                          visible_type,
-                'TOTAL_PART'                                                                      strategy,
+select distinct 'RelationTeam'                                                                      "owner",
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vt' as "type",
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vt' ||
+                level_def_temp.code                                                              as "name",
+                'SYSTEM'                                                                            "source",
+                'PUBLIC'                                                                            visible_type,
+                'TOTAL_PART'                                                                        strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
                 (case
@@ -3733,19 +3366,16 @@ select distinct 'RelationTeam'                                                  
                     || (case
                             when nft_trade_type_temp.asset_type = 'token' or nft_trade_type_temp.nft_trade_type = 'ALL'
                                 then 'Trader'
-                            else nft_trade_type_temp.nft_trade_type_name end)                     "content",
-                'SQL'                                                                             rule_type,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type ||
-                '_MP_NFT_VOLUME_TOP'                                                              rule_group,
-                'RESULT'                                                                          value_type,
-                999999                                                                            run_order,
-                now()                                                                             created_at,
-                0                                                                                 refresh_time,
-                'NFT'                                                                             wired_type,
-                999                                                                               label_order,
-                'WAITING'                                                                         sync_es_status
+                            else nft_trade_type_temp.nft_trade_type_name end)                       "content",
+                'SQL'                                                                               rule_type,
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vt'    rule_group,
+                'RESULT'                                                                            value_type,
+                999999                                                                              run_order,
+                now()                                                                               created_at,
+                0                                                                                   refresh_time,
+                'NFT'                                                                               wired_type,
+                999                                                                                 label_order,
+                'WAITING'                                                                           sync_es_status
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -3777,16 +3407,8 @@ select distinct 'ALL_NFT'                                              asset,
                 ''                                                     activity,
                 ''                                                     hold_time,
                 now()                                                  created_at,
-                recent_time_temp.recent_time_name ||
-                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
-                'ALL_' || 'ALL_' || nft_trade_type_temp.nft_trade_type || '_MP_NFT_VOLUME_TOP_' ||
-                level_def_temp.level                                   label_name,
-                recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'MP NFT ' ||
-                level_def_temp.level_name || ' ' ||
-                (case
-                     when nft_trade_type_temp.nft_trade_type = 'ALL' then 'Trader'
-                     else nft_trade_type_temp.nft_trade_type_name end) "content",
+                recent_time_temp.code || 'a1' || 'a1' || 'm' || nft_trade_type_temp.code || 'vt' ||
+                level_def_temp.code                                    label_name,
                 'nft'                                                  asset_type,
                 'TOP'                                                  label_category,
                 recent_time_code
@@ -5360,8 +4982,8 @@ select distinct 'RelationTeam'                               "owner",
                 platform_temp.platform_name || ' ' ||
                 top_token_1000_temp.symbol || ' ' ||
                 level_def_temp.level_name || ' ' ||
-                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name|| ' ' end) ||
-                'Trader'                                    "content",
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
+                'Trader'                                     "content",
                 'SQL'                                        rule_type,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
@@ -5580,11 +5202,11 @@ select distinct 'RelationTeam'            "owner",
                 'TOTAL_PART'              strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_large_category.platform_large_name || ' '||
-                top_token_1000_temp.symbol ||' ' ||
+                platform_large_category.platform_large_name || ' ' ||
+                top_token_1000_temp.symbol || ' ' ||
                 (case when trade_type.trade_type = 'ALL' then level_def_temp.level || ' ' else '' end) ||
-                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name|| ' ' end) ||
-                (case when trade_type.trade_type <> 'ALL' then '' || level_def_temp.level|| ' ' else '' end) ||
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
+                (case when trade_type.trade_type <> 'ALL' then '' || level_def_temp.level || ' ' else '' end) ||
                 level_def_temp.level_name "content",
                 'SQL'                     rule_type,
                 recent_time_temp.recent_time_name ||
@@ -5742,10 +5364,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                               strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_temp.platform_name ||' ' ||
-                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name|| ' ' end)  ||
-                level_def_temp.level_name|| ' ' ||
-                'Trader'                                                                 "content",
+                platform_temp.platform_name || ' ' ||
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
+                level_def_temp.level_name || ' ' ||
+                'Trader'                                                                   "content",
                 'SQL'                                                                      rule_type,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
@@ -5884,10 +5506,10 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                  strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                platform_large_category.platform_large_name|| ' ' ||
+                platform_large_category.platform_large_name || ' ' ||
                 level_def_temp.level_name || ' ' ||
-                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name|| ' ' end) ||
-                'Trader'                                                                     "content",
+                (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
+                'Trader'                                                                      "content",
                 'SQL'                                                                         rule_type,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
