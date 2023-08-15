@@ -36,13 +36,13 @@ into dim_rule_content_temp ("token",
                             token_name,
                             token_type)
 
-select distinct lpt.pool                              as token,
+select distinct lpt.pool                          as token,
                 --平台+资产+交易类型
                 '' || 'l' || ipt.id || '' || 'bg' as label_type,
-                'T'                                   as operate_type,
-                'balance_grade'                          data_subject,
-                lpt.symbol_wired                         token_name,
-                'lp'                                  as token_type
+                'T'                               as operate_type,
+                'balance_grade'                      data_subject,
+                lpt.symbol_wired                     token_name,
+                'lp'                              as token_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -88,15 +88,15 @@ into public."label_temp" ("owner",
                           sync_es_status)
 select distinct 'RelationTeam'                                                                 "owner",
                 --平台+资产+交易类型
-                '' || 'l' || ipt.id || '' || 'bg'                        as                "type",
+                '' || 'l' || ipt.id || '' || 'bg'                        as                    "type",
                 --平台+资产+交易类型
-                '' || 'l' || ipt.id || '' || 'bg' || level_def_temp.code as                "name",
+                '' || 'l' || ipt.id || '' || 'bg' || level_def_temp.code as                    "name",
                 'SYSTEM'                                                                       "source",
                 'PUBLIC'                                                                       visible_type,
                 'TOTAL_PART'                                                                   strategy,
                 lpt.factory_content || ' ' || symbol_wired || ' ' || level_def_temp.level_name "content",
                 'SQL'                                                                          rule_type,
-                '' || 'l' || ipt.id || '' || 'bg'                                          rule_group,
+                '' || 'l' || ipt.id || '' || 'bg'                                              rule_group,
                 'RESULT'                                                                       value_type,
                 999999                                                                         run_order,
                 now()                                                                          created_at,
@@ -155,7 +155,7 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 ''                                                                             activity,
                 ''                                                                             hold_time,
                 now()                                                                          created_at,
-                '' || 'l' || ipt.id || '' || 'bg' || level_def_temp.code                   label_name,
+                '' || 'l' || ipt.id || '' || 'bg' || level_def_temp.code                       label_name,
                 'token'                                                                        asset_type,
                 'GRADE'                                                                        label_category,
                 'ALL'                                                                          recent_time_code
@@ -200,12 +200,12 @@ into dim_rule_content_temp ("token",
                             token_name,
                             token_type)
 
-select distinct lpt.pool                              as token,
+select distinct lpt.pool                          as token,
                 '' || 'l' || ipt.id || '' || 'br' as label_type,
-                'T'                                   as operate_type,
-                'balance_rank'                           data_subject,
-                lpt.symbol_wired                         token_name,
-                'lp'                                  as token_type
+                'T'                               as operate_type,
+                'balance_rank'                       data_subject,
+                lpt.symbol_wired                     token_name,
+                'lp'                              as token_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -250,14 +250,14 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                                                 "owner",
-                '' || 'l' || ipt.id || '' || 'br'                                          "type",
-                '' || 'l' || ipt.id || '' || 'br' || level_def_temp.code as                "name",
+                '' || 'l' || ipt.id || '' || 'br'                                              "type",
+                '' || 'l' || ipt.id || '' || 'br' || level_def_temp.code as                    "name",
                 'SYSTEM'                                                                       "source",
                 'PUBLIC'                                                                       visible_type,
                 'TOTAL_PART'                                                                   strategy,
                 lpt.factory_content || ' ' || symbol_wired || ' ' || level_def_temp.level_name "content",
                 'SQL'                                                                          rule_type,
-                '' || 'l' || ipt.id || '' || 'br'                                          rule_group,
+                '' || 'l' || ipt.id || '' || 'br'                                              rule_group,
                 'RESULT'                                                                       value_type,
                 999999                                                                         run_order,
                 now()                                                                          created_at,
@@ -316,7 +316,7 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 ''                                                                             activity,
                 ''                                                                             hold_time,
                 now()                                                                          created_at,
-                '' || 'l' || ipt.id || '' || 'br' || level_def_temp.code                   label_name,
+                '' || 'l' || ipt.id || '' || 'br' || level_def_temp.code                       label_name,
                 'token'                                                                        asset_type,
                 'RANK'                                                                         label_category,
                 'ALL'                                                                          recent_time_code
@@ -359,12 +359,12 @@ into dim_rule_content_temp ("token",
                             data_subject,
                             token_name, token_type)
 
-select distinct lpt.pool                              as token,
+select distinct lpt.pool                          as token,
                 '' || 'l' || ipt.id || '' || 'bt' as label_type,
-                'T'                                   as operate_type,
-                'balance_top'                            data_subject,
-                lpt.symbol_wired                         token_name,
-                'lp'                                  as token_type
+                'T'                               as operate_type,
+                'balance_top'                        data_subject,
+                lpt.symbol_wired                     token_name,
+                'lp'                              as token_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -409,14 +409,14 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status)
 select distinct 'RelationTeam'                                                                 "owner",
-                '' || 'l' || ipt.id || '' || 'bt'                                          "type",
-                '' || 'l' || ipt.id || '' || 'bt' || level_def_temp.code                   "name",
+                '' || 'l' || ipt.id || '' || 'bt'                                              "type",
+                '' || 'l' || ipt.id || '' || 'bt' || level_def_temp.code                       "name",
                 'SYSTEM'                                                                       "source",
                 'PUBLIC'                                                                       visible_type,
                 'TOTAL_PART'                                                                   strategy,
                 lpt.factory_content || ' ' || symbol_wired || ' ' || level_def_temp.level_name "content",
                 'SQL'                                                                          rule_type,
-                '' || 'l' || ipt.id || '' || 'bt'                                          rule_group,
+                '' || 'l' || ipt.id || '' || 'bt'                                              rule_group,
                 'RESULT'                                                                       value_type,
                 999999                                                                         run_order,
                 now()                                                                          created_at,
@@ -475,7 +475,7 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 ''                                                                             activity,
                 ''                                                                             hold_time,
                 now()                                                                          created_at,
-                '' || 'l' || ipt.id || '' || 'bt' || level_def_temp.code                   label_name,
+                '' || 'l' || ipt.id || '' || 'bt' || level_def_temp.code                       label_name,
                 'token'                                                                        asset_type,
                 'TOP'                                                                          label_category,
                 'ALL'                                                                          recent_time_code
@@ -521,12 +521,12 @@ into dim_rule_content_temp ("token",
                             token_type,
                             recent_code)
 
-select distinct lpt.pool                                                       as token,
+select distinct lpt.pool                                                   as token,
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'cg' as label_type,
-                'T'                                                            as operate_type,
-                'count'                                                           data_subject,
-                lpt.symbol_wired                                                  token_name,
-                'lp'                                                           as token_type,
+                'T'                                                        as operate_type,
+                'count'                                                       data_subject,
+                lpt.symbol_wired                                              token_name,
+                'lp'                                                       as token_type,
                 recent_time_temp.recent_time_code
 from (select wlp.id,
              wlp.name,
@@ -572,25 +572,25 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                        as "owner",
+select distinct 'RelationTeam'                                                                    as "owner",
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'cg'                        as "type",
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'cg' || level_def_temp.code as "name",
-                'SYSTEM'                                                                              as "source",
-                'PUBLIC'                                                                              as visible_type,
-                'TOTAL_PART'                                                                          as strategy,
+                'SYSTEM'                                                                          as "source",
+                'PUBLIC'                                                                          as visible_type,
+                'TOTAL_PART'                                                                      as strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || lpt.factory_content ||
                 ' ' ||
-                symbol_wired || ' ' || level_def_temp.level_name                                      as "content",
-                'SQL'                                                                                 as rule_type,
+                symbol_wired || ' ' || level_def_temp.level_name                                  as "content",
+                'SQL'                                                                             as rule_type,
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'cg'                        as rule_group,
-                'RESULT'                                                                              as value_type,
-                999999                                                                                as run_order,
-                now()                                                                                 as created_at,
-                0                                                                                     as refresh_time,
-                'DEFI'                                                                                as wired_type,
-                999                                                                                   as label_order,
-                'WAITING'                                                                             as sync_es_status
+                'RESULT'                                                                          as value_type,
+                999999                                                                            as run_order,
+                now()                                                                             as created_at,
+                0                                                                                 as refresh_time,
+                'DEFI'                                                                            as wired_type,
+                999                                                                               as label_order,
+                'WAITING'                                                                         as sync_es_status
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -635,17 +635,17 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')'        asset,
-                lpt.factory_type                                                                      project,
-                ''                                                                                    trade_type,
-                ''                                                                                    balance,
-                ''                                                                                    volume,
-                level_def_temp.level                                                                  activity,
-                ''                                                                                    hold_time,
-                now()                                                                                 created_at,
+select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')'    asset,
+                lpt.factory_type                                                                  project,
+                ''                                                                                trade_type,
+                ''                                                                                balance,
+                ''                                                                                volume,
+                level_def_temp.level                                                              activity,
+                ''                                                                                hold_time,
+                now()                                                                             created_at,
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'cg' || level_def_temp.code label_name,
-                'token'                                                                               asset_type,
-                'GRADE'                                                                               label_category,
+                'token'                                                                           asset_type,
+                'GRADE'                                                                           label_category,
                 recent_time_code
 from (select wlp.id,
              wlp.name,
@@ -689,12 +689,12 @@ into dim_rule_content_temp ("token",
                             token_type,
                             recent_code)
 
-select distinct lpt.pool                                                       as token,
+select distinct lpt.pool                                                   as token,
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vg' as label_type,
-                'T'                                                            as operate_type,
-                'volume_grade'                                                 as data_subject,
-                lpt.symbol_wired                                               as token_name,
-                'lp'                                                           as token_type,
+                'T'                                                        as operate_type,
+                'volume_grade'                                             as data_subject,
+                lpt.symbol_wired                                           as token_name,
+                'lp'                                                       as token_type,
                 recent_time_temp.recent_time_code
 from (select wlp.id,
              wlp.name,
@@ -740,28 +740,28 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                           "owner",
+select distinct 'RelationTeam'                                                                       "owner",
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vg'                        as "type",
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vg' || level_def_temp.code as "name",
-                'SYSTEM'                                                                                 "source",
-                'PUBLIC'                                                                                 visible_type,
-                'TOTAL_PART'                                                                             strategy,
+                'SYSTEM'                                                                             "source",
+                'PUBLIC'                                                                             visible_type,
+                'TOTAL_PART'                                                                         strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || lpt.factory_content ||
                 ' ' ||
                 symbol_wired || ' ' || (case
                                             when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
                                                 then level_def_temp.level || ' '
-                                            else '' end) || level_def_temp.level_name                    "content",
-                'SQL'                                                                                    rule_type,
+                                            else '' end) || level_def_temp.level_name                "content",
+                'SQL'                                                                                rule_type,
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vg'                           rule_group,
-                'RESULT'                                                                                 value_type,
-                999999                                                                                   run_order,
-                now()                                                                                    created_at,
-                0                                                                                        refresh_time,
-                'DEFI'                                                                                   wired_type,
-                999                                                                                      label_order,
-                'WAITING'                                                                                sync_es_status
+                'RESULT'                                                                             value_type,
+                999999                                                                               run_order,
+                now()                                                                                created_at,
+                0                                                                                    refresh_time,
+                'DEFI'                                                                               wired_type,
+                999                                                                                  label_order,
+                'WAITING'                                                                            sync_es_status
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -806,17 +806,17 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')'        asset,
-                lpt.factory_type                                                                      project,
-                ''                                                                                    trade_type,
-                ''                                                                                    balance,
-                level_def_temp.level                                                                  volume,
-                ''                                                                                    activity,
-                ''                                                                                    hold_time,
-                now()                                                                                 created_at,
+select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')'    asset,
+                lpt.factory_type                                                                  project,
+                ''                                                                                trade_type,
+                ''                                                                                balance,
+                level_def_temp.level                                                              volume,
+                ''                                                                                activity,
+                ''                                                                                hold_time,
+                now()                                                                             created_at,
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vg' || level_def_temp.code label_name,
-                'token'                                                                               asset_type,
-                'GRADE'                                                                               label_category,
+                'token'                                                                           asset_type,
+                'GRADE'                                                                           label_category,
                 recent_time_code
 from (select wlp.id,
              wlp.name,
@@ -860,12 +860,12 @@ into dim_rule_content_temp ("token",
                             token_type,
                             recent_code)
 
-select distinct lpt.pool                                                                              as token,
+select distinct lpt.pool                                                                          as token,
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vr' || level_def_temp.code as label_type,
-                'T'                                                                                   as operate_type,
-                'volume_rank'                                                                            data_subject,
-                lpt.symbol_wired                                                                         token_name,
-                'lp'                                                                                  as token_type,
+                'T'                                                                               as operate_type,
+                'volume_rank'                                                                        data_subject,
+                lpt.symbol_wired                                                                     token_name,
+                'lp'                                                                              as token_type,
                 recent_time_temp.recent_time_code
 from (select wlp.id,
              wlp.name,
@@ -913,9 +913,9 @@ into public."label_temp" ("owner",
                           sync_es_status)
 select distinct 'RelationTeam'                                                                           "owner",
                 recent_time_temp.recent_time_name ||
-                recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vr'                        as "type",
+                recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vr'                        as     "type",
                 recent_time_temp.recent_time_name ||
-                recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vr' || level_def_temp.code as "name",
+                recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vr' || level_def_temp.code as     "name",
                 'SYSTEM'                                                                                 "source",
                 'PUBLIC'                                                                                 visible_type,
                 'TOTAL_PART'                                                                             strategy,
@@ -925,9 +925,9 @@ select distinct 'RelationTeam'                                                  
                 symbol_wired || ' ' || (case
                                             when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
                                                 then level_def_temp.level || ' '
-                                            else '' end) || level_def_temp.level_name                    "content",
+                                            else '' end) || level_def_temp.level_name || ' ' || 'Trader' "content",
                 'SQL'                                                                                    rule_type,
-                recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vr'                           rule_group,
+                recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vr'                               rule_group,
                 'RESULT'                                                                                 value_type,
                 999999                                                                                   run_order,
                 now()                                                                                    created_at,
@@ -963,7 +963,7 @@ from (select wlp.id,
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join (select *
                      from level_def_temp
-                     where type = 'token_volume_rank') level_def_temp on
+                     where type = 'defi_volume_rank') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1);
 insert
@@ -979,18 +979,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')'        asset,
-                lpt.factory_type                                                                      project,
-                ''                                                                                    trade_type,
-                ''                                                                                    balance,
-                level_def_temp.level                                                                  volume,
-                ''                                                                                    activity,
-                ''                                                                                    hold_time,
-                now()                                                                                 created_at,
+select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')'    asset,
+                lpt.factory_type                                                                  project,
+                ''                                                                                trade_type,
+                ''                                                                                balance,
+                level_def_temp.level                                                              volume,
+                ''                                                                                activity,
+                ''                                                                                hold_time,
+                now()                                                                             created_at,
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vr' || level_def_temp.code label_name,
-                'token'                                                                               asset_type,
-                'RANK'                                                                                label_category,
-                'ALL'                                                                                 recent_time_code
+                'token'                                                                           asset_type,
+                'RANK'                                                                            label_category,
+                'ALL'                                                                             recent_time_code
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -1019,7 +1019,7 @@ from (select wlp.id,
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join (select *
                      from level_def_temp
-                     where type = 'token_volume_rank') level_def_temp on
+                     where type = 'defi_volume_rank') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1);
 
@@ -1033,13 +1033,13 @@ into dim_rule_content_temp(token,
                            create_time,
                            token_name,
                            token_type)
-select distinct t.address                           as token,
+select distinct t.address                       as token,
                 '' || 't' || t.id || '' || 'bg' as label_type,
-                'T'                                    operate_type,
-                'balance_grade'                        data_subject,
-                now()                               as create_time,
-                t.symbol                            as token_name,
-                'token'                             as token_type
+                'T'                                operate_type,
+                'balance_grade'                    data_subject,
+                now()                           as create_time,
+                t.symbol                        as token_name,
+                'token'                         as token_type
 from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t;
 
 insert
@@ -1059,22 +1059,22 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                "owner",
+select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'bg'                        as "type",
                 '' || 't' || t.id || '' || 'bg' || level_def_temp.code as "name",
-                'SYSTEM'                                                      "source",
-                'PUBLIC'                                                      visible_type,
-                'TOTAL_PART'                                                  strategy,
-                t.symbol || ' ' || level_def_temp.level_name                  "content",
-                'SQL'                                                         rule_type,
+                'SYSTEM'                                                  "source",
+                'PUBLIC'                                                  visible_type,
+                'TOTAL_PART'                                              strategy,
+                t.symbol || ' ' || level_def_temp.level_name              "content",
+                'SQL'                                                     rule_type,
                 '' || 't' || t.id || '' || 'bg'                           rule_group,
-                'RESULT'                                                      value_type,
-                999999                                                        run_order,
-                now()                                                         created_at,
-                0                                                             refresh_time,
-                'DEFI'                                                        wired_type,
-                999                                                           label_order,
-                'WAITING'                                                     sync_es_status
+                'RESULT'                                                  value_type,
+                999999                                                    run_order,
+                now()                                                     created_at,
+                0                                                         refresh_time,
+                'DEFI'                                                    wired_type,
+                999                                                       label_order,
+                'WAITING'                                                 sync_es_status
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1095,18 +1095,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'       asset,
-                ''                                                         project,
-                ''                                                         trade_type,
-                level_def_temp.level                                       balance,
-                ''                                                         volume,
-                ''                                                         activity,
-                ''                                                         hold_time,
-                now()                                                      created_at,
+select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
+                ''                                                     project,
+                ''                                                     trade_type,
+                level_def_temp.level                                   balance,
+                ''                                                     volume,
+                ''                                                     activity,
+                ''                                                     hold_time,
+                now()                                                  created_at,
                 '' || 't' || t.id || '' || 'bg' || level_def_temp.code label_name,
-                'token'                                                    asset_type,
-                'GRADE'                                                    label_category,
-                'ALL'                                                      recent_time_code
+                'token'                                                asset_type,
+                'GRADE'                                                label_category,
+                'ALL'                                                  recent_time_code
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1123,12 +1123,12 @@ into dim_rule_content_temp ("token",
                             data_subject,
                             token_name,
                             token_type)
-select distinct 'ALL'                        "token",
+select distinct 'ALL'                  "token",
                 '' || '' || '' || 'bg' label_type,
-                'T'                          operate_type,
-                'balance_grade'              data_subject,
-                'ALL'                        token_name,
-                'token' as                   token_type;
+                'T'                    operate_type,
+                'balance_grade'        data_subject,
+                'ALL'                  token_name,
+                'token' as             token_type;
 insert
 into public."label_temp" ("owner",
                           "type",
@@ -1146,22 +1146,22 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                         "owner",
+select distinct 'RelationTeam'                                   "owner",
                 '' || '' || '' || 'bg'                        as "type",
                 '' || '' || '' || 'bg' || level_def_temp.code as "name",
-                'SYSTEM'                                               "source",
-                'PUBLIC'                                               visible_type,
-                'TOTAL_PART'                                           strategy,
-                'Token ' || level_def_temp.level_name                  "content",
-                'SQL'                                                  rule_type,
+                'SYSTEM'                                         "source",
+                'PUBLIC'                                         visible_type,
+                'TOTAL_PART'                                     strategy,
+                'Token ' || level_def_temp.level_name            "content",
+                'SQL'                                            rule_type,
                 '' || '' || '' || 'bg'                           rule_group,
-                'RESULT'                                               value_type,
-                999999                                                 run_order,
-                now()                                                  created_at,
-                0                                                      refresh_time,
-                'DEFI'                                                 wired_type,
-                999                                                    label_order,
-                'WAITING'                                              sync_es_status
+                'RESULT'                                         value_type,
+                999999                                           run_order,
+                now()                                            created_at,
+                0                                                refresh_time,
+                'DEFI'                                           wired_type,
+                999                                              label_order,
+                'WAITING'                                        sync_es_status
 from level_def_temp
 where type = 'defi_balance_grade';
 insert
@@ -1177,18 +1177,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_TOKEN'                                         asset,
-                ''                                                  project,
-                ''                                                  trade_type,
-                level_def_temp.level                                balance,
-                ''                                                  volume,
-                ''                                                  activity,
-                ''                                                  hold_time,
-                now()                                               created_at,
+select distinct 'ALL_TOKEN'                                   asset,
+                ''                                            project,
+                ''                                            trade_type,
+                level_def_temp.level                          balance,
+                ''                                            volume,
+                ''                                            activity,
+                ''                                            hold_time,
+                now()                                         created_at,
                 '' || '' || '' || 'bg' || level_def_temp.code label_name,
-                'token'                                             asset_type,
-                'GRADE'                                             label_category,
-                'ALL'                                               recent_time_code
+                'token'                                       asset_type,
+                'GRADE'                                       label_category,
+                'ALL'                                         recent_time_code
 from level_def_temp
 where type = 'defi_balance_grade';
 
@@ -1202,13 +1202,13 @@ into dim_rule_content_temp(token,
                            create_time,
                            token_name,
                            token_type)
-select distinct t.address                           as token,
+select distinct t.address                       as token,
                 '' || 't' || t.id || '' || 'br' as label_type,
-                'T'                                    operate_type,
-                'balance_rank'                         data_subject,
-                now()                               as create_time,
-                t.symbol                            as token_name,
-                'token'                             as token_type
+                'T'                                operate_type,
+                'balance_rank'                     data_subject,
+                now()                           as create_time,
+                t.symbol                        as token_name,
+                'token'                         as token_type
 from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t;
 
 insert
@@ -1228,22 +1228,22 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                "owner",
+select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'br'                        as "type",
                 '' || 't' || t.id || '' || 'br' || level_def_temp.code as "name",
-                'SYSTEM'                                                      "source",
-                'PUBLIC'                                                      visible_type,
-                'TOTAL_PART'                                                  strategy,
-                t.symbol || ' ' || level_def_temp.level_name                  "content",
-                'SQL'                                                         rule_type,
+                'SYSTEM'                                                  "source",
+                'PUBLIC'                                                  visible_type,
+                'TOTAL_PART'                                              strategy,
+                t.symbol || ' ' || level_def_temp.level_name              "content",
+                'SQL'                                                     rule_type,
                 '' || 't' || t.id || '' || 'br'                           rule_group,
-                'RESULT'                                                      value_type,
-                999999                                                        run_order,
-                now()                                                         created_at,
-                0                                                             refresh_time,
-                'DEFI'                                                        wired_type,
-                999                                                           label_order,
-                'WAITING'                                                     sync_es_status
+                'RESULT'                                                  value_type,
+                999999                                                    run_order,
+                now()                                                     created_at,
+                0                                                         refresh_time,
+                'DEFI'                                                    wired_type,
+                999                                                       label_order,
+                'WAITING'                                                 sync_es_status
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1264,18 +1264,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'       asset,
-                ''                                                         project,
-                ''                                                         trade_type,
-                level_def_temp.level                                       balance,
-                ''                                                         volume,
-                ''                                                         activity,
-                ''                                                         hold_time,
-                now()                                                      created_at,
+select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
+                ''                                                     project,
+                ''                                                     trade_type,
+                level_def_temp.level                                   balance,
+                ''                                                     volume,
+                ''                                                     activity,
+                ''                                                     hold_time,
+                now()                                                  created_at,
                 '' || 't' || t.id || '' || 'br' || level_def_temp.code label_name,
-                'token'                                                    asset_type,
-                'RANK'                                                     label_category,
-                'ALL'                                                      recent_time_code
+                'token'                                                asset_type,
+                'RANK'                                                 label_category,
+                'ALL'                                                  recent_time_code
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1292,12 +1292,12 @@ into dim_rule_content_temp ("token",
                             operate_type,
                             data_subject,
                             token_name, token_type)
-select distinct 'ALL'                        "token",
+select distinct 'ALL'                  "token",
                 '' || '' || '' || 'br' label_type,
-                'T'                          operate_type,
-                'balance_rank'               data_subject,
-                'ALL'                        token_name,
-                'token' as                   token_type;
+                'T'                    operate_type,
+                'balance_rank'         data_subject,
+                'ALL'                  token_name,
+                'token' as             token_type;
 insert
 into public."label_temp" ("owner",
                           "type",
@@ -1315,22 +1315,22 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                         "owner",
+select distinct 'RelationTeam'                                   "owner",
                 '' || '' || '' || 'br'                        as "type",
                 '' || '' || '' || 'br' || level_def_temp.code as "name",
-                'SYSTEM'                                               "source",
-                'PUBLIC'                                               visible_type,
-                'TOTAL_PART'                                           strategy,
-                'Token ' || level_def_temp.level_name                  "content",
-                'SQL'                                                  rule_type,
+                'SYSTEM'                                         "source",
+                'PUBLIC'                                         visible_type,
+                'TOTAL_PART'                                     strategy,
+                'Token ' || level_def_temp.level_name            "content",
+                'SQL'                                            rule_type,
                 '' || '' || '' || 'br'                           rule_group,
-                'RESULT'                                               value_type,
-                999999                                                 run_order,
-                now()                                                  created_at,
-                0                                                      refresh_time,
-                'DEFI'                                                 wired_type,
-                999                                                    label_order,
-                'WAITING'                                              sync_es_status
+                'RESULT'                                         value_type,
+                999999                                           run_order,
+                now()                                            created_at,
+                0                                                refresh_time,
+                'DEFI'                                           wired_type,
+                999                                              label_order,
+                'WAITING'                                        sync_es_status
 from level_def_temp
 where type = 'defi_balance_rank';
 insert
@@ -1346,18 +1346,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_TOKEN'                                         asset,
-                ''                                                  project,
-                ''                                                  trade_type,
-                level_def_temp.level                                balance,
-                ''                                                  volume,
-                ''                                                  activity,
-                ''                                                  hold_time,
-                now()                                               created_at,
+select distinct 'ALL_TOKEN'                                   asset,
+                ''                                            project,
+                ''                                            trade_type,
+                level_def_temp.level                          balance,
+                ''                                            volume,
+                ''                                            activity,
+                ''                                            hold_time,
+                now()                                         created_at,
                 '' || '' || '' || 'br' || level_def_temp.code label_name,
-                'token'                                             asset_type,
-                'RANK'                                              label_category,
-                'ALL'                                               recent_time_code
+                'token'                                       asset_type,
+                'RANK'                                        label_category,
+                'ALL'                                         recent_time_code
 from level_def_temp
 where type = 'defi_balance_rank';
 
@@ -1371,13 +1371,13 @@ into dim_rule_content_temp(token,
                            create_time,
                            token_name,
                            token_type)
-select distinct t.address                           as token,
+select distinct t.address                       as token,
                 '' || 't' || t.id || '' || 'bt' as label_type,
-                'T'                                    operate_type,
-                'balance_top'                          data_subject,
-                now()                               as create_time,
-                t.symbol                            as token_name,
-                'token'                             as token_type
+                'T'                                operate_type,
+                'balance_top'                      data_subject,
+                now()                           as create_time,
+                t.symbol                        as token_name,
+                'token'                         as token_type
 from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t;
 
 insert
@@ -1397,22 +1397,22 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                "owner",
+select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'bt'                        as "type",
                 '' || 't' || t.id || '' || 'bt' || level_def_temp.code as "name",
-                'SYSTEM'                                                      "source",
-                'PUBLIC'                                                      visible_type,
-                'TOTAL_PART'                                                  strategy,
-                t.symbol || ' ' || level_def_temp.level_name                  "content",
-                'SQL'                                                         rule_type,
+                'SYSTEM'                                                  "source",
+                'PUBLIC'                                                  visible_type,
+                'TOTAL_PART'                                              strategy,
+                t.symbol || ' ' || level_def_temp.level_name              "content",
+                'SQL'                                                     rule_type,
                 '' || 't' || t.id || '' || 'bt' || level_def_temp.code    rule_group,
-                'RESULT'                                                      value_type,
-                999999                                                        run_order,
-                now()                                                         created_at,
-                0                                                             refresh_time,
-                'DEFI'                                                        wired_type,
-                999                                                           label_order,
-                'WAITING'                                                     sync_es_status
+                'RESULT'                                                  value_type,
+                999999                                                    run_order,
+                now()                                                     created_at,
+                0                                                         refresh_time,
+                'DEFI'                                                    wired_type,
+                999                                                       label_order,
+                'WAITING'                                                 sync_es_status
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1433,18 +1433,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'       asset,
-                ''                                                         project,
-                ''                                                         trade_type,
-                level_def_temp.level                                       balance,
-                ''                                                         volume,
-                ''                                                         activity,
-                ''                                                         hold_time,
-                now()                                                      created_at,
+select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
+                ''                                                     project,
+                ''                                                     trade_type,
+                level_def_temp.level                                   balance,
+                ''                                                     volume,
+                ''                                                     activity,
+                ''                                                     hold_time,
+                now()                                                  created_at,
                 '' || 't' || t.id || '' || 'bt' || level_def_temp.code label_name,
-                'token'                                                    asset_type,
-                'TOP'                                                      label_category,
-                'ALL'                                                      recent_time_code
+                'token'                                                asset_type,
+                'TOP'                                                  label_category,
+                'ALL'                                                  recent_time_code
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1461,12 +1461,12 @@ into dim_rule_content_temp ("token",
                             operate_type,
                             data_subject,
                             token_name, token_type)
-select distinct 'ALL'                        "token",
+select distinct 'ALL'                  "token",
                 '' || '' || '' || 'bt' label_type,
-                'T'                          operate_type,
-                'balance_top'                data_subject,
-                'ALL'                        token_name,
-                'token' as                   token_type;
+                'T'                    operate_type,
+                'balance_top'          data_subject,
+                'ALL'                  token_name,
+                'token' as             token_type;
 insert
 into public."label_temp" ("owner",
                           "type",
@@ -1484,22 +1484,22 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                         "owner",
+select distinct 'RelationTeam'                                   "owner",
                 '' || '' || '' || 'bt'                        as "type",
                 '' || '' || '' || 'bt' || level_def_temp.code as "name",
-                'SYSTEM'                                               "source",
-                'PUBLIC'                                               visible_type,
-                'TOTAL_PART'                                           strategy,
-                'Token ' || level_def_temp.level_name                  "content",
-                'SQL'                                                  rule_type,
+                'SYSTEM'                                         "source",
+                'PUBLIC'                                         visible_type,
+                'TOTAL_PART'                                     strategy,
+                'Token ' || level_def_temp.level_name            "content",
+                'SQL'                                            rule_type,
                 '' || '' || '' || 'bt'                           rule_group,
-                'RESULT'                                               value_type,
-                999999                                                 run_order,
-                now()                                                  created_at,
-                0                                                      refresh_time,
-                'DEFI'                                                 wired_type,
-                999                                                    label_order,
-                'WAITING'                                              sync_es_status
+                'RESULT'                                         value_type,
+                999999                                           run_order,
+                now()                                            created_at,
+                0                                                refresh_time,
+                'DEFI'                                           wired_type,
+                999                                              label_order,
+                'WAITING'                                        sync_es_status
 from level_def_temp
 where type = 'defi_balance_top';
 insert
@@ -1515,18 +1515,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_TOKEN'                                         asset,
-                ''                                                  project,
-                ''                                                  trade_type,
-                level_def_temp.level                                balance,
-                ''                                                  volume,
-                ''                                                  activity,
-                ''                                                  hold_time,
-                now()                                               created_at,
+select distinct 'ALL_TOKEN'                                   asset,
+                ''                                            project,
+                ''                                            trade_type,
+                level_def_temp.level                          balance,
+                ''                                            volume,
+                ''                                            activity,
+                ''                                            hold_time,
+                now()                                         created_at,
                 '' || '' || '' || 'bt' || level_def_temp.code label_name,
-                'token'                                             asset_type,
-                'TOP'                                               label_category,
-                'ALL'                                               recent_time_code
+                'token'                                       asset_type,
+                'TOP'                                         label_category,
+                'ALL'                                         recent_time_code
 from level_def_temp
 where type = 'defi_balance_top';
 
@@ -1541,13 +1541,13 @@ into dim_rule_content_temp(token,
                            token_name,
                            token_type,
                            recent_code)
-select distinct t.address                                                    as token,
+select distinct t.address                                                as token,
                 recent_time_temp.code || '' || 't' || t.id || '' || 'cg' as label_type,
-                'T'                                                             operate_type,
-                'count'                                                         data_subject,
-                now()                                                        as create_time,
-                t.symbol                                                     as token_name,
-                'token'                                                      as token_type,
+                'T'                                                         operate_type,
+                'count'                                                     data_subject,
+                now()                                                    as create_time,
+                t.symbol                                                 as token_name,
+                'token'                                                  as token_type,
                 recent_time_temp.recent_time_code
 from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t
          inner join recent_time_temp on (1 = 1);
@@ -1569,24 +1569,24 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                         "owner",
+select distinct 'RelationTeam'                                                                     "owner",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'cg'                        as "type",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'cg' || level_def_temp.code as "name",
-                'SYSTEM'                                                                               "source",
-                'PUBLIC'                                                                               visible_type,
-                'TOTAL_PART'                                                                           strategy,
+                'SYSTEM'                                                                           "source",
+                'PUBLIC'                                                                           visible_type,
+                'TOTAL_PART'                                                                       strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || t.symbol || ' ' ||
-                level_def_temp.level_name                                                              "content",
-                'SQL'                                                                                  rule_type,
+                level_def_temp.level_name                                                          "content",
+                'SQL'                                                                              rule_type,
                 recent_time_temp.code || '' || 't' || t.id || '' || 'cg'                           rule_group,
-                'RESULT'                                                                               value_type,
-                999999                                                                                 run_order,
-                now()                                                                                  created_at,
-                0                                                                                      refresh_time,
-                'DEFI'                                                                                 wired_type,
-                999                                                                                    label_order,
-                'WAITING'                                                                              sync_es_status
+                'RESULT'                                                                           value_type,
+                999999                                                                             run_order,
+                now()                                                                              created_at,
+                0                                                                                  refresh_time,
+                'DEFI'                                                                             wired_type,
+                999                                                                                label_order,
+                'WAITING'                                                                          sync_es_status
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1608,17 +1608,17 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'                                asset,
-                ''                                                                                  project,
-                ''                                                                                  trade_type,
-                ''                                                                                  balance,
-                ''                                                                                  volume,
-                level_def_temp.level                                                                activity,
-                ''                                                                                  hold_time,
-                now()                                                                               created_at,
+select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'                            asset,
+                ''                                                                              project,
+                ''                                                                              trade_type,
+                ''                                                                              balance,
+                ''                                                                              volume,
+                level_def_temp.level                                                            activity,
+                ''                                                                              hold_time,
+                now()                                                                           created_at,
                 recent_time_temp.code || '' || 't' || t.id || '' || 'cg' || level_def_temp.code label_name,
-                'token'                                                                             asset_type,
-                'GRADE'                                                                             label_category,
+                'token'                                                                         asset_type,
+                'GRADE'                                                                         label_category,
                 recent_time_code
 from top_token_1000_temp t
          inner join (select *
@@ -1638,12 +1638,12 @@ into dim_rule_content_temp ("token",
                             token_name,
                             token_type,
                             recent_code)
-select distinct 'ALL'                                                 "token",
+select distinct 'ALL'                                           "token",
                 recent_time_temp.code || '' || '' || '' || 'cg' label_type,
-                'T'                                                   operate_type,
-                'count'                                               data_subject,
-                'ALL'                                                 token_name,
-                'token' as                                            token_type,
+                'T'                                             operate_type,
+                'count'                                         data_subject,
+                'ALL'                                           token_name,
+                'token' as                                      token_type,
                 recent_time_temp.recent_time_code
 from recent_time_temp;
 
@@ -1664,24 +1664,24 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                  "owner",
+select distinct 'RelationTeam'                                                            "owner",
                 recent_time_temp.code || '' || '' || '' || 'cg'                        as "type",
                 recent_time_temp.code || '' || '' || '' || 'cg' || level_def_temp.code as "name",
-                'SYSTEM'                                                                        "source",
-                'PUBLIC'                                                                        visible_type,
-                'TOTAL_PART'                                                                    strategy,
+                'SYSTEM'                                                                  "source",
+                'PUBLIC'                                                                  visible_type,
+                'TOTAL_PART'                                                              strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'Token ' ||
-                level_def_temp.level_name                                                       "content",
-                'SQL'                                                                           rule_type,
+                level_def_temp.level_name                                                 "content",
+                'SQL'                                                                     rule_type,
                 recent_time_temp.code || '' || '' || '' || 'cg' || level_def_temp.code    rule_group,
-                'RESULT'                                                                        value_type,
-                999999                                                                          run_order,
-                now()                                                                           created_at,
-                0                                                                               refresh_time,
-                'DEFI'                                                                          wired_type,
-                999                                                                             label_order,
-                'WAITING'                                                                       sync_es_status
+                'RESULT'                                                                  value_type,
+                999999                                                                    run_order,
+                now()                                                                     created_at,
+                0                                                                         refresh_time,
+                'DEFI'                                                                    wired_type,
+                999                                                                       label_order,
+                'WAITING'                                                                 sync_es_status
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_count';
@@ -1698,17 +1698,17 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_TOKEN'                                                                  asset,
-                ''                                                                           project,
-                ''                                                                           trade_type,
-                ''                                                                           balance,
-                ''                                                                           volume,
-                level_def_temp.level                                                         activity,
-                ''                                                                           hold_time,
-                now()                                                                        created_at,
+select distinct 'ALL_TOKEN'                                                            asset,
+                ''                                                                     project,
+                ''                                                                     trade_type,
+                ''                                                                     balance,
+                ''                                                                     volume,
+                level_def_temp.level                                                   activity,
+                ''                                                                     hold_time,
+                now()                                                                  created_at,
                 recent_time_temp.code || '' || '' || '' || 'cg' || level_def_temp.code label_name,
-                'token'                                                                      asset_type,
-                'GRADE'                                                                      label_category,
+                'token'                                                                asset_type,
+                'GRADE'                                                                label_category,
                 recent_time_code
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
@@ -1723,13 +1723,13 @@ into dim_rule_content_temp(token,
                            create_time,
                            token_name,
                            token_type)
-select distinct t.address                           as token,
+select distinct t.address                       as token,
                 '' || 't' || t.id || '' || 'tg' as label_type,
-                'T'                                    operate_type,
-                'time_grade'                           data_subject,
-                now()                               as create_time,
-                t.symbol                            as token_name,
-                'token'                             as token_type
+                'T'                                operate_type,
+                'time_grade'                       data_subject,
+                now()                           as create_time,
+                t.symbol                        as token_name,
+                'token'                         as token_type
 from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t;
 
 insert
@@ -1749,22 +1749,22 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                "owner",
+select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'tg'                           "type",
                 '' || 't' || t.id || '' || 'tg' || level_def_temp.code as "name",
-                'SYSTEM'                                                      "source",
-                'PUBLIC'                                                      visible_type,
-                'TOTAL_PART'                                                  strategy,
-                t.symbol || ' ' || level_def_temp.level_name                  "content",
-                'SQL'                                                         rule_type,
+                'SYSTEM'                                                  "source",
+                'PUBLIC'                                                  visible_type,
+                'TOTAL_PART'                                              strategy,
+                t.symbol || ' ' || level_def_temp.level_name              "content",
+                'SQL'                                                     rule_type,
                 '' || 't' || t.id || '' || 'tg'                           rule_group,
-                'RESULT'                                                      value_type,
-                999999                                                        run_order,
-                now()                                                         created_at,
-                0                                                             refresh_time,
-                'DEFI'                                                        wired_type,
-                999                                                           label_order,
-                'WAITING'                                                     sync_es_status
+                'RESULT'                                                  value_type,
+                999999                                                    run_order,
+                now()                                                     created_at,
+                0                                                         refresh_time,
+                'DEFI'                                                    wired_type,
+                999                                                       label_order,
+                'WAITING'                                                 sync_es_status
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1785,18 +1785,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'       asset,
-                ''                                                         project,
-                ''                                                         trade_type,
-                ''                                                         balance,
-                ''                                                         volume,
-                ''                                                         activity,
-                level_def_temp.level                                       hold_time,
-                now()                                                      created_at,
+select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
+                ''                                                     project,
+                ''                                                     trade_type,
+                ''                                                     balance,
+                ''                                                     volume,
+                ''                                                     activity,
+                level_def_temp.level                                   hold_time,
+                now()                                                  created_at,
                 '' || 't' || t.id || '' || 'tg' || level_def_temp.code label_name,
-                'token'                                                    asset_type,
-                'GRADE'                                                    label_category,
-                'ALL'                                                      recent_time_code
+                'token'                                                asset_type,
+                'GRADE'                                                label_category,
+                'ALL'                                                  recent_time_code
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1814,13 +1814,13 @@ into dim_rule_content_temp(token,
                            create_time,
                            token_name,
                            token_type)
-select distinct t.address                           as token,
+select distinct t.address                       as token,
                 '' || 't' || t.id || '' || 'ts' as label_type,
-                'T'                                    operate_type,
-                'time_special'                         data_subject,
-                now()                               as create_time,
-                t.symbol                            as token_name,
-                'token'                             as token_type
+                'T'                                operate_type,
+                'time_special'                     data_subject,
+                now()                           as create_time,
+                t.symbol                        as token_name,
+                'token'                         as token_type
 from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t;
 
 insert
@@ -1840,22 +1840,22 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                "owner",
+select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'ts'                        as "type",
                 '' || 't' || t.id || '' || 'ts' || level_def_temp.code as "name",
-                'SYSTEM'                                                      "source",
-                'PUBLIC'                                                      visible_type,
-                'TOTAL_PART'                                                  strategy,
-                t.symbol || ' ' || level_def_temp.level_name                  "content",
-                'SQL'                                                         rule_type,
+                'SYSTEM'                                                  "source",
+                'PUBLIC'                                                  visible_type,
+                'TOTAL_PART'                                              strategy,
+                t.symbol || ' ' || level_def_temp.level_name              "content",
+                'SQL'                                                     rule_type,
                 '' || 't' || t.id || '' || 'ts'                           rule_group,
-                'RESULT'                                                      value_type,
-                999999                                                        run_order,
-                now()                                                         created_at,
-                0                                                             refresh_time,
-                'DEFI'                                                        wired_type,
-                999                                                           label_order,
-                'WAITING'                                                     sync_es_status
+                'RESULT'                                                  value_type,
+                999999                                                    run_order,
+                now()                                                     created_at,
+                0                                                         refresh_time,
+                'DEFI'                                                    wired_type,
+                999                                                       label_order,
+                'WAITING'                                                 sync_es_status
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1876,18 +1876,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'       asset,
-                ''                                                         project,
-                ''                                                         trade_type,
-                ''                                                         balance,
-                ''                                                         volume,
-                ''                                                         activity,
-                level_def_temp.level                                       hold_time,
-                now()                                                      created_at,
+select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
+                ''                                                     project,
+                ''                                                     trade_type,
+                ''                                                     balance,
+                ''                                                     volume,
+                ''                                                     activity,
+                level_def_temp.level                                   hold_time,
+                now()                                                  created_at,
                 '' || 't' || t.id || '' || 'ts' || level_def_temp.code label_name,
-                'token'                                                    asset_type,
-                'SPECIAL'                                                  label_category,
-                'ALL'                                                      recent_time_code
+                'token'                                                asset_type,
+                'SPECIAL'                                              label_category,
+                'ALL'                                                  recent_time_code
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1906,13 +1906,13 @@ into dim_rule_content_temp(token,
                            token_name,
                            token_type,
                            recent_code)
-select distinct t.address                                                    as token,
+select distinct t.address                                                as token,
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vg' as label_type,
-                'T'                                                             operate_type,
-                'volume_grade'                                                  data_subject,
-                now()                                                        as create_time,
-                t.symbol                                                     as token_name,
-                'token'                                                      as token_type,
+                'T'                                                         operate_type,
+                'volume_grade'                                              data_subject,
+                now()                                                    as create_time,
+                t.symbol                                                 as token_name,
+                'token'                                                  as token_type,
                 recent_time_temp.recent_time_code
 from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t
          inner join recent_time_temp on (1 = 1);
@@ -1934,28 +1934,28 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                         "owner",
+select distinct 'RelationTeam'                                                                     "owner",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vg'                        as "type",
                 recent_time_temp.recent_time_name ||
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vg' || level_def_temp.code as "name",
-                'SYSTEM'                                                                               "source",
-                'PUBLIC'                                                                               visible_type,
-                'TOTAL_PART'                                                                           strategy,
+                'SYSTEM'                                                                           "source",
+                'PUBLIC'                                                                           visible_type,
+                'TOTAL_PART'                                                                       strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || t.symbol || (case
                                                                                                                 when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
                                                                                                                     then ' ' || level_def_temp.level
                                                                                                                 else '' end) ||
-                ' ' || level_def_temp.level_name                                                       "content",
-                'SQL'                                                                                  rule_type,
+                ' ' || level_def_temp.level_name                                                   "content",
+                'SQL'                                                                              rule_type,
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vg'                           rule_group,
-                'RESULT'                                                                               value_type,
-                999999                                                                                 run_order,
-                now()                                                                                  created_at,
-                0                                                                                      refresh_time,
-                'DEFI'                                                                                 wired_type,
-                999                                                                                    label_order,
-                'WAITING'                                                                              sync_es_status
+                'RESULT'                                                                           value_type,
+                999999                                                                             run_order,
+                now()                                                                              created_at,
+                0                                                                                  refresh_time,
+                'DEFI'                                                                             wired_type,
+                999                                                                                label_order,
+                'WAITING'                                                                          sync_es_status
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1977,18 +1977,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'                                asset,
-                ''                                                                                  project,
-                ''                                                                                  trade_type,
-                ''                                                                                  balance,
-                level_def_temp.level                                                                volume,
-                ''                                                                                  activity,
-                ''                                                                                  hold_time,
-                now()                                                                               created_at,
+select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'                            asset,
+                ''                                                                              project,
+                ''                                                                              trade_type,
+                ''                                                                              balance,
+                level_def_temp.level                                                            volume,
+                ''                                                                              activity,
+                ''                                                                              hold_time,
+                now()                                                                           created_at,
                 recent_time_temp.recent_time_name ||
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vg' || level_def_temp.code label_name,
-                'token'                                                                             asset_type,
-                'GRADE'                                                                             label_category,
+                'token'                                                                         asset_type,
+                'GRADE'                                                                         label_category,
                 recent_time_code
 from top_token_1000_temp t
          inner join (select *
@@ -2008,12 +2008,12 @@ into dim_rule_content_temp ("token",
                             token_name,
                             token_type,
                             recent_code)
-select distinct 'ALL'                                                 "token",
+select distinct 'ALL'                                           "token",
                 recent_time_temp.code || '' || '' || '' || 'vg' label_type,
-                'T'                                                   operate_type,
-                'volume_grade'                                        data_subject,
-                'ALL'                                                 token_name,
-                'token' as                                            token_type,
+                'T'                                             operate_type,
+                'volume_grade'                                  data_subject,
+                'ALL'                                           token_name,
+                'token' as                                      token_type,
                 recent_time_temp.recent_time_code
 from recent_time_temp;
 insert
@@ -2033,27 +2033,27 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                  "owner",
+select distinct 'RelationTeam'                                                            "owner",
                 recent_time_temp.code || '' || '' || '' || 'vg'                        as "type",
                 recent_time_temp.code || '' || '' || '' || 'vg' || level_def_temp.code as "name",
-                'SYSTEM'                                                                        "source",
-                'PUBLIC'                                                                        visible_type,
-                'TOTAL_PART'                                                                    strategy,
+                'SYSTEM'                                                                  "source",
+                'PUBLIC'                                                                  visible_type,
+                'TOTAL_PART'                                                              strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'Token ' || (case
                                                                                                                 when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
                                                                                                                     then level_def_temp.level || ' '
                                                                                                                 else '' end) ||
-                level_def_temp.level_name                                                       "content",
-                'SQL'                                                                           rule_type,
+                level_def_temp.level_name                                                 "content",
+                'SQL'                                                                     rule_type,
                 recent_time_temp.code || '' || '' || '' || 'vg'                           rule_group,
-                'RESULT'                                                                        value_type,
-                999999                                                                          run_order,
-                now()                                                                           created_at,
-                0                                                                               refresh_time,
-                'DEFI'                                                                          wired_type,
-                999                                                                             label_order,
-                'WAITING'                                                                       sync_es_status
+                'RESULT'                                                                  value_type,
+                999999                                                                    run_order,
+                now()                                                                     created_at,
+                0                                                                         refresh_time,
+                'DEFI'                                                                    wired_type,
+                999                                                                       label_order,
+                'WAITING'                                                                 sync_es_status
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_volume_grade';
@@ -2070,17 +2070,17 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_TOKEN'                                                                  asset,
-                ''                                                                           project,
-                ''                                                                           trade_type,
-                ''                                                                           balance,
-                level_def_temp.level                                                         volume,
-                ''                                                                           activity,
-                ''                                                                           hold_time,
-                now()                                                                        created_at,
+select distinct 'ALL_TOKEN'                                                            asset,
+                ''                                                                     project,
+                ''                                                                     trade_type,
+                ''                                                                     balance,
+                level_def_temp.level                                                   volume,
+                ''                                                                     activity,
+                ''                                                                     hold_time,
+                now()                                                                  created_at,
                 recent_time_temp.code || '' || '' || '' || 'vg' || level_def_temp.code label_name,
-                'token'                                                                      asset_type,
-                'GRADE'                                                                      label_category,
+                'token'                                                                asset_type,
+                'GRADE'                                                                label_category,
                 recent_time_code
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
@@ -2096,13 +2096,13 @@ into dim_rule_content_temp(token,
                            token_name,
                            token_type,
                            recent_code)
-select distinct t.address                                                    as token,
+select distinct t.address                                                as token,
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vr' as label_type,
-                'T'                                                             operate_type,
-                'volume_rank'                                                   data_subject,
-                now()                                                        as create_time,
-                t.symbol                                                     as token_name,
-                'token'                                                      as token_type,
+                'T'                                                         operate_type,
+                'volume_rank'                                               data_subject,
+                now()                                                    as create_time,
+                t.symbol                                                 as token_name,
+                'token'                                                  as token_type,
                 recent_time_temp.recent_time_code
 from (select * from top_token_1000_temp where holders >= 100 and removed <> 'true') t
          inner join recent_time_temp on (1 = 1);
@@ -2124,28 +2124,28 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                         "owner",
+select distinct 'RelationTeam'                                                                     "owner",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vr'                        as "type",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vr' || level_def_temp.code as "name",
-                'SYSTEM'                                                                               "source",
-                'PUBLIC'                                                                               visible_type,
-                'TOTAL_PART'                                                                           strategy,
+                'SYSTEM'                                                                           "source",
+                'PUBLIC'                                                                           visible_type,
+                'TOTAL_PART'                                                                       strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || t.symbol || ' ' ||
-                level_def_temp.level_name                                                              "content",
-                'SQL'                                                                                  rule_type,
+                level_def_temp.level_name || ' ' || 'Trader'                                       "content",
+                'SQL'                                                                              rule_type,
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vr'                           rule_group,
-                'RESULT'                                                                               value_type,
-                999999                                                                                 run_order,
-                now()                                                                                  created_at,
-                0                                                                                      refresh_time,
-                'DEFI'                                                                                 wired_type,
-                999                                                                                    label_order,
-                'WAITING'                                                                              sync_es_status
+                'RESULT'                                                                           value_type,
+                999999                                                                             run_order,
+                now()                                                                              created_at,
+                0                                                                                  refresh_time,
+                'DEFI'                                                                             wired_type,
+                999                                                                                label_order,
+                'WAITING'                                                                          sync_es_status
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
-                     where type = 'token_volume_rank') level_def_temp on
+                     where type = 'defi_volume_rank') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
 where holders >= 100
@@ -2163,22 +2163,22 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'                                asset,
-                ''                                                                                  project,
-                ''                                                                                  trade_type,
-                ''                                                                                  balance,
-                level_def_temp.level                                                                volume,
-                ''                                                                                  activity,
-                ''                                                                                  hold_time,
-                now()                                                                               created_at,
+select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'                            asset,
+                ''                                                                              project,
+                ''                                                                              trade_type,
+                ''                                                                              balance,
+                level_def_temp.level                                                            volume,
+                ''                                                                              activity,
+                ''                                                                              hold_time,
+                now()                                                                           created_at,
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vr' || level_def_temp.code label_name,
-                'token'                                                                             asset_type,
-                'RANK'                                                                              label_category,
+                'token'                                                                         asset_type,
+                'RANK'                                                                          label_category,
                 recent_time_code
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
-                     where type = 'token_volume_rank') level_def_temp on
+                     where type = 'defi_volume_rank') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
 where holders >= 100
@@ -2194,12 +2194,12 @@ into dim_rule_content_temp ("token",
                             token_name,
                             token_type,
                             recent_code)
-select distinct 'ALL'                                                 "token",
+select distinct 'ALL'                                           "token",
                 recent_time_temp.code || '' || '' || '' || 'vr' label_type,
-                'T'                                                   operate_type,
-                'volume_rank'                                         data_subject,
-                'ALL'                                                 token_name,
-                'token' as                                            token_type,
+                'T'                                             operate_type,
+                'volume_rank'                                   data_subject,
+                'ALL'                                           token_name,
+                'token' as                                      token_type,
                 recent_time_temp.recent_time_code
 from recent_time_temp;
 insert
@@ -2219,24 +2219,24 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                                  "owner",
+select distinct 'RelationTeam'                                                            "owner",
                 recent_time_temp.code || '' || '' || '' || 'vr'                        as "type",
                 recent_time_temp.code || '' || '' || '' || 'vr' || level_def_temp.code as "name",
-                'SYSTEM'                                                                        "source",
-                'PUBLIC'                                                                        visible_type,
-                'TOTAL_PART'                                                                    strategy,
+                'SYSTEM'                                                                  "source",
+                'PUBLIC'                                                                  visible_type,
+                'TOTAL_PART'                                                              strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'Token ' ||
-                level_def_temp.level_name || ' Trader'                                          "content",
-                'SQL'                                                                           rule_type,
+                level_def_temp.level_name || ' ' || 'Trader'                              "content",
+                'SQL'                                                                     rule_type,
                 recent_time_temp.code || '' || '' || '' || 'vr'                           rule_group,
-                'RESULT'                                                                        value_type,
-                999999                                                                          run_order,
-                now()                                                                           created_at,
-                0                                                                               refresh_time,
-                'DEFI'                                                                          wired_type,
-                999                                                                             label_order,
-                'WAITING'                                                                       sync_es_status
+                'RESULT'                                                                  value_type,
+                999999                                                                    run_order,
+                now()                                                                     created_at,
+                0                                                                         refresh_time,
+                'DEFI'                                                                    wired_type,
+                999                                                                       label_order,
+                'WAITING'                                                                 sync_es_status
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_volume_rank';
@@ -2253,18 +2253,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_TOKEN'                                                                          asset,
-                ''                                                                                   project,
-                ''                                                                                   trade_type,
-                ''                                                                                   balance,
-                level_def_temp.level                                                                 volume,
-                ''                                                                                   activity,
-                ''                                                                                   hold_time,
-                now()                                                                                created_at,
+select distinct 'ALL_TOKEN'                                                            asset,
+                ''                                                                     project,
+                ''                                                                     trade_type,
+                ''                                                                     balance,
+                level_def_temp.level                                                   volume,
+                ''                                                                     activity,
+                ''                                                                     hold_time,
+                now()                                                                  created_at,
                 recent_time_temp.code || '' || '' || '' || 'vr' || level_def_temp.code label_name,
-                'token'                                                                              asset_type,
-                'RANK'                                                                               label_category,
-                'ALL'                                                                                recent_time_code
+                'token'                                                                asset_type,
+                'RANK'                                                                 label_category,
+                'ALL'                                                                  recent_time_code
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_volume_rank';

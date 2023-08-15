@@ -145,7 +145,10 @@ from (select wlp.id,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
   and wlp."type" = 'LP') lpt
-         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
+         inner join (select *
+                     from level_def_temp
+                     where type = 'defi_lp_first_mover_lp') level_def_temp on (1 = 1);
 insert
 into public.combination_temp (asset,
                               project,
@@ -265,23 +268,23 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                            "owner",
+select distinct 'RelationTeam'                                                                 "owner",
                 --平台+资产+交易类型
-                '' || 'l' || lpt.id || '' || 'bhl' as                     "type",
-                '' || 'l' || lpt.id || '' || 'bhl' as                     "name",
-                'SYSTEM'                                                  "source",
-                'PUBLIC'                                                  visible_type,
-                'TOTAL_PART'                                              strategy,
-                lpt.factory_content || ' ' || symbol_wired || ' Heavy LP' "content",
-                'SQL'                                                     rule_type,
-                '' || 'l' || lpt.id || '' || 'bhl'                        rule_group,
-                'RESULT'                                                  value_type,
-                999999                                                    run_order,
-                now()                                                     created_at,
-                0                                                         refresh_time,
-                'DEFI'                                                    wired_type,
-                999                                                       label_order,
-                'WAITING'                                                 sync_es_status
+                '' || 'l' || lpt.id || '' || 'bhl' as                                          "type",
+                '' || 'l' || lpt.id || '' || 'bhl' as                                          "name",
+                'SYSTEM'                                                                       "source",
+                'PUBLIC'                                                                       visible_type,
+                'TOTAL_PART'                                                                   strategy,
+                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def_temp.level_name "content",
+                'SQL'                                                                          rule_type,
+                '' || 'l' || lpt.id || '' || 'bhl'                                             rule_group,
+                'RESULT'                                                                       value_type,
+                999999                                                                         run_order,
+                now()                                                                          created_at,
+                0                                                                              refresh_time,
+                'DEFI'                                                                         wired_type,
+                999                                                                            label_order,
+                'WAITING'                                                                      sync_es_status
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -307,7 +310,10 @@ from (select wlp.id,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
-         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
+         inner join (select *
+                     from level_def_temp
+                     where type = 'defi_lp_heavy_lp') level_def_temp on (1 = 1);
 insert
 into public.combination_temp (asset,
                               project,
@@ -424,22 +430,22 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                       "owner",
-                '' || 'l' || lpt.id || '' || 'bf' as                                 "type",
-                '' || 'l' || lpt.id || '' || 'bf' as                                 "name",
-                'SYSTEM'                                                             "source",
-                'PUBLIC'                                                             visible_type,
-                'TOTAL_PART'                                                         strategy,
-                lpt.factory_content || ' ' || symbol_wired || ' First Mover Staking' "content",
-                'SQL'                                                                rule_type,
-                '' || 'l' || lpt.id || '' || 'bf'                                    rule_group,
-                'RESULT'                                                             value_type,
-                999999                                                               run_order,
-                now()                                                                created_at,
-                0                                                                    refresh_time,
-                'DEFI'                                                               wired_type,
-                999                                                                  label_order,
-                'WAITING'                                                            sync_es_status
+select distinct 'RelationTeam'                                                                 "owner",
+                '' || 'l' || lpt.id || '' || 'bf' as                                           "type",
+                '' || 'l' || lpt.id || '' || 'bf' as                                           "name",
+                'SYSTEM'                                                                       "source",
+                'PUBLIC'                                                                       visible_type,
+                'TOTAL_PART'                                                                   strategy,
+                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def_temp.level_name "content",
+                'SQL'                                                                          rule_type,
+                '' || 'l' || lpt.id || '' || 'bf'                                              rule_group,
+                'RESULT'                                                                       value_type,
+                999999                                                                         run_order,
+                now()                                                                          created_at,
+                0                                                                              refresh_time,
+                'DEFI'                                                                         wired_type,
+                999                                                                            label_order,
+                'WAITING'                                                                      sync_es_status
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -465,7 +471,10 @@ from (select wlp.id,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
-         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
+         inner join (select *
+                     from level_def_temp
+                     where type = 'defi_lp_first_mover_staking') level_def_temp on (1 = 1);
 insert
 into public.combination_temp (asset,
                               project,
@@ -583,22 +592,22 @@ into public."label_temp" ("owner",
                           wired_type,
                           label_order,
                           sync_es_status)
-select distinct 'RelationTeam'                                                   "owner",
-                '' || 'l' || lpt.id || '' || 'bhs' as                            "type",
-                '' || 'l' || lpt.id || '' || 'bhs' as                            "name",
-                'SYSTEM'                                                         "source",
-                'PUBLIC'                                                         visible_type,
-                'TOTAL_PART'                                                     strategy,
-                lpt.factory_content || ' ' || symbol_wired || ' Heavy LP Staker' "content",
-                'SQL'                                                            rule_type,
-                '' || 'l' || lpt.id || '' || 'bhs'                               rule_group,
-                'RESULT'                                                         value_type,
-                999999                                                           run_order,
-                now()                                                            created_at,
-                0                                                                refresh_time,
-                'DEFI'                                                           wired_type,
-                999                                                              label_order,
-                'WAITING'                                                        sync_es_status
+select distinct 'RelationTeam'                                                                 "owner",
+                '' || 'l' || lpt.id || '' || 'bhs' as                                          "type",
+                '' || 'l' || lpt.id || '' || 'bhs' as                                          "name",
+                'SYSTEM'                                                                       "source",
+                'PUBLIC'                                                                       visible_type,
+                'TOTAL_PART'                                                                   strategy,
+                lpt.factory_content || ' ' || symbol_wired || ' ' || level_def_temp.level_name "content",
+                'SQL'                                                                          rule_type,
+                '' || 'l' || lpt.id || '' || 'bhs'                                             rule_group,
+                'RESULT'                                                                       value_type,
+                999999                                                                         run_order,
+                now()                                                                          created_at,
+                0                                                                              refresh_time,
+                'DEFI'                                                                         wired_type,
+                999                                                                            label_order,
+                'WAITING'                                                                      sync_es_status
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -624,7 +633,10 @@ from (select wlp.id,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type='Sushiswap') lpt
-         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
+         inner join (select *
+                     from level_def_temp
+                     where type = 'defi_lp_heavy_lp_staker') level_def_temp on (1 = 1);
 insert
 into public.combination_temp (asset,
                               project,
@@ -929,20 +941,20 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_NFT'                                              asset,
-                'ALL'                                                  project,
+select distinct 'ALL_NFT'                                       asset,
+                'ALL'                                           project,
                 case
                     when nft_trade_type_temp.nft_trade_type = 'ALL' THEN ''
-                    ELSE nft_trade_type_temp.nft_trade_type END        trade_type,
-                ''                                                     balance,
-                ''                                                     volume,
-                level_def_temp.level                                   activity,
-                ''                                                     hold_time,
-                now()                                                  created_at,
+                    ELSE nft_trade_type_temp.nft_trade_type END trade_type,
+                ''                                              balance,
+                ''                                              volume,
+                level_def_temp.level                            activity,
+                ''                                              hold_time,
+                now()                                           created_at,
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'cg' ||
-                level_def_temp.code                                    label_name,
-                'nft'                                                  asset_type,
-                'GRADE'                                                label_category,
+                level_def_temp.code                             label_name,
+                'nft'                                           asset_type,
+                'GRADE'                                         label_category,
                 recent_time_code
 from nft_trade_type_temp
          inner join (select *
@@ -5744,18 +5756,18 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_NFT'                           asset,
-                ''                                  project,
-                ''                                  trade_type,
-                level_def_temp.level                balance,
-                ''                                  volume,
-                ''                                  activity,
-                ''                                  hold_time,
-                now()                               created_at,
-                'n' || 'bt' || level_def_temp.code  label_name,
-                'nft'                               asset_type,
-                'TOP'                               label_category,
-                'ALL'                               recent_time_code
+select distinct 'ALL_NFT'                          asset,
+                ''                                 project,
+                ''                                 trade_type,
+                level_def_temp.level               balance,
+                ''                                 volume,
+                ''                                 activity,
+                ''                                 hold_time,
+                now()                              created_at,
+                'n' || 'bt' || level_def_temp.code label_name,
+                'nft'                              asset_type,
+                'TOP'                              label_category,
+                'ALL'                              recent_time_code
 from level_def_temp
 where type = 'nft_balance_top';
 
@@ -6815,20 +6827,20 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct 'ALL_NFT'                                                         asset,
-                ''                                                                project,
+select distinct 'ALL_NFT'                                       asset,
+                ''                                              project,
                 case
                     when nft_trade_type_temp.nft_trade_type = 'ALL' THEN ''
-                    ELSE nft_trade_type_temp.nft_trade_type END                   trade_type,
-                ''                                                                balance,
-                level_def_temp.level                                              volume,
-                ''                                                                activity,
-                ''                                                                hold_time,
-                now()                                                             created_at,
+                    ELSE nft_trade_type_temp.nft_trade_type END trade_type,
+                ''                                              balance,
+                level_def_temp.level                            volume,
+                ''                                              activity,
+                ''                                              hold_time,
+                now()                                           created_at,
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'vg' ||
-                level_def_temp.code                                               label_name,
-                'nft'                                                             asset_type,
-                'GRADE'                                                           label_category,
+                level_def_temp.code                             label_name,
+                'nft'                                           asset_type,
+                'GRADE'                                         label_category,
                 recent_time_code
 from nft_trade_type_temp
          inner join (select *
