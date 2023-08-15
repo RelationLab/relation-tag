@@ -18,7 +18,7 @@ insert into recent_time_temp(code,recent_time_code,recent_time_content,recent_ti
 insert into recent_time_temp(code,recent_time_code,recent_time_content,recent_time_name,days) values('6m','6m','6 Months','6m',180);
 insert into recent_time_temp(code,recent_time_code,recent_time_content,recent_time_name,days) values('1y','1y','1 Year','1y',365);
 insert into recent_time_temp(code,recent_time_code,recent_time_content,recent_time_name,days,seg_flag) values('2y','2y','2 Year','2y',730,'1');
-insert into recent_time_temp(code,recent_time_code,recent_time_content,recent_time_name,block_height,seg_flag) values('0a','ALL','','',46147,'1');
+insert into recent_time_temp(code,recent_time_code,recent_time_content,recent_time_name,block_height,seg_flag) values('','ALL','','',46147,'1');
 
 update
     recent_time_temp rt
