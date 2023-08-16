@@ -1540,23 +1540,23 @@ into public.combination_temp (asset,
                               asset_type,
                               label_category,
                               recent_time_code)
-select distinct nft_sync_address.platform                       asset,
-                'ALL'                                           project,
+select distinct nft_sync_address.platform                               asset,
+                'ALL'                                                   project,
                 case
                     when nft_trade_type_temp.nft_trade_type = 'ALL' THEN ''
-                    ELSE nft_trade_type_temp.nft_trade_type END trade_type,
-                ''                                              balance,
-                level_def_temp.level                            volume,
-                ''                                              activity,
-                ''                                              hold_time,
-                now()                                           created_at,
+                    ELSE nft_trade_type_temp.nft_trade_type END         trade_type,
+                ''                                                      balance,
+                level_def_temp.level                                    volume,
+                ''                                                      activity,
+                ''                                                      hold_time,
+                now()                                                   created_at,
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' ||
-                nft_trade_type_temp.code ||
-                've' level_def_temp.code  label_name, (case
-                                                           when nft_action_platform_temp.nft_type = 'ERC721'
-                                                               THEN 'nft'
-                                                           else 'token' end) asset_type,
-                'ELITE'                                         label_category,
+                nft_trade_type_temp.code || 've' || level_def_temp.code label_name,
+                (case
+                     when nft_action_platform_temp.nft_type = 'ERC721'
+                         THEN 'nft'
+                     else 'token' end)                                  asset_type,
+                'ELITE'                                                 label_category,
                 recent_time_code
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
@@ -3508,14 +3508,15 @@ into dim_project_token_type_temp(project,
                                  token_name,
                                  recent_code)
 
-select distinct token_platform_temp.platform as                                                          project,
-                token_platform_temp.address  as                                                          token,
-                trade_type.trade_type        as                                                          type,
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+select distinct token_platform_temp.platform as project,
+                token_platform_temp.address  as token,
+                trade_type.trade_type        as type,
+                recent_time_temp.code || platform_temp.id ||
+                (case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) || top_token_1000_temp.id ||
                 platform_large_category.code ||
                 trade_type.code || 'cg'      as                                                          label_type,
                 'T'                          as                                                          operate_type,
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id || ((case when top_token_1000_temp.asset_type='token' then 't'  else 'l' end)|| top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'cg'                                                                  seq_flag,
                 'count'                                                                                  data_subject,
@@ -3523,42 +3524,46 @@ select distinct token_platform_temp.platform as                                 
                 top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_temp.address, 1, 8) || ')' token_name,
                 recent_time_temp.recent_time_code
 from token_platform_temp
-         inner join platform_temp on
+    inner join platform_temp
+on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select address,
-                            symbol,
-                            'token' as asset_type
-                     from top_token_1000_temp
-                     where holders >= 100
-                       and removed <> 'true'
-                     union all
-                     select wlp.address,
-                            wlp.symbol_wired as symbol,
-                            'lp'             as asset_type
-                     from white_list_lp_temp wlp
-                              left join white_list_lp_temp wslp on
-                                 wlp.address = wslp.address
-                             and wlp.type = 'LP'
-                             and wslp.type = 'SLP'
-                     where wlp.tvl > 1000000
-                       and string_to_array(wlp.symbol_wired, '/') && array['ETH',
-                        'WETH',
-                        'UNI',
-                        'AAVE',
-                        '1INCH',
-                        'MANA',
-                        'AXS',
-                        'SAND']
-                    and wlp."type" = 'LP') top_token_1000_temp
-                    on (token_platform_temp.address = top_token_1000_temp.address)
-         INNER JOIN trade_type ON (top_token_1000_temp.asset_type = 'token' or
-                                   (top_token_1000_temp.asset_type = 'lp' and trade_type.trade_type = 'stakelp'))
-         inner join recent_time_temp on (1 = 1)
-         inner join dex_action_platform_temp
-                    on (token_platform_temp.platform = dex_action_platform_temp.platform and
-                        trade_type.trade_type = dex_action_platform_temp.trade_type)
-         inner join platform_large_category
-                    on (platform_temp.platform_large_code = platform_large_category.platform_large_code);
+    inner join (
+    select id,
+    address,
+    symbol,
+    'token' as asset_type
+    from top_token_1000_temp
+    where holders >= 100
+    and removed <> 'true'
+    union all
+    select wlp.id,
+    wlp.address,
+    wlp.symbol_wired as symbol,
+    'lp' as asset_type
+    from white_list_lp_temp wlp
+    left join white_list_lp_temp wslp on
+    wlp.address = wslp.address
+    and wlp.type = 'LP'
+    and wslp.type = 'SLP'
+    where wlp.tvl > 1000000
+    and string_to_array(wlp.symbol_wired, '/') && array['ETH',
+    'WETH',
+    'UNI',
+    'AAVE',
+    '1INCH',
+    'MANA',
+    'AXS',
+    'SAND']
+    and wlp."type" = 'LP') top_token_1000_temp
+    on (token_platform_temp.address = top_token_1000_temp.address)
+    INNER JOIN trade_type ON (top_token_1000_temp.asset_type = 'token' or
+    (top_token_1000_temp.asset_type = 'lp' and trade_type.trade_type = 'stakelp'))
+    inner join recent_time_temp on (1 = 1)
+    inner join dex_action_platform_temp
+    on (token_platform_temp.platform = dex_action_platform_temp.platform and
+    trade_type.trade_type = dex_action_platform_temp.trade_type)
+    inner join platform_large_category
+    on (platform_temp.platform_large_code = platform_large_category.platform_large_code);
 insert
 into public."label_temp" ("owner",
                           "type",
@@ -3579,9 +3584,13 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type)
 select distinct 'RelationTeam'                                                                    "owner",
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code || trade_type.code || 'cg'                        as "type",
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code || trade_type.code || 'cg' || level_def_temp.code as "name",
                 'SYSTEM'                                                                          "source",
                 'PUBLIC'                                                                          visible_type,
@@ -3593,7 +3602,9 @@ select distinct 'RelationTeam'                                                  
                 (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
                 level_def_temp.level_name                                                         "content",
                 'SQL'                                                                             rule_type,
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code || trade_type.code || 'cg'                           rule_group,
                 'RESULT'                                                                          value_type,
                 999999                                                                            run_order,
@@ -3607,14 +3618,16 @@ select distinct 'RelationTeam'                                                  
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select address,
+         inner join (select id,
+                            address,
                             symbol,
                             'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
-                     select wlp.address,
+                     select wlp.id,
+                            wlp.address,
                             wlp.symbol_wired as symbol,
                             'lp'             as asset_type
                      from white_list_lp_temp wlp
@@ -3664,7 +3677,9 @@ select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_te
                 level_def_temp.level                                                                     activity,
                 ''                                                                                       hold_time,
                 now()                                                                                    created_at,
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code || trade_type.code || 'cg' || level_def_temp.code           label_name,
                 'token'                                                                                  asset_type,
                 'GRADE'                                                                                  label_category,
@@ -3672,14 +3687,16 @@ select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_te
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select address,
+         inner join (select id,
+                            address,
                             symbol,
                             'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
-                     select wlp.address,
+                     select wlp.id,
+                            wlp.address,
                             wlp.symbol_wired as symbol,
                             'lp'             as asset_type
                      from white_list_lp_temp wlp
@@ -4118,11 +4135,15 @@ into dim_project_token_type_temp (project,
 select distinct token_platform_temp.platform as                                                          project,
                 token_platform_temp.address  as                                                          token,
                 trade_type.trade_type        as                                                          type,
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vg'      as                                                          label_type,
                 'T'                          as                                                          operate_type,
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vg'                                                                  seq_flag,
                 'volume_grade'                                                                           data_subject,
@@ -4132,14 +4153,16 @@ select distinct token_platform_temp.platform as                                 
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select address,
+         inner join (select id,
+                            address,
                             symbol,
                             'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
-                     select wlp.address,
+                     select wlp.id,
+                            wlp.address,
                             wlp.symbol_wired as symbol,
                             'lp'             as asset_type
                      from white_list_lp_temp wlp
@@ -4186,10 +4209,14 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type)
 select distinct 'RelationTeam'                     "owner",
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vg'         as "type",
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vg' ||
                 level_def_temp.code             as "name",
@@ -4207,7 +4234,9 @@ select distinct 'RelationTeam'                     "owner",
                 (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
                 level_def_temp.level_name          "content",
                 'SQL'                              rule_type,
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vg'            rule_group,
                 'RESULT'                           value_type,
@@ -4222,14 +4251,16 @@ select distinct 'RelationTeam'                     "owner",
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select address,
+         inner join (select id,
+                            address,
                             symbol,
                             'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
-                     select wlp.address,
+                     select wlp.id,
+                            wlp.address,
                             wlp.symbol_wired as symbol,
                             'lp'             as asset_type
                      from white_list_lp_temp wlp
@@ -4280,7 +4311,9 @@ select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_te
                 ''                                                                                       activity,
                 ''                                                                                       hold_time,
                 now()                                                                                    created_at,
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vg' ||
                 level_def_temp.code                                                                      label_name,
@@ -4290,14 +4323,16 @@ select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_te
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select address,
+         inner join (select id,
+                            address,
                             symbol,
                             'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
-                     select wlp.address,
+                     select wlp.id,
+                            wlp.address,
                             wlp.symbol_wired as symbol,
                             'lp'             as asset_type
                      from white_list_lp_temp wlp
@@ -4763,11 +4798,15 @@ into dim_project_token_type_temp (project,
 select distinct token_platform_temp.platform as                                                          project,
                 token_platform_temp.address  as                                                          token,
                 trade_type.trade_type        as                                                          type,
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vr'      as                                                          label_type,
                 'T'                          as                                                          operate_type,
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vr'                                                                  seq_flag,
                 'volume_rank'                                                                            data_subject,
@@ -4777,14 +4816,16 @@ select distinct token_platform_temp.platform as                                 
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select address,
+         inner join (select id,
+                            address,
                             symbol,
                             'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
-                     select wlp.address,
+                     select wlp.id,
+                            wlp.address,
                             wlp.symbol_wired as symbol,
                             'lp'             as asset_type
                      from white_list_lp_temp wlp
@@ -4831,10 +4872,14 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type)
 select distinct 'RelationTeam'                    "owner",
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vr'        as "type",
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vr' ||
                 level_def_temp.code            as "name",
@@ -4849,7 +4894,9 @@ select distinct 'RelationTeam'                    "owner",
                 (CASE WHEN trade_type.trade_type = 'ALL' THEN '' else trade_type.trade_type_name || ' ' end) ||
                 'Trader'                          "content",
                 'SQL'                             rule_type,
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vr'           rule_group,
                 'RESULT'                          value_type,
@@ -4864,14 +4911,16 @@ select distinct 'RelationTeam'                    "owner",
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select address,
+         inner join (select id,
+                            address,
                             symbol,
                             'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
-                     select wlp.address,
+                     select wlp.id,
+                            wlp.address,
                             wlp.symbol_wired as symbol,
                             'lp'             as asset_type
                      from white_list_lp_temp wlp
@@ -4923,7 +4972,9 @@ select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_te
                 ''                                                                                       activity,
                 ''                                                                                       hold_time,
                 now()                                                                                    created_at,
-                recent_time_temp.code || platform_temp.id || ('t' || top_token_1000_temp.id) ||
+                recent_time_temp.code || platform_temp.id ||
+                ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
+                 top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vr' || level_def_temp.code                                           label_name,
                 'token'                                                                                  asset_type,
@@ -4932,14 +4983,16 @@ select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_te
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
-         inner join (select address,
+         inner join (select id,
+                            address,
                             symbol,
                             'token' as asset_type
                      from top_token_1000_temp
                      where holders >= 100
                        and removed <> 'true'
                      union all
-                     select wlp.address,
+                     select wlp.id,
+                            wlp.address,
                             wlp.symbol_wired as symbol,
                             'lp'             as asset_type
                      from white_list_lp_temp wlp

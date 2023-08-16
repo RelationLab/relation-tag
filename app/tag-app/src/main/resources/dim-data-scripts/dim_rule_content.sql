@@ -767,10 +767,7 @@ select distinct 'RelationTeam'                                                  
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || lpt.factory_content ||
                 ' ' ||
-                symbol_wired || ' ' || (case
-                                            when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
-                                                then level_def_temp.level || ' '
-                                            else '' end) || level_def_temp.level_name                "content",
+                symbol_wired || ' ' || level_def_temp.level_name                                     "content",
                 'SQL'                                                                                rule_type,
                 recent_time_temp.code || '' || 'l' || lpt.id || '' || 'vg'                           rule_group,
                 'RESULT'                                                                             value_type,
