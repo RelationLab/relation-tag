@@ -36,8 +36,8 @@ CREATE TABLE public."label_temp" (
                                 personal int2 NULL DEFAULT 0,
                                 wired_type varchar(128) NULL,
                                 label_order int4 NULL DEFAULT 999,
-                                one_wired_type varchar(10),
-                                two_wired_type varchar(10),
+                                one_wired_type varchar(100),
+                                two_wired_type varchar(2),
                                 sync_es_status varchar(20) NOT NULL DEFAULT 'WAITING'::character varying
 ) with (appendonly='true', compresstype=zstd, compresslevel='5')
 distributed by ("name");
