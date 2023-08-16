@@ -3,12 +3,13 @@ CREATE TABLE address_labels_json_gin_row_temp_${tableSuffix}
 (
     address TEXT  NOT NULL,
     data    TEXT NOT NULL,
+    total_num int8,
     recent_time_code varchar(30) NULL
 ) WITH (appendoptimized = true, orientation = column) DISTRIBUTED BY (address,recent_time_code);
 truncate table address_labels_json_gin_row_temp_${tableSuffix};
 vacuum address_labels_json_gin_row_temp_${tableSuffix};
 
-INSERT INTO address_labels_json_gin_row_temp_${tableSuffix}(address, data,recent_time_code)
+INSERT INTO address_labels_json_gin_row_temp_${tableSuffix}(address, data,recent_time_code,total_num)
 SELECT address_label_gp_temp_${tableSuffix}.address,
        JSONB_BUILD_OBJECT(
                'address', address_label_gp_temp_${tableSuffix}.address,
@@ -30,7 +31,8 @@ SELECT address_label_gp_temp_${tableSuffix}.address,
                    ),
                'updated_at', CURRENT_TIMESTAMP
            )::TEXT,
-        address_label_gp_temp_${tableSuffix}.recent_time_code
+        address_label_gp_temp_${tableSuffix}.recent_time_code,
+       sum(1) as total_num
 FROM address_label_gp_temp_${tableSuffix}
 LEFT JOIN contract ON (address_label_gp_temp_${tableSuffix}.address = contract.contract_address)
 GROUP BY (address_label_gp_temp_${tableSuffix}.address,address_label_gp_temp_${tableSuffix}.recent_time_code) ;
