@@ -60,7 +60,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                                "owner",
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'bg'                        as       "type",
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'bg' || level_def_temp.code as       "name",
@@ -76,7 +78,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                                             refresh_time,
                 'WEB3'                                                                                        wired_type,
                 999                                                                                           label_order,
-                'WAITING'                                                                                     sync_es_status
+                'WAITING'                                                                                     sync_es_status,
+                '{"pf": 1, "act": 1, "ast": 0}'                                                      as       one_wired_type,
+                'b'                                                                                  as       two_wired_type
 from web3_action_platform_temp
          inner join web3_platform_temp on
     (web3_platform_temp.platform = web3_action_platform_temp.platform)
@@ -164,7 +168,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                          "owner",
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'br'                        as "type",
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'br' || level_def_temp.code as "name",
@@ -181,7 +187,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                                       refresh_time,
                 'WEB3'                                                                                  wired_type,
                 999                                                                                     label_order,
-                'WAITING'                                                                               sync_es_status
+                'WAITING'                                                                               sync_es_status,
+                '{"pf": 1, "act": 1, "ast": 0}'                                                      as one_wired_type,
+                'b'                                                                                  as two_wired_type
 from web3_action_platform_temp
          inner join web3_platform_temp on
     (web3_platform_temp.platform = web3_action_platform_temp.platform)
@@ -268,7 +276,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                          "owner",
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'bt'                        as "type",
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'bt' || level_def_temp.code as "name",
@@ -285,7 +295,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                                       refresh_time,
                 'WEB3'                                                                                  wired_type,
                 999                                                                                     label_order,
-                'WAITING'                                                                               sync_es_status
+                'WAITING'                                                                               sync_es_status,
+                '{"pf": 1, "act": 1, "ast": 0}'                                                      as one_wired_type,
+                'b'                                                                                  as two_wired_type
 from web3_action_platform_temp
          inner join web3_platform_temp on
     (web3_platform_temp.platform = web3_action_platform_temp.platform)
@@ -374,7 +386,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                            "owner",
                 recent_time_temp.code || 'w' || web3_platform_temp.id || web3_action_temp.code || 'cg' as "type",
                 recent_time_temp.code || 'w' || web3_platform_temp.id || web3_action_temp.code || 'cg' ||
@@ -393,7 +407,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                                         refresh_time,
                 'WEB3'                                                                                    wired_type,
                 999                                                                                       label_order,
-                'WAITING'                                                                                 sync_es_status
+                'WAITING'                                                                                 sync_es_status,
+                '{"pf": 1, "act": 1, "ast": 0}'                                                        as one_wired_type,
+                'c'                                                                                    as two_wired_type
 from web3_action_platform_temp
          inner join web3_platform_temp on
     (web3_platform_temp.platform = web3_action_platform_temp.platform)

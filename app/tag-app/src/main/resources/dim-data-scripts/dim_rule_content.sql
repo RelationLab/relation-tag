@@ -85,7 +85,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                 "owner",
                 --平台+资产+交易类型
                 '' || 'l' || ipt.id || '' || 'bg'                        as                    "type",
@@ -103,7 +105,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                              refresh_time,
                 'DEFI'                                                                         wired_type,
                 999                                                                            label_order,
-                'WAITING'                                                                      sync_es_status
+                'WAITING'                                                                      sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                          as                    one_wired_type,
+                'b'                                                      as                    two_wired_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -248,7 +252,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                 "owner",
                 '' || 'l' || ipt.id || '' || 'br'                                              "type",
                 '' || 'l' || ipt.id || '' || 'br' || level_def_temp.code as                    "name",
@@ -264,7 +270,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                              refresh_time,
                 'DEFI'                                                                         wired_type,
                 999                                                                            label_order,
-                'WAITING'                                                                      sync_es_status
+                'WAITING'                                                                      sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                          as                    one_wired_type,
+                'b'                                                      as                    two_wired_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -407,7 +415,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                 "owner",
                 '' || 'l' || ipt.id || '' || 'bt'                                              "type",
                 '' || 'l' || ipt.id || '' || 'bt' || level_def_temp.code                       "name",
@@ -423,7 +433,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                              refresh_time,
                 'DEFI'                                                                         wired_type,
                 999                                                                            label_order,
-                'WAITING'                                                                      sync_es_status
+                'WAITING'                                                                      sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}' as                                             one_wired_type,
+                'b'                             as                                             two_wired_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -571,7 +583,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                    as "owner",
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'cg'                        as "type",
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'cg' || level_def_temp.code as "name",
@@ -590,7 +604,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                                 as refresh_time,
                 'DEFI'                                                                            as wired_type,
                 999                                                                               as label_order,
-                'WAITING'                                                                         as sync_es_status
+                'WAITING'                                                                         as sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                                                   as one_wired_type,
+                'c'                                                                               as two_wired_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -739,7 +755,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                       "owner",
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vg'                        as "type",
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vg' || level_def_temp.code as "name",
@@ -761,7 +779,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                                    refresh_time,
                 'DEFI'                                                                               wired_type,
                 999                                                                                  label_order,
-                'WAITING'                                                                            sync_es_status
+                'WAITING'                                                                            sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                                                   as one_wired_type,
+                'v'                                                                               as two_wired_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -910,11 +930,11 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                           "owner",
-                recent_time_temp.recent_time_name ||
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vr'                        as     "type",
-                recent_time_temp.recent_time_name ||
                 recent_time_temp.code || '' || 'l' || ipt.id || '' || 'vr' || level_def_temp.code as     "name",
                 'SYSTEM'                                                                                 "source",
                 'PUBLIC'                                                                                 visible_type,
@@ -934,7 +954,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                                        refresh_time,
                 'DEFI'                                                                                   wired_type,
                 999                                                                                      label_order,
-                'WAITING'                                                                                sync_es_status
+                'WAITING'                                                                                sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                                                   as     one_wired_type,
+                'v'                                                                               as     two_wired_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -1058,7 +1080,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'bg'                        as "type",
                 '' || 't' || t.id || '' || 'bg' || level_def_temp.code as "name",
@@ -1074,7 +1098,9 @@ select distinct 'RelationTeam'                                            "owner
                 0                                                         refresh_time,
                 'DEFI'                                                    wired_type,
                 999                                                       label_order,
-                'WAITING'                                                 sync_es_status
+                'WAITING'                                                 sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                        as one_wired_type,
+                'b'                                                    as two_wired_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1145,7 +1171,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                   "owner",
                 '' || '' || '' || 'bg'                        as "type",
                 '' || '' || '' || 'bg' || level_def_temp.code as "name",
@@ -1161,7 +1189,9 @@ select distinct 'RelationTeam'                                   "owner",
                 0                                                refresh_time,
                 'DEFI'                                           wired_type,
                 999                                              label_order,
-                'WAITING'                                        sync_es_status
+                'WAITING'                                        sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'               as one_wired_type,
+                'b'                                           as two_wired_type
 from level_def_temp
 where type = 'defi_balance_grade';
 insert
@@ -1227,7 +1257,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'br'                        as "type",
                 '' || 't' || t.id || '' || 'br' || level_def_temp.code as "name",
@@ -1243,7 +1275,9 @@ select distinct 'RelationTeam'                                            "owner
                 0                                                         refresh_time,
                 'DEFI'                                                    wired_type,
                 999                                                       label_order,
-                'WAITING'                                                 sync_es_status
+                'WAITING'                                                 sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                        as one_wired_type,
+                'b'                                                    as two_wired_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1314,7 +1348,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                   "owner",
                 '' || '' || '' || 'br'                        as "type",
                 '' || '' || '' || 'br' || level_def_temp.code as "name",
@@ -1330,7 +1366,9 @@ select distinct 'RelationTeam'                                   "owner",
                 0                                                refresh_time,
                 'DEFI'                                           wired_type,
                 999                                              label_order,
-                'WAITING'                                        sync_es_status
+                'WAITING'                                        sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'               as one_wired_type,
+                'b'                                           as two_wired_type
 from level_def_temp
 where type = 'defi_balance_rank';
 insert
@@ -1396,7 +1434,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'bt'                        as "type",
                 '' || 't' || t.id || '' || 'bt' || level_def_temp.code as "name",
@@ -1412,7 +1452,9 @@ select distinct 'RelationTeam'                                            "owner
                 0                                                         refresh_time,
                 'DEFI'                                                    wired_type,
                 999                                                       label_order,
-                'WAITING'                                                 sync_es_status
+                'WAITING'                                                 sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                        as one_wired_type,
+                'b'                                                    as two_wired_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1483,7 +1525,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                   "owner",
                 '' || '' || '' || 'bt'                        as "type",
                 '' || '' || '' || 'bt' || level_def_temp.code as "name",
@@ -1499,7 +1543,9 @@ select distinct 'RelationTeam'                                   "owner",
                 0                                                refresh_time,
                 'DEFI'                                           wired_type,
                 999                                              label_order,
-                'WAITING'                                        sync_es_status
+                'WAITING'                                        sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'               as one_wired_type,
+                'b'                                           as two_wired_type
 from level_def_temp
 where type = 'defi_balance_top';
 insert
@@ -1568,7 +1614,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                     "owner",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'cg'                        as "type",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'cg' || level_def_temp.code as "name",
@@ -1586,7 +1634,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                                  refresh_time,
                 'DEFI'                                                                             wired_type,
                 999                                                                                label_order,
-                'WAITING'                                                                          sync_es_status
+                'WAITING'                                                                          sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                                                 as one_wired_type,
+                'c'                                                                             as two_wired_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1663,7 +1713,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                            "owner",
                 recent_time_temp.code || '' || '' || '' || 'cg'                        as "type",
                 recent_time_temp.code || '' || '' || '' || 'cg' || level_def_temp.code as "name",
@@ -1681,7 +1733,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                         refresh_time,
                 'DEFI'                                                                    wired_type,
                 999                                                                       label_order,
-                'WAITING'                                                                 sync_es_status
+                'WAITING'                                                                 sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                                        as one_wired_type,
+                'c'                                                                    as two_wired_type
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_count';
@@ -1748,7 +1802,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'tg'                           "type",
                 '' || 't' || t.id || '' || 'tg' || level_def_temp.code as "name",
@@ -1764,7 +1820,9 @@ select distinct 'RelationTeam'                                            "owner
                 0                                                         refresh_time,
                 'DEFI'                                                    wired_type,
                 999                                                       label_order,
-                'WAITING'                                                 sync_es_status
+                'WAITING'                                                 sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                        as one_wired_type,
+                't'                                                    as two_wired_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1839,7 +1897,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'ts'                        as "type",
                 '' || 't' || t.id || '' || 'ts' || level_def_temp.code as "name",
@@ -1855,7 +1915,9 @@ select distinct 'RelationTeam'                                            "owner
                 0                                                         refresh_time,
                 'DEFI'                                                    wired_type,
                 999                                                       label_order,
-                'WAITING'                                                 sync_es_status
+                'WAITING'                                                 sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                        as one_wired_type,
+                't'                                                    as two_wired_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1933,10 +1995,11 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                     "owner",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vg'                        as "type",
-                recent_time_temp.recent_time_name ||
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vg' || level_def_temp.code as "name",
                 'SYSTEM'                                                                           "source",
                 'PUBLIC'                                                                           visible_type,
@@ -1955,7 +2018,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                                  refresh_time,
                 'DEFI'                                                                             wired_type,
                 999                                                                                label_order,
-                'WAITING'                                                                          sync_es_status
+                'WAITING'                                                                          sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                                                 as one_wired_type,
+                'v'                                                                             as two_wired_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1985,7 +2050,6 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'            
                 ''                                                                              activity,
                 ''                                                                              hold_time,
                 now()                                                                           created_at,
-                recent_time_temp.recent_time_name ||
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vg' || level_def_temp.code label_name,
                 'token'                                                                         asset_type,
                 'GRADE'                                                                         label_category,
@@ -2032,7 +2096,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                            "owner",
                 recent_time_temp.code || '' || '' || '' || 'vg'                        as "type",
                 recent_time_temp.code || '' || '' || '' || 'vg' || level_def_temp.code as "name",
@@ -2053,7 +2119,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                         refresh_time,
                 'DEFI'                                                                    wired_type,
                 999                                                                       label_order,
-                'WAITING'                                                                 sync_es_status
+                'WAITING'                                                                 sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                                        as one_wired_type,
+                'v'                                                                    as two_wired_type
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_volume_grade';
@@ -2123,7 +2191,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                                     "owner",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vr'                        as "type",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vr' || level_def_temp.code as "name",
@@ -2141,7 +2211,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                                  refresh_time,
                 'DEFI'                                                                             wired_type,
                 999                                                                                label_order,
-                'WAITING'                                                                          sync_es_status
+                'WAITING'                                                                          sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                                                 as one_wired_type,
+                'v'                                                                             as two_wired_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -2218,7 +2290,9 @@ into public."label_temp" ("owner",
                           refresh_time,
                           wired_type,
                           label_order,
-                          sync_es_status)
+                          sync_es_status,
+                          one_wired_type,
+                          two_wired_type)
 select distinct 'RelationTeam'                                                            "owner",
                 recent_time_temp.code || '' || '' || '' || 'vr'                        as "type",
                 recent_time_temp.code || '' || '' || '' || 'vr' || level_def_temp.code as "name",
@@ -2236,7 +2310,9 @@ select distinct 'RelationTeam'                                                  
                 0                                                                         refresh_time,
                 'DEFI'                                                                    wired_type,
                 999                                                                       label_order,
-                'WAITING'                                                                 sync_es_status
+                'WAITING'                                                                 sync_es_status,
+                '{"pf": 0, "act": 0, "ast": 1}'                                        as one_wired_type,
+                'v'                                                                    as two_wired_type
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_volume_rank';
