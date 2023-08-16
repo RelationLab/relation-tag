@@ -71,8 +71,14 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                            strategy,
 
                 web3_platform_temp.platform_name_alis ||
-                (case when web3_platform_temp.platform_name_alis = 'Web3' THEN '' ELSE ' ' end) || 'NFT ' ||
-                level_def_temp.level_name || ' Collector'                                               "content",
+                (case when web3_platform_temp.platform_name_alis = 'Web3' THEN '' ELSE ' ' end) ||
+                (case
+                     when web3_action_temp.trade_type = 'write' then ''
+                     else 'NFT ' end) ||
+                level_def_temp.level_name ||
+                (case
+                     when web3_action_temp.trade_type = 'write' then ' ' || web3_action_temp.trade_type_alis
+                     else ' Collector' end)                                                             "content",
                 'SQL'                                                                                   rule_type,
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'bg'                           rule_group,
                 'RESULT'                                                                                value_type,
@@ -186,8 +192,13 @@ select distinct 'RelationTeam'                                                  
                 level_def_temp.level_name || ' ' ||
                 (case
                      when web3_platform_temp.platform_name_alis = 'Web3' THEN web3_platform_temp.platform_name_alis
-                     ELSE '' END)
-                    || 'NFT Collector'                                                                  "content",
+                     ELSE '' END) ||
+                (case
+                     when web3_action_temp.trade_type = 'write' then ''
+                     else 'NFT ' end) ||
+                (case
+                     when web3_action_temp.trade_type = 'write' then ' ' || web3_action_temp.trade_type_alis
+                     else ' Collector' end)                                                             "content",
                 'SQL'                                                                                   rule_type,
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'br'                           rule_group,
                 'RESULT'                                                                                value_type,
@@ -268,7 +279,8 @@ from web3_action_platform_temp
     (web3_platform_temp.platform = web3_action_platform_temp.platform)
          inner join web3_action_temp on
     (web3_action_temp.trade_type = web3_action_platform_temp.trade_type)
-WHERE web3_action_platform_temp.dim_type = '1';
+WHERE web3_action_platform_temp.dim_type = '1'
+  and web3_action_temp.trade_type <> 'write';
 insert
 into public."label_temp" ("owner",
                           "type",
@@ -317,7 +329,8 @@ from web3_action_platform_temp
                      from level_def_temp
                      where type = 'web3_balance_top') level_def_temp on
     (1 = 1)
-WHERE web3_action_platform_temp.dim_type = '1';
+WHERE web3_action_platform_temp.dim_type = '1'
+  and web3_action_temp.trade_type <> 'write';
 
 insert
 into public.combination_temp (asset,
@@ -355,7 +368,8 @@ from web3_action_platform_temp
                      from level_def_temp
                      where type = 'web3_balance_top') level_def_temp on
     (1 = 1)
-WHERE web3_action_platform_temp.dim_type = '1';
+WHERE web3_action_platform_temp.dim_type = '1'
+  and web3_action_temp.trade_type <> 'write';
 
 -----count  WEB3_RabbitHole_NFTRecipient_ACTIVITY
 insert
@@ -409,7 +423,12 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                              strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
-                web3_platform_temp.platform_name_alis || '  ' || level_def_temp.level_name                "content",
+                web3_platform_temp.platform_name_alis || '  ' || level_def_temp.level_name ||
+                case
+                    when web3_action_temp.trade_type = 'ALL' then ''
+                    else ' ' || web3_action_temp.trade_type_alis
+                    end
+                                                                                                          "content",
                 'SQL'                                                                                     rule_type,
                 recent_time_temp.code || 'w' || web3_platform_temp.id || web3_action_temp.code || 'cg'    rule_group,
                 'RESULT'                                                                                  value_type,
