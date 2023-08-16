@@ -2965,7 +2965,7 @@ select distinct 'RelationTeam'                                                  
                      when nft_trade_type_temp.nft_trade_type = 'Lend' or nft_trade_type_temp.nft_trade_type = 'Bid'
                          then level_def_temp.level_name || ' '
                      else '' end) ||
-                nft_action_platform_temp.nft_type_name || ' ' ||
+                'NFT' || ' ' ||
                 (case
                      when nft_trade_type_temp.nft_trade_type = 'Lend' or nft_trade_type_temp.nft_trade_type = 'Bid'
                          then ''
