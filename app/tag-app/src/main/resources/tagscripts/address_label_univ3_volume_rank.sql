@@ -1,38 +1,44 @@
 drop table if exists address_label_univ3_volume_rank;
 CREATE TABLE public.address_label_univ3_volume_rank
 (
-    address    varchar(512) NULL,
-    data       numeric(250, 20) NULL,
-    wired_type varchar(20) NULL,
-    label_type varchar(512) NULL,
-    label_name varchar(1024) NULL,
-    updated_at timestamp(6) NULL,
-    "group"    varchar(1) NULL,
-    "level"    varchar(100) NULL,
-    category   varchar(100) NULL,
-    trade_type varchar(100) NULL,
-    project    varchar(100) NULL,
-    asset      varchar(100) NULL,
-    bus_type   varchar(20) NULL,
+    address          varchar(512) NULL,
+    data             numeric(250, 20) NULL,
+    wired_type       varchar(20) NULL,
+    label_type       varchar(512) NULL,
+    label_name       varchar(1024) NULL,
+    updated_at       timestamp(6) NULL,
+    "group"          varchar(1) NULL,
+    "level"          varchar(100) NULL,
+    category         varchar(100) NULL,
+    trade_type       varchar(100) NULL,
+    project          varchar(100) NULL,
+    asset            varchar(100) NULL,
+    bus_type         varchar(20) NULL,
     recent_time_code varchar(30) NULL
-)with (appendonly='true', compresstype=zstd, compresslevel='5')
-    distributed by (address,label_name,recent_time_code);
+) with (appendonly = 'true', compresstype = zstd, compresslevel = '5')
+    distributed by
+(
+    address,
+    label_name,
+    recent_time_code
+);
 truncate table public.address_label_univ3_volume_rank;
 vacuum
 address_label_univ3_volume_rank;
 
 insert into public.address_label_univ3_volume_rank(address, label_type, label_name, data, wired_type, updated_at,
-                                                   "group", level, category, trade_type, project, asset, bus_type, recent_time_code )
+                                                   "group", level, category, trade_type, project, asset, bus_type,
+                                                   recent_time_code)
 select tb1.address,
        tb2.label_type,
-       tb2.label_type || '_' || case
-                                    when zb_rate > 0.025
-                                        and zb_rate <= 0.1 then 'MEDIUM'
-                                    when zb_rate > 0.01
-                                        and zb_rate <= 0.025 then 'HEAVY'
-                                    when zb_rate > 0.001
-                                        and zb_rate <= 0.01 then 'ELITE'
-                                    when zb_rate <= 0.001 then 'LEGENDARY'
+       tb2.label_type || case
+                             when zb_rate > 0.01
+                                 and zb_rate <= 0.025 then '1g'
+                             when zb_rate > 0.001
+                                 and zb_rate <= 0.01 then '1k'
+                             when zb_rate > 0.025
+                                 and zb_rate <= 0.1 then '1i'
+                             when zb_rate <= 0.001 then '1l'
            end                                        as label_name,
        zb_rate                                        as data,
        'DEFI'                                         as wired_type,
@@ -95,7 +101,7 @@ from (select t1.address,
                                       and address not in (select address from exclude_address)) s1
                                        inner join dim_rank_token_temp s2
                                                   on
-                                                          s1.token = s2.token_id
+                                                      s1.token = s2.token_id
                               where volume_usd >= 100
                               group by s1.token,
                                        s1.address,

@@ -48,16 +48,16 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name)
 
-select distinct platform_detail_temp.platform     as                 project,
-                lpt.pool                          as                 token,
-                'lp'                              as                 type,
+select distinct platform_detail_temp.platform     as project,
+                lpt.pool                          as token,
+                'lp'                              as type,
                 --平台+资产+交易类型
-                '' || 'l' || lpt.id || '' || 'tf' as                 label_type,
-                'T'                               as                 operate_type,
-                lpt.factory_type || '_' || lpt.symbol_wired || '_lp' seq_flag,
-                'FIRST_MOVER_LP'                                     data_subject,
-                lpt.factory_type                                     project_name,
-                lpt.symbol_wired                                     token_name
+                '' || 'l' || lpt.id || '' || 'tf' as label_type,
+                'T'                               as operate_type,
+                '' || 'l' || lpt.id || '' || 'tf'    seq_flag,
+                'FIRST_MOVER_LP'                     data_subject,
+                lpt.factory_type                     project_name,
+                lpt.symbol_wired                     token_name
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,

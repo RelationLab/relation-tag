@@ -31,14 +31,14 @@ insert into public.address_label_token_project_type_volume_rank(address, label_t
                                                                 project, asset, bus_type, recent_time_code)
 select address,
        label_type,
-       label_type || '_' || case
-                                when zb_rate > 0.01
-                                    and zb_rate <= 0.025 then 'HEAVY'
-                                when zb_rate > 0.001
-                                    and zb_rate <= 0.01 then 'ELITE'
-                                when zb_rate > 0.025
-                                    and zb_rate <= 0.1 then 'MEDIUM'
-                                when zb_rate <= 0.001 then 'LEGENDARY'
+       label_type || case
+                         when zb_rate > 0.01
+                             and zb_rate <= 0.025 then '1g'
+                         when zb_rate > 0.001
+                             and zb_rate <= 0.01 then '1k'
+                         when zb_rate > 0.025
+                             and zb_rate <= 0.1 then '1i'
+                         when zb_rate <= 0.001 then '1l'
            end                                        as label_name,
        zb_rate                                        as data,
        'DEFI'                                         as wired_type,
@@ -126,7 +126,7 @@ from (select address,
                                                     tb2.type,
                                                     recent_time_code
                                              from dex_tx_volume_count_summary_temp totala
-                                                  inner join dim_project_token_type_temp tb2 on
+                                                      inner join dim_project_token_type_temp tb2 on
                                                  (totala.token = tb2.token and totala.project = tb2.project
                                                      and totala.type = tb2.type and tb2.data_subject = 'volume_rank'
                                                      and totala.recent_time_code = tb2.recent_code)

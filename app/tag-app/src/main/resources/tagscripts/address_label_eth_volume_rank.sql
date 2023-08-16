@@ -15,24 +15,30 @@ CREATE TABLE public.address_label_eth_volume_rank
     asset            varchar(100) NULL,
     bus_type         varchar(20) NULL,
     recent_time_code varchar(30) NULL
-)with (appendonly='true', compresstype=zstd, compresslevel='5')
-    distributed by (address,label_name,recent_time_code);
+) with (appendonly = 'true', compresstype = zstd, compresslevel = '5')
+    distributed by
+(
+    address,
+    label_name,
+    recent_time_code
+);
 truncate table public.address_label_eth_volume_rank;
 vacuum
 address_label_eth_volume_rank;
 
 insert into public.address_label_eth_volume_rank(address, label_type, label_name, data, wired_type, updated_at, "group",
-                                                 level, category, trade_type, project, asset, bus_type, recent_time_code )
+                                                 level, category, trade_type, project, asset, bus_type,
+                                                 recent_time_code)
 select tb1.address,
        tb2.label_type,
-       tb2.label_type || '_' || case
-                                    when zb_rate > 0.01
-                                        and zb_rate <= 0.025 then 'HEAVY'
-                                    when zb_rate > 0.001
-                                        and zb_rate <= 0.01 then 'ELITE'
-                                    when zb_rate > 0.025
-                                        and zb_rate <= 0.1 then 'MEDIUM'
-                                    when zb_rate <= 0.001 then 'LEGENDARY'
+       tb2.label_type || case
+                             when zb_rate > 0.01
+                                 and zb_rate <= 0.025 then '1g'
+                             when zb_rate > 0.001
+                                 and zb_rate <= 0.01 then '1k'
+                             when zb_rate > 0.025
+                                 and zb_rate <= 0.1 then '1i'
+                             when zb_rate <= 0.001 then '1l'
            end                                        as label_name,
        zb_rate                                        as data,
        'DEFI'                                         as wired_type,
