@@ -43,21 +43,21 @@ into public.address_label_token_volume_grade_all(address,
 select a1.address,
        a2.label_type,
        a2.label_type || case
-                            when total_transfer_volume_usd >= 100
-                                and total_transfer_volume_usd < 1000 then '1a'
-                            when total_transfer_volume_usd >= 1000
-                                and total_transfer_volume_usd < 10000 then '1b'
-                            when total_transfer_volume_usd >= 10000
-                                and total_transfer_volume_usd < 50000 then '1c'
-                            when total_transfer_volume_usd >= 50000
-                                and total_transfer_volume_usd < 100000 then '1d'
-                            when total_transfer_volume_usd >= 100000
-                                and total_transfer_volume_usd < 500000 then '1e'
-                            when total_transfer_volume_usd >= 500000
-                                and total_transfer_volume_usd < 1000000 then '1f'
-                            when total_transfer_volume_usd >= 1000000
-                                and total_transfer_volume_usd < 1000000000 then '1g'
-                            when total_transfer_volume_usd >= 1000000000 then '1h'
+                            when volume_usd >= 100
+                                and volume_usd < 1000 then '1a'
+                            when volume_usd >= 1000
+                                and volume_usd < 10000 then '1b'
+                            when volume_usd >= 10000
+                                and volume_usd < 50000 then '1c'
+                            when volume_usd >= 50000
+                                and volume_usd < 100000 then '1d'
+                            when volume_usd >= 100000
+                                and volume_usd < 500000 then '1e'
+                            when volume_usd >= 500000
+                                and volume_usd < 1000000 then '1f'
+                            when volume_usd >= 1000000
+                                and volume_usd < 1000000000 then '1g'
+                            when volume_usd >= 1000000000 then '1h'
            end    as label_name,
        volume_usd as data,
        'DEFI'     as wired_type,
