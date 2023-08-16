@@ -23,7 +23,7 @@ insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_
 insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values(9,'HIGH_BALANCE','High Balance','defi_balance_rank','defi','balance','High Balance');
 insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values(10,'WHALE','Whale','defi_balance_top','defi','balance','Whale');
 insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values(11,'HEAVY_LP','Heavy LP','defi_lp_heavy_lp','defi_lp','balance','Heavy LP');
-insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values(12,'HEAVY_LP_STAKER','Heavy LP Staker','defi_lp_heavy_lp_staker','defi_lp','balance','Heavy LP Staker');
+insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values(12,'HEAVY_LP_STAKER','Heavy Lp Staker','defi_lp_heavy_lp_staker','defi_lp','balance','Heavy Lp Staker');
 
 insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values(13,'L1','Vol Lv1','defi_volume_grade','defi','volume','Lv1');
 insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values(14,'L2','Vol Lv2','defi_volume_grade','defi','volume','Lv2');

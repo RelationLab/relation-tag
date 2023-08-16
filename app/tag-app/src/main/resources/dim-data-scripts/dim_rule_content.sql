@@ -1999,11 +1999,8 @@ select distinct 'RelationTeam'                                                  
                 'PUBLIC'                                                                           visible_type,
                 'TOTAL_PART'                                                                       strategy,
                 recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || t.symbol || (case
-                                                                                                                when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
-                                                                                                                    then ' ' || level_def_temp.level
-                                                                                                                else '' end) ||
-                ' ' || level_def_temp.level_name                                                   "content",
+                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || t.symbol || ' ' ||
+                level_def_temp.level_name                                                          "content",
                 'SQL'                                                                              rule_type,
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vg'                           rule_group,
                 'RESULT'                                                                           value_type,
@@ -2100,10 +2097,7 @@ select distinct 'RelationTeam'                                                  
                 'PUBLIC'                                                                  visible_type,
                 'TOTAL_PART'                                                              strategy,
                 recent_time_temp.recent_time_content ||
-                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'Token ' || (case
-                                                                                                                when level_def_temp.level = 'Million' or level_def_temp.level = 'Billion'
-                                                                                                                    then level_def_temp.level || ' '
-                                                                                                                else '' end) ||
+                (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'Token ' ||
                 level_def_temp.level_name                                                 "content",
                 'SQL'                                                                     rule_type,
                 recent_time_temp.code || '' || '' || '' || 'vg'                           rule_group,
@@ -2196,7 +2190,7 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                                       strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || t.symbol || ' ' ||
-                level_def_temp.level_name || ' ' || 'Trader'                                       "content",
+                level_def_temp.level_name                                                          "content",
                 'SQL'                                                                              rule_type,
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vr'                           rule_group,
                 'RESULT'                                                                           value_type,
@@ -2295,7 +2289,7 @@ select distinct 'RelationTeam'                                                  
                 'TOTAL_PART'                                                              strategy,
                 recent_time_temp.recent_time_content ||
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'Token ' ||
-                level_def_temp.level_name || ' ' || 'Trader'                              "content",
+                level_def_temp.level_name                                                 "content",
                 'SQL'                                                                     rule_type,
                 recent_time_temp.code || '' || '' || '' || 'vr'                           rule_group,
                 'RESULT'                                                                  value_type,

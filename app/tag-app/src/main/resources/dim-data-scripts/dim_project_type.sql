@@ -63,24 +63,27 @@ into public."label_temp" ("owner",
                           sync_es_status,
                           one_wired_type,
                           two_wired_type)
-select distinct 'RelationTeam'                                                                                "owner",
-                'w' || web3_platform_temp.id || web3_action_temp.code || 'bg'                        as       "type",
-                'w' || web3_platform_temp.id || web3_action_temp.code || 'bg' || level_def_temp.code as       "name",
-                'SYSTEM'                                                                                      "source",
-                'PUBLIC'                                                                                      visible_type,
-                'TOTAL_PART'                                                                                  strategy,
-                web3_platform_temp.platform_name_alis || ' NFT ' || level_def_temp.level_name || ' Collector' "content",
-                'SQL'                                                                                         rule_type,
-                'w' || web3_platform_temp.id || web3_action_temp.code || 'bg'                                 rule_group,
-                'RESULT'                                                                                      value_type,
-                999999                                                                                        run_order,
-                now()                                                                                         created_at,
-                0                                                                                             refresh_time,
-                'WEB3'                                                                                        wired_type,
-                999                                                                                           label_order,
-                'WAITING'                                                                                     sync_es_status,
-                '{"pf": 1, "act": 1, "ast": 0}'                                                      as       one_wired_type,
-                'b'                                                                                  as       two_wired_type
+select distinct 'RelationTeam'                                                                          "owner",
+                'w' || web3_platform_temp.id || web3_action_temp.code || 'bg'                        as "type",
+                'w' || web3_platform_temp.id || web3_action_temp.code || 'bg' || level_def_temp.code as "name",
+                'SYSTEM'                                                                                "source",
+                'PUBLIC'                                                                                visible_type,
+                'TOTAL_PART'                                                                            strategy,
+
+                web3_platform_temp.platform_name_alis ||
+                (case when web3_platform_temp.platform_name_alis = 'Web3' THEN '' ELSE ' ' end) || 'NFT ' ||
+                level_def_temp.level_name || ' Collector'                                               "content",
+                'SQL'                                                                                   rule_type,
+                'w' || web3_platform_temp.id || web3_action_temp.code || 'bg'                           rule_group,
+                'RESULT'                                                                                value_type,
+                999999                                                                                  run_order,
+                now()                                                                                   created_at,
+                0                                                                                       refresh_time,
+                'WEB3'                                                                                  wired_type,
+                999                                                                                     label_order,
+                'WAITING'                                                                               sync_es_status,
+                '{"pf": 1, "act": 1, "ast": 0}'                                                      as one_wired_type,
+                'b'                                                                                  as two_wired_type
 from web3_action_platform_temp
          inner join web3_platform_temp on
     (web3_platform_temp.platform = web3_action_platform_temp.platform)
@@ -177,8 +180,14 @@ select distinct 'RelationTeam'                                                  
                 'SYSTEM'                                                                                "source",
                 'PUBLIC'                                                                                visible_type,
                 'TOTAL_PART'                                                                            strategy,
-                web3_platform_temp.platform_name_alis || ' ' || level_def_temp.level_name || ' NFT ' ||
-                'Collector'                                                                             "content",
+                (case
+                     when web3_platform_temp.platform_name_alis = 'Web3' THEN ''
+                     ELSE web3_platform_temp.platform_name_alis || ' ' END) ||
+                level_def_temp.level_name || ' ' ||
+                (case
+                     when web3_platform_temp.platform_name_alis = 'Web3' THEN web3_platform_temp.platform_name_alis
+                     ELSE '' END)
+                    || 'NFT Collector'                                                                  "content",
                 'SQL'                                                                                   rule_type,
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'br'                           rule_group,
                 'RESULT'                                                                                value_type,
@@ -285,8 +294,9 @@ select distinct 'RelationTeam'                                                  
                 'SYSTEM'                                                                                "source",
                 'PUBLIC'                                                                                visible_type,
                 'TOTAL_PART'                                                                            strategy,
-                web3_platform_temp.platform_name_alis || ' ' || level_def_temp.level_name || ' NFT' ||
-                ' Collector'                                                                            "content",
+                web3_platform_temp.platform_name_alis ||
+                (case when web3_platform_temp.platform_name_alis = 'Web3' THEN '' ELSE ' ' end)
+                    || 'NFT ' || level_def_temp.level_name                                              "content",
                 'SQL'                                                                                   rule_type,
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'bt'                           rule_group,
                 'RESULT'                                                                                value_type,
@@ -308,6 +318,7 @@ from web3_action_platform_temp
                      where type = 'web3_balance_top') level_def_temp on
     (1 = 1)
 WHERE web3_action_platform_temp.dim_type = '1';
+
 insert
 into public.combination_temp (asset,
                               project,
