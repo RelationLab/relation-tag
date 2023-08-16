@@ -99,15 +99,19 @@ select distinct a1.address,
                 'CROWD'                  as bus_type
 from (select address
       from address_label_eth_time_special
-      where label_name = 'ETH_HOLDING_TIME_SPECIAL_LONG_TERM_HOLDER'
+      where label_name = 't832ts3g'
+--           label_name = 'ETH_HOLDING_TIME_SPECIAL_LONG_TERM_HOLDER'
       union all
       select address
       from address_label_token_time_special
-      where label_name like '%_HOLDING_TIME_SPECIAL_LONG_TERM_HOLDER'
+      where label_name like 't%ts3g'
+--           label_name like '%_HOLDING_TIME_SPECIAL_LONG_TERM_HOLDER'
       union all
       select address
       from address_label_nft_time_rank
-      where label_name like '%_NFT_TIME_SPECIAL_LONG_TERM_HOLDER') a1
+      where  label_name like 'n%ts7g'
+--           label_name like '%_NFT_TIME_SPECIAL_LONG_TERM_HOLDER'
+      ) a1
 where address not in (select address from exclude_address);
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_eth_time_special' as table_name, '${batchDate}' as batch_date;

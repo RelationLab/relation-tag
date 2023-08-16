@@ -158,9 +158,14 @@ select distinct a1.address,
                 'ALL'                     as asset,
                 'CROWD'                   as bus_type
 from address_label_token_count_grade a1
-where (label_name = 'ALL_ALL_ALL_ACTIVITY_High'
-    or label_name = 'ALL_ALL_ALL_ACTIVITY_Medium'
-    or label_name = 'ALL_ALL_ALL_ACTIVITY_Low')
+where (
+            label_name = 'cg2g'
+        or label_name = 'cg2i'
+        or label_name = 'cg2h'
+--     label_name = 'ALL_ALL_ALL_ACTIVITY_High'
+--     or label_name = 'ALL_ALL_ALL_ACTIVITY_Medium'
+--     or label_name = 'ALL_ALL_ALL_ACTIVITY_Low'
+    )
   and address not in (select address from exclude_address);
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_token_count_grade' as table_name, '${batchDate}' as batch_date;

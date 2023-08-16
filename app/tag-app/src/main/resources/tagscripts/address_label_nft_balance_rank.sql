@@ -203,10 +203,14 @@ select distinct a1.address,
                 'CROWD'           as bus_type
 from (select address
       from address_label_nft_balance_rank
-      where label_name = 'ALL_NFT_BALANCE_RANK_RARE_NFT_COLLECTOR'
-         or label_name = 'ALL_NFT_BALANCE_RANK_UNCOMMON_NFT_COLLECTOR'
-         or label_name = 'ALL_NFT_BALANCE_RANK_EPIC_NFT_COLLECTOR'
-         or label_name = 'ALL_NFT_BALANCE_RANK_LEGENDARY_NFT_COLLECTOR'
+      where  label_name = 'nbr4j'
+         or label_name = 'nbr4i'
+         or label_name = 'nbr4g'
+         or label_name = 'nbr4h'
+--           label_name = 'ALL_NFT_BALANCE_RANK_RARE_NFT_COLLECTOR'
+--          or label_name = 'ALL_NFT_BALANCE_RANK_UNCOMMON_NFT_COLLECTOR'
+--          or label_name = 'ALL_NFT_BALANCE_RANK_EPIC_NFT_COLLECTOR'
+--          or label_name = 'ALL_NFT_BALANCE_RANK_LEGENDARY_NFT_COLLECTOR'
       union all
       select address
       from address_label_nft_balance_top) a1

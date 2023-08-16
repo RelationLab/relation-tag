@@ -208,9 +208,14 @@ select distinct a1.address,
                 'ALL'                     as asset,
                 'CROWD'                   as bus_type
 from address_label_web3_type_count_grade a1
-where (label_name = 'WEB3_ALL_ALL_ACTIVITY_High'
-    or label_name = 'WEB3_ALL_ALL_ACTIVITY_Medium'
-    or label_name = 'WEB3_ALL_ALL_ACTIVITY_Low')
+where (
+            label_name = 'w0o2cg9h'
+        or label_name = 'w0o2cg9i'
+        or label_name = 'w0o2cg9g'
+--     label_name = 'WEB3_ALL_ALL_ACTIVITY_High'
+--     or label_name = 'WEB3_ALL_ALL_ACTIVITY_Medium'
+--     or label_name = 'WEB3_ALL_ALL_ACTIVITY_Low'
+    )
   and address not in (select address
                       from exclude_address);
 insert into tag_result(table_name, batch_date)

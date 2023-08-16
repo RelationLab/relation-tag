@@ -123,9 +123,13 @@ select distinct a1.address,
                 'CROWD'             as bus_type
 from (select address
       from address_label_token_balance_grade_all
-      where label_name = 'ALL_ALL_ALL_BALANCE_GRADE_Millionaire'
-         or label_name = 'ALL_ALL_ALL_BALANCE_GRADE_Billionaire'
-         or label_name = 'ALL_ALL_ALL_BALANCE_TOP_WHALE'
+      where
+          label_name = 'bt0j'
+         or label_name = 'bg0g'
+         or label_name = 'bg0h'
+--           label_name = 'ALL_ALL_ALL_BALANCE_GRADE_Millionaire'
+--          or label_name = 'ALL_ALL_ALL_BALANCE_GRADE_Billionaire'
+--          or label_name = 'ALL_ALL_ALL_BALANCE_TOP_WHALE'
       union all
       select address
       from address_label_token_balance_rank_all) a1

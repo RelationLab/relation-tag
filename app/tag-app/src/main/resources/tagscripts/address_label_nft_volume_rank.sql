@@ -226,10 +226,16 @@ select distinct a1.address,
                 'ALL'                     as asset,
                 'CROWD'                   as bus_type
 from address_label_nft_volume_rank a1
-where (label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_RARE_NFT_TRADER'
-    or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_EPIC_NFT_TRADER'
-    or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_UNCOMMON_NFT_TRADER'
-    or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_LEGENDARY_NFT_TRADER')
+where (
+        label_name = 'no0vr5j'
+        or label_name = 'no0vr5h'
+        or label_name = 'no0vr5g'
+        or label_name = 'no0vr5i'
+--     label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_RARE_NFT_TRADER'
+--     or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_EPIC_NFT_TRADER'
+--     or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_UNCOMMON_NFT_TRADER'
+--     or label_name = 'ALL_ALL_ALL_NFT_VOLUME_RANK_LEGENDARY_NFT_TRADER'
+    )
   and address not in (select address from exclude_address);
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_nft_volume_rank' as table_name, '${batchDate}' as batch_date;

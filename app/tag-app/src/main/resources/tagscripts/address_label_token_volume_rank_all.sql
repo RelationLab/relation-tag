@@ -190,8 +190,16 @@ select distinct a1.address,
                 'ALL'                      as asset,
                 'CROWD'                    as bus_type
 from address_label_token_volume_rank_all a1
-where (label_name = 'ALL_ALL_ALL_VOLUME_RANK_MEDIUM' or label_name = 'ALL_ALL_ALL_VOLUME_RANK_HEAVY'
-    or label_name = 'ALL_ALL_ALL_VOLUME_RANK_ELITE' or label_name = 'ALL_ALL_ALL_VOLUME_RANK_LEGENDARY')
+where (
+            label_name = 'vr1l'
+        or label_name = 'vr1i'
+        or label_name = 'vr1g'
+        or label_name = 'vr1k'
+--     label_name = 'ALL_ALL_ALL_VOLUME_RANK_MEDIUM'
+--         or label_name = 'ALL_ALL_ALL_VOLUME_RANK_HEAVY'
+--     or label_name = 'ALL_ALL_ALL_VOLUME_RANK_ELITE'
+--         or label_name = 'ALL_ALL_ALL_VOLUME_RANK_LEGENDARY'
+    )
   and address not in (select address from exclude_address);
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_token_volume_rank_all' as table_name, '${batchDate}' as batch_date;
