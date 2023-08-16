@@ -66,4 +66,12 @@ insert into dex_action_platform_temp(platform,trade_type) values('commpound','re
 insert into dex_action_platform_temp(platform,trade_type) values('commpound','borrow');
 insert into dex_action_platform_temp(platform,trade_type) values('commpound','repay');
 
+insert into dex_action_platform_temp(platform,trade_type) values('summerfi','execute');
+insert into dex_action_platform_temp(platform,trade_type) values('Instadapp','deposit');
+insert into dex_action_platform_temp(platform,trade_type) values('Instadapp','withdraw');
+
+insert into dex_action_platform_temp(platform,trade_type) values('dydx','operate');
+
+
+
 insert into tag_result(table_name,batch_date)  SELECT 'basic_data_dex_action_platform' as table_name,'${batchDate}'  as batch_date;

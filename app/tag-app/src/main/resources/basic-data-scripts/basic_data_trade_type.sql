@@ -20,4 +20,7 @@ insert into trade_type(code,trade_type,trade_type_name,trade_type_alis) values('
 insert into trade_type(code,trade_type,trade_type_name,trade_type_alis) values('o9','repay','Repay','repay');
 insert into trade_type(code,trade_type,trade_type_name,trade_type_alis) values('o10','mint','Mint','mint');
 
+insert into trade_type(code,trade_type,trade_type_name,trade_type_alis) values('o11','execute','Execute','execute');
+insert into trade_type(code,trade_type,trade_type_name,trade_type_alis) values('o12','operate','Operate','operate');
+
 insert into tag_result(table_name,batch_date)  SELECT 'basic_data_trade_type' as table_name,'${batchDate}'  as batch_date;

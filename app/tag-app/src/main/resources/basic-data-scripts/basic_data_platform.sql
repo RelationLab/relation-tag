@@ -24,4 +24,12 @@ insert into platform_temp(id,platform_large_code,platform,platform_name,token_al
 insert into platform_temp(id,platform_large_code,platform,platform_name,token_all_flag) values(11,'ETH2.0','0xae7ab96520de3a18e5e111b5eaab095312d7fe84','Lido','1');
 insert into platform_temp(id,platform_large_code,platform,platform_name,token_all_flag) values(12,'ETH2.0','0xbafa44efe7901e04e39dad13167d089c559c1138','Frax','1');
 insert into platform_temp(id,platform_large_code,platform,platform_name,token_all_flag) values(13,'ETH2.0','0x4d05e3d48a938db4b7a9a59a802d5b45011bde58','RocketPool','1');
+
+insert into platform_temp(id,platform_large_code,platform,platform_name,token_all_flag) values(14,'SERVICES','Instadapp','Instadapp','1');
+insert into platform_temp(id,platform_large_code,platform,platform_name,token_all_flag) values(15,'SERVICES','summerfi','Summer.Fi','1');
+
+insert into platform_temp(id,platform_large_code,platform,platform_name,token_all_flag) values(16,'DERIVATIVES','dydx','dydx','1');
+
+
+
 insert into tag_result(table_name,batch_date)  SELECT 'basic_data_platform' as table_name,'${batchDate}'  as batch_date;
