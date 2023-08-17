@@ -34,8 +34,8 @@ bhs-BALANCE_HEAVY_LP_STAKER
 *********************************************************dim_rule_content.sql start*********************************************************
 ***********************************LP*********************************
 label_name                                label_type new_label_name 时间维度label_type 时间维度new_label_name
-Uniswap_v3_UNI/WETH_0x1d42_BALANCE_GRADE  l1bg       l1bg1
-Uniswap_v3_UNI/WETH_0x1d42_BALANCE_RANK   l1br       l1br1
+Uniswap_v3_UNI/WETH_0x1d42_BALANCE_GRADE  l1bg       l1bg1a
+Uniswap_v3_UNI/WETH_0x1d42_BALANCE_RANK   l1br       l1br1b
 Uniswap_v3_UNI/WETH_0x1d42_BALANCE_TOP    l1bt       l1bt1
 Uniswap_v3_UNI/WETH_0x1d42_ACTIVITY       l1cg       l1cg1          3dl1cg            3dl1cg1
 Uniswap_v3_UNI/WETH_0x1d42_VOLUME_GRADE   l1vg       l1vg1          3dl1vg            3dl1vg1

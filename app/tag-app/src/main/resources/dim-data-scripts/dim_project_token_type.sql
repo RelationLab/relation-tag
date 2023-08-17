@@ -102,7 +102,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                  "owner",
                 --平台+资产+交易类型
                 '' || 'l' || lpt.id || '' || 'tf' as                            "type",
@@ -123,7 +123,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                             label_order,
                 'WAITING'                                                       sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'   as                            one_wired_type,
-                't'                               as                            two_wired_type
+                't'                               as                            two_wired_type,
+                'l'                               as                            time_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -273,7 +274,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                 "owner",
                 --平台+资产+交易类型
                 '' || 'l' || lpt.id || '' || 'bhl' as                                          "type",
@@ -292,7 +293,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                            label_order,
                 'WAITING'                                                                      sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'    as                                          one_wired_type,
-                'b'                                as                                          two_wired_type
+                'b'                                as                                          two_wired_type,
+                'l'                                as                                          time_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -439,7 +441,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                 "owner",
                 '' || 'l' || lpt.id || '' || 'bf' as                                           "type",
                 '' || 'l' || lpt.id || '' || 'bf' as                                           "name",
@@ -457,7 +459,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                            label_order,
                 'WAITING'                                                                      sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'   as                                           one_wired_type,
-                'b'                               as                                           two_wired_type
+                'b'                               as                                           two_wired_type,
+                'l'                               as                                           time_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -605,7 +608,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                 "owner",
                 '' || 'l' || lpt.id || '' || 'bhs' as                                          "type",
                 '' || 'l' || lpt.id || '' || 'bhs' as                                          "name",
@@ -623,7 +626,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                            label_order,
                 'WAITING'                                                                      sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'    as                                          one_wired_type,
-                'b'                                as                                          two_wired_type
+                'b'                                as                                          two_wired_type,
+                'l'                                as                                          time_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -765,7 +769,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
                 recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'cg'                        as "type",
@@ -801,7 +805,8 @@ select distinct 'RelationTeam'                                             "owne
                 999                                                        label_order,
                 'WAITING'                                                  sync_es_status,
                 '{"pf": 1, "act": 1, "ast": 1}'                         as one_wired_type,
-                'c'                                                     as two_wired_type
+                'c'                                                     as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_sync_address
          inner join nft_platform_temp on
     (nft_sync_address.address = nft_platform_temp.address)
@@ -909,7 +914,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                  "owner",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'cg' as "type",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'cg' ||
@@ -942,7 +947,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                             label_order,
                 'WAITING'                                                                       sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 0}'                                              as one_wired_type,
-                'c'                                                                          as two_wired_type
+                'c'                                                                          as two_wired_type,
+                recent_time_temp.code_revent || 'l'                                          as time_type
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -1041,7 +1047,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'cg'                        as "type",
@@ -1077,7 +1083,8 @@ select distinct 'RelationTeam'                                             "owne
                 999                                                        label_order,
                 'WAITING'                                                  sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 1}'                         as one_wired_type,
-                'c'                                                     as two_wired_type
+                'c'                                                     as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
          inner join (select *
@@ -1189,12 +1196,12 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                         "owner",
                 recent_time_temp.code || mp_nft_platform_temp.id || '' || 'm' || nft_trade_type_temp.code ||
-                'cg'                            as                     "type",
+                'cg'                                as                 "type",
                 recent_time_temp.code || mp_nft_platform_temp.id || '' || 'm' || nft_trade_type_temp.code || 'cg' ||
-                level_def_temp.code             as                     "name",
+                level_def_temp.code                 as                 "name",
                 'SYSTEM'                                               "source",
                 'PUBLIC'                                               visible_type,
                 'TOTAL_PART'                                           strategy,
@@ -1225,8 +1232,9 @@ select distinct 'RelationTeam'                                         "owner",
                 'NFT'                                                  wired_type,
                 999                                                    label_order,
                 'WAITING'                                              sync_es_status,
-                '{"pf": 1, "act": 1, "ast": 0}' as                     one_wired_type,
-                'c'                             as                     two_wired_type
+                '{"pf": 1, "act": 1, "ast": 0}'     as                 one_wired_type,
+                'c'                                 as                 two_wired_type,
+                recent_time_temp.code_revent || 'l' as                 time_type
 from mp_nft_platform_temp
          inner join nft_trade_type_temp on
     (1 = 1)
@@ -1340,7 +1348,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                "owner",
 
                 recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
@@ -1382,7 +1390,8 @@ select distinct 'RelationTeam'                                                "o
                 999                                                           label_order,
                 'WAITING'                                                     sync_es_status,
                 '{"pf": 1, "act": 1, "ast": 1}'                         as    one_wired_type,
-                'v'                                                     as    two_wired_type
+                'v'                                                     as    two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as    time_type
 from nft_sync_address
          inner join nft_platform_temp on
     (nft_sync_address.address = nft_platform_temp.address)
@@ -1497,7 +1506,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                "owner",
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 've'                        as    "type",
@@ -1536,7 +1545,8 @@ select distinct 'RelationTeam'                                                "o
                 999                                                           label_order,
                 'WAITING'                                                     sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 1}'                         as    one_wired_type,
-                'v'                                                     as    two_wired_type
+                'v'                                                     as    two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as    time_type
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
          inner join (select *
@@ -1651,12 +1661,12 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                "owner",
                 recent_time_temp.code || mp_nft_platform_temp.id || '' || 'm' || nft_trade_type_temp.code ||
-                've'                            as                            "type",
+                've'                                as                        "type",
                 recent_time_temp.code || mp_nft_platform_temp.id || '' || 'm' || nft_trade_type_temp.code || 've' ||
-                level_def_temp.code             as                            "name",
+                level_def_temp.code                 as                        "name",
                 'SYSTEM'                                                      "source",
                 'PUBLIC'                                                      visible_type,
                 'TOTAL_PART'                                                  strategy,
@@ -1690,8 +1700,9 @@ select distinct 'RelationTeam'                                                "o
                 'NFT'                                                         wired_type,
                 999                                                           label_order,
                 'WAITING'                                                     sync_es_status,
-                '{"pf": 1, "act": 1, "ast": 0}' as                            one_wired_type,
-                'v'                             as                            two_wired_type
+                '{"pf": 1, "act": 1, "ast": 0}'     as                        one_wired_type,
+                'v'                                 as                        two_wired_type,
+                recent_time_temp.code_revent || 'l' as                        time_type
 from mp_nft_platform_temp
          inner join nft_trade_type_temp on
     (1 = 1)
@@ -1794,7 +1805,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                  "owner",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 've' as "type",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 've' ||
@@ -1831,7 +1842,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                             label_order,
                 'WAITING'                                                                       sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 0}'                                              as one_wired_type,
-                'v'                                                                          as two_wired_type
+                'v'                                                                          as two_wired_type,
+                recent_time_temp.code_revent || 'l'                                          as time_type
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -1935,7 +1947,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
                 recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vg'                        as "type",
@@ -1969,7 +1981,8 @@ select distinct 'RelationTeam'                                             "owne
                 999                                                        label_order,
                 'WAITING'                                                  sync_es_status,
                 '{"pf": 1, "act": 1, "ast": 1}'                         as one_wired_type,
-                'v'                                                     as two_wired_type
+                'v'                                                     as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_sync_address
          inner join nft_platform_temp on
     (nft_sync_address.address = nft_platform_temp.address)
@@ -2082,7 +2095,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vg'                        as "type",
@@ -2116,7 +2129,8 @@ select distinct 'RelationTeam'                                             "owne
                 999                                                        label_order,
                 'WAITING'                                                  sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 1}'                         as one_wired_type,
-                'v'                                                     as two_wired_type
+                'v'                                                     as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
          inner join (select *
@@ -2229,13 +2243,13 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                         "owner",
                 recent_time_temp.code || mp_nft_platform_temp.id || '' || 'm' || nft_trade_type_temp.code ||
-                'vg'                            as                     "type",
+                'vg'                                as                 "type",
                 recent_time_temp.code || mp_nft_platform_temp.id || '' || 'm' || nft_trade_type_temp.code ||
                 'vg' ||
-                level_def_temp.code             as                     "name",
+                level_def_temp.code                 as                 "name",
                 'SYSTEM'                                               "source",
                 'PUBLIC'                                               visible_type,
                 'TOTAL_PART'                                           strategy,
@@ -2263,8 +2277,9 @@ select distinct 'RelationTeam'                                         "owner",
                 'NFT'                                                  wired_type,
                 999                                                    label_order,
                 'WAITING'                                              sync_es_status,
-                '{"pf": 1, "act": 1, "ast": 0}' as                     one_wired_type,
-                'v'                             as                     two_wired_type
+                '{"pf": 1, "act": 1, "ast": 0}'     as                 one_wired_type,
+                'v'                                 as                 two_wired_type,
+                recent_time_temp.code_revent || 'l' as                 time_type
 from mp_nft_platform_temp
          inner join nft_trade_type_temp on
     (1 = 1)
@@ -2366,7 +2381,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                  "owner",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'vg' as "type",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'vg' ||
@@ -2397,7 +2412,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                             label_order,
                 'WAITING'                                                                       sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 0}'                                              as one_wired_type,
-                'v'                                                                          as two_wired_type
+                'v'                                                                          as two_wired_type,
+                recent_time_temp.code_revent || 'l'                                          as time_type
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -2501,7 +2517,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                "owner",
                 recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vr'                        as    "type",
@@ -2541,7 +2557,8 @@ select distinct 'RelationTeam'                                                "o
                 999                                                           label_order,
                 'WAITING'                                                     sync_es_status,
                 '{"pf": 1, "act": 1, "ast": 1}'                         as    one_wired_type,
-                'v'                                                     as    two_wired_type
+                'v'                                                     as    two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as    time_type
 from nft_sync_address
          inner join nft_platform_temp on
     (nft_sync_address.address = nft_platform_temp.address)
@@ -2654,13 +2671,13 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                "owner",
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' ||
-                nft_trade_type_temp.code || 'vr' as                           "type",
+                nft_trade_type_temp.code || 'vr'    as                        "type",
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vr' ||
-                level_def_temp.code              as                           "name",
+                level_def_temp.code                 as                        "name",
                 'SYSTEM'                                                      "source",
                 'PUBLIC'                                                      visible_type,
                 'TOTAL_PART'                                                  strategy,
@@ -2693,8 +2710,9 @@ select distinct 'RelationTeam'                                                "o
                 'NFT'                                                         wired_type,
                 999                                                           label_order,
                 'WAITING'                                                     sync_es_status,
-                '{"pf": 0, "act": 1, "ast": 1}'  as                           one_wired_type,
-                'v'                              as                           two_wired_type
+                '{"pf": 0, "act": 1, "ast": 1}'     as                        one_wired_type,
+                'v'                                 as                        two_wired_type,
+                recent_time_temp.code_revent || 'l' as                        time_type
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
          inner join (select *
@@ -2808,12 +2826,12 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                "owner",
                 recent_time_temp.code || mp_nft_platform_temp.id || '' || 'm' || nft_trade_type_temp.code ||
-                'vr'                            as                            "type",
+                'vr'                                as                        "type",
                 recent_time_temp.code || mp_nft_platform_temp.id || '' || 'm' || nft_trade_type_temp.code || 'vr' ||
-                level_def_temp.code             as                            "name",
+                level_def_temp.code                 as                        "name",
                 'SYSTEM'                                                      "source",
                 'PUBLIC'                                                      visible_type,
                 'TOTAL_PART'                                                  strategy,
@@ -2847,8 +2865,9 @@ select distinct 'RelationTeam'                                                "o
                 'NFT'                                                         wired_type,
                 999                                                           label_order,
                 'WAITING'                                                     sync_es_status,
-                '{"pf": 1, "act": 1, "ast": 0}' as                            one_wired_type,
-                'v'                             as                            two_wired_type
+                '{"pf": 1, "act": 1, "ast": 0}'     as                        one_wired_type,
+                'v'                                 as                        two_wired_type,
+                recent_time_temp.code_revent || 'l' as                        time_type
 from mp_nft_platform_temp
          inner join nft_trade_type_temp on
     (1 = 1)
@@ -2951,7 +2970,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                  "owner",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'vr' as "type",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'vr' ||
@@ -2988,7 +3007,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                             label_order,
                 'WAITING'                                                                       sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 0}'                                              as one_wired_type,
-                'v'                                                                          as two_wired_type
+                'v'                                                                          as two_wired_type,
+                recent_time_temp.code_revent || 'l'                                          as time_type
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -3091,7 +3111,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                "owner",
                 recent_time_temp.code || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vt'                        as    "type",
@@ -3131,7 +3151,8 @@ select distinct 'RelationTeam'                                                "o
                 999                                                           label_order,
                 'WAITING'                                                     sync_es_status,
                 '{"pf": 1, "act": 1, "ast": 1}'                         as    one_wired_type,
-                'v'                                                     as    two_wired_type
+                'v'                                                     as    two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as    time_type
 from nft_sync_address
          inner join nft_platform_temp on
     (nft_sync_address.address = nft_platform_temp.address)
@@ -3244,13 +3265,13 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                "owner",
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' ||
-                nft_trade_type_temp.code || 'vt' as                           "type",
+                nft_trade_type_temp.code || 'vt'    as                        "type",
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vt' ||
-                level_def_temp.code              as                           "name",
+                level_def_temp.code                 as                        "name",
                 'SYSTEM'                                                      "source",
                 'PUBLIC'                                                      visible_type,
                 'TOTAL_PART'                                                  strategy,
@@ -3283,8 +3304,9 @@ select distinct 'RelationTeam'                                                "o
                 'NFT'                                                         wired_type,
                 999                                                           label_order,
                 'WAITING'                                                     sync_es_status,
-                '{"pf": 0, "act": 1, "ast": 0}'  as                           one_wired_type,
-                'v'                              as                           two_wired_type
+                '{"pf": 0, "act": 1, "ast": 0}'     as                        one_wired_type,
+                'v'                                 as                        two_wired_type,
+                recent_time_temp.code_revent || 'l' as                        time_type
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
          inner join (select *
@@ -3399,12 +3421,12 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                "owner",
                 recent_time_temp.code || mp_nft_platform_temp.id || '' || 'm' || nft_trade_type_temp.code ||
-                'vt'                            as                            "type",
+                'vt'                                as                        "type",
                 recent_time_temp.code || mp_nft_platform_temp.id || '' || 'm' || nft_trade_type_temp.code || 'vt' ||
-                level_def_temp.code             as                            "name",
+                level_def_temp.code                 as                        "name",
                 'SYSTEM'                                                      "source",
                 'PUBLIC'                                                      visible_type,
                 'TOTAL_PART'                                                  strategy,
@@ -3438,8 +3460,9 @@ select distinct 'RelationTeam'                                                "o
                 'NFT'                                                         wired_type,
                 999                                                           label_order,
                 'WAITING'                                                     sync_es_status,
-                '{"pf": 1, "act": 1, "ast": 0}' as                            one_wired_type,
-                'v'                             as                            two_wired_type
+                '{"pf": 1, "act": 1, "ast": 0}'     as                        one_wired_type,
+                'v'                                 as                        two_wired_type,
+                recent_time_temp.code_revent || 'l' as                        time_type
 from mp_nft_platform_temp
          inner join nft_trade_type_temp on
     (1 = 1)
@@ -3542,7 +3565,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                  "owner",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'vt' as "type",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'vt' ||
@@ -3579,7 +3602,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                             label_order,
                 'WAITING'                                                                       sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 0}'                                              as one_wired_type,
-                'v'                                                                          as two_wired_type
+                'v'                                                                          as two_wired_type,
+                recent_time_temp.code_revent || 'l'                                          as time_type
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -3716,7 +3740,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                    "owner",
                 recent_time_temp.code || platform_temp.id ||
                 ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
@@ -3757,7 +3781,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                               label_order,
                 'WAITING'                                                                         sync_es_status,
                 '{"pf": 1, "act": 1, "ast": 1}'                                                as one_wired_type,
-                'c'                                                                            as two_wired_type
+                'c'                                                                            as two_wired_type,
+                recent_time_temp.code_revent || 'l'                                            as time_type
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
@@ -3924,7 +3949,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                    "owner",
                 recent_time_temp.code || '' || ('t' || top_token_1000_temp.id) ||
                 platform_large_category.code || trade_type.code || 'cg'                        as "type",
@@ -3959,7 +3984,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                               label_order,
                 'WAITING'                                                                         sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 1}'                                                as one_wired_type,
-                'c'                                                                            as two_wired_type
+                'c'                                                                            as two_wired_type,
+                recent_time_temp.code_revent || 'l'                                            as time_type
 from (select *
       from top_token_1000_temp
       where holders >= 100
@@ -4070,7 +4096,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
                 recent_time_temp.code || '' || platform_temp.id || 't' ||
                 platform_large_category.code || trade_type.code || 'cg' as "type",
@@ -4105,7 +4131,8 @@ select distinct 'RelationTeam'                                             "owne
                 999                                                        label_order,
                 'WAITING'                                                  sync_es_status,
                 '{"pf": 1, "act": 1, "ast": 0}'                         as one_wired_type,
-                'c'                                                     as two_wired_type
+                'c'                                                     as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from platform_temp
          inner join trade_type on
     (1 = 1)
@@ -4207,7 +4234,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                    "owner",
                 recent_time_temp.code || '' || platform_temp.id || '' ||
                 platform_large_category.code || trade_type.code || 'cg'                        as "type",
@@ -4241,7 +4268,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                               label_order,
                 'WAITING'                                                                         sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 0}'                                                as one_wired_type,
-                'c'                                                                            as two_wired_type
+                'c'                                                                            as two_wired_type,
+                recent_time_temp.code_revent || 'l'                                            as time_type
 from trade_type
          inner join (select *
                      from level_def_temp
@@ -4377,19 +4405,19 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                           "owner",
                 recent_time_temp.code || platform_temp.id ||
                 ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
                  top_token_1000_temp.id) ||
                 platform_large_category.code ||
-                trade_type.code || 'vg'         as       "type",
+                trade_type.code || 'vg'             as   "type",
                 recent_time_temp.code || platform_temp.id ||
                 ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
                  top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vg' ||
-                level_def_temp.code             as       "name",
+                level_def_temp.code                 as   "name",
                 'SYSTEM'                                 "source",
                 'PUBLIC'                                 visible_type,
                 'TOTAL_PART'                             strategy,
@@ -4420,8 +4448,9 @@ select distinct 'RelationTeam'                           "owner",
                 'DEFI'                                   wired_type,
                 999                                      label_order,
                 'WAITING'                                sync_es_status,
-                '{"pf": 1, "act": 1, "ast": 1}' as       one_wired_type,
-                'v'                             as       two_wired_type
+                '{"pf": 1, "act": 1, "ast": 1}'     as   one_wired_type,
+                'v'                                 as   two_wired_type,
+                recent_time_temp.code_revent || 'l' as   time_type
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
@@ -4591,7 +4620,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                    "owner",
                 recent_time_temp.code || '' || ('t' || top_token_1000_temp.id) ||
                 platform_large_category.code || trade_type.code || 'vg'                        as "type",
@@ -4630,7 +4659,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                               label_order,
                 'WAITING'                                                                         sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 1}'                                                as one_wired_type,
-                'v'                                                                            as two_wired_type
+                'v'                                                                            as two_wired_type,
+                recent_time_temp.code_revent || 'l'                                            as time_type
 from (select *
       from top_token_1000_temp
       where holders >= 100
@@ -4741,7 +4771,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
                 recent_time_temp.code || '' || platform_temp.id || '' ||
                 platform_large_category.code || trade_type.code || 'vg' as "type",
@@ -4775,7 +4805,8 @@ select distinct 'RelationTeam'                                             "owne
                 999                                                        label_order,
                 'WAITING'                                                  sync_es_status,
                 '{"pf": 1, "act": 1, "ast": 0}'                         as one_wired_type,
-                'v'                                                     as two_wired_type
+                'v'                                                     as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from platform_temp
          inner join trade_type on
     (1 = 1)
@@ -4878,7 +4909,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
                 recent_time_temp.code || '' || '' ||
                 platform_large_category.code || trade_type.code || 'vg' as "type",
@@ -4912,7 +4943,8 @@ select distinct 'RelationTeam'                                             "owne
                 999                                                        label_order,
                 'WAITING'                                                  sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 0}'                         as one_wired_type,
-                'v'                                                     as two_wired_type
+                'v'                                                     as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from trade_type
          inner join (select *
                      from level_def_temp
@@ -5049,19 +5081,19 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                           "owner",
                 recent_time_temp.code || platform_temp.id ||
                 ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
                  top_token_1000_temp.id) ||
                 platform_large_category.code ||
-                trade_type.code || 'vr'        as        "type",
+                trade_type.code || 'vr'             as   "type",
                 recent_time_temp.code || platform_temp.id ||
                 ((case when top_token_1000_temp.asset_type = 'token' then 't' else 'l' end) ||
                  top_token_1000_temp.id) ||
                 platform_large_category.code ||
                 trade_type.code || 'vr' ||
-                level_def_temp.code            as        "name",
+                level_def_temp.code                 as   "name",
                 'SYSTEM'                                 "source",
                 'PUBLIC'                                 visible_type,
                 'TOTAL_PART'                             strategy,
@@ -5086,8 +5118,9 @@ select distinct 'RelationTeam'                           "owner",
                 'DEFI'                                   wired_type,
                 999                                      label_order,
                 'WAITING'                                sync_es_status,
-                '{"pf": 1, "act": 1, "ast":1}' as        one_wired_type,
-                'v'                            as        two_wired_type
+                '{"pf": 1, "act": 1, "ast":1}'      as   one_wired_type,
+                'v'                                 as   two_wired_type,
+                recent_time_temp.code_revent || 'l' as   time_type
 from token_platform_temp
          inner join platform_temp on
     (token_platform_temp.platform = platform_temp.platform)
@@ -5258,7 +5291,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
                 recent_time_temp.code || '' || ('t' || top_token_1000_temp.id) ||
                 platform_large_category.code || trade_type.code || 'vr' as "type",
@@ -5287,7 +5320,8 @@ select distinct 'RelationTeam'                                             "owne
                 999                                                        label_order,
                 'WAITING'                                                  sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 1}'                         as one_wired_type,
-                'v'                                                     as two_wired_type
+                'v'                                                     as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from (select *
       from top_token_1000_temp
       where holders >= 100
@@ -5399,7 +5433,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
                 recent_time_temp.code || '' || platform_temp.id || '' ||
                 platform_large_category.code || trade_type.code || 'vr' as "type",
@@ -5427,7 +5461,8 @@ select distinct 'RelationTeam'                                             "owne
                 999                                                        label_order,
                 'WAITING'                                                  sync_es_status,
                 '{"pf": 1, "act": 1, "ast": 0}'                         as one_wired_type,
-                'v'                                                     as two_wired_type
+                'v'                                                     as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from platform_temp
          inner join trade_type on
     (1 = 1)
@@ -5529,7 +5564,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
                 recent_time_temp.code || '' || '' ||
                 platform_large_category.code || trade_type.code || 'vr' as "type",
@@ -5557,7 +5592,8 @@ select distinct 'RelationTeam'                                             "owne
                 999                                                        label_order,
                 'WAITING'                                                  sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 0}'                         as one_wired_type,
-                'v'                                                     as two_wired_type
+                'v'                                                     as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from trade_type
          inner join (select *
                      from level_def_temp
@@ -5650,7 +5686,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                 "owner",
                 ('n' || nft_sync_address.id) || 'bg'                        as "type",
                 ('n' || nft_sync_address.id) || 'bg' || level_def_temp.code as "name",
@@ -5668,7 +5704,8 @@ select distinct 'RelationTeam'                                                 "
                 999                                                            label_order,
                 'WAITING'                                                      sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                             as one_wired_type,
-                'b'                                                         as two_wired_type
+                'b'                                                         as two_wired_type,
+                'l'                                                         as time_type
 from public.nft_sync_address
          inner join (select *
                      from level_def_temp
@@ -5746,7 +5783,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                        "owner",
                 'n' || 'bg'                        as "type",
                 'n' || 'bg' || level_def_temp.code as "name",
@@ -5764,7 +5801,8 @@ select distinct 'RelationTeam'                        "owner",
                 999                                   label_order,
                 'WAITING'                             sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'    as one_wired_type,
-                'b'                                as two_wired_type
+                'b'                                as two_wired_type,
+                'l'                                as time_type
 from level_def_temp
 where type = 'nft_balance_grade';
 insert
@@ -5837,7 +5875,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                 "owner",
                 ('n' || nft_sync_address.id) || 'br'                        as "type",
                 ('n' || nft_sync_address.id) || 'br' || level_def_temp.code as "name",
@@ -5855,7 +5893,8 @@ select distinct 'RelationTeam'                                                 "
                 999                                                            label_order,
                 'WAITING'                                                      sync_es_status,
                 '{"pf": 0, "act": 0, "ast":1}'                              as one_wired_type,
-                'b'                                                         as two_wired_type
+                'b'                                                         as two_wired_type,
+                 'l'                     as time_type
 from public.nft_sync_address
          inner join (select *
                      from level_def_temp
@@ -5932,7 +5971,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                        "owner",
                 'n' || 'br'                        as "type",
                 'n' || 'br' || level_def_temp.code as "name",
@@ -5950,7 +5989,8 @@ select distinct 'RelationTeam'                        "owner",
                 999                                   label_order,
                 'WAITING'                             sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'    as one_wired_type,
-                'b'                                as two_wired_type
+                'b'                                as two_wired_type,
+                'l'                     as time_type
 from level_def_temp
 where type = 'nft_balance_rank';
 insert
@@ -6022,7 +6062,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                 "owner",
                 ('n' || nft_sync_address.id) || 'bt'                        as "type",
                 ('n' || nft_sync_address.id) || 'bt' || level_def_temp.code as "name",
@@ -6040,7 +6080,8 @@ select distinct 'RelationTeam'                                                 "
                 999                                                            label_order,
                 'WAITING'                                                      sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                             as one_wired_type,
-                'b'                                                         as two_wired_type
+                'b'                                                         as two_wired_type,
+                'l'                     as time_type
 from public.nft_sync_address
          inner join (select *
                      from level_def_temp
@@ -6118,7 +6159,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                        "owner",
                 'n' || 'bt'                        as "type",
                 'n' || 'bt' || level_def_temp.code as "name",
@@ -6136,7 +6177,8 @@ select distinct 'RelationTeam'                        "owner",
                 999                                   label_order,
                 'WAITING'                             sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'    as one_wired_type,
-                'b'                                as two_wired_type
+                'b'                                as two_wired_type,
+               'l'                     as time_type
 from level_def_temp
 where type = 'nft_balance_top';
 insert
@@ -6221,7 +6263,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                               "owner",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 'cg' as "type",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 'cg' ||
@@ -6257,7 +6299,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                                          label_order,
                 'WAITING'                                                                                    sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 1}'                                                           as one_wired_type,
-                'c'                                                                                       as two_wired_type
+                'c'                                                                                       as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
          inner join (select *
@@ -6364,7 +6407,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                      "owner",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'cg' as "type",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'cg' ||
@@ -6399,7 +6442,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                 label_order,
                 'WAITING'                                                           sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 1}'                                  as one_wired_type,
-                'c'                                                              as two_wired_type
+                'c'                                                              as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -6485,7 +6529,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                 "owner",
                 ('n' || nft_sync_address.id) || 'tg'                        as "type",
                 ('n' || nft_sync_address.id) || 'tg' || level_def_temp.code as "name",
@@ -6503,7 +6547,8 @@ select distinct 'RelationTeam'                                                 "
                 999                                                            label_order,
                 'WAITING'                                                      sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                             as one_wired_type,
-                't'                                                         as two_wired_type
+                't'                                                         as two_wired_type,
+                'l'                     as time_type
 from nft_sync_address
          inner join (select *
                      from level_def_temp
@@ -6582,7 +6627,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                "owner",
                 ('n' || nft_sync_address.id) || 'ea' as                       "type",
                 ('n' || nft_sync_address.id) || 'ea' as                       "name",
@@ -6600,7 +6645,8 @@ select distinct 'RelationTeam'                                                "o
                 999                                                           label_order,
                 'WAITING'                                                     sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'      as                       one_wired_type,
-                't'                                  as                       two_wired_type
+                't'                                  as                       two_wired_type,
+                'l'                     as time_type
 from nft_sync_address
          inner join (select *
                      from level_def_temp
@@ -6679,7 +6725,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                 "owner",
                 ('n' || nft_sync_address.id) || 'ts'                        as "type",
                 ('n' || nft_sync_address.id) || 'ts' || level_def_temp.code as "name",
@@ -6697,7 +6743,8 @@ select distinct 'RelationTeam'                                                 "
                 999                                                            label_order,
                 'WAITING'                                                      sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                             as one_wired_type,
-                't'                                                         as two_wired_type
+                't'                                                         as two_wired_type,
+                 'l'                     as time_type
 from nft_sync_address
          inner join (select *
                      from level_def_temp
@@ -6791,7 +6838,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                               "owner",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 've' as "type",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 've' ||
@@ -6819,7 +6866,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                                          label_order,
                 'WAITING'                                                                                    sync_es_status,
                 '{"pf": 1, "act": 1, "ast": 1}'                                                           as one_wired_type,
-                'v'                                                                                       as two_wired_type
+                'v'                                                                                       as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
          inner join (select *
@@ -6925,7 +6973,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                             "owner",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 've' as                        "type",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 've' ||
@@ -6952,7 +7000,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                                        label_order,
                 'WAITING'                                                                                  sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 0}'                                  as                        one_wired_type,
-                'v'                                                              as                        two_wired_type
+                'v'                                                              as                        two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -7052,7 +7101,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                               "owner",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 'vg' as "type",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 'vg' ||
@@ -7083,7 +7132,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                                          label_order,
                 'WAITING'                                                                                    sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 1}'                                                           as one_wired_type,
-                'v'                                                                                       as two_wired_type
+                'v'                                                                                       as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
          inner join (select *
@@ -7189,7 +7239,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                      "owner",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'vg' as "type",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'vg' ||
@@ -7220,7 +7270,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                 label_order,
                 'WAITING'                                                           sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 0}'                                  as one_wired_type,
-                'v'                                                              as two_wired_type
+                'v'                                                              as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -7318,7 +7369,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                               "owner",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 'vr' as "type",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 'vr' ||
@@ -7345,7 +7396,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                                          label_order,
                 'WAITING'                                                                                    sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 1}'                                                           as one_wired_type,
-                'v'                                                                                       as two_wired_type
+                'v'                                                                                       as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
          inner join (select *
@@ -7450,7 +7502,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                             "owner",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'vr' as                        "type",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'vr' ||
@@ -7477,7 +7529,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                                        label_order,
                 'WAITING'                                                                                  sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 0}'                                  as                        one_wired_type,
-                'v'                                                              as                        two_wired_type
+                'v'                                                              as                        two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
@@ -7577,7 +7630,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                               "owner",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 'vt' as "type",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 'vt' ||
@@ -7604,7 +7657,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                                          label_order,
                 'WAITING'                                                                                    sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 1}'                                                           as one_wired_type,
-                'v'                                                                                       as two_wired_type
+                'v'                                                                                       as two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_sync_address
          inner join nft_trade_type_temp on (1 = 1)
          inner join (select *
@@ -7709,7 +7763,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                             "owner",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'vt' as                        "type",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'vt' ||
@@ -7736,7 +7790,8 @@ select distinct 'RelationTeam'                                                  
                 999                                                                                        label_order,
                 'WAITING'                                                                                  sync_es_status,
                 '{"pf": 0, "act": 1, "ast": 0}'                                  as                        one_wired_type,
-                'v'                                                              as                        two_wired_type
+                'v'                                                              as                        two_wired_type,
+                recent_time_temp.code_revent || 'l'                     as time_type
 from nft_trade_type_temp
          inner join (select *
                      from level_def_temp
