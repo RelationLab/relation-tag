@@ -1561,7 +1561,7 @@ select mod(to_number(address, '9999999999'), 50000),
 from address_label_nft_balance_usd_top;
 
 insert into tag_result(table_name, batch_date)
-SELECT 'address_label_gp_${tableSuffix}' as table_name, ' ${batchDate}' as batch_date;
+SELECT 'address_label_gp_${tableSuffix}' as table_name, '${batchDate}' as batch_date;
 
 
 
