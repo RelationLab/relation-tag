@@ -3,7 +3,7 @@ create table web3_action_platform_temp
 (
     platform varchar(80) NULL,
     trade_type varchar(512) NULL,
-    dim_type varchar(1) NULL
+    dim_type varchar(1) NULL //'1'表示balance activity标签都有 '0'表示只有activity
 ) ;
 insert into web3_action_platform_temp(platform,trade_type,dim_type) values('ALL','ALL','1');
 insert into web3_action_platform_temp(platform,trade_type,dim_type) values('ALL','NFT Recipient','1');
