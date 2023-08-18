@@ -166,7 +166,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_content                                                            project,
                 ''                                                                             trade_type,
@@ -336,7 +336,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_content                                                            project,
                 ''                                                                             trade_type,
@@ -502,7 +502,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_content                                                            project,
                 ''                                                                             trade_type,
@@ -669,7 +669,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_content                                                            project,
                 ''                                                                             trade_type,
@@ -730,10 +730,10 @@ into dim_project_token_type_temp (project,
 select distinct nft_platform_temp.platform_name    project,
                 nft_platform_temp.address          "token",
                 nft_trade_type_temp.nft_trade_type "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'cg'   label_type,
                 'T'                                operate_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'cg'   seq_flag,
                 'count'                            data_subject,
                 mp_nft_platform_temp.platform_name project_name,
@@ -771,9 +771,9 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'cg'                        as "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'cg' || level_def_temp.code as "name",
                 'SYSTEM'                                                   "source",
                 'PUBLIC'                                                   visible_type,
@@ -799,7 +799,7 @@ select distinct 'RelationTeam'                                             "owne
                          then ''
                      else nft_trade_type_temp.nft_trade_type_name end)     "content",
                 'SQL'                                                      rule_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'cg'                           rule_group,
                 'RESULT'                                                   value_type,
                 999999                                                     run_order,
@@ -839,7 +839,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                                                            asset,
                 mp_nft_platform_temp.platform_name                                                   project,
                 nft_trade_type_temp.nft_trade_type                                                   trade_type,
@@ -848,7 +848,7 @@ select distinct nft_sync_address.platform                                       
                 level_def_temp.level                                                                 activity,
                 ''                                                                                   hold_time,
                 now()                                                                                created_at,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'cg' || level_def_temp.code                              label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
                 'GRADE'                                                                              label_category,
@@ -976,7 +976,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                                       asset,
                 'ALL'                                           project,
                 case
@@ -1119,7 +1119,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                                                            asset,
                 'ALL'                                                                                project,
                 case
@@ -1212,11 +1212,11 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                         "owner",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code ||
                 'cg'                                as                 "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code || 'cg' ||
                 level_def_temp.code                 as                 "name",
@@ -1244,7 +1244,7 @@ select distinct 'RelationTeam'                                         "owner",
                          then ''
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                  rule_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code ||
                 'cg'                                                   rule_group,
@@ -1284,7 +1284,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL_NFT' else 'ALL_TOKEN' end) asset,
                 mp_nft_platform_temp.platform_name                                                           project,
                 nft_trade_type_temp.nft_trade_type                                                           trade_type,
@@ -1293,7 +1293,7 @@ select distinct (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'AL
                 level_def_temp.level                                                                         activity,
                 ''                                                                                           hold_time,
                 now()                                                                                        created_at,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code || 'cg' ||
                 level_def_temp.code                                                                          label_name,
@@ -1332,11 +1332,11 @@ into dim_project_token_type_temp (project,
 select distinct nft_platform_temp.platform_name    project,
                 nft_platform_temp.address          "token",
                 nft_trade_type_temp.nft_trade_type "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 've'   label_type,
                 'T'                                operate_type,
 
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 've'   seq_flag,
                 'volume_elite'                     data_subject,
                 mp_nft_platform_temp.platform_name project_name,
@@ -1376,9 +1376,9 @@ into public."label_temp" ("owner",
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
 
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 've'                        as "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 've' || level_def_temp.code as "name",
                 'SYSTEM'                                                   "source",
                 'PUBLIC'                                                   visible_type,
@@ -1402,7 +1402,7 @@ select distinct 'RelationTeam'                                             "owne
                      else nft_trade_type_temp.nft_trade_type_name end)     "content",
                 'SQL'                                                      rule_type,
 
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 've'                           rule_group,
                 'RESULT'                                                   value_type,
                 999999                                                     run_order,
@@ -1442,7 +1442,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                                                            asset,
                 mp_nft_platform_temp.platform_name                                                   project,
                 nft_trade_type_temp.nft_trade_type                                                   trade_type,
@@ -1452,7 +1452,7 @@ select distinct nft_sync_address.platform                                       
                 ''                                                                                   hold_time,
                 now()                                                                                created_at,
 
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 've' || level_def_temp.code                              label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
                 'ELITE'                                                                              label_category,
@@ -1590,7 +1590,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                               asset,
                 'ALL'                                                   project,
                 case
@@ -1686,11 +1686,11 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                         "owner",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code ||
                 've'                                as                 "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code || 've' ||
                 level_def_temp.code                 as                 "name",
@@ -1715,7 +1715,7 @@ select distinct 'RelationTeam'                                         "owner",
                          then nft_trade_type.nft_trade_type_name || ' ' || 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                  rule_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code ||
                 've'                                                   rule_group,
@@ -1755,7 +1755,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                                                                            asset,
                 mp_nft_platform_temp.platform_name                                                   project,
                 nft_trade_type_temp.nft_trade_type                                                   trade_type,
@@ -1764,7 +1764,7 @@ select distinct 'ALL_NFT'                                                       
                 ''                                                                                   activity,
                 ''                                                                                   hold_time,
                 now()                                                                                created_at,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code || 've' ||
                 level_def_temp.code                                                                  label_name,
@@ -1889,7 +1889,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                                       asset,
                 'ALL'                                           project,
                 case
@@ -1933,10 +1933,10 @@ into dim_project_token_type_temp (project,
 select distinct nft_platform_temp.platform_name    project,
                 nft_platform_temp.address          "token",
                 nft_trade_type_temp.nft_trade_type "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vg'   label_type,
                 'T'                                operate_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vg'   seq_flag,
                 'volume_grade'                     data_subject,
                 mp_nft_platform_temp.platform_name project_name,
@@ -1974,9 +1974,9 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vg'                        as "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vg' || level_def_temp.code as "name",
                 'SYSTEM'                                                   "source",
                 'PUBLIC'                                                   visible_type,
@@ -1997,7 +1997,7 @@ select distinct 'RelationTeam'                                             "owne
                          then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end)     "content",
                 'SQL'                                                      rule_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vg'                           rule_group,
                 'RESULT'                                                   value_type,
                 999999                                                     run_order,
@@ -2037,7 +2037,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                                                            asset,
                 mp_nft_platform_temp.platform_name                                                   project,
                 nft_trade_type_temp.nft_trade_type                                                   trade_type,
@@ -2046,7 +2046,7 @@ select distinct nft_sync_address.platform                                       
                 ''                                                                                   activity,
                 ''                                                                                   hold_time,
                 now()                                                                                created_at,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vg' || level_def_temp.code                              label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
                 'GRADE'                                                                              label_category,
@@ -2183,7 +2183,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                                                            asset,
                 'ALL'                                                                                project,
                 case
@@ -2276,11 +2276,11 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                         "owner",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code ||
                 'vg'                                as                 "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code ||
                 'vg' ||
@@ -2304,7 +2304,7 @@ select distinct 'RelationTeam'                                         "owner",
                          then 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                  rule_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code ||
                 'vg'                                                   rule_group,
@@ -2344,7 +2344,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL_NFT' else 'ALL_TOKEN' end) asset,
                 mp_nft_platform_temp.platform_name                                                           project,
                 nft_trade_type_temp.nft_trade_type                                                           trade_type,
@@ -2353,7 +2353,7 @@ select distinct (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'AL
                 ''                                                                                           activity,
                 ''                                                                                           hold_time,
                 now()                                                                                        created_at,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code || 'vg' ||
                 level_def_temp.code                                                                          label_name,
@@ -2476,7 +2476,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                                       asset,
                 'ALL'                                           project,
                 case
@@ -2519,10 +2519,10 @@ into dim_project_token_type_temp (project,
 select distinct nft_platform_temp.platform_name    project,
                 nft_platform_temp.address          "token",
                 nft_trade_type_temp.nft_trade_type "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vr'   label_type,
                 'T'                                operate_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vr'   seq_flag,
                 'volume_rank'                      data_subject,
                 mp_nft_platform_temp.platform_name project_name,
@@ -2560,9 +2560,9 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vr'                        as "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vr' || level_def_temp.code as "name",
                 'SYSTEM'                                                   "source",
                 'PUBLIC'                                                   visible_type,
@@ -2585,7 +2585,7 @@ select distinct 'RelationTeam'                                             "owne
                          then nft_trade_type.nft_trade_type_name || ' ' || 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end)     "content",
                 'SQL'                                                      rule_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vr'                           rule_group,
                 'RESULT'                                                   value_type,
                 999999                                                     run_order,
@@ -2625,7 +2625,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                                                            asset,
                 mp_nft_platform_temp.platform_name                                                   project,
                 nft_trade_type_temp.nft_trade_type                                                   trade_type,
@@ -2634,7 +2634,7 @@ select distinct nft_sync_address.platform                                       
                 ''                                                                                   activity,
                 ''                                                                                   hold_time,
                 now()                                                                                created_at,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vr' || level_def_temp.code                              label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
                 'RANK'                                                                               label_category,
@@ -2772,7 +2772,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                       asset,
                 'ALL'                                           project,
                 case
@@ -2867,11 +2867,11 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                         "owner",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code ||
                 'vr'                                as                 "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code || 'vr' ||
                 level_def_temp.code                 as                 "name",
@@ -2896,7 +2896,7 @@ select distinct 'RelationTeam'                                         "owner",
                          then nft_trade_type.nft_trade_type_name || ' ' || 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                  rule_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code ||
                 'vr'                                                   rule_group,
@@ -2936,7 +2936,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL_NFT' else 'ALL_TOKEN' end) asset,
                 mp_nft_platform_temp.platform_name                                                           project,
                 nft_trade_type_temp.nft_trade_type                                                           trade_type,
@@ -2945,7 +2945,7 @@ select distinct (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'AL
                 ''                                                                                           activity,
                 ''                                                                                           hold_time,
                 now()                                                                                        created_at,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code || 'vr' ||
                 level_def_temp.code                                                                          label_name,
@@ -3070,7 +3070,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                                       asset,
                 'ALL'                                           project,
                 case
@@ -3113,10 +3113,10 @@ into dim_project_token_type_temp (project,
 select distinct nft_platform_temp.platform_name    project,
                 nft_platform_temp.address          "token",
                 nft_trade_type_temp.nft_trade_type "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vt'   label_type,
                 'T'                                operate_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vt'   seq_flag,
                 'volume_top'                       data_subject,
                 mp_nft_platform_temp.platform_name project_name,
@@ -3154,9 +3154,9 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vt'                        as "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vt' || level_def_temp.code as "name",
                 'SYSTEM'                                                   "source",
                 'PUBLIC'                                                   visible_type,
@@ -3179,7 +3179,7 @@ select distinct 'RelationTeam'                                             "owne
                          then nft_trade_type.nft_trade_type_name || ' ' || 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end)     "content",
                 'SQL'                                                      rule_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vt'                           rule_group,
                 'RESULT'                                                   value_type,
                 999999                                                     run_order,
@@ -3219,7 +3219,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                                                            asset,
                 mp_nft_platform_temp.platform_name                                                   project,
                 nft_trade_type_temp.nft_trade_type                                                   trade_type,
@@ -3228,7 +3228,7 @@ select distinct nft_sync_address.platform                                       
                 ''                                                                                   activity,
                 ''                                                                                   hold_time,
                 now()                                                                                created_at,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
                 nft_trade_type_temp.code || 'vt' || level_def_temp.code                              label_name,
                 (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'nft' else 'token' end) asset_type,
                 'TOP'                                                                                label_category,
@@ -3366,7 +3366,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                       asset,
                 'ALL'                                           project,
                 case
@@ -3422,10 +3422,12 @@ select distinct (select nft_platform_temp.platform_name
    'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
     recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ''  || 'm' ||case when nft_action_platform_temp.nft_type='ERC721' then 'n' else 't'
-end||nft_trade_type_temp.code || 'vt' label_type,
+end
+||nft_trade_type_temp.code || 'vt' label_type,
     'T' operate_type,
      recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ''  || 'm' ||case when nft_action_platform_temp.nft_type='ERC721' then 'n' else 't'
-end||nft_trade_type_temp.code || 'vt' seq_flag,
+end
+||nft_trade_type_temp.code || 'vt' seq_flag,
     'volume_top' data_subject,
     mp_nft_platform_temp.platform_name project_name,
     'ALL' token_name,
@@ -3460,11 +3462,11 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                         "owner",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code ||
                 'vt'                                as                 "type",
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code || 'vt' ||
                 level_def_temp.code                 as                 "name",
@@ -3489,7 +3491,7 @@ select distinct 'RelationTeam'                                         "owner",
                          then nft_trade_type.nft_trade_type_name || ' ' || 'Trader'
                      else nft_trade_type_temp.nft_trade_type_name end) "content",
                 'SQL'                                                  rule_type,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code ||
                 'vt'                                                   rule_group,
@@ -3529,7 +3531,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'ALL_NFT' else 'ALL_TOKEN' end) asset,
                 mp_nft_platform_temp.platform_name                                                           project,
                 nft_trade_type_temp.nft_trade_type                                                           trade_type,
@@ -3538,7 +3540,7 @@ select distinct (case when nft_action_platform_temp.nft_type = 'ERC721' THEN 'AL
                 ''                                                                                           activity,
                 ''                                                                                           hold_time,
                 now()                                                                                        created_at,
-                recent_time_temp.code || 'p'||mp_nft_platform_temp.id || '' || 'm' ||
+                recent_time_temp.code || 'p' || mp_nft_platform_temp.id || '' || 'm' ||
                 case when nft_action_platform_temp.nft_type = 'ERC721' then 'n' else 't' end ||
                 nft_trade_type_temp.code || 'vt' ||
                 level_def_temp.code                                                                          label_name,
@@ -3663,7 +3665,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                                       asset,
                 'ALL'                                           project,
                 case
@@ -3875,7 +3877,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_temp.address, 1, 8) || ')' asset,
                 platform_temp.platform_name                                                              project,
                 trade_type.trade_type                                                                    trade_type,
@@ -4053,7 +4055,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_temp.address, 1, 8) || ')' asset,
                 platform_large_category.platform_large_code                                              project,
                 trade_type.trade_type                                                                    trade_type,
@@ -4197,7 +4199,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_TOKEN'                 asset,
                 platform_temp.platform_name project,
                 trade_type.trade_type       trade_type,
@@ -4331,7 +4333,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_TOKEN'                                                                    asset,
                 platform_large_category.platform_large_code                                    project,
                 trade_type.trade_type                                                          trade_type,
@@ -4544,7 +4546,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_temp.address, 1, 8) || ')' asset,
                 platform_temp.platform_name                                                              project,
                 trade_type.trade_type                                                                    trade_type,
@@ -4728,7 +4730,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_temp.address, 1, 8) || ')' asset,
                 platform_large_category.platform_large_code                                              project,
                 trade_type.trade_type                                                                    trade_type,
@@ -4871,7 +4873,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_TOKEN'                 asset,
                 platform_temp.platform_name project,
                 trade_type.trade_type       trade_type,
@@ -5006,7 +5008,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_TOKEN'                                 asset,
                 platform_large_category.platform_large_code project,
                 trade_type.trade_type                       trade_type,
@@ -5215,7 +5217,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_temp.address, 1, 8) || ')' asset,
                 platform_temp.platform_name                                                              project,
                 trade_type.trade_type                                                                    trade_type,
@@ -5389,7 +5391,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_temp.address, 1, 8) || ')' asset,
                 platform_large_category.platform_large_code                                              project,
                 trade_type.trade_type                                                                    trade_type,
@@ -5527,7 +5529,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_TOKEN'                 asset,
                 platform_temp.platform_name project,
                 trade_type.trade_type       trade_type,
@@ -5655,7 +5657,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_TOKEN'                                 asset,
                 platform_large_category.platform_large_code project,
                 trade_type.trade_type                       trade_type,
@@ -5763,7 +5765,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                                   asset,
                 ''                                                          project,
                 ''                                                          trade_type,
@@ -5856,7 +5858,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                          asset,
                 ''                                 project,
                 ''                                 trade_type,
@@ -5952,7 +5954,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                                   asset,
                 ''                                                          project,
                 ''                                                          trade_type,
@@ -6044,7 +6046,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                          asset,
                 ''                                 project,
                 ''                                 trade_type,
@@ -6139,7 +6141,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                                   asset,
                 ''                                                          project,
                 ''                                                          trade_type,
@@ -6232,7 +6234,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                          asset,
                 ''                                 project,
                 ''                                 trade_type,
@@ -6365,7 +6367,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                       asset,
                 ''                                              project,
                 case
@@ -6503,7 +6505,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                                       asset,
                 ''                                              project,
                 case
@@ -6606,7 +6608,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                                   asset,
                 ''                                                          project,
                 ''                                                          trade_type,
@@ -6704,7 +6706,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform            asset,
                 ''                                   project,
                 ''                                   trade_type,
@@ -6803,7 +6805,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                                   asset,
                 ''                                                          project,
                 ''                                                          trade_type,
@@ -6932,7 +6934,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                       asset,
                 ''                                              project,
                 case
@@ -7061,7 +7063,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                                       asset,
                 ''                                              project,
                 case
@@ -7198,7 +7200,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                       asset,
                 ''                                              project,
                 case
@@ -7331,7 +7333,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                                       asset,
                 ''                                              project,
                 case
@@ -7462,7 +7464,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                       asset,
                 ''                                              project,
                 case
@@ -7590,7 +7592,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                                       asset,
                 ''                                              project,
                 case
@@ -7723,7 +7725,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct nft_sync_address.platform                       asset,
                 ''                                              project,
                 case
@@ -7851,7 +7853,7 @@ into public.combination_temp (asset,
                               label_name,
                               asset_type,
                               label_category,
-                              recent_time_code)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_NFT'                                       asset,
                 ''                                              project,
                 case
