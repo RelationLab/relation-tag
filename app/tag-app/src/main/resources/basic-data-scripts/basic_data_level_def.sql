@@ -34,7 +34,7 @@ insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_
 insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values('1g','Million','Million Trader','defi_volume_grade','defi','volume','Million Trader');
 insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values('1h','Billion','Billion Trader','defi_volume_grade','defi','volume','Billion Trader');
 insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values('1i','MEDIUM','Medium Trader','defi_volume_rank','defi','volume','Medium Trader');
-insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values('1g','HEAVY','Heavy Trader','defi_volume_rank','defi','volume','Heavy Trader');
+insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values('1j','HEAVY','Heavy Trader','defi_volume_rank','defi','volume','Heavy Trader');
 insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values('1k','ELITE','Elite Trader','defi_volume_rank','defi','volume','Elite Trader');
 insert into level_def_temp(code,level,level_name,type,asset_type,dim_type,short_name) values('1l','LEGENDARY','Legendary Trader','defi_volume_rank','defi','volume','Legendary Trader');
 
