@@ -14,32 +14,32 @@ from
     (
         select
             count(1),
-            case when label_name='crowd_active_users' then 'Active users'
+            case when label_name='cau' then 'Active users'
                  when label_name='crowd_elite' then 'Elite'
-                 when label_name='crowd_nft_active_users' then 'NFT active users'
-                 when label_name='crowd_long_term_holder' then 'Long-term holder'
-                 when label_name='crowd_nft_whale' then 'NFT whale'
-                 when label_name='crowd_nft_high_demander' then 'NFT high demander'
-                 when label_name='crowd_token_whale' then 'Token whale'
-                 when label_name='crowd_defi_active_users' then 'DeFi active users'
-                 when label_name='crowd_defi_high_demander' then 'DeFi high demander'
-                 when label_name='crowd_web3_active_users' then 'Web3 active users'
+                 when label_name='cnau' then 'NFT active users'
+                 when label_name='clth' then 'Long-term holder'
+                 when label_name='cnw' then 'NFT whale'
+                 when label_name='cnhd' then 'NFT high demander'
+                 when label_name='ctw' then 'Token whale'
+                 when label_name='cdau' then 'DeFi active users'
+                 when label_name='cdhd' then 'DeFi high demander'
+                 when label_name='cwau' then 'Web3 active users'
                  else 'undefine'
                 end as label_name
                 ,
             algout.address
         from
             address_label_gp_${configEnvironment} algout         inner join address_init${tableSuffix} ais  on(algout.address=ais.address)
-        where (recent_time_code ='ALL' OR recent_time_code IS NULL) AND  label_name in('crowd_active_users',
+        where (recent_time_code ='ALL' OR recent_time_code IS NULL) AND  label_name in('cau',
                                                  'crowd_elite',
-                                                 'crowd_nft_active_users',
-                                                 'crowd_long_term_holder',
-                                                 'crowd_nft_whale',
-                                                 'crowd_nft_high_demander',
-                                                 'crowd_token_whale',
-                                                 'crowd_defi_active_users',
-                                                 'crowd_defi_high_demander',
-                                                 'crowd_web3_active_users')
+                                                 'cnau',
+                                                 'clth',
+                                                 'cnw',
+                                                 'cnhd',
+                                                 'ctw',
+                                                 'cdau',
+                                                 'cdhd',
+                                                 'cwau')
         group by
             label_name,
             algout.address) out_t

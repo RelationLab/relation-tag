@@ -87,7 +87,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                 "owner",
                 --平台+资产+交易类型
                 '' || 'l' || lpt.id || '' || 'bg'                        as                    "type",
@@ -108,7 +108,7 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                      sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                          as                    one_wired_type,
                 'b'                                                      as                    two_wired_type,
-                 'l'                     as time_type
+                'l'                                                      as                    time_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -150,7 +150,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
@@ -162,7 +162,9 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 '' || 'l' || lpt.id || '' || 'bg' || level_def_temp.code                       label_name,
                 'token'                                                                        asset_type,
                 'GRADE'                                                                        label_category,
-                'ALL'                                                                          recent_time_code
+                'ALL'                                                                          recent_time_code,
+                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
+                ')' || '_BALANCE_GRADE_' || level_def_temp.level                               old_label_name
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -254,7 +256,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                 "owner",
                 '' || 'l' || lpt.id || '' || 'br'                                              "type",
                 '' || 'l' || lpt.id || '' || 'br' || level_def_temp.code as                    "name",
@@ -273,7 +275,7 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                      sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                          as                    one_wired_type,
                 'b'                                                      as                    two_wired_type,
-                 'l'                     as time_type
+                'l'                                                      as                    time_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -315,7 +317,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
@@ -327,7 +329,9 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 '' || 'l' || lpt.id || '' || 'br' || level_def_temp.code                       label_name,
                 'token'                                                                        asset_type,
                 'RANK'                                                                         label_category,
-                'ALL'                                                                          recent_time_code
+                'ALL'                                                                          recent_time_code,
+                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
+                ')' || '_BALANCE_RANK_' || level_def_temp.level                                old_label_name
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -417,7 +421,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                 "owner",
                 '' || 'l' || lpt.id || '' || 'bt'                                              "type",
                 '' || 'l' || lpt.id || '' || 'bt' || level_def_temp.code                       "name",
@@ -436,7 +440,7 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                      sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}' as                                             one_wired_type,
                 'b'                             as                                             two_wired_type,
-               'l'                     as time_type
+                'l'                             as                                             time_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -478,7 +482,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')' asset,
                 lpt.factory_type                                                               project,
                 ''                                                                             trade_type,
@@ -490,7 +494,9 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 '' || 'l' || lpt.id || '' || 'bt' || level_def_temp.code                       label_name,
                 'token'                                                                        asset_type,
                 'TOP'                                                                          label_category,
-                'ALL'                                                                          recent_time_code
+                'ALL'                                                                          recent_time_code,
+                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
+                ')' || '_BALANCE_TOP_' || level_def_temp.level                                 old_label_name
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -585,7 +591,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                    as "owner",
                 recent_time_temp.code || '' || 'l' || lpt.id || '' || 'cg'                        as "type",
                 recent_time_temp.code || '' || 'l' || lpt.id || '' || 'cg' || level_def_temp.code as "name",
@@ -607,7 +613,7 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                         as sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                                                   as one_wired_type,
                 'c'                                                                               as two_wired_type,
-                recent_time_temp.code_revent || 'l'                     as time_type
+                recent_time_temp.code_revent || 'l'                                               as time_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -650,7 +656,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')'    asset,
                 lpt.factory_type                                                                  project,
                 ''                                                                                trade_type,
@@ -662,7 +668,11 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 recent_time_temp.code || '' || 'l' || lpt.id || '' || 'cg' || level_def_temp.code label_name,
                 'token'                                                                           asset_type,
                 'GRADE'                                                                           label_category,
-                recent_time_code
+                recent_time_code,
+                recent_time_temp.recent_time_name ||
+                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
+                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
+                ')' || '_ACTIVITY_' || level_def_temp.level                                       old_label_name
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -757,7 +767,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                       "owner",
                 recent_time_temp.code || '' || 'l' || lpt.id || '' || 'vg'                        as "type",
                 recent_time_temp.code || '' || 'l' || lpt.id || '' || 'vg' || level_def_temp.code as "name",
@@ -779,7 +789,7 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                            sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                                                   as one_wired_type,
                 'v'                                                                               as two_wired_type,
-                recent_time_temp.code_revent || 'l'                     as time_type
+                recent_time_temp.code_revent || 'l'                                               as time_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -822,7 +832,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')'    asset,
                 lpt.factory_type                                                                  project,
                 ''                                                                                trade_type,
@@ -834,7 +844,11 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 recent_time_temp.code || '' || 'l' || lpt.id || '' || 'vg' || level_def_temp.code label_name,
                 'token'                                                                           asset_type,
                 'GRADE'                                                                           label_category,
-                recent_time_code
+                recent_time_code,
+                recent_time_temp.recent_time_name ||
+                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
+                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
+                ')' || '_VOLUME_GRADE_' || level_def_temp.level                                   old_label_name
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -929,7 +943,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                       "owner",
                 recent_time_temp.code || '' || 'l' || lpt.id || '' || 'vr'                        as "type",
                 recent_time_temp.code || '' || 'l' || lpt.id || '' || 'vr' || level_def_temp.code as "name",
@@ -951,7 +965,7 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                            sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                                                   as one_wired_type,
                 'v'                                                                               as two_wired_type,
-                recent_time_temp.code_revent || 'l'                     as time_type
+                recent_time_temp.code_revent || 'l'                                               as time_type
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -994,7 +1008,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) || ')'    asset,
                 lpt.factory_type                                                                  project,
                 ''                                                                                trade_type,
@@ -1006,7 +1020,11 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 recent_time_temp.code || '' || 'l' || lpt.id || '' || 'vr' || level_def_temp.code label_name,
                 'token'                                                                           asset_type,
                 'RANK'                                                                            label_category,
-                'ALL'                                                                             recent_time_code
+                'ALL'                                                                             recent_time_code,
+                recent_time_temp.recent_time_name ||
+                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
+                lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
+                ')' || '_VOLUME_RANK_' || level_def_temp.level                                    old_label_name
 from (select wlp.id,
              wlp.name,
              wlp.symbol_wired,
@@ -1076,7 +1094,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'bg'                        as "type",
                 '' || 't' || t.id || '' || 'bg' || level_def_temp.code as "name",
@@ -1095,7 +1113,7 @@ select distinct 'RelationTeam'                                            "owner
                 'WAITING'                                                 sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                        as one_wired_type,
                 'b'                                                    as two_wired_type,
-                 'l'                     as time_type
+                'l'                                                    as time_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1114,7 +1132,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
                 ''                                                     project,
                 ''                                                     trade_type,
@@ -1126,7 +1144,9 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
                 '' || 't' || t.id || '' || 'bg' || level_def_temp.code label_name,
                 'token'                                                asset_type,
                 'GRADE'                                                label_category,
-                'ALL'                                                  recent_time_code
+                'ALL'                                                  recent_time_code,
+                'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_GRADE_' ||
+                level_def_temp.level                                   old_label_name
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1167,7 +1187,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                   "owner",
                 '' || '' || '' || 'bg'                        as "type",
                 '' || '' || '' || 'bg' || level_def_temp.code as "name",
@@ -1186,7 +1206,7 @@ select distinct 'RelationTeam'                                   "owner",
                 'WAITING'                                        sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'               as one_wired_type,
                 'b'                                           as two_wired_type,
-                'l'                     as time_type
+                'l'                                           as time_type
 from level_def_temp
 where type = 'defi_balance_grade';
 insert
@@ -1200,19 +1220,20 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
-select distinct 'ALL_TOKEN'                                   asset,
-                ''                                            project,
-                ''                                            trade_type,
-                level_def_temp.level                          balance,
-                ''                                            volume,
-                ''                                            activity,
-                ''                                            hold_time,
-                now()                                         created_at,
-                '' || '' || '' || 'bg' || level_def_temp.code label_name,
-                'token'                                       asset_type,
-                'GRADE'                                       label_category,
-                'ALL'                                         recent_time_code
+                              recent_time_code, old_label_name)
+select distinct 'ALL_TOKEN'                                                            asset,
+                ''                                                                     project,
+                ''                                                                     trade_type,
+                level_def_temp.level                                                   balance,
+                ''                                                                     volume,
+                ''                                                                     activity,
+                ''                                                                     hold_time,
+                now()                                                                  created_at,
+                '' || '' || '' || 'bg' || level_def_temp.code                          label_name,
+                'token'                                                                asset_type,
+                'GRADE'                                                                label_category,
+                'ALL'                                                                  recent_time_code,
+                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_GRADE_' || level_def_temp.level old_label_name
 from level_def_temp
 where type = 'defi_balance_grade';
 
@@ -1253,7 +1274,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'br'                        as "type",
                 '' || 't' || t.id || '' || 'br' || level_def_temp.code as "name",
@@ -1272,7 +1293,7 @@ select distinct 'RelationTeam'                                            "owner
                 'WAITING'                                                 sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                        as one_wired_type,
                 'b'                                                    as two_wired_type,
-                 'l'                     as time_type
+                'l'                                                    as time_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1291,7 +1312,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
                 ''                                                     project,
                 ''                                                     trade_type,
@@ -1303,7 +1324,9 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
                 '' || 't' || t.id || '' || 'br' || level_def_temp.code label_name,
                 'token'                                                asset_type,
                 'RANK'                                                 label_category,
-                'ALL'                                                  recent_time_code
+                'ALL'                                                  recent_time_code,
+                'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_RANK_' ||
+                level_def_temp.level                                   old_label_name
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1344,7 +1367,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                   "owner",
                 '' || '' || '' || 'br'                        as "type",
                 '' || '' || '' || 'br' || level_def_temp.code as "name",
@@ -1363,7 +1386,7 @@ select distinct 'RelationTeam'                                   "owner",
                 'WAITING'                                        sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'               as one_wired_type,
                 'b'                                           as two_wired_type,
-                 'l'                     as time_type
+                'l'                                           as time_type
 from level_def_temp
 where type = 'defi_balance_rank';
 insert
@@ -1377,19 +1400,20 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
-select distinct 'ALL_TOKEN'                                   asset,
-                ''                                            project,
-                ''                                            trade_type,
-                level_def_temp.level                          balance,
-                ''                                            volume,
-                ''                                            activity,
-                ''                                            hold_time,
-                now()                                         created_at,
-                '' || '' || '' || 'br' || level_def_temp.code label_name,
-                'token'                                       asset_type,
-                'RANK'                                        label_category,
-                'ALL'                                         recent_time_code
+                              recent_time_code, old_label_name)
+select distinct 'ALL_TOKEN'                                                           asset,
+                ''                                                                    project,
+                ''                                                                    trade_type,
+                level_def_temp.level                                                  balance,
+                ''                                                                    volume,
+                ''                                                                    activity,
+                ''                                                                    hold_time,
+                now()                                                                 created_at,
+                '' || '' || '' || 'br' || level_def_temp.code                         label_name,
+                'token'                                                               asset_type,
+                'RANK'                                                                label_category,
+                'ALL'                                                                 recent_time_code,
+                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_RANK_' || level_def_temp.level old_label_name
 from level_def_temp
 where type = 'defi_balance_rank';
 
@@ -1430,7 +1454,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'bt'                        as "type",
                 '' || 't' || t.id || '' || 'bt' || level_def_temp.code as "name",
@@ -1449,7 +1473,7 @@ select distinct 'RelationTeam'                                            "owner
                 'WAITING'                                                 sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                        as one_wired_type,
                 'b'                                                    as two_wired_type,
-                 'l'                     as time_type
+                'l'                                                    as time_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1468,7 +1492,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
                 ''                                                     project,
                 ''                                                     trade_type,
@@ -1480,7 +1504,9 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
                 '' || 't' || t.id || '' || 'bt' || level_def_temp.code label_name,
                 'token'                                                asset_type,
                 'TOP'                                                  label_category,
-                'ALL'                                                  recent_time_code
+                'ALL'                                                  recent_time_code,
+                'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_BALANCE_TOP_' ||
+                level_def_temp.level                                   old_label_name
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1521,7 +1547,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                   "owner",
                 '' || '' || '' || 'bt'                        as "type",
                 '' || '' || '' || 'bt' || level_def_temp.code as "name",
@@ -1540,7 +1566,7 @@ select distinct 'RelationTeam'                                   "owner",
                 'WAITING'                                        sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'               as one_wired_type,
                 'b'                                           as two_wired_type,
-                 'l'                     as time_type
+                'l'                                           as time_type
 from level_def_temp
 where type = 'defi_balance_top';
 insert
@@ -1554,19 +1580,20 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
-select distinct 'ALL_TOKEN'                                   asset,
-                ''                                            project,
-                ''                                            trade_type,
-                level_def_temp.level                          balance,
-                ''                                            volume,
-                ''                                            activity,
-                ''                                            hold_time,
-                now()                                         created_at,
-                '' || '' || '' || 'bt' || level_def_temp.code label_name,
-                'token'                                       asset_type,
-                'TOP'                                         label_category,
-                'ALL'                                         recent_time_code
+                              recent_time_code, old_label_name)
+select distinct 'ALL_TOKEN'                                                          asset,
+                ''                                                                   project,
+                ''                                                                   trade_type,
+                level_def_temp.level                                                 balance,
+                ''                                                                   volume,
+                ''                                                                   activity,
+                ''                                                                   hold_time,
+                now()                                                                created_at,
+                '' || '' || '' || 'bt' || level_def_temp.code                        label_name,
+                'token'                                                              asset_type,
+                'TOP'                                                                label_category,
+                'ALL'                                                                recent_time_code,
+                'ALL_' || 'ALL_' || 'ALL' || '_BALANCE_TOP_' || level_def_temp.level old_label_name
 from level_def_temp
 where type = 'defi_balance_top';
 
@@ -1610,7 +1637,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                     "owner",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'cg'                        as "type",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'cg' || level_def_temp.code as "name",
@@ -1631,7 +1658,7 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                          sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                                                 as one_wired_type,
                 'c'                                                                             as two_wired_type,
-                recent_time_temp.code_revent || 'l'                     as time_type
+                recent_time_temp.code_revent || 'l'                                             as time_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1651,7 +1678,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'                            asset,
                 ''                                                                              project,
                 ''                                                                              trade_type,
@@ -1663,7 +1690,11 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'            
                 recent_time_temp.code || '' || 't' || t.id || '' || 'cg' || level_def_temp.code label_name,
                 'token'                                                                         asset_type,
                 'GRADE'                                                                         label_category,
-                recent_time_code
+                recent_time_code,
+                recent_time_temp.recent_time_name ||
+                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
+                'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_ACTIVITY_' ||
+                level_def_temp.level                                                            old_label_name
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1709,7 +1740,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                            "owner",
                 recent_time_temp.code || '' || '' || '' || 'cg'                        as "type",
                 recent_time_temp.code || '' || '' || '' || 'cg' || level_def_temp.code as "name",
@@ -1730,7 +1761,7 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                 sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                                        as one_wired_type,
                 'c'                                                                    as two_wired_type,
-                recent_time_temp.code_revent || 'l'                     as time_type
+                recent_time_temp.code_revent || 'l'                                    as time_type
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_count';
@@ -1745,7 +1776,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_TOKEN'                                                            asset,
                 ''                                                                     project,
                 ''                                                                     trade_type,
@@ -1757,7 +1788,10 @@ select distinct 'ALL_TOKEN'                                                     
                 recent_time_temp.code || '' || '' || '' || 'cg' || level_def_temp.code label_name,
                 'token'                                                                asset_type,
                 'GRADE'                                                                label_category,
-                recent_time_code
+                recent_time_code,
+                recent_time_temp.recent_time_name ||
+                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
+                'ALL_' || 'ALL_' || 'ALL' || '_ACTIVITY_' || level_def_temp.level      old_label_name
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_count';
@@ -1798,7 +1832,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'tg'                           "type",
                 '' || 't' || t.id || '' || 'tg' || level_def_temp.code as "name",
@@ -1817,7 +1851,7 @@ select distinct 'RelationTeam'                                            "owner
                 'WAITING'                                                 sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                        as one_wired_type,
                 't'                                                    as two_wired_type,
-                 'l'                     as time_type
+                'l'                                                    as time_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1836,7 +1870,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
                 ''                                                     project,
                 ''                                                     trade_type,
@@ -1848,7 +1882,9 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
                 '' || 't' || t.id || '' || 'tg' || level_def_temp.code label_name,
                 'token'                                                asset_type,
                 'GRADE'                                                label_category,
-                'ALL'                                                  recent_time_code
+                'ALL'                                                  recent_time_code,
+                t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_HOLDING_TIME_GRADE_' ||
+                level_def_temp.level                                   old_label_name
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1893,7 +1929,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                            "owner",
                 '' || 't' || t.id || '' || 'ts'                        as "type",
                 '' || 't' || t.id || '' || 'ts' || level_def_temp.code as "name",
@@ -1912,7 +1948,7 @@ select distinct 'RelationTeam'                                            "owner
                 'WAITING'                                                 sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                        as one_wired_type,
                 't'                                                    as two_wired_type,
-                 'l'                     as time_type
+                'l'                                                    as time_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1931,7 +1967,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
                 ''                                                     project,
                 ''                                                     trade_type,
@@ -1943,7 +1979,9 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'   asset,
                 '' || 't' || t.id || '' || 'ts' || level_def_temp.code label_name,
                 'token'                                                asset_type,
                 'SPECIAL'                                              label_category,
-                'ALL'                                                  recent_time_code
+                'ALL'                                                  recent_time_code,
+                t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_HOLDING_TIME_SPECIAL_' ||
+                level_def_temp.level                                   old_label_name
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -1991,7 +2029,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                     "owner",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vg'                        as "type",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vg' || level_def_temp.code as "name",
@@ -2012,7 +2050,7 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                          sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                                                 as one_wired_type,
                 'v'                                                                             as two_wired_type,
-                recent_time_temp.code_revent || 'l'                     as time_type
+                recent_time_temp.code_revent || 'l'                                             as time_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -2032,7 +2070,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'                            asset,
                 ''                                                                              project,
                 ''                                                                              trade_type,
@@ -2044,7 +2082,11 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'            
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vg' || level_def_temp.code label_name,
                 'token'                                                                         asset_type,
                 'GRADE'                                                                         label_category,
-                recent_time_code
+                recent_time_code,
+                recent_time_temp.recent_time_name ||
+                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
+                'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_VOLUME_GRADE_' ||
+                level_def_temp.level                                                            old_label_name
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -2089,7 +2131,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                            "owner",
                 recent_time_temp.code || '' || '' || '' || 'vg'                        as "type",
                 recent_time_temp.code || '' || '' || '' || 'vg' || level_def_temp.code as "name",
@@ -2110,7 +2152,7 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                 sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                                        as one_wired_type,
                 'v'                                                                    as two_wired_type,
-                recent_time_temp.code_revent || 'l'                     as time_type
+                recent_time_temp.code_revent || 'l'                                    as time_type
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_volume_grade';
@@ -2125,7 +2167,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_TOKEN'                                                            asset,
                 ''                                                                     project,
                 ''                                                                     trade_type,
@@ -2137,7 +2179,10 @@ select distinct 'ALL_TOKEN'                                                     
                 recent_time_temp.code || '' || '' || '' || 'vg' || level_def_temp.code label_name,
                 'token'                                                                asset_type,
                 'GRADE'                                                                label_category,
-                recent_time_code
+                recent_time_code,
+                recent_time_temp.recent_time_name ||
+                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
+                'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_GRADE_' || level_def_temp.level  old_label_name
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_volume_grade';
@@ -2181,7 +2226,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                     "owner",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vr'                        as "type",
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vr' || level_def_temp.code as "name",
@@ -2202,7 +2247,7 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                          sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                                                 as one_wired_type,
                 'v'                                                                             as two_wired_type,
-                recent_time_temp.code_revent || 'l'                     as time_type
+                recent_time_temp.code_revent || 'l'                                             as time_type
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -2222,7 +2267,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'                            asset,
                 ''                                                                              project,
                 ''                                                                              trade_type,
@@ -2234,7 +2279,11 @@ select distinct t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')'            
                 recent_time_temp.code || '' || 't' || t.id || '' || 'vr' || level_def_temp.code label_name,
                 'token'                                                                         asset_type,
                 'RANK'                                                                          label_category,
-                recent_time_code
+                recent_time_code,
+                recent_time_temp.recent_time_name ||
+                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
+                'ALL_' || t.symbol || '(' || SUBSTRING(t.address, 1, 8) || ')' || '_ALL_VOLUME_RANK_' ||
+                level_def_temp.level                                                            old_label_name
 from top_token_1000_temp t
          inner join (select *
                      from level_def_temp
@@ -2280,7 +2329,7 @@ into public."label_temp" ("owner",
                           label_order,
                           sync_es_status,
                           one_wired_type,
-                          two_wired_type,time_type)
+                          two_wired_type, time_type)
 select distinct 'RelationTeam'                                                            "owner",
                 recent_time_temp.code || '' || '' || '' || 'vr'                        as "type",
                 recent_time_temp.code || '' || '' || '' || 'vr' || level_def_temp.code as "name",
@@ -2301,7 +2350,7 @@ select distinct 'RelationTeam'                                                  
                 'WAITING'                                                                 sync_es_status,
                 '{"pf": 0, "act": 0, "ast": 1}'                                        as one_wired_type,
                 'v'                                                                    as two_wired_type,
-                recent_time_temp.code_revent || 'l'                     as time_type
+                recent_time_temp.code_revent || 'l'                                    as time_type
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_volume_rank';
@@ -2316,7 +2365,7 @@ into public.combination_temp (asset,
                               created_at,
                               label_name,
                               asset_type, label_category,
-                              recent_time_code,old_label_name)
+                              recent_time_code, old_label_name)
 select distinct 'ALL_TOKEN'                                                            asset,
                 ''                                                                     project,
                 ''                                                                     trade_type,
@@ -2328,7 +2377,10 @@ select distinct 'ALL_TOKEN'                                                     
                 recent_time_temp.code || '' || '' || '' || 'vr' || level_def_temp.code label_name,
                 'token'                                                                asset_type,
                 'RANK'                                                                 label_category,
-                'ALL'                                                                  recent_time_code
+                'ALL'                                                                  recent_time_code,
+                recent_time_temp.recent_time_name ||
+                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
+                'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_RANK_' || level_def_temp.level   old_label_name
 from level_def_temp
          inner join recent_time_temp on (1 = 1)
 where type = 'defi_volume_rank';
@@ -2347,7 +2399,8 @@ into combination_temp (asset,
                        label_name,
                        asset_type,
                        label_category,
-                       recent_time_code)
+                       recent_time_code,
+                       old_label_name)
 values ('',
         '',
         '',
@@ -2361,7 +2414,7 @@ values ('',
         'ctw',---crowd_token_whale
         '',
         '',
-        'ALL');
+        'ALL','crowd_token_whale');
 insert
 into combination_temp (asset,
                        project,
@@ -2376,7 +2429,8 @@ into combination_temp (asset,
                        label_name,
                        asset_type,
                        label_category,
-                       recent_time_code)
+                       recent_time_code,
+                       old_label_name)
 values ('',
         '',
         '',
@@ -2390,7 +2444,7 @@ values ('',
         'cnw',----crowd_nft_whale
         '',
         '',
-        'ALL');
+        'ALL','crowd_nft_whale');
 
 
 insert
@@ -2407,7 +2461,8 @@ into combination_temp (asset,
                        label_name,
                        asset_type,
                        label_category,
-                       recent_time_code)
+                       recent_time_code,
+                       old_label_name)
 values ('',
         '',
         '',
@@ -2421,7 +2476,7 @@ values ('',
         'cau',----crowd_active_users
         '',
         '',
-        'ALL');
+        'ALL','crowd_active_users');
 insert
 into combination_temp (asset,
                        project,
@@ -2436,7 +2491,8 @@ into combination_temp (asset,
                        label_name,
                        asset_type,
                        label_category,
-                       recent_time_code)
+                       recent_time_code,
+                       old_label_name)
 values ('',
         '',
         '',
@@ -2450,7 +2506,7 @@ values ('',
         'cdau',----crowd_defi_active_users
         '',
         '',
-        'ALL');
+        'ALL','crowd_defi_active_users');
 
 insert
 into combination_temp (asset,
@@ -2466,7 +2522,8 @@ into combination_temp (asset,
                        label_name,
                        asset_type,
                        label_category,
-                       recent_time_code)
+                       recent_time_code,
+                       old_label_name)
 values ('',
         '',
         '',
@@ -2480,7 +2537,7 @@ values ('',
         'cnau',---crowd_nft_active_users
         '',
         '',
-        'ALL');
+        'ALL','crowd_nft_active_users');
 insert
 into combination_temp (asset,
                        project,
@@ -2495,7 +2552,7 @@ into combination_temp (asset,
                        label_name,
                        asset_type,
                        label_category,
-                       recent_time_code)
+                       recent_time_code, old_label_name)
 values ('',
         '',
         '',
@@ -2509,7 +2566,7 @@ values ('',
         'cwau',-----crowd_web3_active_users
         '',
         '',
-        'ALL');
+        'ALL','crowd_web3_active_users');
 
 
 insert
@@ -2526,7 +2583,7 @@ into combination_temp (asset,
                        label_name,
                        asset_type,
                        label_category,
-                       recent_time_code)
+                       recent_time_code, old_label_name)
 values ('',
         '',
         '',
@@ -2540,7 +2597,7 @@ values ('',
         'clth',----crowd_long_term_holder
         '',
         '',
-        'ALL');
+        'ALL','crowd_long_term_holder');
 insert
 into combination_temp (asset,
                        project,
@@ -2555,7 +2612,7 @@ into combination_temp (asset,
                        label_name,
                        asset_type,
                        label_category,
-                       recent_time_code)
+                       recent_time_code, old_label_name)
 values ('',
         '',
         '',
@@ -2569,7 +2626,7 @@ values ('',
         'cdhd',------crowd_defi_high_demander
         '',
         '',
-        'ALL');
+        'ALL','crowd_defi_high_demander');
 
 
 insert
@@ -2586,7 +2643,7 @@ into combination_temp (asset,
                        label_name,
                        asset_type,
                        label_category,
-                       recent_time_code)
+                       recent_time_code, old_label_name)
 values ('',
         '',
         '',
@@ -2600,7 +2657,7 @@ values ('',
         'cnhd',-----crowd_nft_high_demander
         '',
         '',
-        'ALL');
+        'ALL','crowd_nft_high_demander');
 insert
 into combination_temp (asset,
                        project,
@@ -2615,7 +2672,7 @@ into combination_temp (asset,
                        label_name,
                        asset_type,
                        label_category,
-                       recent_time_code)
+                       recent_time_code, old_label_name)
 values ('',
         '',
         '',
@@ -2629,7 +2686,7 @@ values ('',
         'ce',----crowd_elite
         '',
         '',
-        'ALL');
+        'ALL','crowd_elite');
 insert into dim_rank_token_temp
 select distinct token, token_type
 from dim_rule_content_temp;

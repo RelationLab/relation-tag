@@ -126,7 +126,9 @@ select distinct CASE
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'bg' || level_def_temp.code label_name,
                 'web3'                                                                               asset_type,
                 'GRADE'                                                                              label_category,
-                'ALL'                                                                                recent_time_code
+                'ALL'                                                                                recent_time_code,
+                'WEB3_' || web3_platform_temp.platform_name || '_' || web3_action_temp.trade_type_name ||
+                '_BALANCE_GRADE_' || level_def_temp.level                                            old_label_name
 from web3_action_platform_temp
          inner join web3_platform_temp on
     (web3_platform_temp.platform = web3_action_platform_temp.platform)
@@ -246,7 +248,9 @@ select distinct CASE
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'br' || level_def_temp.code label_name,
                 'web3'                                                                               asset_type,
                 'RANK'                                                                               label_category,
-                'ALL'                                                                                recent_time_code
+                'ALL'                                                                                recent_time_code,
+                'WEB3_' || web3_platform_temp.platform_name || '_' || web3_action_temp.trade_type_name ||
+                '_BALANCE_RANK_' || level_def_temp.level                                             old_label_name
 from web3_action_platform_temp
          inner join web3_platform_temp on
     (web3_platform_temp.platform = web3_action_platform_temp.platform)
@@ -358,7 +362,9 @@ select distinct CASE
                 'w' || web3_platform_temp.id || web3_action_temp.code || 'bt' || level_def_temp.code label_name,
                 'web3'                                                                               asset_type,
                 'TOP'                                                                                label_category,
-                'ALL'                                                                                recent_time_code
+                'ALL'                                                                                recent_time_code,
+                'WEB3_' || web3_platform_temp.platform_name || '_' || web3_action_temp.trade_type_name ||
+                '_BALANCE_TOP_' || level_def_temp.level                                              old_label_name
 from web3_action_platform_temp
          inner join web3_platform_temp on
     (web3_platform_temp.platform = web3_action_platform_temp.platform)
@@ -477,7 +483,11 @@ select distinct CASE
                 level_def_temp.code                           label_name,
                 'web3'                                        asset_type,
                 'GRADE'                                       label_category,
-                recent_time_code
+                recent_time_code,
+                recent_time_temp.recent_time_name ||
+                (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) || 'WEB3_' ||
+                web3_platform_temp.platform_name || '_' || web3_action_temp.trade_type_name || '_ACTIVITY_' ||
+                level_def_temp.level                          old_label_name
 from web3_action_platform_temp
          inner join web3_platform_temp on
     (web3_platform_temp.platform = web3_action_platform_temp.platform)
