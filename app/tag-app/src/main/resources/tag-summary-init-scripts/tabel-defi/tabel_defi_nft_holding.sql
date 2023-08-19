@@ -23,4 +23,4 @@ CREATE TABLE public.nft_holding_temp
 truncate table nft_holding_temp;
 vacuum nft_holding_temp;
 insert into tag_result(table_name, batch_date)
-SELECT 'tabel_defi_nft_holding' as table_name, to_char(current_date, 'YYYY-MM-DD') as batch_date;
+SELECT 'tabel_defi_nft_holding' as table_name, '${batchDate}' as batch_date;
