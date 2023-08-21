@@ -53,10 +53,9 @@ from (select address,
              recent_time_code
       from eth_holding_vol_count_temp
       where total_transfer_volume > 0) eh
-         inner join (select price
+         inner join (select max(price) price
                      from white_list_erc20_temp
-                     where symbol = 'WETH'
-                     group by price) wle on
+                     where symbol = 'WETH') wle on
         1 = 1;
 insert into tag_result(table_name, batch_date)
 SELECT 'token_volume_usd' as table_name, '${batchDate}' as batch_date;

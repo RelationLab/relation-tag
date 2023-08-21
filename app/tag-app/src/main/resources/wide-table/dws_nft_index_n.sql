@@ -235,7 +235,8 @@ select
 	
   from  platform_nft_type_volume_count_temp  s1  left join  mp_nft_platform s2 
   on s1.platform=s2.platform
-  left join   nft_sync_address s3 
+ inner join nft_platform_temp on s1.platform=nft_platform_temp.platform and s1.token=nft_platform_temp.address
+ left join   nft_sync_address s3
   on s1.token=s3.address
   where   s3.type<>'ERC1155'
   
@@ -289,7 +290,8 @@ select
 	,now() as etl_update_time
   from  platform_nft_type_volume_count_temp  s1  left join  mp_nft_platform s2 
   on s1.platform=s2.platform
-  inner join   nft_sync_address s3 
+ inner join nft_platform_temp on s1.platform=nft_platform_temp.platform and s1.token=nft_platform_temp.address
+ inner join   nft_sync_address s3
   on s1.token=s3.address
   where   s3.type<>'ERC1155'
   group  by    
@@ -337,6 +339,7 @@ select
 	,now() as etl_update_time
   from  platform_nft_type_volume_count_temp  s1  left join  mp_nft_platform s2 
   on s1.platform=s2.platform
+ inner join nft_platform_temp on s1.platform=nft_platform_temp.platform and s1.token=nft_platform_temp.address
   inner join   nft_sync_address s3 
   on s1.token=s3.address
   where   s3.type<>'ERC1155'
@@ -386,6 +389,7 @@ select
 	,now() as etl_update_time
   from  platform_nft_type_volume_count_temp  s1  left join  mp_nft_platform s2 
   on s1.platform=s2.platform
+    inner join nft_platform_temp on s1.platform=nft_platform_temp.platform and s1.token=nft_platform_temp.address
   inner join   nft_sync_address s3 
   on s1.token=s3.address
   where   s3.type<>'ERC1155'

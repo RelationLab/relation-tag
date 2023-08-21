@@ -45,7 +45,7 @@ from dws_eth_index_n  s1 left join  (
     and wlp."type" = 'LP'
     ) s2
 on s1.token=s2.address
-;
+where s1.address not in (select address from exclude_address);
 
 
 insert  into  wired_address_dataset_temp
@@ -60,8 +60,8 @@ select
      , s1.type as action
 	,s1.first_tx_time                             --最早交易时间
     ,s1.latest_tx_time                            -- 最后交易时间
-	,s1.transaction_count
 	,s1.transaction_volume
+    ,s1.transaction_count
 	,s1.balance_count
    	,s1.balance_usd
 	,s1.transaction_volume_3d
@@ -82,7 +82,7 @@ select
 	,s1.transaction_count_2y
     ,now() as etl_update_time
 from dws_web3_index_n  s1
-;
+   where  s1.address not in (select address from exclude_address);
 
 insert  into  wired_address_dataset_temp
 select
@@ -120,5 +120,5 @@ select
 from dws_nft_index_n s1  left join
     nft_sync_address s2
 on s1.token=s2.address
-;
+where s1.address not in (select address from exclude_address);
 insert into tag_result(table_name,batch_date)  SELECT 'wired_address_dataset' as table_name,'${batchDate}'  as batch_date;
