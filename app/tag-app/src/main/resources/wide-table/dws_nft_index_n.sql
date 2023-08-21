@@ -133,10 +133,10 @@ select
 	,  sum(case when recent_time_code='2y'  then transfer_count else null end)  as transaction_count_2y 	
 
 	,now() as etl_update_time
-from  nft_volume_count_temp S1  
+from  nft_volume_count_temp S1
  inner join  nft_sync_address s2
  on s1.token=s2.address
-  where  s2.type<>'ERC1155'
+  where  s2.type<>'ERC1155' and S1.type<>'ALL'
   group by s1.address,s1.token
   ,s1.type
   
@@ -184,7 +184,7 @@ select
 from  nft_volume_count_temp S1  
  inner join  nft_sync_address s2
  on s1.token=s2.address
-  where  s2.type<>'ERC1155'
+  where  s2.type<>'ERC1155' and S1.type<>'ALL'
   group by s1.address
   ,s1.type
   
