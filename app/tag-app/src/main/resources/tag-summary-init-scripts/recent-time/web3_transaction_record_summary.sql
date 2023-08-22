@@ -10,7 +10,7 @@ into
 select
     lower(address) as address,
     sum(total_transfer_volume) as total_transfer_volume ,
-    sum(total_transfer_count) as total_transfer_count ,
+    sum(case when type='write' then 1 else total_transfer_count end)  as total_transfer_count ,
     type ,
     project,
     sum(balance) as balance,
