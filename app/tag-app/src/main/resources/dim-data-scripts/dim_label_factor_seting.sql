@@ -68,7 +68,7 @@ from  (select wlp.name,
               wslp.factory_type as stakeRouter
        from white_list_lp_temp wlp
                 left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-       where wlp.tvl > 5000000
+       where wlp.tvl > 1000000
          and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' ) lpt;
 insert into tag_result(table_name,batch_date)  SELECT 'dim_label_factor_seting' as table_name,'${batchDate}'  as batch_date;

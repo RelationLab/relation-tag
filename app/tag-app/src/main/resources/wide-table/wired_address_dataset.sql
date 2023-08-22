@@ -11,8 +11,8 @@ select
      ,s1.type as action
 	,s1.first_tx_time                             --最早交易时间
     ,s1.latest_tx_time                            -- 最后交易时间
+    ,s1.transaction_volume
 	,s1.transaction_count
-	,s1.transaction_volume
 	,s1.balance_count
    	,s1.balance_usd
 	,s1.transaction_volume_3d 
@@ -96,8 +96,8 @@ select
      ,s1.type as action
 	,s1.first_tx_time                             --最早交易时间
     ,s1.latest_tx_time                            -- 最后交易时间
+    ,s1.transaction_volume
 	,s1.transaction_count
-	,s1.transaction_volume
 	,s1.balance_count
    	,s1.balance_usd
 	,s1.transaction_volume_3d 
