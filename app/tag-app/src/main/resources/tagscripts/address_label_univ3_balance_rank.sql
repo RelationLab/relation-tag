@@ -74,6 +74,7 @@ from (select t1.address,
                                     from dex_tx_volume_count_summary_univ3_temp
                                     where project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                       and balance_usd >= 100
+                                      and recent_time_code ='ALL'
                                       and type = 'lp'
                                       and address not in (select address from exclude_address)) s1
                                        inner join dim_rank_token_temp s2
@@ -90,6 +91,7 @@ from (select t1.address,
                               from dex_tx_volume_count_summary_univ3_temp
                               where project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
                                 and balance_usd >= 100
+                                and recent_time_code ='ALL'
                                 and type = 'lp'
                                 and address not in (select address from exclude_address)) tbvu2
                         group by token) as a10

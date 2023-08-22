@@ -76,6 +76,7 @@ from (
                                      and a1.type = a2.type
                                      and a2.data_subject = 'balance_grade'
                                      and (a1.type = 'NFT Recipient' or a1.type = 'write')
+         WHERE recent_time_code ='ALL'
          group by a1.address,
                   a2.label_type,
                   a2.type,
@@ -94,6 +95,7 @@ from (
                                      and a1.type = a2.type
                                      and a2.data_subject = 'balance_grade'
                                      and (a1.type = 'NFT Recipient' or a1.type = 'write')
+         WHERE recent_time_code ='ALL'
          group by a1.address,
                   a2.label_type,
                   a2.type,
@@ -112,6 +114,7 @@ from (
                                      and a2.type = 'ALL'
                                      and a2.data_subject = 'balance_grade'
                                      and (a1.type = 'NFT Recipient')
+         WHERE recent_time_code ='ALL'
          group by a1.address,
                   a2.label_type,
                   a2.type,
@@ -130,6 +133,7 @@ from (
                                      and a2.type = 'ALL'
                                      and a2.data_subject = 'balance_grade'
                                      and (a1.type = 'NFT Recipient')
+         WHERE recent_time_code ='ALL'
          group by a1.address,
                   a2.label_type,
                   a2.type,

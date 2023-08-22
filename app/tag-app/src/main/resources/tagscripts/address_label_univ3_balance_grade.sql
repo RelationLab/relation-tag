@@ -79,6 +79,7 @@ from (select address,
              type
       from dex_tx_volume_count_summary_univ3_temp tbvutk
       where project = '0xc36442b4a4522e871399cd717abdd847ab11fe88'
+      and recent_time_code ='ALL'
         and balance_usd >= 100
         and type = 'lp') a1
          inner join

@@ -70,6 +70,7 @@ from (select address,
                            where balance >= 1
                              and address not in (select address from exclude_address)
                              and (type = 'NFT Recipient' or type = 'write')
+                             AND recent_time_code ='ALL'
                            union all
                            -- project(ALL)-type
                            select address,
@@ -80,6 +81,7 @@ from (select address,
                            where balance >= 1
                              and address not in (select address from exclude_address)
                              and (type = 'NFT Recipient' or type = 'write')
+                             AND recent_time_code ='ALL'
                            union all
                            -- project(ALL)-type(ALL)
                            select address,
@@ -89,6 +91,7 @@ from (select address,
                            from web3_transaction_record_summary_temp
                            where balance >= 1
                              and address not in (select address from exclude_address)
+                             AND recent_time_code ='ALL'
                              and (type = 'NFT Recipient')
                            union all
                            -- project-type(ALL)
@@ -99,6 +102,7 @@ from (select address,
                            from web3_transaction_record_summary_temp
                            where balance >= 1
                              and address not in (select address from exclude_address)
+                             AND recent_time_code ='ALL'
                              and (type = 'NFT Recipient')) totala
                   group by address,
                            type,

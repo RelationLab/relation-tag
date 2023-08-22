@@ -106,6 +106,7 @@ from (select address,
                                              where balance >= 1
                                                and address not in (select address from exclude_address)
                                                and (type = 'NFT Recipient' or type = 'write')
+                                             AND recent_time_code ='ALL'
                                              union all
                                              -- project(ALL)-type
                                              select address,
@@ -118,6 +119,7 @@ from (select address,
                                              where balance >= 1
                                                and address not in (select address from exclude_address)
                                                and (type = 'NFT Recipient' or type = 'write')
+                                               AND recent_time_code ='ALL'
                                              union all
                                              -- project(ALL)-type(ALL)
                                              select address,
@@ -130,6 +132,7 @@ from (select address,
                                              where balance >= 1
                                                and address not in (select address from exclude_address)
                                                and (type = 'NFT Recipient')
+                                               AND recent_time_code ='ALL'
                                              union all
                                              -- project-type(ALL)
                                              select address,
@@ -141,6 +144,7 @@ from (select address,
                                              from web3_transaction_record_summary_temp
                                              where balance >= 1
                                                and address not in (select address from exclude_address)
+                                               AND recent_time_code ='ALL'
                                                and (type = 'NFT Recipient')) s1
                                              inner join dim_project_type_temp s2
                                                         on
@@ -163,6 +167,7 @@ from (select address,
                                        from web3_transaction_record_summary_temp
                                        where balance >= 1
                                          and address not in (select address from exclude_address)
+                                         AND recent_time_code ='ALL'
                                          and (type = 'NFT Recipient' or type = 'write')
                                        union all
                                        -- project(ALL)-type
@@ -172,6 +177,7 @@ from (select address,
                                        from web3_transaction_record_summary_temp
                                        where balance >= 1
                                          and address not in (select address from exclude_address)
+                                         AND recent_time_code ='ALL'
                                          and (type = 'NFT Recipient' or type = 'write')
                                        union all
                                        -- project(ALL)-type(ALL)
@@ -181,6 +187,7 @@ from (select address,
                                        from web3_transaction_record_summary_temp
                                        where balance >= 1
                                          and address not in (select address from exclude_address)
+                                         AND recent_time_code ='ALL'
                                          and (type = 'NFT Recipient')
                                        union all
                                        -- project-type(ALL)
@@ -190,6 +197,7 @@ from (select address,
                                        from web3_transaction_record_summary_temp
                                        where balance >= 1
                                          and address not in (select address from exclude_address)
+                                         AND recent_time_code ='ALL'
                                          and (type = 'NFT Recipient')) w3trs
                               group by type,
                                        project) as a10
