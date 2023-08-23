@@ -195,6 +195,6 @@ from (
              a2.token_name,
              recent_time_code) t
 where sum_count >= 1
-  and address not in (select address from exclude_address)
+  and address not in (select address from exclude_address);
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_nft_project_type_count_grade' as table_name, '${batchDate}' as batch_date;
