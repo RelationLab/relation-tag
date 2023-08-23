@@ -118,6 +118,7 @@ from (select address,
                                                                      and a1.type = a2.type and
                                                                     a2.data_subject = 'volume_elite'
                                                                      and a1.recent_time_code = a2.recent_code
+                                                                     and a2.wired_type = 'NFT'
                                              where volume_usd >= 100
                                                and address not in (select address from exclude_address)
                                              union all
@@ -137,6 +138,7 @@ from (select address,
                                                                      and a1.type = a2.type and
                                                                     a2.data_subject = 'volume_elite'
                                                                      and a1.recent_time_code = a2.recent_code
+                                                                        and a2.wired_type = 'NFT'
                                              where volume_usd >= 100
                                                and address not in (select address from exclude_address)
                                                and a1.nft_type = 'ERC721'
@@ -158,6 +160,7 @@ from (select address,
                                                                      and a1.type = a2.type and
                                                                     a2.data_subject = 'volume_elite'
                                                                      and a1.recent_time_code = a2.recent_code
+                                                                     and a2.wired_type = 'NFT'
                                              where volume_usd >= 100
                                                and address not in (select address from exclude_address)
                                                and a1.nft_type = 'ERC721-token'
@@ -179,6 +182,7 @@ from (select address,
                                                                      and a1.type = a2.type and
                                                                     a2.data_subject = 'volume_elite'
                                                                      and a1.recent_time_code = a2.recent_code
+                                                                     and a2.wired_type = 'NFT'
                                              where volume_usd >= 100
                                                and address not in (select address from exclude_address)
                                                and a1.nft_type = 'ERC721'
@@ -199,6 +203,7 @@ from (select address,
                                                                      and a1.type = a2.type and
                                                                     a2.data_subject = 'volume_elite'
                                                                      and a1.recent_time_code = a2.recent_code
+                                                                     and a2.wired_type = 'NFT'
                                              where volume_usd >= 100
                                                and address not in (select address from exclude_address)) s1
                                     group by s1.address,
@@ -234,6 +239,7 @@ from (select address,
                                                                      and a1.type = a2.type and
                                                                     a2.data_subject = 'volume_elite'
                                                                      and a1.recent_time_code = a2.recent_code
+                                                                     and a2.wired_type = 'NFT'
                                              where volume_usd >= 100
                                                and a1.address not in (select address from exclude_address)
                                              union all
@@ -251,6 +257,7 @@ from (select address,
                                                                      and a1.type = a2.type and
                                                                     a2.data_subject = 'volume_elite'
                                                                      and a1.recent_time_code = a2.recent_code
+                                                                     and a2.wired_type = 'NFT'
                                              where volume_usd >= 100
                                                and a1.address not in (select address from exclude_address)
                                                and a1.nft_type = 'ERC721'
@@ -270,6 +277,7 @@ from (select address,
                                                                      and a1.type = a2.type and
                                                                     a2.data_subject = 'volume_elite'
                                                                      and a1.recent_time_code = a2.recent_code
+                                                                     and a2.wired_type = 'NFT'
                                              where volume_usd >= 100
                                                and a1.address not in (select address from exclude_address)
                                                and a1.nft_type = 'ERC721-token'
@@ -289,6 +297,7 @@ from (select address,
                                                                      and a1.type = a2.type and
                                                                     a2.data_subject = 'volume_elite'
                                                                      and a1.recent_time_code = a2.recent_code
+                                                                     and a2.wired_type = 'NFT'
                                              where volume_usd >= 100
                                                and a1.address not in (select address from exclude_address)
                                                and a1.nft_type = 'ERC721'
@@ -307,6 +316,7 @@ from (select address,
                                                                      and a1.type = a2.type and
                                                                     a2.data_subject = 'volume_elite'
                                                                      and a1.recent_time_code = a2.recent_code
+                                                                     and a2.wired_type = 'NFT'
                                              where volume_usd >= 100
                                                and a1.address not in (select address from exclude_address)) totala
                                     group by address,
@@ -327,8 +337,8 @@ from (select address,
           and dptt."type" = tb1.type
           and dptt.seq_flag = tb1.seq_flag
           and dptt.data_subject = 'volume_elite' and tb1.recent_time_code = dptt.recent_code)
+          and dptt.wired_type = 'NFT'
       where zb_rate <= 0.01
-        and zb_rate_transfer_count <= 0.01
-        and label_type not like '%_DEX_%') t;
+        and zb_rate_transfer_count <= 0.01) t;
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_nft_project_type_volume_count_rank' as table_name, '${batchDate}' as batch_date;

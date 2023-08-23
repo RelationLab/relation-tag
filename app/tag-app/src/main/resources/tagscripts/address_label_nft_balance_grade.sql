@@ -75,8 +75,7 @@ from (
          from nft_holding_temp a1
                   inner join dim_project_token_type_temp a2
                              on a1.token = a2.token and a2.project = '' and (a2.type = '' OR a2.type = 'ALL') and
-                                a2.data_subject = 'balance_grade' and a2.label_type like '%NFT%' AND
-                                a2.label_type NOT LIKE '%WEB3%'
+                                a2.data_subject = 'balance_grade' and a2.wired_type='NFT'
          where a1.recent_time_code = 'ALL'
          group by a1.address,
                   a2.label_type,
@@ -94,8 +93,7 @@ from (
          from nft_holding_temp a1
                   inner join dim_project_token_type_temp a2
                              on a2.token = 'ALL' and a2.project = '' and (a2.type = '' OR a2.type = 'ALL') and
-                                a2.data_subject = 'balance_grade' and a2.label_type like '%NFT%' AND
-                                a2.label_type NOT LIKE '%WEB3%'
+                                a2.data_subject = 'balance_grade' and a2.wired_type='NFT'
          where a1.recent_time_code = 'ALL'
          group by a1.address,
                   a2.label_type,

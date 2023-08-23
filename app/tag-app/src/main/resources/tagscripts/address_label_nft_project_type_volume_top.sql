@@ -75,6 +75,7 @@ from (select address,
                                             on a2.token = a1.token and a1.platform_group = a2.project
                                                 and a1.type = a2.type and a2.data_subject = 'volume_top'
                                                 and a1.recent_time_code = a2.recent_code
+                                                and a2.wired_type = 'NFT'
                         where volume_usd >= 100
                           and address not in (select address from exclude_address)
                         union all
@@ -91,6 +92,7 @@ from (select address,
                                             on a2.token = 'ALL' and a1.platform_group = a2.project
                                                 and a1.type = a2.type and a2.data_subject = 'volume_top'
                                                 and a1.recent_time_code = a2.recent_code
+                                                and a2.wired_type = 'NFT'
                         where volume_usd >= 100
                           and address not in (select address from exclude_address)
                           and a1.nft_type = 'ERC721'
@@ -109,6 +111,7 @@ from (select address,
                                             on a2.token = 'ALL' and a1.platform_group = a2.project
                                                 and a1.type = a2.type and a2.data_subject = 'volume_top'
                                                 and a1.recent_time_code = a2.recent_code
+                                                and a2.wired_type = 'NFT'
                         where volume_usd >= 100
                           and address not in (select address from exclude_address)
                           and a1.nft_type = 'ERC721-token'
@@ -127,6 +130,7 @@ from (select address,
                                             on a2.token = 'ALL' and a2.project = 'ALL'
                                                 and a1.type = a2.type and a2.data_subject = 'volume_top'
                                                 and a1.recent_time_code = a2.recent_code
+                                                and a2.wired_type = 'NFT'
                         where volume_usd >= 100
                           and address not in (select address from exclude_address)
                           and a1.nft_type = 'ERC721'
@@ -144,6 +148,7 @@ from (select address,
                                             on a2.token = a1.token and a2.project = 'ALL'
                                                 and a1.type = a2.type and a2.data_subject = 'volume_top'
                                                 and a1.recent_time_code = a2.recent_code
+                                                and a2.wired_type = 'NFT'
                         where volume_usd >= 100
                           and address not in (select address from exclude_address)) tatola
                   group by address,
@@ -157,8 +162,8 @@ from (select address,
               and dptt.recent_code = s1.recent_time_code
               and dptt.type = s1.type
               and dptt.data_subject = 'volume_top'
+              and dptt.wired_type = 'NFT'
           )
-      where s1.rn <= 100
-        and label_type not like '%_DEX_%') t;
+      where s1.rn <= 100 ) t;
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_nft_project_type_volume_top' as table_name, '${batchDate}' as batch_date;

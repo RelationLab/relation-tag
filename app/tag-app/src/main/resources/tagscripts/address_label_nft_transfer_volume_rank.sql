@@ -131,8 +131,7 @@ from (select address,
                                                                 and (s2.project = ''
                                                                 or s2.project = 'ALL')
                                                                 and s2.data_subject = 'volume_rank'
-                                                                and s2.label_type like '%NFT%'
-                                                                and s2.label_type not like '%WEB3%'
+                                                               and s2.wired_type='NFT'
                                                                 and s1.recent_time_code = s2.recent_code
                                     where total_transfer_volume >= 1
                                     group by s1.address,
@@ -168,8 +167,7 @@ from (select address,
                                            and (tb2.project = ''
                                            or tb2.project = 'ALL')
                                            and tb2.data_subject = 'volume_rank'
-                                           and tb2.label_type like '%NFT%'
-                                           and tb2.label_type not like '%WEB3%'
+                                          and tb2.wired_type='NFT'
                                            and totala.recent_time_code = tb2.recent_code
                               group by seq_flag, recent_time_code) as a10
                              on
@@ -184,8 +182,7 @@ from (select address,
               and (dptt.project = ''
                   or dptt.project = 'ALL')
               and dptt.data_subject = 'volume_rank'
-              and dptt.label_type like '%NFT%'
-              and dptt.label_type not like '%WEB3%'
+              and dptt.wired_type='NFT'
               and tb1.recent_time_code = dptt.recent_code)
       where tb1.total_transfer_volume >= 1
         and zb_rate <= 0.1) t;

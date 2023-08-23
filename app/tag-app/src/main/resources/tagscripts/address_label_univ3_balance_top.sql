@@ -67,7 +67,7 @@ from (select a1.address,
                           on
                                       a1.token = a2.token
                                   and a2.data_subject = 'balance_top'
-                                  and a2.label_type like 'Uniswap_v3%') s1
+                                  ) s1
 where s1.rn <= 100;
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_univ3_balance_top' as table_name, '${batchDate}' as batch_date;

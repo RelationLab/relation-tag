@@ -123,8 +123,7 @@ from (select s1.address,
                                                   tatola.token = a2.token
                                               and tatola.type = a2.type
                                               and a2.data_subject = 'volume_top'
-                                              and a2.label_type like '%NFT%'
-                                              and a2.label_type not like '%WEB3%'
+                                            and a2.wired_type='NFT'
                                               and a2.recent_code = tatola.recent_time_code
                                               and a2.type != 'Transfer'
                                                    and a2.project = ''
@@ -136,8 +135,7 @@ from (select s1.address,
                inner join dim_project_token_type_temp dptt on (dptt.seq_flag = s1.seq_flag
           and dptt.type = s1.type
           and dptt.data_subject = 'volume_top'
-          and dptt.label_type like '%NFT%'
-          and dptt.label_type not like '%WEB3%'
+         and dptt.wired_type='NFT'
           and dptt.type != 'Transfer'
                 and dptt.project = '' and dptt.recent_code = s1.recent_time_code)
       where s1.rn <= 100) t;

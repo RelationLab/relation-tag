@@ -112,7 +112,8 @@ from (select address,
                                              inner join dim_project_token_type_temp s2
                                                         on (s1.token = s2.token and s1.project = s2.project and
                                                             s1.type = s2.type and s2.data_subject = 'volume_rank' and
-                                                            s1.recent_time_code = s2.recent_code)
+                                                            s1.recent_time_code = s2.recent_code
+                                                            and S2.wired_type = 'DEFI')
                                     where total_transfer_volume_usd >= 100
                                       and s1.address not in (select address from exclude_address)
                                     group by s1.address,
@@ -129,7 +130,8 @@ from (select address,
                                                       inner join dim_project_token_type_temp tb2 on
                                                  (totala.token = tb2.token and totala.project = tb2.project
                                                      and totala.type = tb2.type and tb2.data_subject = 'volume_rank'
-                                                     and totala.recent_time_code = tb2.recent_code)
+                                                     and totala.recent_time_code = tb2.recent_code
+                                                     and tb2.wired_type = 'DEFI')
                                              where total_transfer_volume_usd >= 100
                                                and totala.address not in (select address from exclude_address)
                                              group by tb2.token,
@@ -143,7 +145,7 @@ from (select address,
           and dptt."type" = tb1.type
           and dptt.seq_flag = tb1.seq_flag
           and dptt.data_subject = 'volume_rank'
-          and label_type not like '%NFT%'
+          and dptt.wired_type = 'DEFI'
           and tb1.recent_time_code = dptt.recent_code)
       where tb1.total_transfer_volume_usd >= 100
         and zb_rate <= 0.1) t;

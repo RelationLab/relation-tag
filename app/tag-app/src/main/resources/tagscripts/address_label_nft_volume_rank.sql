@@ -129,8 +129,7 @@ from (select address,
                                                                 and s2.project = ''
                                                                 and s2.type != 'Transfer'
                                                                            and s2.data_subject = 'volume_rank'
-                                                                           and s2.label_type like '%NFT%'
-                                                                           and s2.label_type not like '%WEB3%'
+                                                                           and s2.wired_type='NFT'
                                                                             and  s1.recent_time_code = s2.recent_code
                                     where
                                         transfer_volume >= 1
@@ -171,8 +170,7 @@ from (select address,
                                                           and tb2.project = ''
                                                           and tb2.type != 'Transfer'
                                                                    and tb2.data_subject = 'volume_rank'
-                                                                   and tb2.label_type like '%NFT%'
-                                                                   and tb2.label_type not like '%WEB3%'
+                                                                   and tb2.wired_type='NFT'
                                                                    and  totala.recent_time_code = tb2.recent_code
                               group by
                                   seq_flag,
@@ -185,9 +183,8 @@ from (select address,
           and dptt.type = tb1.type
           and dptt.project = ''
           and dptt.data_subject = 'volume_rank'
-          and dptt.label_type like '%NFT%'
           and dptt.type != 'Transfer'
-                and dptt.label_type not like '%WEB3%')
+                and dptt.wired_type='NFT')
       where tb1.transfer_volume >= 1
         and zb_rate <= 0.1) t;
 

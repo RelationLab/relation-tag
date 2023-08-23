@@ -80,6 +80,7 @@ from (
                              on a1.token = a2.token and a1.platform_group = a2.project and
                                 a2.recent_code = a1.recent_time_code
                                  and a1.type = a2.type and a2.data_subject = 'volume_grade'
+                                 and a2.wired_type = 'NFT'
                                  and a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
          where volume_usd >= 100
          group by a1.address,
@@ -102,6 +103,7 @@ from (
                              on a2.token = 'ALL' and a1.platform_group = a2.project and
                                 a2.recent_code = a1.recent_time_code
                                  and a1.type = a2.type and a2.data_subject = 'volume_grade'
+                                 and a2.wired_type = 'NFT'
          where volume_usd >= 100
            and a1.nft_type = 'ERC721'
            and a2.nft_type = 'ERC721'
@@ -123,7 +125,7 @@ from (
          from platform_nft_type_volume_count_temp a1
                   inner join dim_project_token_type_temp a2
                              on a2.token = 'ALL' and a1.platform_group = a2.project and
-                                a2.recent_code = a1.recent_time_code
+                                a2.recent_code = a1.recent_time_code and a2.wired_type = 'NFT'
                                  and a1.type = a2.type and a2.data_subject = 'volume_grade'
          where volume_usd >= 100
            and a1.nft_type = 'ERC721-token'
@@ -146,6 +148,7 @@ from (
          from platform_nft_type_volume_count_temp a1
                   inner join dim_project_token_type_temp a2
                              on a2.token = 'ALL' and a2.recent_code = a1.recent_time_code
+                                 and a2.wired_type = 'NFT'
                                  and a2.project = 'ALL' and a1.type = a2.type and a2.data_subject = 'volume_grade'
          where volume_usd >= 100
            and a1.nft_type = 'ERC721'
@@ -167,6 +170,7 @@ from (
          from platform_nft_type_volume_count_temp a1
                   inner join dim_project_token_type_temp a2
                              on a2.token = a1.token and a2.recent_code = a1.recent_time_code
+                                 and a2.wired_type = 'NFT'
                                  and a2.project = 'ALL' and a1.type = a2.type and a2.data_subject = 'volume_grade'
          where volume_usd >= 100
            and a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
@@ -176,7 +180,6 @@ from (
                   a2.project_name,
                   a2.token_name,
                   recent_time_code) t
-where address not in (select address from exclude_address)
-  and label_type not like '%_DEX_%';
+where address not in (select address from exclude_address);
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_nft_project_type_volume_grade' as table_name, '${batchDate}' as batch_date;

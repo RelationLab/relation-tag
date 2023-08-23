@@ -14,7 +14,8 @@ create table dim_project_token_type_temp
     project_name    varchar(100),
     token_name      varchar(100),
     recent_code     varchar(30),
-    nft_type        varchar(30)
+    nft_type        varchar(30),
+    wired_type      varchar(10)
 ) with (appendonly = 'true', compresstype = zstd, compresslevel = '5')
     distributed by
 (
@@ -38,7 +39,7 @@ dim_project_token_type_rank_temp;
 ---------------------------------dim_dex_lp.sql---------------------------------------------
 -----FIRST_MOVER_LP  Uniswap_v2_UNI/WETH_0xd3d2_HOLDING_TIME_FIRST_MOVER_LP
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -48,7 +49,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name)
 
-select distinct platform_detail_temp.platform     as project,
+select distinct 'DEFI'                            as wired_type,
+                platform_detail_temp.platform     as project,
                 lpt.pool                          as token,
                 'lp'                              as type,
                 --平台+资产+交易类型
@@ -211,7 +213,7 @@ from (select wlp.id,
 
 -----HEAVY_LP  Uniswap_v2_UNI/WETH_0xd3d2_BALANCE_HEAVY_LP
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -221,7 +223,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name)
 
-select distinct platform_detail_temp.platform      as project,
+select distinct 'DEFI'                             as wired_type,
+                platform_detail_temp.platform      as project,
                 lpt.pool                           as token,
                 'lp'                               as type,
                 --平台+资产+交易类型
@@ -382,7 +385,7 @@ from (select wlp.id,
 
 -----FIRST_MOVER_STAKING Sushiswap_SYN/WETH_0x4a86_BALANCE_FIRST_MOVER_STAKING
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -392,7 +395,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name)
 
-select distinct platform_detail_temp.platform     as project,
+select distinct 'DEFI'                            as wired_type,
+                platform_detail_temp.platform     as project,
                 lpt.pool                          as token,
                 'lp'                              as type,
                 '' || 'l' || lpt.id || '' || 'bf' as label_type,
@@ -551,7 +555,7 @@ from (select wlp.id,
 
 -----HEAVY_LP_STAKER Sushiswap_SYN/WETH_0x4a86_BALANCE_HEAVY_LP_STAKER
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -561,7 +565,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name)
 
-select distinct platform_detail_temp.platform      as project,
+select distinct 'DEFI'                             as wired_type,
+                platform_detail_temp.platform      as project,
                 lpt.pool                           as token,
                 'lp'                               as type,
                 '' || 'l' || lpt.id || '' || 'bhs' as label_type,
@@ -725,7 +730,7 @@ from (select wlp.id,
 -- Blur_CryptoPunks_Sale_MP_NFT_ACTIVITY
 -- Blur_CryptoPunks_Buy_MP_NFT_ACTIVITY
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -735,7 +740,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct nft_platform_temp.platform_name    project,
+select distinct 'NFT' as                           wired_type,
+                nft_platform_temp.platform_name    project,
                 nft_platform_temp.address          "token",
                 nft_trade_type_temp.nft_trade_type "type",
                 recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
@@ -888,7 +894,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_ALL_Buy_MP_NFT_ACTIVITY
 -- ALL_ALL_Sale_MP_NFT_ACTIVITY
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -898,7 +904,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                        project,
+select distinct 'NFT' as                                                                     wired_type,
+                'ALL'                                                                        project,
                 'ALL'                                                                        "token",
                 nft_trade_type_temp.nft_trade_type                                           "type",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'cg' label_type,
@@ -1022,7 +1029,7 @@ where nft_trade_type_temp.type = '1'
 -- ALL_CryptoPunks_Buy_MP_NFT_ACTIVITY
 -- ALL_CryptoPunks_Sale_MP_NFT_ACTIVITY
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -1032,7 +1039,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                              project,
+select distinct 'NFT' as                           wired_type,
+                'ALL'                              project,
                 nft_sync_address.address           "token",
                 nft_trade_type_temp.nft_trade_type "type",
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' || nft_trade_type_temp.code ||
@@ -1174,7 +1182,7 @@ where nft_sync_address.type = 'ERC721'
 -- Blur_ALL_Buy_MP_NFT_ACTIVITY
 -- Blur_ALL_Sale_MP_NFT_ACTIVITY
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -1185,10 +1193,11 @@ into dim_project_token_type_temp (project,
                                   token_name,
                                   recent_code,
                                   nft_type)
-select distinct (select nft_platform_temp.platform_name
+select distinct 'NFT' as wired_type,
+                (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
-                    limit 1)  project,
+                         limit 1)  project,
     'ALL' as  "token",
     nft_trade_type_temp.nft_trade_type "type",
     recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ''  || 'm'||case when nft_action_platform_temp.nft_type='ERC721' then 'n' else 't'
@@ -1345,7 +1354,7 @@ where nft_trade_type_temp.type = '1';
 -- Blur_CryptoPunks_Buy_MP_NFT_VOLUME_ELITE
 -- Blur_CryptoPunks_Sale_MP_NFT_VOLUME_ELITE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -1355,7 +1364,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct nft_platform_temp.platform_name    project,
+select distinct 'NFT' as                           wired_type,
+                nft_platform_temp.platform_name    project,
                 nft_platform_temp.address          "token",
                 nft_trade_type_temp.nft_trade_type "type",
                 recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
@@ -1509,7 +1519,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_CryptoPunks_Buy_MP_NFT_VOLUME_ELITE
 -- ALL_CryptoPunks_Sale_MP_NFT_VOLUME_ELITE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -1519,7 +1529,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                              project,
+select distinct 'NFT' as                           wired_type,
+                'ALL'                              project,
                 nft_sync_address.address           "token",
                 nft_trade_type_temp.nft_trade_type "type",
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' ||
@@ -1663,7 +1674,7 @@ where nft_sync_address.type = 'ERC721'
 -- Blur_ALL_Buy_MP_NFT_VOLUME_ELITE
 -- Blur_ALL_Sale_MP_NFT_VOLUME_ELITE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -1674,10 +1685,11 @@ into dim_project_token_type_temp (project,
                                   token_name,
                                   recent_code,
                                   nft_type)
-select distinct (select nft_platform_temp.platform_name
+select distinct 'NFT' as wired_type,
+                (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
-                    limit 1)  project,
+                         limit 1)  project,
     'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
     recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ''  || 'm' ||case when nft_action_platform_temp.nft_type='ERC721' then 'n' else 't'
@@ -1831,7 +1843,7 @@ where nft_trade_type_temp.type = '1';
 -- ALL_ALL_Buy_MP_NFT_VOLUME_ELITE
 -- ALL_ALL_Sale_MP_NFT_VOLUME_ELITE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -1841,7 +1853,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                        project,
+select distinct 'NFT' as                                                                     wired_type,
+                'ALL'                                                                        project,
                 'ALL'                                                                        "token",
                 nft_trade_type_temp.nft_trade_type                                           "type",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 've' label_type,
@@ -1965,7 +1978,7 @@ where nft_trade_type_temp.type = '1'
 -- Blur_CryptoPunks_Sale_MP_NFT_VOLUME_GRADE
 -- Blur_CryptoPunks_Buy_MP_NFT_VOLUME_GRADE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -1975,7 +1988,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct nft_platform_temp.platform_name    project,
+select distinct 'NFT' as                           wired_type,
+                nft_platform_temp.platform_name    project,
                 nft_platform_temp.address          "token",
                 nft_trade_type_temp.nft_trade_type "type",
                 recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
@@ -2122,7 +2136,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_CryptoPunks_Buy_MP_NFT_VOLUME_GRADE
 -- ALL_CryptoPunks_Sale_MP_NFT_VOLUME_GRADE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -2132,7 +2146,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                              project,
+select distinct 'NFT' as                           wired_type,
+                'ALL'                              project,
                 nft_sync_address.address           "token",
                 nft_trade_type_temp.nft_trade_type "type",
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' ||
@@ -2271,7 +2286,7 @@ where nft_sync_address.type = 'ERC721'
 -- Blur_ALL_Buy_MP_NFT_VOLUME_GRADE
 -- Blur_ALL_Sale_MP_NFT_VOLUME_GRADE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -2282,10 +2297,11 @@ into dim_project_token_type_temp (project,
                                   token_name,
                                   recent_code,
                                   nft_type)
-select distinct (select nft_platform_temp.platform_name
+select distinct 'NFT' as wired_type,
+                (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
-                    limit 1)  project,
+                         limit 1)  project,
     'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
    recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ''  || 'm' ||case when nft_action_platform_temp.nft_type='ERC721' then 'n' else 't'
@@ -2438,7 +2454,7 @@ where nft_trade_type_temp.type = '1';
 -- ALL_ALL_Buy_MP_NFT_VOLUME_GRADE
 -- ALL_ALL_Sale_MP_NFT_VOLUME_GRADE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -2448,7 +2464,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                        project,
+select distinct 'NFT' as                                                                     wired_type,
+                'ALL'                                                                        project,
                 'ALL'                                                                        "token",
                 nft_trade_type_temp.nft_trade_type                                           "type",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'vg' label_type,
@@ -2568,7 +2585,7 @@ where nft_trade_type_temp.type = '1'
 -- Blur_CryptoPunks_Sale_MP_NFT_VOLUME_RANK
 -- Blur_CryptoPunks_Buy_MP_NFT_VOLUME_RANK
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -2578,7 +2595,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct nft_platform_temp.platform_name    project,
+select distinct 'NFT' as                           wired_type,
+                nft_platform_temp.platform_name    project,
                 nft_platform_temp.address          "token",
                 nft_trade_type_temp.nft_trade_type "type",
                 recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
@@ -2727,7 +2745,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_CryptoPunks_Buy_MP_NFT_VOLUME_RANK
 -- ALL_CryptoPunks_Sale_MP_NFT_VOLUME_RANK
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -2737,7 +2755,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                              project,
+select distinct 'NFT' as                           wired_type,
+                'ALL'                              project,
                 nft_sync_address.address           "token",
                 nft_trade_type_temp.nft_trade_type "type",
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' ||
@@ -2880,7 +2899,7 @@ where nft_sync_address.type = 'ERC721'
 -- Blur_ALL_Buy_MP_NFT_VOLUME_RANK
 -- Blur_ALL_Sale_MP_NFT_VOLUME_RANK
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -2891,10 +2910,11 @@ into dim_project_token_type_temp (project,
                                   token_name,
                                   recent_code,
                                   nft_type)
-select distinct (select nft_platform_temp.platform_name
+select distinct 'NFT' as wired_type,
+                (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
-                    limit 1)  project,
+                         limit 1)  project,
    'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
     recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ''  || 'm' ||case when nft_action_platform_temp.nft_type='ERC721' then 'n' else 't'
@@ -3049,7 +3069,7 @@ where nft_trade_type_temp.type = '1';
 -- ALL_ALL_Buy_MP_NFT_VOLUME_RANK
 -- ALL_ALL_Sale_MP_NFT_VOLUME_RANK
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -3059,7 +3079,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                        project,
+select distinct 'NFT' as                                                                     wired_type,
+                'ALL'                                                                        project,
                 'ALL'                                                                        "token",
                 nft_trade_type_temp.nft_trade_type                                           "type",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'vr' label_type,
@@ -3181,7 +3202,7 @@ where nft_trade_type_temp.type = '1'
 -- Blur_CryptoPunks_Sale_MP_NFT_VOLUME_TOP
 -- Blur_CryptoPunks_Buy_MP_NFT_VOLUME_TOP
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -3191,7 +3212,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct nft_platform_temp.platform_name    project,
+select distinct 'NFT' as                           wired_type,
+                nft_platform_temp.platform_name    project,
                 nft_platform_temp.address          "token",
                 nft_trade_type_temp.nft_trade_type "type",
                 recent_time_temp.code || 'p' || mp_nft_platform_temp.id || ('n' || nft_sync_address.id) || 'm' ||
@@ -3340,7 +3362,7 @@ where nft_sync_address.type <> 'ERC1155'
 -- ALL_CryptoPunks_Buy_MP_NFT_VOLUME_TOP
 -- ALL_CryptoPunks_Sale_MP_NFT_VOLUME_TOP
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -3350,7 +3372,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                              project,
+select distinct 'NFT' as                           wired_type,
+                'ALL'                              project,
                 nft_sync_address.address           "token",
                 nft_trade_type_temp.nft_trade_type "type",
                 recent_time_temp.code || '' || ('n' || nft_sync_address.id) || 'm' ||
@@ -3494,7 +3517,7 @@ where nft_sync_address.type = 'ERC721'
 -- Blur_ALL_Buy_MP_NFT_VOLUME_TOP
 -- Blur_ALL_Sale_MP_NFT_VOLUME_TOP
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -3505,10 +3528,11 @@ into dim_project_token_type_temp (project,
                                   token_name,
                                   recent_code,
                                   nft_type)
-select distinct (select nft_platform_temp.platform_name
+select distinct 'NFT' as wired_type,
+                (select nft_platform_temp.platform_name
                  from nft_platform_temp
                  where mp_nft_platform_temp.platform = nft_platform_temp.platform
-                    limit 1)  project,
+                         limit 1)  project,
    'ALL'  "token",
     nft_trade_type_temp.nft_trade_type "type",
     recent_time_temp.code || 'p'||mp_nft_platform_temp.id || ''  || 'm' ||case when nft_action_platform_temp.nft_type='ERC721' then 'n' else 't'
@@ -3663,7 +3687,7 @@ where nft_trade_type_temp.type = '1';
 -- ALL_ALL_Buy_MP_NFT_VOLUME_TOP
 -- ALL_ALL_Sale_MP_NFT_VOLUME_TOP
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -3673,7 +3697,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct 'ALL'                                                                        project,
+select distinct 'NFT' as                                                                     wired_type,
+                'ALL'                                                                        project,
                 'ALL'                                                                        "token",
                 nft_trade_type_temp.nft_trade_type                                           "type",
                 recent_time_temp.code || '' || '' || 'm' || nft_trade_type_temp.code || 'vt' label_type,
@@ -3795,7 +3820,7 @@ where nft_trade_type_temp.type = '1'
 ---------------------------------dim_dex_token.sql---------------------
 ---------------count 0x_USDC(0xa0b869)_ALL_ACTIVITY_DEX--------------------------
 insert
-into dim_project_token_type_temp(project,
+into dim_project_token_type_temp(wired_type, project,
                                  "token",
                                  "type",
                                  label_type,
@@ -3806,7 +3831,8 @@ into dim_project_token_type_temp(project,
                                  token_name,
                                  recent_code)
 
-select distinct token_platform_temp.platform as                                                          project,
+select distinct 'DEFI'                       as                                                          wired_type,
+                token_platform_temp.platform as                                                          project,
                 token_platform_temp.address  as                                                          token,
                 trade_type.trade_type        as                                                          type,
                 recent_time_temp.code || platform_temp.id ||
@@ -3998,7 +4024,7 @@ select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_te
                 platform_temp.platform_name || '_' || top_token_1000_temp.symbol || '(' ||
                 SUBSTRING(top_token_1000_temp.address, 1, 8) || ')_' || trade_type.trade_type_name || '_ACTIVITY'
                     || (case
-                            when top_token_1000_temp.asset_type  = 'token'
+                            when top_token_1000_temp.asset_type = 'token'
                                 then '_' || platform_large_category.platform_large_code || '_'
                             else '_' end) ||
                 level_def_temp.level                                                                     old_label_name
@@ -4046,7 +4072,7 @@ from token_platform_temp
 
 ---------------count ALL_USDC(0xa0b869)_ALL_ACTIVITY_DEX--------------------------
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -4056,7 +4082,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct platform_large_category.platform_large_code             as project,
+select distinct 'DEFI'                                                  as wired_type,
+                platform_large_category.platform_large_code             as project,
                 top_token_1000_temp.address                             as token,
                 trade_type.trade_type                                   as type,
                 recent_time_temp.code || '' || ('t' || top_token_1000_temp.id) ||
@@ -4203,7 +4230,7 @@ from (select *
 
 ---------------count 1inch_ALL_ALL_ACTIVITY_DEX
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -4214,7 +4241,8 @@ into dim_project_token_type_temp (project,
                                   token_name,
                                   recent_code)
 
-select distinct platform_temp.platform                                  as project,
+select distinct 'DEFI'                                                  as wired_type,
+                platform_temp.platform                                  as project,
                 'ALL'                                                   as token,
                 trade_type.trade_type                                   as type,
                 recent_time_temp.code || '' || platform_temp.id || 't' ||
@@ -4348,7 +4376,7 @@ from platform_temp
 where platform_temp.token_all_flag = '1';
 ---------------count ALL_ALL_ALL_ACTIVITY_DEX
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -4358,7 +4386,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct platform_large_category.platform_large_code             as project,
+select distinct 'DEFI'                                                  as wired_type,
+                platform_large_category.platform_large_code             as project,
                 'ALL'                                                   as token,
                 trade_type.trade_type                                   as type,
                 recent_time_temp.code || '' || platform_temp.id || '' ||
@@ -4484,7 +4513,7 @@ from trade_type
 
 ---------------volume_grade 0x_USDC(0xa0b869)_ALL_VOLUME_DEX_GRADE--------------------------
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -4495,7 +4524,8 @@ into dim_project_token_type_temp (project,
                                   token_name,
                                   recent_code)
 
-select distinct token_platform_temp.platform as                                                          project,
+select distinct 'DEFI'                       as                                                          wired_type,
+                token_platform_temp.platform as                                                          project,
                 token_platform_temp.address  as                                                          token,
                 trade_type.trade_type        as                                                          type,
                 recent_time_temp.code || platform_temp.id ||
@@ -4739,7 +4769,7 @@ from token_platform_temp
 
 ---------------volume_grade ALL_USDC(0xa0b869)_ALL_VOLUME_DEX_GRADE--------------------------
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -4749,7 +4779,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct platform_large_category.platform_large_code             as                               project,
+select distinct 'DEFI'                                                  as                               wired_type,
+                platform_large_category.platform_large_code             as                               project,
                 top_token_1000_temp.address                             as                               token,
                 trade_type.trade_type                                   as                               type,
                 recent_time_temp.code || '' || ('t' || top_token_1000_temp.id) ||
@@ -4899,7 +4930,7 @@ from (select *
 
 ---------------volume_grade 1inch_ALL_ALL_VOLUME_DEX_GRADE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -4909,7 +4940,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct platform_temp.platform                                  as project,
+select distinct 'DEFI'                                                  as wired_type,
+                platform_temp.platform                                  as project,
                 'ALL'                                                   as token,
                 trade_type.trade_type                                   as type,
                 recent_time_temp.code || '' || platform_temp.id || '' ||
@@ -5045,7 +5077,7 @@ where platform_temp.token_all_flag = '1';
 
 ---------------volume_grade ALL_ALL_ALL_VOLUME_DEX_GRADE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -5055,7 +5087,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct platform_large_category.platform_large_code             as project,
+select distinct 'DEFI'                                                  as wired_type,
+                platform_large_category.platform_large_code             as project,
                 'ALL'                                                   as token,
                 trade_type.trade_type                                   as type,
                 recent_time_temp.code || '' || '' ||
@@ -5182,7 +5215,7 @@ from trade_type
 
 ---------------volume_rank 0x_USDC(0xa0b869)_ALL_VOLUME_DEX_RANK--------------------------
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -5193,7 +5226,8 @@ into dim_project_token_type_temp (project,
                                   token_name,
                                   recent_code)
 
-select distinct token_platform_temp.platform as                                                          project,
+select distinct 'DEFI'                       as                                                          wired_type,
+                token_platform_temp.platform as                                                          project,
                 token_platform_temp.address  as                                                          token,
                 trade_type.trade_type        as                                                          type,
                 recent_time_temp.code || platform_temp.id ||
@@ -5434,7 +5468,7 @@ from token_platform_temp
 
 ---------------volume_rank ALL_USDC(0xa0b869)_ALL_VOLUME_DEX_RANK
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -5444,7 +5478,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct platform_large_category.platform_large_code             as                               project,
+select distinct 'DEFI'                                                  as                               wired_type,
+                platform_large_category.platform_large_code             as                               project,
                 top_token_1000_temp.address                             as                               token,
                 trade_type.trade_type                                   as                               type,
                 recent_time_temp.code || '' || ('t' || top_token_1000_temp.id) ||
@@ -5586,7 +5621,7 @@ from (select *
 
 ---------------volume_rank 1inch_ALL_ALL_VOLUME_DEX_RANK
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -5596,7 +5631,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct platform_temp.platform                                  as project,
+select distinct 'DEFI'                                                  as wired_type,
+                platform_temp.platform                                  as project,
                 'ALL'                                                   as token,
                 trade_type.trade_type                                   as type,
                 recent_time_temp.code || '' || platform_temp.id || '' ||
@@ -5725,7 +5761,7 @@ from platform_temp
 where platform_temp.token_all_flag = '1';
 ---------------volume_rank ALL_ALL_ALL_VOLUME_DEX_RANK
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -5735,7 +5771,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct platform_large_category.platform_large_code             as project,
+select distinct 'DEFI'                                                  as wired_type,
+                platform_large_category.platform_large_code             as project,
                 'ALL'                                                   as token,
                 trade_type.trade_type                                   as type,
                 recent_time_temp.code || '' || '' ||
@@ -5859,7 +5896,7 @@ from trade_type
 --------------------NFT---------有211 但维度表有合并的204个而已------------------
 --------balance_grade CryptoPunks_NFT_BALANCE_GRADE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -5868,7 +5905,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name)
-select distinct ''                                   project,
+select distinct 'NFT' as                             wired_type,
+                ''                                   project,
                 address                              "token",
                 ''                                   "type",
                 ('n' || nft_sync_address.id) || 'bg' label_type,
@@ -5960,7 +5998,7 @@ where nft_sync_address.type = 'ERC721';
 
 --------balance_grade ALL_NFT_BALANCE_GRADE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -5969,7 +6007,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name)
-select distinct ''              project,
+select distinct 'NFT' as        wired_type,
+                ''              project,
                 'ALL'           "token",
                 ''              "type",
                 'n' || 'bg'     label_type,
@@ -6050,7 +6089,7 @@ where type = 'nft_balance_grade';
 
 --------balance_rank CryptoPunks_NFT_BALANCE_RANK
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -6059,7 +6098,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name)
-select distinct ''                                   project,
+select distinct 'NFT' as                             wired_type,
+                ''                                   project,
                 address                              "token",
                 ''                                   "type",
                 ('n' || nft_sync_address.id) || 'br' label_type,
@@ -6150,7 +6190,7 @@ where nft_sync_address.type = 'ERC721';
 
 --------balance_rank ALL_NFT_BALANCE_RANK
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -6159,7 +6199,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name)
-select distinct ''             project,
+select distinct 'NFT' as       wired_type,
+                ''             project,
                 'ALL'          "token",
                 ''             "type",
                 'n' || 'br'    label_type,
@@ -6239,7 +6280,7 @@ where type = 'nft_balance_rank';
 
 --------balance_top CryptoPunks_NFT_BALANCE_TOP
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -6248,7 +6289,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name)
-select distinct ''                                   project,
+select distinct 'NFT' as                             wired_type,
+                ''                                   project,
                 address                              "token",
                 ''                                   "type",
                 ('n' || nft_sync_address.id) || 'bt' label_type,
@@ -6340,7 +6382,7 @@ where nft_sync_address.type = 'ERC721';
 
 --------balance_top ALL_NFT_BALANCE_TOP
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -6349,7 +6391,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name)
-select distinct ''            project,
+select distinct 'NFT' as      wired_type,
+                ''            project,
                 'ALL'         "token",
                 ''            "type",
                 'n' || 'bt'   label_type,
@@ -6434,7 +6477,7 @@ where type = 'nft_balance_top';
 -- ALL_CryptoPunks_Burn_NFT_ACTIVITY
 -- ALL_CryptoPunks_Buy_NFT_ACTIVITY
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -6444,7 +6487,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct ''                                                                                        project,
+select distinct 'NFT' as                                                                                  wired_type,
+                ''                                                                                        project,
                 nft_sync_address.address                                                                  "token",
                 nft_trade_type_temp.nft_trade_type                                                        "type",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 'cg' label_type,
@@ -6587,7 +6631,7 @@ where nft_sync_address.type = 'ERC721'
 -- ALL_ALL_Burn_NFT_ACTIVITY
 -- ALL_ALL_Buy_NFT_ACTIVITY
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -6597,7 +6641,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct ''                                                               project,
+select distinct 'NFT' as                                                         wired_type,
+                ''                                                               project,
                 'ALL'                                                            "token",
                 nft_trade_type_temp.nft_trade_type                               "type",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'cg' label_type,
@@ -6717,7 +6762,7 @@ where nft_trade_type_temp.type = '0'
 
 --------time_grade CryptoPunks_NFT_TIME_GRADE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -6726,7 +6771,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name)
-select distinct ''                                   project,
+select distinct 'NFT' as                             wired_type,
+                ''                                   project,
                 address                              "token",
                 ''                                   "type",
                 ('n' || nft_sync_address.id) || 'tg' label_type,
@@ -6816,7 +6862,7 @@ where nft_sync_address.type = 'ERC721';
 
 --------time_rank CryptoPunks_NFT_TIME_SMART_NFT_EARLY_ADOPTER
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -6825,7 +6871,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name)
-select distinct ''                                   project,
+select distinct 'NFT' as                             wired_type,
+                ''                                   project,
                 address                              "token",
                 ''                                   "type",
                 ('n' || nft_sync_address.id) || 'ea' label_type,
@@ -6915,7 +6962,7 @@ where nft_sync_address.type = 'ERC721';
 
 --------time_special CryptoPunks_NFT_TIME_SPECIAL
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -6924,7 +6971,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name)
-select distinct ''                                   project,
+select distinct 'NFT' as                             wired_type,
+                ''                                   project,
                 address                              "token",
                 ''                                   "type",
                 ('n' || nft_sync_address.id) || 'ts' label_type,
@@ -7020,7 +7068,7 @@ where nft_sync_address.type = 'ERC721';
 -- ALL_CryptoPunks_Burn_NFT_VOLUME_ELITE
 -- ALL_CryptoPunks_Buy_NFT_VOLUME_ELITE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -7030,7 +7078,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct ''                                                                                        project,
+select distinct 'NFT' as                                                                                  wired_type,
+                ''                                                                                        project,
                 nft_sync_address.address                                                                  "token",
                 nft_trade_type_temp.nft_trade_type                                                        "type",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 've' label_type,
@@ -7165,7 +7214,7 @@ where nft_sync_address.type = 'ERC721'
 -- ALL_ALL_Burn_NFT_VOLUME_ELITE
 -- ALL_ALL_Buy_NFT_VOLUME_ELITE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -7175,7 +7224,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct ''                                                               project,
+select distinct 'NFT' as                                                         wired_type,
+                ''                                                               project,
                 'ALL'                                                            "token",
                 nft_trade_type_temp.nft_trade_type                               "type",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 've' label_type,
@@ -7292,7 +7342,7 @@ where nft_trade_type_temp.type = '0'
 -- ALL_CryptoPunks_Burn_NFT_VOLUME_GRADE
 -- ALL_CryptoPunks_Buy_NFT_VOLUME_GRADE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -7302,7 +7352,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct ''                                                                                        project,
+select distinct 'NFT' as                                                                                  wired_type,
+                ''                                                                                        project,
                 nft_sync_address.address                                                                  "token",
                 nft_trade_type_temp.nft_trade_type                                                        "type",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 'vg' label_type,
@@ -7440,7 +7491,7 @@ where nft_sync_address.type = 'ERC721'
 -- ALL_ALL_Burn_NFT_VOLUME_GRADE
 -- ALL_ALL_Buy_NFT_VOLUME_GRADE
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -7450,7 +7501,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct ''                                                               project,
+select distinct 'NFT' as                                                         wired_type,
+                ''                                                               project,
                 'ALL'                                                            "token",
                 nft_trade_type_temp.nft_trade_type                               "type",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'vg' label_type,
@@ -7571,7 +7623,7 @@ where nft_trade_type_temp.type = '0'
 -- ALL_CryptoPunks_Burn_NFT_VOLUME_RANK
 -- ALL_CryptoPunks_Buy_NFT_VOLUME_RANK
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -7580,7 +7632,8 @@ into dim_project_token_type_temp (project,
                                   data_subject,
                                   project_name,
                                   token_name)
-select distinct ''                                                                                        project,
+select distinct 'NFT' as                                                                                  wired_type,
+                ''                                                                                        project,
                 nft_sync_address.address                                                                  "token",
                 nft_trade_type_temp.nft_trade_type                                                        "type",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 'vr' label_type,
@@ -7712,7 +7765,7 @@ where nft_sync_address.type = 'ERC721'
 -- ALL_ALL_Burn_NFT_VOLUME_RANK
 -- ALL_ALL_Buy_NFT_VOLUME_RANK
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -7722,7 +7775,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct ''                                                               project,
+select distinct 'NFT' as                                                         wired_type,
+                ''                                                               project,
                 'ALL'                                                            "token",
                 nft_trade_type_temp.nft_trade_type                               "type",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'vr' label_type,
@@ -7839,7 +7893,7 @@ where nft_trade_type_temp.type = '0'
 -- ALL_CryptoPunks_Burn_NFT_VOLUME_TOP
 -- ALL_CryptoPunks_Buy_NFT_VOLUME_TOP
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -7849,7 +7903,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct ''                                                                                        project,
+select distinct 'NFT' as                                                                                  wired_type,
+                ''                                                                                        project,
                 nft_sync_address.address                                                                  "token",
                 nft_trade_type_temp.nft_trade_type                                                        "type",
                 recent_time_temp.code || ('n' || nft_sync_address.id) || nft_trade_type_temp.code || 'vt' label_type,
@@ -7982,7 +8037,7 @@ where nft_sync_address.type = 'ERC721'
 -- ALL_ALL_Burn_NFT_VOLUME_TOP
 -- ALL_ALL_Buy_NFT_VOLUME_TOP
 insert
-into dim_project_token_type_temp (project,
+into dim_project_token_type_temp (wired_type, project,
                                   "token",
                                   "type",
                                   label_type,
@@ -7992,7 +8047,8 @@ into dim_project_token_type_temp (project,
                                   project_name,
                                   token_name,
                                   recent_code)
-select distinct ''                                                               project,
+select distinct 'NFT' as                                                         wired_type,
+                ''                                                               project,
                 'ALL'                                                            "token",
                 nft_trade_type_temp.nft_trade_type                               "type",
                 recent_time_temp.code || 'n' || nft_trade_type_temp.code || 'vt' label_type,

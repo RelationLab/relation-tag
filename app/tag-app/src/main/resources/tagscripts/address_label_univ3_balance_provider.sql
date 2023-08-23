@@ -65,7 +65,7 @@ from (select a1.address,
                      token) a1
                inner join dim_project_token_type_temp a2
                           on
-                                      a1.token = a2.token
+                                      a1.token = a2.token   and a2.wired_type = 'DEFI'
                                   and a2.data_subject = 'HEAVY_LP') s1
 where s1.rn <= 200;
 insert into tag_result(table_name, batch_date)

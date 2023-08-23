@@ -61,8 +61,7 @@ from (select token,
      on
          a1.token = a2.token
 where a2.data_subject = 'time_special'
-  and a2.label_type like '%NFT%'
-  and a2.label_type not like '%WEB3%'
+ and a2.wired_type='NFT'
   and counter >= 1
   and counter <= 365
   and (a2.type = ''

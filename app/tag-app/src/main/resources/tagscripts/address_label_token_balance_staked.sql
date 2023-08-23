@@ -59,7 +59,8 @@ from (select a1.address,
                           on
                                       a1.token = a2.token
                                   and a1.project = a2.project
-                                  and a2.data_subject = 'HEAVY_LP_STAKER') s1
+                                  and a2.data_subject = 'HEAVY_LP_STAKER'
+                                          and a2.wired_type = 'DEFI') s1
 where s1.rn <= 200;
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_token_balance_staked' as table_name, '${batchDate}' as batch_date;

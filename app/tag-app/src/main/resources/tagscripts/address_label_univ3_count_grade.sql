@@ -91,7 +91,6 @@ from (select th.token,
      dim_rule_content_temp a2
      on
                  a1.token = a2.token and a1.recent_time_code = a2.recent_code
-             and a2.label_type like 'Uniswap_v3%'
 where a1.total_transfer_count >= 1
   and a2.data_subject = 'count'
   and address not in (select address from exclude_address);

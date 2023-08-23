@@ -102,8 +102,7 @@ from (select address,
                                               and (a2.project = ''
                                               or a2.project = 'ALL')
                                               and a2.data_subject = 'volume_top'
-                                              and a2.label_type like '%NFT%'
-                                              and a2.label_type not like '%WEB3%'
+                                              and a2.wired_type='NFT'
                                               and totala.recent_time_code = a2.recent_code
                   group by address,
                            recent_time_code,
@@ -114,8 +113,7 @@ from (select address,
               and (dptt.project = ''
                   or dptt.project = 'ALL')
               and dptt.data_subject = 'volume_top'
-              and dptt.label_type like '%NFT%'
-              and dptt.label_type not like '%WEB3%'
+              and dptt.wired_type='NFT'
               and s1.recent_time_code = dptt.recent_code)
       where s1.rn <= 100) t;
 insert into tag_result(table_name, batch_date)

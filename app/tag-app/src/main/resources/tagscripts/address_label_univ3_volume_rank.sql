@@ -133,7 +133,6 @@ from (select t1.address,
      dim_rule_content_temp tb2
      on
                  tb1.token = tb2.token
-             and tb2.label_type like 'Uniswap_v3%'
              and tb1.recent_time_code = tb2.recent_code
 where tb1.volume_usd >= 100
   and tb2.data_subject = 'volume_rank'

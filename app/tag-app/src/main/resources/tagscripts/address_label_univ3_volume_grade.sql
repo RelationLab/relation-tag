@@ -88,7 +88,6 @@ from (select dtvcs.address,
      dim_rule_content_temp a2
      on
                  a1.token = a2.token
-             and a2.label_type like 'Uniswap_v3%'
              and a1.recent_time_code = a2.recent_code
 where a2.data_subject = 'volume_grade'
   and address not in (select address from exclude_address);

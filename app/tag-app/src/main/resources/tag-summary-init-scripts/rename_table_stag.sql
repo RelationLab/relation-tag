@@ -53,6 +53,8 @@ DROP TABLE IF EXISTS label_factor_seting;
 ALTER TABLE label_factor_seting_temp                    RENAME TO label_factor_seting;
 DROP TABLE IF EXISTS dim_project_token_type;
 ALTER TABLE dim_project_token_type_temp                 RENAME TO dim_project_token_type;
+DROP TABLE IF EXISTS nft_balance_usd;
+ALTER TABLE nft_balance_usd_temp                 RENAME TO nft_balance_usd;
 DROP TABLE IF EXISTS dim_project_type;
 ALTER TABLE dim_project_type_temp                       RENAME TO dim_project_type;
 DROP TABLE IF EXISTS dim_project_token_type_rank;

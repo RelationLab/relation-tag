@@ -118,8 +118,7 @@ from (select address,
                                                                 and (s2.type = ''
                                                                 or s2.type = 'ALL')
                                                                 and s2.data_subject = 'balance_rank'
-                                                                and s2.label_type like '%NFT%'
-                                                                and s2.label_type not like '%WEB3%'
+                                                               and s2.wired_type='NFT'
                                     where balance >= 100
                                     group by s1.address,
                                              s2.seq_flag) as a1) as a1
@@ -150,8 +149,7 @@ from (select address,
                                                           and (tb2.type = ''
                                                           or tb2.type = 'ALL')
                                                           and tb2.data_subject = 'balance_rank'
-                                                          and tb2.label_type like '%NFT%'
-                                                          and tb2.label_type not like '%WEB3%'
+                                                         and tb2.wired_type='NFT'
                               group by seq_flag) as a10
                              on
                                  a10.seq_flag = a1.seq_flag) as a2) as t1) tb1
@@ -160,8 +158,7 @@ from (select address,
           and (dptt.type = ''
               or dptt.type = 'ALL')
           and dptt.data_subject = 'balance_rank'
-          and dptt.label_type like '%NFT%'
-          and dptt.label_type not like '%WEB3%')
+          and dptt.wired_type='NFT')
       where tb1.balance >= 100
         and zb_rate <= 0.1) t;
 insert into tag_result(table_name, batch_date)

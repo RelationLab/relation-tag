@@ -92,6 +92,7 @@ from (
                              on a1.token = a2.token and a1.platform_group = a2.project
                                  and a1.type = a2.type and a2.data_subject = 'count'
                                  and a1.recent_time_code = a2.recent_code
+                                 and a2.wired_type = 'NFT'
          group by a1.address,
                   a2.label_type,
                   a2.type,
@@ -112,6 +113,7 @@ from (
                              on a2.token = 'ALL' and a1.platform_group = a2.project
                                  and a1.type = a2.type and a2.data_subject = 'count'
                                  and a1.recent_time_code = a2.recent_code
+                                 and a2.wired_type = 'NFT'
          where a1.nft_type = 'ERC721'
            and a2.nft_type = 'ERC721'
          group by a1.address,
@@ -134,6 +136,7 @@ from (
                              on a2.token = 'ALL' and a1.platform_group = a2.project
                                  and a1.type = a2.type and a2.data_subject = 'count'
                                  and a1.recent_time_code = a2.recent_code
+                                    and a2.wired_type = 'NFT'
          where a1.nft_type = 'ERC721-token'
            and a2.nft_type = 'ERC721-token'
          group by a1.address,
@@ -159,8 +162,7 @@ from (
                                      and a1.type = a2.type
                                      and a2.type != 'Transfer'
             and a2.data_subject = 'count'
-            and a2.label_type like '%NFT%'
-            and a2.label_type not like '%WEB3%'
+          and a2.wired_type = 'NFT'
         and a1.recent_time_code =a2.recent_code
          where a1.nft_type = 'ERC721'
          group by
@@ -183,8 +185,7 @@ from (
              and a1.type = a2.type
              and a2.type != 'Transfer'
              and a2.data_subject = 'count'
-             and a2.label_type like '%NFT%'
-             and a2.label_type not like '%WEB3%'
+             and a2.wired_type = 'NFT'
              and a1.recent_time_code =a2.recent_code
          group by
              a1.address,
@@ -195,6 +196,5 @@ from (
              recent_time_code) t
 where sum_count >= 1
   and address not in (select address from exclude_address)
-  and label_type not like '%_DEX_%';
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_nft_project_type_count_grade' as table_name, '${batchDate}' as batch_date;
