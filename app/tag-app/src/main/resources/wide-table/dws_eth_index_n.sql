@@ -187,8 +187,7 @@ select
      ,project
      ,token  --  枚举值   1m  2y
      ,type
-     ,(select to_timestamp(block_timestamp.timestamp)::timestamp
-       from block_timestamp where height=min(first_updated_block_height)) as first_tx_time                             --最早交易时间
+     ,(select to_timestamp(min(first_updated_block_height))::timestamp) as first_tx_time                            --最早交易时间
      ,cast(null  as timestamp) as latest_tx_time                            -- 最后交易时间
      ,sum(case when  recent_time_code='ALL' then  total_transfer_count  else null end)  as transaction_count
      ,sum(case when  recent_time_code='ALL' then total_transfer_volume_usd else null end) as transaction_volume
