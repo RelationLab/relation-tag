@@ -27,18 +27,18 @@ address_label_crowd_nft_active_users;
 insert into public.address_label_crowd_nft_active_users(address, label_type, label_name, data, wired_type, updated_at,
                                                         "group", level, category, trade_type, project, asset, bus_type)
 select distinct a1.address,
-                'cnau' as label_type,
-                'cnau' as label_name,
-                0                        as data,
-                'CROWD'                  as wired_type,
-                now()                    as updated_at,
-                'g'                      as "group",
-                'cnau' as level,
-                'other'                  as category,
-                'ALL'                    as trade_type,
-                'ALL'                    as project,
-                'ALL'                    as asset,
-                'CROWD'                  as bus_type
+                'cnau'  as label_type,
+                'cnau'  as label_name,
+                0       as data,
+                'CROWD' as wired_type,
+                now()   as updated_at,
+                'g'     as "group",
+                'cnau'  as level,
+                'other' as category,
+                'ALL'   as trade_type,
+                'ALL'   as project,
+                'ALL'   as asset,
+                'CROWD' as bus_type
 from address_label_nft_count_grade a1
 where (label_name = 'no0cg6g' or label_name = 'no0cg6h' or label_name = 'no0cg6i')
 --     (label_name = 'ALL_ALL_ALL_NFT_ACTIVITY_Low'
@@ -75,18 +75,18 @@ address_label_crowd_active_users;
 insert into public.address_label_crowd_active_users(address, label_type, label_name, data, wired_type, updated_at,
                                                     "group", level, category, trade_type, project, asset, bus_type)
 select distinct a1.address,
-                'cau' as label_type,
-                'cau' as label_name,
-                0                    as data,
-                'CROWD'              as wired_type,
-                now()                as updated_at,
-                'g'                  as "group",
-                'cau' as level,
-                'other'              as category,
-                'ALL'                   trade_type,
-                'ALL'                as project,
-                'ALL'                as asset,
-                'CROWD'              as bus_type
+                'cau'   as label_type,
+                'cau'   as label_name,
+                0       as data,
+                'CROWD' as wired_type,
+                now()   as updated_at,
+                'g'     as "group",
+                'cau'   as level,
+                'other' as category,
+                'ALL'      trade_type,
+                'ALL'   as project,
+                'ALL'   as asset,
+                'CROWD' as bus_type
 from (select address
       from address_label_nft_count_grade
       where label_name = 'no0cg6i'
@@ -1558,7 +1558,26 @@ select mod(to_number(address, '9999999999'), 50000),
        asset,
        bus_type,
        case when recent_time_code is null then 'ALL' else recent_time_code end as recent_time_code
-from address_label_nft_balance_usd_top;
+from address_label_nft_balance_usd_top
+union all
+select mod(to_number(address, '9999999999'), 50000),
+       address,
+       label_type,
+       label_name,
+       wired_type,
+       round(data, 6)                                                          as data,
+       updated_at,
+       '-1'                                                                    as owner,
+       'SYSTEM'                                                                as source,
+       "group",
+       level,
+       category,
+       trade_type,
+       project,
+       asset,
+       bus_type,
+       case when recent_time_code is null then 'ALL' else recent_time_code end as recent_time_code
+from address_label_univ3_time_first_lp;
 
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_gp_${tableSuffix}' as table_name, '${batchDate}' as batch_date;

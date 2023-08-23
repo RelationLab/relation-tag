@@ -3813,6 +3813,8 @@ insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_balance_usd_rank','address_label_nft_balance_usd_rank',1);
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_nft_balance_usd_top','address_label_nft_balance_usd_top',1);
+insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+values ('address_label_univ3_time_first_lp','address_label_univ3_time_first_lp',1);
 
 -- insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 -- values ('address_label_crowd_active_users','address_label_crowd_active_users',1);
