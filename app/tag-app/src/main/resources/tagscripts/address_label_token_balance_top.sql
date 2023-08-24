@@ -30,7 +30,7 @@ insert into public.address_label_token_balance_top(address, label_type, label_na
                                                    "group", level, category, trade_type, project, asset, bus_type)
 select s1.address,
        s1.label_type,
-       s1.label_type || '0g' as label_name,
+       s1.label_type || '0j' as label_name,
        rn                    as data,
        'DEFI'                as wired_type,
        now()                 as updated_at,
@@ -64,8 +64,7 @@ from (select a1.address,
                inner join dim_rule_content_temp a2
                           on
                                       a1.token = a2.token
-                                  and a2.data_subject = 'balance_top'
-                                  and a2.label_type not like 'Uniswap_v3%') s1
+                                  and a2.data_subject = 'balance_top') s1
 where s1.rn <= 100;
 insert into tag_result(table_name, batch_date)
 SELECT 'address_label_token_balance_top' as table_name, '${batchDate}' as batch_date;

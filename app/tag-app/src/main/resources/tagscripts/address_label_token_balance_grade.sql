@@ -80,7 +80,6 @@ from (select address,
      dim_rule_content_temp a2
      on
                  a1.token = a2.token
-             and a2.label_type not like 'Uniswap_v3%'
 where a1.balance_usd >= 100
   and a2.data_subject = 'balance_grade'
   and address not in (select address from exclude_address);

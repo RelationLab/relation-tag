@@ -117,7 +117,6 @@ from (select address,
      dim_rule_content_temp a2
      on
                  a1.token = a2.token
-             and a2.label_type not like 'Uniswap_v3%'
              and a1.recent_time_code = a2.recent_code
 where a1.total_transfer_count >= 1
   and a2.data_subject = 'count'
