@@ -30,7 +30,7 @@ insert into public.address_label_token_balance_top_all(address, label_type, labe
                                                        "group", level, category, trade_type, project, asset, bus_type)
 select s1.address,
        s1.label_type,
-       s1.label_type || '0g' as label_name,
+       s1.label_type || '0j' as label_name,
        rn                    as data,
        'DEFI'                as wired_type,
        now()                 as updated_at,

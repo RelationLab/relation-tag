@@ -33,7 +33,7 @@ select address,
        label_type,
        label_type || case
                          when zb_rate > 0.01
-                             and zb_rate <= 0.025 then '1g'
+                             and zb_rate <= 0.025 then '1j'
                          when zb_rate > 0.001
                              and zb_rate <= 0.01 then '1k'
                          when zb_rate > 0.025
