@@ -209,7 +209,10 @@ from (select wlp.id,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
   and wlp."type" = 'LP') lpt
-         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
+         inner join (select *
+                     from level_def_temp
+                     where type = 'defi_lp_first_mover_lp') level_def_temp on (1 = 1);
 
 -----HEAVY_LP  Uniswap_v2_UNI/WETH_0xd3d2_BALANCE_HEAVY_LP
 insert
@@ -381,7 +384,10 @@ from (select wlp.id,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP') lpt
-         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
+         inner join (select *
+                     from level_def_temp
+                     where type = 'defi_lp_heavy_lp') level_def_temp on (1 = 1);
 
 -----FIRST_MOVER_STAKING Sushiswap_SYN/WETH_0x4a86_BALANCE_FIRST_MOVER_STAKING
 insert
@@ -550,7 +556,10 @@ from (select wlp.id,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
-         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
+         inner join (select *
+                     from level_def_temp
+                     where type = 'defi_lp_first_mover_staking') level_def_temp on (1 = 1);
 
 
 -----HEAVY_LP_STAKER Sushiswap_SYN/WETH_0x4a86_BALANCE_HEAVY_LP_STAKER
@@ -720,7 +729,10 @@ from (select wlp.id,
       where wlp.tvl > 1000000
         and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
         and wlp."type" = 'LP' and wlp.factory_type in('Sushiswap')) lpt
-         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
+         inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
+         inner join (select *
+                     from level_def_temp
+                     where type = 'defi_lp_heavy_lp_staker') level_def_temp on (1 = 1);
 
 
 
