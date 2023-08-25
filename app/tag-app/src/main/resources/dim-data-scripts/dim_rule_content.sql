@@ -1463,7 +1463,7 @@ select distinct 'RelationTeam'                                            "owner
                 'TOTAL_PART'                                              strategy,
                 t.symbol || ' ' || level_def_temp.level_name              "content",
                 'SQL'                                                     rule_type,
-                '' || 't' || t.id || '' || 'bt' || level_def_temp.code    rule_group,
+                '' || 't' || t.id || '' || 'bt'                           rule_group,
                 'RESULT'                                                  value_type,
                 999999                                                    run_order,
                 now()                                                     created_at,
@@ -1751,7 +1751,7 @@ select distinct 'RelationTeam'                                                  
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) || 'Token ' ||
                 level_def_temp.level_name                                                 "content",
                 'SQL'                                                                     rule_type,
-                recent_time_temp.code || '' || '' || '' || 'cg' || level_def_temp.code    rule_group,
+                recent_time_temp.code || '' || '' || '' || 'cg'                           rule_group,
                 'RESULT'                                                                  value_type,
                 999999                                                                    run_order,
                 now()                                                                     created_at,
@@ -2414,7 +2414,7 @@ values ('',
         'ctw',---crowd_token_whale
         '',
         '',
-        'ALL','crowd_token_whale');
+        'ALL', 'crowd_token_whale');
 insert
 into combination_temp (asset,
                        project,
@@ -2444,7 +2444,7 @@ values ('',
         'cnw',----crowd_nft_whale
         '',
         '',
-        'ALL','crowd_nft_whale');
+        'ALL', 'crowd_nft_whale');
 
 
 insert
@@ -2476,7 +2476,7 @@ values ('',
         'cau',----crowd_active_users
         '',
         '',
-        'ALL','crowd_active_users');
+        'ALL', 'crowd_active_users');
 insert
 into combination_temp (asset,
                        project,
@@ -2506,7 +2506,7 @@ values ('',
         'cdau',----crowd_defi_active_users
         '',
         '',
-        'ALL','crowd_defi_active_users');
+        'ALL', 'crowd_defi_active_users');
 
 insert
 into combination_temp (asset,
@@ -2537,7 +2537,7 @@ values ('',
         'cnau',---crowd_nft_active_users
         '',
         '',
-        'ALL','crowd_nft_active_users');
+        'ALL', 'crowd_nft_active_users');
 insert
 into combination_temp (asset,
                        project,
@@ -2566,7 +2566,7 @@ values ('',
         'cwau',-----crowd_web3_active_users
         '',
         '',
-        'ALL','crowd_web3_active_users');
+        'ALL', 'crowd_web3_active_users');
 
 
 insert
@@ -2597,7 +2597,7 @@ values ('',
         'clth',----crowd_long_term_holder
         '',
         '',
-        'ALL','crowd_long_term_holder');
+        'ALL', 'crowd_long_term_holder');
 insert
 into combination_temp (asset,
                        project,
@@ -2626,7 +2626,7 @@ values ('',
         'cdhd',------crowd_defi_high_demander
         '',
         '',
-        'ALL','crowd_defi_high_demander');
+        'ALL', 'crowd_defi_high_demander');
 
 
 insert
@@ -2657,7 +2657,7 @@ values ('',
         'cnhd',-----crowd_nft_high_demander
         '',
         '',
-        'ALL','crowd_nft_high_demander');
+        'ALL', 'crowd_nft_high_demander');
 insert
 into combination_temp (asset,
                        project,
@@ -2686,38 +2686,88 @@ values ('',
         'ce',----crowd_elite
         '',
         '',
-        'ALL','crowd_elite');
+        'ALL', 'crowd_elite');
 
 INSERT INTO public."label_temp"
-("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group, value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular, refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type, label_order, sync_es_status)
-VALUES( 'RelationTeam', 'ctw', 'ctw', 'SYSTEM_CROWD', 'PUBLIC', '', 'Token whale', NULL, NULL, 'SQL', 'ctw', 'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
+("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group,
+ value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular,
+ refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type,
+ label_order, sync_es_status)
+VALUES ('RelationTeam', 'ctw', 'ctw', 'SYSTEM_CROWD', 'PUBLIC', '', 'Token whale', NULL, NULL, 'SQL', 'ctw', 'RESULT',
+        NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0,
+        NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
 INSERT INTO public."label_temp"
-("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group, value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular, refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type, label_order, sync_es_status)
-VALUES( 'RelationTeam', 'cnw', 'cnw', 'SYSTEM_CROWD', 'PUBLIC', '', 'NFT whale', NULL, NULL, 'SQL', 'cnw', 'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
+("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group,
+ value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular,
+ refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type,
+ label_order, sync_es_status)
+VALUES ('RelationTeam', 'cnw', 'cnw', 'SYSTEM_CROWD', 'PUBLIC', '', 'NFT whale', NULL, NULL, 'SQL', 'cnw', 'RESULT',
+        NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0,
+        NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
 INSERT INTO public."label_temp"
-("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group, value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular, refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type, label_order, sync_es_status)
-VALUES( 'RelationTeam', 'cau', 'cau', 'SYSTEM_CROWD', 'PUBLIC', '', 'Active users', NULL, NULL, 'SQL', 'cau', 'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
+("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group,
+ value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular,
+ refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type,
+ label_order, sync_es_status)
+VALUES ('RelationTeam', 'cau', 'cau', 'SYSTEM_CROWD', 'PUBLIC', '', 'Active users', NULL, NULL, 'SQL', 'cau', 'RESULT',
+        NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0,
+        NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
 INSERT INTO public."label_temp"
-("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group, value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular, refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type, label_order, sync_es_status)
-VALUES( 'RelationTeam', 'cdau', 'cdau', 'SYSTEM_CROWD', 'PUBLIC', '', 'DeFi active users', NULL, NULL, 'SQL', 'cdau', 'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
+("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group,
+ value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular,
+ refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type,
+ label_order, sync_es_status)
+VALUES ('RelationTeam', 'cdau', 'cdau', 'SYSTEM_CROWD', 'PUBLIC', '', 'DeFi active users', NULL, NULL, 'SQL', 'cdau',
+        'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS',
+        false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
 INSERT INTO public."label_temp"
-("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group, value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular, refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type, label_order, sync_es_status)
-VALUES( 'RelationTeam', 'cnau', 'cnau', 'SYSTEM_CROWD', 'PUBLIC', '', 'NFT active users', NULL, NULL, 'SQL', 'cnau', 'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
+("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group,
+ value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular,
+ refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type,
+ label_order, sync_es_status)
+VALUES ('RelationTeam', 'cnau', 'cnau', 'SYSTEM_CROWD', 'PUBLIC', '', 'NFT active users', NULL, NULL, 'SQL', 'cnau',
+        'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS',
+        false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
 INSERT INTO public."label_temp"
-("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group, value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular, refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type, label_order, sync_es_status)
-VALUES( 'RelationTeam', 'cwau', 'cwau', 'SYSTEM_CROWD', 'PUBLIC', '', 'Web3 active users', NULL, NULL, 'SQL', 'cwau', 'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
+("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group,
+ value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular,
+ refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type,
+ label_order, sync_es_status)
+VALUES ('RelationTeam', 'cwau', 'cwau', 'SYSTEM_CROWD', 'PUBLIC', '', 'Web3 active users', NULL, NULL, 'SQL', 'cwau',
+        'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS',
+        false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
 INSERT INTO public."label_temp"
-("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group, value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular, refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type, label_order, sync_es_status)
-VALUES( 'RelationTeam', 'clth', 'clth', 'SYSTEM_CROWD', 'PUBLIC', '', 'Long-term holder', NULL, NULL, 'SQL', 'clth', 'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
+("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group,
+ value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular,
+ refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type,
+ label_order, sync_es_status)
+VALUES ('RelationTeam', 'clth', 'clth', 'SYSTEM_CROWD', 'PUBLIC', '', 'Long-term holder', NULL, NULL, 'SQL', 'clth',
+        'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS',
+        false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
 INSERT INTO public."label_temp"
-("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group, value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular, refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type, label_order, sync_es_status)
-VALUES('RelationTeam', 'cdhd', 'cdhd', 'SYSTEM_CROWD', 'PUBLIC', '', 'DeFi high demander', NULL, NULL, 'SQL', 'cdhd', 'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
+("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group,
+ value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular,
+ refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type,
+ label_order, sync_es_status)
+VALUES ('RelationTeam', 'cdhd', 'cdhd', 'SYSTEM_CROWD', 'PUBLIC', '', 'DeFi high demander', NULL, NULL, 'SQL', 'cdhd',
+        'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS',
+        false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
 INSERT INTO public."label_temp"
-("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group, value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular, refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type, label_order, sync_es_status)
-VALUES( 'RelationTeam', 'cnhd', 'cnhd', 'SYSTEM_CROWD', 'PUBLIC', '', 'NFT high demander', NULL, NULL, 'SQL', 'cnhd', 'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
+("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group,
+ value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular,
+ refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type,
+ label_order, sync_es_status)
+VALUES ('RelationTeam', 'cnhd', 'cnhd', 'SYSTEM_CROWD', 'PUBLIC', '', 'NFT high demander', NULL, NULL, 'SQL', 'cnhd',
+        'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS',
+        false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
 INSERT INTO public."label_temp"
-("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group, value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular, refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type, label_order, sync_es_status)
-VALUES( 'RelationTeam', 'ce', 'ce', 'SYSTEM_CROWD', 'PUBLIC', '', 'Elite', NULL, NULL, 'SQL', 'ce', 'RESULT', NULL, 999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0, NULL, NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
+("owner", "type", "name", "source", visible_type, strategy, "content", "rule", default_rule, rule_type, rule_group,
+ value_type, description, run_order, created_at, updated_at, removed, for_init, error_msg, status, popular,
+ refresh_time, mark_type, ar_tx_hash, ar_status, ar_error_msg, ar_error_count, api_level, personal, wired_type,
+ label_order, sync_es_status)
+VALUES ('RelationTeam', 'ce', 'ce', 'SYSTEM_CROWD', 'PUBLIC', '', 'Elite', NULL, NULL, 'SQL', 'ce', 'RESULT', NULL,
+        999999, '2023-06-25 09:14:07.135', '2023-06-25 09:14:07.135', false, false, NULL, 'SUCCESS', false, 0, NULL,
+        NULL, 'PENDING', NULL, 0, NULL, 1, 'CROWD', 999, 'WAITING');
 
 insert into dim_rank_token_temp
 select distinct token, token_type
