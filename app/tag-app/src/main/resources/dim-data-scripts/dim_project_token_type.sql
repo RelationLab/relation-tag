@@ -7750,7 +7750,7 @@ select distinct nft_sync_address.platform                       asset,
                 level_def_temp.code                             label_name,
                 'nft'                                           asset_type,
                 'RANK'                                          label_category,
-                'ALL'                                           recent_time_code,
+                recent_time_code,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || nft_sync_address.name_for_label || '_' || nft_trade_type_temp.nft_trade_type ||
