@@ -455,7 +455,7 @@ insert into dws_nft_index_n
 select
 -- 维度
     'nft'                             as b_type             --  业务类型
-     , 'nft'                             asstatistical_type -- 业务统计类型
+     , min(statistical_type)           asstatistical_type -- 业务统计类型
      , s1.address
      , s1.project
      , s1.platform_name
@@ -488,6 +488,7 @@ select
 from (
 -- 所有平台 
          select address
+              , statistical_type
               , project        --ALL  是产品中全部5个的平台     如果为空就是全部
               , platform_name
               , token
