@@ -1596,7 +1596,7 @@ select mod(to_number(address, '9999999999'), 50000),
        ''         project,
        ''         asset,
        ''         bus_type,
-       'ul'    as recent_time_code
+       'opl'    as recent_time_code
 from address_label_third_party_${tableSuffix}
 union all
 select mod(to_number(address, '9999999999'), 50000),
@@ -1615,7 +1615,7 @@ select mod(to_number(address, '9999999999'), 50000),
        ''         project,
        ''         asset,
        ''         bus_type,
-       'opl'   as recent_time_code
+       'ul'   as recent_time_code
 from address_label_ugc_${tableSuffix};
 
 insert into tag_result(table_name, batch_date)
