@@ -1521,63 +1521,6 @@ select mod(to_number(address, '9999999999'), 50000),
        asset,
        bus_type,
        case when recent_time_code is null then 'ALL' else recent_time_code end as recent_time_code
-from address_label_nft_balance_usd_grade
-union all
-select mod(to_number(address, '9999999999'), 50000),
-       address,
-       label_type,
-       label_name,
-       wired_type,
-       round(data, 6)                                                          as data,
-       updated_at,
-       '-1'                                                                    as owner,
-       'SYSTEM'                                                                as source,
-       "group",
-       level,
-       category,
-       trade_type,
-       project,
-       asset,
-       bus_type,
-       case when recent_time_code is null then 'ALL' else recent_time_code end as recent_time_code
-from address_label_nft_balance_usd_rank
-union all
-select mod(to_number(address, '9999999999'), 50000),
-       address,
-       label_type,
-       label_name,
-       wired_type,
-       round(data, 6)                                                          as data,
-       updated_at,
-       '-1'                                                                    as owner,
-       'SYSTEM'                                                                as source,
-       "group",
-       level,
-       category,
-       trade_type,
-       project,
-       asset,
-       bus_type,
-       case when recent_time_code is null then 'ALL' else recent_time_code end as recent_time_code
-from address_label_nft_balance_usd_top
-union all
-select mod(to_number(address, '9999999999'), 50000),
-       address,
-       label_type,
-       label_name,
-       wired_type,
-       round(data, 6)                                                          as data,
-       updated_at,
-       '-1'                                                                    as owner,
-       'SYSTEM'                                                                as source,
-       "group",
-       level,
-       category,
-       trade_type,
-       project,
-       asset,
-       bus_type,
-       case when recent_time_code is null then 'ALL' else recent_time_code end as recent_time_code
 from address_label_univ3_time_first_lp
 union all
 select mod(to_number(address, '9999999999'), 50000),
