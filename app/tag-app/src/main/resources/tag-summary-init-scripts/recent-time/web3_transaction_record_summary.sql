@@ -22,5 +22,5 @@ group by
     address,
     type ,
     project;
-insert into tag_result(table_name,batch_date)  SELECT 'web3_transaction_record_summary_temp_${recentTimeCode}' as table_name,'${batchDate}'  as batch_date;
+insert into tag_result(table_name,batch_date)  SELECT 'web3_transaction_record_summary_${recentTimeCode}' as table_name,'${batchDate}'  as batch_date;
 
