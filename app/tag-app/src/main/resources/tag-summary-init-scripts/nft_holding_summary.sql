@@ -15,8 +15,8 @@ into nft_holding_temp(address,
                       updated_block_height,
                       recent_time_code)
 
-select address,
-       token,
+select nft_holding_middle.address,
+       nft_holding_middle.token,
        sum(balance),
        sum(total_transfer_volume),
        sum(total_transfer_count),
