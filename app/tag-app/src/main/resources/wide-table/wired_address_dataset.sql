@@ -118,7 +118,7 @@ select
 	,s1.transaction_count_2y 	
     ,now() as etl_update_time
 from dws_nft_index_n s1  left join
-    nft_sync_address s2
+    nft_sync_address_temp s2
 on s1.token=s2.address
 where s1.address not in (select address from exclude_address);
 insert into tag_result(table_name,batch_date)  SELECT 'wired_address_dataset' as table_name,'${batchDate}'  as batch_date;

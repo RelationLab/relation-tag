@@ -32,7 +32,7 @@ insert into platform_nft_volume_usd(recent_time_code,address, platform_group, pl
             total_transfer_volume * price
      from platform_nft_holding_temp pnh
               inner join white_list_erc20_temp w on (pnh.quote_token = w.address)
-     where pnh.token in (select nft_sync_address.address from nft_sync_address) or
+     where pnh.token in (select nft_sync_address_temp.address from nft_sync_address_temp) or
          pnh.token='0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb');
 
 insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_volume_usd' as table_name,'${batchDate}'  as batch_date;

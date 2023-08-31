@@ -18,20 +18,20 @@ select  '${recentTimeCode}' recent_time_code,
        substring(pdwtr."type", 1, 1) || lower(substring(pdwtr."type", 2, length(pdwtr."type") - 1)) as "type",
        sum(pdwtr.quote_value * w.price)                                                             as volume_usd,
        count(1)                                                                                     as transfer_count,
-        nft_sync_address.nft_type
+        nft_sync_address_temp.nft_type
 from platform_deposit_withdraw_tx_record pdwtr
          inner join white_list_erc20_temp w on
     (pdwtr.quote_token = w.address)
          inner join (select address,type as nft_type
-                     from nft_sync_address nsa
-                     where type = 'ERC721-token') nft_sync_address on
-    (pdwtr."token" = nft_sync_address.address)
+                     from nft_sync_address_temp nsa
+                     where type = 'ERC721-token') nft_sync_address_temp on
+    (pdwtr."token" = nft_sync_address_temp.address)
 where pdwtr.block_number >= ${recentTimeBlockHeight} 
 group by pdwtr."operator",
          pdwtr.quote_token,
          pdwtr."token",
          pdwtr."type",
-         nft_sync_address.nft_type;
+         nft_sync_address_temp.nft_type;
 
 insert into platform_nft_type_volume_count_temp(recent_time_code,
                                                 address,
@@ -52,20 +52,20 @@ select  '${recentTimeCode}' recent_time_code,
         substring(pdwtr."type", 1, 1) || lower(substring(pdwtr."type", 2, length(pdwtr."type") - 1)) as "type",
         sum(pdwtr.quote_value * w.price)                                                             as volume_usd,
         count(1)                                                                                     as transfer_count,
-        nft_sync_address.nft_type
+        nft_sync_address_temp.nft_type
 from platform_deposit_withdraw_tx_record pdwtr
          inner join white_list_erc20_temp w on
     (pdwtr.quote_token = w.address)
          inner join (select address,type as nft_type
-                     from nft_sync_address nsa
-                     where type = 'ERC721-token') nft_sync_address on
-    (pdwtr."token" = nft_sync_address.address)
+                     from nft_sync_address_temp nsa
+                     where type = 'ERC721-token') nft_sync_address_temp on
+    (pdwtr."token" = nft_sync_address_temp.address)
 where pdwtr.block_number >= ${recentTimeBlockHeight}
 group by pdwtr."operator",
          pdwtr.quote_token,
          pdwtr."token",
          pdwtr."type",
-         nft_sync_address.nft_type;
+         nft_sync_address_temp.nft_type;
 
 
 insert into platform_nft_type_volume_count_temp(recent_time_code,
@@ -104,12 +104,12 @@ from (
                       sum(w.price*lend_value)          as volume_usd,
                       sum(1)          as volume,
                       1               as transfer_count,
-                      nft_sync_address.nft_type
+                      nft_sync_address_temp.nft_type
                from platform_lend_tx_record pltr
                         inner join (select address,type as nft_type
-                                    from nft_sync_address nsa
-                                    where type = 'ERC721') nft_sync_address on
-                   (pltr.pledge_token = nft_sync_address.address)
+                                    from nft_sync_address_temp nsa
+                                    where type = 'ERC721') nft_sync_address_temp on
+                   (pltr.pledge_token = nft_sync_address_temp.address)
                         inner join white_list_erc20_temp w on
                    (w.address='eth')
                where pltr.block_number >=${recentTimeBlockHeight}
@@ -117,7 +117,7 @@ from (
                         pltr.pledge_token,
                         pltr."type",
                         hash,
-                        nft_sync_address.nft_type) pltrout
+                        nft_sync_address_temp.nft_type) pltrout
          group by pltrout.address,
                   pltrout.token,
                   nft_type
@@ -129,18 +129,18 @@ from (
                 sum(w.price*lend_value)          as volume_usd,
                 sum(1)          as volume,
                 1               as transfer_count,
-                nft_sync_address.nft_type
+                nft_sync_address_temp.nft_type
          from platform_lend_tx_record pltr
                   inner join (select address,type as nft_type
-                              from nft_sync_address nsa
-                              where type = 'ERC721') nft_sync_address on
-             (pltr.pledge_token = nft_sync_address.address)
+                              from nft_sync_address_temp nsa
+                              where type = 'ERC721') nft_sync_address_temp on
+             (pltr.pledge_token = nft_sync_address_temp.address)
               inner join white_list_erc20_temp w on
              (w.address='eth')
          where pltr.block_number >=${recentTimeBlockHeight}
          group by pltr.lender,
                   pltr.pledge_token,
-                  nft_sync_address.nft_type) lendt
+                  nft_sync_address_temp.nft_type) lendt
 group by lendt.address,
          lendt.token,
          nft_type;
@@ -189,12 +189,12 @@ from (
                           when pbtr.type = 'ASK' then 1
                           else 0
                           end        as transfer_count,
-                      nft_sync_address.nft_type
+                      nft_sync_address_temp.nft_type
                from platform_bid_tx_record pbtr
                         inner join (select address,type as nft_type
-                                    from nft_sync_address nsa
-                                    where type = 'ERC721') nft_sync_address on
-                   (pbtr.nft_token = nft_sync_address.address)
+                                    from nft_sync_address_temp nsa
+                                    where type = 'ERC721') nft_sync_address_temp on
+                   (pbtr.nft_token = nft_sync_address_temp.address)
                         inner join white_list_erc20_temp w on
                    (w.address='eth')
                where pbtr.block_number >= ${recentTimeBlockHeight}
@@ -202,7 +202,7 @@ from (
                         pbtr.nft_token,
                         pbtr."type",
                         hash,
-                        nft_sync_address.nft_type) pbtrout
+                        nft_sync_address_temp.nft_type) pbtrout
          group by pbtrout.address,
                   pbtrout.token,
                   nft_type
@@ -228,9 +228,9 @@ from (
                       nft_type
                from platform_bid_tx_record pbtr
                         inner join (select address,type as nft_type
-                                    from nft_sync_address nsa
-                                    where type = 'ERC721') nft_sync_address on
-                   (pbtr.nft_token = nft_sync_address.address)
+                                    from nft_sync_address_temp nsa
+                                    where type = 'ERC721') nft_sync_address_temp on
+                   (pbtr.nft_token = nft_sync_address_temp.address)
                         inner join white_list_erc20_temp w on
                    (w.address='eth')
                where pbtr.block_number >= ${recentTimeBlockHeight}
@@ -238,7 +238,7 @@ from (
                         pbtr.nft_token,
                         pbtr."type",
                         hash,
-                        nft_sync_address.nft_type) pbtrout
+                        nft_sync_address_temp.nft_type) pbtrout
          group by pbtrout.address,
                   pbtrout.token,
                   nft_type) bidt

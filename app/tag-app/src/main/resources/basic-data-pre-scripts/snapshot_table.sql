@@ -7,11 +7,13 @@ DROP TABLE if EXISTS public.token_holding_time_temp;
 DROP TABLE if EXISTS public.white_list_lp_temp;
 DROP TABLE if EXISTS public.white_list_price_temp;
 DROP TABLE if EXISTS public.top_token_1000_temp;
+DROP TABLE if EXISTS public.nft_sync_address_temp;
 
 create table top_token_1000_temp as select * from top_token_1000_cdc;
 create table token_holding_temp as select * from token_holding_cdc;
 create table eth_holding_temp as select * from eth_holding_cdc;
 
+CREATE table nft_sync_address_temp AS  select * from  nft_sync_address_cdc;
 create table nft_holding_time_temp as select * from nft_holding_time_cdc;
 create table eth_holding_time_temp as select * from eth_holding_time_cdc;
 create table token_holding_time_temp as select * from token_holding_time_cdc;

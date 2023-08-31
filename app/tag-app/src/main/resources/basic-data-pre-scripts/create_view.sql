@@ -4,12 +4,10 @@
     CREATE VIEW block_timestamp AS  select * from  block_timestamp_cdc;
     DROP VIEW if EXISTS public.nft_sync_buy_sell_address;
     CREATE VIEW nft_sync_buy_sell_address AS  select * from  nft_sync_buy_sell_address_cdc;
-    DROP VIEW if EXISTS public.nft_sync_address;
-    CREATE VIEW nft_sync_address AS  select * from  nft_sync_address_cdc;
     DROP VIEW if EXISTS public.nft_time_sync_address;
     CREATE VIEW nft_time_sync_address AS  select * from  nft_time_sync_address_cdc;
-    DROP VIEW if EXISTS public.platform_nft_sync_address;
-    CREATE VIEW platform_nft_sync_address AS  select * from  platform_nft_sync_address_cdc;
+    DROP VIEW if EXISTS public.platform_nft_sync_address_temp;
+    CREATE VIEW platform_nft_sync_address_temp AS  select * from  platform_nft_sync_address_cdc;
     DROP VIEW if EXISTS public.total_nft_tx_count;
     CREATE VIEW total_nft_tx_count AS  select * from  total_nft_tx_count_cdc;
     DROP VIEW if EXISTS public.total_tx_count;

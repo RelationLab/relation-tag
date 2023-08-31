@@ -31,9 +31,9 @@ select nft_holding_middle.address,
        max(updated_block_height),
        recent_time_code
 from nft_holding_middle
-         inner join nft_sync_address on
-    (nft_sync_address.address = nft_holding_middle.token)
-WHERE nft_sync_address.type <> 'ERC1155'
+         inner join nft_sync_address_temp on
+    (nft_sync_address_temp.address = nft_holding_middle.token)
+WHERE nft_sync_address_temp.type <> 'ERC1155'
 group by nft_holding_middle.address, nft_holding_middle.token, recent_time_code;
 insert into tag_result(table_name, batch_date)
 SELECT 'nft_holding_summary' as table_name, '${batchDate}' as batch_date;

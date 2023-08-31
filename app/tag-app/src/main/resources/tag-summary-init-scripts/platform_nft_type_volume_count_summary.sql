@@ -87,17 +87,17 @@ select
     sum(pntvc.volume_usd) as volume_usd,
     sum(pntvc.transfer_count) as transfer_count,
     pntvc.recent_time_code,
-    nft_sync_address.nft_type
+    nft_sync_address_temp.nft_type
 from
     platform_nft_type_volume_count_temp pntvc
         inner join (
         select
             address,type as nft_type
         from
-            nft_sync_address nsa
+            nft_sync_address_temp nsa
         where
-                type <> 'ERC1155') nft_sync_address on
-        (pntvc.token = nft_sync_address.address)
+                type <> 'ERC1155') nft_sync_address_temp on
+        (pntvc.token = nft_sync_address_temp.address)
 group by
     pntvc.address,
     pntvc.platform_group,
@@ -105,7 +105,7 @@ group by
     pntvc.quote_token,
     pntvc.token,
     pntvc.recent_time_code,
-    nft_sync_address.nft_type;
+    nft_sync_address_temp.nft_type;
 
 
 insert into tag_result(table_name,batch_date)  SELECT 'platform_nft_type_volume_count_summary' as table_name,'${batchDate}'  as batch_date;

@@ -19,7 +19,7 @@ CREATE TABLE public.label_factor_seting_temp
 
 INSERT INTO public.label_factor_seting_temp (dict_code,dict_name,dict_type)
 select platform as dict_code,platform as dict_name,'asset_NFT' as dict_type
-from  nft_sync_address nsa   group by platform;
+from  nft_sync_address_temp nsa   group by platform;
 
 insert
 into

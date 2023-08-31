@@ -67,6 +67,8 @@ DROP TABLE IF EXISTS white_list_erc20;
 ALTER TABLE white_list_erc20_temp                       RENAME TO white_list_erc20;
 DROP TABLE IF EXISTS white_list_erc20_tag;
 ALTER TABLE white_list_erc20_tag_temp                   RENAME TO white_list_erc20_tag;
+DROP TABLE IF EXISTS nft_sync_address;
+ALTER TABLE nft_sync_address_temp                   RENAME TO nft_sync_address;
 
 
 
