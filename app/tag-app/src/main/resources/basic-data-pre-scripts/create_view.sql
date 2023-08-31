@@ -15,7 +15,6 @@
     DROP VIEW if EXISTS public.contract;
     CREATE VIEW contract AS  select * from  contract_cdc;
 
-
     DROP VIEW if EXISTS public.dex_tx_volume_count_record;
     CREATE VIEW dex_tx_volume_count_record AS select * from dex_tx_volume_count_record_cdc
     where block_height<=(select min(block_height) from dms_syn_block);
