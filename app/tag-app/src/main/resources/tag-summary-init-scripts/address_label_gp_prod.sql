@@ -38,7 +38,7 @@ select distinct a1.address,
                 'ALL'                    as trade_type,
                 'ALL'                    as project,
                 'ALL'                    as asset,
-                'CROWD'                  as bus_type na0cg6g
+                'CROWD'                  as bus_type
 from address_label_nft_count_grade a1
 where (label_name = 'na0cg6g' or label_name = 'na0cg6h' or label_name = 'na0cg6i')
 --     (label_name = 'ALL_ALL_ALL_NFT_ACTIVITY_Low'
