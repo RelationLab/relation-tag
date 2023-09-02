@@ -111,6 +111,8 @@ DROP TABLE IF EXISTS nft_volume_count;
 ALTER TABLE nft_volume_count_temp                       RENAME TO nft_volume_count;
 DROP TABLE IF EXISTS web3_transaction_record_summary;
 ALTER TABLE web3_transaction_record_summary_temp                       RENAME TO web3_transaction_record_summary;
+DROP TABLE IF EXISTS total_volume_usd;
+ALTER TABLE total_volume_usd_temp                       RENAME TO total_volume_usd;
 
 
 insert into tag_result(table_name,batch_date)  SELECT 'rename_table_${tableSuffix}' as table_name,'${batchDate}'  as batch_date;

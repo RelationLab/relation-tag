@@ -91,7 +91,7 @@ from (select t1.address,
                                            'ALL' as token,
                                            volume_usd,
                                            recent_time_code
-                                    from total_volume_usd tbvu
+                                    from total_volume_usd_temp tbvu
                                     where volume_usd >= 100
                                       and address not in (select address from exclude_address)
                                     union all
@@ -122,7 +122,7 @@ from (select t1.address,
                                                  'ALL' as token,
                                                  volume_usd,
                                                  recent_time_code
-                                          from total_volume_usd tbvu
+                                          from total_volume_usd_temp tbvu
                                           where volume_usd >= 100
                                             and address not in (select address from exclude_address)
                                           union all

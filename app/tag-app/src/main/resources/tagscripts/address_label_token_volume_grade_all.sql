@@ -94,7 +94,7 @@ from (select address,
                    'ALL' as             token,
                    round(volume_usd, 8) volume_usd,
                    recent_time_code
-            from total_volume_usd tbvu
+            from total_volume_usd_temp tbvu
             where volume_usd >= 100
             union all
             select address,

@@ -672,6 +672,43 @@ select
 from  token_volume_usd_temp
 group by address,token
 ;
+
+
+insert into  dws_eth_index_n_tmp2
+select
+    'DEFi' as  b_type
+     , 'token' as statistical_type
+     , address
+     ,'ALLNET' as project
+     ,'ALLNET'  as platform_name
+     ,'ALL' as token
+     ,'ALL' as type
+     ,null as first_tx_time                             --最早交易时间
+     ,null as latest_tx_time                            -- 最后交易时间
+     ,null as transaction_count
+     ,sum(case when recent_time_code='ALL' then volume_usd else null end) as transaction_volume
+     ,null as balance_count
+     ,null  as balance_usd
+     ,sum(case when recent_time_code='3d' then volume_usd else null end)  as transaction_volume_3d
+     ,sum(case when recent_time_code='7d' then volume_usd else null end)  as transaction_volume_7d
+     ,sum(case when recent_time_code='15d' then volume_usd else null end)  as transaction_volume_15d
+     ,sum(case when recent_time_code='1m' then volume_usd else null end)  as transaction_volume_1m
+     ,sum(case when recent_time_code='3m' then volume_usd else null end)  as transaction_volume_3m
+     ,sum(case when recent_time_code='6m' then volume_usd else null end)  as transaction_volume_6m
+     ,sum(case when recent_time_code='1y' then volume_usd else null end)  as transaction_volume_1y
+     ,sum(case when recent_time_code='2y' then volume_usd else null end)  as transaction_volume_2y
+     ,null as transaction_count_3d
+     ,null as transaction_count_7d
+     ,null as transaction_count_15d
+     ,null as transaction_count_1m
+     ,null as transaction_count_3m
+     ,null as transaction_count_6m
+     ,null as transaction_count_1y
+     ,null as transaction_count_2y
+     ,now() as etl_update_time
+from  total_volume_usd_temp
+group by address;
+
 -- 第六步
 
 insert into  dws_eth_index_n_tmp2
@@ -784,6 +821,82 @@ select
 from  token_holding_vol_count_temp
 group by address,token
 ;
+
+
+insert into  dws_eth_index_n_tmp2
+select
+    'DEFi' as  b_type
+     , 'token' as statistical_type
+     ,address
+     ,'ALLNET' as project
+     ,'ALLNET'  as platform_name
+     ,'ALL' AS token
+     ,'ALL' as type
+     ,null as first_tx_time                             --最早交易时间
+     ,null as latest_tx_time                            -- 最后交易时间
+     ,sum(transaction_count) as transaction_count
+     ,null as transaction_volume
+     ,null as balance_count
+     ,null  as balance_usd
+     ,null as transaction_volume_3d
+     ,null as transaction_volume_7d
+     ,null as transaction_volume_15d
+     ,null as transaction_volume_1m
+     ,null as transaction_volume_3m
+     ,null as transaction_volume_6m
+     ,null as transaction_volume_1y
+     ,null as transaction_volume_2y
+     ,sum(transaction_count_3d)  as transaction_count_3d
+     ,sum(transaction_count_3d)  as transaction_count_7d
+     ,sum(transaction_count_15d)  as transaction_count_15d
+     ,sum(transaction_count_1m)  as transaction_count_1m
+     ,sum(transaction_count_3m)  as transaction_count_3m
+     ,sum(transaction_count_6m)  as transaction_count_6m
+     ,sum(transaction_count_1y)  as transaction_count_1y
+     ,sum(transaction_count_2y)  as transaction_count_2y
+     ,now() as etl_update_time
+from (
+         select
+             address
+              ,sum(case when recent_time_code='ALL' then total_transfer_count else null end ) as transaction_count
+              ,sum(case when recent_time_code='3d' then total_transfer_count else null end)  as transaction_count_3d
+              ,sum(case when recent_time_code='7d' then total_transfer_count else null end)  as transaction_count_7d
+              ,sum(case when recent_time_code='15d' then total_transfer_count else null end)  as transaction_count_15d
+              ,sum(case when recent_time_code='1m' then total_transfer_count else null end)  as transaction_count_1m
+              ,sum(case when recent_time_code='3m' then total_transfer_count else null end)  as transaction_count_3m
+              ,sum(case when recent_time_code='6m' then total_transfer_count else null end)  as transaction_count_6m
+              ,sum(case when recent_time_code='1y' then total_transfer_count else null end)  as transaction_count_1y
+              ,sum(case when recent_time_code='2y' then total_transfer_count else null end)  as transaction_count_2y
+         from  eth_holding_vol_count_temp where total_transfer_count >= 1
+         group by address
+         union
+         select
+             address
+              ,sum(case when recent_time_code='ALL' then total_transfer_count else null end ) as transaction_count
+              ,sum(case when recent_time_code='3d' then total_transfer_count else null end)  as transaction_count_3d
+              ,sum(case when recent_time_code='7d' then total_transfer_count else null end)  as transaction_count_7d
+              ,sum(case when recent_time_code='15d' then total_transfer_count else null end)  as transaction_count_15d
+              ,sum(case when recent_time_code='1m' then total_transfer_count else null end)  as transaction_count_1m
+              ,sum(case when recent_time_code='3m' then total_transfer_count else null end)  as transaction_count_3m
+              ,sum(case when recent_time_code='6m' then total_transfer_count else null end)  as transaction_count_6m
+              ,sum(case when recent_time_code='1y' then total_transfer_count else null end)  as transaction_count_1y
+              ,sum(case when recent_time_code='2y' then total_transfer_count else null end)  as transaction_count_2y
+         from  token_holding_vol_count_temp where total_transfer_count >= 1
+         group by address
+         union
+         select
+             address
+              ,sum(case when recent_time_code='ALL' then total_transfer_count else null end ) as transaction_count
+              ,sum(case when recent_time_code='3d' then total_transfer_count else null end)  as transaction_count_3d
+              ,sum(case when recent_time_code='7d' then total_transfer_count else null end)  as transaction_count_7d
+              ,sum(case when recent_time_code='15d' then total_transfer_count else null end)  as transaction_count_15d
+              ,sum(case when recent_time_code='1m' then total_transfer_count else null end)  as transaction_count_1m
+              ,sum(case when recent_time_code='3m' then total_transfer_count else null end)  as transaction_count_3m
+              ,sum(case when recent_time_code='6m' then total_transfer_count else null end)  as transaction_count_6m
+              ,sum(case when recent_time_code='1y' then total_transfer_count else null end)  as transaction_count_1y
+              ,sum(case when recent_time_code='2y' then total_transfer_count else null end)  as transaction_count_2y
+         from  dex_tx_volume_count_summary_univ3_temp where project = '0xc36442b4a4522e871399cd717abdd847ab11fe88' and total_transfer_count >= 1 and type = 'ALL'
+         group by address) totalAc group by address;
 
 
 -- 第二部分汇总
