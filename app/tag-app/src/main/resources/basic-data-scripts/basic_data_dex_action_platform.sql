@@ -39,6 +39,11 @@ insert into dex_action_platform_temp(platform,trade_type) values('0x4d05e3d48a93
 insert into dex_action_platform_temp(platform,trade_type) values('aave','ALL');
 insert into dex_action_platform_temp(platform,trade_type) values('commpound','ALL');
 
+insert into dex_action_platform_temp(platform,trade_type) values('Instadapp','ALL');
+insert into dex_action_platform_temp(platform,trade_type) values('summerfi','ALL');
+insert into dex_action_platform_temp(platform,trade_type) values('dydx','ALL');
+
+
 
 insert into dex_action_platform_temp(platform,trade_type) values('0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f','stakelp');
 insert into dex_action_platform_temp(platform,trade_type) values('0x1111111254fb6c44bac0bed2854e76f90643097d','stakelp');
