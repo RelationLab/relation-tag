@@ -6513,9 +6513,6 @@ select distinct 'NFT' as                                                        
 from nft_sync_address_temp
          inner join nft_trade_type_temp on (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -6582,9 +6579,6 @@ from nft_sync_address_temp
                      where type = 'nft_count') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -6627,9 +6621,6 @@ from nft_sync_address_temp
                      where type = 'nft_count') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -7104,9 +7095,6 @@ select distinct 'NFT' as                                                        
 from nft_sync_address_temp
          inner join nft_trade_type_temp on (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -7165,9 +7153,6 @@ from nft_sync_address_temp
                      where type = 'nft_volume_elite') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -7211,9 +7196,6 @@ from nft_sync_address_temp
                      where type = 'nft_volume_elite') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -7378,9 +7360,6 @@ select distinct 'NFT' as                                                        
 from nft_sync_address_temp
          inner join nft_trade_type_temp on (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -7442,9 +7421,6 @@ from nft_sync_address_temp
                      where type = 'nft_volume_grade') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -7488,9 +7464,6 @@ from nft_sync_address_temp
                      where type = 'nft_volume_grade') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -7657,9 +7630,6 @@ select distinct 'NFT' as                                                        
 from nft_sync_address_temp
          inner join nft_trade_type_temp on (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -7717,9 +7687,6 @@ from nft_sync_address_temp
                      where type = 'nft_volume_rank') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -7763,9 +7730,6 @@ from nft_sync_address_temp
                      where type = 'nft_volume_rank') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -7929,9 +7893,6 @@ select distinct 'NFT' as                                                        
 from nft_sync_address_temp
          inner join nft_trade_type_temp on (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -7989,9 +7950,6 @@ from nft_sync_address_temp
                      where type = 'nft_volume_top') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
@@ -8035,9 +7993,6 @@ from nft_sync_address_temp
                      where type = 'nft_volume_top') level_def_temp on
     (1 = 1)
          inner join recent_time_temp on (1 = 1)
-         INNER JOIN nft_action_platform_temp ON
-    (nft_trade_type_temp.nft_trade_type = nft_action_platform_temp.nft_trade_type
-        and nft_action_platform_temp.token = nft_sync_address_temp.address)
 where nft_sync_address_temp.type = 'ERC721'
   and nft_trade_type_temp.type = '0'
   and nft_trade_type_temp.nft_trade_type not in ('Deposit', 'Withdraw');
