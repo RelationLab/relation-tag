@@ -3893,7 +3893,8 @@ from token_platform_temp
     'SAND']
     and wlp."type" = 'LP') top_token_1000_temp
                     on (token_platform_temp.address = top_token_1000_temp.address)
-         INNER JOIN trade_type ON (1=1)
+         INNER JOIN trade_type ON (top_token_1000_temp.asset_type = 'token' or
+                                   (top_token_1000_temp.asset_type = 'lp' and (trade_type.trade_type = 'stakelp' or trade_type.trade_type = 'ALL')))
          inner join recent_time_temp on (1 = 1)
          inner join dex_action_platform_temp
                     on (token_platform_temp.platform = dex_action_platform_temp.platform and
@@ -3992,7 +3993,8 @@ from token_platform_temp
                         'SAND']
                     and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
-         inner join trade_type on (1 = 1)
+         inner join trade_type  ON (top_token_1000_temp.asset_type = 'token' or
+                                    (top_token_1000_temp.asset_type = 'lp' and (trade_type.trade_type = 'stakelp' or trade_type.trade_type = 'ALL')))
          inner join recent_time_temp on (1 = 1)
          inner join dex_action_platform_temp
                     on (token_platform_temp.platform = dex_action_platform_temp.platform and
@@ -4070,7 +4072,8 @@ from token_platform_temp
                         'SAND']
                     and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
-         inner join trade_type on (1 = 1)
+         inner join trade_type  ON (top_token_1000_temp.asset_type = 'token' or
+                                    (top_token_1000_temp.asset_type = 'lp' and (trade_type.trade_type = 'stakelp' or trade_type.trade_type = 'ALL')))
          inner join recent_time_temp on (1 = 1)
          inner join dex_action_platform_temp
                     on (token_platform_temp.platform = dex_action_platform_temp.platform and
@@ -4585,9 +4588,8 @@ from token_platform_temp
                         'SAND']
                     and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
-         INNER JOIN trade_type ON (1=1)
---              top_token_1000_temp.asset_type = 'token' or
---                                    (top_token_1000_temp.asset_type = 'lp' and trade_type.trade_type = 'stakelp'))
+         INNER JOIN trade_type  ON (top_token_1000_temp.asset_type = 'token' or
+                                    (top_token_1000_temp.asset_type = 'lp' and (trade_type.trade_type = 'stakelp' or trade_type.trade_type = 'ALL')))
          inner join recent_time_temp on (1 = 1)
          inner join dex_action_platform_temp
                     on (token_platform_temp.platform = dex_action_platform_temp.platform and
@@ -4689,7 +4691,8 @@ from token_platform_temp
                         'SAND']
                     and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
-         INNER JOIN trade_type ON (1 = 1)
+         INNER JOIN trade_type  ON (top_token_1000_temp.asset_type = 'token' or
+                                    (top_token_1000_temp.asset_type = 'lp' and (trade_type.trade_type = 'stakelp' or trade_type.trade_type = 'ALL')))
          inner join recent_time_temp on (1 = 1)
          inner join (select *
                      from level_def_temp
@@ -4767,7 +4770,8 @@ from token_platform_temp
                         'SAND']
                     and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
-         INNER JOIN trade_type ON (1 = 1)
+         INNER JOIN trade_type ON (top_token_1000_temp.asset_type = 'token' or
+                                   (top_token_1000_temp.asset_type = 'lp' and (trade_type.trade_type = 'stakelp' or trade_type.trade_type = 'ALL')))
          inner join recent_time_temp on (1 = 1)
          inner join (select *
                      from level_def_temp
@@ -5288,7 +5292,8 @@ from token_platform_temp
                         'SAND']
                     and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
-         INNER JOIN trade_type ON (1=1)
+         INNER JOIN trade_type  ON (top_token_1000_temp.asset_type = 'token' or
+                                    (top_token_1000_temp.asset_type = 'lp' and (trade_type.trade_type = 'stakelp' or trade_type.trade_type = 'ALL')))
          inner join recent_time_temp on (1 = 1)
          inner join dex_action_platform_temp
                     on (token_platform_temp.platform = dex_action_platform_temp.platform and
@@ -5384,7 +5389,8 @@ from token_platform_temp
                         'SAND']
                     and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
-         INNER JOIN trade_type ON (1 = 1)
+         INNER JOIN trade_type  ON (top_token_1000_temp.asset_type = 'token' or
+                                    (top_token_1000_temp.asset_type = 'lp' and (trade_type.trade_type = 'stakelp' or trade_type.trade_type = 'ALL')))
          inner join (select *
                      from level_def_temp
                      where type = 'defi_volume_rank') level_def_temp on
@@ -5464,7 +5470,8 @@ from token_platform_temp
                         'SAND']
                     and wlp."type" = 'LP') top_token_1000_temp on
     (token_platform_temp.address = top_token_1000_temp.address)
-         INNER JOIN trade_type ON (1 = 1)
+         INNER JOIN trade_type  ON (top_token_1000_temp.asset_type = 'token' or
+                                    (top_token_1000_temp.asset_type = 'lp' and (trade_type.trade_type = 'stakelp' or trade_type.trade_type = 'ALL')))
          inner join (select *
                      from level_def_temp
                      where type = 'defi_volume_rank') level_def_temp on
