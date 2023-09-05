@@ -6,6 +6,7 @@ create table lp_action_platform_temp
 ) ;
 
 insert into lp_action_platform_temp(platform,trade_type) values('Balancer','stakelp');
+insert into lp_action_platform_temp(platform,trade_type) values('Curve','stakelp');
 insert into lp_action_platform_temp(platform,trade_type) values('Sushiswap','stakelp');
 insert into lp_action_platform_temp(platform,trade_type) values('1inch','stakelp');
 
