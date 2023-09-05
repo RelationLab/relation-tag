@@ -592,7 +592,7 @@ insert into  dws_eth_index_n_tmp2
 select
     'DEFi' as  b_type
      , 'token' as statistical_type
-     ,address
+     ,token_balance_volume_usd_temp.address
      ,'ALLNET' as project
      ,factory_type  as platform_name
      ,token
