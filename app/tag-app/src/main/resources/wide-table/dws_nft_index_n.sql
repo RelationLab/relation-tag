@@ -14,8 +14,8 @@ select
      , 'ALL'                                                                                as type
      , null                                                                                 as first_tx_time      --最早交易时间
      , null                                                                                 as latest_tx_time     -- 最后交易时间
-     , sum(case when recent_time_code = 'ALL' then total_transfer_all_volume else 0 end)    as transaction_volume
      , sum(case when recent_time_code = 'ALL' then total_transfer_all_count else 0 end)     as transaction_count
+     , sum(case when recent_time_code = 'ALL' then total_transfer_all_volume else 0 end)    as transaction_volume
      , sum(case when recent_time_code = 'ALL' then balance else 0 end)                      as balance_count
      , null                                                                                 as balance_usd
      , sum(case when recent_time_code = '3d' then total_transfer_all_volume else null end)  as transaction_volume_3d
@@ -62,8 +62,8 @@ select
      , 'ALL'                                                                                as type
      , null                                                                                 as first_tx_time      --最早交易时间
      , null                                                                                 as latest_tx_time     -- 最后交易时间
-     , sum(case when recent_time_code = 'ALL' then total_transfer_all_volume else 0 end)    as transaction_volume
      , sum(case when recent_time_code = 'ALL' then total_transfer_all_count else 0 end)     as transaction_count
+     , sum(case when recent_time_code = 'ALL' then total_transfer_all_volume else 0 end)    as transaction_volume
      , sum(case when recent_time_code = 'ALL' then balance else 0 end)                      as balance_count
      , null                                                                                 as balance_usd
      , sum(case when recent_time_code = '3d' then total_transfer_all_volume else null end)  as transaction_volume_3d
@@ -107,8 +107,8 @@ select
      , s1.type
      , null                                                                       as first_tx_time      --最早交易时间
      , null                                                                       as latest_tx_time     -- 最后交易时间
-     , sum(case when recent_time_code = 'ALL' then transfer_volume else 0 end)    as transaction_volume
      , sum(case when recent_time_code = 'ALL' then transfer_count else 0 end)     as transaction_count
+     , sum(case when recent_time_code = 'ALL' then transfer_volume else 0 end)    as transaction_volume
      , cast(null as int)                                                          as balance_count
      , cast(null as int)                                                          as balance_usd
 
@@ -155,8 +155,8 @@ select
      , s1.type
      , null                                                                       as first_tx_time         --最早交易时间
      , null                                                                       as latest_tx_time        -- 最后交易时间
-     , sum(case when recent_time_code = 'ALL' then transfer_volume else 0 end)    as transaction_volume
      , sum(case when recent_time_code = 'ALL' then transfer_count else 0 end)     as transaction_count
+     , sum(case when recent_time_code = 'ALL' then transfer_volume else 0 end)    as transaction_volume
      , cast(null as int)                                                          as balance_count
      , cast(null as int)                                                          as balance_usd
 
@@ -206,8 +206,8 @@ select
      , s1.type
      , null                                                                         as first_tx_time      --最早交易时间
      , null                                                                         as latest_tx_time     -- 最后交易时间
-     , sum(case when recent_time_code = 'ALL' then s1.volume_usd else null end)     as transaction_volume
      , sum(case when recent_time_code = 'ALL' then s1.transfer_count else null end) as transaction_count
+     , sum(case when recent_time_code = 'ALL' then s1.volume_usd else null end)     as transaction_volume
      , null                                                                         as balance_count
      , null                                                                         as balance_usd
 
@@ -265,8 +265,8 @@ select
      , s1.type
      , null                                                                         as first_tx_time      --最早交易时间
      , null                                                                         as latest_tx_time     -- 最后交易时间
-     , sum(case when recent_time_code = 'ALL' then s1.volume_usd else null end)     as transaction_volume
      , sum(case when recent_time_code = 'ALL' then s1.transfer_count else null end) as transaction_count
+     , sum(case when recent_time_code = 'ALL' then s1.volume_usd else null end)     as transaction_volume
      , null                                                                         as balance_count
      , null                                                                         as balance_usd
 
@@ -317,8 +317,8 @@ select
      , s1.type
      , null                                                                         as first_tx_time      --最早交易时间
      , null                                                                         as latest_tx_time     -- 最后交易时间
-     , sum(case when recent_time_code = 'ALL' then s1.volume_usd else null end)     as transaction_volume
      , sum(case when recent_time_code = 'ALL' then s1.transfer_count else null end) as transaction_count
+     , sum(case when recent_time_code = 'ALL' then s1.volume_usd else null end)     as transaction_volume
      , null                                                                         as balance_count
      , null                                                                         as balance_usd
 
@@ -369,8 +369,8 @@ select
      , s1.type
      , null                                                                         as first_tx_time      --最早交易时间
      , null                                                                         as latest_tx_time     -- 最后交易时间
-     , sum(case when recent_time_code = 'ALL' then s1.volume_usd else null end)     as transaction_volume
      , sum(case when recent_time_code = 'ALL' then s1.transfer_count else null end) as transaction_count
+     , sum(case when recent_time_code = 'ALL' then s1.volume_usd else null end)     as transaction_volume
      , null                                                                         as balance_count
      , null                                                                         as balance_usd
 
@@ -419,8 +419,8 @@ select
      , 'ALL'                  AS type
      , min(s1.latest_tx_time) as latest_tx_time
      , max(s1.first_tx_time)  as first_tx_time
-     , null                   as transaction_volume
      , null                   as transaction_count
+     , null                   as transaction_volume
      , null                   as balance_count
      , null                   as balance_usd
 
