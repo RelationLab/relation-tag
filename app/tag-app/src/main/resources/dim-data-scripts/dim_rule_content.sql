@@ -2377,7 +2377,7 @@ select distinct 'ALL_TOKEN'                                                     
                 recent_time_temp.code || '' || '' || '' || 'vr' || level_def_temp.code label_name,
                 'token'                                                                asset_type,
                 'RANK'                                                                 label_category,
-                'ALL'                                                                  recent_time_code,
+                recent_time_code,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 'ALL_' || 'ALL_' || 'ALL' || '_VOLUME_RANK_' || level_def_temp.level   old_label_name

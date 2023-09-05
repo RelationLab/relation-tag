@@ -221,149 +221,149 @@ group by  address
 
 
 
--- Uniswap_v2
--- 交易量
-insert into  dws_eth_index_n_tmp10
-select
-    'DEFi' as  b_type
-     , 'LP' as statistical_type
-     , s1.address
-     ,'0x7a250d5630b4cf539739df2c5dacb4c659f2488d' as project
-     ,s1.token
-     ,'ALL' as type
-     ,null as first_tx_time                             --最早交易时间
-     ,null as latest_tx_time                            -- 最后交易时间
-     ,null as transaction_count
-     ,sum(case when s1.recent_time_code='ALL' then s1.volume_usd else null end) as transaction_volume
-     ,null as balance_count
-     ,null  as balance_usd
-     ,sum(case when s1.recent_time_code='3d' then s1.volume_usd else null end)  as transaction_volume_3d
-     ,sum(case when s1.recent_time_code='7d' then s1.volume_usd else null end)  as transaction_volume_7d
-     ,sum(case when s1.recent_time_code='15d' then s1.volume_usd else null end)  as transaction_volume_15d
-     ,sum(case when s1.recent_time_code='1m' then s1.volume_usd else null end)  as transaction_volume_1m
-     ,sum(case when s1.recent_time_code='3m' then s1.volume_usd else null end)  as transaction_volume_3m
-     ,sum(case when s1.recent_time_code='6m' then s1.volume_usd else null end)  as transaction_volume_6m
-     ,sum(case when s1.recent_time_code='1y' then s1.volume_usd else null end)  as transaction_volume_1y
-     ,sum(case when s1.recent_time_code='2y' then s1.volume_usd else null end)  as transaction_volume_2y
-     ,null as transaction_count_3d
-     ,null as transaction_count_7d
-     ,null as transaction_count_15d
-     ,null as transaction_count_1m
-     ,null as transaction_count_3m
-     ,null as transaction_count_6m
-     ,null as transaction_count_1y
-     ,null as transaction_count_2y
-     ,now() as etl_update_time
-from  token_volume_usd_temp s1   inner join
-      (
-          select       distinct
-              wlp.address
-          from white_list_lp wlp
-                   left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-          where wlp.tvl > 1000000
-            and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
-        and wlp."type" = 'LP'
-        and wlp.factory_type ='Uniswap_v2'
-      ) as s2
-      on s1.token=s2.address
-group by s1.address,s1.token
-;
-
-
-
--- 交易次数
-insert into  dws_eth_index_n_tmp10
-select
-    'DEFi' as  b_type
-     , 'LP' as statistical_type
-     ,s1.address
-     ,'0x7a250d5630b4cf539739df2c5dacb4c659f2488d' as project
-     ,s1.token
-     ,'ALL' as type
-     ,null as first_tx_time                             --最早交易时间
-     ,null as latest_tx_time                            -- 最后交易时间
-     ,sum(case when s1.recent_time_code='ALL' then total_transfer_count else null end ) as transaction_count
-     ,null as transaction_volume
-     ,null as balance_count
-     ,null  as balance_usd
-     ,null as transaction_volume_3d
-     ,null as transaction_volume_7d
-     ,null as transaction_volume_15d
-     ,null as transaction_volume_1m
-     ,null as transaction_volume_3m
-     ,null as transaction_volume_6m
-     ,null as transaction_volume_1y
-     ,null as transaction_volume_2y
-     ,sum(case when s1.recent_time_code='3d' then s1.total_transfer_count else null end)  as transaction_count_3d
-     ,sum(case when s1.recent_time_code='7d' then s1.total_transfer_count else null end)  as transaction_count_7d
-     ,sum(case when s1.recent_time_code='15d' then s1.total_transfer_count else null end)  as transaction_count_15d
-     ,sum(case when s1.recent_time_code='1m' then s1.total_transfer_count else null end)  as transaction_count_1m
-     ,sum(case when s1.recent_time_code='3m' then s1.total_transfer_count else null end)  as transaction_count_3m
-     ,sum(case when s1.recent_time_code='6m' then s1.total_transfer_count else null end)  as transaction_count_6m
-     ,sum(case when s1.recent_time_code='1y' then s1.total_transfer_count else null end)  as transaction_count_1y
-     ,sum(case when s1.recent_time_code='2y' then s1.total_transfer_count else null end)  as transaction_count_2y
-     ,now() as etl_update_time
-from  token_holding_vol_count_temp  s1   inner join
-      (
-          select       distinct
-              wlp.address
-          from white_list_lp wlp
-                   left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-          where wlp.tvl > 1000000
-            and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
-        and wlp."type" = 'LP'
-        and wlp.factory_type ='Uniswap_v2'
-      ) as s2
-      on s1.token=s2.address
-group by s1.address,s1.token
-;
-
---  余额
-insert into  dws_eth_index_n_tmp10
-select
-    'DEFi' as  b_type
-     , 'LP' as statistical_type
-     ,s1.address
-     ,'0x7a250d5630b4cf539739df2c5dacb4c659f2488d' as project
-     ,s1.token
-     ,'ALL' as  type
-     ,null as  first_tx_time                             --最早交易时间
-     ,null as latest_tx_time                            -- 最后交易时间
-     ,null as transaction_count
-     ,null as transaction_volume
-     ,null as balance_count
-     ,sum(s1.balance_usd) as balance_usd
-     ,null as transaction_volume_3d
-     ,null as transaction_volume_7d
-     ,null as transaction_volume_15d
-     ,null as transaction_volume_1m
-     ,null as transaction_volume_3m
-     ,null as transaction_volume_6m
-     ,null as transaction_volume_1y
-     ,null as transaction_volume_2y
-     ,null as transaction_count_3d
-     ,null as transaction_count_7d
-     ,null as transaction_count_15d
-     ,null as transaction_count_1m
-     ,null as transaction_count_3m
-     ,null as transaction_count_6m
-     ,null as transaction_count_1y
-     ,null as transaction_count_2y
-     ,now() as etl_update_time
-from  token_balance_volume_usd_temp s1   inner join
-      (
-          select       distinct
-              wlp.address
-          from white_list_lp wlp
-                   left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-          where wlp.tvl > 1000000
-            and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
-        and wlp."type" = 'LP'
-        and wlp.factory_type ='Uniswap_v2'
-      ) as s2
-      on s1.token=s2.address
-group by s1.address,s1.token
-;
+-- -- Uniswap_v2
+-- -- 交易量
+-- insert into  dws_eth_index_n_tmp10
+-- select
+--     'DEFi' as  b_type
+--      , 'LP' as statistical_type
+--      , s1.address
+--      ,'0x7a250d5630b4cf539739df2c5dacb4c659f2488d' as project
+--      ,s1.token
+--      ,'ALL' as type
+--      ,null as first_tx_time                             --最早交易时间
+--      ,null as latest_tx_time                            -- 最后交易时间
+--      ,null as transaction_count
+--      ,sum(case when s1.recent_time_code='ALL' then s1.volume_usd else null end) as transaction_volume
+--      ,null as balance_count
+--      ,null  as balance_usd
+--      ,sum(case when s1.recent_time_code='3d' then s1.volume_usd else null end)  as transaction_volume_3d
+--      ,sum(case when s1.recent_time_code='7d' then s1.volume_usd else null end)  as transaction_volume_7d
+--      ,sum(case when s1.recent_time_code='15d' then s1.volume_usd else null end)  as transaction_volume_15d
+--      ,sum(case when s1.recent_time_code='1m' then s1.volume_usd else null end)  as transaction_volume_1m
+--      ,sum(case when s1.recent_time_code='3m' then s1.volume_usd else null end)  as transaction_volume_3m
+--      ,sum(case when s1.recent_time_code='6m' then s1.volume_usd else null end)  as transaction_volume_6m
+--      ,sum(case when s1.recent_time_code='1y' then s1.volume_usd else null end)  as transaction_volume_1y
+--      ,sum(case when s1.recent_time_code='2y' then s1.volume_usd else null end)  as transaction_volume_2y
+--      ,null as transaction_count_3d
+--      ,null as transaction_count_7d
+--      ,null as transaction_count_15d
+--      ,null as transaction_count_1m
+--      ,null as transaction_count_3m
+--      ,null as transaction_count_6m
+--      ,null as transaction_count_1y
+--      ,null as transaction_count_2y
+--      ,now() as etl_update_time
+-- from  token_volume_usd_temp s1   inner join
+--       (
+--           select       distinct
+--               wlp.address
+--           from white_list_lp wlp
+--                    left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+--           where wlp.tvl > 1000000
+--             and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+--         and wlp."type" = 'LP'
+--         and wlp.factory_type ='Uniswap_v2'
+--       ) as s2
+--       on s1.token=s2.address
+-- group by s1.address,s1.token
+-- ;
+--
+--
+--
+-- -- 交易次数
+-- insert into  dws_eth_index_n_tmp10
+-- select
+--     'DEFi' as  b_type
+--      , 'LP' as statistical_type
+--      ,s1.address
+--      ,'0x7a250d5630b4cf539739df2c5dacb4c659f2488d' as project
+--      ,s1.token
+--      ,'ALL' as type
+--      ,null as first_tx_time                             --最早交易时间
+--      ,null as latest_tx_time                            -- 最后交易时间
+--      ,sum(case when s1.recent_time_code='ALL' then total_transfer_count else null end ) as transaction_count
+--      ,null as transaction_volume
+--      ,null as balance_count
+--      ,null  as balance_usd
+--      ,null as transaction_volume_3d
+--      ,null as transaction_volume_7d
+--      ,null as transaction_volume_15d
+--      ,null as transaction_volume_1m
+--      ,null as transaction_volume_3m
+--      ,null as transaction_volume_6m
+--      ,null as transaction_volume_1y
+--      ,null as transaction_volume_2y
+--      ,sum(case when s1.recent_time_code='3d' then s1.total_transfer_count else null end)  as transaction_count_3d
+--      ,sum(case when s1.recent_time_code='7d' then s1.total_transfer_count else null end)  as transaction_count_7d
+--      ,sum(case when s1.recent_time_code='15d' then s1.total_transfer_count else null end)  as transaction_count_15d
+--      ,sum(case when s1.recent_time_code='1m' then s1.total_transfer_count else null end)  as transaction_count_1m
+--      ,sum(case when s1.recent_time_code='3m' then s1.total_transfer_count else null end)  as transaction_count_3m
+--      ,sum(case when s1.recent_time_code='6m' then s1.total_transfer_count else null end)  as transaction_count_6m
+--      ,sum(case when s1.recent_time_code='1y' then s1.total_transfer_count else null end)  as transaction_count_1y
+--      ,sum(case when s1.recent_time_code='2y' then s1.total_transfer_count else null end)  as transaction_count_2y
+--      ,now() as etl_update_time
+-- from  token_holding_vol_count_temp  s1   inner join
+--       (
+--           select       distinct
+--               wlp.address
+--           from white_list_lp wlp
+--                    left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+--           where wlp.tvl > 1000000
+--             and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+--         and wlp."type" = 'LP'
+--         and wlp.factory_type ='Uniswap_v2'
+--       ) as s2
+--       on s1.token=s2.address
+-- group by s1.address,s1.token
+-- ;
+--
+-- --  余额
+-- insert into  dws_eth_index_n_tmp10
+-- select
+--     'DEFi' as  b_type
+--      , 'LP' as statistical_type
+--      ,s1.address
+--      ,'0x7a250d5630b4cf539739df2c5dacb4c659f2488d' as project
+--      ,s1.token
+--      ,'ALL' as  type
+--      ,null as  first_tx_time                             --最早交易时间
+--      ,null as latest_tx_time                            -- 最后交易时间
+--      ,null as transaction_count
+--      ,null as transaction_volume
+--      ,null as balance_count
+--      ,sum(s1.balance_usd) as balance_usd
+--      ,null as transaction_volume_3d
+--      ,null as transaction_volume_7d
+--      ,null as transaction_volume_15d
+--      ,null as transaction_volume_1m
+--      ,null as transaction_volume_3m
+--      ,null as transaction_volume_6m
+--      ,null as transaction_volume_1y
+--      ,null as transaction_volume_2y
+--      ,null as transaction_count_3d
+--      ,null as transaction_count_7d
+--      ,null as transaction_count_15d
+--      ,null as transaction_count_1m
+--      ,null as transaction_count_3m
+--      ,null as transaction_count_6m
+--      ,null as transaction_count_1y
+--      ,null as transaction_count_2y
+--      ,now() as etl_update_time
+-- from  token_balance_volume_usd_temp s1   inner join
+--       (
+--           select       distinct
+--               wlp.address
+--           from white_list_lp wlp
+--                    left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+--           where wlp.tvl > 1000000
+--             and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+--         and wlp."type" = 'LP'
+--         and wlp.factory_type ='Uniswap_v2'
+--       ) as s2
+--       on s1.token=s2.address
+-- group by s1.address,s1.token
+-- ;
 
 
 
@@ -554,7 +554,7 @@ insert into  dws_eth_index_n_tmp2
 select
     'DEFi' as  b_type
      , 'token' as statistical_type
-     ,address
+     ,token_balance_volume_usd_temp.address
      ,'ALLNET' as project
      ,'ALLNET'  as platform_name
      ,token
@@ -582,9 +582,105 @@ select
      ,null as transaction_count_1y
      ,null as transaction_count_2y
      ,now() as etl_update_time
-from  token_balance_volume_usd_temp
-group by address,token
+from  token_balance_volume_usd_temp inner join  (
+    select address,name from top_token_1000 where removed=false and holders >= 100
+) top_token_1000 on(token_balance_volume_usd_temp.token=top_token_1000.address)
+group by token_balance_volume_usd_temp.address,token
 ;
+
+insert into  dws_eth_index_n_tmp2
+select
+    'DEFi' as  b_type
+     , 'token' as statistical_type
+     ,address
+     ,'ALLNET' as project
+     ,factory_type  as platform_name
+     ,token
+     ,'ALL' as type
+     ,null as  first_tx_time                             --最早交易时间
+     ,null as latest_tx_time                            -- 最后交易时间
+     ,null as transaction_count
+     ,null as transaction_volume
+     ,null as balance_count
+     ,sum(balance_usd) as balance_usd
+     ,null as transaction_volume_3d
+     ,null as transaction_volume_7d
+     ,null as transaction_volume_15d
+     ,null as transaction_volume_1m
+     ,null as transaction_volume_3m
+     ,null as transaction_volume_6m
+     ,null as transaction_volume_1y
+     ,null as transaction_volume_2y
+     ,null as transaction_count_3d
+     ,null as transaction_count_7d
+     ,null as transaction_count_15d
+     ,null as transaction_count_1m
+     ,null as transaction_count_3m
+     ,null as transaction_count_6m
+     ,null as transaction_count_1y
+     ,null as transaction_count_2y
+     ,now() as etl_update_time
+from  token_balance_volume_usd_temp inner join  (
+    select       distinct
+        wlp.address,
+        wlp.symbol_wired  as name,
+        wlp.factory_type
+    from white_list_lp wlp
+             left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+    where wlp.tvl > 1000000
+      and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+    and wlp."type" = 'LP'
+) top_token_1000 on(token_balance_volume_usd_temp.token=top_token_1000.address)
+group by token_balance_volume_usd_temp.address,token,factory_type;
+
+--
+-- insert into  dws_eth_index_n_tmp2
+-- select
+--     'DEFi' as  b_type
+--      , 'token' as statistical_type
+--      ,token_balance_volume_usd_temp.address
+--      ,'ALLNET' as project
+--      ,'ALLNET'  as platform_name
+--      ,min(token)
+--      ,'ALL' as type
+--      ,null as  first_tx_time                             --最早交易时间
+--      ,null as latest_tx_time                            -- 最后交易时间
+--      ,null as transaction_count
+--      ,null as transaction_volume
+--      ,null as balance_count
+--      ,sum(balance_usd) as balance_usd
+--      ,null as transaction_volume_3d
+--      ,null as transaction_volume_7d
+--      ,null as transaction_volume_15d
+--      ,null as transaction_volume_1m
+--      ,null as transaction_volume_3m
+--      ,null as transaction_volume_6m
+--      ,null as transaction_volume_1y
+--      ,null as transaction_volume_2y
+--      ,null as transaction_count_3d
+--      ,null as transaction_count_7d
+--      ,null as transaction_count_15d
+--      ,null as transaction_count_1m
+--      ,null as transaction_count_3m
+--      ,null as transaction_count_6m
+--      ,null as transaction_count_1y
+--      ,null as transaction_count_2y
+--      ,now() as etl_update_time
+-- from  token_balance_volume_usd_temp inner join  (
+--     select       distinct
+--         wlp.address,
+--         wlp.symbol_wired  as name,
+--         wlp.factory_type
+--     from white_list_lp wlp
+--              left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+--     where wlp.tvl > 1000000
+--       and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+--     and wlp."type" = 'LP'
+-- ) top_token_1000 on(token_balance_volume_usd_temp.token=top_token_1000.address)
+-- group by token_balance_volume_usd_temp.address,top_token_1000.name;
+
+
+
 
 
 
@@ -641,10 +737,10 @@ insert into  dws_eth_index_n_tmp2
 select
     'DEFi' as  b_type
      , 'token' as statistical_type
-     , address
+     , token_volume_usd_temp.address
      ,'ALLNET' as project
      ,'ALLNET'  as platform_name
-     ,token
+     ,token_volume_usd_temp.token
      ,'ALL' as type
      ,null as first_tx_time                             --最早交易时间
      ,null as latest_tx_time                            -- 最后交易时间
@@ -669,8 +765,57 @@ select
      ,null as transaction_count_1y
      ,null as transaction_count_2y
      ,now() as etl_update_time
-from  token_volume_usd_temp
-group by address,token
+from  token_volume_usd_temp inner join  (
+    select address,name from top_token_1000 where removed=false and holders >= 100
+) top_token_1000 on(token_volume_usd_temp.token=top_token_1000.address)
+group by token_volume_usd_temp.address,token_volume_usd_temp.token
+;
+
+
+insert into  dws_eth_index_n_tmp2
+select
+    'DEFi' as  b_type
+     , 'token' as statistical_type
+     , token_volume_usd_temp.address
+     ,'ALLNET' as project
+     ,factory_type  as platform_name
+     ,token_volume_usd_temp.token
+     ,'ALL' as type
+     ,null as first_tx_time                             --最早交易时间
+     ,null as latest_tx_time                            -- 最后交易时间
+     ,null as transaction_count
+     ,sum(case when recent_time_code='ALL' then volume_usd else null end) as transaction_volume
+     ,null as balance_count
+     ,null  as balance_usd
+     ,sum(case when recent_time_code='3d' then volume_usd else null end)  as transaction_volume_3d
+     ,sum(case when recent_time_code='7d' then volume_usd else null end)  as transaction_volume_7d
+     ,sum(case when recent_time_code='15d' then volume_usd else null end)  as transaction_volume_15d
+     ,sum(case when recent_time_code='1m' then volume_usd else null end)  as transaction_volume_1m
+     ,sum(case when recent_time_code='3m' then volume_usd else null end)  as transaction_volume_3m
+     ,sum(case when recent_time_code='6m' then volume_usd else null end)  as transaction_volume_6m
+     ,sum(case when recent_time_code='1y' then volume_usd else null end)  as transaction_volume_1y
+     ,sum(case when recent_time_code='2y' then volume_usd else null end)  as transaction_volume_2y
+     ,null as transaction_count_3d
+     ,null as transaction_count_7d
+     ,null as transaction_count_15d
+     ,null as transaction_count_1m
+     ,null as transaction_count_3m
+     ,null as transaction_count_6m
+     ,null as transaction_count_1y
+     ,null as transaction_count_2y
+     ,now() as etl_update_time
+from  token_volume_usd_temp inner join  (
+    select       distinct
+        wlp.address,
+        wlp.symbol_wired  as name,
+        wlp.factory_type
+    from white_list_lp wlp
+             left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+    where wlp.tvl > 1000000
+      and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+    and wlp."type" = 'LP'
+) top_token_1000 on(token_volume_usd_temp.token=top_token_1000.address)
+group by token_volume_usd_temp.address,token_volume_usd_temp.token,factory_type
 ;
 
 
@@ -715,7 +860,7 @@ insert into  dws_eth_index_n_tmp2
 select
     'DEFi' as  b_type
      , 'token' as statistical_type
-     ,address
+     ,token_holding_temp.address
      ,'ALLNET' as project
      ,'ALLNET'  as platform_name
      ,token
@@ -744,7 +889,57 @@ select
      ,null as transaction_count_2y
      ,now() as etl_update_time
 from  token_holding_temp
-group by address,token
+          inner join  (
+    select address,name from top_token_1000 where removed=false and holders >= 100
+) top_token_1000 on(token_holding_temp.token=top_token_1000.address)
+group by token_holding_temp.address,token_holding_temp.token
+;
+
+
+insert into  dws_eth_index_n_tmp2
+select
+    'DEFi' as  b_type
+     , 'token' as statistical_type
+     ,token_holding_temp.address
+     ,'ALLNET' as project
+     ,factory_type  as platform_name
+     ,token
+     ,'ALL' as type
+     ,null as  first_tx_time                             --最早交易时间
+     ,null as latest_tx_time                            -- 最后交易时间
+     ,null as transaction_count
+     ,null as transaction_volume
+     ,sum(balance) as balance_count -- 余额 个数
+     ,null as balance_usd
+     ,null as transaction_volume_3d
+     ,null as transaction_volume_7d
+     ,null as transaction_volume_15d
+     ,null as transaction_volume_1m
+     ,null as transaction_volume_3m
+     ,null as transaction_volume_6m
+     ,null as transaction_volume_1y
+     ,null as transaction_volume_2y
+     ,null as transaction_count_3d
+     ,null as transaction_count_7d
+     ,null as transaction_count_15d
+     ,null as transaction_count_1m
+     ,null as transaction_count_3m
+     ,null as transaction_count_6m
+     ,null as transaction_count_1y
+     ,null as transaction_count_2y
+     ,now() as etl_update_time
+from  token_holding_temp inner join  (
+    select       distinct
+        wlp.address,
+        wlp.symbol_wired  as name,
+        wlp.factory_type
+    from white_list_lp wlp
+             left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+    where wlp.tvl > 1000000
+      and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+    and wlp."type" = 'LP'
+) top_token_1000 on(token_holding_temp.token=top_token_1000.address)
+group by token_holding_temp.address,token_holding_temp.token,factory_type
 ;
 
 -- 第七步
@@ -752,7 +947,7 @@ insert into  dws_eth_index_n_tmp2
 select
     'DEFi' as  b_type
      , 'token' as statistical_type
-     ,address
+     ,token_holding_time_temp.address
      ,'ALLNET' as project
      ,'ALLNET'  as platform_name
      ,token
@@ -780,17 +975,63 @@ select
      ,null as transaction_count_1y
      ,null as transaction_count_2y
      ,now() as etl_update_time
-from  token_holding_time_temp
-group by address,token
+from  token_holding_time_temp inner join  (
+    select address,name from top_token_1000 where removed=false and holders >= 100
+) top_token_1000 on(token_holding_time_temp.token=top_token_1000.address)
+group by token_holding_time_temp.address,token
 ;
-
+insert into  dws_eth_index_n_tmp2
+select
+    'DEFi' as  b_type
+     , 'token' as statistical_type
+     ,token_holding_time_temp.address
+     ,'ALLNET' as project
+     ,factory_type  as platform_name
+     ,token
+     ,'ALL' as type
+     ,min(first_tx_time) as      first_tx_time                       --最早交易时间
+     ,max(latest_tx_time)  as    latest_tx_time                         -- 最后交易时间
+     ,null as transaction_count
+     ,null as transaction_volume
+     ,null as balance_count
+     ,null as balance_usd
+     ,null as transaction_volume_3d
+     ,null as transaction_volume_7d
+     ,null as transaction_volume_15d
+     ,null as transaction_volume_1m
+     ,null as transaction_volume_3m
+     ,null as transaction_volume_6m
+     ,null as transaction_volume_1y
+     ,null as transaction_volume_2y
+     ,null as transaction_count_3d
+     ,null as transaction_count_7d
+     ,null as transaction_count_15d
+     ,null as transaction_count_1m
+     ,null as transaction_count_3m
+     ,null as transaction_count_6m
+     ,null as transaction_count_1y
+     ,null as transaction_count_2y
+     ,now() as etl_update_time
+from  token_holding_time_temp inner join  (
+    select       distinct
+        wlp.address,
+        wlp.symbol_wired  as name,
+        wlp.factory_type
+    from white_list_lp wlp
+             left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+    where wlp.tvl > 1000000
+      and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+    and wlp."type" = 'LP'
+) top_token_1000 on(token_holding_time_temp.token=top_token_1000.address)
+group by token_holding_time_temp.address,token,factory_type
+;
 
 -- 第八步
 insert into  dws_eth_index_n_tmp2
 select
     'DEFi' as  b_type
      , 'token' as statistical_type
-     ,address
+     ,token_holding_vol_count_temp.address
      ,'ALLNET' as project
      ,'ALLNET'  as platform_name
      ,token
@@ -818,10 +1059,58 @@ select
      ,sum(case when recent_time_code='1y' then total_transfer_count else null end)  as transaction_count_1y
      ,sum(case when recent_time_code='2y' then total_transfer_count else null end)  as transaction_count_2y
      ,now() as etl_update_time
-from  token_holding_vol_count_temp
-group by address,token
+from  token_holding_vol_count_temp inner join  (
+    select address,name from top_token_1000 where removed=false and holders >= 100
+) top_token_1000 on(token_holding_vol_count_temp.token=top_token_1000.address)
+group by token_holding_vol_count_temp.address,token
 ;
 
+-- 第八步
+insert into  dws_eth_index_n_tmp2
+select
+    'DEFi' as  b_type
+     , 'token' as statistical_type
+     ,token_holding_vol_count_temp.address
+     ,'ALLNET' as project
+     ,factory_type  as platform_name
+     ,token
+     ,'ALL' as type
+     ,null as first_tx_time                             --最早交易时间
+     ,null as latest_tx_time                            -- 最后交易时间
+     ,sum(case when recent_time_code='ALL' then total_transfer_count else null end ) as transaction_count
+     ,null as transaction_volume
+     ,null as balance_count
+     ,null  as balance_usd
+     ,null as transaction_volume_3d
+     ,null as transaction_volume_7d
+     ,null as transaction_volume_15d
+     ,null as transaction_volume_1m
+     ,null as transaction_volume_3m
+     ,null as transaction_volume_6m
+     ,null as transaction_volume_1y
+     ,null as transaction_volume_2y
+     ,sum(case when recent_time_code='3d' then total_transfer_count else null end)  as transaction_count_3d
+     ,sum(case when recent_time_code='7d' then total_transfer_count else null end)  as transaction_count_7d
+     ,sum(case when recent_time_code='15d' then total_transfer_count else null end)  as transaction_count_15d
+     ,sum(case when recent_time_code='1m' then total_transfer_count else null end)  as transaction_count_1m
+     ,sum(case when recent_time_code='3m' then total_transfer_count else null end)  as transaction_count_3m
+     ,sum(case when recent_time_code='6m' then total_transfer_count else null end)  as transaction_count_6m
+     ,sum(case when recent_time_code='1y' then total_transfer_count else null end)  as transaction_count_1y
+     ,sum(case when recent_time_code='2y' then total_transfer_count else null end)  as transaction_count_2y
+     ,now() as etl_update_time
+from  token_holding_vol_count_temp inner join  (
+    select       distinct
+        wlp.address,
+        wlp.symbol_wired  as name,
+        wlp.factory_type
+    from white_list_lp wlp
+             left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+    where wlp.tvl > 1000000
+      and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+    and wlp."type" = 'LP'
+) top_token_1000 on(token_holding_vol_count_temp.token=top_token_1000.address)
+group by token_holding_vol_count_temp.address,token,factory_type
+;
 
 insert into  dws_eth_index_n_tmp2
 select
