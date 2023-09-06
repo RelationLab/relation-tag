@@ -1020,7 +1020,7 @@ select distinct (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool
                 recent_time_temp.code || '' || 'l' || lpt.id || '' || 'vr' || level_def_temp.code label_name,
                 'token'                                                                           asset_type,
                 'RANK'                                                                            label_category,
-                'ALL'                                                                             recent_time_code,
+                recent_time_code,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 lpt.factory_type || '_' || (lpt.symbol1 || '/' || lpt.symbol2) || '(' || SUBSTRING(lpt.pool, 1, 8) ||
