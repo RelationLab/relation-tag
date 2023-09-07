@@ -14,33 +14,33 @@ select
      , 'ALL'                                                                                as type
      , null                                                                                 as first_tx_time      --最早交易时间
      , null                                                                                 as latest_tx_time     -- 最后交易时间
-     , sum(case when recent_time_code = 'ALL' then total_transfer_all_count else 0 end)     as transaction_count
-     , sum(case when recent_time_code = 'ALL' then total_transfer_all_volume else 0 end)    as transaction_volume
+     , null     as transaction_count
+     , null   as transaction_volume
      , sum(case when recent_time_code = 'ALL' then balance else 0 end)                      as balance_count
      , null                                                                                 as balance_usd
-     , sum(case when recent_time_code = '3d' then total_transfer_all_volume else null end)  as transaction_volume_3d
-     , sum(case when recent_time_code = '7d' then total_transfer_all_volume else null end)  as transaction_volume_7d
-     , sum(case when recent_time_code = '15d' then total_transfer_all_volume else null end) as transaction_volume_15d
-     , sum(case when recent_time_code = '1m' then total_transfer_all_volume else null end)  as transaction_volume_1m
-     , sum(case when recent_time_code = '3m' then total_transfer_all_volume else null end)  as transaction_volume_3m
-     , sum(case when recent_time_code = '6m' then total_transfer_all_volume else null end)  as transaction_volume_6m
-     , sum(case when recent_time_code = '1y' then total_transfer_all_volume else null end)  as transaction_volume_1y
-     , sum(case when recent_time_code = '2y' then total_transfer_all_volume else null end)  as transaction_volume_2y
+     , null  as transaction_volume_3d
+     , null  as transaction_volume_7d
+     , null as transaction_volume_15d
+     , null  as transaction_volume_1m
+     , null  as transaction_volume_3m
+     , null  as transaction_volume_6m
+     , null  as transaction_volume_1y
+     , null  as transaction_volume_2y
 
-     , sum(case when recent_time_code = '3d' then total_transfer_all_count else null end)   as transaction_count_3d
-     , sum(case when recent_time_code = '7d' then total_transfer_all_count else null end)   as transaction_count_7d
-     , sum(case when recent_time_code = '15d' then total_transfer_all_count else null end)  as transaction_count_15d
-     , sum(case when recent_time_code = '1m' then total_transfer_all_count else null end)   as transaction_count_1m
-     , sum(case when recent_time_code = '3m' then total_transfer_all_count else null end)   as transaction_count_3m
-     , sum(case when recent_time_code = '6m' then total_transfer_all_count else null end)   as transaction_count_6m
-     , sum(case when recent_time_code = '1y' then total_transfer_all_count else null end)   as transaction_count_1y
-     , sum(case when recent_time_code = '2y' then total_transfer_all_count else null end)   as transaction_count_2y
+     , null  as transaction_count_3d
+     , null   as transaction_count_7d
+     , null  as transaction_count_15d
+     , null   as transaction_count_1m
+     , null   as transaction_count_3m
+     , null   as transaction_count_6m
+     , null   as transaction_count_1y
+     , null   as transaction_count_2y
      , now()                                                                                as etl_update_time
 from nft_holding_temp s1
          inner join nft_sync_address_temp s2
                     on s1.token = s2.address
      --  left join  platform_nft_sync_address_temp  s3
-where s2.type <> 'ERC1155'
+where s2.type <> 'ERC1155' and s1.balance>0
 group by s1.address
        , s1.token
 --  , s2.platform
@@ -62,33 +62,33 @@ select
      , 'ALL'                                                                                as type
      , null                                                                                 as first_tx_time      --最早交易时间
      , null                                                                                 as latest_tx_time     -- 最后交易时间
-     , sum(case when recent_time_code = 'ALL' then total_transfer_all_count else 0 end)     as transaction_count
-     , sum(case when recent_time_code = 'ALL' then total_transfer_all_volume else 0 end)    as transaction_volume
+     , null     as transaction_count
+     , null    as transaction_volume
      , sum(case when recent_time_code = 'ALL' then balance else 0 end)                      as balance_count
      , null                                                                                 as balance_usd
-     , sum(case when recent_time_code = '3d' then total_transfer_all_volume else null end)  as transaction_volume_3d
-     , sum(case when recent_time_code = '7d' then total_transfer_all_volume else null end)  as transaction_volume_7d
-     , sum(case when recent_time_code = '15d' then total_transfer_all_volume else null end) as transaction_volume_15d
-     , sum(case when recent_time_code = '1m' then total_transfer_all_volume else null end)  as transaction_volume_1m
-     , sum(case when recent_time_code = '3m' then total_transfer_all_volume else null end)  as transaction_volume_3m
-     , sum(case when recent_time_code = '6m' then total_transfer_all_volume else null end)  as transaction_volume_6m
-     , sum(case when recent_time_code = '1y' then total_transfer_all_volume else null end)  as transaction_volume_1y
-     , sum(case when recent_time_code = '2y' then total_transfer_all_volume else null end)  as transaction_volume_2y
+     , null  as transaction_volume_3d
+     , null  as transaction_volume_7d
+     , null as transaction_volume_15d
+     , null  as transaction_volume_1m
+     , null  as transaction_volume_3m
+     , null  as transaction_volume_6m
+     , null  as transaction_volume_1y
+     , null  as transaction_volume_2y
 
-     , sum(case when recent_time_code = '3d' then total_transfer_all_count else null end)   as transaction_count_3d
-     , sum(case when recent_time_code = '7d' then total_transfer_all_count else null end)   as transaction_count_7d
-     , sum(case when recent_time_code = '15d' then total_transfer_all_count else null end)  as transaction_count_15d
-     , sum(case when recent_time_code = '1m' then total_transfer_all_count else null end)   as transaction_count_1m
-     , sum(case when recent_time_code = '3m' then total_transfer_all_count else null end)   as transaction_count_3m
-     , sum(case when recent_time_code = '6m' then total_transfer_all_count else null end)   as transaction_count_6m
-     , sum(case when recent_time_code = '1y' then total_transfer_all_count else null end)   as transaction_count_1y
-     , sum(case when recent_time_code = '2y' then total_transfer_all_count else null end)   as transaction_count_2y
+     , null   as transaction_count_3d
+     , null   as transaction_count_7d
+     , null  as transaction_count_15d
+     , null   as transaction_count_1m
+     , null   as transaction_count_3m
+     , null   as transaction_count_6m
+     , null   as transaction_count_1y
+     , null   as transaction_count_2y
      , now()                                                                                as etl_update_time
 from nft_holding_temp s1
          inner join nft_sync_address_temp s2
                     on s1.token = s2.address
      --  left join  platform_nft_sync_address_temp  s3
-where s2.type <> 'ERC1155'
+where s2.type <> 'ERC1155' and s1.balance>0
 group by s1.address
 ;
 
@@ -135,7 +135,6 @@ from nft_volume_count_temp S1
          inner join nft_sync_address_temp s2
                     on s1.token = s2.address
 where s2.type <> 'ERC1155'
-  and S1.type <> 'ALL'
 group by s1.address, s1.token
        , s1.type
 ;
@@ -183,7 +182,6 @@ from nft_volume_count_temp S1
          inner join nft_sync_address_temp s2
                     on s1.token = s2.address
 where s2.type <> 'ERC1155'
-  and S1.type <> 'ALL'
 group by s1.address
        , s1.type
 ;
