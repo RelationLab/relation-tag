@@ -25,4 +25,8 @@ insert into platform_detail_temp(id,platform,platform_name,platform_symbol) valu
 insert into platform_detail_temp(id,platform,platform_name,platform_symbol) values(9,'aave','AAVE','AAVE');
 insert into platform_detail_temp(id,platform,platform_name,platform_symbol) values(10,'commpound','Commpound','Compound');
 
+
+insert into platform_detail_temp(id,platform,platform_name,platform_symbol) values(14,'Instadapp','Instadapp','Instadapp');
+insert into platform_detail_temp(id,platform,platform_name,platform_symbol) values(15,'summerfi','Summer.Fi','Summer.Fi');
+insert into platform_detail_temp(id,platform,platform_name,platform_symbol) values(16,'dydx','dydx','dydx');
 insert into tag_result(table_name,batch_date)  SELECT 'basic_data_platform_detail' as table_name,'${batchDate}'  as batch_date;

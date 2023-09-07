@@ -406,6 +406,7 @@ select
 from
     dws_eth_index_n_tmp10 s1
         left join (select platform,platform_name from  platform_detail --  补充   uniswap
+            union select platform_large_code as platform,platform_large_name as platform_name from  platform_large_category
     )  s2
                   on s1.project=s2.platform
 group by   s1.b_type   --  业务类型
