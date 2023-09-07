@@ -13,7 +13,16 @@ into
 select
     pnvu.address,
     pnvu.platform_group,
-    pnvu.platform,
+    case
+        when pnvu.platform = '0x39da41747a83aee658334415666f3ef92dd0d541' or
+             pnvu.platform = '0x000000000000ad05ccc4f10045630fb830b95127'
+            then '0x39da41747a83aee658334415666f3ef92dd0d541'
+        when pnvu.platform = '0x00000000006c3852cbef3e08e8df289169ede581' or
+             pnvu.platform = '0x7be8076f4ea4a4ad08075c2508e481d6c946d12b'
+            or pnvu.platform = '0x7f268357a8c2552623316e2562d90e642bb538e5'
+            then '0x00000000006c3852cbef3e08e8df289169ede581'
+        else pnvu.platform
+        end as platform,
     pnvu.quote_token,
     pnvu.token,
     'Buy',
@@ -47,7 +56,16 @@ into
 select
     pnvu.address,
     pnvu.platform_group,
-    pnvu.platform,
+    case
+        when pnvu.platform = '0x39da41747a83aee658334415666f3ef92dd0d541' or
+             pnvu.platform = '0x000000000000ad05ccc4f10045630fb830b95127'
+            then '0x39da41747a83aee658334415666f3ef92dd0d541'
+        when pnvu.platform = '0x00000000006c3852cbef3e08e8df289169ede581' or
+             pnvu.platform = '0x7be8076f4ea4a4ad08075c2508e481d6c946d12b'
+            or pnvu.platform = '0x7f268357a8c2552623316e2562d90e642bb538e5'
+            then '0x00000000006c3852cbef3e08e8df289169ede581'
+        else pnvu.platform
+        end as platform,
     pnvu.quote_token,
     pnvu.token,
     'Sale',
