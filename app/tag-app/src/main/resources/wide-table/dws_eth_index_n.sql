@@ -592,7 +592,7 @@ group by token_balance_volume_usd_temp.address,token
 insert into  dws_eth_index_n_tmp2
 select
     'DEFi' as  b_type
-     , 'token' as statistical_type
+     , 'LP' as statistical_type
      ,token_balance_volume_usd_temp.address
      ,'ALLNET' as project
      ,factory_type  as platform_name
@@ -776,7 +776,7 @@ group by token_volume_usd_temp.address,token_volume_usd_temp.token
 insert into  dws_eth_index_n_tmp2
 select
     'DEFi' as  b_type
-     , 'token' as statistical_type
+     , 'LP' as statistical_type
      , token_volume_usd_temp.address
      ,'ALLNET' as project
      ,factory_type  as platform_name
@@ -900,7 +900,7 @@ group by token_holding_temp.address,token_holding_temp.token
 insert into  dws_eth_index_n_tmp2
 select
     'DEFi' as  b_type
-     , 'token' as statistical_type
+     , 'LP' as statistical_type
      ,token_holding_temp.address
      ,'ALLNET' as project
      ,factory_type  as platform_name
@@ -984,7 +984,7 @@ group by token_holding_time_temp.address,token
 insert into  dws_eth_index_n_tmp2
 select
     'DEFi' as  b_type
-     , 'token' as statistical_type
+     , 'LP' as statistical_type
      ,token_holding_time_temp.address
      ,'ALLNET' as project
      ,factory_type  as platform_name
@@ -1070,7 +1070,7 @@ group by token_holding_vol_count_temp.address,token
 insert into  dws_eth_index_n_tmp2
 select
     'DEFi' as  b_type
-     , 'token' as statistical_type
+     , 'LP' as statistical_type
      ,token_holding_vol_count_temp.address
      ,'ALLNET' as project
      ,factory_type  as platform_name
