@@ -2956,369 +2956,369 @@ values ('address_label_nft_volume_top','
 		) s1
 	where
         s1.rn <= 100;',1);
-
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_transfer_count_grade','	truncate
-		table public.address_label_nft_transfer_count_grade;
-
-	insert
-	into public.address_label_nft_transfer_count_grade(address,
-													label_type,
-													label_name,
-
-													updated_at)
-	select address
-			,
-		label_type
-			,
-		label_type||''_''||case
-			when sum_count >= 1
-				and sum_count < 10 then ''L1''
-			when sum_count >= 10
-				and sum_count < 40 then ''L2''
-			when sum_count >= 40
-				and sum_count < 80 then ''L3''
-			when sum_count >= 80
-				and sum_count < 120 then ''L4''
-			when sum_count >= 120
-				and sum_count < 160 then ''L5''
-			when sum_count >= 160
-				and sum_count < 200 then ''L6''
-			when sum_count >= 200
-				and sum_count < 400 then ''Low''
-			when sum_count >= 400
-				and sum_count < 619 then ''Medium''
-			when sum_count >= 619 then ''High''
-			end as label_name,
-			now()   as updated_at
-	from (
-         
-         select a1.address,
-                a2.seq_flag,
-                a2.label_type,
-                sum(total_transfer_count) as sum_count
-         from nft_transfer_holding_temp a1
-                  inner join dim_project_token_type_temp a2
-                             on a1.token = a2.token   and
-                                a2.type = ''Transfer'' and
-                                a2.data_subject = ''count'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
-		and (a2.project ='''' or a2.project =''ALL'')
-         group by a1.address,
-             a2.seq_flag,
-             a2.label_type
-         union all
-         
-         select a1.address,
-             a2.seq_flag,
-             a2.label_type,
-             sum(total_transfer_count) as sum_count
-         from nft_transfer_holding_temp a1
-             inner join dim_project_token_type_temp a2
-         on a2.token = ''ALL''   and
-             a2.type = ''Transfer'' and
-             a2.data_subject = ''count'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
-             and (a2.project ='''' or a2.project =''ALL'')
-         group by a1.address,
-             a2.seq_flag,
-             a2.label_type) t where sum_count >= 1;',1);
-
-
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_transfer_volume_grade','	truncate
-		table public.address_label_nft_transfer_volume_grade;
-
-	insert
-	into public.address_label_nft_transfer_volume_grade(address,
-														label_type,
-														label_name,
-
-														updated_at)
-	select address
-			,
-		label_type
-			,
-		label_type||''_''||case
-			when volume_usd >= 1
-				and volume_usd < 3 then ''L1''
-			when volume_usd >= 3
-				and volume_usd < 7 then ''L2''
-			when volume_usd >= 7
-				and volume_usd < 21 then ''L3''
-			when volume_usd >= 21
-				and volume_usd < 101 then ''L4''
-			when volume_usd >= 101
-				and volume_usd < 201 then ''L5''
-			when volume_usd >= 201 then ''L6''
-			end as label_name,
-			now()   as updated_at
-	from (
-         
-         select a1.address,
-                a2.seq_flag,
-                a2.label_type,
-                sum(total_transfer_volume) as volume_usd
-         from nft_transfer_holding_temp a1
-                  inner join dim_project_token_type a2
-                             on a1.token = a2.token   and
-                                a2.type = ''Transfer'' and
-                                a2.data_subject = ''volume_grade'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
-								and (a2.project ='''' or a2.project =''ALL'')
-         group by a1.address,
-             a2.seq_flag,
-             a2.label_type
-         union all
-         
-         select a1.address,
-             a2.seq_flag,
-             a2.label_type,
-             sum(total_transfer_volume) as volume_usd
-         from nft_transfer_holding_temp a1
-             inner join dim_project_token_type a2
-         on a2.token = ''ALL''   and
-             a2.type = ''Transfer'' and
-             a2.data_subject = ''volume_grade'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%'' and (a2.project ='''' or a2.project =''ALL'')
-         group by a1.address,
-             a2.seq_flag,
-             a2.label_type) t where volume_usd >= 1;',1);
-
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_transfer_volume_count_rank','
-	truncate
-		table public.address_label_nft_transfer_volume_count_rank;
-
-	insert
-	into public.address_label_nft_transfer_volume_count_rank (address,
-															label_type,
-															label_name,
-
-															updated_at)
-	select tb1.address ,
-		tb2.label_type,
-		tb2.label_type||''_ELITE_NFT_TRADER'' as label_name,
-			now()   as updated_at
-	from (select t1.id,
-				t1.address,
-				t1.token,
-				t1.total_transfer_volume,
-				t1.count_sum,
-				t1.count_sum_total,
-				t1.zb_rate,
-				t1.zb_rate_transfer_count
-		from (select a2.id,
-					a2.address,
-					a2.token,
-					a2.total_transfer_volume,
-					a2.count_sum,
-					a2.count_sum_total,
-					cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate,
-					cast(a2.transfer_count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate_transfer_count
-				from (select a1.id,
-							a1.address,
-							a1.token,
-							a1.total_transfer_volume,
-							a1.count_sum,
-							a1.transfer_count_sum,
-							a10.count_sum_total
-					from (SELECT
-								md5(CAST(random() AS varchar)) AS id,
-								a1.address,
-								a1.token,
-								a1.total_transfer_volume,
-								ROW_NUMBER() OVER(PARTITION BY seq_flag ORDER BY total_transfer_volume DESC,address asc) AS count_sum,
-									ROW_NUMBER() OVER(PARTITION BY seq_flag ORDER BY total_transfer_count DESC,address asc) AS transfer_count_sum
-							FROM
-								(
-									SELECT
-										s1.address,
-										s2.seq_flag,
-										s1.token,
-										sum(s1.total_transfer_volume) AS total_transfer_volume,
-										sum(s1.total_transfer_count) AS total_transfer_count
-									FROM (
-											select  address
-												,token
-												,total_transfer_volume
-												,total_transfer_count
-											from nft_transfer_holding_temp
-											union all
-											select  address
-												,''ALL'' as token
-												,total_transfer_volume
-												,total_transfer_count
-											from nft_transfer_holding_temp
-										)
-											s1
-											INNER JOIN dim_project_token_type s2
-														ON
-																	s1.token = s2.token
-																AND s2.data_subject = ''volume_elite''
-									and s2.label_type like ''%NFT%'' AND  s2.label_type NOT  LIKE ''%WEB3%'' and (s2.project ='''' or s2.project =''ALL'')
-									WHERE
-										total_transfer_volume >= 1
-									GROUP BY
-										s1.address,
-										s1.token,
-										s2.seq_flag) AS a1) as a1
-							inner join
-						(select count(distinct address) as count_sum_total ,token
-							from (
-									select  address
-										,token
-									from nft_transfer_holding_temp
-									union all
-									select  address
-										,''ALL'' as token
-									from nft_transfer_holding_temp) nth group by  token) as a10
-						on a10.token = a1.token) as a2) as t1
-		) tb1
-			inner join
-		dim_project_token_type tb2
-		on
-				tb1.token = tb2.token
-	where tb1.total_transfer_volume >= 1
-  and tb2.type = ''Transfer''  and (tb2.project ='''' or tb2.project =''ALL'')
-  and zb_rate <= 0.001 and zb_rate_transfer_count<=0.001
-  and tb2.data_subject = ''volume_elite'' and tb2.label_type like ''%NFT%'' AND  tb2.label_type NOT  LIKE ''%WEB3%'';',1);
-
-
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_transfer_volume_rank','
-	truncate
-		table public.address_label_nft_transfer_volume_rank;
-
-	insert
-	into public.address_label_nft_transfer_volume_rank (address,
-														label_type,
-														label_name,
-
-														updated_at)
-	select tb1.address ,
-		tb2.label_type,
-		tb2.label_type||''_''||case
-				when zb_rate > 0.01 and zb_rate <= 0.025 then ''RARE_NFT_TRADER''
-				when zb_rate > 0.001 and zb_rate <= 0.01 then ''EPIC_NFT_TRADER''
-				when zb_rate > 0.025 and zb_rate <= 0.1 then ''UNCOMMON_NFT_TRADER''
-				when zb_rate <= 0.001 then ''LEGENDARY_NFT_TRADER''
-			end as label_name,
-			now()   as updated_at
-	from (select t1.id,
-				t1.address,
-				t1.token,
-				t1.total_transfer_volume,
-				t1.count_sum,
-				t1.count_sum_total,
-				t1.zb_rate
-		from (select a2.id,
-					a2.address,
-					a2.token,
-					a2.total_transfer_volume,
-					a2.count_sum,
-					a2.count_sum_total,
-					cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
-				from (select a1.id,
-							a1.address,
-							a1.token,
-							a1.total_transfer_volume,
-							a1.count_sum,
-							a10.count_sum_total
-					from (SELECT
-								md5(CAST(random() AS varchar)) AS id,
-								a1.address,
-								a1.token,
-								a1.total_transfer_volume,
-								ROW_NUMBER() OVER(PARTITION BY seq_flag
-	ORDER BY
-		total_transfer_volume DESC,address asc) AS count_sum
-							FROM
-								(
-									SELECT
-										s1.address,
-										s2.seq_flag,
-										s1.token,
-										sum(s1.total_transfer_volume) AS total_transfer_volume
-									FROM (
-											select  address
-												,token
-												,total_transfer_volume
-											from nft_transfer_holding_temp
-											union all
-											select  address
-												,''ALL'' as token
-												,total_transfer_volume
-											from nft_transfer_holding_temp
-										)
-											s1
-											INNER JOIN dim_project_token_type s2
-														ON
-																	s1.token = s2.token
-																AND s2.data_subject = ''volume_rank'' and s2.label_type like ''%NFT%'' AND  s2.label_type NOT  LIKE ''%WEB3%''
-									WHERE
-										total_transfer_volume >= 1
-									GROUP BY
-										s1.address,
-										s1.token,
-										s2.seq_flag) AS a1) as a1
-							inner join
-						(select count(distinct address) as count_sum_total ,token
-							from (
-									select  address
-										,token
-									from nft_transfer_holding_temp
-									union all
-									select  address
-										,''ALL'' as token
-									from nft_transfer_holding_temp) nth group by  token) as a10
-						on a10.token = a1.token) as a2) as t1
-		) tb1
-			inner join
-		dim_project_token_type tb2
-		on
-				tb1.token = tb2.token
-	where tb1.total_transfer_volume >= 1
-  and tb2.type = ''Transfer''  and (tb2.project ='''' or tb2.project =''ALL'')
-  and tb2.data_subject = ''volume_rank''   and tb2.label_type like ''%NFT%'' AND  tb2.label_type NOT  LIKE ''%WEB3%'' and  zb_rate <= 0.1;',1);
-
-insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
-values ('address_label_nft_transfer_volume_top','	truncate table address_label_nft_transfer_volume_top;
-	insert into public.address_label_nft_transfer_volume_top (address,
-															label_type,
-															label_name,
-
-															updated_at)
-	select
-		s1.address,
-		s1.label_type,
-		label_type||''_''||''TOP'' as label_name,
-			now() as updated_at
-	from
-		(
-			select
-				a1.address,
-				a2.label_type,
-
-				row_number() over( partition by a2.token
-		order by
-			total_transfer_volume desc,address asc) as rn
-			from
-				(
-					select  address
-						,token
-						,total_transfer_volume
-					from nft_transfer_holding_temp
-					union all
-					select  address
-						,''ALL'' as token
-						,total_transfer_volume
-					from nft_transfer_holding_temp) a1
-					inner join dim_project_token_type a2
-							on
-										a1.token = a2.token
-									and a2.type = ''Transfer'' and (a2.project ='''' or a2.project =''ALL'')
-									and a2.data_subject = ''volume_top'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
-		) s1
-	where
-        s1.rn <= 100;',1);
-
+--
+-- insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+-- values ('address_label_nft_transfer_count_grade','	truncate
+-- 		table public.address_label_nft_transfer_count_grade;
+--
+-- 	insert
+-- 	into public.address_label_nft_transfer_count_grade(address,
+-- 													label_type,
+-- 													label_name,
+--
+-- 													updated_at)
+-- 	select address
+-- 			,
+-- 		label_type
+-- 			,
+-- 		label_type||''_''||case
+-- 			when sum_count >= 1
+-- 				and sum_count < 10 then ''L1''
+-- 			when sum_count >= 10
+-- 				and sum_count < 40 then ''L2''
+-- 			when sum_count >= 40
+-- 				and sum_count < 80 then ''L3''
+-- 			when sum_count >= 80
+-- 				and sum_count < 120 then ''L4''
+-- 			when sum_count >= 120
+-- 				and sum_count < 160 then ''L5''
+-- 			when sum_count >= 160
+-- 				and sum_count < 200 then ''L6''
+-- 			when sum_count >= 200
+-- 				and sum_count < 400 then ''Low''
+-- 			when sum_count >= 400
+-- 				and sum_count < 619 then ''Medium''
+-- 			when sum_count >= 619 then ''High''
+-- 			end as label_name,
+-- 			now()   as updated_at
+-- 	from (
+--
+--          select a1.address,
+--                 a2.seq_flag,
+--                 a2.label_type,
+--                 sum(total_transfer_count) as sum_count
+--          from nft_transfer_holding_temp a1
+--                   inner join dim_project_token_type_temp a2
+--                              on a1.token = a2.token   and
+--                                 a2.type = ''Transfer'' and
+--                                 a2.data_subject = ''count'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
+-- 		and (a2.project ='''' or a2.project =''ALL'')
+--          group by a1.address,
+--              a2.seq_flag,
+--              a2.label_type
+--          union all
+--
+--          select a1.address,
+--              a2.seq_flag,
+--              a2.label_type,
+--              sum(total_transfer_count) as sum_count
+--          from nft_transfer_holding_temp a1
+--              inner join dim_project_token_type_temp a2
+--          on a2.token = ''ALL''   and
+--              a2.type = ''Transfer'' and
+--              a2.data_subject = ''count'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
+--              and (a2.project ='''' or a2.project =''ALL'')
+--          group by a1.address,
+--              a2.seq_flag,
+--              a2.label_type) t where sum_count >= 1;',1);
+--
+--
+-- insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+-- values ('address_label_nft_transfer_volume_grade','	truncate
+-- 		table public.address_label_nft_transfer_volume_grade;
+--
+-- 	insert
+-- 	into public.address_label_nft_transfer_volume_grade(address,
+-- 														label_type,
+-- 														label_name,
+--
+-- 														updated_at)
+-- 	select address
+-- 			,
+-- 		label_type
+-- 			,
+-- 		label_type||''_''||case
+-- 			when volume_usd >= 1
+-- 				and volume_usd < 3 then ''L1''
+-- 			when volume_usd >= 3
+-- 				and volume_usd < 7 then ''L2''
+-- 			when volume_usd >= 7
+-- 				and volume_usd < 21 then ''L3''
+-- 			when volume_usd >= 21
+-- 				and volume_usd < 101 then ''L4''
+-- 			when volume_usd >= 101
+-- 				and volume_usd < 201 then ''L5''
+-- 			when volume_usd >= 201 then ''L6''
+-- 			end as label_name,
+-- 			now()   as updated_at
+-- 	from (
+--
+--          select a1.address,
+--                 a2.seq_flag,
+--                 a2.label_type,
+--                 sum(total_transfer_volume) as volume_usd
+--          from nft_transfer_holding_temp a1
+--                   inner join dim_project_token_type a2
+--                              on a1.token = a2.token   and
+--                                 a2.type = ''Transfer'' and
+--                                 a2.data_subject = ''volume_grade'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
+-- 								and (a2.project ='''' or a2.project =''ALL'')
+--          group by a1.address,
+--              a2.seq_flag,
+--              a2.label_type
+--          union all
+--
+--          select a1.address,
+--              a2.seq_flag,
+--              a2.label_type,
+--              sum(total_transfer_volume) as volume_usd
+--          from nft_transfer_holding_temp a1
+--              inner join dim_project_token_type a2
+--          on a2.token = ''ALL''   and
+--              a2.type = ''Transfer'' and
+--              a2.data_subject = ''volume_grade'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%'' and (a2.project ='''' or a2.project =''ALL'')
+--          group by a1.address,
+--              a2.seq_flag,
+--              a2.label_type) t where volume_usd >= 1;',1);
+--
+-- insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+-- values ('address_label_nft_transfer_volume_count_rank','
+-- 	truncate
+-- 		table public.address_label_nft_transfer_volume_count_rank;
+--
+-- 	insert
+-- 	into public.address_label_nft_transfer_volume_count_rank (address,
+-- 															label_type,
+-- 															label_name,
+--
+-- 															updated_at)
+-- 	select tb1.address ,
+-- 		tb2.label_type,
+-- 		tb2.label_type||''_ELITE_NFT_TRADER'' as label_name,
+-- 			now()   as updated_at
+-- 	from (select t1.id,
+-- 				t1.address,
+-- 				t1.token,
+-- 				t1.total_transfer_volume,
+-- 				t1.count_sum,
+-- 				t1.count_sum_total,
+-- 				t1.zb_rate,
+-- 				t1.zb_rate_transfer_count
+-- 		from (select a2.id,
+-- 					a2.address,
+-- 					a2.token,
+-- 					a2.total_transfer_volume,
+-- 					a2.count_sum,
+-- 					a2.count_sum_total,
+-- 					cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate,
+-- 					cast(a2.transfer_count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate_transfer_count
+-- 				from (select a1.id,
+-- 							a1.address,
+-- 							a1.token,
+-- 							a1.total_transfer_volume,
+-- 							a1.count_sum,
+-- 							a1.transfer_count_sum,
+-- 							a10.count_sum_total
+-- 					from (SELECT
+-- 								md5(CAST(random() AS varchar)) AS id,
+-- 								a1.address,
+-- 								a1.token,
+-- 								a1.total_transfer_volume,
+-- 								ROW_NUMBER() OVER(PARTITION BY seq_flag ORDER BY total_transfer_volume DESC,address asc) AS count_sum,
+-- 									ROW_NUMBER() OVER(PARTITION BY seq_flag ORDER BY total_transfer_count DESC,address asc) AS transfer_count_sum
+-- 							FROM
+-- 								(
+-- 									SELECT
+-- 										s1.address,
+-- 										s2.seq_flag,
+-- 										s1.token,
+-- 										sum(s1.total_transfer_volume) AS total_transfer_volume,
+-- 										sum(s1.total_transfer_count) AS total_transfer_count
+-- 									FROM (
+-- 											select  address
+-- 												,token
+-- 												,total_transfer_volume
+-- 												,total_transfer_count
+-- 											from nft_transfer_holding_temp
+-- 											union all
+-- 											select  address
+-- 												,''ALL'' as token
+-- 												,total_transfer_volume
+-- 												,total_transfer_count
+-- 											from nft_transfer_holding_temp
+-- 										)
+-- 											s1
+-- 											INNER JOIN dim_project_token_type s2
+-- 														ON
+-- 																	s1.token = s2.token
+-- 																AND s2.data_subject = ''volume_elite''
+-- 									and s2.label_type like ''%NFT%'' AND  s2.label_type NOT  LIKE ''%WEB3%'' and (s2.project ='''' or s2.project =''ALL'')
+-- 									WHERE
+-- 										total_transfer_volume >= 1
+-- 									GROUP BY
+-- 										s1.address,
+-- 										s1.token,
+-- 										s2.seq_flag) AS a1) as a1
+-- 							inner join
+-- 						(select count(distinct address) as count_sum_total ,token
+-- 							from (
+-- 									select  address
+-- 										,token
+-- 									from nft_transfer_holding_temp
+-- 									union all
+-- 									select  address
+-- 										,''ALL'' as token
+-- 									from nft_transfer_holding_temp) nth group by  token) as a10
+-- 						on a10.token = a1.token) as a2) as t1
+-- 		) tb1
+-- 			inner join
+-- 		dim_project_token_type tb2
+-- 		on
+-- 				tb1.token = tb2.token
+-- 	where tb1.total_transfer_volume >= 1
+--   and tb2.type = ''Transfer''  and (tb2.project ='''' or tb2.project =''ALL'')
+--   and zb_rate <= 0.001 and zb_rate_transfer_count<=0.001
+--   and tb2.data_subject = ''volume_elite'' and tb2.label_type like ''%NFT%'' AND  tb2.label_type NOT  LIKE ''%WEB3%'';',1);
+--
+--
+-- insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+-- values ('address_label_nft_transfer_volume_rank','
+-- 	truncate
+-- 		table public.address_label_nft_transfer_volume_rank;
+--
+-- 	insert
+-- 	into public.address_label_nft_transfer_volume_rank (address,
+-- 														label_type,
+-- 														label_name,
+--
+-- 														updated_at)
+-- 	select tb1.address ,
+-- 		tb2.label_type,
+-- 		tb2.label_type||''_''||case
+-- 				when zb_rate > 0.01 and zb_rate <= 0.025 then ''RARE_NFT_TRADER''
+-- 				when zb_rate > 0.001 and zb_rate <= 0.01 then ''EPIC_NFT_TRADER''
+-- 				when zb_rate > 0.025 and zb_rate <= 0.1 then ''UNCOMMON_NFT_TRADER''
+-- 				when zb_rate <= 0.001 then ''LEGENDARY_NFT_TRADER''
+-- 			end as label_name,
+-- 			now()   as updated_at
+-- 	from (select t1.id,
+-- 				t1.address,
+-- 				t1.token,
+-- 				t1.total_transfer_volume,
+-- 				t1.count_sum,
+-- 				t1.count_sum_total,
+-- 				t1.zb_rate
+-- 		from (select a2.id,
+-- 					a2.address,
+-- 					a2.token,
+-- 					a2.total_transfer_volume,
+-- 					a2.count_sum,
+-- 					a2.count_sum_total,
+-- 					cast(a2.count_sum as numeric(20, 8)) / cast(a2.count_sum_total as numeric(20, 8)) as zb_rate
+-- 				from (select a1.id,
+-- 							a1.address,
+-- 							a1.token,
+-- 							a1.total_transfer_volume,
+-- 							a1.count_sum,
+-- 							a10.count_sum_total
+-- 					from (SELECT
+-- 								md5(CAST(random() AS varchar)) AS id,
+-- 								a1.address,
+-- 								a1.token,
+-- 								a1.total_transfer_volume,
+-- 								ROW_NUMBER() OVER(PARTITION BY seq_flag
+-- 	ORDER BY
+-- 		total_transfer_volume DESC,address asc) AS count_sum
+-- 							FROM
+-- 								(
+-- 									SELECT
+-- 										s1.address,
+-- 										s2.seq_flag,
+-- 										s1.token,
+-- 										sum(s1.total_transfer_volume) AS total_transfer_volume
+-- 									FROM (
+-- 											select  address
+-- 												,token
+-- 												,total_transfer_volume
+-- 											from nft_transfer_holding_temp
+-- 											union all
+-- 											select  address
+-- 												,''ALL'' as token
+-- 												,total_transfer_volume
+-- 											from nft_transfer_holding_temp
+-- 										)
+-- 											s1
+-- 											INNER JOIN dim_project_token_type s2
+-- 														ON
+-- 																	s1.token = s2.token
+-- 																AND s2.data_subject = ''volume_rank'' and s2.label_type like ''%NFT%'' AND  s2.label_type NOT  LIKE ''%WEB3%''
+-- 									WHERE
+-- 										total_transfer_volume >= 1
+-- 									GROUP BY
+-- 										s1.address,
+-- 										s1.token,
+-- 										s2.seq_flag) AS a1) as a1
+-- 							inner join
+-- 						(select count(distinct address) as count_sum_total ,token
+-- 							from (
+-- 									select  address
+-- 										,token
+-- 									from nft_transfer_holding_temp
+-- 									union all
+-- 									select  address
+-- 										,''ALL'' as token
+-- 									from nft_transfer_holding_temp) nth group by  token) as a10
+-- 						on a10.token = a1.token) as a2) as t1
+-- 		) tb1
+-- 			inner join
+-- 		dim_project_token_type tb2
+-- 		on
+-- 				tb1.token = tb2.token
+-- 	where tb1.total_transfer_volume >= 1
+--   and tb2.type = ''Transfer''  and (tb2.project ='''' or tb2.project =''ALL'')
+--   and tb2.data_subject = ''volume_rank''   and tb2.label_type like ''%NFT%'' AND  tb2.label_type NOT  LIKE ''%WEB3%'' and  zb_rate <= 0.1;',1);
+--
+-- insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
+-- values ('address_label_nft_transfer_volume_top','	truncate table address_label_nft_transfer_volume_top;
+-- 	insert into public.address_label_nft_transfer_volume_top (address,
+-- 															label_type,
+-- 															label_name,
+--
+-- 															updated_at)
+-- 	select
+-- 		s1.address,
+-- 		s1.label_type,
+-- 		label_type||''_''||''TOP'' as label_name,
+-- 			now() as updated_at
+-- 	from
+-- 		(
+-- 			select
+-- 				a1.address,
+-- 				a2.label_type,
+--
+-- 				row_number() over( partition by a2.token
+-- 		order by
+-- 			total_transfer_volume desc,address asc) as rn
+-- 			from
+-- 				(
+-- 					select  address
+-- 						,token
+-- 						,total_transfer_volume
+-- 					from nft_transfer_holding_temp
+-- 					union all
+-- 					select  address
+-- 						,''ALL'' as token
+-- 						,total_transfer_volume
+-- 					from nft_transfer_holding_temp) a1
+-- 					inner join dim_project_token_type a2
+-- 							on
+-- 										a1.token = a2.token
+-- 									and a2.type = ''Transfer'' and (a2.project ='''' or a2.project =''ALL'')
+-- 									and a2.data_subject = ''volume_top'' and a2.label_type like ''%NFT%'' AND  a2.label_type NOT  LIKE ''%WEB3%''
+-- 		) s1
+-- 	where
+--         s1.rn <= 100;',1);
+--
 
 insert into dim_rule_sql_content (rule_name, rule_sql, rule_order)
 values ('address_label_token_balance_provider','	truncate table address_label_token_balance_provider;

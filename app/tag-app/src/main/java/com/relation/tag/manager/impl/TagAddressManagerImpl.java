@@ -106,7 +106,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
          * 如果正在打标签，等待.....
          */
         checkTagBegin(batchDate);
-        if (!checkResult("address_label", batchDate, 60, true)) {
+        if (!checkResult("address_label", batchDate, 55, true)) {
             buildTagBasicData(batchDate);
             check("dim_rule_content", 60 * 1000, batchDate, 1, false);
             tagSummaryInit(batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH);
@@ -114,7 +114,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             exceTagSql(batchDate,filePath);
             exceWideTableSql(batchDate,WIDE_TABLE_PATH);
         }
-        check("address_label", 60 * 1000, batchDate, 60, true);
+        check("address_label", 60 * 1000, batchDate, 55, true);
         tagMerge(batchDate);
     }
 

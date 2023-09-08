@@ -103,7 +103,7 @@ from (select address,
                                              from nft_volume_count_temp
                                              where transfer_volume > 0
                                                and address not in (select address from exclude_address)
-                                               and token in (select token_id from dim_project_token_type_rank_temp dpttr)
+                                               and token in(select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')
                                              union all
                                              -- project(null)+nft（ALL）+type
                                              select address,
@@ -115,12 +115,11 @@ from (select address,
                                              from nft_volume_count_temp
                                              where transfer_volume > 0
                                                and address not in (select address from exclude_address)
-                                               and token in (select token_id from dim_project_token_type_rank_temp dpttr)) s1
+                                               and token in(select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')) s1
                                              inner join dim_project_token_type_temp s2 on
                                                 s1.token = s2.token
                                             and s1.type = s2.type
                                             and s2.project = ''
-                                            and s2.type != 'Transfer'
                                                             and s2.data_subject = 'volume_elite'
                                                             and s2.wired_type='NFT'
                                     where
@@ -143,7 +142,7 @@ from (select address,
                                                       from nft_volume_count_temp
                                                       where transfer_volume > 0
                                                         and address not in (select address from exclude_address)
-                                                        and token in (select token_id from dim_project_token_type_rank_temp dpttr)
+                                                        and token in(select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')
                                                       union all
                                                       -- project(null)+nft（ALL）+type
                                                       select address,
@@ -153,12 +152,11 @@ from (select address,
                                                       from nft_volume_count_temp
                                                       where transfer_volume > 0
                                                         and address not in (select address from exclude_address)
-                                                        and token in (select token_id from dim_project_token_type_rank_temp dpttr)) totala
+                                                        and token in(select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')) totala
                                                       inner join dim_project_token_type_temp tb2 on
                                                          totala.token = tb2.token
                                                      and totala.type = tb2.type
                                                      and tb2.project = ''
-                                                     and tb2.type != 'Transfer'
                                                     and tb2.data_subject = 'volume_elite'
                                             and tb2.wired_type='NFT'
                                                     and  totala.recent_time_code = tb2.recent_code
@@ -175,7 +173,6 @@ from (select address,
                               and dptt.project = ''
                               and dptt.data_subject = 'volume_elite'
                              and dptt.wired_type='NFT'
-                              and dptt.type != 'Transfer'
     and  tb1.recent_time_code = dptt.recent_code)
       where tb1.transfer_volume >= 1
         and zb_rate <= 0.01

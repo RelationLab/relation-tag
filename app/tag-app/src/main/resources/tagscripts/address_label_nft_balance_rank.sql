@@ -98,8 +98,8 @@ from (select address,
                                                     a1.token,
                                                     a1.balance
                                              from nft_holding_temp a1
-                                                      inner join dim_project_token_type_rank_temp a2 on (a1.token = a2.token_id)
                                              where balance >= 1
+                                               and token in (select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')
                                                and address not in (select address from exclude_address)
                                                and recent_time_code = 'ALL'
                                              union all
@@ -108,8 +108,8 @@ from (select address,
                                                     'ALL' as token,
                                                     a1.balance
                                              from nft_holding_temp a1
-                                                      inner join dim_project_token_type_rank_temp a2 on (a1.token = a2.token_id)
                                              where balance >= 1
+                                               and token in (select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')
                                                and address not in (select address from exclude_address)
                                                and recent_time_code = 'ALL') s1
                                              inner join dim_project_token_type_temp s2
@@ -130,8 +130,8 @@ from (select address,
                                            a1.token,
                                            a1.balance
                                     from nft_holding_temp a1
-                                             inner join dim_project_token_type_rank_temp a2 on (a1.token = a2.token_id)
                                     where balance >= 1
+                                      and token in (select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')
                                       and address not in (select address from exclude_address)
                                       and recent_time_code = 'ALL'
                                     union all
@@ -140,8 +140,8 @@ from (select address,
                                            'ALL' as token,
                                            a1.balance
                                     from nft_holding_temp a1
-                                             inner join dim_project_token_type_rank_temp a2 on (a1.token = a2.token_id)
                                     where balance >= 1
+                                      and token in (select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')
                                       and address not in (select address from exclude_address)
                                       and recent_time_code = 'ALL') totala
                                        inner join dim_project_token_type_temp tb2

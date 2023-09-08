@@ -73,7 +73,7 @@ from (select s1.address,
                            from nft_volume_count_temp
                            where transfer_volume >= 1
                              and address not in (select address from exclude_address)
-                             and token in (select token_id from dim_project_token_type_rank_temp dpttr)
+                             and token in (select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')
                            union all
                            -- project(null)+nft(ALL)+type(null)
                            select address,
@@ -84,7 +84,7 @@ from (select s1.address,
                            from nft_volume_count_temp
                            where transfer_volume >= 1
                              and address not in (select address from exclude_address)
-                             and token in (select token_id from dim_project_token_type_rank_temp dpttr)
+                             and token in (select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')
                            union all
                            -- project(null)+nft+type
                            select address,
@@ -95,7 +95,7 @@ from (select s1.address,
                            from nft_volume_count_temp
                            where transfer_volume >= 1
                              and address not in (select address from exclude_address)
-                             and token in (select token_id from dim_project_token_type_rank_temp dpttr)
+                             and token in (select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')
                            union all
                            -- project(null)+nft+type(ALL)
                            select address,
@@ -106,7 +106,7 @@ from (select s1.address,
                            from nft_volume_count_temp
                            where transfer_volume >= 1
                              and address not in (select address from exclude_address)
-                             and token in (select token_id from dim_project_token_type_rank_temp dpttr)
+                             and token in (select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')
                            union all
                            -- project(null)+nft（ALL）+type
                            select address,
@@ -117,7 +117,7 @@ from (select s1.address,
                            from nft_volume_count_temp
                            where transfer_volume >= 1
                              and address not in (select address from exclude_address)
-                             and token in (select token_id from dim_project_token_type_rank_temp dpttr)) tatola
+                             and token in (select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')) tatola
                            inner join dim_project_token_type_temp a2
                                       on
                                                   tatola.token = a2.token
@@ -125,7 +125,6 @@ from (select s1.address,
                                               and a2.data_subject = 'volume_top'
                                             and a2.wired_type='NFT'
                                               and a2.recent_code = tatola.recent_time_code
-                                              and a2.type != 'Transfer'
                                                    and a2.project = ''
                   group by
                       address,
@@ -136,7 +135,6 @@ from (select s1.address,
           and dptt.type = s1.type
           and dptt.data_subject = 'volume_top'
          and dptt.wired_type='NFT'
-          and dptt.type != 'Transfer'
                 and dptt.project = '' and dptt.recent_code = s1.recent_time_code)
       where s1.rn <= 100) t;
 insert into tag_result(table_name, batch_date)

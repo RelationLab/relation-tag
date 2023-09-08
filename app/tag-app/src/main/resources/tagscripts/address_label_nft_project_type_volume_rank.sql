@@ -285,7 +285,7 @@ from (select address,
                                              union all
                                              -- project(ALL)-token(ALL)-type
                                              select a1.address,
-                                                    a1.platform,
+                                                    'ALL' as  platform_group,
                                                     'ALL' as token,
                                                     a1.type,
                                                     volume_usd,
@@ -304,7 +304,7 @@ from (select address,
                                                -- project(ALL)-token-type
                                              union all
                                              select a1.address,
-                                                    a1.platform,
+                                                    'ALL' as  platform_group,
                                                     a1.token,
                                                     a1.type,
                                                     volume_usd,

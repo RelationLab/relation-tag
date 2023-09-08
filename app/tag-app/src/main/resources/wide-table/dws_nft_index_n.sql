@@ -4,43 +4,45 @@ insert into dws_nft_index_n_tmp1
 -- 所有平台 
 select
 -- 维度
-    'nft'                                                                                   as b_type             --  业务类型
-     , 'nft'                                                                                   asstatistical_type -- 业务统计类型
+    'nft'                                                              as b_type             --  业务类型
+     , 'nft'                                                              asstatistical_type -- 业务统计类型
      , s1.address
-     , 'ALLNET'                                                                             as project            --ALL  是产品中全部5个的平台     如果为空就是全部
-     , 'ALLNET'                                                                             AS platform_name
+     , 'ALLNET'                                                        as project            --ALL  是产品中全部5个的平台     如果为空就是全部
+     , 'ALLNET'                                                        AS platform_name
      , s1.token
      --    ,  s2.platform as  asset
-     , 'ALL'                                                                                as type
-     , null                                                                                 as first_tx_time      --最早交易时间
-     , null                                                                                 as latest_tx_time     -- 最后交易时间
-     , null     as transaction_count
-     , null   as transaction_volume
-     , sum(case when recent_time_code = 'ALL' then balance else 0 end)                      as balance_count
-     , null                                                                                 as balance_usd
-     , null  as transaction_volume_3d
-     , null  as transaction_volume_7d
-     , null as transaction_volume_15d
-     , null  as transaction_volume_1m
-     , null  as transaction_volume_3m
-     , null  as transaction_volume_6m
-     , null  as transaction_volume_1y
-     , null  as transaction_volume_2y
+     , 'ALL'                                                           as type
+     , null                                                            as first_tx_time      --最早交易时间
+     , null                                                            as latest_tx_time     -- 最后交易时间
+     , null                                                            as transaction_count
+     , null                                                            as transaction_volume
+     , sum(case when recent_time_code = 'ALL' then balance else 0 end) as balance_count
+     , null                                                            as balance_usd
+     , null                                                            as transaction_volume_3d
+     , null                                                            as transaction_volume_7d
+     , null                                                            as transaction_volume_15d
+     , null                                                            as transaction_volume_1m
+     , null                                                            as transaction_volume_3m
+     , null                                                            as transaction_volume_6m
+     , null                                                            as transaction_volume_1y
+     , null                                                            as transaction_volume_2y
 
-     , null  as transaction_count_3d
-     , null   as transaction_count_7d
-     , null  as transaction_count_15d
-     , null   as transaction_count_1m
-     , null   as transaction_count_3m
-     , null   as transaction_count_6m
-     , null   as transaction_count_1y
-     , null   as transaction_count_2y
-     , now()                                                                                as etl_update_time
+     , null                                                            as transaction_count_3d
+     , null                                                            as transaction_count_7d
+     , null                                                            as transaction_count_15d
+     , null                                                            as transaction_count_1m
+     , null                                                            as transaction_count_3m
+     , null                                                            as transaction_count_6m
+     , null                                                            as transaction_count_1y
+     , null                                                            as transaction_count_2y
+     , now()                                                           as etl_update_time
 from nft_holding_temp s1
          inner join nft_sync_address_temp s2
                     on s1.token = s2.address
      --  left join  platform_nft_sync_address_temp  s3
-where s2.type <> 'ERC1155' and s1.balance>0
+where s2.type <> 'ERC1155'
+  and s1.balance > 0
+  and s1.address not in (select address from exclude_address)
 group by s1.address
        , s1.token
 --  , s2.platform
@@ -52,43 +54,45 @@ insert into dws_nft_index_n_tmp1
 -- 所有平台 
 select
 -- 维度
-    'nft'                                                                                   as b_type             --  业务类型
-     , 'nft'                                                                                   asstatistical_type -- 业务统计类型
+    'nft'                                                              as b_type             --  业务类型
+     , 'nft'                                                              asstatistical_type -- 业务统计类型
      , s1.address
-     , 'ALLNET'                                                                             as project            --ALL  是产品中全部5个的平台     如果为空就是全部
-     , 'ALLNET'                                                                             AS platform_name
-     , 'ALL'                                                                                AS token
+     , 'ALLNET'                                                        as project            --ALL  是产品中全部5个的平台     如果为空就是全部
+     , 'ALLNET'                                                        AS platform_name
+     , 'ALL'                                                           AS token
      --    ,  s2.platform as  asset
-     , 'ALL'                                                                                as type
-     , null                                                                                 as first_tx_time      --最早交易时间
-     , null                                                                                 as latest_tx_time     -- 最后交易时间
-     , null     as transaction_count
-     , null    as transaction_volume
-     , sum(case when recent_time_code = 'ALL' then balance else 0 end)                      as balance_count
-     , null                                                                                 as balance_usd
-     , null  as transaction_volume_3d
-     , null  as transaction_volume_7d
-     , null as transaction_volume_15d
-     , null  as transaction_volume_1m
-     , null  as transaction_volume_3m
-     , null  as transaction_volume_6m
-     , null  as transaction_volume_1y
-     , null  as transaction_volume_2y
+     , 'ALL'                                                           as type
+     , null                                                            as first_tx_time      --最早交易时间
+     , null                                                            as latest_tx_time     -- 最后交易时间
+     , null                                                            as transaction_count
+     , null                                                            as transaction_volume
+     , sum(case when recent_time_code = 'ALL' then balance else 0 end) as balance_count
+     , null                                                            as balance_usd
+     , null                                                            as transaction_volume_3d
+     , null                                                            as transaction_volume_7d
+     , null                                                            as transaction_volume_15d
+     , null                                                            as transaction_volume_1m
+     , null                                                            as transaction_volume_3m
+     , null                                                            as transaction_volume_6m
+     , null                                                            as transaction_volume_1y
+     , null                                                            as transaction_volume_2y
 
-     , null   as transaction_count_3d
-     , null   as transaction_count_7d
-     , null  as transaction_count_15d
-     , null   as transaction_count_1m
-     , null   as transaction_count_3m
-     , null   as transaction_count_6m
-     , null   as transaction_count_1y
-     , null   as transaction_count_2y
-     , now()                                                                                as etl_update_time
+     , null                                                            as transaction_count_3d
+     , null                                                            as transaction_count_7d
+     , null                                                            as transaction_count_15d
+     , null                                                            as transaction_count_1m
+     , null                                                            as transaction_count_3m
+     , null                                                            as transaction_count_6m
+     , null                                                            as transaction_count_1y
+     , null                                                            as transaction_count_2y
+     , now()                                                           as etl_update_time
 from nft_holding_temp s1
          inner join nft_sync_address_temp s2
                     on s1.token = s2.address
      --  left join  platform_nft_sync_address_temp  s3
-where s2.type <> 'ERC1155' and s1.balance>0
+where s2.type <> 'ERC1155'
+  and s1.balance > 0
+  and s1.address not in (select address from exclude_address)
 group by s1.address
 ;
 
@@ -135,6 +139,8 @@ from nft_volume_count_temp S1
          inner join nft_sync_address_temp s2
                     on s1.token = s2.address
 where s2.type <> 'ERC1155'
+  and transfer_volume > 0
+  and s1.address not in (select address from exclude_address)
 group by s1.address, s1.token
        , s1.type
 ;
@@ -178,10 +184,12 @@ select
      , sum(case when recent_time_code = '2y' then transfer_count else null end)   as transaction_count_2y
 
      , now()                                                                      as etl_update_time
-from nft_volume_count_temp S1
+from nft_volume_count_temp s1
          inner join nft_sync_address_temp s2
                     on s1.token = s2.address
 where s2.type <> 'ERC1155'
+  and transfer_volume > 0
+  and s1.address not in (select address from exclude_address)
 group by s1.address
        , s1.type
 ;
@@ -194,7 +202,8 @@ select
 -- 维度
     'nft'                                                                           as b_type             --  业务类型
      , (case
-            when s1.type = 'Deposit' or s1.type = 'Withdraw' then 'token'
+            when
+                s3.type = 'ERC721-token' then 'token'
             else 'nft' end)                                                         as asstatistical_type -- 业务统计类型
      , s1.address
      , s1.platform                                                                  as project
@@ -205,7 +214,7 @@ select
      , null                                                                         as first_tx_time      --最早交易时间
      , null                                                                         as latest_tx_time     -- 最后交易时间
      , sum(case when recent_time_code = 'ALL' then s1.transfer_count else null end) as transaction_count
-     , sum(case when recent_time_code = 'ALL' then s1.volume_usd else null end)     as transaction_volume
+     , sum(case when recent_time_code = 'ALL' and  volume_usd >= 100 then s1.volume_usd else null end)     as transaction_volume
      , null                                                                         as balance_count
      , null                                                                         as balance_usd
 
@@ -237,13 +246,14 @@ from platform_nft_type_volume_count_temp s1
          left join nft_sync_address_temp s3
                    on s1.token = s3.address
 where s3.type <> 'ERC1155'
-
+  and s1.address not in (select address from exclude_address)
 group by s1.address
        , s1.platform
        , s2.platform_name
        , s1.token
        -- ,s3.platform
        , s1.type
+       , s3.type
 ;
 
 
@@ -253,7 +263,8 @@ select
 -- 维度
     'nft'                                                                           as b_type             --  业务类型
      , (case
-            when s1.type = 'Deposit' or s1.type = 'Withdraw' then 'token'
+            when
+                s3.type = 'ERC721-token' then 'token'
             else 'nft' end)                                                         as asstatistical_type -- 业务统计类型
      , s1.address
      , 'ALL'                                                                        AS project
@@ -264,7 +275,7 @@ select
      , null                                                                         as first_tx_time      --最早交易时间
      , null                                                                         as latest_tx_time     -- 最后交易时间
      , sum(case when recent_time_code = 'ALL' then s1.transfer_count else null end) as transaction_count
-     , sum(case when recent_time_code = 'ALL' then s1.volume_usd else null end)     as transaction_volume
+     , sum(case when recent_time_code = 'ALL' and  volume_usd >= 100 then s1.volume_usd else null end)     as transaction_volume
      , null                                                                         as balance_count
      , null                                                                         as balance_usd
 
@@ -294,10 +305,12 @@ from platform_nft_type_volume_count_temp s1
          inner join nft_sync_address_temp s3
                     on s1.token = s3.address
 where s3.type <> 'ERC1155'
+  and s1.address not in (select address from exclude_address)
 group by s1.address
        , s1.token
        -- ,s3.platform
        , s1.type
+       , s3.type
 ;
 
 insert into dws_nft_index_n_tmp1
@@ -305,7 +318,8 @@ select
 -- 维度
     'nft'                                                                           as b_type             --  业务类型
      , (case
-            when s1.type = 'Deposit' or s1.type = 'Withdraw' then 'token'
+            when
+                s3.type = 'ERC721-token' then 'token'
             else 'nft' end)                                                         as asstatistical_type -- 业务统计类型
      , s1.address
      , 'ALL'                                                                        AS project
@@ -316,7 +330,7 @@ select
      , null                                                                         as first_tx_time      --最早交易时间
      , null                                                                         as latest_tx_time     -- 最后交易时间
      , sum(case when recent_time_code = 'ALL' then s1.transfer_count else null end) as transaction_count
-     , sum(case when recent_time_code = 'ALL' then s1.volume_usd else null end)     as transaction_volume
+     , sum(case when recent_time_code = 'ALL' and  volume_usd >= 100 then s1.volume_usd else null end)     as transaction_volume
      , null                                                                         as balance_count
      , null                                                                         as balance_usd
 
@@ -346,8 +360,10 @@ from platform_nft_type_volume_count_temp s1
          inner join nft_sync_address_temp s3
                     on s1.token = s3.address
 where s3.type <> 'ERC1155'
+  and s1.address not in (select address from exclude_address)
 group by s1.address
        , s1.type
+       , s3.type
 ;
 
 
@@ -357,7 +373,8 @@ select
 -- 维度
     'nft'                                                                           as b_type             --  业务类型
      , (case
-            when s1.type = 'Deposit' or s1.type = 'Withdraw' then 'token'
+            when
+                s3.type = 'ERC721-token' then 'token'
             else 'nft' end)                                                         as asstatistical_type -- 业务统计类型
      , s1.address
      , s1.platform                                                                  as project
@@ -368,7 +385,7 @@ select
      , null                                                                         as first_tx_time      --最早交易时间
      , null                                                                         as latest_tx_time     -- 最后交易时间
      , sum(case when recent_time_code = 'ALL' then s1.transfer_count else null end) as transaction_count
-     , sum(case when recent_time_code = 'ALL' then s1.volume_usd else null end)     as transaction_volume
+     , sum(case when recent_time_code = 'ALL' and  volume_usd >= 100 then s1.volume_usd else null end)     as transaction_volume
      , null                                                                         as balance_count
      , null                                                                         as balance_usd
 
@@ -398,10 +415,12 @@ from platform_nft_type_volume_count_temp s1
          inner join nft_sync_address_temp s3
                     on s1.token = s3.address
 where s3.type <> 'ERC1155'
+  and s1.address not in (select address from exclude_address)
 group by s1.address
        , s1.platform
        , s2.platform_name
        , s1.type
+       , s3.type
 ;
 
 -- 第五部分
@@ -443,6 +462,7 @@ from nft_holding_time_temp s1
          inner join nft_sync_address_temp s2
                     on s1.token = s2.address
 where s2.type <> 'ERC1155'
+  and s1.address not in (select address from exclude_address)
 group by s1.address, s1.token
 ;
 
@@ -453,7 +473,7 @@ insert into dws_nft_index_n
 select
 -- 维度
     'nft'                             as b_type             --  业务类型
-     , min(statistical_type)           asstatistical_type -- 业务统计类型
+     , statistical_type             asstatistical_type -- 业务统计类型
      , s1.address
      , s1.project
      , s1.platform_name
@@ -521,6 +541,8 @@ group by s1.address
        , s1.project
        , s1.platform_name
        , s1.token
-       , s1.type;
+       , s1.type
+       , s1.statistical_type;
+
 insert into tag_result(table_name, batch_date)
 SELECT 'dws_nft_index_n' as table_name, '${batchDate}' as batch_date;

@@ -81,12 +81,11 @@ from (
                                          a1.token = a2.token
                                      and a2.project = ''
                                      and a1.type = a2.type
-                                     and a2.type != 'Transfer'
                                       and a2.wired_type = 'NFT'
                                    and  a1.recent_time_code = a2.recent_code
 		and
                                 a2.data_subject = 'volume_grade'
-         where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
+         where a1.token in (select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')
          group by
              a1.address,
              a2.label_type,
@@ -105,11 +104,10 @@ from (
              a2.token = 'ALL'
              and a2.project = ''
              and a1.type = a2.type
-             and a2.type != 'Transfer'
              and a2.data_subject = 'volume_grade'
              and a2.wired_type = 'NFT'
              and a1.recent_time_code = a2.recent_code
-         where a1.token in (select token_id from dim_project_token_type_rank_temp dpttr)
+         where a1.token in (select address from nft_sync_address_temp  where nft_sync_address_temp.type <> 'ERC1155')
          group by
              a1.address,
              a2.label_type,
