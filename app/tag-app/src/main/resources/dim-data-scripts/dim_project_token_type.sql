@@ -4224,7 +4224,7 @@ select distinct top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_te
                 'ALL' || '_' || top_token_1000_temp.symbol || '(' || SUBSTRING(top_token_1000_temp.address, 1, 8) ||
                 ')_' ||
                 trade_type.trade_type_name || '_ACTIVITY' || '_' ||
-                platform_large_category.platform_large_code || level_def_temp.level                      old_label_name
+                platform_large_category.platform_large_code || '_'|| level_def_temp.level                      old_label_name
 from (select *
       from top_token_1000_temp
       where holders >= 100
@@ -4374,7 +4374,7 @@ select distinct 'ALL_TOKEN'                 asset,
                 recent_time_temp.recent_time_name ||
                 (case when recent_time_temp.recent_time_name <> '' then '_' else '' end) ||
                 platform_temp.platform_name || '_' || 'ALL_' || trade_type.trade_type_name || '_ACTIVITY_' ||
-                '_' || platform_large_category.platform_large_code ||
+                '_' || platform_large_category.platform_large_code || '_' ||
                 level_def_temp.level        old_label_name
 from platform_temp
          inner join trade_type on (1 = 1)
@@ -4851,11 +4851,6 @@ select distinct 'RelationTeam'                                                  
                 (case when recent_time_temp.recent_time_content <> '' then ' ' else '' end) ||
                 platform_large_category.platform_large_name || ' ' ||
                 top_token_1000_temp.symbol || ' ' ||
-                (case
-                     when trade_type.trade_type = 'ALL' and
-                          (level_def_temp.level = 'Million' or level_def_temp.level = 'Billion')
-                         then level_def_temp.level || ' '
-                     else '' end) ||
                 (CASE
                      WHEN trade_type.trade_type = 'ALL' or level_def_temp.level = 'Billion' or
                           level_def_temp.level = 'Million'
@@ -4865,7 +4860,7 @@ select distinct 'RelationTeam'                                                  
                      when trade_type.trade_type_name <> 'ALL' AND
                           (level_def_temp.level = 'Billion' or level_def_temp.level = 'Million')
                          then replace(level_def_temp.level_name, ' ', ' ' || trade_type.trade_type_name || ' ')
-                     else level_def_temp.level_name end)                                          "content",
+                     else level_def_temp.level_name end)                                         "content",
                 'SQL'                                                                             rule_type,
                 recent_time_temp.code || '' || ('t' || top_token_1000_temp.id) ||
                 platform_large_category.code || trade_type.code || 'vg'                           rule_group,
