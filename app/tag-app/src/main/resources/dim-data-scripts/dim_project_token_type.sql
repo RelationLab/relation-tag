@@ -7743,7 +7743,8 @@ into dim_project_token_type_temp (wired_type, project,
                                   seq_flag,
                                   data_subject,
                                   project_name,
-                                  token_name)
+                                  token_name,
+                                  recent_code)
 select distinct 'NFT' as                                                                                       wired_type,
                 ''                                                                                             project,
                 nft_sync_address_temp.address                                                                  "token",
@@ -7754,7 +7755,8 @@ select distinct 'NFT' as                                                        
                 recent_time_temp.code || ('n' || nft_sync_address_temp.id) || nft_trade_type_temp.code || 'vr' seq_flag,
                 'volume_rank'                                                                                  data_subject,
                 'ALL'                                                                                          project_name,
-                nft_sync_address_temp.platform                                                                 token_name
+                nft_sync_address_temp.platform                                                                 token_name,
+                recent_time_temp.recent_time_code
 from nft_sync_address_temp
          inner join nft_trade_type_temp on (1 = 1)
          inner join recent_time_temp on (1 = 1)
