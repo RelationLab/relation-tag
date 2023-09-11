@@ -66,7 +66,8 @@ select a1.address,
        'time'                                   as bus_type
 from (select address,
              token,
-             counter
+             floor((floor( EXTRACT(epoch FROM CAST('${batchDate}' AS TIMESTAMP))) - floor(extract(epoch from latest_tx_time))) /
+                   (24 * 3600))  counter
       from token_holding_time_temp tbvutk) a1
          inner join
      dim_rule_content_temp a2

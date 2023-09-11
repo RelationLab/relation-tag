@@ -18,7 +18,7 @@ create table   dws_eth_index_n (
 
     ,  balance_count              numeric(125, 30)
     ,  balance_usd      numeric(125, 30)   -- 余额
-
+    ,  days      int8   -- 持有天数
     ,  transaction_volume_3d   numeric(125, 30)
     ,  transaction_volume_7d    numeric(125, 30)
     ,  transaction_volume_15d   numeric(125, 30)
@@ -61,7 +61,7 @@ create table  dws_eth_index_n_tmp1 (
 
     ,  balance_count              numeric(125, 30)
     ,  balance_usd      numeric(125, 30)   -- 余额
-
+    ,  days      int8   -- 持有天数
     ,  transaction_volume_3d   numeric(125, 30)
     ,  transaction_volume_7d    numeric(125, 30)
     ,  transaction_volume_15d   numeric(125, 30)
@@ -105,7 +105,7 @@ create table  dws_eth_index_n_tmp10 (
 
     ,  balance_count              numeric(125, 30)
     ,  balance_usd      numeric(125, 30)   -- 余额
-
+    ,  days      int8   -- 持有天数
     ,  transaction_volume_3d   numeric(125, 30)
     ,  transaction_volume_7d    numeric(125, 30)
     ,  transaction_volume_15d   numeric(125, 30)
@@ -148,7 +148,7 @@ create table  dws_eth_index_n_tmp2 (
 
     ,  balance_count              numeric(125, 30)
     ,  balance_usd      numeric(125, 30)   -- 余额
-
+    ,  days      int8   -- 持有天数
     ,  transaction_volume_3d   numeric(125, 30)
     ,  transaction_volume_7d    numeric(125, 30)
     ,  transaction_volume_15d   numeric(125, 30)
@@ -193,7 +193,7 @@ create table  dws_eth_index_n_tmp3 (
 
     ,  balance_count              numeric(125, 30)
     ,  balance_usd      numeric(125, 30)   -- 余额
-
+    ,  days      int8   -- 持有天数
     ,  transaction_volume_3d   numeric(125, 30)
     ,  transaction_volume_7d    numeric(125, 30)
     ,  transaction_volume_15d   numeric(125, 30)
@@ -241,7 +241,7 @@ create table dws_web3_index_n (
 
     ,  balance_count              numeric(125, 30)
     ,  balance_usd      numeric(125, 30)   -- 余额
-
+    ,  days      int8   -- 持有天数
     ,  transaction_volume_3d   numeric(125, 30)
     ,  transaction_volume_7d    numeric(125, 30)
     ,  transaction_volume_15d   numeric(125, 30)
@@ -285,6 +285,7 @@ create table  dws_nft_index_n (
     ,  transaction_volume              numeric(125, 30)   -- 交易量  添加了余额后的
     ,  balance_count              numeric(125, 30)
     ,  balance_usd      numeric(125, 30)   -- 余额
+    ,  days      int8   -- 持有天数
     ,  transaction_volume_3d   numeric(125, 30)
     ,  transaction_volume_7d    numeric(125, 30)
     ,  transaction_volume_15d   numeric(125, 30)
@@ -327,6 +328,7 @@ create table  dws_nft_index_n_tmp1 (
     ,  transaction_volume              numeric(125, 30)   -- 交易量  添加了余额后的
     ,  balance_count              numeric(125, 30)
     ,  balance_usd      numeric(125, 30)   -- 余额
+    ,  days      int8   -- 持有天数
     ,  transaction_volume_3d   numeric(125, 30)
     ,  transaction_volume_7d    numeric(125, 30)
     ,  transaction_volume_15d   numeric(125, 30)
@@ -372,6 +374,7 @@ create table  wired_address_dataset_temp  (
 -- 余额如何统计 当前的最新额余额  不管什么阶段  的值是一样的 
     ,  balance_count numeric(125, 30)   -- 余额个数
     ,  balance_usd      numeric(125, 30)   -- 余额
+    ,  days      int8   -- 持有天数
     ,  transaction_volume_usd_3d   numeric(125, 30)
     ,  transaction_volume_usd_7d    numeric(125, 30)
     ,  transaction_volume_usd_15d   numeric(125, 30)

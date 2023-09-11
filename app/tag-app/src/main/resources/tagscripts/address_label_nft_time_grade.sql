@@ -66,7 +66,7 @@ select a1.address,
        'time'                                   as bus_type
 from (select token,
              address,
-             floor((floor(extract(epoch from now())) - floor(extract(epoch from nht.latest_tx_time))) /
+             floor((floor( EXTRACT(epoch FROM CAST('${batchDate}' AS TIMESTAMP))) - floor(extract(epoch from nht.latest_tx_time))) /
                    (24 * 3600)) as counter
       from nft_holding_time_temp nht
       where nht.latest_tx_time is not null

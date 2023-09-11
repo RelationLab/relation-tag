@@ -67,7 +67,7 @@ select a1.address,
        'time'        as bus_type
 from (select address,
              'eth'              as token,
-             floor((floor(extract(epoch from now())) - floor(extract(epoch from latest_tx_time))) /
+             floor((floor( EXTRACT(epoch FROM CAST('${batchDate}' AS TIMESTAMP))) - floor(extract(epoch from latest_tx_time))) /
                    (24 * 3600)) as counter
       from eth_holding_time_temp tbvutk) a1
          inner join

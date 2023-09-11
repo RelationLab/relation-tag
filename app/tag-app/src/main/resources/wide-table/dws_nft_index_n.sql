@@ -18,6 +18,7 @@ select
      , null                                                            as transaction_volume
      , sum(case when recent_time_code = 'ALL' then balance else 0 end) as balance_count
      , null                                                            as balance_usd
+     , cast(null as int)                                               as days
      , null                                                            as transaction_volume_3d
      , null                                                            as transaction_volume_7d
      , null                                                            as transaction_volume_15d
@@ -67,6 +68,7 @@ select
      , null                                                            as transaction_volume
      , sum(case when recent_time_code = 'ALL' then balance else 0 end) as balance_count
      , null                                                            as balance_usd
+     , cast(null as int)                                               as days
      , null                                                            as transaction_volume_3d
      , null                                                            as transaction_volume_7d
      , null                                                            as transaction_volume_15d
@@ -113,7 +115,7 @@ select
      , sum(case when recent_time_code = 'ALL' then transfer_volume else 0 end)    as transaction_volume
      , cast(null as int)                                                          as balance_count
      , cast(null as int)                                                          as balance_usd
-
+     , cast(null as int)                                                          as days
      , sum(case when recent_time_code = '3d' then transfer_volume else null end)  as transaction_volume_3d
      , sum(case when recent_time_code = '7d' then transfer_volume else null end)  as transaction_volume_7d
      , sum(case when recent_time_code = '15d' then transfer_volume else null end) as transaction_volume_15d
@@ -162,7 +164,7 @@ select
      , sum(case when recent_time_code = 'ALL' then transfer_volume else 0 end)    as transaction_volume
      , cast(null as int)                                                          as balance_count
      , cast(null as int)                                                          as balance_usd
-
+     , cast(null as int)                                                          as days
      , sum(case when recent_time_code = '3d' then transfer_volume else null end)  as transaction_volume_3d --交易个数
      , sum(case when recent_time_code = '7d' then transfer_volume else null end)  as transaction_volume_7d
      , sum(case when recent_time_code = '15d' then transfer_volume else null end) as transaction_volume_15d
@@ -212,10 +214,12 @@ select
      , null                                                                         as first_tx_time      --最早交易时间
      , null                                                                         as latest_tx_time     -- 最后交易时间
      , sum(case when recent_time_code = 'ALL' then s1.transfer_count else null end) as transaction_count
-     , sum(case when recent_time_code = 'ALL' and  volume_usd >= 100 then s1.volume_usd else null end)     as transaction_volume
+     , sum(case
+               when recent_time_code = 'ALL' and volume_usd >= 100 then s1.volume_usd
+               else null end)                                                       as transaction_volume
      , null                                                                         as balance_count
      , null                                                                         as balance_usd
-
+     , cast(null as int)                                                            as days
      , sum(case when recent_time_code = '3d' then volume_usd else null end)         as transaction_volume_3d
      , sum(case when recent_time_code = '7d' then volume_usd else null end)         as transaction_volume_7d
      , sum(case when recent_time_code = '15d' then volume_usd else null end)        as transaction_volume_15d
@@ -273,10 +277,12 @@ select
      , null                                                                         as first_tx_time      --最早交易时间
      , null                                                                         as latest_tx_time     -- 最后交易时间
      , sum(case when recent_time_code = 'ALL' then s1.transfer_count else null end) as transaction_count
-     , sum(case when recent_time_code = 'ALL' and  volume_usd >= 100 then s1.volume_usd else null end)     as transaction_volume
+     , sum(case
+               when recent_time_code = 'ALL' and volume_usd >= 100 then s1.volume_usd
+               else null end)                                                       as transaction_volume
      , null                                                                         as balance_count
      , null                                                                         as balance_usd
-
+     , cast(null as int)                                                            as days
      , sum(case when recent_time_code = '3d' then volume_usd else null end)         as transaction_volume_3d
      , sum(case when recent_time_code = '7d' then volume_usd else null end)         as transaction_volume_7d
      , sum(case when recent_time_code = '15d' then volume_usd else null end)        as transaction_volume_15d
@@ -328,10 +334,12 @@ select
      , null                                                                         as first_tx_time      --最早交易时间
      , null                                                                         as latest_tx_time     -- 最后交易时间
      , sum(case when recent_time_code = 'ALL' then s1.transfer_count else null end) as transaction_count
-     , sum(case when recent_time_code = 'ALL' and  volume_usd >= 100 then s1.volume_usd else null end)     as transaction_volume
+     , sum(case
+               when recent_time_code = 'ALL' and volume_usd >= 100 then s1.volume_usd
+               else null end)                                                       as transaction_volume
      , null                                                                         as balance_count
      , null                                                                         as balance_usd
-
+     , cast(null as int)                                                            as days
      , sum(case when recent_time_code = '3d' then volume_usd else null end)         as transaction_volume_3d
      , sum(case when recent_time_code = '7d' then volume_usd else null end)         as transaction_volume_7d
      , sum(case when recent_time_code = '15d' then volume_usd else null end)        as transaction_volume_15d
@@ -383,10 +391,12 @@ select
      , null                                                                         as first_tx_time      --最早交易时间
      , null                                                                         as latest_tx_time     -- 最后交易时间
      , sum(case when recent_time_code = 'ALL' then s1.transfer_count else null end) as transaction_count
-     , sum(case when recent_time_code = 'ALL' and  volume_usd >= 100 then s1.volume_usd else null end)     as transaction_volume
+     , sum(case
+               when recent_time_code = 'ALL' and volume_usd >= 100 then s1.volume_usd
+               else null end)                                                       as transaction_volume
      , null                                                                         as balance_count
      , null                                                                         as balance_usd
-
+     , cast(null as int)                                                            as days
      , sum(case when recent_time_code = '3d' then volume_usd else null end)         as transaction_volume_3d
      , sum(case when recent_time_code = '7d' then volume_usd else null end)         as transaction_volume_7d
      , sum(case when recent_time_code = '15d' then volume_usd else null end)        as transaction_volume_15d
@@ -438,7 +448,10 @@ select
      , null                   as transaction_volume
      , null                   as balance_count
      , null                   as balance_usd
-
+     , floor(
+            (floor(EXTRACT(epoch FROM CAST('${batchDate}' AS TIMESTAMP))) -
+             floor(extract(epoch from max(latest_tx_time)))) /
+            (24 * 3600))      as days
      , null                   as transaction_volume_3d
      , null                   as transaction_volume_7d
      , null                   as transaction_volume_15d
@@ -471,7 +484,7 @@ insert into dws_nft_index_n
 select
 -- 维度
     'nft'                             as b_type             --  业务类型
-     , statistical_type             asstatistical_type -- 业务统计类型
+     , statistical_type                  asstatistical_type -- 业务统计类型
      , s1.address
      , s1.project
      , s1.platform_name
@@ -484,6 +497,7 @@ select
      , sum(s1.transaction_volume)     as transaction_volume
      , sum(s1.balance_count)          as balance_count
      , sum(s1.balance_usd)            as balance_usd
+     , sum(s1.days)                   as days
      , sum(s1.transaction_volume_3d)  as transaction_volume_3d
      , sum(s1.transaction_volume_7d)  as transaction_volume_7d
      , sum(s1.transaction_volume_15d) as transaction_volume_15d
@@ -516,6 +530,7 @@ from (
               , transaction_count
               , balance_count
               , balance_usd
+              , days
               , transaction_volume_3d
               , transaction_volume_7d
               , transaction_volume_15d
