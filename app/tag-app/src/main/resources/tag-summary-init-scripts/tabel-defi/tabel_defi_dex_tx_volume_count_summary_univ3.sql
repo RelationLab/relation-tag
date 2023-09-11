@@ -12,6 +12,7 @@ CREATE TABLE public.dex_tx_volume_count_summary_univ3_temp (
                                                           "type" varchar(10) NULL,
                                                           project varchar(100) NULL,
                                                           balance_usd numeric(125, 30) DEFAULT 0,
+                                                          balance_count numeric(125, 30) DEFAULT 0,
                                                           recent_time_code varchar(30) NULL
 ) with (appendonly='true', compresstype=zstd, compresslevel='5')
     DISTRIBUTED BY (address,"token",recent_time_code);

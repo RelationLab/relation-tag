@@ -10,6 +10,7 @@ into
                                       total_transfer_count,
                                       first_updated_block_height,
                                       balance_usd,
+                                        balance_count,
                                       recent_time_code)
 select
     th.address,
@@ -21,6 +22,7 @@ select
     sum(total_transfer_count) as total_transfer_count,
     min(first_updated_block_height) as first_updated_block_height,
     sum(balance) as balance_usd,
+    sum(case when type='lp' then 1 else 0 end ) as balance_count,
     '${recentTimeCode}' recent_time_code
 from
     token_holding_uni_filter th

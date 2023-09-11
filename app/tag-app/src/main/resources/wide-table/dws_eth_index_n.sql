@@ -191,8 +191,8 @@ select
      ,cast(null  as timestamp) as latest_tx_time                            -- 最后交易时间
      ,sum(case when  recent_time_code='ALL' then  total_transfer_count  else null end)  as transaction_count
      ,sum(case when  recent_time_code='ALL' then total_transfer_volume_usd else null end) as transaction_volume
-     ,0 balance_count
-     ,sum(case when  recent_time_code='ALL' then  balance_usd else null end)  as balance_usd
+     ,sum(case when  recent_time_code='ALL' and type='lp' then  1 else null end)  as  balance_count
+     ,sum(case when  recent_time_code='ALL' and type='lp' then  balance_usd else null end)  as balance_usd
 
      ,sum(case when recent_time_code='3d' then total_transfer_volume_usd else null end)  as transaction_volume_3d
      ,sum(case when recent_time_code='7d' then total_transfer_volume_usd else null end)  as transaction_volume_7d
