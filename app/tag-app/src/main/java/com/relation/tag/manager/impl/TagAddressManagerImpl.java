@@ -112,7 +112,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
             tagSummaryInit(batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH);
             check("total", 1 * 60 * 1000, batchDate, 7, true);
             exceTagSql(batchDate,filePath);
-            exceWideTableSql(batchDate,WIDE_TABLE_PATH);
         }
         check("address_label", 60 * 1000, batchDate, 55, true);
         tagMerge(batchDate);
@@ -263,6 +262,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         if (!StringUtils.equals(configEnvironment,"stag")){
             return;
         }
+        exceWideTableSql(batchDate,WIDE_TABLE_PATH);
         execSql("wired_address_dataset", "rename_wired_address_dataset_"+configEnvironment+".sql", batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH,1,false, null, false);
     }
 
