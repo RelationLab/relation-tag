@@ -446,7 +446,7 @@ from token_balance_volume_usd_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols < @ array(
+                       and wlp.symbols <@ ARRAY(
                      select
                          symbol
                      from
@@ -611,7 +611,7 @@ from token_volume_usd_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols < @ array(
+                       and wlp.symbols <@ ARRAY(
                      select
                          symbol
                      from
@@ -766,7 +766,7 @@ from token_holding_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols < @ array(
+                       and wlp.symbols <@ ARRAY(
                      select
                          symbol
                      from
@@ -862,7 +862,7 @@ from token_holding_time_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols < @ array(
+                       and wlp.symbols <@ ARRAY(
                      select
                          symbol
                      from
@@ -954,7 +954,7 @@ from token_holding_vol_count_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols < @ array(
+                       and wlp.symbols <@ ARRAY(
                      select
                          symbol
                      from

@@ -66,7 +66,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -139,7 +139,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -202,7 +202,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -256,7 +256,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -327,7 +327,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -390,7 +390,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -442,7 +442,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -513,7 +513,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -576,7 +576,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -632,7 +632,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -707,7 +707,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -773,7 +773,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -829,7 +829,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -904,7 +904,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -970,7 +970,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -1026,7 +1026,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -1101,7 +1101,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
@@ -1167,7 +1167,7 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and wlp.symbols < @ array(
+        and wlp.symbols <@ ARRAY(
       select
           symbol
       from
