@@ -63,35 +63,34 @@ select 'DEFi'                  as b_type
                when recent_time_code = 'ALL' and token <> 'ALL' then total_transfer_count
                else null end)  as transaction_count
      , sum(case
-               when recent_time_code = 'ALL' then total_transfer_volume_usd
+               when recent_time_code = 'ALL' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
                else null end)  as transaction_volume
-
      , 0                          balance_count
      , 0                       as balance_usd
      , cast(null as int)       as days
      , sum(case
-               when recent_time_code = '3d' then total_transfer_volume_usd
+               when recent_time_code = '3d' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
                else null end)  as transaction_volume_3d
      , sum(case
-               when recent_time_code = '7d' then total_transfer_volume_usd
+               when recent_time_code = '7d' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
                else null end)  as transaction_volume_7d
      , sum(case
-               when recent_time_code = '15d' then total_transfer_volume_usd
+               when recent_time_code = '15d' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
                else null end)  as transaction_volume_15d
      , sum(case
-               when recent_time_code = '1m' then total_transfer_volume_usd
+               when recent_time_code = '1m' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
                else null end)  as transaction_volume_1m
      , sum(case
-               when recent_time_code = '3m' then total_transfer_volume_usd
+               when recent_time_code = '3m' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
                else null end)  as transaction_volume_3m
      , sum(case
-               when recent_time_code = '6m' then total_transfer_volume_usd
+               when recent_time_code = '6m' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
                else null end)  as transaction_volume_6m
      , sum(case
-               when recent_time_code = '1y' then total_transfer_volume_usd
+               when recent_time_code = '1y' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
                else null end)  as transaction_volume_1y
      , sum(case
-               when recent_time_code = '2y' then total_transfer_volume_usd
+               when recent_time_code = '2y' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
                else null end)  as transaction_volume_2y
 
 
@@ -129,38 +128,58 @@ group by address
 
 --  LP 数据执行 univ3
 insert into dws_eth_index_n_tmp10
-select 'DEFi'                                                                                 as b_type
-     , 'LP'                                                                                   as statistical_type
+select 'DEFi'                                                                          as b_type
+     , 'LP'                                                                            as statistical_type
      , address
      , project
-     , token                                                                                                    --  枚举值   1m  2y
+     , token                                                                                             --  枚举值   1m  2y
      , type
-     , (select to_timestamp(min(first_updated_block_height)) ::timestamp)                     as first_tx_time  --最早交易时间
-     , cast(null as timestamp)                                                                as latest_tx_time -- 最后交易时间
-     , sum(case when recent_time_code = 'ALL' then total_transfer_count else null end)        as transaction_count
-     , sum(case when recent_time_code = 'ALL' then total_transfer_volume_usd else null end)   as transaction_volume
-     , sum(case when recent_time_code = 'ALL' and type = 'lp' then 1 else null end)           as balance_count
-     , sum(case when recent_time_code = 'ALL' and type = 'lp' then balance_usd else null end) as balance_usd
-     , cast(null as int)                                                                      as days
-     , sum(case when recent_time_code = '3d' then total_transfer_volume_usd else null end)    as transaction_volume_3d
-     , sum(case when recent_time_code = '7d' then total_transfer_volume_usd else null end)    as transaction_volume_7d
-     , sum(case when recent_time_code = '15d' then total_transfer_volume_usd else null end)   as transaction_volume_15d
-     , sum(case when recent_time_code = '1m' then total_transfer_volume_usd else null end)    as transaction_volume_1m
-     , sum(case when recent_time_code = '3m' then total_transfer_volume_usd else null end)    as transaction_volume_3m
-     , sum(case when recent_time_code = '6m' then total_transfer_volume_usd else null end)    as transaction_volume_6m
-     , sum(case when recent_time_code = '1y' then total_transfer_volume_usd else null end)    as transaction_volume_1y
-     , sum(case when recent_time_code = '2y' then total_transfer_volume_usd else null end)    as transaction_volume_2y
+     , (select to_timestamp(min(first_updated_block_height)) ::timestamp)              as first_tx_time  --最早交易时间
+     , cast(null as timestamp)                                                         as latest_tx_time -- 最后交易时间
+     , sum(case when recent_time_code = 'ALL' then total_transfer_count else null end) as transaction_count
+     , sum(case
+               when recent_time_code = 'ALL' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
+               else null end)                                                          as transaction_volume
+     , sum(case when recent_time_code = 'ALL' and type = 'lp' then 1 else null end)    as balance_count
+     , sum(case
+               when recent_time_code = 'ALL' and type = 'lp' and balance_usd >= 100 then balance_usd
+               else null end)                                                          as balance_usd
+     , cast(null as int)                                                               as days
+     , sum(case
+               when recent_time_code = '3d' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
+               else null end)                                                          as transaction_volume_3d
+     , sum(case
+               when recent_time_code = '7d' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
+               else null end)                                                          as transaction_volume_7d
+     , sum(case
+               when recent_time_code = '15d' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
+               else null end)                                                          as transaction_volume_15d
+     , sum(case
+               when recent_time_code = '1m' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
+               else null end)                                                          as transaction_volume_1m
+     , sum(case
+               when recent_time_code = '3m' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
+               else null end)                                                          as transaction_volume_3m
+     , sum(case
+               when recent_time_code = '6m' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
+               else null end)                                                          as transaction_volume_6m
+     , sum(case
+               when recent_time_code = '1y' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
+               else null end)                                                          as transaction_volume_1y
+     , sum(case
+               when recent_time_code = '2y' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd
+               else null end)                                                          as transaction_volume_2y
 
 
-     , sum(case when recent_time_code = '3d' then total_transfer_count else null end)         as transaction_count_3d
-     , sum(case when recent_time_code = '7d' then total_transfer_count else null end)         as transaction_count_7d
-     , sum(case when recent_time_code = '15d' then total_transfer_count else null end)        as transaction_count_15d
-     , sum(case when recent_time_code = '1m' then total_transfer_count else null end)         as transaction_count_1m
-     , sum(case when recent_time_code = '3m' then total_transfer_count else null end)         as transaction_count_3m
-     , sum(case when recent_time_code = '6m' then total_transfer_count else null end)         as transaction_count_6m
-     , sum(case when recent_time_code = '1y' then total_transfer_count else null end)         as transaction_count_1y
-     , sum(case when recent_time_code = '2y' then total_transfer_count else null end)         as transaction_count_2y
-     , now()                                                                                  as etl_update_time
+     , sum(case when recent_time_code = '3d' then total_transfer_count else null end)  as transaction_count_3d
+     , sum(case when recent_time_code = '7d' then total_transfer_count else null end)  as transaction_count_7d
+     , sum(case when recent_time_code = '15d' then total_transfer_count else null end) as transaction_count_15d
+     , sum(case when recent_time_code = '1m' then total_transfer_count else null end)  as transaction_count_1m
+     , sum(case when recent_time_code = '3m' then total_transfer_count else null end)  as transaction_count_3m
+     , sum(case when recent_time_code = '6m' then total_transfer_count else null end)  as transaction_count_6m
+     , sum(case when recent_time_code = '1y' then total_transfer_count else null end)  as transaction_count_1y
+     , sum(case when recent_time_code = '2y' then total_transfer_count else null end)  as transaction_count_2y
+     , now()                                                                           as etl_update_time
 from dex_tx_volume_count_summary_univ3_temp
 group by address
        , project
@@ -383,6 +402,7 @@ select 'DEFi'            as b_type
 from token_balance_volume_usd_temp
          inner join (select address, name from top_token_1000 where removed = false and holders >= 100) top_token_1000
                     on (token_balance_volume_usd_temp.token = top_token_1000.address)
+where balance_usd >= 100
 group by token_balance_volume_usd_temp.address, token
 ;
 
@@ -426,15 +446,17 @@ from token_balance_volume_usd_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols <@ array(
-select
-	symbol
-from
-	top_token_1000_temp
-where
-	holders >= 100
-	and removed = false)
-    and wlp."type" = 'LP') top_token_1000 on (token_balance_volume_usd_temp.token = top_token_1000.address)
+                       and wlp.symbols < @ array(
+                     select
+                         symbol
+                     from
+                         top_token_1000_temp
+                     where
+                         holders >= 100
+                       and removed = false)
+                       and wlp."type" = 'LP') top_token_1000
+                    on (token_balance_volume_usd_temp.token = top_token_1000.address)
+where balance_usd >= 100
 group by token_balance_volume_usd_temp.address, token, factory_type;
 
 -- 第三步2
@@ -471,6 +493,7 @@ select 'DEFi'            as b_type
      , null              as transaction_count_2y
      , now()             as etl_update_time
 from total_balance_volume_usd_temp
+where balance_usd >= 100
 group by address
 ;
 
@@ -478,37 +501,53 @@ group by address
 -- 第五步
 
 insert into dws_eth_index_n_tmp2
-select 'DEFi'                                                                as b_type
-     , 'token'                                                               as statistical_type
+select 'DEFi'                                                                                      as b_type
+     , 'token'                                                                                     as statistical_type
      , token_volume_usd_temp.address
-     , 'ALLNET'                                                              as project
-     , 'ALLNET'                                                              as platform_name
+     , 'ALLNET'                                                                                    as project
+     , 'ALLNET'                                                                                    as platform_name
      , token_volume_usd_temp.token
-     , 'ALL'                                                                 as type
-     , null                                                                  as first_tx_time  --最早交易时间
-     , null                                                                  as latest_tx_time -- 最后交易时间
-     , null                                                                  as transaction_count
-     , sum(case when recent_time_code = 'ALL' then volume_usd else null end) as transaction_volume
-     , null                                                                  as balance_count
-     , null                                                                  as balance_usd
-     , cast(null as int)                                                     as days
-     , sum(case when recent_time_code = '3d' then volume_usd else null end)  as transaction_volume_3d
-     , sum(case when recent_time_code = '7d' then volume_usd else null end)  as transaction_volume_7d
-     , sum(case when recent_time_code = '15d' then volume_usd else null end) as transaction_volume_15d
-     , sum(case when recent_time_code = '1m' then volume_usd else null end)  as transaction_volume_1m
-     , sum(case when recent_time_code = '3m' then volume_usd else null end)  as transaction_volume_3m
-     , sum(case when recent_time_code = '6m' then volume_usd else null end)  as transaction_volume_6m
-     , sum(case when recent_time_code = '1y' then volume_usd else null end)  as transaction_volume_1y
-     , sum(case when recent_time_code = '2y' then volume_usd else null end)  as transaction_volume_2y
-     , null                                                                  as transaction_count_3d
-     , null                                                                  as transaction_count_7d
-     , null                                                                  as transaction_count_15d
-     , null                                                                  as transaction_count_1m
-     , null                                                                  as transaction_count_3m
-     , null                                                                  as transaction_count_6m
-     , null                                                                  as transaction_count_1y
-     , null                                                                  as transaction_count_2y
-     , now()                                                                 as etl_update_time
+     , 'ALL'                                                                                       as type
+     , null                                                                                        as first_tx_time  --最早交易时间
+     , null                                                                                        as latest_tx_time -- 最后交易时间
+     , null                                                                                        as transaction_count
+     , sum(case when recent_time_code = 'ALL' and volume_usd >= 100 then volume_usd else null end) as transaction_volume
+     , null                                                                                        as balance_count
+     , null                                                                                        as balance_usd
+     , cast(null as int)                                                                           as days
+     , sum(case
+               when recent_time_code = '3d' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_3d
+     , sum(case
+               when recent_time_code = '7d' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_7d
+     , sum(case
+               when recent_time_code = '15d' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_15d
+     , sum(case
+               when recent_time_code = '1m' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_1m
+     , sum(case
+               when recent_time_code = '3m' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_3m
+     , sum(case
+               when recent_time_code = '6m' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_6m
+     , sum(case
+               when recent_time_code = '1y' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_1y
+     , sum(case
+               when recent_time_code = '2y' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_2y
+     , null                                                                                        as transaction_count_3d
+     , null                                                                                        as transaction_count_7d
+     , null                                                                                        as transaction_count_15d
+     , null                                                                                        as transaction_count_1m
+     , null                                                                                        as transaction_count_3m
+     , null                                                                                        as transaction_count_6m
+     , null                                                                                        as transaction_count_1y
+     , null                                                                                        as transaction_count_2y
+     , now()                                                                                       as etl_update_time
 from token_volume_usd_temp
          inner join (select address, name from top_token_1000 where removed = false and holders >= 100) top_token_1000
                     on (token_volume_usd_temp.token = top_token_1000.address)
@@ -517,37 +556,53 @@ group by token_volume_usd_temp.address, token_volume_usd_temp.token
 
 
 insert into dws_eth_index_n_tmp2
-select 'DEFi'                                                                as b_type
-     , 'LP'                                                                  as statistical_type
+select 'DEFi'                                                                                      as b_type
+     , 'LP'                                                                                        as statistical_type
      , token_volume_usd_temp.address
-     , 'ALLNET'                                                              as project
-     , factory_type                                                          as platform_name
+     , 'ALLNET'                                                                                    as project
+     , factory_type                                                                                as platform_name
      , token_volume_usd_temp.token
-     , 'ALL'                                                                 as type
-     , null                                                                  as first_tx_time  --最早交易时间
-     , null                                                                  as latest_tx_time -- 最后交易时间
-     , null                                                                  as transaction_count
-     , sum(case when recent_time_code = 'ALL' then volume_usd else null end) as transaction_volume
-     , null                                                                  as balance_count
-     , null                                                                  as balance_usd
-     , cast(null as int)                                                     as days
-     , sum(case when recent_time_code = '3d' then volume_usd else null end)  as transaction_volume_3d
-     , sum(case when recent_time_code = '7d' then volume_usd else null end)  as transaction_volume_7d
-     , sum(case when recent_time_code = '15d' then volume_usd else null end) as transaction_volume_15d
-     , sum(case when recent_time_code = '1m' then volume_usd else null end)  as transaction_volume_1m
-     , sum(case when recent_time_code = '3m' then volume_usd else null end)  as transaction_volume_3m
-     , sum(case when recent_time_code = '6m' then volume_usd else null end)  as transaction_volume_6m
-     , sum(case when recent_time_code = '1y' then volume_usd else null end)  as transaction_volume_1y
-     , sum(case when recent_time_code = '2y' then volume_usd else null end)  as transaction_volume_2y
-     , null                                                                  as transaction_count_3d
-     , null                                                                  as transaction_count_7d
-     , null                                                                  as transaction_count_15d
-     , null                                                                  as transaction_count_1m
-     , null                                                                  as transaction_count_3m
-     , null                                                                  as transaction_count_6m
-     , null                                                                  as transaction_count_1y
-     , null                                                                  as transaction_count_2y
-     , now()                                                                 as etl_update_time
+     , 'ALL'                                                                                       as type
+     , null                                                                                        as first_tx_time  --最早交易时间
+     , null                                                                                        as latest_tx_time -- 最后交易时间
+     , null                                                                                        as transaction_count
+     , sum(case when recent_time_code = 'ALL' and volume_usd >= 100 then volume_usd else null end) as transaction_volume
+     , null                                                                                        as balance_count
+     , null                                                                                        as balance_usd
+     , cast(null as int)                                                                           as days
+     , sum(case
+               when recent_time_code = '3d' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_3d
+     , sum(case
+               when recent_time_code = '7d' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_7d
+     , sum(case
+               when recent_time_code = '15d' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_15d
+     , sum(case
+               when recent_time_code = '1m' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_1m
+     , sum(case
+               when recent_time_code = '3m' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_3m
+     , sum(case
+               when recent_time_code = '6m' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_6m
+     , sum(case
+               when recent_time_code = '1y' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_1y
+     , sum(case
+               when recent_time_code = '2y' and volume_usd >= 100 then volume_usd
+               else null end)                                                                      as transaction_volume_2y
+     , null                                                                                        as transaction_count_3d
+     , null                                                                                        as transaction_count_7d
+     , null                                                                                        as transaction_count_15d
+     , null                                                                                        as transaction_count_1m
+     , null                                                                                        as transaction_count_3m
+     , null                                                                                        as transaction_count_6m
+     , null                                                                                        as transaction_count_1y
+     , null                                                                                        as transaction_count_2y
+     , now()                                                                                       as etl_update_time
 from token_volume_usd_temp
          inner join (select distinct wlp.address,
                                      wlp.symbol_wired as name,
@@ -556,52 +611,78 @@ from token_volume_usd_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols <@ array(
-select
-	symbol
-from
-	top_token_1000_temp
-where
-	holders >= 100
-	and removed = false)
-    and wlp."type" = 'LP') top_token_1000 on (token_volume_usd_temp.token = top_token_1000.address)
+                       and wlp.symbols < @ array(
+                     select
+                         symbol
+                     from
+                         top_token_1000_temp
+                     where
+                         holders >= 100
+                       and removed = false)
+                       and wlp."type" = 'LP') top_token_1000 on (token_volume_usd_temp.token = top_token_1000.address)
 group by token_volume_usd_temp.address, token_volume_usd_temp.token, factory_type
 ;
 
 
 insert into dws_eth_index_n_tmp2
-select 'DEFi'                                                                as b_type
-     , 'token'                                                               as statistical_type
+select 'DEFi'                      as b_type
+     , 'token'                     as statistical_type
      , address
-     , 'ALLNET'                                                              as project
-     , 'ALLNET'                                                              as platform_name
-     , 'ALL'                                                                 as token
-     , 'ALL'                                                                 as type
-     , null                                                                  as first_tx_time  --最早交易时间
-     , null                                                                  as latest_tx_time -- 最后交易时间
-     , null                                                                  as transaction_count
-     , sum(case when recent_time_code = 'ALL' then volume_usd else null end) as transaction_volume
-     , null                                                                  as balance_count
-     , null                                                                  as balance_usd
-     , cast(null as int)                                                     as days
-     , sum(case when recent_time_code = '3d' then volume_usd else null end)  as transaction_volume_3d
-     , sum(case when recent_time_code = '7d' then volume_usd else null end)  as transaction_volume_7d
-     , sum(case when recent_time_code = '15d' then volume_usd else null end) as transaction_volume_15d
-     , sum(case when recent_time_code = '1m' then volume_usd else null end)  as transaction_volume_1m
-     , sum(case when recent_time_code = '3m' then volume_usd else null end)  as transaction_volume_3m
-     , sum(case when recent_time_code = '6m' then volume_usd else null end)  as transaction_volume_6m
-     , sum(case when recent_time_code = '1y' then volume_usd else null end)  as transaction_volume_1y
-     , sum(case when recent_time_code = '2y' then volume_usd else null end)  as transaction_volume_2y
-     , null                                                                  as transaction_count_3d
-     , null                                                                  as transaction_count_7d
-     , null                                                                  as transaction_count_15d
-     , null                                                                  as transaction_count_1m
-     , null                                                                  as transaction_count_3m
-     , null                                                                  as transaction_count_6m
-     , null                                                                  as transaction_count_1y
-     , null                                                                  as transaction_count_2y
-     , now()                                                                 as etl_update_time
-from total_volume_usd_temp
+     , 'ALLNET'                    as project
+     , 'ALLNET'                    as platform_name
+     , 'ALL'                       as token
+     , 'ALL'                       as type
+     , null                        as first_tx_time  --最早交易时间
+     , null                        as latest_tx_time -- 最后交易时间
+     , null                        as transaction_count
+     , sum(transaction_volume)     as transaction_volume
+     , null                        as balance_count
+     , null                        as balance_usd
+     , cast(null as int)           as days
+     , sum(transaction_volume_3d)  as transaction_volume_3d
+     , sum(transaction_volume_7d)  as transaction_volume_7d
+     , sum(transaction_volume_15d) as transaction_volume_15d
+     , sum(transaction_volume_1m)  as transaction_volume_1m
+     , sum(transaction_volume_3m)  as transaction_volume_3m
+     , sum(transaction_volume_6m)  as transaction_volume_6m
+     , sum(transaction_volume_1y)  as transaction_volume_1y
+     , sum(transaction_volume_2y)  as transaction_volume_2y
+     , null                        as transaction_count_3d
+     , null                        as transaction_count_7d
+     , null                        as transaction_count_15d
+     , null                        as transaction_count_1m
+     , null                        as transaction_count_3m
+     , null                        as transaction_count_6m
+     , null                        as transaction_count_1y
+     , null                        as transaction_count_2y
+     , now()                       as etl_update_time
+from (select
+              , address
+              , sum (case when recent_time_code = 'ALL' and volume_usd >= 100 then volume_usd else null end) as transaction_volume
+              , sum (case when recent_time_code = '3d' and volume_usd >= 100 then volume_usd else null end) as transaction_volume_3d
+              , sum (case when recent_time_code = '7d' and volume_usd >= 100 then volume_usd else null end) as transaction_volume_7d
+              , sum (case when recent_time_code = '15d' and volume_usd >= 100 then volume_usd else null end) as transaction_volume_15d
+              , sum (case when recent_time_code = '1m' and volume_usd >= 100 then volume_usd else null end ) as transaction_volume_1m
+              , sum (case when recent_time_code = '3m' and volume_usd >= 100 then volume_usd else null end) as transaction_volume_3m
+              , sum (case when recent_time_code = '6m' and volume_usd >= 100 then volume_usd else null end ) as transaction_volume_6m
+              , sum (case when recent_time_code = '1y' and volume_usd >= 100 then volume_usd else null end ) as transaction_volume_1y
+              , sum (case when recent_time_code = '2y' and volume_usd >= 100 then volume_usd else null end ) as transaction_volume_2y
+      from total_volume_usd_temp
+      group address
+      union all
+      select
+              , address
+              , sum (case when recent_time_code = 'ALL' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd else null end) as transaction_volume
+              , sum (case when recent_time_code = '3d' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd else null end) as transaction_volume_3d
+              , sum (case when recent_time_code = '7d' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd else null end) as transaction_volume_7d
+              , sum (case when recent_time_code = '15d' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd else null end) as transaction_volume_15d
+              , sum (case when recent_time_code = '1m' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd else null end) as transaction_volume_1m
+              , sum (case when recent_time_code = '3m' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd else null end) as transaction_volume_3m
+              , sum (case when recent_time_code = '6m' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd else null end) as transaction_volume_6m
+              , sum (case when recent_time_code = '1y' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd else null end) as transaction_volume_1y
+              , sum (case when recent_time_code = '2y' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd else null end) as transaction_volume_2y
+      from dex_tx_volume_count_summary_univ3_temp
+      group by address) tvu
 group by address;
 
 -- 第六步
@@ -685,15 +766,15 @@ from token_holding_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols <@ array(
-select
-	symbol
-from
-	top_token_1000_temp
-where
-	holders >= 100
-	and removed = false)
-    and wlp."type" = 'LP') top_token_1000 on (token_holding_temp.token = top_token_1000.address)
+                       and wlp.symbols < @ array(
+                     select
+                         symbol
+                     from
+                         top_token_1000_temp
+                     where
+                         holders >= 100
+                       and removed = false)
+                       and wlp."type" = 'LP') top_token_1000 on (token_holding_temp.token = top_token_1000.address)
 group by token_holding_temp.address, token_holding_temp.token, factory_type
 ;
 
@@ -781,15 +862,15 @@ from token_holding_time_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols <@ array(
-select
-	symbol
-from
-	top_token_1000_temp
-where
-	holders >= 100
-	and removed = false)
-    and wlp."type" = 'LP') top_token_1000 on (token_holding_time_temp.token = top_token_1000.address)
+                       and wlp.symbols < @ array(
+                     select
+                         symbol
+                     from
+                         top_token_1000_temp
+                     where
+                         holders >= 100
+                       and removed = false)
+                       and wlp."type" = 'LP') top_token_1000 on (token_holding_time_temp.token = top_token_1000.address)
 group by token_holding_time_temp.address, token, factory_type
 ;
 
@@ -873,15 +954,16 @@ from token_holding_vol_count_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols <@ array(
-select
-	symbol
-from
-	top_token_1000_temp
-where
-	holders >= 100
-	and removed = false)
-    and wlp."type" = 'LP') top_token_1000 on (token_holding_vol_count_temp.token = top_token_1000.address)
+                       and wlp.symbols < @ array(
+                     select
+                         symbol
+                     from
+                         top_token_1000_temp
+                     where
+                         holders >= 100
+                       and removed = false)
+                       and wlp."type" = 'LP') top_token_1000
+                    on (token_holding_vol_count_temp.token = top_token_1000.address)
 group by token_holding_vol_count_temp.address, token, factory_type
 ;
 
