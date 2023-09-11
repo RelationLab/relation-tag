@@ -37,10 +37,17 @@ from dws_eth_index_n s1 left join (
     union all
     select distinct
     wlp.address, wlp.symbol_wired as name
-    from white_list_lp wlp
-    left join white_list_lp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+    from white_list_lp_temp wlp
+    left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
     where wlp.tvl > 1000000
-    and string_to_array(wlp.symbol_wired, '/') && array['ETH', 'WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+    and wlp.symbols <@ array(
+select
+	symbol
+from
+	top_token_1000_temp
+where
+	holders >= 100
+	and removed = false)
     and wlp."type" = 'LP'
     ) s2
 on s1.token=s2.address

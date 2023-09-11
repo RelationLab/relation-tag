@@ -34,32 +34,38 @@ from
         select
             white_list_erc20_temp.*
         from
-            white_list_erc20_temp   INNER JOIN (
-                select wlp.name,
-                       wlp.symbol_wired,
-                       wlp.address as address,
-                       wlp.factory,
-                       wlp.factory_type,
-                       wlp.factory_content,
-                       wlp.pool_id,
-                       wlp.symbols[1] as symbol1,
-                       wlp.symbols[2] as symbol2,
-                       wlp.type,
-                       wlp.tokens,
-                       wlp.decimals,
-                       wlp.price,
-                       wlp.tvl,
-                       wlp.fee as fee,
-                       SUBSTR(wlp.address, 1, 6) as poolPrefix,
-                       wlp.total_supply,
-                       wslp.factory AS stakePool,
-                       wslp.factory_type as stakeRouter
-                from white_list_lp_temp wlp
-                         left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
-                where wlp.tvl > 5000000
-                  and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
-                    and wlp."type" = 'LP'
-            ) lpt
+            white_list_erc20_temp   INNER JOIN (select wlp.id,
+                                                       wlp.name,
+                                                       wlp.symbol_wired,
+                                                       wlp.address               as pool,
+                                                       wlp.factory,
+                                                       wlp.factory_type,
+                                                       wlp.factory_content,
+                                                       wlp.pool_id,
+                                                       wlp.symbols[1]            as symbol1,
+                                                       wlp.symbols[2]            as symbol2,
+                                                       wlp.type,
+                                                       wlp.tokens,
+                                                       wlp.decimals,
+                                                       wlp.price,
+                                                       wlp.tvl,
+                                                       wlp.fee                   as fee,
+                                                       SUBSTR(wlp.address, 1, 6) as poolPrefix,
+                                                       wlp.total_supply,
+                                                       wslp.factory              AS stakePool,
+                                                       wslp.factory_type         as stakeRouter
+                                                from white_list_lp_temp wlp
+                                                         left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
+                                                where wlp.tvl > 1000000
+                                                  and wlp.symbols < @ array(
+                                                select
+                                                    symbol
+                                                from
+                                                    top_token_1000_temp
+                                                where
+                                                    holders >= 100
+                                                  and removed = false)
+                                                  and wlp."type" = 'LP') lpt
             ON (white_list_erc20_temp.address = lpt.address) ) w on w.address = dtvcr."token"
     where dtvcr.type='stakelp'
 group by

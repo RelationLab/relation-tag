@@ -422,11 +422,18 @@ from token_balance_volume_usd_temp
          inner join (select distinct wlp.address,
                                      wlp.symbol_wired as name,
                                      wlp.factory_type
-                     from white_list_lp wlp
-                              left join white_list_lp wslp
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+                       and wlp.symbols <@ array(
+select
+	symbol
+from
+	top_token_1000_temp
+where
+	holders >= 100
+	and removed = false)
     and wlp."type" = 'LP') top_token_1000 on (token_balance_volume_usd_temp.token = top_token_1000.address)
 group by token_balance_volume_usd_temp.address, token, factory_type;
 
@@ -545,11 +552,18 @@ from token_volume_usd_temp
          inner join (select distinct wlp.address,
                                      wlp.symbol_wired as name,
                                      wlp.factory_type
-                     from white_list_lp wlp
-                              left join white_list_lp wslp
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+                       and wlp.symbols <@ array(
+select
+	symbol
+from
+	top_token_1000_temp
+where
+	holders >= 100
+	and removed = false)
     and wlp."type" = 'LP') top_token_1000 on (token_volume_usd_temp.token = top_token_1000.address)
 group by token_volume_usd_temp.address, token_volume_usd_temp.token, factory_type
 ;
@@ -667,11 +681,18 @@ from token_holding_temp
          inner join (select distinct wlp.address,
                                      wlp.symbol_wired as name,
                                      wlp.factory_type
-                     from white_list_lp wlp
-                              left join white_list_lp wslp
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+                       and wlp.symbols <@ array(
+select
+	symbol
+from
+	top_token_1000_temp
+where
+	holders >= 100
+	and removed = false)
     and wlp."type" = 'LP') top_token_1000 on (token_holding_temp.token = top_token_1000.address)
 group by token_holding_temp.address, token_holding_temp.token, factory_type
 ;
@@ -756,11 +777,18 @@ from token_holding_time_temp
          inner join (select distinct wlp.address,
                                      wlp.symbol_wired as name,
                                      wlp.factory_type
-                     from white_list_lp wlp
-                              left join white_list_lp wslp
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+                       and wlp.symbols <@ array(
+select
+	symbol
+from
+	top_token_1000_temp
+where
+	holders >= 100
+	and removed = false)
     and wlp."type" = 'LP') top_token_1000 on (token_holding_time_temp.token = top_token_1000.address)
 group by token_holding_time_temp.address, token, factory_type
 ;
@@ -841,11 +869,18 @@ from token_holding_vol_count_temp
          inner join (select distinct wlp.address,
                                      wlp.symbol_wired as name,
                                      wlp.factory_type
-                     from white_list_lp wlp
-                              left join white_list_lp wslp
+                     from white_list_lp_temp wlp
+                              left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+                       and wlp.symbols <@ array(
+select
+	symbol
+from
+	top_token_1000_temp
+where
+	holders >= 100
+	and removed = false)
     and wlp."type" = 'LP') top_token_1000 on (token_holding_vol_count_temp.token = top_token_1000.address)
 group by token_holding_vol_count_temp.address, token, factory_type
 ;

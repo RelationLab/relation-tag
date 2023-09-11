@@ -66,7 +66,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 insert
@@ -132,7 +139,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join (select *
@@ -188,7 +202,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join (select *
@@ -235,7 +256,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 insert
@@ -299,7 +327,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join (select *
@@ -355,7 +390,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join (select *
@@ -400,7 +442,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
 insert
@@ -464,7 +513,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join (select *
@@ -520,7 +576,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join (select *
@@ -569,7 +632,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join recent_time_temp on (1 = 1)
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name);
@@ -637,7 +707,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join recent_time_temp on (1 = 1)
@@ -696,7 +773,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join recent_time_temp on (1 = 1)
@@ -745,7 +829,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join recent_time_temp on (1 = 1);
@@ -813,7 +904,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join (select *
@@ -872,7 +970,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join (select *
@@ -921,7 +1026,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join recent_time_temp on (1 = 1);
@@ -989,7 +1101,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join (select *
@@ -1048,7 +1167,14 @@ from (select wlp.id,
       from white_list_lp_temp wlp
                left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
       where wlp.tvl > 1000000
-        and string_to_array(wlp.symbol_wired, '/') && array['ETH','WETH', 'UNI', 'AAVE', '1INCH', 'MANA', 'AXS', 'SAND']
+        and wlp.symbols < @ array(
+      select
+          symbol
+      from
+          top_token_1000_temp
+      where
+          holders >= 100
+        and removed = false)
         and wlp."type" = 'LP') lpt
          inner join platform_detail_temp on (lpt.factory_type = platform_detail_temp.platform_name)
          inner join (select *
