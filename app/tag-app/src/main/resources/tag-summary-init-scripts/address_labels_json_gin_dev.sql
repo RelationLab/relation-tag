@@ -18,6 +18,10 @@ SELECT address,
                'a', address_labels_json_gin_row_temp_${tableSuffix}.address,
                'at', CASE WHEN COUNT(contract_address) > 0 THEN 'c' ELSE 'p' END,
                'l', (max(CASE WHEN recent_time_code = 'ALL' THEN data ELSE '[]' END))::JSONB,
+               'dl', (max(CASE WHEN recent_time_code = 'ALL' THEN
+                   case when position(split_part(data, '}', 11) in data)>1 then
+                   (substr(data,0,position(split_part(data, '}', 11) in data)-1 )||'}]')
+                       else  data end ELSE '[]' END))::JSONB,
                'd3l', (max(CASE WHEN recent_time_code = '3d' THEN data ELSE '[]' END))::JSONB,
                'd7l', (max(CASE WHEN recent_time_code = '7d' THEN data ELSE '[]' END))::JSONB,
                'd15l', (max(CASE WHEN recent_time_code = '15d' THEN data ELSE '[]' END))::JSONB,
