@@ -37,7 +37,7 @@ from
             white_list_erc20_temp   INNER JOIN (select wlp.id,
                                                        wlp.name,
                                                        wlp.symbol_wired,
-                                                       wlp.address               as pool,
+                                                       wlp.address               as address,
                                                        wlp.factory,
                                                        wlp.factory_type,
                                                        wlp.factory_content,

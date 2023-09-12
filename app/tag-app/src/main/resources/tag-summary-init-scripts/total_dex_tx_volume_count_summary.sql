@@ -27,7 +27,7 @@ group by dtvcr.address,
 
 insert
 into
-    dex_tx_volume_count_summary(address,
+    dex_tx_volume_count_summary_temp(address,
                                 token,
                                 type,
                                 project,
@@ -44,11 +44,11 @@ select
     project,
     max(block_height) block_height,
     sum(total_transfer_volume_usd) as total_transfer_volume_usd,
-    sum(1) total_transfer_count,
+    sum(total_transfer_count) total_transfer_count,
     min(first_updated_block_height) first_updated_block_height,
     recent_time_code
 from
-    dex_tx_volume_count_summary dtvcr
+    dex_tx_volume_count_summary_temp dtvcr
 group by
     dtvcr.address,
     dtvcr.type,
@@ -73,11 +73,11 @@ select
     platform_temp.platform_large_code as project,
     max(block_height) block_height,
     sum(total_transfer_volume_usd) as total_transfer_volume_usd,
-    sum(1) total_transfer_count,
+    sum(total_transfer_count) total_transfer_count,
     min(first_updated_block_height) first_updated_block_height,
     recent_time_code
 from
-    dex_tx_volume_count_summary dtvcr
+    dex_tx_volume_count_summary_temp dtvcr
         left join  platform_temp on (dtvcr.project=platform_temp.platform)
 where platform_temp.platform_large_code is not null
 group by
