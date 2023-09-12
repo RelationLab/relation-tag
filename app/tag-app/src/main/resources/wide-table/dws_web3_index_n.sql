@@ -12,7 +12,7 @@ select 'web3'                                                                   
      , sum(case when s1.recent_time_code = 'ALL' then s1.total_transfer_count else null end)  as transaction_count
      , sum(case when s1.recent_time_code = 'ALL' then s1.total_transfer_volume else null end) as transaction_volume
      , sum(case when s1.recent_time_code = 'ALL' then s1.balance else null end)               as balance_count
-     , cast(null as int)                                                                      as balance_usd
+     , sum(case when s1.recent_time_code = 'ALL' then s1.balance else null end)               as balance_usd
      , cast(null as int)                                                                      as days
      , sum(case when s1.recent_time_code = '3d' then s1.total_transfer_volume else null end)  as transaction_volume_3d
      , sum(case when s1.recent_time_code = '7d' then s1.total_transfer_volume else null end)  as transaction_volume_7d
@@ -52,7 +52,7 @@ select 'web3'                                                                   
      , sum(case when s1.recent_time_code = 'ALL' then s1.total_transfer_count else null end)  as transaction_count
      , sum(case when s1.recent_time_code = 'ALL' then s1.total_transfer_volume else null end) as transaction_volume
      , sum(case when s1.recent_time_code = 'ALL' then s1.balance else null end)               as balance_count
-     , null                                                                                   as balance_usd
+     , sum(case when s1.recent_time_code = 'ALL' then s1.balance else null end)               as balance_usd
      , cast(null as int)                                                                      as days
      , sum(case when s1.recent_time_code = '3d' then s1.total_transfer_volume else null end)  as transaction_volume_3d
      , sum(case when s1.recent_time_code = '7d' then s1.total_transfer_volume else null end)  as transaction_volume_7d
@@ -97,7 +97,9 @@ select 'web3'                  as b_type           --  业务类型
      , sum(case
                when s1.recent_time_code = 'ALL' AND s1.type = 'NFT Recipient' then s1.balance
                else null end)  as balance_count
-     , null                    as balance_usd
+     , sum(case
+               when s1.recent_time_code = 'ALL' AND s1.type = 'NFT Recipient' then s1.balance
+               else null end)  as balance_usd
      , cast(null as int)       as days
      , sum(case
                when s1.recent_time_code = '3d' then s1.total_transfer_volume
@@ -175,7 +177,9 @@ select 'web3'                  as b_type           --  业务类型
      , sum(case
                when s1.recent_time_code = 'ALL' AND s1.type = 'NFT Recipient' then s1.balance
                else null end)  as balance_count
-     , null                    as balance_usd
+     , sum(case
+               when s1.recent_time_code = 'ALL' AND s1.type = 'NFT Recipient' then s1.balance
+               else null end)  as balance_usd
      , cast(null as int)       as days
      , sum(case
                when s1.recent_time_code = '3d' then s1.total_transfer_volume

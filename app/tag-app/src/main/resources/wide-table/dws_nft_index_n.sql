@@ -17,7 +17,7 @@ select
      , null                                                            as transaction_count
      , null                                                            as transaction_volume
      , sum(case when recent_time_code = 'ALL' then balance else 0 end) as balance_count
-     , null                                                            as balance_usd
+     , sum(case when recent_time_code = 'ALL' then balance else 0 end) as balance_usd
      , cast(null as int)                                               as days
      , null                                                            as transaction_volume_3d
      , null                                                            as transaction_volume_7d
@@ -67,7 +67,7 @@ select
      , null                                                            as transaction_count
      , null                                                            as transaction_volume
      , sum(case when recent_time_code = 'ALL' then balance else 0 end) as balance_count
-     , null                                                            as balance_usd
+     , sum(case when recent_time_code = 'ALL' then balance else 0 end) as balance_usd
      , cast(null as int)                                               as days
      , null                                                            as transaction_volume_3d
      , null                                                            as transaction_volume_7d
