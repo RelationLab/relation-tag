@@ -40,7 +40,7 @@ from dws_eth_index_n s1 left join (
     from white_list_lp_temp wlp
     left join white_list_lp_temp wslp on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
     where wlp.tvl > 1000000
-    and wlp.symbols <@ ARRAY(
+    and wlp.tokens <@ ARRAY(
 select
 	symbol
 from

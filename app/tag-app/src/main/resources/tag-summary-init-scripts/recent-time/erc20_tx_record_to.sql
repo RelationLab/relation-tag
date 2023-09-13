@@ -9,7 +9,7 @@ into
 select
     to_address address,
     token,
-    max(block_number) as block_height,
+    min(block_number) as block_height,
     sum(amount) as total_transfer_volume,
     0 as total_transfer_count,
     '${recentTimeCode}' recent_time_code

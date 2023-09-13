@@ -7,7 +7,7 @@ insert into
 
 select
     address,
-    max(atb.block_height) as block_height,
+    min(atb.block_height) as block_height,
     sum(total_transfer_volume) total_transfer_volume,
     sum(total_transfer_count) total_transfer_count,
     '${recentTimeCode}' recent_time_code

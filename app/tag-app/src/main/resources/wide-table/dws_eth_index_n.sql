@@ -446,7 +446,7 @@ from token_balance_volume_usd_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols <@ ARRAY(
+                       and wlp.tokens <@ ARRAY(
                      select
                          symbol
                      from
@@ -611,7 +611,7 @@ from token_volume_usd_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols <@ ARRAY(
+                       and wlp.tokens <@ ARRAY(
                      select
                          symbol
                      from
@@ -656,8 +656,7 @@ select 'DEFi'                      as b_type
      , null                        as transaction_count_1y
      , null                        as transaction_count_2y
      , now()                       as etl_update_time
-from (select
-              , address
+from (select address
               , sum (case when recent_time_code = 'ALL' and volume_usd >= 100 then volume_usd else null end) as transaction_volume
               , sum (case when recent_time_code = '3d' and volume_usd >= 100 then volume_usd else null end) as transaction_volume_3d
               , sum (case when recent_time_code = '7d' and volume_usd >= 100 then volume_usd else null end) as transaction_volume_7d
@@ -668,10 +667,9 @@ from (select
               , sum (case when recent_time_code = '1y' and volume_usd >= 100 then volume_usd else null end ) as transaction_volume_1y
               , sum (case when recent_time_code = '2y' and volume_usd >= 100 then volume_usd else null end ) as transaction_volume_2y
       from total_volume_usd_temp
-      group address
+      group by address
       union all
-      select
-              , address
+      select address
               , sum (case when recent_time_code = 'ALL' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd else null end) as transaction_volume
               , sum (case when recent_time_code = '3d' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd else null end) as transaction_volume_3d
               , sum (case when recent_time_code = '7d' and total_transfer_volume_usd >= 100 then total_transfer_volume_usd else null end) as transaction_volume_7d
@@ -766,7 +764,7 @@ from token_holding_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols <@ ARRAY(
+                       and wlp.tokens <@ ARRAY(
                      select
                          symbol
                      from
@@ -862,7 +860,7 @@ from token_holding_time_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols <@ ARRAY(
+                       and wlp.tokens <@ ARRAY(
                      select
                          symbol
                      from
@@ -954,7 +952,7 @@ from token_holding_vol_count_temp
                               left join white_list_lp_temp wslp
                                         on wlp.address = wslp.address and wlp.type = 'LP' and wslp.type = 'SLP'
                      where wlp.tvl > 1000000
-                       and wlp.symbols <@ ARRAY(
+                       and wlp.tokens <@ ARRAY(
                      select
                          symbol
                      from

@@ -8,7 +8,7 @@ insert into
 select
     from_address address,
     token,
-    max(block_number) as block_height,
+    min(block_number) as block_height,
     sum(amount) total_transfer_volume,
     sum(case
             when sender = from_address then 1
