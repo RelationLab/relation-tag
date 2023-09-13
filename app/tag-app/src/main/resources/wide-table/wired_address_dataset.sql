@@ -4,7 +4,7 @@ select s1.b_type
      , s1.statistical_type
      , s1.address
      , s1.project
-     , s1.platform_name
+     , case when s1.platform_name='DEX' then 'Dex' else s1.platform_name end  as platform_name
      , s1.token
      , case when s1.token = 'ALL' then 'ALL' else s2.name end as asset -- token 名称
      , s1.type as action
