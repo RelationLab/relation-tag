@@ -448,7 +448,7 @@ from token_balance_volume_usd_temp
                      where wlp.tvl > 1000000
                        and wlp.tokens <@ ARRAY(
                      select
-                         symbol
+                         address
                      from
                          top_token_1000_temp
                      where
@@ -613,7 +613,7 @@ from token_volume_usd_temp
                      where wlp.tvl > 1000000
                        and wlp.tokens <@ ARRAY(
                      select
-                         symbol
+                         address
                      from
                          top_token_1000_temp
                      where
@@ -766,7 +766,7 @@ from token_holding_temp
                      where wlp.tvl > 1000000
                        and wlp.tokens <@ ARRAY(
                      select
-                         symbol
+                         address
                      from
                          top_token_1000_temp
                      where
@@ -862,7 +862,7 @@ from token_holding_time_temp
                      where wlp.tvl > 1000000
                        and wlp.tokens <@ ARRAY(
                      select
-                         symbol
+                         address
                      from
                          top_token_1000_temp
                      where
@@ -954,7 +954,7 @@ from token_holding_vol_count_temp
                      where wlp.tvl > 1000000
                        and wlp.tokens <@ ARRAY(
                      select
-                         symbol
+                         address
                      from
                          top_token_1000_temp
                      where

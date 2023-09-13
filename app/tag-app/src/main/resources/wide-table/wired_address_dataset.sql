@@ -42,7 +42,7 @@ from dws_eth_index_n s1 left join (
     where wlp.tvl > 1000000
     and wlp.tokens <@ ARRAY(
 select
-	symbol
+	address
 from
 	top_token_1000_temp
 where
