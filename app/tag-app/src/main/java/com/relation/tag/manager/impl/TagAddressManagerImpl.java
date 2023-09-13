@@ -110,7 +110,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             buildTagBasicData(batchDate);
             check("dim_rule_content", 60 * 1000, batchDate, 1, false);
             tagSummaryInit(batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH);
-            check("total", 1 * 60 * 1000, batchDate, 7, true);
+            check("total", 1 * 60 * 1000, batchDate, 8, true);
             exceTagSql(batchDate,filePath);
         }
         check("address_label", 60 * 1000, batchDate, 55, true);
@@ -434,6 +434,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
         execSql("erc20_tx_record_to", "tabel_defi_eth_tx_record_from_to.sql", batchDate, tableDefiPath, 7,true,null, false);
         exceRecentTimeScripts(batchDate, recentTimePath, "eth_tx_record_from_to.sql", "tabel_defi_eth_tx_record_from_to", 1,false);
         execSql("eth_tx_record_from_to", "vol_count_eth_holding_vol_count.sql", batchDate, filePath, 9,true,null, false);
+        execSql("vol_count_token_holding_vol_count", "total_token_holding_time.sql", batchDate, filePath, 1,false,null, false);
         execSql("vol_count", "token_volume_usd.sql", batchDate, filePath, 2,true,null, false);
         execSql("token_volume_usd", "total_volume_usd.sql", batchDate, filePath, 1,false,null, false);
 
