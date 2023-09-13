@@ -88,6 +88,7 @@ from
                                     dex_tx_volume_count_summary  where total_transfer_volume_usd >=100
                                     and address not in (select address from exclude_address)
                                                                    and recent_time_code='ALL'
+                                   and project  not in('DEX','ETH2.0','LENDING','SERVICES','DERIVATIVES')
                                 ) tbvu
                         group by
                             project)
@@ -183,7 +184,8 @@ from
                                         end as project,
                                     total_transfer_count
                                 from
-                                    dex_tx_volume_count_summary where  recent_time_code='ALL')
+                                    dex_tx_volume_count_summary where  recent_time_code='ALL'
+                                  and project  not in('DEX','ETH2.0','LENDING','SERVICES','DERIVATIVES'))
                                 tbvu
                         where
                                 tbvu.address not in (

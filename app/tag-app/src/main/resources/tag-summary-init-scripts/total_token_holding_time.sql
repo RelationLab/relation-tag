@@ -22,5 +22,6 @@ insert into token_holding_time(
     first_tx_time,
     latest_tx_time
 )
-select address,token,block_height from token_holding_vol_count_temp inner join
+select address,token,block_height from token_holding_vol_count_temp
+    inner join
 where recent_time_code='ALL';

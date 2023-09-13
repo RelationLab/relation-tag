@@ -91,7 +91,7 @@ from
                                         inner join address_init${tableSuffix} ais  on(dtvcs.address=ais.address)
                                 where  total_transfer_volume_usd >=100
                                   and  dtvcs.address not in (select address from exclude_address)
-                                  and recent_time_code='ALL'
+                                  and recent_time_code='ALL'  and project  not in('DEX','ETH2.0','LENDING','SERVICES','DERIVATIVES')
                             ) tbvu
                         group by
                             project)
@@ -192,6 +192,7 @@ from (
                                  inner join address_init${tableSuffix} ais  on(tbvu.address=ais.address)
                                  where  tbvu.address not in (select address from exclude_address)
                                     and total_transfer_count>0     and recent_time_code='ALL'
+                                   and project  not in('DEX','ETH2.0','LENDING','SERVICES','DERIVATIVES')
                          group by
                              project)
                          rowtable ) s1
