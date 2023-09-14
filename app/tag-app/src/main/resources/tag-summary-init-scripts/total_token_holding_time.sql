@@ -38,6 +38,6 @@ from
 where
         recent_time_code = 'ALL'
   and token_holding_temp.balance>0 ;
-SELECT 'total_token_holding_time' as table_name, '${batchDate}' as batch_date;
+insert into tag_result(table_name,batch_date) SELECT 'total_token_holding_time' as table_name, '${batchDate}' as batch_date;
 
 
