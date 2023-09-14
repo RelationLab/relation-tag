@@ -4515,10 +4515,10 @@ select distinct 'DEFI'                                                  as wired
                 platform_large_category.platform_large_code             as project,
                 'ALL'                                                   as token,
                 trade_type.trade_type                                   as type,
-                recent_time_temp.code || '' || platform_temp.id || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'cg' as label_type,
                 'T'                                                     as operate_type,
-                recent_time_temp.code || '' || platform_temp.id || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'cg'    seq_flag,
                 'count'                                                    data_subject,
                 'ALL'                                                      project_name,
@@ -4551,9 +4551,9 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                                                    "owner",
-                recent_time_temp.code || '' || platform_temp.id || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'cg'                        as "type",
-                recent_time_temp.code || '' || platform_temp.id || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'cg' || level_def_temp.code as "name",
                 'SYSTEM'                                                                          "source",
                 'PUBLIC'                                                                          visible_type,
@@ -4573,7 +4573,7 @@ select distinct 'RelationTeam'                                                  
                          then replace(level_def_temp.level_name, ' ', ' ' || trade_type.trade_type_name || ' ')
                      else level_def_temp.level_name end)                                          "content",
                 'SQL'                                                                             rule_type,
-                recent_time_temp.code || '' || platform_temp.id || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'cg'                           rule_group,
                 'RESULT'                                                                          value_type,
                 999999                                                                            run_order,
@@ -4616,7 +4616,7 @@ select distinct 'ALL_TOKEN'                                                     
                 level_def_temp.level                                                                     activity,
                 ''                                                                                       hold_time,
                 now()                                                                                    created_at,
-                recent_time_temp.code || '' || platform_temp.id || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'cg' || level_def_temp.code           label_name,
                 'token'                                                                                  asset_type,
                 'GRADE'                                                                                  label_category,
@@ -5216,10 +5216,10 @@ select distinct 'DEFI'                                                  as wired
                 platform_large_category.platform_large_code             as project,
                 'ALL'                                                   as token,
                 trade_type.trade_type                                   as type,
-                recent_time_temp.code || '' || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'vg' as label_type,
                 'T'                                                     as operate_type,
-                recent_time_temp.code || '' || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'vg'    seq_flag,
                 'volume_grade'                                             data_subject,
                 'ALL'                                                      project_name,
@@ -5251,9 +5251,9 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
-                recent_time_temp.code || '' || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'vg' as "type",
-                recent_time_temp.code || '' || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'vg' ||
                 level_def_temp.code                                     as "name",
                 'SYSTEM'                                                   "source",
@@ -5273,7 +5273,7 @@ select distinct 'RelationTeam'                                             "owne
                          then replace(level_def_temp.level_name, ' ', ' ' || trade_type.trade_type_name || ' ')
                      else level_def_temp.level_name end)                   "content",
                 'SQL'                                                      rule_type,
-                recent_time_temp.code || '' || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'vg'    rule_group,
                 'RESULT'                                                   value_type,
                 999999                                                     run_order,
@@ -5316,7 +5316,7 @@ select distinct 'ALL_TOKEN'                                 asset,
                 ''                                          activity,
                 ''                                          hold_time,
                 now()                                       created_at,
-                recent_time_temp.code || '' || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'vg' ||
                 level_def_temp.code                         label_name,
                 'token'                                     asset_type,
@@ -5905,10 +5905,10 @@ select distinct 'DEFI'                                                  as wired
                 platform_large_category.platform_large_code             as project,
                 'ALL'                                                   as token,
                 trade_type.trade_type                                   as type,
-                recent_time_temp.code || '' || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'vr' as label_type,
                 'T'                                                     as operate_type,
-                recent_time_temp.code || '' || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'vr'    seq_flag,
                 'volume_rank'                                              data_subject,
                 'ALL'                                                      project_name,
@@ -5940,9 +5940,9 @@ into public."label_temp" ("owner",
                           one_wired_type,
                           two_wired_type, time_type)
 select distinct 'RelationTeam'                                             "owner",
-                recent_time_temp.code || '' || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'vr' as "type",
-                recent_time_temp.code || '' || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'vr' ||
                 level_def_temp.code                                     as "name",
                 'SYSTEM'                                                   "source",
@@ -5956,7 +5956,7 @@ select distinct 'RelationTeam'                                             "owne
                          then replace(level_def_temp.level_name, ' ', ' ' || trade_type.trade_type_name || ' ')
                      else level_def_temp.level_name end)                   "content",
                 'SQL'                                                      rule_type,
-                recent_time_temp.code || '' || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'vr'    rule_group,
                 'RESULT'                                                   value_type,
                 999999                                                     run_order,
@@ -5999,7 +5999,7 @@ select distinct 'ALL_TOKEN'                                 asset,
                 ''                                          activity,
                 ''                                          hold_time,
                 now()                                       created_at,
-                recent_time_temp.code || '' || '' ||
+                recent_time_temp.code ||
                 platform_large_category.code || trade_type.code || 'vr' ||
                 level_def_temp.code                         label_name,
                 'token'                                     asset_type,
