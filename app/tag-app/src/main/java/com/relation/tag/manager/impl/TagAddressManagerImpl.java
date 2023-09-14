@@ -263,7 +263,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             return;
         }
         exceWideTableSql(batchDate,WIDE_TABLE_PATH);
-        execSql("wired_address_dataset", "rename_wired_address_dataset_"+configEnvironment+".sql", batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH,1,false, null, false);
+        execSql("wired_address_dataset", "rename_wired_address_dataset_"+configEnvironment+".sql", batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH,1,false, Maps.newHashMap("tableSuffix",configEnvironment), false);
     }
 
     /*************************************************************执行SQL部分**********************************************************/
