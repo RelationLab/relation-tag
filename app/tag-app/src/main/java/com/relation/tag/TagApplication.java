@@ -22,6 +22,9 @@ public class TagApplication {
         ConfigurableApplicationContext ctx = SpringApplication.run(TagApplication.class, args);
         String configEnvironment = ctx.getEnvironment().getProperty("config.environment");
         String tagFlag = ctx.getEnvironment().getProperty("config.tag.flag");
+        if (StringUtils.equals(configEnvironment,"dev")){
+            return;
+        }
         if (!StringUtils.equals(tagFlag,"tag")){
             return;
         }
