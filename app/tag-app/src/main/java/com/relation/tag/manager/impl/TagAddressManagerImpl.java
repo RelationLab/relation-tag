@@ -111,6 +111,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
             check("dim_rule_content", 60 * 1000, batchDate, 1, false);
             tagSummaryInit(batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH);
             check("total", 1 * 60 * 1000, batchDate, 8, true);
+            exceWideTableSql(batchDate,WIDE_TABLE_PATH);
             exceTagSql(batchDate,filePath);
         }
         check("address_label", 60 * 1000, batchDate, 55, true);
@@ -262,7 +263,6 @@ public class TagAddressManagerImpl implements TagAddressManager {
         if (!StringUtils.equals(configEnvironment,"stag")){
             return;
         }
-        exceWideTableSql(batchDate,WIDE_TABLE_PATH);
         execSql("wired_address_dataset", "rename_wired_address_dataset_"+configEnvironment+".sql", batchDate, TAG_SUMMARY_INIT_SCRIPTS_PATH,1,false, Maps.newHashMap("tableSuffix",configEnvironment), false);
     }
 
@@ -484,7 +484,7 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
 
     private void exceWideTableSql(String batchDate, String filePath) {
-        execSql(null, "table_defi_wide_table_ddl.sql", batchDate, filePath,1,true, null, false);
+        execSql("total", "table_defi_wide_table_ddl.sql", batchDate, filePath,8,true, null, false);
         execSql("table_defi_wide_table_ddl", "dws_eth_index_n.sql", batchDate, filePath, 1,false,null, false);
         execSql("table_defi_wide_table_ddl", "dws_nft_index_n.sql", batchDate, filePath,1,false, null, false);
         execSql("table_defi_wide_table_ddl", "dws_web3_index_n.sql", batchDate, filePath, 1,false,null,false );
