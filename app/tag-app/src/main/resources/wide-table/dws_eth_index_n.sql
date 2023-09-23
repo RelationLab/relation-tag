@@ -11,7 +11,7 @@ insert into dws_eth_index_n_tmp10
 select
 -- 包含了type=ALL的情况
 -- 维度
-    'DEFi'                                                                             as b_type           --  业务类型
+    'DeFi'                                                                             as b_type           --  业务类型
      , 'token'                                                                         as statistical_type -- 统计类型
      , address
      , project
@@ -51,7 +51,7 @@ group by address
 ;
 
 insert into dws_eth_index_n_tmp10
-select 'DEFi'                  as b_type
+select 'DeFi'                  as b_type
      , 'token'                 as statistical_type
      , address
      , project
@@ -128,7 +128,7 @@ group by address
 
 --  LP 数据执行 univ3
 insert into dws_eth_index_n_tmp10
-select 'DEFi'                                                                          as b_type
+select 'DeFi'                                                                          as b_type
      , 'LP'                                                                            as statistical_type
      , address
      , project
@@ -247,7 +247,7 @@ group by s1.b_type           --  业务类型
 truncate table dws_eth_index_n_tmp2;
 -- 第一步
 insert into dws_eth_index_n_tmp2
-select 'DEFi'            as b_type
+select 'DeFi'            as b_type
      , 'token'           as statistical_type
      , address
      , 'ALLNET'          as project
@@ -287,7 +287,7 @@ group by address
 
 -- 第二步
 insert into dws_eth_index_n_tmp2
-select 'DEFi'              as b_type
+select 'DeFi'              as b_type
      , 'token'             as statistical_type
      , address
      , 'ALLNET'            as project
@@ -328,7 +328,7 @@ group by address
 
 -- 第三步 
 insert into dws_eth_index_n_tmp2
-select 'DEFi'                                                                          as b_type
+select 'DeFi'                                                                          as b_type
      , 'token'                                                                         as statistical_type
      , address
      , 'ALLNET'                                                                        as project
@@ -368,7 +368,7 @@ group by address;
 
 -- 第四步
 insert into dws_eth_index_n_tmp2
-select 'DEFi'            as b_type
+select 'DeFi'            as b_type
      , 'token'           as statistical_type
      , token_balance_volume_usd_temp.address
      , 'ALLNET'          as project
@@ -407,7 +407,7 @@ group by token_balance_volume_usd_temp.address, token
 ;
 
 insert into dws_eth_index_n_tmp2
-select 'DEFi'            as b_type
+select 'DeFi'            as b_type
      , 'LP'              as statistical_type
      , token_balance_volume_usd_temp.address
      , 'ALLNET'          as project
@@ -461,7 +461,7 @@ group by token_balance_volume_usd_temp.address, token, factory_type;
 
 -- 第三步2
 insert into dws_eth_index_n_tmp2
-select 'DEFi'            as b_type
+select 'DeFi'            as b_type
      , 'token'           as statistical_type
      , address
      , 'ALLNET'          as project
@@ -501,7 +501,7 @@ group by address
 -- 第五步
 
 insert into dws_eth_index_n_tmp2
-select 'DEFi'                                                                                      as b_type
+select 'DeFi'                                                                                      as b_type
      , 'token'                                                                                     as statistical_type
      , token_volume_usd_temp.address
      , 'ALLNET'                                                                                    as project
@@ -556,7 +556,7 @@ group by token_volume_usd_temp.address, token_volume_usd_temp.token
 
 
 insert into dws_eth_index_n_tmp2
-select 'DEFi'                                                                                      as b_type
+select 'DeFi'                                                                                      as b_type
      , 'LP'                                                                                        as statistical_type
      , token_volume_usd_temp.address
      , 'ALLNET'                                                                                    as project
@@ -625,7 +625,7 @@ group by token_volume_usd_temp.address, token_volume_usd_temp.token, factory_typ
 
 
 insert into dws_eth_index_n_tmp2
-select 'DEFi'                      as b_type
+select 'DeFi'                      as b_type
      , 'token'                     as statistical_type
      , address
      , 'ALLNET'                    as project
@@ -686,7 +686,7 @@ group by address;
 -- 第六步
 
 insert into dws_eth_index_n_tmp2
-select 'DEFi'            as b_type
+select 'DeFi'            as b_type
      , 'token'           as statistical_type
      , token_holding_temp.address
      , 'ALLNET'          as project
@@ -725,7 +725,7 @@ group by token_holding_temp.address, token_holding_temp.token
 
 
 insert into dws_eth_index_n_tmp2
-select 'DEFi'            as b_type
+select 'DeFi'            as b_type
      , 'LP'              as statistical_type
      , token_holding_temp.address
      , 'ALLNET'          as project
@@ -778,7 +778,7 @@ group by token_holding_temp.address, token_holding_temp.token, factory_type
 
 -- 第七步
 insert into dws_eth_index_n_tmp2
-select 'DEFi'              as b_type
+select 'DeFi'              as b_type
      , 'token'             as statistical_type
      , token_holding_time_temp.address
      , 'ALLNET'            as project
@@ -818,7 +818,7 @@ from token_holding_time_temp
 group by token_holding_time_temp.address, token
 ;
 insert into dws_eth_index_n_tmp2
-select 'DEFi'              as b_type
+select 'DeFi'              as b_type
      , 'LP'                as statistical_type
      , token_holding_time_temp.address
      , 'ALLNET'            as project
@@ -874,7 +874,7 @@ group by token_holding_time_temp.address, token, factory_type
 
 -- 第八步
 insert into dws_eth_index_n_tmp2
-select 'DEFi'                                                                          as b_type
+select 'DeFi'                                                                          as b_type
      , 'token'                                                                         as statistical_type
      , token_holding_vol_count_temp.address
      , 'ALLNET'                                                                        as project
@@ -913,7 +913,7 @@ group by token_holding_vol_count_temp.address, token
 
 -- 第八步
 insert into dws_eth_index_n_tmp2
-select 'DEFi'                                                                          as b_type
+select 'DeFi'                                                                          as b_type
      , 'LP'                                                                            as statistical_type
      , token_holding_vol_count_temp.address
      , 'ALLNET'                                                                        as project
@@ -966,7 +966,7 @@ group by token_holding_vol_count_temp.address, token, factory_type
 ;
 
 insert into dws_eth_index_n_tmp2
-select 'DEFi'                     as b_type
+select 'DeFi'                     as b_type
      , 'token'                    as statistical_type
      , address
      , 'ALLNET'                   as project
