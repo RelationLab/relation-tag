@@ -26,6 +26,7 @@ public class TagJob {
 
     /**
      * 打测试环境
+     *
      * @throws Exception
      */
     @Scheduled(cron = "0 0 19 * * ?")
@@ -42,6 +43,7 @@ public class TagJob {
 
     /**
      * 打生产环境
+     *
      * @throws Exception
      */
     @Scheduled(cron = "0 0 1 * * ?")
@@ -85,5 +87,21 @@ public class TagJob {
         log.info("check address_labels_json_gin start...........");
         tagAddressManager.check(checkTable, 1 * 60 * 1000, batchDate, 1, false);
         log.info("tag end...........");
+    }
+
+    /**
+     * 打测试环境
+     *
+     * @throws Exception
+     */
+    @Scheduled(cron = "0 */5 * * * ?")
+    public void checkTagFinish() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) + 8);
+        // 将日期减一天
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        String batchDate = DateUtils.formatDate(calendar.getTime(), "YYYY-MM-dd");
+        tagAddressManager.checkTagFinish(batchDate);
     }
 }

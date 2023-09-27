@@ -83,4 +83,9 @@ public class GreenPlumAddressLabelGpServiceImpl extends ServiceImpl<GreenplumAdd
     public List<RecentTime> selectRecentTimeList() {
         return baseMapper.selectRecentTimeList();
     }
+
+    @Override
+    public Long selectSynCount() {
+        return baseMapper.selectSynCount();
+    }
 }

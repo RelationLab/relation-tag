@@ -29,4 +29,6 @@ public interface IAddressLabelGpService extends IService<AddressLabelGp> {
     void setSuggestAddressBatchStatus(List<SuggestAddressBatch> list);
 
     List<RecentTime> selectRecentTimeList();
+
+    Long selectSynCount();
 }

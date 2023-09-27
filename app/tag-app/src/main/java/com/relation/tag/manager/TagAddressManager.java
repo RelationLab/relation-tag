@@ -7,4 +7,5 @@ public interface TagAddressManager {
     void check(String tableName, long sleepTime, String batchDate, int resultNum, boolean likeKey) throws Exception;
      boolean checkResult(String tableName, String batchDate, Integer result, boolean likeKey);
 
+    void checkTagFinish(String batchDate);
 }
