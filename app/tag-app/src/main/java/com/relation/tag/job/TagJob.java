@@ -96,6 +96,9 @@ public class TagJob {
      */
     @Scheduled(cron = "0 */5 * * * ?")
     public void checkTagFinish() throws Exception {
+        if (StringUtils.equals(tagFlag, "dev")) {
+            return;
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) + 8);
