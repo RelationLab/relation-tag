@@ -112,12 +112,12 @@
         select * from recent_time_temp
     </select>
 
-    <select id="selectSynCount" resultType="java.lang.Long">
-        select
-            count(1)
-        from
-            pg_stat_activity psa
-        where
-            state = 'active' and query like 'COPY  ( SELECT address, data FROM address_labels_json_gin_%'
-    </select>
+<!--    <select id="selectSynCount" resultType="java.lang.Long">-->
+<!--        select-->
+<!--            count(1)-->
+<!--        from-->
+<!--            pg_stat_activity psa-->
+<!--        where-->
+<!--            state = 'active' and query like 'COPY  ( SELECT address, data FROM address_labels_json_gin_%'-->
+<!--    </select>-->
 </mapper>

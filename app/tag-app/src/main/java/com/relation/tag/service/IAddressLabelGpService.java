@@ -30,5 +30,5 @@ public interface IAddressLabelGpService extends IService<AddressLabelGp> {
 
     List<RecentTime> selectRecentTimeList();
 
-    Long selectSynCount();
+//    Long selectSynCount();
 }

@@ -34,5 +34,5 @@ public interface GreenplumAddressLabelGpMapper extends BaseMapper<AddressLabelGp
 
     List<RecentTime> selectRecentTimeList();
 
-    Long selectSynCount();
+//    Long selectSynCount();
 }

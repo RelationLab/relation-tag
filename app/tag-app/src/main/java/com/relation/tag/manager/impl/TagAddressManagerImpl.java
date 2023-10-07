@@ -96,7 +96,13 @@ public class TagAddressManagerImpl implements TagAddressManager {
 
     @Override
     public void checkTagFinish(String batchDate) {
-        Long synCount = iAddressLabelService.selectSynCount();
+        String exceSelectSql = "select\n" +
+                "            count(1)\n" +
+                "        from\n" +
+                "            pg_stat_activity psa\n" +
+                "        where\n" +
+                "            state = 'active' and query like 'COPY  ( SELECT address, data FROM address_labels_json_gin_"+configEnvironment+"%'";
+        Integer synCount = iAddressLabelService.exceSelectSql(exceSelectSql);
         String tagRemovingTable = "tag_removing_".concat(configEnvironment);
         String tagRemovedTable = "tag_removed_".concat(configEnvironment);
         Integer tagRemovingCount = checkResultData(tagRemovingTable, batchDate, true);
