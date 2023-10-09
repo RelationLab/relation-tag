@@ -29,7 +29,7 @@ public class TagJob {
      *
      * @throws Exception
      */
-    @Scheduled(cron = "0 0 19 * * ?")
+//    @Scheduled(cron = "0 0 19 * * ?")
     public void execTagForStag() throws Exception {
         if (!StringUtils.equals(configEnvironment, "stag")) {
             return;
@@ -46,7 +46,7 @@ public class TagJob {
      *
      * @throws Exception
      */
-    @Scheduled(cron = "0 0 1 * * ?")
+//    @Scheduled(cron = "0 0 1 * * ?")
     public void execTagForProd() throws Exception {
         if (!StringUtils.equals(configEnvironment, "prod")) {
             return;
